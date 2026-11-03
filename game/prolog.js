@@ -116,7 +116,7 @@ Cutaway.dialog("mail_sable", {
 const AF = Halcyon.at.flat;
 Cutaway.room("flat", {
   name: "Junos Wohnung", background: "flat_bg",
-  ambience: ["rain_glass", "city_far", "neon_buzz", "fridge_hum"],
+  ambience: ["rain_glass", "city_far", "neon_buzz", "fridge_hum"], music: { theme: "juno", intensity: 0.4 },
   walk: AF.walk, holes: AF.holes, props: AF.props,
   light: { ambient: 0.38, color: "#8a9cff", lamps: [
     // the warm LED strip high on the left wall, over the bed (its two ends); it keeps Juno warm at the deck

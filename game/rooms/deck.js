@@ -37,5 +37,6 @@ Halcyon.deckLayout = {
   hotspots.close = { name: "Zurück", rect: D.buttons.close, exit: { to: "flat", at: Halcyon.at.flat.deck, face: "ne" } };
 
   Cutaway.room("deck", { name: "Deck", color: "#131a2a", observe: true, deck: true, hotspots,
-    ambience: ["deck_fans", { sfx: "rain_glass", gain: 0.5 }, { sfx: "city_far", gain: 0.6 }] });
+    ambience: ["deck_fans", { sfx: "rain_glass", gain: 0.5 }, { sfx: "city_far", gain: 0.6 }],
+    music: { theme: "juno", intensity: 0.4, speaker: 1 } });                   // the theme through the wall
 })();

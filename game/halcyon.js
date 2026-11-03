@@ -48,7 +48,10 @@ Cutaway.script.action("zoom", (s) => {
 });
 
 // { cache: "clip_kessler_ring" } puts a clip or a note into the cache
-Cutaway.script.action("cache", (s) => { Cutaway.state.set(`cache_${s.cache}`); Cutaway.events.emit("sfx", { sfx: "cache" }); },
+Cutaway.script.action("cache", (s) => {
+  Cutaway.state.set(`cache_${s.cache}`); Cutaway.events.emit("sfx", { sfx: "cache" });
+  if (String(s.cache).startsWith("clip_") && !Cutaway.script.fast) Cutaway.events.emit("stinger", "clue");   // a moment caught
+},
   { sets: (s) => [`cache_${s.cache}`] });
 
 // { ledger: "kessler", value: "full" } writes an entry into the Kassenbuch and pays what it pays
