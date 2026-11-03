@@ -147,9 +147,10 @@
     },
   });
 
-  // Drawn after the room and its post-effects, before the interface (lines, hover labels, dialogue
-  // choices stay on top): the engine's "frame.ui" moment.
-  Cutaway.events.on("frame.ui", (/** @type {CanvasRenderingContext2D} */ ctx) => {
+  // Drawn after the room and its post-effects, under the fade (room changes cover the deck and the
+  // display too: game/transitions.js), before the interface (lines, hover labels, choices stay on top):
+  // the engine's "frame.screen" moment.
+  Cutaway.events.on("frame.screen", (/** @type {CanvasRenderingContext2D} */ ctx) => {
     const r = Cutaway.scene.room;
     if (!r || Cutaway.scene.backdrop) return;
     if (r.deck) deck(ctx);
