@@ -64,9 +64,10 @@ geschieht zu seiner Zeit, ob jemand zusieht oder nicht. Damit kein Spieler häng
 
 - **Wichtige Momente warten auf den Spieler**, wenn er der richtigen Person folgt (der Moment beginnt,
   sobald Juno auf der richtigen Kamera ist, innerhalb seines Zeitfensters).
-- **Jede Kamera hat einen Puffer** der letzten 30 Spielminuten. Was Juno verpasst hat, kann sie im
-  Puffer zurückspulen und dort aufzeichnen. Ältere Aufnahmen liegen nur im Halcyon-Archiv (ein
-  späteres Rätsel).
+- **Jede Kamera hat einen Puffer** mit den Aufnahmen der laufenden Nacht (bis Juno schläft). Was Juno
+  verpasst hat, kann sie im Puffer zurückspulen und dort aufzeichnen (der Knopf `PUFFER` erscheint, wenn
+  es dort etwas gibt, das sie braucht). Aufnahmen früherer Nächte liegen nur im Halcyon-Archiv (ein
+  späteres Rätsel). (Geändert beim Bau von H2: ein 30-Minuten-Puffer hätte Sackgassen erzeugt.)
 - Der Solver behandelt einen Moment als Zustand: gesehen, aufgezeichnet, verpasst.
 
 **Verbinden.** Eine Kamera ist verbunden, wenn Juno ihren Zugangscode kennt. Codes findet man:

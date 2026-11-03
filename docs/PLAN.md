@@ -34,7 +34,7 @@ E-a and E-b:
 
 The solver and `play.mjs` wait as a move ("wait": on to the next change).
 
-Compatibility: the demo validates, solves and plays through. In The Loonies the new code paths are never taken (no comparisons, diagonal views, front lines, time or watched rooms in its data). A bounded solve of its Act 1 gives the same states with the old and the new engine. A full playthrough with the new engine runs in `build/compat_loonies/`.
+Compatibility: the demo validates, solves and plays through. In The Loonies the new code paths are never taken (no comparisons, diagonal views, front lines, time or watched rooms in its data). A bounded solve of its Act 1 gives the same states with the old and the new engine. A full headless playthrough (`play.mjs --max 1000000`) can't finish on this machine within a tool run's 2-hour limit: its full-game solve alone takes longer. Run it by hand in The Loonies after its next `sync-engine.sh` (`playthrough.bat`, or `node tools/playthrough.mjs`).
 
 | Done | File |
 |---|---|
