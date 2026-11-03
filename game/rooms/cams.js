@@ -26,7 +26,7 @@ Halcyon.FEED_POST = [
  */
 /** Where the display's buttons and camera column are (screens.js draws them there). */
 Halcyon.osd = {
-  rewind: [172, 22, 40, 10], rec: [214, 22, 24, 10], wait: [240, 22, 26, 10], back: [268, 22, 48, 10],
+  rewind: [172, 13, 40, 10], rec: [214, 13, 24, 10], wait: [240, 13, 26, 10], back: [268, 13, 48, 10],
   /** @param {number} i */
   thumb: (i) => [4, 42 + i * 13, 34, 10],
 };

@@ -20,7 +20,7 @@ Object.assign(Halcyon.ledger, {
 Cutaway.time.configure({
   start: "18:00", end: "04:00",
   // where the button for waiting is (play.mjs clicks it): on the deck and in every feed
-  waitPoint: () => Cutaway.scene.room?.deck ? { x: 33, y: 170 } : Cutaway.scene.room?.feed ? { x: 253, y: 27 } : null,
+  waitPoint: () => Cutaway.scene.room?.deck ? { x: 33, y: 170 } : Cutaway.scene.room?.feed ? { x: 253, y: 18 } : null,
 });
 
 // ---- routines (where everyone is when)

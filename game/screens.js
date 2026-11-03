@@ -44,9 +44,8 @@
       text(ctx, cam.owner, 4, 12, C.phosphor);
       text(ctx, "LINK: J.REYES IMPLANTAT", 4, 21, C.implant);
     }
-    // (the engine's satchel sits in the top right corner: the time stays left of it)
-    text(ctx, Halcyon.stamp(), W - 26, 3, C.phosphorBright, "right");
-    if (S().flag("rec_on") && blink()) { ctx.fillStyle = C.red; ctx.fillRect(W - 92, 4, 3, 3); }
+    text(ctx, Halcyon.stamp(), W - 4, 3, C.phosphorBright, "right");
+    if (S().flag("rec_on") && blink()) { ctx.fillStyle = C.red; ctx.fillRect(W - 80, 4, 3, 3); }
     // the cameras Juno has linked: a column on the left, under the display's lines (a click switches:
     // hotspots `thumb_<cam>`; the rects are Halcyon.osd's)
     const O = Halcyon.osd;
@@ -90,7 +89,7 @@
     ctx.fillStyle = C.steel; ctx.fillRect(0, 0, W, H);
     ctx.fillStyle = C.steel2; ctx.fillRect(0, 0, W, 14); ctx.fillRect(D.map[0], D.map[1], D.map[2], D.map[3]);
     text(ctx, "DECK // J.REYES", 4, 3, C.cyan);
-    text(ctx, `${Halcyon.stamp()}   ${S().flag("chits") ?? 0} CHITS`, W - 26, 3, C.cyanPale, "right");
+    text(ctx, `${Halcyon.stamp()}   ${S().flag("chits") ?? 0} CHITS`, W - 4, 3, C.cyanPale, "right");
     // the map of the quarter: streets as lines, cameras as points
     ctx.fillStyle = C.steel3;
     for (const [x, y, w, h] of D.streets) ctx.fillRect(x, y, w, h);
