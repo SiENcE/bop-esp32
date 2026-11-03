@@ -1,33 +1,26 @@
-// The menu screen's logo (style guide §8a "Title screen"): small and flat over the rainy street (the
-// title screen before it, art/ui/splash.px.js, carries the people and the big name). GLASS SISTER in
-// our font's letters at 2x, filled in one pale colour (no gradient, no shadow), an ink outline so the
-// street can't get into it, between two magenta rules.
+// The menu screen's logo (style guide §8a "Title screen"): the same title block as on the title screen
+// (art/ui/letters.px.js titleBlock: GLASS SISTER as outline letters at 3x between magenta rules,
+// HALCYON · LOWER NINTH · 2091 under it), as wide as the title screen's row of panels. On a night-dark
+// plate with cut corners, so the rainy street behind can't get into the thin letters.
 //
 //   title_logo   an animation: still, now and then the letters split into magenta and cyan for a moment
 include("letters.px.js")
 
-pal({ k: "#0c0e1a", V: "#dafcff", v: "#62def0", m: "#ff4fd3" })
+pal({ k: "#0c0e1a", n: "#06080f", N: "#0a0e18", V: "#dafcff", v: "#62def0", m: "#ff4fd3" })
 
 {
-  const T = titleLetters("GLASS SISTER", 2, 2), PAD = 4, RULE = 8
-  const W = T.w + 2 * (PAD + RULE), H = T.h + 2 * PAD + 6
-  const OX = PAD + RULE, OY = PAD + 3
+  const ROW = 4 * 58 + 3 * 5                     // the title screen's row of panels (art/ui/splash.px.js)
+  const TB = titleBlock(ROW), PAD = 6, CUT = 5
+  const W = ROW + 2 * PAD, H = TB.h + 2 * PAD - 2
 
   function paint(c, o = {}) {
     const B = new Array(W * H).fill(null)
     const put = (x, y, k) => { if (x >= 0 && y >= 0 && x < W && y < H) B[y * W + x] = k }
-    for (let x = PAD; x < W - PAD; x++) { put(x, OY - 4, "m"); put(x, OY + T.h + 3, "m") }
-    if (o.split) for (let y = 0; y < T.h; y++) for (let x = 0; x < T.w; x++) if (T.filled(x, y)) { put(OX + x - o.split, OY + y, "m"); put(OX + x + o.split, OY + y, "v") }
-    for (let y = 0; y < T.h; y++) for (let x = 0; x < T.w; x++) if (T.filled(x, y)) put(OX + x, OY + y, "V")
-    const ink = B.slice()
-    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
-      if (B[y * W + x]) continue
-      for (let j = -1; j <= 1; j++) for (let i = -1; i <= 1; i++) {
-        const xx = x + i, yy = y + j
-        if (xx >= 0 && yy >= 0 && xx < W && yy < H && B[yy * W + xx]) ink[y * W + x] = "k"
-      }
-    }
-    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) if (ink[y * W + x]) c.px(x, y, ink[y * W + x])
+    const inside = (x, y) => x >= 0 && y >= 0 && x < W && y < H && x + y >= CUT && (W - 1 - x) + (H - 1 - y) >= CUT
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) if (inside(x, y)) put(x, y, y % 4 === 3 ? "N" : "n")
+    TB.draw(put, PAD, PAD - 1, o)
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) if (B[y * W + x]) c.px(x, y, B[y * W + x])
+    TB.place(c, PAD, PAD - 1)
   }
   const FRAMES = [[3200, {}], [70, { split: 1 }], [2200, {}]]
   anim("title_logo", { w: W, h: H, frames: FRAMES.length, ms: FRAMES.map(([ms]) => ms) }, (c) => paint(c, FRAMES[c.frame][1]))

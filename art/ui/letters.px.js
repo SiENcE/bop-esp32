@@ -35,3 +35,29 @@ function titleLetters(word, sc, gap) {
   const stroke = (x, y) => filled(x, y) && (!filled(x - 1, y) || !filled(x + 1, y) || !filled(x, y - 1) || !filled(x, y + 1))
   return { w, h, filled, stroke }
 }
+
+/**
+ * The title block, the same on the title screen and the menu screen: a magenta rule, GLASS SISTER as
+ * outline letters at 3x in one pale colour, a magenta rule, HALCYON · LOWER NINTH · 2091 spaced out.
+ * `row` is the width of the rules; the block is `h` high from its top (the upper rule). Keys: "V" the
+ * letters, "m" the rules, "v" the place (and the glitch's cyan), as the includer's palette has them.
+ */
+function titleBlock(row) {
+  const T = titleLetters("GLASS SISTER", 3, 3)
+  const h = T.h + 21
+  return {
+    h,
+    /** the rules and the letters into a buffer: put(x, y, key); o.split: the glitch's split in px */
+    draw(put, x0, y0, o = {}) {
+      const tx = x0 + Math.round((row - T.w) / 2), ty = y0 + 6
+      for (let x = x0; x < x0 + row; x++) { put(x, y0, "m"); put(x, ty + T.h + 5, "m") }
+      if (o.split) for (let y = 0; y < T.h; y++) for (let x = 0; x < T.w; x++) if (T.stroke(x, y)) { put(tx + x - o.split, ty + y, "m"); put(tx + x + o.split, ty + y, "v") }
+      for (let y = 0; y < T.h; y++) for (let x = 0; x < T.w; x++) if (T.stroke(x, y)) put(tx + x, ty + y, "V")
+    },
+    /** the place, written straight onto the canvas (after the buffer) */
+    place(c, x0, y0) {
+      const place = "HALCYON · LOWER NINTH · 2091", step = 6, pw = place.length * step - 2
+      ;[...place].forEach((ch, i) => { if (ch !== " ") c.text(x0 + Math.round((row - pw) / 2) + i * step, y0 + 6 + T.h + 10, ch === "·" ? "." : ch, "v") })
+    },
+  }
+}

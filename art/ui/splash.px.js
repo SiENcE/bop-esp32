@@ -24,7 +24,7 @@ pal({
 {
   const W = 320, H = 180, PW = 58, PH = 100, GAP = 5, CUT = 7
   const ROW = 4 * PW + 3 * GAP, PX = Math.round((W - ROW) / 2), PY = 10
-  const T = titleLetters("GLASS SISTER", 3, 3)
+  const TB = titleBlock(ROW)
   const PANELS = [
     { bg: "a", stripe: "A", dark: "b", mid: "B", who: "evi" },
     { bg: "j", stripe: "J", dark: "d", mid: "D", who: "juno" },
@@ -82,13 +82,10 @@ pal({
         for (let x = 0; x < line.length; x++) B[y * W + x0 - 3 + x] = line[x - dx] ?? "n"
       }
     }
-    const TX = PX + Math.round((ROW - T.w) / 2), TY = PY + PH + 12
-    for (let x = PX; x < PX + ROW; x++) { put(x, TY - 6, "m"); put(x, TY + T.h + 5, "m") }
-    if (o.split) for (let y = 0; y < T.h; y++) for (let x = 0; x < T.w; x++) if (T.stroke(x, y)) { put(TX + x - o.split, TY + y, "m"); put(TX + x + o.split, TY + y, "v") }
-    for (let y = 0; y < T.h; y++) for (let x = 0; x < T.w; x++) if (T.stroke(x, y)) put(TX + x, TY + y, "V")
+    const BY = PY + PH + 6                                  // the title block (art/ui/letters.px.js), as on the menu screen
+    TB.draw(put, PX, BY, o)
     for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) c.px(x, y, B[y * W + x])
-    const place = "HALCYON · LOWER NINTH · 2091", step = 6, pw = place.length * step - 2
-    ;[...place].forEach((ch, i) => { if (ch !== " ") c.text(PX + Math.round((ROW - pw) / 2) + i * step, TY + T.h + 10, ch === "·" ? "." : ch, "v") })
+    TB.place(c, PX, BY)
   }
 
   const FRAMES = [[2700, {}], [70, { split: 2 }], [60, { slips: [[1, 44, 7, 4]], split: 1 }], [1700, {}], [50, { slips: [[3, 76, 5, -3]] }], [800, {}]]
