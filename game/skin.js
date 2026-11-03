@@ -166,12 +166,38 @@
     if (!c.buttons.length && typed && Math.floor(ms / 600) % 2 === 0) readout(ctx, ">>", W - 22, H - 16, C.cyan);
   }
 
+  // ---------------------------------------------------------------- the dialogue's choices
+  // A panel along the bottom: night steel, scanlines, a cyan top edge that catches the light at its left,
+  // a magenta tick; each choice numbered in the HUD font ([1] ... the keys pick them too); the one under
+  // the pointer on a cyan band with a marker, in pale cyan; the others in the speaker's colour.
+  /** @type {NonNullable<Parameters<typeof Cutaway.ui.skin>[0]["choices"]>["draw"]} */
+  function choices(ctx, c) {
+    const f = Cutaway.ui.font(), top = c.y - 2;
+    ctx.fillStyle = "rgba(9, 13, 24, 0.92)";
+    ctx.fillRect(0, top, c.w, c.h + 2);
+    scanlines(ctx, 0, top + 1, c.w, c.h + 1);
+    ctx.fillStyle = C.cyanDark; ctx.fillRect(0, top, c.w, 1);
+    ctx.fillStyle = C.cyan; ctx.fillRect(0, top, 40, 1);
+    ctx.fillStyle = C.magenta; ctx.fillRect(c.w - 14, top - 1, 8, 2);
+    c.texts.forEach((t, i) => {
+      const y = c.textY + i * c.line, on = i === c.hover;
+      if (on) {
+        ctx.fillStyle = "rgba(98, 222, 240, 0.14)"; ctx.fillRect(2, y - 2, c.w - 4, c.line);
+        ctx.fillStyle = C.cyan; ctx.fillRect(2, y - 2, 1, c.line);
+      }
+      readout(ctx, `[${i + 1}]`, 6, y + 1, on ? C.cyanPale : C.cyanDark);
+      f.draw(ctx, t, 22, y, { color: on ? C.cyanPale : c.color, outline: C.ink });
+    });
+  }
+
   // the pointer, the satchel and the buttons beside it: art/ui/hud.px.js (assets/ui.js)
   Cutaway.inventory.setSprite("ui_satchel");
   Cutaway.ui.skin({
     cursor: "ui_cursor", cursorHot: "ui_cursor_hot", cursorAnchor: [5, 5],
     buttons: { hint: "ui_evi", menu: "ui_menu", hotspots: "ui_eye" },
     outline: C.ink, accent: C.cyan, labelColor: C.cyanPale, panel: "rgba(9, 13, 24, 0.86)",
+    label: { font: "hud", format: (t) => `[ ${t.toUpperCase()} ]` },
+    choices: { draw: choices },
     frame: { outline: C.ink, light: C.cyan, face: C.cyanDeep, dark: C.cyanDark, fill: "rgba(9, 13, 24, 0.94)", plate: C.cyanDeep,
       hover: "rgba(98, 222, 240, 0.12)", draw: frame },
     card: { draw: card },
