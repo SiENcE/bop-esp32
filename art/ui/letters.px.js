@@ -1,6 +1,7 @@
 // Shared by the title art (art/ui/splash.px.js, art/ui/logo.px.js): GLASS SISTER in our font's letters
 // (game/font.js), each pixel of a 5x7 glyph a block of `sc` x `sc`, the corners the font cuts at 45° (and
-// its diagonals) cut cleanly inside their block. No palette: the includer paints the mask.
+// its diagonals) cut cleanly inside their block; and the title block both screens show. No palette: the
+// includer's palette has the keys named below.
 
 const TITLE_GLYPHS = {
   G: ".#### #.... #.... #.### #...# #...# ####.", L: "#.... #.... #.... #.... #.... #.... #####",
@@ -36,28 +37,61 @@ function titleLetters(word, sc, gap) {
   return { w, h, filled, stroke }
 }
 
+// the camera display's 3x5 capitals (game/font.js "hud"), for readouts drawn into a buffer
+const HUD3 = {
+  " ": "... ... ... ... ...", "/": "..# ..# .#. #.. #..", ".": ". . . . #", ":": ". # . # .",
+  A: ".#. #.# ### #.# #.#", C: ".## #.. #.. #.. .##", E: "### #.. ##. #.. ###", H: "#.# #.# ### #.# #.#",
+  I: "### .#. .#. .#. ###", L: "#.. #.. #.. #.. ###", N: "##. #.# #.# #.# #.#", O: ".#. #.# #.# #.# .#.",
+  R: "##. #.# ##. #.# #.#", S: ".## #.. .#. ..# ##.", T: "### .#. .#. .#. .#.", V: "#.# #.# #.# #.# .#.",
+  W: "#.# #.# ### ### #.#", Y: "#.# #.# .#. .#. .#.", J: "..# ..# ..# #.# .#.", B: "##. #.# ##. #.# ##.",
+  M: "#.# ### ### #.# #.#", G: ".## #.. #.# #.# .##", K: "#.# #.# ##. #.# #.#", P: "##. #.# ##. #.. #..",
+  U: "#.# #.# #.# #.# ###", D: "##. #.# #.# #.# ##.", F: "### #.. ##. #.. #..", "?": "##. ..# .#. ... .#.",
+  0: "### #.# #.# #.# ###", 1: ".#. ##. .#. .#. ###", 2: "##. ..# .#. #.. ###", 3: "##. ..# .#. ..# ##.",
+  4: "#.# #.# ### ..# ..#", 5: "### #.. ##. ..# ##.", 6: ".## #.. ### #.# ###", 7: "### ..# .#. .#. .#.",
+  8: "### #.# ### #.# ###", 9: "### #.# ### ..# ##.",
+}
+/** Write a readout into a buffer: put(x, y, key); returns its width. */
+function hudText(put, x, y, text, key) {
+  let cx = x
+  for (const ch of text) {
+    const rows = (HUD3[ch] ?? HUD3["?"]).split(" ")
+    rows.forEach((r, j) => { for (let i = 0; i < r.length; i++) if (r[i] === "#") put(cx + i, y + j, key) })
+    cx += rows[0].length + 1
+  }
+  return cx - x - 1
+}
+const hudWidth = (text) => [...text].reduce((w, ch) => w + (HUD3[ch] ?? HUD3["?"]).split(" ")[0].length + 1, 0) - 1
+
 /**
- * The title block, the same on the title screen and the menu screen: a magenta rule, GLASS SISTER as
- * outline letters at 3x in one pale colour, a magenta rule, HALCYON · LOWER NINTH · 2091 spaced out.
- * `row` is the width of the rules; the block is `h` high from its top (the upper rule). Keys: "V" the
- * letters, "m" the rules, "v" the place (and the glitch's cyan), as the includer's palette has them.
+ * The title block, the same on the title screen and the menu screen: GLASS SISTER as outline letters at
+ * 3x in one pale colour, tagged by the implant's corner brackets (as Juno tags a face in a feed); under
+ * it a camera readout, a magenta tick and HALCYON // LOWER NINTH // 2091 on the left, a red REC dot on
+ * the right. `w` and `h` its size from its top left. Keys: "V" the letters, "v" the brackets and the
+ * readout, "m" the tick and the glitch's magenta, "q" the REC dot.
  */
-function titleBlock(row) {
-  const T = titleLetters("GLASS SISTER", 3, 3)
-  const h = T.h + 21
+function titleBlock() {
+  const T = titleLetters("GLASS SISTER", 3, 3), B = 6
+  const w = T.w + 2 * B, h = T.h + 2 * B - 2 + 10
   return {
-    h,
-    /** the rules and the letters into a buffer: put(x, y, key); o.split: the glitch's split in px */
+    w, h,
+    /** into a buffer: put(x, y, key); o.split: the glitch's split in px */
     draw(put, x0, y0, o = {}) {
-      const tx = x0 + Math.round((row - T.w) / 2), ty = y0 + 6
-      for (let x = x0; x < x0 + row; x++) { put(x, y0, "m"); put(x, ty + T.h + 5, "m") }
+      const tx = x0 + B, ty = y0 + B
+      // the brackets round the letters
+      const bx0 = x0, by0 = y0, bx1 = x0 + w - 1, by1 = ty + T.h + B - 1, arm = 8
+      for (let i = 0; i < arm; i++) {
+        put(bx0 + i, by0, "v"); put(bx0, by0 + i, "v"); put(bx1 - i, by0, "v"); put(bx1, by0 + i, "v")
+        put(bx0 + i, by1, "v"); put(bx0, by1 - i, "v"); put(bx1 - i, by1, "v"); put(bx1, by1 - i, "v")
+      }
       if (o.split) for (let y = 0; y < T.h; y++) for (let x = 0; x < T.w; x++) if (T.stroke(x, y)) { put(tx + x - o.split, ty + y, "m"); put(tx + x + o.split, ty + y, "v") }
       for (let y = 0; y < T.h; y++) for (let x = 0; x < T.w; x++) if (T.stroke(x, y)) put(tx + x, ty + y, "V")
-    },
-    /** the place, written straight onto the canvas (after the buffer) */
-    place(c, x0, y0) {
-      const place = "HALCYON · LOWER NINTH · 2091", step = 6, pw = place.length * step - 2
-      ;[...place].forEach((ch, i) => { if (ch !== " ") c.text(x0 + Math.round((row - pw) / 2) + i * step, y0 + 6 + T.h + 10, ch === "·" ? "." : ch, "v") })
+      // the readout under it
+      const ry = by1 + 4
+      for (let j = 0; j < 5; j++) { put(bx0 + 1, ry + j, "m"); put(bx0 + 2, ry + j, "m") }
+      hudText(put, bx0 + 6, ry, "HALCYON // LOWER NINTH // 2091", "v")
+      const rec = "REC", rw = hudWidth(rec)
+      hudText(put, bx1 - rw, ry, rec, "v")
+      for (let j = 1; j < 4; j++) for (let i = 0; i < 3; i++) put(bx1 - rw - 6 + i, ry + j, "q")
     },
   }
 }
