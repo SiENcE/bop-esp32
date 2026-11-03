@@ -1,6 +1,6 @@
 // Glass Sister: the screens before the game (docs/style-guide.md §8a "Title screen").
-//   the title screen   (title.splash) the people the story is about in their panels, GLASS SISTER, the
-//                      place (art/ui/splash.px.js), rain over it, the engine's prompt; on start-up only
+//   the title screen   (title.splash) the siblings through cracked glass, Juno awake and Teo asleep, GLASS
+//                      SISTER (art/ui/splash.px.js), rain on Juno's side, the engine's prompt; on start-up only
 //   the menu screen    rain over the Kowalski street at night, the broken HALCYON screen with the eye in
 //                      its static (art/ui/title_bg.px.js), a small flat logo (art/ui/logo.px.js), the menu
 //                      in the chamfered frame (game/skin.js); Juno's theme with the drums in
@@ -8,7 +8,8 @@
 
 Cutaway.room("splash", {
   name: "Glass Sister", background: "splash_bg",
-  fx: [{ kind: "rain", rect: [0, 0, 320, 180], count: 46, color: "#41547a", speed: 170, slant: 0.18, length: 4 }],
+  // rain on Juno's side of the glass only (right of the crack, over the picture); Teo's side stays dry
+  fx: [{ kind: "rain", rect: [165, 0, 155, 116], count: 18, color: "#41547a", speed: 170, slant: 0.18, length: 4 }],
   ambience: ["rain", { sfx: "city_far", gain: 0.6 }],
 });
 
