@@ -10,7 +10,7 @@ Zeit: `docs/kapitel0-design.md` §2–4. Stil: `docs/style-guide.md`.
 | Länge | etwa 2 Std. |
 | Ziel | die Miete (900 Chits) in drei Tagen |
 | Aufbau | **offen**: drei Aufträge, in beliebiger Reihenfolge und parallel, über drei Abende verteilt; das Kapitel endet am dritten Abend mit dem Treffen in der alten Metro |
-| Neu im Spiel | der Drain-Markt und Sable (persönlich), Werkzeuge kaufen, Steuern im Feed, Kamera vor Ort anzapfen, die Tage, Teo, die Polizei (Morrow, kurz) |
+| Neu im Spiel | der Drain-Markt und Sable (persönlich), Ratz, die Deck-App NETZ, Anonymisieren im Clip-Editor, Vesper (NINTH LIVE), Werkzeuge kaufen, Steuern im Feed, Kamera vor Ort anzapfen, die Tage, Teo, die Polizei (Morrow, kurz) |
 | Orte, Straßenmodus | `flat`, `kessel_14`, `kessel_lobby`, `kowalski`, `lucky_static`, `okonkwo_shop`, `drain_market`, `sable_booth`, `laundromat` (9) |
 | Kameras | `cam03`, `cam04`, `cam07` (Kowalski-Straße, das Mockup E), `cam07v` (die Automatenkamera), `cam12` (Eingang Drain-Markt), `cam15` (Kapselhotel Morpheus), `cam21`–`cam24` (Ines' Wege), `cam30` (Sumpf-Abgang), `cam31` (alte Metro) (12) |
 | Entscheidungen | K1a (Kessler), K1b (der Eckladen), **Entscheidung 1** (WREN) |
@@ -71,10 +71,10 @@ grüßt Juno jeden Abend.
 | B2 | `cam07` | Die Kowalski-Straße von oben (das Mockup E). Ins Ladenfenster sieht man nur schräg. Die Kamera hat drei Stellungen (Steuern): in Stellung 3 sieht sie durch das Fenster auf die Theke. | — |
 | B3 | `cam07` | 01:00 schließt Okonkwo, kniet sich hinter die Theke, öffnet den Tresor. Von oben verdeckt sein Rücken das Tastenfeld. Juno: „Falscher Winkel. Ich brauch was auf Augenhöhe." | — |
 | B4 | `kowalski` | Der Automat vor dem Laden hat eine eigene kleine Kamera (Werbung, „Lächeln für einen Gutschein!"). Ansehen: „Die Automatenkamera. Sieht genau durchs Fenster." Sie hängt nicht am Netz: Man muss sie anzapfen. | — |
-| B5 | `drain_market` | Ein Händler (Ratz, ein Junge mit Kopfhörern, Stand mit Elektroschrott) verkauft einen **Abzweiger**: 60 Chits. Oder Motte baut einen aus Junks, wenn Juno ihm im Prolog freundlich geantwortet hat und ihm jetzt eine Lektion gibt (§7). | `+tap` |
+| B5 | `drain_market` | Ein Händler (Ratz, eine Kabelratte aus dem alten Flutprogramm, so groß wie ein kleiner Hund, Kopfhörer, Stand mit Elektroschrott; Story §4) verkauft einen **Abzweiger**: 60 Chits. Ratz feilscht, vertauscht über seinen geflickten Sprechkragen Wörter („Sechzig Chits, Freundschaftspreis, Feindschaftspreis wäre achtzig.") und will wissen, ob Juno Ratten in den Rohren unter der Krone gesehen hat (Nebengeschichte, Story §9). Oder Motte baut einen aus Junks, wenn Juno ihm im Prolog freundlich geantwortet hat und ihm jetzt eine Lektion gibt (§7). | `+tap` |
 | B6 | `kowalski` | Den Abzweiger am Automaten benutzen (Straßenmodus, Juno kniet sich hin). Die Drohne patrouilliert: Nur wenn ihr Lichtkegel weg ist (alle 8 Sekunden), sonst: „Nicht, solange die Drohne guckt." | `linked_cam07v` |
 | B7 | `cam07v` | Ein Fischauge auf Hüfthöhe, die Ladentheke im Hintergrund. 01:00: das Tastenfeld, Zoom: der Code `4-1-7-0-9`. Aufzeichnen oder notieren. | `note_safe_code` |
-| B8 | `cam07` | **Morrow**: Abend 2 oder 3, 00:30, ein Polizeiwagen hält vor dem Laden. Lt. Morrow nimmt von einem Tidewater-Jungen einen Umschlag. Zuhören: „Das ist für die ruhige Woche. Und haltet euch von der Kowalski fern." Moment `morrow_bribe` (für Kap. 2 und 4 wichtig, wer ihn aufzeichnet, hat etwas gegen Morrow). | optional `+clip_morrow_bribe` |
+| B8 | `cam07` | **Morrow**: Abend 2 oder 3, 00:30, ein Polizeiwagen hält vor dem Laden. Lt. Morrow nimmt von einem Tidewater-Jungen einen Umschlag (Kiemenschlitze, die Leuchtmarkierung am Hals im Feed hell wie eine Lampe). Zuhören: „Das ist für die ruhige Woche. Und haltet euch von der Kowalski fern." Moment `morrow_bribe` (für Kap. 2 und 4 wichtig, wer ihn aufzeichnet, hat etwas gegen Morrow). | optional `+clip_morrow_bribe` |
 | B9 | **Entscheidung K1b** | siehe unten | |
 
 ### Entscheidung K1b
@@ -87,7 +87,7 @@ grüßt Juno jeden Abend.
 
 ## 5. Die Miete
 
-- 900 Chits um Mitternacht am Abend 3. Was Juno hat, zahlt sie vom Konto (Deck, Reiter Konto, oder im
+- 900 Chits um Mitternacht am Abend 3, davon 310 Hüllenabgabe (die Flutschuld, Story §3). Was Juno hat, zahlt sie vom Konto (Deck, Reiter Konto, oder im
   Flur beim Hausverwalter-Terminal).
 - Reicht es nicht, schreibt Teo am Abend 3 um 21:00: „Hab gehört, die Miete. Ich hab Schichten
   gemacht. Schon überwiesen. Sag nichts." Der Rest ist bezahlt. Teo hat dafür noch mehr Doppelschichten
@@ -156,6 +156,8 @@ Kap. 2 (die Quiet weiß dann, dass Juno die Glaserin war, oder sucht sie erst).
 | Abend 1–3 | `kessel_14` | **Motte** wartet auf der Treppe. Wenn Juno ihm im Prolog freundlich geantwortet hat: „Zeigst du mir was?" Drei Lektionen (je eine pro Abend, ein kleiner Dialog): was eine Kamera ist, wie man einen Code findet, warum man nie seinen eigenen Block glast. Nach der zweiten baut er den Abzweiger (B5). Nach der dritten: `moth_student` (in Kap. 3 warnt er Juno vor der Razzia). |
 | Abend 2 | `kessel_14` | Frau Haldane, wach, an ihrer Tür: Ihr Sohn schreibt nicht mehr aus den mittleren Ringen. Eine Nebengeschichte beginnt (Story §9). |
 | Abend 2 | `lucky_static` | Die Bar von innen: Stammgäste, ein Fernseher mit Halcyon-Nachrichten („Kriminalität im Neunten auf Rekordtief"), die Wirtin Mei (`#ff9a7a`), die Juno anschreiben lässt. Gespräche: Gerüchte über Sinker („Der Sohn vom Fischmann ist nicht aufgewacht. Ruhe-Erschöpfung, sagen sie."). |
+| Abend 1 | Deck | Die App **NETZ** ist neu (Prolog-Design §2.1): HalcyonNet mit den Nachrichten des Abends, Werbung und dem Glaser-Brett. EVI liest die Schlagzeilen vor und versteht sie falsch („Kriminalität auf Rekordtief. Heißt das, die Verbrecher schlafen?"). Jeden Abend neue Einträge; am Abend 2 ein Beitrag auf dem Brett: „Wer weiß was über Ruhe-Erschöpfung? Mein Vater wacht nicht auf." |
+| Abend 2 | Deck | **Vesper** schreibt im Chat, ein Einkäufer für NINTH LIVE (Story §3, §9): „Ich höre, Sie haben ein Auge für das Echte. Ich zahle das Doppelte von Sable. Für jeden rohen Clip." Juno kann ihm jeden Clip aus dem Cache verkaufen (Kesslers Ring, Morrows Umschlag, Okonkwo am Tresor). EVI zeigt dabei das **Anonymisieren** im Clip-Editor („Ich kann Gesichter wegmachen!"); anonymisierte Clips nimmt Vesper nicht. Jeder Verkauf an Vesper steht im Kassenbuch mit der Zahl der Zuschauer, die später dazukommt. Optional, nie nötig. |
 | Abend 3, 21:00 | Deck | Teos Nachricht wegen der Miete (§5), falls nötig. |
 
 ## 8. Das Ende: CAM 31
@@ -167,11 +169,11 @@ außer zusehen, aufzeichnen und markieren.
 | Zeit | Was geschieht |
 |---|---|
 | 22:55 | Ines kommt die Treppe herunter, Tasche in der Hand. Sie wartet am Bahnsteigrand. |
-| 23:00 | Lantern kommt aus dem Tunnel (Poncho, Antennen). Zuhören: Ines: „Es ist alles drauf. Die Protokolle passen auf die Sekunde." Lantern: „Wenn das stimmt ..." Ines: „Es stimmt. Sie schlafen nicht. Sie *arbeiten*." Sie gibt ihm ein Laufwerk. |
+| 23:00 | Lantern kommt durch das Wasser aus dem Tunnel, in seinem Rollstuhl mit Schwimmern (Poncho, Antennen; Story §4). Zuhören: Ines: „Es ist alles drauf. Die Protokolle passen auf die Sekunde." Lantern: „Wenn das stimmt ..." Ines: „Es stimmt. Sie schlafen nicht. Sie *arbeiten*." Sie gibt ihm ein Laufwerk. |
 | 23:02 | Ein Mann im weißen Regenmantel tritt aus dem Schatten der Treppe. Im Feed hat er kein Gesicht: Seine Maske überstrahlt die Kamera zu einem weißen Fleck. Das Overlay versucht ihn zu markieren und zeigt `???`, dann rot `BEDROHUNG`. |
-| 23:02 | Lantern springt ins Wasser, in den Tunnel. Ines nicht. **Rask tötet Ines** (Darstellung je nach Inhaltsoption, Story §10: schwarze Balken schließen sich, oder der Moment im Phosphor, ohne Nahaufnahme). Wer REC gedrückt hat, hat es: `clip_ines_death`. Wer nicht: der Puffer (Juno *muss* es haben; der Puffer hält es fest, auch wenn der Spieler zögert). |
+| 23:02 | Lantern wirft den Motor an und verschwindet im Tunnel. Ines nicht. **Rask tötet Ines** (Darstellung je nach Inhaltsoption, Story §10: schwarze Balken schließen sich, oder der Moment im Phosphor, ohne Nahaufnahme). Wer REC gedrückt hat, hat es: `clip_ines_death`. Wer nicht: der Puffer (Juno *muss* es haben; der Puffer hält es fest, auch wenn der Spieler zögert). |
 | 23:03 | Rask hebt den Kopf und sieht in die Kamera. Er hebt eine Hand und winkt. Das Overlay zuckt. Der Feed bricht ab: `SIGNAL LOST`. |
-| danach | Junos Wohnung, Straßenmodus, ohne Musik. Juno sitzt vor dem schwarzen Bildschirm. Der Spieler kann nichts anklicken außer Juno selbst: „Ich hab's. Ich hab alles." Abblende. „Kapitel 2: Aufnahme". |
+| danach | Junos Wohnung, Straßenmodus, ohne Musik. Juno sitzt vor dem schwarzen Bildschirm. Der Spieler kann nichts anklicken außer Juno selbst: „Ich hab's. Ich hab alles." Auf dem Deck, ganz klein in der Ecke, EVI mit dem besorgten Gesicht: „Er hat sie ausgeschaltet. Juno. Er hat sie ausgeschaltet." Zum ersten Mal hat EVI einen Menschen richtig gelesen. Abblende. „Kapitel 2: Aufnahme". |
 
 Wenn Juno WREN den Ort verkauft hat, kommt um 23:05 eine letzte Nachricht: „Zahlung erfolgt. Danke
 für die Live-Übertragung." 750 Chits. Das Kassenbuch schreibt sich selbst eine Zeile dazu: „Ines
@@ -208,16 +210,16 @@ Calder: tot."
 
 | Wer | Größe | Silhouette und Akzent im Feed | Farbe | Ansichten |
 |---|---|---|---|---|
-| Teo | 33 px | orange Weste, Gehörschutz | `#ffb070` | Iso |
+| Teo | 33 px | orange Weste, Gehörschutz, Kiemenschlitze (Gezeitenmod) | `#ffb070` | Iso |
 | Sable | 34 px | langer Mantel, Glatze, Pfeifenglut | `#c890ff` | Iso (sitzend) |
-| Ratz | 26 px | Kopfhörer, zu großer Parka | `#90d0a0` | Iso |
+| Ratz | 26 px (aufrecht) | Kabelratte: Kopfhörer, zu großer Parka, Schwanz, glimmender Sprechkragen | `#90d0a0` | Iso |
 | Herr Okonkwo | 31 px | Strickjacke, Lesebrille | `#d8b890` | Iso + Feed |
 | Mei | 30 px | Schürze, hochgesteckte Haare | `#ff9a7a` | Iso |
 | Dr. Ines Calder | 30 px | Kittel (heller als alles), Zopf | `#f0a0c0` | Feed (4 Kameras) |
-| Lantern | 32 px | Poncho, Antennen über dem Kopf | `#b0f0a0` | Feed |
+| Lantern | 32 px (sitzend) | Poncho, Rollstuhl mit Schwimmern, Antennen über dem Kopf | `#b0f0a0` | Feed |
 | Rask | 35 px | weißer Mantel, Maske (überstrahlt) | `#ff7a6a` | Feed |
 | Lt. Morrow | 32 px | Trenchcoat | `#a8b8d0` | Feed |
-| Tidewater-Junge | 28 px | Wellen-Tattoo am Hals, Kapuze | `#7ab0c0` | Feed |
+| Tidewater-Junge | 28 px | Gezeitenkind: Kiemen, leuchtende Markierung am Hals, Kapuze | `#7ab0c0` | Feed |
 
 ## 11. Rätselkette als Überblick
 
@@ -240,6 +242,8 @@ nur `know_meeting` und `linked_cam31`. Wer A und B nicht macht, hat weniger Geld
 Kassenbuch; Teo zahlt. Der Solver prüft alle Reihenfolgen über die drei Abende.
 
 ## 12. Hinweise
+
+Die Hinweise spricht EVI (Prolog-Design §2.2, §6.5).
 
 | Für | Stufe 1 | Stufe 2 | Stufe 3 |
 |---|---|---|---|

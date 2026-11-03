@@ -219,15 +219,26 @@ Reference: the UI in `mock_c_iso`.
   bar of item icons (about 20x14).
 - **Implant button** beside the bag (to add): opens feed mode wherever Juno has a link. At the deck in
   her flat, the deck itself opens it.
+- **Hint button:** EVI's head peeking out of the satchel (16 px), not a light bulb. EVI is the AI on
+  Juno's deck (`docs/kapitel0-design.md` §2.2).
+- **The deck** is a computer desktop, not a panel: icons (24x24, hand-drawn, ink outline, 3x5 label),
+  one app window at a time, a 10 px header, notification cards sliding in at the top right (also over
+  the feed and the street). Colours: steel `1`–`6` and cyan `cCvV`; EVI is the only rounded, soft
+  shape on it. The second deck (Chapter 4) is patched together and amber. Mockup first:
+  `docs/mockups/mock_f_deck`.
 - **Speech:** subtitles above the speaker in the speaker's colour, 5x7 font, ink shadow, centred, two
   lines at most.
 
   | Speaker | Colour |
   |---|---|
   | Juno | `#fff070` |
+  | EVI | `#8ef5d8` (mint: cyan's meaning, technology, but softer and greener than the tech cyan) |
 
   Every other character gets a fixed colour when first drawn; add it here. Avoid red and cyan for
-  anyone harmless (the meanings in §5).
+  anyone harmless (the meanings in §5). EVI is the exception, because she is technology.
+- **Animals and mods:** the two talking animals (Ratz, a cable rat; Tinte, a pump octopus) and the
+  tide-modded people (gills, glowing skin marks) follow the same character rules (§6). Their glowing
+  marks are their signature accent in the feed: among the brightest values in the picture.
 - **Languages:** German first, English later. Every line of dialogue, label and interface text comes
   from the engine's language files, never painted into art. The city's own signs and ads (`HALCYON:
   SLEEP BETTER`, `LUCKY STATIC`, `OUT OF ORDER`) are English in both versions and may be painted in.

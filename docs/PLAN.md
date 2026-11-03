@@ -128,7 +128,8 @@ Each item gets tests (`node tests/run.mjs`, "all passed"), `npm run check`, a se
 
 | File | What |
 |---|---|
-| `deck.js` | the deck: a full-screen UI layer with five tabs (feeds map, messages, cache, Kassenbuch, account); messages and replies as data (`Halcyon.message(id, {...})`); actions `{ deck: "messages" }`, `{ mail: id }` |
+| `deck.js` | the deck as a computer (`docs/kapitel0-design.md` §2): a full-screen UI layer with a desktop, icons and one app window (GLAS, CHAT, CACHE, BUCH, KONTO, NETZ, RADIO, MÜLL); the messenger (threads, status, choice replies, attachments, messages timed by the clock); notification cards over every mode; the clip editor (cut, later anonymise, check, splice); actions `{ deck: "chat" }`, `{ mail: id }` |
+| `evi.js` | EVI, the AI on the deck: her figure on the desktop (6 faces, idle, walk, sleep), her lines, the hint button as her head in the satchel |
 | `feed.js` | feed mode on top of C6–C9: tag (max 3), follow (the camera strip), zoom (a zoom window with its own art per target), REC and the 30-minute buffer, steer (camera positions, screens, doors), link (codes), the implant overlay (brackets, tags, labels), the OSD (camera ID, time, REC, thumbnails, the audio bar, the cache) |
 | `ledger.js` | the Kassenbuch: entries with later outcomes (`{ ledger: "kessler_varga", text, chits }`, `{ ledger: ..., outcome: ... }`) |
 | `money.js` | chits as a number flag, buying and trading with traders, the rent |
@@ -150,7 +151,8 @@ Each item gets tests (`node tests/run.mjs`, "all passed"), `npm run check`, a se
   - a feed figure: 3–4 phosphor values, about 24 px, a few frames.
 - `art/rooms/<id>.px.js` (iso) and `art/cams/<id>.px.js` (a blockout in meters, a camera, baked to
   the phosphor).
-- `art/ui/`: the deck, the overlay brackets, the cursor, the bag, the name tag.
+- `art/ui/`: the deck (desktop, icons, window frame, notification card), EVI, the overlay brackets,
+  the cursor, the bag, the name tag.
 - **Fonts:** check that the 5x7 font has Ä Ö Ü ä ö ü ß, and add them if not.
 - Build: `tools/build_art.sh` like the Loonies'.
 
@@ -164,6 +166,7 @@ Each item gets tests (`node tests/run.mjs`, "all passed"), `npm run check`, a se
 | **E-b** | engine | C4, C5, C6 (time, routines, moments, watching rooms) | tests, demo: a watched square with two people on a schedule |
 | **E-c** | engine | C7, C8, C9, C10, C11 (post-effects, overheard lines, overlays, settings, tools) | tests, solver plays the demo |
 | **H2** | game | **Vertical slice:** prologue steps 0–10. Juno's `flat` with the deck; `cam03` and `cam04`; Kessler and Varga on their routine; tag, listen, zoom, link, REC and the buffer; the clip; choice P1. | it plays through by hand and in `play.mjs`; the solver proves it |
+| **H2b** | game | **The deck as a computer and EVI** (`docs/kapitel0-design.md` §2): first the mockup `docs/mockups/mock_f_deck` (desktop, chat, clip editor, EVI's faces at 320x180), then `deck.js` and `evi.js` replace the current one-panel deck; the prologue's steps 0a–12 get EVI's lines; the hints become EVI's | the prologue plays through the new deck by hand and in `play.mjs`; the solver still proves it |
 | **E-d** | engine | C12, C13 (dialogue v2 and the node editor), then a mockup of the log panel at 320x180 | tests; the demo's dialogue in the node view; The Loonies' dialogues load and solve unchanged |
 | **H3** | game | The rest of the prologue: the intro "Die letzte Schicht", `kessel_14`, `kessel_lobby`, `kowalski`, Bao, "JUNO.", hints, music | the prologue solves and plays from the title screen |
 | **H4** | game | Chapter 1 (`docs/kapitel1-design.md`): 9 rooms, 12 cameras, three evenings, the Kassenbuch, money, the murder in two variants | `solve-act ch1 --full` |

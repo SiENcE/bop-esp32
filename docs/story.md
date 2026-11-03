@@ -2,7 +2,9 @@
 
 Stand: **erster Entwurf** (2026-11-03). Der Einstieg (der Tagesjob, der Schwarzmarkt, das Rausgehen,
 das Verbrechen, der moralische Konflikt, die langsame Enthüllung) stammt vom Nutzer. Alles andere hier
-ist ein Vorschlag zur Diskussion.
+ist ein Vorschlag zur Diskussion. Ergänzt am selben Tag: EVI, die KI auf dem Deck (§4, §6), eine
+fremdere Welt mit Gezeitenmods, Tieren aus den Flutprogrammen und der Flutschuld (§3), ein vielfältigeres
+Ensemble (§4); siehe §10.
 Stil: `docs/style-guide.md` (Straßenmodus in Iso, Feed-Modus durch gekaperte Kameras).
 
 Eigennamen der Spielwelt (Halcyon, Lull, Civic Rest, die Quiet) bleiben englisch, wie in der Stadt selbst.
@@ -33,6 +35,9 @@ kostenlose Demo sein.
 4. **Entscheidungen verzweigen; Rätsel führen nie in eine Sackgasse.** Entscheidungen sind Flags. Jedes
    Kapitel lässt sich aus jedem Zustand heraus beenden, und der Solver beweist das.
 5. **Schlaf.** Der ganzen Stadt wird Schlaf verkauft. Das Geheimnis liegt im Schlaf.
+6. **Ausgemustert.** Juno, EVI, die Tiere aus den Flutprogrammen, der ganze Neunte: Halcyon hat sie
+   gebraucht, umgebaut und weggelegt. Wer weggelegt wurde, hält zusammen. Daher kommt die Wärme des
+   Spiels, und daher kommt sein Witz.
 
 ## 3. Die Welt
 
@@ -55,6 +60,44 @@ unten bis zur **Krone** ganz oben.
     bringt sie in seine **Schlafstationen**.
 - **Geld:** Chits.
 
+### Eine fremde Welt, als Alltag
+
+Vorbild für den Ton sind *Read Only Memories*, *Undertale* und *Deltarune*: Das Seltsame ist Alltag,
+niemand wundert sich, und Witz und Aufrichtigkeit stehen mitten im Ernst. Unser Seltsames kommt aus
+einer Quelle, der Flut. Halcyon hat die Stadt nicht nur gestapelt, es hat Menschen, Tiere und
+Maschinen für die Arbeit am Wasser umgebaut.
+
+- **Die Flutschuld.** Wer im Neunten wohnt, stammt von den Menschen der ertrunkenen Stadt ab, und
+  Halcyon hat ihnen den Bau der Ringe über ihren Köpfen in Rechnung gestellt. Die Schuld wird vererbt
+  und steckt in jeder Miete als **Hüllenabgabe**. Kein Kind im Neunten wird schuldenfrei geboren.
+  Deshalb arbeitet der halbe Neunte Doppelschichten, und deshalb nimmt der halbe Neunte Lull. Die
+  Flutschuld ist eine Regel der Welt, kein Handlungsstrang: Sie steht auf jeder Mietmahnung, im
+  Konto auf dem Deck und in den Gesprächen.
+- **Gezeitenmods.** Für die Arbeit in den Pumpen und Schleusen hat Halcyon in den 2060ern Menschen
+  umgebaut: Kiemenschlitze am Hals, Schwimmhäute, Nickhäute über den Augen für trübes Wasser,
+  leuchtende Markierungen auf der Haut, damit man sich im Dunkeln findet. Das Programm ist lange
+  eingestellt, die Mods sind geblieben und werden weitervererbt oder auf dem Drain-Markt nachgebaut.
+  Die Gezeitenleute sind heute eine eigene Kultur im Neunten, mit eigenem Slang. Im Feed leuchten ihre
+  Markierungen heller als alles andere, und das ist ein Werkzeug für Rätsel.
+- **Die Tiere aus den Flutprogrammen.** Halcyon hat auch Tiere für die Arbeit verbessert: Ratten, die
+  Kabel durch Rohre ziehen, zu eng für Menschen, und Kraken, die die Filter der Meerespumpen reinigen.
+  Sie wurden klüger, als geplant war. Der Sprechkragen, mit dem man ihnen Befehle gab, spricht seitdem
+  in beide Richtungen. Halcyon beendete die Programme und ließ die Tiere, wo sie waren. Nur wenige
+  sprechen, und das Spiel hat **genau zwei** von ihnen: **Ratz** und **Tinte** (§4). Sie sind
+  Nebenfiguren mit eigenen Geschichten, keine Maskottchen.
+- **Maschinen mit Eigenheiten.** Die Nudelautomaten haben Launen, ein Aufzug spricht nur dienstags,
+  und Junos Deck hat **EVI** (§4, §6). Das sind keine Bürger mit Rechten; es sind Dinge, mit denen man
+  zu leben gelernt hat.
+- **Die Wache Kirche.** Eine kleine Sekte, die Lull verweigert und sich mit Kaffee wach hält. Sie
+  predigt auf dem Drain-Markt, und niemand hört zu. Sie liegt mit ihren Gründen falsch und mit ihrem
+  Verdacht richtig.
+- **NINTH LIVE.** In der Krone läuft ein Kanal, der „echtes Leben aus dem Neunten" streamt:
+  Streitereien, Abschiede, Menschen, die nicht wissen, dass man ihnen zusieht. Seine Einkäufer kaufen
+  auf dem Schwarzmarkt rohe Feeds, und sie zahlen besser als jeder andere (Elendstourismus, §9).
+- **Vielfalt ist selbstverständlich.** Das Ensemble ist vielfältig in Herkunft, Alter, Körper und
+  Geschlecht, und niemand im Spiel kommentiert das. Keine Figur ist „die Diverse"; jede ist zuerst
+  eine Person mit einem Problem.
+
 ### Orte (erste Liste)
 
 | Ring | Ort | Notizen |
@@ -64,7 +107,7 @@ unten bis zur **Krone** ganz oben.
 | Neunter | **Kowalski-Straße**: LUCKY STATIC und Baos Garküche | die Straße aus dem Mockup, Junos Stammlokal |
 | Neunter | **Der Drain-Markt** | der Schwarzmarkt in einem trockengelegten Flutkanal; Stände, Hehler, Sables Bude |
 | Neunter | **Lull-Klinik 9-Ost** | weiß, still, Schlangen müder Menschen |
-| Neunter | **Pumpenhalle 3** | wo Teo arbeitet; das Tosen des Meeres; Wartungstunnel |
+| Neunter | **Pumpenhalle 3** | wo Teo arbeitet; das Tosen des Meeres; Wartungstunnel; Tinte im Filterbecken |
 | Neunter | **Revier 9** | die Wache von Lieutenant Morrow |
 | Darunter | **Die Sümpfe** | überflutete Straßen der alten Stadt unter dem Neunten; Lanterns Versteck |
 | Mitte (5.) | **Die Transitachse**, die Aufzüge zwischen den Ringen | Kontrollpunkte, der einzige legale Weg nach oben |
@@ -83,14 +126,17 @@ Cyan nur für Technik.
 | Wer | Rolle | Aussehen und Silhouette (Akzent im Feed) | Farbe |
 |---|---|---|---|
 | **Juno Reyes**, 31 | Glaserin und Informationshändlerin; früher **zivile Beobachterin** bei Halcyon (eine menschliche Kamerabeobachterin), vor drei Jahren entlassen, als „automatische Auswertung" ihr Team ersetzte; ihr Beobachter-Implantat hat sie behalten, was heute illegal ist | gelber Regenmantel mit Kapuze, Umhängetasche, Cyan-Implantat auf der Wange | `#fff070` |
-| **Teo Reyes**, 23 | ihr jüngerer Bruder; arbeitet Doppelschichten in Pumpenhalle 3, **mit Lull**; fröhlich und stolz, zahlt ihre Miete, wenn sie es nicht kann | orange Arbeitsweste, Gehörschutz um den Hals | `#ffb070` |
-| **Bao**, über 70 | betreibt die Nudel-Garküche vor dem LUCKY STATIC; lässt Juno anschreiben; kennt jeden | Schirm, weiße Schürze | `#e8c890` |
-| **Sable** | Junos Hehlerin auf dem Drain-Markt; charmant, ehrlich darin, unehrlich zu sein | langer violetter Mantel, rasierter Kopf, eine brennende Pfeife | `#c890ff` |
+| **EVI** | die KI auf Junos Deck: der ausgemusterte Prototyp der „automatischen Auswertung" (§6), den Juno vor der Löschung gerettet hat. Neugierig, lieb, gut mit Daten und hoffnungslos schlecht darin, Menschen zu lesen; fragt Juno ständig, warum Menschen Dinge tun. Erklärt das Deck, meldet Nachrichten, gibt die Hinweise. Lebt im Deck, und das Deck lebt in Junos Tasche. | ein kleines rundes Pixelwesen mit großen Augen und zwei Antennen-Ohren, auf dem Desktop etwa 24 px, in der Tasche 16 px; 6 Gesichter (froh, neugierig, verwirrt, besorgt, müde, Glitch) | `#8ef5d8` |
+| **Teo Reyes**, 23 | ihr jüngerer Bruder; arbeitet Doppelschichten in Pumpenhalle 3, **mit Lull**; fröhlich und stolz, zahlt ihre Miete, wenn sie es nicht kann. Hat sich mit 18 einen **Gezeitenmod** machen lassen (Kiemen), weil Taucher das Doppelte verdienen: Halcyons idealer Arbeiter, umgebaut für die Schicht und betäubt für die Nacht. | orange Arbeitsweste, Gehörschutz um den Hals, Kiemenschlitze, die im Feed leuchten | `#ffb070` |
+| **Bao**, über 70 | betreibt die Nudel-Garküche vor dem LUCKY STATIC; lässt Juno anschreiben; kennt jeden. Redet ständig von seinem Mann Lou, „meinem Alten", der nie zu sehen ist, bis zum Epilog. | Schirm, weiße Schürze | `#e8c890` |
+| **Sable** | Junos Kontakt für Hehlerware auf dem Drain-Markt; nichtbinär; charmant, ehrlich darin, unehrlich zu sein (Sprachregel in §10) | langer violetter Mantel, rasierter Kopf, eine brennende Pfeife | `#c890ff` |
+| **Ratz** | eine **Kabelratte** aus dem alten Flutprogramm, so groß wie ein kleiner Hund, die auf dem Drain-Markt Elektroschrott verkauft; schnell, gierig, abergläubisch, kennt jedes Rohr unter dem Neunten. Spricht durch einen geflickten Sprechkragen, der manchmal Wörter vertauscht. | Kopfhörer, ein viel zu großer Parka, der Schwanz schaut raus; der Kragen glimmt | `#90d0a0` |
+| **Tinte** | eine **Pumpenkrake** aus dem Flutprogramm, sehr alt, im Filterbecken von Pumpenhalle 3; Teos Kollegin und beste Freundin bei der Arbeit. Langsam, weise, trocken witzig; acht Arme, die jeder etwas anderes tun. Weiß mehr über die Sinker der Pumpenhalle als Halcyon glaubt. | ein großer Schatten im Becken, ein Sprechkragen, Saugnäpfe am Glas | `#b0b8ff` |
 | **Motte**, 12 | ein Kurierkind im Kessel-Block, das Juno vergöttert und Glasen lernen will | übergroße weiße Mütze | `#f0f0a0` |
 | **Frau Haldane** | Nachbarin gegenüber; immer auf Lull, immer müde, freundlich | ein rosa Morgenmantel | `#ffa8d8` |
 | **„WREN"** | ein anonymer Auftraggeber, der viel zu gut zahlt | nur Text, auf dem Deck | `#d0d8f0` |
 | **Dr. Ines Calder** | Schlaftechnikerin in einer Lull-Klinik, die Schlafprotokolle hinausschmuggelt | weißer Klinikkittel, dunkler Zopf | `#f0a0c0` |
-| **„Lantern"** (Oskar Lind) | ein Piratensender, der Werbebildschirme für zehn Sekunden Wahrheit kapert; Ines' Kontakt; paranoid | geflickter Poncho, ein Bündel Antennen auf dem Rucksack | `#b0f0a0` |
+| **„Lantern"** (Oskar Lind) | ein Piratensender, der Werbebildschirme für zehn Sekunden Wahrheit kapert; Ines' Kontakt; paranoid. Sitzt seit einem Pumpenunfall im Rollstuhl, den er für die Sümpfe umgebaut hat: Schwimmer, ein Bootsmotor, der Sender eingebaut. | geflickter Poncho; der Rollstuhl mit Schwimmern und einem Bündel Antennen | `#b0f0a0` |
 | **Lt. Agnes Morrow** | Revier 9; nimmt Geld von Halcyon und hasst sich dafür; ihre Tochter ist eine Lull-Sinkerin | grauer Trenchcoat, Polizeimarke am Band | `#a8b8d0` |
 | **Corvin Rask** | ein Agent der **Quiet**, Halcyons inoffizieller Sicherheitseinheit; höflich, geduldig, der Mörder | weißer Regenmantel, im Feed ohne Gesicht (eine Maske, die die Kamera überstrahlt) | `#ff7a6a` |
 | **Direktorin Selene Aubrecht** | Leiterin von Civic Rest, dem Lull-Programm; glaubt, den Neunten gerettet zu haben, und die Zahlen geben ihr recht | weißer Anzug, silbernes Haar | `#e8f0ff` |
@@ -120,6 +166,14 @@ Wird langsam über die Kapitel enthüllt; der Spieler soll es einen Schritt vor 
 1. **Der Rückgang der Kriminalität ist echt, aber die „automatische Auswertung" ist eine Lüge.** Keine
    Maschine sieht sich die Kameras des Neunten an. Halcyon hat es nie geschafft, dass eine Maschine
    Menschen so gut liest wie Menschen.
+   - **Der Beweis lebt auf Junos Deck.** Das Projekt AUTO-EVAL wurde mit den Markierungen der
+     menschlichen Beobachter trainiert, auch mit Junos gelben Klammern. Es scheiterte: Das Modell hielt
+     Tränen für Regen und Umarmungen für Ringkämpfe. Halcyon stellte es **ein halbes Jahr vor der
+     Entlassung der Beobachter** ein und verkündete trotzdem, die automatische Auswertung übernehme. In
+     ihrer letzten Woche fand Juno den Prototyp EVAL-7 auf einem Server, der gelöscht werden sollte,
+     und nahm ihn mit, weil er ihr leid tat. Sie nannte ihn EVI. Juno weiß, dass EVI ein
+     ausgemustertes Halcyon-Testmodell ist. Sie weiß nicht, dass EVI genau die Maschine ist, die
+     angeblich ihren Job macht, und dass es diese Maschine nie gegeben hat.
 2. **Die Schlafenden sehen zu.** Lull erholt dich nicht nur. Während du schläfst, leiht es sich deine
    Sehrinde und spielt dir Kamera-Feeds vor. Jeder Lull-Nutzer im Neunten verbringt seine Nächte damit,
    das Glas der Stadt zu träumen, und sein schlafender Verstand markiert, was falsch aussieht. Halcyon
@@ -149,7 +203,8 @@ Die „Rätsel" hier sind der Umriss; jedes Kapitel bekommt später ein eigenes 
 
 ### Prolog: Nachtschicht (Tutorial, ~30 Min.)
 
-**Bringt bei:** Feed-Modus (zusehen, zuhören, markieren, aufzeichnen), Verkaufen, Straßenmodus.
+**Bringt bei:** das Deck und EVI, Feed-Modus (zusehen, zuhören, markieren, aufzeichnen), Verkaufen,
+Straßenmodus.
 
 - **Vorspann (vor dem Titel, überspringbar):** drei Jahre früher. Die Beobachtungshalle von Halcyon:
   Reihen von Menschen mit Implantaten vor Wänden voller Kamerabilder, Juno mittendrin. Die letzte
@@ -157,6 +212,8 @@ Die „Rätsel" hier sind der Umriss; jedes Kapitel bekommt später ein eigenes 
   Ihren Dienst." Die Bildschirme gehen einer nach dem anderen aus. Juno geht mit ihrem Karton, und
   das Implantat bleibt in ihrem Kopf. Schnitt auf heute: dieselbe Juno, dasselbe Implantat, ein
   gestohlenes Kamerabild auf einem selbstgebauten Deck.
+- **Das Deck:** Es fährt hoch, und EVI begrüßt Juno („Guten Abend! Eine neue Nachricht. Null
+  Abendessen."). EVI erklärt das Deck im Spiel selbst, als jemand, der es gern vorführt.
 - **Der Auftrag:** Nacht, Junos Wohnung, Regen. An ihrem Deck erledigt sie einen kleinen Auftrag.
   Eine Frau will Beweise, dass ihr Mann, **Herr Kessler**, sie betrügt. Juno beobachtet ihn durch
   CAM 03 und CAM 04 an zwei Orten, markiert ihn, hört mit und zeichnet auf, wie er sich mit jemandem
@@ -165,7 +222,8 @@ Die „Rätsel" hier sind der Umriss; jedes Kapitel bekommt später ein eigenes 
 - **Rausgehen:** Der Kühlschrank ist leer. Raus durch den Kessel-Block (Motte auf der Treppe, die Tür
   von Frau Haldane) auf die Kowalski-Straße zu Baos Garküche.
 - **Das Ende:** Der kaputte Werbebildschirm über der Straße flackert und sagt **„JUNO."** (der Moment
-  aus dem Mockup). Niemand sonst hat es gehört.
+  aus dem Mockup). Niemand sonst hat es gehört. Aus der Tasche, ganz leise, EVI: „Das war nicht ich.
+  Ehrlich." (Der Spieler darf EVI kurz verdächtigen.)
 
 ### Kapitel 1: Glas (der Tagesjob, ~2 Std.)
 
@@ -176,7 +234,8 @@ Die „Rätsel" hier sind der Umriss; jedes Kapitel bekommt später ein eigenes 
   reparieren, ein Passwort in einer Wohnung finden).
   - **Der verschwundene Schuldner:** Kessler aus dem Prolog ist untergetaucht. Der Kredithai Varga
     heuert Juno an, ihn zu finden. Verkaufen, warnen oder lügen.
-  - **Der Eckladen:** Die Tidewater Boys, eine Gang aus der Gegend, wollen den Tresorcode eines Ladens
+  - **Der Eckladen:** Die Tidewater Boys, eine Gang aus Gezeitenkindern (Kiemen, Leuchtmarkierungen),
+    wollen den Tresorcode eines Ladens
     in der Kowalski-Straße. Verkauft Juno ihn, wird der Laden in Kapitel 2 ausgeraubt, und Bao wird
     dabei verletzt.
   - **WRENs Auftrag:** Ein anonymer Auftraggeber zahlt das Fünffache ihres Satzes. „Finde heraus, wen
@@ -193,7 +252,8 @@ Die „Rätsel" hier sind der Umriss; jedes Kapitel bekommt später ein eigenes 
 - **Das Ende:** das Treffen in der alten U-Bahn-Station in den Sümpfen, durch CAM 31. Ines gibt
   Lantern ein Laufwerk. Ein Mann in einem weißen Regenmantel tritt aus der Dunkelheit. Rask tötet Ines
   vor der Kamera. Lantern flieht. Rask sieht nach oben in die Kamera, direkt zu Juno, und der Feed
-  bricht ab. **Juno hat die Aufnahme.**
+  bricht ab. **Juno hat die Aufnahme.** EVI, die sonst jeden Menschen falsch liest, liest diesen
+  richtig: „Er hat sie ausgeschaltet. Juno. Er hat sie ausgeschaltet."
 
 ### Kapitel 2: Aufnahme (das moralische Problem, ~2 Std.)
 
@@ -207,7 +267,17 @@ Die „Rätsel" hier sind der Umriss; jedes Kapitel bekommt später ein eigenes 
     Flur frei ist);
   - ihre Klinik (Lull-Klinik 9-Ost, als Patientin bei einem Aufnahmegespräch);
   - der Trockner im Waschsalon, wo sie eine zweite Kopie der Protokolle hinterlassen hat,
-    verschlüsselt.
+    verschlüsselt;
+  - **die Fälschung:** Am zweiten Tag zeigen die Halcyon-Nachrichten einen Clip aus CAM 31, in dem
+    *Lantern* Ines tötet. Revier 9 jagt ihn. Juno legt die Fälschung im Clip-Editor neben ihre
+    Aufnahme und findet, wo sie geschnitten ist (ein Feed-Rätsel am Schreibtisch: Zeitstempel,
+    Regentropfen, die zweimal fallen, Rasks überstrahlte Maske, die fehlt). Der Beweis hilft bei jeder
+    Wahl in Entscheidung 2.
+- **EVI erfährt, was EVI ist.** In Ines' Wohnung liegt eine Akte aus Civic Rest: „AUTO-EVAL
+  eingestellt, 2087-10. Ersatz: Programm Civic Rest." Darunter die Trainingsdaten: „Beobachterin 0412,
+  J. REYES". Die automatische Auswertung hat es nie gegeben, und EVI wurde von Juno geformt. EVI: „Ich
+  hab dich nicht ersetzt. Ich hab nie jemanden ersetzt." Wer dann? Das beantwortet das Ende des
+  Kapitels.
 - **Entscheidung 2 (die große): der Clip.**
 
   | Was Juno tut | Was passiert |
@@ -219,7 +289,8 @@ Die „Rätsel" hier sind der Umriss; jedes Kapitel bekommt später ein eigenes 
 
 - **Das Ende:** Ines' Protokolle werden entschlüsselt. Die REM-Spitzen der Lull-Nutzer stimmen mit den
   Zeitstempeln der Kameras überein, auf die Sekunde. In dieser Nacht wacht Teo nicht auf. **Teo ist ein
-  Sinker.**
+  Sinker.** Die Nachricht kommt nicht von Halcyon, sondern von Tinte, über das Netz der Pumpenhalle:
+  „Dein Bruder schläft im Becken-Raum. Er hört nicht. Komm."
 
 ### Kapitel 3: Lull (~2 Std.)
 
@@ -228,6 +299,10 @@ Die „Rätsel" hier sind der Umriss; jedes Kapitel bekommt später ein eigenes 
 - **Teo:** Er wird in die **Schlafstation** gebracht, oben in den mittleren Ringen, wo der Neunte
   nicht hinkommt. Juno versucht ihn zu besuchen und wird abgewiesen. Morrows Tochter liegt auf
   derselben Station.
+- **Pumpenhalle 3:** Tinte hat gesehen, wie Teo umfiel, und wie vor ihm elf andere. Sie zählt die
+  Sinker der Halle seit Jahren mit, auf ihre Art (ein Knoten pro Sinker in einem Kabel im Becken).
+  Tinte weiß nicht, was Lull ist, aber sie weiß, dass die Schlafenden „gleichzeitig zucken, wie ein
+  Schwarm".
 - **Juno nimmt Lull.** Nur so kann sie sehen, was Teo sieht. Sie bekommt es in der Klinik (oder
   Schwarzmarkt-Lull über Sable). Ihr altes Implantat und Lull zusammen bringen sie **wach** in den
   gemeinsamen Schlaf.
@@ -242,16 +317,26 @@ Die „Rätsel" hier sind der Umriss; jedes Kapitel bekommt später ein eigenes 
 - **Entscheidung 3:** was Juno dem Zeugen sagt. „Ich helfe dir", „Gib mir meinen Bruder zurück" oder
   „Du bist genau wie die." Das bestimmt, wie der Zeuge im Finale handelt.
 - **Das Ende:** Juno entkommt aus dem Kessel-Block. Ihre Wohnung ist ausgebrannt, ihr Deck ist weg,
-  und sie hat nur noch ihr Implantat.
+  und sie hat nur noch ihr Implantat. **EVI ist weg.** Das letzte, was das Deck zeigt, bevor es
+  schmilzt, ist EVIs Gesicht im Glitch.
 
 ### Kapitel 4: Die Quiet (gejagt, ~2 Std.)
 
 **Ziel:** überleben, Verbündete finden und hinauf in die mittleren Ringe kommen.
 
 - **Untergrund:** Juno versteckt sich auf dem Drain-Markt und in den Sümpfen und baut sich aus Teilen
-  ein neues Deck (gekauft, getauscht oder mit altem Shine bezahlt).
+  ein neues Deck (gekauft, getauscht oder mit altem Shine bezahlt). Ratz kennt die Rohre, durch die
+  man ungesehen von einem Markt zum anderen kommt, und verkauft Teile zu Wucherpreisen, aber er
+  verkauft Juno nicht.
+- **EVI kommt zurück**, immer, aber auf zwei Wegen:
+  - Hat Juno Motte unterrichtet (`moth_student`), hat Motte ein Backup gemacht („Du hast gesagt, man
+    macht immer ein Backup."). EVI wacht im neuen Deck auf und ist ganz EVI.
+  - Sonst bringt der Zeuge EVI zurück: Das neue Deck startet, und EVI ist da, mit Lücken in der
+    Erinnerung und einem magentafarbenen Glanz in den Augen. „Sie haben mich aufgehoben. Die
+    Schlafenden. Sie sind sehr viele, Juno." Diese EVI hört den Zeugen und kann ihn übersetzen, aber sie
+    erinnert sich nicht mehr an den Prolog.
 - **Die Verbündeten werden auf die Probe gestellt**, abhängig von Entscheidung 2 und dem Kassenbuch:
-  - **Sable** verkauft Junos Aufenthaltsort an die Quiet, wenn Juno ihr den Clip verkauft hat (ein
+  - **Sable** verkauft Junos Aufenthaltsort an die Quiet, wenn Juno Sable den Clip verkauft hat (ein
     Feed-Rätsel, um die Falle kommen zu sehen). Wenn nicht, hilft Sable, gegen Bezahlung.
   - **Morrow** lässt sich mit dem Beweis aus Kapitel 3 und ihrer Tochter auf der Station umstimmen.
     Sie gibt Juno einen Passierschein für die Transitachse.
@@ -276,6 +361,8 @@ Die „Rätsel" hier sind der Umriss; jedes Kapitel bekommt später ein eigenes 
   - die Zahlen (weniger Verbrechen, Menschen, die schlafen, sichere Kinder);
   - das Angebot: für Civic Rest arbeiten, als erste wache Beobachterin des neuen Systems, mit Teos
     Sicherheit, Geld und einer Wohnung in den mittleren Ringen.
+  - Aubrecht erkennt EVI auf dem Deck: „AUTO-EVAL. Wir haben dich abgeschaltet." Zum Angebot gehört,
+    EVI zu „reparieren", damit sie endlich Menschen lesen kann. EVI will das nicht.
   - Das Angebot gilt bis zum Finale.
 - **Der Einbruch:** Im Feed-Modus lotst Juno einen Verbündeten (Lantern, Morrow oder Motte, je nach
   Flags) über die Kameras durch die Stockwerke des Towers. Ganz im Stil von Maniac Mansion: Der
@@ -300,7 +387,10 @@ Die „Rätsel" hier sind der Umriss; jedes Kapitel bekommt später ein eigenes 
 **Die Straße, einige Wochen später:**
 - Baos Garküche, und auf dem Werbebildschirm das, was das Ende dorthin gebracht hat;
 - die Menschen aus dem Kassenbuch, so wie es für sie ausgegangen ist;
-- Teo, so wie die Entscheidungen ihn zurückgelassen haben.
+- Teo, so wie die Entscheidungen ihn zurückgelassen haben;
+- Bao, und endlich sein Mann Lou;
+- EVI, so wie das Ende sie zurückgelassen hat (bei „Der lange Schlaf" ist EVI die Einzige, die mit der
+  schlafenden Juno spricht).
 
 ## 8. Enden
 
@@ -321,7 +411,26 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
   Aufzug, der nur dienstags funktioniert.
 - **Glas-Aufträge:** kleine Aufträge auf dem Deck in Kap. 1, 2 und 4 (ein vermisster Hund, ein
   Versicherungsbetrüger, ein Gewerkschafter, der verfolgt wird). Jeder ist ein abgeschlossenes
-  Feed-Rätsel mit einem Eintrag im Kassenbuch.
+  Feed-Rätsel mit einem Eintrag im Kassenbuch. Die besten sind **kleine Leben in einem Auftrag**:
+  - **Der Vater:** Ein Mann will jede Aufnahme seiner toten Tochter, aus jeder Kamera, die sie je
+    gesehen hat. Juno findet sie im Puffer und im Archiv. Am Ende bietet NINTH LIVE für dieselben
+    Clips das Zehnfache.
+  - **Die Frau, die sich erinnert:** Eine Lull-Nutzerin ist sicher, einen Mord gesehen zu haben, in
+    einer Straße, in der sie nie war. Sie will wissen, ob sie verrückt ist. Juno findet die Straße und
+    die Kamera, und die Nacht, in der es geschah: Die Frau hat den Feed im Schlaf gesehen. (Ein früher
+    Hinweis auf §6, Punkt 2, in Kap. 1 oder 2.)
+  - **Der Mann aus der Krone:** Ein Kunde will „etwas Echtes" aus dem Neunten, egal was, Hauptsache
+    roh. Er ist Einkäufer für NINTH LIVE.
+- **Elendstourismus (NINTH LIVE):** Ein Einkäufer namens **Vesper** taucht ab Kap. 1 im Messenger
+  auf und zahlt für rohe Feeds aus dem Neunten mehr als jeder andere. Was Juno ihm verkauft, läuft in
+  der Krone als Unterhaltung, und im Kassenbuch steht später, wie viele Leute es gesehen haben und was
+  das für die Gefilmten bedeutet hat. Anonymisierte Clips (Clip-Editor, Prolog-Design §2) kauft Vesper
+  nicht: „Ohne Gesichter ist es kein Leben."
+- **Ratz:** Er sucht seine Kolonie, die beim Ende des Kabelprogramms in die Rohre unter der Krone
+  gezogen ist. Juno findet sie über alte Wartungskameras. Lohn: Ratz zeigt ihr in Kap. 4 die Rohre.
+- **Tinte:** Halcyon will die Filterbecken auf Maschinen umstellen, und Tinte soll „ins Meer
+  entlassen" werden, mit 90 Jahren und ohne Kiemen fürs offene Wasser. Juno kann es verhindern,
+  verzögern oder den Abschied filmen (und verkaufen).
 - **Baos Vergangenheit:** Er war Koch in der alten Stadt vor der Flut; ein Rezept und ein Foto in den
   Sümpfen.
 - **Die Tidewater Boys:** eine Gang, die Partner oder Feinde werden kann.
@@ -348,3 +457,19 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
 - **Namen:** Halcyon, Lull, der Zeuge und die Figuren bleiben vorerst.
 - **Kampf:** keiner. Gefahr wird über Timing in den Feeds und durch Flucht gelöst. Juno kann an
   einigen markierten Stellen sterben, mit sofortigem Neuversuch direkt vor der Gefahr.
+- **Das Deck ist ein echter Computer** mit Desktop, Apps, Messenger und Benachrichtigungen, und
+  darauf lebt **EVI**, eine niedliche KI. EVI ist der ausgemusterte Prototyp der automatischen
+  Auswertung (§6, Punkt 1). Gestaltung: `docs/kapitel0-design.md` §2.
+- **Die Welt ist fremder**, im Ton von *Read Only Memories*, *Undertale* und *Deltarune*, aber aus
+  unserer eigenen Logik (die Flut, §3): Gezeitenmods, die Flutschuld, Maschinen mit Eigenheiten und
+  **genau zwei sprechende Tiere** aus Halcyons Flutprogrammen (Ratz, Tinte). Mehr nicht, damit sie
+  besonders bleiben.
+- **Vielfalt** im Ensemble, selbstverständlich und ohne Kommentar (§4: Sable nichtbinär, Bao und sein
+  Mann, Lantern im Rollstuhl, Teo mit Gezeitenmod).
+- **Sprachregel für Sable** (Vorschlag): Im deutschen Text bekommt Sable **keine Pronomen** und keine
+  gegenderten Rollenwörter; man sagt „Sable" und baut die Sätze darum herum („Sable kauft alles. Bei
+  Sable zahlt man halb."). Im Englischen ist Sable „they".
+- **Aus den Ideen-Notizen** (`docs/ideas/`) übernommen: der Clip-Editor mit Anonymisieren, Prüfen und
+  Montieren (aus idea2), Aufträge als kleine Leben und NINTH LIVE (aus idea2), die vererbte Flutschuld
+  (aus idea1). Nicht übernommen: Erinnerungshandel als Prämisse und der Twist „alles ist eine
+  Simulation, du bist die KI".

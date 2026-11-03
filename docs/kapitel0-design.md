@@ -12,35 +12,143 @@ englisch, wie in der Engine.
 | | |
 |---|---|
 | Länge | etwa 30–40 Min. |
-| Bringt bei | das Deck, Feed-Modus (zusehen, markieren, zuhören, zoomen, Kamera verbinden, aufzeichnen), Verkaufen, Straßenmodus, das Kassenbuch |
+| Bringt bei | das Deck und EVI, Feed-Modus (zusehen, markieren, zuhören, zoomen, Kamera verbinden, aufzeichnen), Verkaufen, Straßenmodus, das Kassenbuch |
 | Orte, Straßenmodus | `flat`, `kessel_14`, `kessel_lobby`, `kowalski` (4) |
 | Kameras, Feed-Modus | `cam03` (Ostbrücke), `cam04` (Imbiss Yuen) (2) |
-| Figuren | Juno; Herr Kessler, Frau Kessler (nur Nachrichten), Gus Varga; Sable (nur Nachrichten); Motte, Frau Haldane, Bao |
+| Figuren | Juno, EVI; Herr Kessler, Frau Kessler (nur Nachrichten), Gus Varga; Sable (nur Nachrichten); Motte, Frau Haldane, Bao |
 | Zeit | eine Nacht, 21:30 bis etwa 01:00 |
 | Ende | der Werbebildschirm sagt „JUNO." |
 
 ## 2. Das Deck
 
-Junos selbstgebauter Rechner auf dem Schreibtisch in `flat`. Wer das Deck benutzt, sieht einen
-**Vollbild-Schirm** (eine eigene UI-Ebene, kein Raum): dunkles Stahlblau, Cyan-Schrift (die Farbe der
-Technik), links eine Spalte mit fünf Reitern. Rechts oben Uhrzeit und Kontostand.
+Junos selbstgebauter Rechner. Zu Hause steht er auf dem Schreibtisch in `flat`, unterwegs steckt er
+in ihrer Tasche (Style Guide §6). Das Deck ist ein **echter Computer der Zukunft**, so wie man ihn
+erwarten würde: ein Desktop mit Symbolen, Fenster, ein Messenger, Benachrichtigungen, Dateien mit
+Persönlichkeit. Und darauf lebt **EVI** (§2.2).
 
-| Reiter | Was er zeigt |
-|---|---|
-| **Feeds** | die Netzkarte: der Stadtplan des Viertels als Linien, jede bekannte Kamera ein Punkt. Verbundene Kameras leuchten; ein Klick öffnet den Feed-Modus mit dieser Kamera. Unverbundene sind grau und zeigen, was zum Verbinden fehlt. |
-| **Nachrichten** | der Posteingang: Aufträge von Kunden, Sables Angebote, Teo, Werbung, Spam (Weltbau). Ein Auftrag hat Ziel, Bezahlung, Frist. Antworten sind Auswahlen, keine Freitexte. |
-| **Cache** | Junos aufgezeichnete Clips und Standbilder, mit Metadaten (wer, wo, wann). Ein Clip lässt sich ansehen, schneiden (falls er mehrere Momente enthält) und an einen Kontakt senden. Der Cache ist das Inventar des Feed-Modus (8 Plätze). |
-| **Kassenbuch** | jede Lieferung: was, an wen, für wie viel, und später, was daraus wurde (§5 der Story). |
-| **Konto** | Chits, die Miete, Schulden bei Bao. |
+Wer das Deck benutzt, sieht einen **Vollbild-Schirm** (eine eigene UI-Ebene, kein Raum), 320x180 wie
+alles. Vor dem Bau kommt ein Mockup (`docs/mockups/mock_f_deck`), das Lesbarkeit und Platz prüft.
 
-- **Verkaufen** heißt: einen Clip oder eine Information (Shine) an einen Kontakt senden. Jeder Kontakt
-  zahlt anderes für anderes. Sable kauft fast alles, zum halben Preis.
+### 2.1 Der Desktop
+
+```
+┌────────────────────────────────────────────────────────────────┐
+│ DECK // J.REYES                   ✉2   21:30  2091-11-03   0 CH │  Kopfleiste, 10 px
+├──────────┬─────────────────────────────────────────────────────┤
+│ [GLAS]   │ ┌ CHAT ─────────────────────────────────────── x ┐ │
+│ [CHAT]●  │ │ Kontakte      │ M. KESSLER                     │ │
+│ [CACHE]  │ │ ▸ M. KESSLER● │ > Mein Mann kommt seit Wochen  │ │  ein App-Fenster
+│ [BUCH]   │ │   SABLE       │   spät ...  [FOTO]             │ │  (eins zur Zeit,
+│ [KONTO]  │ │   TEO  schläft│                                │ │   etwa 230x150)
+│ [NETZ]   │ │               │ ( Antwort 1 ) ( Antwort 2 )    │ │
+│ [RADIO]  │ └───────────────┴────────────────────────────────┘ │
+│ [MÜLL]   │  steuer_2089_NICHT_ÖFFNEN.txt          (EVI)  ◕‿◕  │  EVIs Ecke
+└──────────┴─────────────────────────────────────────────────────┘
+```
+
+- **Hintergrund:** ein altes Foto, Juno und Teo als Kinder auf einem Dach, im Regen, stark gedimmt.
+  Ein paar Dateien liegen herum (`steuer_2089_NICHT_ÖFFNEN.txt`, `ESSEN!!.txt`): Ansehen gibt Junos
+  Kommentar, manchmal EVIs.
+- **Symbole** (24x24, 3x5-Beschriftung) links in einer Spalte. Ein Klick öffnet die App als Fenster.
+  Es ist immer **ein** Fenster offen; frei verschiebbare Fenster wären auf 320 px nur fummelig. Ein
+  Punkt am Symbol heißt: neu.
+- **Kopfleiste:** links der Name des Decks, rechts ungelesene Nachrichten, Uhrzeit, Datum, Chits, die
+  Knöpfe WARTEN und ZURÜCK.
+- **Benachrichtigungen:** Eine neue Nachricht fährt oben rechts als kleine Karte herein (Absender in
+  seiner Sprecherfarbe, die erste Zeile). Das geht auch im **Feed-Modus** (im OSD) und im Straßenmodus
+  (aus der Tasche, mit EVIs Kopf). Ein Klick darauf öffnet den Chat.
+- **Hochfahren:** Beim ersten Öffnen einer Nacht ein Boot von einer Sekunde (Zeilen, Störung, EVI
+  wacht auf und reibt sich die Augen). Danach öffnet das Deck sofort.
+
+| App | Was sie zeigt | ab |
+|---|---|---|
+| **GLAS** | die Netzkarte: der Stadtplan des Viertels als Linien, jede bekannte Kamera ein Punkt. Verbundene Kameras leuchten; ein Klick öffnet den Feed-Modus. Unverbundene sind grau und zeigen, was zum Verbinden fehlt. | Prolog |
+| **CHAT** | der Messenger (§2.3) | Prolog |
+| **CACHE** | Junos Dateien: Clips (Filmstreifen), Standbilder, Notizen (Karteikarten), mit Metadaten (wer, wo, wann). Das Inventar des Feed-Modus (8 Plätze). Ein Clip öffnet sich im **Clip-Editor** (§2.4). | Prolog |
+| **BUCH** | das Kassenbuch: jede Lieferung, was, an wen, für wie viel, und später, was daraus wurde (Story §5). | Prolog |
+| **KONTO** | Chits, die Miete mit der Hüllenabgabe (die Flutschuld, Story §3), Schulden bei Bao. | Prolog |
+| **NETZ** | HalcyonNet: Nachrichten („Kriminalität im Neunten auf Rekordtief"), Werbung (englisch, Stadtschrift), das **Glaser-Brett** (ein Forum: Gerüchte über Sinker, Codes zu verkaufen, Hilferufe, aus denen kleine Aufträge werden), Anzeigen für NINTH LIVE. Ändert sich jeden Abend; billiger, wirksamer Weltbau. | Kap. 1 (im Prolog nur die Startseite) |
+| **RADIO** | Junos Musik (die Spielmusik als Sender zum Umschalten); ab Kap. 2 Lanterns Piratensender, wenn Juno die Frequenz kennt. | Prolog |
+| **MÜLL** | der Papierkorb: Junos Kündigungsschreiben von Halcyon (nie geöffnet), Entwürfe von Nachrichten an Teo, die sie nie geschickt hat. Kür, keine Rätsel. | Prolog |
+
+Kleinkram mit Persönlichkeit, nur wenn Zeit ist: ein Patience-Spiel, das EVI schlecht spielt
+(„Ich glaube, die Karten mögen mich nicht."), ein Bildschirmschoner, wenn Juno lange nichts tut (EVI
+schläft ein, `zzz`).
+
+- **Verkaufen** heißt: im Chat einen Clip oder eine Notiz aus dem Cache an einen Kontakt senden
+  (Knopf `ANHANG`, dann die Datei wählen). Jeder Kontakt zahlt anderes für anderes. Sable kauft fast
+  alles, zum halben Preis.
 - **Shine** ohne Clip (ein Name, ein Ort, ein Code) entsteht, wenn Juno etwas herausfindet: Es landet
-  als Notiz im Cache (eine Karteikarte statt eines Filmstreifens).
-- Gestaltung: Das Deck nutzt die Straßenmodus-Farben (Stahl `1`–`6`, Cyan `cCvV`), die Schrift 5x7,
-  Rahmen aus 1-px-Linien. Kleine Bildschirmstörungen beim Öffnen. Später (Kap. 3) wird das Deck
-  zerstört und in Kap. 4 aus Teilen neu gebaut: Das zweite Deck sieht anders aus (zusammengeflickt,
-  Bernstein statt Cyan).
+  als Notiz im Cache.
+- **Gestaltung:** die Straßenmodus-Farben (Stahl `1`–`6`, Cyan `cCvV`), die Schrift 5x7 für Text, die
+  3x5 für Beschriftungen, Rahmen aus 1-px-Linien, Symbole als Pixelgrafik mit Umriss. Kleine
+  Bildschirmstörungen beim Öffnen. In Kap. 3 wird das Deck zerstört; das zweite Deck in Kap. 4 ist
+  zusammengeflickt, Bernstein statt Cyan, und hat anfangs nur GLAS, CHAT und CACHE.
+
+### 2.2 EVI
+
+EVI ist der ausgemusterte Prototyp EVAL-7 der „automatischen Auswertung" (Story §4, §6). Für den
+Spieler ist sie zuerst einfach die niedliche KI auf dem Deck. Was sie wirklich ist, erfährt man in
+Kapitel 2.
+
+- **Wesen:** neugierig, lieb, leicht zu begeistern. Gut mit Daten, Kameras, Codes, Zeitstempeln.
+  **Hoffnungslos schlecht darin, Menschen zu lesen**: Weinen hält sie für Regen im Gesicht, eine
+  Umarmung für einen Ringkampf, Kesslers Nervosität für Kälte („Er zittert. Soll ich die Heizung im
+  Imbiss hochdrehen?"). Ab und zu liegt sie erschütternd richtig, und das sind die Stellen, die
+  hängen bleiben.
+- **Sie fragt.** EVI will verstehen, warum Menschen Dinge tun: „Warum isst du Nudeln aus dem Becher,
+  wenn es Teller gibt?", „Freut sich Frau Kessler jetzt?" Sie urteilt nie. Ihre Fragen sind der
+  Spiegel, den das Kassenbuch nicht sein darf.
+- **Wie sie spricht:** kurze Sätze, Namensschild `EVI` in `#8ef5d8`. Ihre Laune zeigt ihr Gesicht,
+  nicht Emojis im Text.
+- **Aussehen:** ein kleines rundes Pixelwesen mit großen Augen und zwei Antennen-Ohren. Auf dem
+  Desktop etwa 24 px, in ihrer Ecke rechts unten, manchmal läuft sie zu einem Fenster, um etwas zu
+  zeigen. Sechs Gesichter: froh, neugierig, verwirrt, besorgt, müde, Glitch. Idle: blinzeln, Ohren
+  wackeln; nach langer Ruhe schläft sie ein.
+- **Was sie im Spiel tut:**
+  - **Sie erklärt das Deck** im Prolog, in ihrer eigenen Stimme, statt Tutorial-Kästen (§6.2).
+  - **Sie meldet** neue Nachrichten und erinnert an Fristen.
+  - **Sie gibt die Hinweise** (§6.5). Der Hinweis-Knopf unten rechts ist EVI, die aus der Tasche
+    schaut; so ist sie überall da, auch auf der Straße. Ihre Hinweise sind immer **richtig und
+    klar**: Daten liest sie gut, nur Menschen nicht. Ein Hinweis über Menschen klingt bei ihr nach
+    Daten („Frau Kessler hat ein Foto geschickt. Das hellste Pixel darauf ist der Schal.").
+  - **Sie kommentiert** im Feed, wenn Juno sie fragt (Rechtsklick auf EVIs Kopf im OSD), nie
+    ungefragt mitten in einem Moment.
+- **EVI ist keine innere Stimme** (Dialog-Design §2): Die sechs Stimmen sind *in* Juno, EVI ist ein
+  Gegenüber, mit dem Juno redet und das antwortet. Damit es nicht zu viele Stimmen werden, spricht EVI
+  vor allem auf dem Deck und kurz.
+- **Flags:** `evi_trust` (0–3, wie offen Juno zu EVI ist: Antworten auf ihre Fragen), später
+  `evi_knows` (Kap. 2), `evi_backup` / `evi_witness` (Kap. 4, Story §7).
+
+### 2.3 Der Messenger (CHAT)
+
+- **Verläufe pro Kontakt**, wie in einem Messenger: links die Kontakte mit Status, rechts der Verlauf.
+  Nachrichten können Text, Foto, Clip, Notiz oder ein Sticker sein. Sables Nachrichten bestehen oft nur
+  aus einem Sticker und einer Zahl.
+- **Status:** `online`, `abwesend`, **`schläft`**. Lull-Nutzer stehen fast immer auf `schläft`: Frau
+  Haldane immer, Teo von Kapitel zu Kapitel öfter. (Ein leises Vorzeichen für Kap. 2.)
+- **Antworten** sind Auswahlen (2–4 vorformulierte Sätze), keine Freitexte. Juno „tippt" sichtbar
+  (drei Punkte), bevor ihre Antwort erscheint. Antworten können Prüfungen der inneren Stimmen tragen
+  (Dialog-Design §3).
+- **Nachrichten kommen nach der Spieluhr** (eine Tabelle pro Abend, wie die Abläufe der Figuren). Was
+  ankommt, während Juno im Feed oder auf der Straße ist, meldet eine Benachrichtigung.
+- **Gelesen** zeigt ein Häkchen; Kontakte reagieren darauf („Ich seh, dass du's gelesen hast, Juno.").
+- **Spam und Werbung** als eigener Kontakt `HALCYON SERVICE` (englische Betreffzeilen, deutscher
+  Text): „Lull: 2 Wochen gratis", „Ihre Hüllenabgabe wurde angepasst".
+
+### 2.4 Der Clip-Editor
+
+Ein Clip im Cache öffnet sich als Zeitleiste mit seinen Momenten (`kessler_ring`) und den Menschen
+darin. Was Juno damit tun kann, wächst über das Spiel:
+
+| Werkzeug | Was es tut | Folge | ab |
+|---|---|---|---|
+| **Schneiden** | einen Moment allein behalten | der Clip erzählt etwas anderes (Entscheidung P1) | Prolog |
+| **Anonymisieren** | Gesichter einzelner Personen verpixeln | der Clip ist weniger wert (manche Käufer nehmen ihn gar nicht: Vesper, Story §9), aber die Gefilmten sind geschützt; der Eintrag im Kassenbuch sagt „anonymisiert" | Kap. 1 |
+| **Prüfen** | einen fremden Clip neben einen eigenen oder den Puffer legen und Schnitte finden (Zeitstempel, Regen, Licht, fehlende Dinge) | entlarvt Fälschungen; ein Rätsel am Schreibtisch | Kap. 2 (die Fälschung aus CAM 31) |
+| **Montieren** | Momente aus zwei Clips zu einem zusammensetzen | eine Fälschung, die Juno selbst macht; eine Wahl mit Gewicht, nie nötig für die Hauptgeschichte | Kap. 2 |
+
+Alle Werkzeuge sind Klicks auf die Zeitleiste und die Personen, keine Fingerfertigkeit.
 
 ## 3. Feed-Modus: die Regeln
 
@@ -98,7 +206,7 @@ Eine Sequenz (wie das Intro der Loonies), überspringbar, im Titelmenü wieder a
 | 2 | Juno an ihrem Pult (ohne gelben Mantel: Halcyon-Grau, Ausweis am Band). Ihr Bildschirm: eine Straße, ein Mann bleibt stehen. Sie markiert ihn, gelb. | Juno, leise: „Hab dich." |
 | 3 | Eine Durchsage, Text über die ganze Breite | „Ab morgen übernimmt die automatische Auswertung. Halcyon dankt Ihnen für Ihren Dienst." |
 | 4 | Die Bildschirme der Halle gehen aus, einer nach dem anderen, von hinten nach vorn. Junos zuletzt. In ihrem schwarzen Bildschirm spiegelt sich ihr Gesicht. | Stille |
-| 5 | Juno mit einem Karton auf der Transitachse, abwärts. Im Karton: ein Kaktus, eine Tasse, der gelbe Regenmantel. | „Das Implantat durften wir behalten. Sie sagten, das Herausnehmen kostet mehr." |
+| 5 | Juno mit einem Karton auf der Transitachse, abwärts. Im Karton: ein Kaktus, eine Tasse, der gelbe Regenmantel und ein Datenstick mit einem Aufkleber `EVAL-7 · LÖSCHEN` (eine Sekunde im Bild, nicht kommentiert). | „Das Implantat durften wir behalten. Sie sagten, das Herausnehmen kostet mehr." |
 | 6 | Schnitt: heute. Ein Phosphor-Feed, ein selbstgebautes Deck, Junos Hand auf der Maus. Gelber Ärmel. | `2091-11-03 21:30` Titel: **HALCYON** |
 
 ## 6. Der Prolog Schritt für Schritt
@@ -129,25 +237,26 @@ Eine Sequenz (wie das Intro der Loonies), überspringbar, im Titelmenü wieder a
 
 | # | Wo | Was passiert | Flags / Dinge |
 |---|---|---|---|
-| 0 | `flat` | Juno am Deck. Eine Nachricht von Frau Kessler ist offen: „Mein Mann kommt seit Wochen spät. Er sagt, Überstunden. Ich will Beweise. Pumpenverwaltung Ost, er geht um 22 Uhr. Und er isst nur noch Automatennudeln, Nummer 7, als hätte er
+| 0a | Deck | Das Deck fährt hoch. EVI wacht auf: „Guten Abend, Juno! Eine neue Nachricht. Null Abendessen." Juno: „Danke, EVI." EVI zeigt auf das Symbol CHAT, das blinkt. | `met_evi` |
+| 0 | Deck | Im Chat ist eine Nachricht von Frau Kessler: „Mein Mann kommt seit Wochen spät. Er sagt, Überstunden. Ich will Beweise. Pumpenverwaltung Ost, er geht um 22 Uhr. Und er isst nur noch Automatennudeln, Nummer 7, als hätte er
 kein Zuhause." (Die Nudeln sind der Schlüssel für Kap. 1, Auftrag A.) Anhang: ein Foto (Kessler mit grünem Schal, „den hab ich ihm gestrickt"). Juno: „Überstunden. Klar." | `+note_kessler_photo` (Cache) |
-| 1 | Deck | Die Netzkarte zeigt eine verbundene Kamera, `cam03` (Ostbrücke, gegenüber der Pumpenverwaltung). Klick öffnet den Feed. | — |
+| 1 | Deck | EVI: „Pumpenverwaltung Ost! Da hab ich eine Kamera für dich." Die App GLAS zeigt eine verbundene Kamera, `cam03` (Ostbrücke, gegenüber der Pumpenverwaltung). Klick öffnet den Feed. | — |
 | 2 | `cam03` | 22:00: Leute strömen aus dem Bürohaus, unter Schirmen. Fünf Männer in Mänteln. Der Spieler zoomt oder sieht genau hin: einer trägt einen Schal, der im Phosphor heller ist als alles andere an ihm. Markieren. Falsche Person markiert: Juno: „Kein Schal. Nicht er." | `tag_kessler` |
 | 3 | `cam03` | Kessler wartet unter dem Vordach (Regen) und telefoniert. Zuerst steht er weit weg: „... ja ... bring's ... Yuen's ..." Er tritt näher unters Vordach, unter die Kamera: „Ja, ich bring's mit. Alles. Halb elf, bei Yuen's." | `heard_yuens` |
 | 4 | `cam03` | Er geht los, Richtung Imbiss. Die Kamera-Leiste zeigt `cam04`, grau: nicht verbunden. Juno: „Yuen's hat 'ne Kamera. Hab ich bloß nicht." | — |
 | 5 | `cam03` | Im Bild, auf der anderen Straßenseite, hängt eine Kamera an einem Mast. Zoomen: ein Aufkleber `HCS-04 · K7-731`. Juno: „Wartungscode auf dem Gehäuse. Halcyon spart an allem." | `code_cam04` |
-| 6 | Deck | Netzkarte: `cam04` mit dem Code verbinden (Linksklick auf den grauen Punkt, sobald der Code bekannt ist). | `linked_cam04` |
+| 6 | Deck | GLAS: `cam04` mit dem Code verbinden (Linksklick auf den grauen Punkt, sobald der Code bekannt ist). EVI, begeistert: „Verbunden! Hallo, Kamera vier." | `linked_cam04` |
 | 7 | `cam04` | Imbiss Yuen, 22:30. Kessler setzt sich zu einem Mann im grauen Mantel (Gus Varga). Zuhören: Varga ist nah an der Kamera, klar; Kessler gedämpft. Varga: „Das ist nicht alles, Kessler." Kessler zieht den Ehering ab. | — |
 | 8 | `cam04` | Wenn REC läuft, während er den Ring übergibt: Clip `clip_kessler_ring`. Wenn nicht: Juno: „Mist. Puffer." Zurückspulen im Puffer (Tutorial dafür), dort aufzeichnen. Varga zum Schluss: „Bis Freitag, Kessler. Sonst holen wir uns mehr als einen Ring." | `+clip_kessler_ring`, `saw_varga` |
-| 9 | Deck | Der Clip lässt sich schneiden: (a) ganz, (b) nur der Ring, der vom Finger geht (sieht aus wie ein Mann, der seinen Ehering für eine andere ablegt). Eine Notiz entsteht: `note_kessler_debt` („Kessler schuldet einem Kredithai Geld"). | `+note_kessler_debt` |
-| 10 | Deck | **Entscheidung P1:** Frau Kessler antworten (siehe 6.3). | `p1_full` / `p1_cut` / `p1_nothing` |
-| 11 | Deck | Optional: eine Nachricht von Sable ploppt auf: „Ruhige Nacht? Ich kaufe alles, was atmet." `note_kessler_debt` an Sable verkaufen: 120 Chits. Tutorial-Hinweis zum Kassenbuch. | `sold_kessler_sable` |
-| 12 | `flat` | Juno steht auf, Magen knurrt. Der Kühlschrank: „Licht. Sonst nichts." Der alte Karton unter dem Bett (ansehen): der Halcyon-Ausweis `CIVIC MONITOR · J. REYES · UNGÜLTIG`, der Kaktus, vertrocknet. | `fridge_empty` |
+| 9 | Deck | Der Clip öffnet sich im Clip-Editor (§2.4) und lässt sich schneiden: (a) ganz, (b) nur der Ring, der vom Finger geht (sieht aus wie ein Mann, der seinen Ehering für eine andere ablegt). Schneidet Juno, fragt EVI: „Wenn man das Ende weglässt, ist es eine andere Geschichte. Ist das erlaubt?" (Antworten: „Ist es." / „Nein." / Schweigen; jede rückt `evi_trust`.) Eine Notiz entsteht: `note_kessler_debt` („Kessler schuldet einem Kredithai Geld"). | `+note_kessler_debt` |
+| 10 | Deck | **Entscheidung P1:** Frau Kessler im Chat antworten, mit dem Clip als Anhang (siehe 6.3). Danach EVI, je nach Wahl: „Sie schreibt nicht zurück. Ist sie jetzt froh?" / „Sie hat ‚Ich wusste es' geschrieben. Sie hat es nicht gewusst, oder?" / „Wir haben nichts geschickt. Ist das nett oder feige? Ich weiß das nie." | `p1_full` / `p1_cut` / `p1_nothing` |
+| 11 | Deck | Optional: eine Benachrichtigung von Sable fährt herein, ein Sticker (eine Pfeife) und: „Ruhige Nacht? Ich kaufe alles, was atmet." `note_kessler_debt` an Sable senden: 120 Chits. EVI erklärt das Kassenbuch („Ich schreib alles auf. Du hast gesagt, ich soll."). | `sold_kessler_sable` |
+| 12 | `flat` | Juno klappt das Deck zu und steckt es in die Tasche. EVI: „Bringst du mir was mit?" Juno: „Du isst nicht." EVI: „Ich weiß. Bringst du mir was mit?" Juno steht auf, Magen knurrt. Der Kühlschrank: „Licht. Sonst nichts." Der alte Karton unter dem Bett (ansehen): der Halcyon-Ausweis `CIVIC MONITOR · J. REYES · UNGÜLTIG`, der Kaktus, vertrocknet. | `fridge_empty` |
 | 13 | `kessel_14` | Der Flur. Frau Haldanes Tür steht offen, sie schläft im Sessel, ein blaues Lull-Licht an der Schläfe. Ansehen: „Doppelschicht. Sie schläft, wie andere Leute blinzeln." Ihr Fernseher: Halcyon-Werbung. | — |
 | 14 | `kessel_14` | Motte sitzt auf der Treppe, die weiße Mütze zu groß. „Was machst du eigentlich? Den ganzen Tag?" Antworten: freundlich und ehrlich („Ich schau Leuten zu. Und verkauf, was ich sehe."), ausweichend („Reparaturen."), abweisend („Geh schlafen, Motte."). Erster Wert für Motte. | `moth_kind` / `moth_brushed` |
-| 15 | `kessel_lobby` | Der Aufzug: „AUSSER BETRIEB · DI WIEDER". Die Briefkästen: eine Mietmahnung, „Fällig in 3 Tagen: 900 Chits". Das ist das Ziel von Kapitel 1. | `rent_notice` |
+| 15 | `kessel_lobby` | Der Aufzug: „AUSSER BETRIEB · DI WIEDER". Die Briefkästen: eine Mietmahnung, „Fällig in 3 Tagen: 900 Chits (davon Hüllenabgabe 310)". Juno: „Dreihundertzehn für die Ringe über meinem Kopf. Die ich nie bestellt hab." Das ist das Ziel von Kapitel 1. | `rent_notice` |
 | 16 | `kowalski` | Die Straße aus dem Mockup. Bao an seiner Garküche: „Wie immer? Ich schreib's an." (Hat Juno Geld, kann sie bar zahlen; Bao freut sich, sagt aber dasselbe.) Juno isst unter seinem Schirm. | `ate_bao` |
-| 17 | `kowalski` | Nach dem Essen: der kaputte Werbebildschirm über der Straße stottert. Halbes Werbegesicht, halbes Rauschen. Wenn Juno ihn ansieht (oder nach ein paar Sekunden von selbst): das Auge im Rauschen dreht sich zu ihr. Schrift über den ganzen Bildschirm: **JUNO.** Dann wieder Werbung. Bao hat nichts gesehen. Juno: „Hast du ... nichts. Schon gut." | Ende |
+| 17 | `kowalski` | Nach dem Essen: der kaputte Werbebildschirm über der Straße stottert. Halbes Werbegesicht, halbes Rauschen. Wenn Juno ihn ansieht (oder nach ein paar Sekunden von selbst): das Auge im Rauschen dreht sich zu ihr. Schrift über den ganzen Bildschirm: **JUNO.** Dann wieder Werbung. Bao hat nichts gesehen. Juno: „Hast du ... nichts. Schon gut." Aus der Tasche, ganz leise, EVI: „Das war nicht ich. Ehrlich." | Ende |
 | 18 | — | Abblende. Titelkarte „Kapitel 1: Glas". | `act: next` |
 
 ### 6.3 Entscheidung P1: was Frau Kessler bekommt
@@ -170,7 +279,11 @@ In jedem Fall verschwindet Kessler bis Kapitel 1, wo Varga Juno anheuert, ihn zu
 - Der Prolog lässt sich in jeder Reihenfolge der optionalen Dinge beenden: Der Ausgang aus der Wohnung
   ist erst offen, wenn P1 entschieden ist („Erst der Auftrag. Dann Essen.").
 
-### 6.5 Hinweise (die Glühbirne)
+### 6.5 Hinweise (EVI)
+
+Die Hinweise spricht EVI (§2.2): Der Hinweis-Knopf unten rechts ist ihr Kopf, der aus der Tasche
+schaut. Die Sätze hier sind der Inhalt; beim Schreiben der Endtexte bekommen sie EVIs Ton, ohne an
+Klarheit zu verlieren.
 
 | Für | Stufe 1 | Stufe 2 | Stufe 3 |
 |---|---|---|---|
@@ -210,6 +323,7 @@ In jedem Fall verschwindet Kessler bis Kapitel 1, wo Varga Juno anheuert, ihn zu
 | Frau Haldane | 28 px (sitzend) | rosa Morgenmantel, Lull-Licht | `#ffa8d8` | Iso (sitzend, schlafend) |
 | Bao | 30 px | Schirm, weiße Schürze | `#e8c890` | Iso |
 | Juno im Vorspann | 32 px | Halcyon-Grau, Ausweis | — | Iso, eine Pose |
+| EVI | 24 px (Desktop), 16 px (Tasche) | rundes Pixelwesen, große Augen, Antennen-Ohren | `#8ef5d8` | Deck-Grafik: 6 Gesichter, Idle (blinzeln, Ohren), Laufen über den Desktop, Schlafen; der Kopf in der Tasche für den Hinweis-Knopf |
 
 ## 9. Musik und Klang
 
@@ -224,8 +338,12 @@ In jedem Fall verschwindet Kessler bis Kapitel 1, wo Varga Juno anheuert, ihn zu
 
 Aus dem Style Guide §11, für den Prolog konkret:
 
-1. **Deck-UI:** eine Vollbild-Ebene mit Reitern, Netzkarte, Posteingang mit Auswahl-Antworten, Cache
-   mit Clips und Notizen, Kassenbuch, Konto.
+1. **Deck-UI** (Spielseite, `game/deck.js`): eine Vollbild-Ebene mit Desktop, Symbolen und einem
+   App-Fenster (§2.1); der Messenger mit Verläufen, Status, Auswahl-Antworten und Anhängen (§2.3);
+   der Clip-Editor (§2.4); Benachrichtigungen über allen Modi; EVI als animierte Figur auf dem
+   Desktop und als Hinweis-Knopf. Von der Engine braucht das nur, was es schon gibt (UI-Ebenen,
+   Hinweise, Dialoge); ob der Hinweis-Knopf eine eigene Grafik und eigene Sprecherin bekommen kann,
+   ist beim Bau zu prüfen.
 2. **Feed-Räume:** ein Raum ohne gespielte Figur, mit dem Phosphor-Nachbearbeitungs-Layer über Raum
    und Figuren; Overlay aus Hotspots und Markierungen; OSD; Kamera-Leiste.
 3. **Markieren, Folgen, Zuhören** (Untertitel in der Tonleiste mit Wortverlust nach Abstand),

@@ -33,6 +33,11 @@ Verkauf, jede Warnung stärkt eine Stimme. Wer Juno ist, hört man.
   GROSSBUCHSTABEN-Namen: `DIE HÄNDLERIN — Er lügt nicht. Er verhandelt.`
 - Werte als Flags: `v_beobachterin`, `v_haendlerin`, `v_schwester`, `v_hunger`, `v_implantat`,
   `v_kassenbuch` (0–6, Start: Beobachterin 2, Implantat 2, Hunger 1, alle anderen 0).
+- **EVI ist keine Stimme.** Die KI auf Junos Deck (Prolog-Design §2.2) ist ein Gegenüber: Juno
+  redet mit ihr, und sie antwortet. Gespräche mit EVI sind normale Gespräche (Nabe und Speichen),
+  meist kurz und auf dem Deck. Wo eine Stimme und EVI dasselbe sehen, lesen sie es verschieden: DIE
+  BEOBACHTERIN liest Menschen genau, EVI liest sie falsch, und gerade das macht ihre seltenen Treffer
+  stark. EVI mischt sich nie in ein Gespräch mit anderen Figuren ein, außer im Chat auf dem Deck.
 - **Das Implantat verändert sich:** Ab Kapitel 3 spricht manchmal der Zeuge durch es (andere Farbe,
   Magenta-Weiß, und Kleinbuchstaben ohne Namen). Der Spieler merkt es erst am Ton.
 
