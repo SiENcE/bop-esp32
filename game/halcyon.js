@@ -42,7 +42,10 @@ Cutaway.script.action("tag", async (s) => {
 
 // { zoom: "zoom_ring" } opens the zoom window over the feed; { zoom: false } closes it (the window is the
 // feed layer's; nothing here waits, so the lines that follow are read while it shows)
-Cutaway.script.action("zoom", (s) => { Halcyon.zoom = s.zoom ? String(s.zoom) : null; });
+Cutaway.script.action("zoom", (s) => {
+  Halcyon.zoom = s.zoom ? String(s.zoom) : null;
+  if (s.zoom && !Cutaway.script.fast) Cutaway.events.emit("sfx", { sfx: "zoom" });
+});
 
 // { cache: "clip_kessler_ring" } puts a clip or a note into the cache
 Cutaway.script.action("cache", (s) => { Cutaway.state.set(`cache_${s.cache}`); Cutaway.events.emit("sfx", { sfx: "cache" }); },

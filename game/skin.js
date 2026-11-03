@@ -82,6 +82,8 @@
 
   // ---------------------------------------------------------------- the cards
   const TYPE_FROM = 250, MS_PER_CHAR = 38;
+  /** the letters a card has typed so far (a key sound every other one: game/sounds.js "type") */
+  let typedSeen = 0, lastCardMs = 0;
 
   /** Is the card in a glitch now? Two short bursts every few seconds, the same every time (screenshots repeat). @param {number} ms */
   function glitching(ms) { return ms < 320 || (ms % 2900 < 70) || (ms % 2900 > 160 && ms % 2900 < 200); }
@@ -116,6 +118,10 @@
 
     // the text types itself on: the heading first, then the lines, a block cursor after the last letter
     let budget = Math.max(0, Math.floor((ms - TYPE_FROM) / MS_PER_CHAR));
+    const letters = Math.min(budget, (c.title ? c.title.length + 3 : 0) + c.lines.join("").length);
+    if (ms < lastCardMs) typedSeen = 0;                                  // a new card
+    lastCardMs = ms;
+    if (letters > typedSeen) { if (Math.floor(letters / 2) > Math.floor(typedSeen / 2)) Cutaway.events.emit("sfx", { sfx: "type" }); typedSeen = letters; }
     const take = (/** @type {string} */ s) => { const n = Math.min(s.length, budget); budget -= n; return s.slice(0, n); };
     const head = c.title ? `// ${c.title}` : "", big = !c.buttons.length && c.lines.length === 1 && f.measure(c.lines[0]) * 2 < W - 60;
     const lineH = big ? f.lineHeight * 2 : f.lineHeight;

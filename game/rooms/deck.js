@@ -24,7 +24,7 @@ Halcyon.deckLayout = {
       name: `CAM ${cam.id}`, rect: [x - 4, y - 4, 40, 18], ...(cam.if ? { if: cam.if } : {}),
       look: `CAM ${cam.id}, ${cam.place}.`,
       use: [{ if: `link_${id}`, then: [{ goto: id }],
-        else: [{ if: `code_${id}`, then: [{ set: `link_${id}` }, "Wartungscode rein. Verbunden."],
+        else: [{ if: `code_${id}`, then: [{ set: `link_${id}` }, { sfx: "link" }, "Wartungscode rein. Verbunden."],
           else: ["Kein Zugang. Ich brauch den Wartungscode der Kamera."] }] }],
     };
   }
@@ -36,5 +36,6 @@ Halcyon.deckLayout = {
   hotspots.wait = { name: "Warten", rect: D.buttons.wait, use: [{ forward: true }] };
   hotspots.close = { name: "Zurück", rect: D.buttons.close, exit: { to: "flat", at: Halcyon.at.flat.deck, face: "ne" } };
 
-  Cutaway.room("deck", { name: "Deck", color: "#131a2a", observe: true, deck: true, hotspots });
+  Cutaway.room("deck", { name: "Deck", color: "#131a2a", observe: true, deck: true, hotspots,
+    ambience: ["deck_fans", { sfx: "rain_glass", gain: 0.5 }, { sfx: "city_far", gain: 0.6 }] });
 })();

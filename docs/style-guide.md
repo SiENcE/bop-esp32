@@ -272,7 +272,7 @@ rivets, wood, rounded friendly letters). When something new is made, it is check
 | **Animation** | nothing stands fully still: neon flickers, screens loop, signs blink, steam rises, drones pass, rain falls; idle animations for everyone | rule for all new art |
 | **Effects** | rain and drip (fx), scanlines and noise in the feed, a glitch on every hack action (link, steer, REC), the chromatic split when the Witness is near | partly (rain, feed) |
 | **Music** | dark synth in the line of Vangelis's *Blade Runner* and the SNES Shadowrun: slow pads (CS-80-like brass and strings), cold arpeggios, a sparse drum machine, the rain mixed in; Juno's theme on an electric piano. Synthesised with the engine's synth (instruments as data). | to do |
-| **Sounds** | electric hum, data chirps, keyboard clicks, a modem handshake when a camera links, the REC beep, glitch bursts, drone buzz, rain on glass; no cartoon sounds | to do |
+| **Sounds** | electric hum, data chirps, keyboard clicks, a modem handshake when a camera links, the REC relay and beep, the lens's servo, glitch bursts, static, rain on glass; no cartoon sounds. Room changes sound by their kind (jack in, jack out, static, glitch); cards type with key clicks; EVI chirps at the hint button. Ambience: rain on the window, the city far below, the sign's buzz, the fridge, the deck's fans, the camera mic's hiss and the rain through it. | **first set done** (`game/sounds.js`; hear them: `node tools/render-sounds.mjs` → `build/sounds/all.wav`) |
 | **Words** | the city's slang (Glas, Shine, Chits, Sinker), short hard sentences, tech terms used lightly; the city's own signs and readouts in English | rule for all text |
 
 ## 9. Feed mode: the hijacked cameras

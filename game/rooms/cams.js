@@ -36,7 +36,7 @@ Halcyon.camRoom = function (id, o) {
   /** @type {Record<string, any>} */
   const hotspots = {
     rec: { name: "REC", rect: O.rec, z: 5,
-      use: [{ if: "rec_on", then: [{ unset: "rec_on" }, "Aufnahme aus."], else: [{ set: "rec_on" }, "Aufnahme läuft."] }] },
+      use: [{ sfx: "rec" }, { if: "rec_on", then: [{ unset: "rec_on" }, "Aufnahme aus."], else: [{ set: "rec_on" }, "Aufnahme läuft."] }] },
     wait: { name: "Vorspulen", rect: O.wait, z: 5, use: [{ forward: true }] },
     back: { name: "Deck", rect: O.back, z: 5, exit: { to: "deck" } },
     ...o.hotspots,
@@ -47,7 +47,7 @@ Halcyon.camRoom = function (id, o) {
     hotspots[`thumb_${c}`] = { name: `CAM ${Halcyon.cams[c].id}`, rect: O.thumb(i), z: 5, if: `link_${c}`, use: [{ goto: c }] };
   });
   Cutaway.room(id, { name: `CAM ${Halcyon.cams[id].id}`, background: `${id}_bg`, observe: true, feed: id,
-    post: Halcyon.FEED_POST, lines: "bottom", label: true, ...o, hotspots });
+    post: Halcyon.FEED_POST, lines: "bottom", label: true, ambience: ["feed_hiss", "feed_rain", "city_far"], ...o, hotspots });
 };
 
 const A3 = Halcyon.at.cam03, A4 = Halcyon.at.cam04;
@@ -68,6 +68,7 @@ Halcyon.camRoom("cam03", {
 });
 
 Halcyon.camRoom("cam04", {
+  ambience: ["feed_hiss", "fridge_hum", { sfx: "feed_rain", gain: 0.4 }],      // inside Yuen's: the kitchen, the rain beyond the window
   mic: { at: A4.mic, clear: 20, lost: 80 },
   hotspots: {
     tv: { name: "Fernseher", rect: A4.tv, look: "Halcyon-Werbung. Eine Frau schläft und lächelt dabei. SLEEP BETTER." },

@@ -82,6 +82,10 @@
     ctx.fillRect(0, Math.floor(hash(seed, 3) * H), W, 3);
   }
 
+  // the sounds play by the same kinds (game/sounds.js)
+  Halcyon.transitionKind = kind;
+  Halcyon.isScreen = screen;
+
   Cutaway.fx.setTransition({
     draw: (ctx, t) => { const k = kind(t); if (k === "jack") jack(ctx, t); else if (k === "static") staticNoise(ctx, t); else glitch(ctx, t); },
     ms: (t) => LENGTHS[kind(t)],
