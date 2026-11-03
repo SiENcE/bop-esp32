@@ -243,8 +243,10 @@ Reference: the UI in `mock_c_iso`.
   from the engine's language files, never painted into art. The city's own signs and ads (`HALCYON:
   SLEEP BETTER`, `LUCKY STATIC`, `OUT OF ORDER`) are English in both versions and may be painted in.
   The fonts need the German letters (Ä Ö Ü ä ö ü ß).
-- **Fonts:** the 5x7 font (`lib/ui/font5x7.px.js`) for speech, names and titles; the built-in 3x5
-  capitals for labels, the OSD and small print.
+- **Fonts** (`game/font.js`, §8a): `halcyon`, our 5x7 terminal face, for speech, names, menus and
+  titles; `hud`, 3x5 capitals, for labels, the OSD and small print. The mockups' art still writes with
+  pxl's `lib/ui/font5x7.px.js`; game art that paints letters (signs are English and may be painted)
+  can keep it, but anything the game writes at run time uses ours.
 
 ## 8a. Everything is cyberpunk
 
@@ -257,8 +259,8 @@ rivets, wood, rounded friendly letters). When something new is made, it is check
 |---|---|---|
 | **Frames and panels** | chamfered corners (45° cuts, top left and bottom right), 1 px cyan lines on night steel, the light catching the cuts, faint scanlines, a magenta tick on the right edge, a readout set into the bottom line (`NINTH//SYS`). Headings sit on a slanted cyan tab. No bevels, no rivets. | **done** (`game/skin.js`, engine `frame.draw`) |
 | **Cards** (act titles, the end) | a dark monitor: scanlines, a rolling band, corner brackets, small readouts (`HALCYON.NET`, `LOWER NINTH`, a counter), the text typing itself on with a block cursor, short glitches (a magenta and cyan split, slipping bands), `>>` when it waits | **done** (`game/skin.js`, engine `card.draw`) |
-| **Fonts** | the HUD font: 3x5 capitals for readouts and decoration | **done** (`hud` in `game/skin.js`) |
-| | the main font: our own 5x7, square and hard-cornered (1 px stems, no round bowls, the look of terminal and LED text), with Ä Ö Ü ä ö ü ß and German quotes; replaces the engine's rounded default everywhere (lines, menus, the deck) | to do (first) |
+| **Fonts** | the HUD font: 3x5 capitals (with Ä Ö Ü) for the camera display, the deck's header and labels, readouts and decoration | **done** (`hud` in `game/font.js`) |
+| | the main font: our own 5x7 terminal face, square and hard-cornered, with the frames' motif (where a letter closes round a corner, the top left and bottom right are cut at 45°: O C G Q S 0 6 8 9); capitals 7 rows, lowercase x-height 5 with 2-row descenders, line height 10; Ä Ö Ü ä ö ü ß, German quotes, € § ° · … → | **done** (`halcyon` in `game/font.js`, the default font) |
 | **Cursor** | a pale cyan arrow with an ink outline (§8); over a hotspot it becomes four corner brackets round the tip, like the implant's overlay | to do |
 | **Buttons** | the satchel: Juno's grey bag with a cyan status light (not a brown chest); the hint button: EVI peeking out of it; the menu button: a jack plug or a small terminal | to do |
 | **Hover labels** | the HUD font in brackets, `[ DECK ]`, pale cyan with an ink outline | to do (the engine needs a label font) |

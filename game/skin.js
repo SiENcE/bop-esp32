@@ -1,7 +1,7 @@
 // Halcyon: the look of the engine's own interface (docs/style-guide.md §8 and §8a): the menu's frames, its
 // heading plate and buttons, and the full-screen cards (act titles, the end). Everything here is drawn,
 // no art: chamfered corners, cyan lines on night steel, a magenta tick, scanlines, small data readouts in
-// a 3x5 HUD font, cards that type themselves on with a block cursor and glitch now and then.
+// the 3x5 HUD font (game/font.js), cards that type themselves on with a block cursor and glitch now and then.
 "use strict";
 
 (function () {
@@ -11,34 +11,7 @@
     magentaDark: "#a8238a", magenta: "#ff4fd3",
   };
 
-  // ---------------------------------------------------------------- the HUD font (3x5 capitals)
-  // Readouts and decoration only (`NINTH//LOWER`, `SYS 00`): the city's tech speaks English in both
-  // languages (story §10), so it needs no umlauts. Defined on first use: fonts need a canvas, and the
-  // Node tools never draw.
-  const HUD_GLYPHS = {
-    " ": ["..", "..", "..", "..", ".."],
-    A: [".#.", "#.#", "###", "#.#", "#.#"], B: ["##.", "#.#", "##.", "#.#", "##."], C: [".##", "#..", "#..", "#..", ".##"],
-    D: ["##.", "#.#", "#.#", "#.#", "##."], E: ["###", "#..", "##.", "#..", "###"], F: ["###", "#..", "##.", "#..", "#.."],
-    G: [".##", "#..", "#.#", "#.#", ".##"], H: ["#.#", "#.#", "###", "#.#", "#.#"], I: ["###", ".#.", ".#.", ".#.", "###"],
-    J: ["..#", "..#", "..#", "#.#", ".#."], K: ["#.#", "#.#", "##.", "#.#", "#.#"], L: ["#..", "#..", "#..", "#..", "###"],
-    M: ["#.#", "###", "###", "#.#", "#.#"], N: ["##.", "#.#", "#.#", "#.#", "#.#"], O: [".#.", "#.#", "#.#", "#.#", ".#."],
-    P: ["##.", "#.#", "##.", "#..", "#.."], Q: [".#.", "#.#", "#.#", "##.", ".##"], R: ["##.", "#.#", "##.", "#.#", "#.#"],
-    S: [".##", "#..", ".#.", "..#", "##."], T: ["###", ".#.", ".#.", ".#.", ".#."], U: ["#.#", "#.#", "#.#", "#.#", "###"],
-    V: ["#.#", "#.#", "#.#", "#.#", ".#."], W: ["#.#", "#.#", "###", "###", "#.#"], X: ["#.#", "#.#", ".#.", "#.#", "#.#"],
-    Y: ["#.#", "#.#", ".#.", ".#.", ".#."], Z: ["###", "..#", ".#.", "#..", "###"],
-    0: ["###", "#.#", "#.#", "#.#", "###"], 1: [".#.", "##.", ".#.", ".#.", "###"], 2: ["##.", "..#", ".#.", "#..", "###"],
-    3: ["##.", "..#", ".#.", "..#", "##."], 4: ["#.#", "#.#", "###", "..#", "..#"], 5: ["###", "#..", "##.", "..#", "##."],
-    6: [".##", "#..", "###", "#.#", "###"], 7: ["###", "..#", ".#.", ".#.", ".#."], 8: ["###", "#.#", "###", "#.#", "###"],
-    9: ["###", "#.#", "###", "..#", "##."],
-    "/": ["..#", "..#", ".#.", "#..", "#.."], ":": [".", "#", ".", "#", "."], ".": [".", ".", ".", ".", "#"],
-    "-": ["...", "...", "###", "...", "..."], "_": ["...", "...", "...", "...", "###"], ">": ["#..", ".#.", "..#", ".#.", "#.."],
-    "<": ["..#", ".#.", "#..", ".#.", "..#"], "+": ["...", ".#.", "###", ".#.", "..."], "#": ["#.#", "###", "#.#", "###", "#.#"],
-    "[": ["##", "#.", "#.", "#.", "##"], "]": ["##", ".#", ".#", ".#", "##"], "|": ["#", "#", "#", "#", "#"],
-    "?": ["##.", "..#", ".#.", "...", ".#."], "%": ["#.#", "..#", ".#.", "#..", "#.#"],
-  };
-  /** @type {ReturnType<typeof Cutaway.font.get> | null} */
-  let hudFont = null;
-  function hud() { return hudFont ??= Cutaway.font.define("hud", { lineHeight: 6, glyphs: HUD_GLYPHS }); }
+  const hud = () => Cutaway.font.get("hud");                // game/font.js
   /** @param {CanvasRenderingContext2D} ctx @param {string} s @param {number} x @param {number} y @param {string} color @param {"left"|"center"|"right"} [align] */
   function readout(ctx, s, x, y, color, align = "left") { hud().draw(ctx, s.toUpperCase(), x, y, { color, align }); }
 
