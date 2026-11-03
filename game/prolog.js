@@ -101,28 +101,40 @@ Cutaway.dialog("mail_sable", {
   },
 });
 
-// ---- the flat (H2: placeholder geometry until art/rooms/flat.px.js's layout is in)
+// ---- the flat (art/rooms/flat.px.js; geometry: docs/rooms/flat_layout.md). Hotspots in this order: the
+// last match wins, so the big shapes come first
 const AF = Halcyon.at.flat;
 Cutaway.room("flat", {
-  // PLACEHOLDER: the test street stands in for the flat's picture until art/rooms/flat.px.js exists
-  name: "Junos Wohnung", background: Cutaway.assets.get("flat_bg") ? "flat_bg" : "street_bg",
-  walk: [[20, 140, 150, 75, 300, 150, 300, 178, 20, 178]],
+  name: "Junos Wohnung", background: "flat_bg",
+  walk: AF.walk, holes: AF.holes, props: AF.props,
+  light: { ambient: 0.38, color: "#8a9cff", lamps: [
+    { id: "lamp", at: [158, 72], r: 80, power: 1.1, color: "#ffd58a", flicker: 0.04, glow: { r: 4, strength: 0.35 } },
+    { id: "deck", at: [214, 70], r: 64, power: 1.0, color: "#62def0", flicker: 0.08 },
+    { id: "neon", at: [288, 95], r: 72, power: 0.9, color: "#ff4fd3", flicker: 0.12 },
+  ] },
   hotspots: {
-    deck: { name: "Deck", rect: [120, 70, 60, 40], walkTo: AF.deck, face: "ne",
-      look: "Mein Deck. Drei Bildschirme, die nicht zusammenpassen, und ein Feed, der nie schläft.", use: [{ goto: "deck" }] },
-    fridge: { name: "Kühlschrank", rect: [220, 70, 24, 40], walkTo: AF.fridge, face: "ne",
-      look: "Der Kühlschrank.", use: [{ set: "fridge_empty" }, "Licht. Sonst nichts."] },
-    box_old: { name: "Karton", rect: [196, 128, 26, 18], walkTo: AF.box, face: "se",
-      look: ["Ein Karton von damals.", "Mein Halcyon-Ausweis. CIVIC MONITOR, J. REYES. UNGÜLTIG.", "Und der Kaktus. Vertrocknet. Wie alles aus der Zeit."] },
-    window: { name: "Fenster", rect: [240, 40, 40, 50], walkTo: AF.window, face: "ne",
-      look: "Regen. Und gegenüber der große Bildschirm. HALCYON: SLEEP BETTER. Ich schlafe schlecht, danke." },
-    pinboard: { name: "Pinnwand", rect: [80, 50, 40, 30], walkTo: AF.pinboard, face: "ne",
-      look: "Fotos, Fäden, Zettel. Leute, die ich kenne, ohne dass sie mich kennen." },
-    door: { name: "Tür", rect: [30, 70, 24, 56], walkTo: AF.door, face: "nw",
+    bed: { name: "Bett", poly: AF.bedPoly, walkTo: AF.bed, face: "nw",
+      look: "Eine Matratze auf einer Palette. Schlafen kann ich später. Oder nie." },
+    fridge: { name: "Kühlschrank", poly: AF.fridgePoly, walkTo: AF.fridge, face: "ne",
+      look: "Der Kühlschrank. Er brummt, als hätte er was zu sagen.", use: [{ set: "fridge_empty" }, "Licht. Sonst nichts."] },
+    deck: { name: "Deck", poly: AF.deckPoly, walkTo: AF.deck, face: "ne",
+      look: ["Mein Deck. Drei Bildschirme, die nicht zusammenpassen, und ein Feed, der nie schläft.", "Auf dem Post-it steht ESSEN!! Von mir. An mich."],
+      use: [{ goto: "deck" }] },
+    window: { name: "Fenster", rect: AF.windowRect, walkTo: AF.window, face: "ne",
+      look: "Regen. Gegenüber das Hotel, und dahinter der große Bildschirm. HALCYON: SLEEP BETTER. Ich schlafe schlecht, danke." },
+    door: { name: "Tür", rect: AF.doorRect, walkTo: AF.door, face: "nw",
       look: "Die Tür zum Flur.",
       use: [{ if: "!p1", then: ["Erst der Auftrag. Dann Essen."],
         else: [{ if: "!fridge_empty", then: ["Hunger. Mal sehen, was der Kühlschrank sagt."],
           else: ["Bao hat immer was.", { end: "Ende des Testabschnitts. Weiter geht es im Flur (H3)." }] }] }] },
+    laundry: { name: "Wäsche", rect: AF.laundryRect, walkTo: AF.laundry, face: "ne",
+      look: "Wäsche. Sauber oder nicht, das weiß inzwischen niemand mehr." },
+    noodles: { name: "Nudelbecher", rect: AF.noodlesRect, walkTo: AF.noodles, face: "ne",
+      look: "Ein Turm aus leeren Nudelbechern. Mein einziges Bauwerk." },
+    pinboard: { name: "Pinnwand", rect: AF.pinboardRect, walkTo: AF.pinboard, face: "nw",
+      look: "Fotos, Fäden, Zettel. Leute, die ich kenne, ohne dass sie mich kennen." },
+    box_old: { name: "Karton", rect: AF.boxRect, walkTo: AF.box, face: "nw",
+      look: ["Ein Karton von damals.", "Mein Halcyon-Ausweis. CIVIC MONITOR, J. REYES. UNGÜLTIG.", "Und der Kaktus. Vertrocknet. Wie alles aus der Zeit."] },
   },
   enter: [{ once: ["Halb zehn. Frau Kesslers Mann hat um zehn Schichtende.", "Erst mal ans Deck."] }],
 });

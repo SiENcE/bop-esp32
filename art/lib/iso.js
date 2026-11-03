@@ -135,7 +135,13 @@ const ISO = (() => {
         const fa = x - (CX + 2 * u0 - 2 * V), fe = CY + fl(d) + 2 * V - y - h0
         if (fa >= 0 && fa < 2 * du && fe >= 0 && fe < dh) { const k = front && front(fa, fe); if (k) c.px(x, y, k); continue }
         const sb = x - (CX + 2 * U - 2 * V), se = CY + 2 * U + fl(-d) - y - h0
-        if (sb >= 0 && sb < 2 * dv && se >= 0 && se < dh) { const k = side && side(sb, se); if (k) c.px(x, y, k) }
+        if (sb >= 0 && sb < 2 * dv && se >= 0 && se < dh) { const k = side && side(sb, se); if (k) c.px(x, y, k); continue }
+        // the top's near edges: on even columns a pixel there lies exactly on tv = V (or tu = U), in
+        // neither the top nor a face; it belongs to the top (else what is behind shows through as dots)
+        if ((fa >= 0 && fa < 2 * du && fe === dh) || (sb >= 0 && sb < 2 * dv && se === dh)) {
+          const k = top && top(Math.min(Math.max(tu - u0, 0), du - 0.25), Math.min(Math.max(tv - v0, 0), dv - 0.25))
+          if (k) c.px(x, y, k)
+        }
       }
     }
 

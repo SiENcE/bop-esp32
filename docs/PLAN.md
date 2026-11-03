@@ -12,10 +12,10 @@ Juno walks in the test street on a 2:1 walk area, with four hotspots. Validate r
 **H2 (the vertical slice) plays** (commit 6513b12):
 - What's in it: prologue steps 0–11, with the deck, CAM 03 and CAM 04, Kessler's evening, choice P1 and Sable's offer.
 - Checks: validate gives 0 errors, and the solver finds the way in 16 moves with no soft-locks.
+- Since done: the flat (art/rooms/flat.px.js: 8 props with front lines, runtime light) and the hints (11, each in three steps; solve --full confirms every state has one).
 - Missing:
-  - the flat's own picture (the test street stands in);
-  - hints;
-  - the sounds (tag, link, cache).
+  - the sounds (tag, link, cache);
+  - Juno with the hood down indoors (style guide §6).
 
 **H1 (Juno) done:** `art/characters/juno.px.js` holds SE and NE views, each with idle (4 frames), walk (8 x 100 ms) and talk (2), plus the feed figure (idle 2, walk 6). The lineup is `docs/characters/juno_lineup_x4.png`. She walks in the test street with diagonal facings at 16x8 px/s.
 
