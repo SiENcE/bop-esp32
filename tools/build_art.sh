@@ -4,7 +4,8 @@
 #        sh tools/build_art.sh test     (phase H0's test street: art/test/street.px.js -> assets/test.js)
 #        sh tools/build_art.sh characters (Juno and the feed people: art/characters/{juno,feed_people}.px.js
 #                                          -> assets/characters.js)
-#        sh tools/build_art.sh ui       (the feed's zoom windows: art/ui/zooms.px.js -> assets/ui.js)
+#        sh tools/build_art.sh ui       (the feed's zoom windows and the interface's sprites: art/ui/zooms.px.js,
+#                                         art/ui/hud.px.js -> assets/ui.js)
 #        sh tools/build_art.sh cams     (the feed cameras: art/cams/*.px.js -> assets/cams.js; review_* stay out)
 #        sh tools/build_art.sh room flat (a street-mode room: art/rooms/flat.px.js -> assets/room_flat.js, its
 #                                         flat_* assets only; art/rooms/flat_review.px.js is not built)
@@ -34,7 +35,8 @@ characters() {
 ui() {
     rm -rf build/art/ui
     $PXL build art/ui/zooms.px.js --out build/art/ui --no-preview | tail -n 1
-    $ATLAS build/art/ui assets/ui.js --only "zoom_*"
+    $PXL build art/ui/hud.px.js --out build/art/ui --no-preview | tail -n 1
+    $ATLAS build/art/ui assets/ui.js --only "zoom_*,ui_*"
 }
 
 cams() {

@@ -1,7 +1,8 @@
 // Halcyon: the look of the engine's own interface (docs/style-guide.md §8 and §8a): the menu's frames, its
-// heading plate and buttons, and the full-screen cards (act titles, the end). Everything here is drawn,
-// no art: chamfered corners, cyan lines on night steel, a magenta tick, scanlines, small data readouts in
-// the 3x5 HUD font (game/font.js), cards that type themselves on with a block cursor and glitch now and then.
+// heading plate and buttons, the full-screen cards (act titles, the end), the pointer, the satchel and
+// the buttons beside it (their art: art/ui/hud.px.js). The frames and cards are drawn here, no art:
+// chamfered corners, cyan lines on night steel, a magenta tick, scanlines, small data readouts in the
+// 3x5 HUD font (game/font.js), cards that type themselves on with a block cursor and glitch now and then.
 "use strict";
 
 (function () {
@@ -165,7 +166,11 @@
     if (!c.buttons.length && typed && Math.floor(ms / 600) % 2 === 0) readout(ctx, ">>", W - 22, H - 16, C.cyan);
   }
 
+  // the pointer, the satchel and the buttons beside it: art/ui/hud.px.js (assets/ui.js)
+  Cutaway.inventory.setSprite("ui_satchel");
   Cutaway.ui.skin({
+    cursor: "ui_cursor", cursorHot: "ui_cursor_hot", cursorAnchor: [5, 5],
+    buttons: { hint: "ui_evi", menu: "ui_menu", hotspots: "ui_eye" },
     outline: C.ink, accent: C.cyan, labelColor: C.cyanPale, panel: "rgba(9, 13, 24, 0.86)",
     frame: { outline: C.ink, light: C.cyan, face: C.cyanDeep, dark: C.cyanDark, fill: "rgba(9, 13, 24, 0.94)", plate: C.cyanDeep,
       hover: "rgba(98, 222, 240, 0.12)", draw: frame },
