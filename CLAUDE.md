@@ -18,7 +18,7 @@ The build plan (engine work C1–C11, game phases H0–H10) is `docs/PLAN.md`. R
 - art: `sh tools/build_art.sh [group]`;
 - checks: `node lib/cutaway/tools/validate.mjs index.html` (0 errors);
 - sounds: `node tools/render-sounds.mjs` (every sound of `game/sounds.js` into `build/sounds/`, `all.wav` in turn);
-- screenshots: `node lib/cutaway/tools/shot.mjs index.html --size 960x540 --query manual --eval "await Cutaway.debug.settle()" --out build/shots/x3.png --buffer build/shots/1x.png`.
+- screenshots: `node lib/cutaway/tools/shot.mjs index.html --size 960x540 --query "manual&act=prolog" --eval "await Cutaway.debug.settle()" --out build/shots/x3.png --buffer build/shots/1x.png` (the game opens on its title screen; `act=prolog` goes straight into the prologue).
 
 Dialogue (role model: Disco Elysium's depth; Juno's six inner voices, deterministic checks, a log panel;
 written in the engine's node editor): `docs/dialog-design.md` (German) and `docs/PLAN.md` C12/C13.

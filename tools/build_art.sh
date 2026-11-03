@@ -6,6 +6,8 @@
 #                                          -> assets/characters.js)
 #        sh tools/build_art.sh ui       (the feed's zoom windows and the interface's sprites: art/ui/zooms.px.js,
 #                                         art/ui/hud.px.js -> assets/ui.js)
+#        sh tools/build_art.sh title    (the title screen: the logo, art/ui/logo.px.js, and the street behind it,
+#                                         art/ui/title_bg.px.js (for now the mockup's street) -> assets/title.js)
 #        sh tools/build_art.sh cams     (the feed cameras: art/cams/*.px.js -> assets/cams.js; review_* stay out)
 #        sh tools/build_art.sh room flat (a street-mode room: art/rooms/flat.px.js -> assets/room_flat.js, its
 #                                         flat_* assets only; art/rooms/flat_review.px.js is not built)
@@ -39,6 +41,13 @@ ui() {
     $ATLAS build/art/ui assets/ui.js --only "zoom_*,ui_*"
 }
 
+title() {
+    rm -rf build/art/title
+    $PXL build art/ui/logo.px.js --out build/art/title --no-preview | tail -n 1
+    $PXL build art/ui/title_bg.px.js --out build/art/title --no-preview | tail -n 1
+    $ATLAS build/art/title assets/title.js --only "title_logo,title_bg"
+}
+
 cams() {
     rm -rf build/art/cams
     for f in art/cams/*.px.js; do
@@ -67,8 +76,9 @@ case "${1:-all}" in
     characters) characters ;;
     cams) cams ;;
     ui) ui ;;
+    title) title ;;
     room) room "$2" ;;
     rooms) rooms ;;
-    all) test_art; characters; cams; ui; rooms ;;
+    all) test_art; characters; cams; ui; title; rooms ;;
     *) echo "unknown group: $1"; exit 2 ;;
 esac
