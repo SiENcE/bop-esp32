@@ -246,6 +246,33 @@ Reference: the UI in `mock_c_iso`.
 - **Fonts:** the 5x7 font (`lib/ui/font5x7.px.js`) for speech, names and titles; the built-in 3x5
   capitals for labels, the OSD and small print.
 
+## 8a. Everything is cyberpunk
+
+Decided 2026-11-03: **everything** in the game must look, sound, feel and taste like cyberpunk, the way
+Shadowrun (SNES, Genesis, Dragonfall), Blade Runner, Snatcher, Ghost in the Shell, Read Only Memories
+and Dreamweb do. Nothing may still look like the engine's defaults or like the Loonies (bevels, brass
+rivets, wood, rounded friendly letters). When something new is made, it is checked against this list.
+
+| Part | The rule | State |
+|---|---|---|
+| **Frames and panels** | chamfered corners (45° cuts, top left and bottom right), 1 px cyan lines on night steel, the light catching the cuts, faint scanlines, a magenta tick on the right edge, a readout set into the bottom line (`NINTH//SYS`). Headings sit on a slanted cyan tab. No bevels, no rivets. | **done** (`game/skin.js`, engine `frame.draw`) |
+| **Cards** (act titles, the end) | a dark monitor: scanlines, a rolling band, corner brackets, small readouts (`HALCYON.NET`, `LOWER NINTH`, a counter), the text typing itself on with a block cursor, short glitches (a magenta and cyan split, slipping bands), `>>` when it waits | **done** (`game/skin.js`, engine `card.draw`) |
+| **Fonts** | the HUD font: 3x5 capitals for readouts and decoration | **done** (`hud` in `game/skin.js`) |
+| | the main font: our own 5x7, square and hard-cornered (1 px stems, no round bowls, the look of terminal and LED text), with Ä Ö Ü ä ö ü ß and German quotes; replaces the engine's rounded default everywhere (lines, menus, the deck) | to do (first) |
+| **Cursor** | a pale cyan arrow with an ink outline (§8); over a hotspot it becomes four corner brackets round the tip, like the implant's overlay | to do |
+| **Buttons** | the satchel: Juno's grey bag with a cyan status light (not a brown chest); the hint button: EVI peeking out of it; the menu button: a jack plug or a small terminal | to do |
+| **Hover labels** | the HUD font in brackets, `[ DECK ]`, pale cyan with an ink outline | to do (the engine needs a label font) |
+| **Lines and choices** | lines in the speaker's colour with an ink outline (as now); the choice panel in the chamfered frame, choices numbered `[1]`, the chosen one with a cyan band | to do (the engine needs a frame for the choice panel) |
+| **Transitions** | rooms change through a short glitch or a scan wipe, not a soft fade; entering feed mode: the screen "jacks in" (a line that opens to the picture, noise, then the feed); leaving: the reverse | to do (an engine hook for transitions) |
+| **Title screen** | rain over the Kowalski street at night, the HALCYON ad screen, the logo glitching on, the menu in the chamfered frame | to do |
+| **Characters** | every person carries at least one piece of tech that glows or blinks (an implant, LED trim, a visor, a sleep patch, gills' glow marks, a collar on the animals); clothes are layered, worn, practical, with English brand prints. Silhouettes stay readable (§6). | rule for all new art |
+| **Rooms and props** | screens, cables, vents, steam, wet floors, English signs and ads, something blinking in every room; nothing is new or clean except in the Crown | rule for all new art |
+| **Animation** | nothing stands fully still: neon flickers, screens loop, signs blink, steam rises, drones pass, rain falls; idle animations for everyone | rule for all new art |
+| **Effects** | rain and drip (fx), scanlines and noise in the feed, a glitch on every hack action (link, steer, REC), the chromatic split when the Witness is near | partly (rain, feed) |
+| **Music** | dark synth in the line of Vangelis's *Blade Runner* and the SNES Shadowrun: slow pads (CS-80-like brass and strings), cold arpeggios, a sparse drum machine, the rain mixed in; Juno's theme on an electric piano. Synthesised with the engine's synth (instruments as data). | to do |
+| **Sounds** | electric hum, data chirps, keyboard clicks, a modem handshake when a camera links, the REC beep, glitch bursts, drone buzz, rain on glass; no cartoon sounds | to do |
+| **Words** | the city's slang (Glas, Shine, Chits, Sinker), short hard sentences, tech terms used lightly; the city's own signs and readouts in English | rule for all text |
+
 ## 9. Feed mode: the hijacked cameras
 
 Feed mode is how Juno works: watching, listening, identifying, recording. It is also how the story
