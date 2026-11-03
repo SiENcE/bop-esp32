@@ -2,19 +2,19 @@
 // steps 0 and 12). Street mode, a cutaway iso room (style guide §4): the left and the right back wall
 // meet in the corner, the front walls are cut to a 5 px stub along the floor's front edges (the
 // floor slab's section under them), the rest of the picture is the dark round the cut.
-// Key hue: screen cyan from her deck, dim; one amber floor lamp; magenta from the neon sign outside
+// Key hue: screen cyan from her deck, dim; a warm LED strip high on the left wall; magenta from the neon sign outside
 // the window, the edge of the big ad screen across the street in cyan.
 //
 // What's where (u along the right wall, v along the left wall, 16 units a meter, 18 px of height):
 //   right wall: the deck (desk, the rig, three mismatched monitors, a chair pulled out), the noodle
 //               cup tower, the laundry pile under the window, the window
-//   left wall:  the fridge in the corner, the floor lamp, the bed (mattress on a pallet) with the
+//   left wall:  the fridge in the corner, the LED strip over the bed, the bed (mattress on a pallet) with the
 //               pinboard over it, the old box by its foot, the door to the hallway near the front
 //
 // Exports (the atlas takes flat_* only):
 //   flat_bg        320x180, a 12-frame loop at 10 fps: rain and the neon outside the window
 //   flat_deck      the desk, the rig and the monitors (12 frames: screens)
-//   flat_chair, flat_fridge, flat_bed, flat_box, flat_lamp, flat_noodles, flat_laundry
+//   flat_chair, flat_fridge, flat_bed, flat_box, flat_noodles, flat_laundry
 // Every prop is drawn where it stands in the room (ISO.pen) into its own sprite, pivot bottom-centre;
 // FLAT.layout (the end of this file) holds what the game needs, measured from the same numbers:
 // docs/rooms/flat_layout.md.
@@ -42,9 +42,8 @@ const FLAT = (() => {
     laundry: [52, 0, 10, 7],
     bed: [0, 20, 15, 32],
     box: [17, 42, 8, 8],
-    lamp: [17, 21, 2, 2],
   }
-  const LAMP = [18, 22, 30]            // the floor lamp's bulb (u, v, h)
+  const BAND = { x0: 46, x1: 116, e: 44 }   // the LED strip on the left wall, flat px (over the bed: v 53..18), its height
   const WIN = { x0: 100, x1: 144, e0: 16, e1: 40, mull: 121 }   // the window in the right wall, flat px
   const DOOR = { x0: 8, x1: 36, h: 38 }                         // the door in the left wall, flat px (screen x - 14)
   const PIN = { x0: 62, x1: 98, e0: 21, e1: 40 }                // the pinboard over the bed, flat px
@@ -64,7 +63,8 @@ const FLAT = (() => {
     return Math.max(0, 0.9 - v / 30)
   }
   const deckLight = (u, v) => (v < 10 ? 0 : Math.max(0, 1.15 - Math.hypot((u - 27) * 0.7, v - 6) / 20))
-  const lampLight = (u, v) => Math.max(0, 1 - Math.hypot(u - LAMP[0], v - LAMP[1]) / 19)
+  // the strip's warm light on the floor along the left wall, fading away from it and past its ends
+  const bandLight = (u, v) => { const v0 = (152 - BAND.x1) / 2, v1 = (152 - BAND.x0) / 2, out = Math.max(0, v0 - v, v - v1); return Math.max(0, 0.95 - u / 24 - out / 8) }
   const inFoot = ([u0, v0, du, dv], u, v, m = 0) => u >= u0 - m && u < u0 + du + m && v >= v0 - m && v < v0 + dv + m
 
   function floorKey(x, y) {
@@ -78,7 +78,7 @@ const FLAT = (() => {
     if (inFoot(FOOT.deck, u, v)) return "e"
     // light: the strongest source here wins; dithered only where it falls off
     // where two pools meet, the stronger wins, the border between them dithered
-    const L = [[lampLight(u, v), "a", "A"], [deckLight(u, v), "t", "T"], [windowLight(u, v), "i", "I"]]
+    const L = [[bandLight(u, v), "a", "A"], [deckLight(u, v), "t", "T"], [windowLight(u, v), "i", "I"]]
       .map((q, i) => [q[0] > 0 ? q[0] + 0.3 * (bay(x + 2 * i + 1, y + i) - 0.5) : 0, q[1], q[2], q[0]])
       .sort((p, q) => q[0] - p[0])[0]
     L[0] = L[3]
@@ -105,11 +105,15 @@ const FLAT = (() => {
   const leftWall = R.wallL("_flat_wallL", 2 * V, HW, (F) => {
     const len = 2 * V
     F.rect(0, 0, len, HW, "3")
-    // the lamp's warm light on the wall round the pinboard, the screens' cyan in the corner
-    ISO.halo(F, [94, 26, 14, 6], 30, { 3: "a" }, 0.75)
-    ISO.halo(F, [100, 27, 4, 3], 12, { a: "A", 3: "A" }, 0.6)
+    // the LED strip's warm light down the wall over the bed, the screens' cyan in the corner
+    ISO.halo(F, [BAND.x0, BAND.e - 1, BAND.x1 - BAND.x0, 2], 26, { 3: "a" }, 0.75)
+    ISO.halo(F, [BAND.x0, BAND.e - 1, BAND.x1 - BAND.x0, 2], 7, { a: "A", 3: "A" }, 0.6)
     ISO.halo(F, [len - 2, 12, 2, 18], 14, { 3: "c" }, 0.45)
     darkenTop(F, len)
+    // the LED strip: an aluminium rail, the lit band under it, its brightest diodes
+    F.hl(BAND.x0 - 1, BAND.e + 1, BAND.x1 - BAND.x0 + 2, "4")
+    F.hl(BAND.x0, BAND.e, BAND.x1 - BAND.x0, "R")
+    for (let x = BAND.x0 + 2; x < BAND.x1; x += 5) F.px(x, BAND.e, "W")
     // skirting board
     F.rect(0, 0, len, 2, "2"); F.hl(0, 2, len, "4")
     // the door: frame, steel leaf, a lighter edge on the lit side, handle, deadbolt with its LED,
@@ -491,21 +495,6 @@ const FLAT = (() => {
     p.grid(lx - 2, ly + 4, ["GHHG", "HCCH", "HhhH", "GHHG"])
   }, { foot: FOOT.box })
 
-  // the floor lamp: a round foot, a thin pole, a paper drum shade lit from inside
-  prop("flat_lamp", (p) => {
-    const [x, y] = P(18, 22)
-    p.ellipse(x, y - 1, 3, 1, "2"); p.hline(x - 2, y - 2, 4, "4")
-    p.vline(x, y - 26, 25, "4"); p.vline(x + 1, y - 24, 22, "2")
-    p.grid(x - 4, y - 34, [
-      "..OPPPPO.",
-      ".PQQQRRRP",
-      ".PQQRRRRP",
-      "PQQRRRRWRP",
-      "PQQRRRWWRP",
-      ".OPRRWWRP.",
-      "...RWWR...",
-    ].map((r) => r.slice(0, 10)))
-  }, { foot: FOOT.lamp })
 
   // ---------------------------------------------------------------- the layout for the game (docs/rooms/flat_layout.md)
   const pt = (u, v, h = 0) => P(u, v, h)
@@ -523,10 +512,10 @@ const FLAT = (() => {
   }
   const layout = {
     room: { CX, CY, U, V, HW },
-    // the walkable floor, in (u, v), notched round what stands against the walls; the lamp is a hole
+    // the walkable floor, in (u, v), notched round what stands against the walls
     walk: [poly([[3, 13], [34, 13], [34, 22], [45, 22], [45, 11], [73, 11], [73, 42], [42, 73], [3, 73], [3, 54],
       [27, 54], [27, 40], [17, 40], [17, 18], [3, 18]])],
-    holes: [poly([[15, 19], [21, 19], [21, 25], [15, 25]])],
+    holes: [],
     props: {},
     spots: {
       start: pt(27, 17), deck: pt(27, 17), fridge: pt(6, 15), bed: pt(19, 33), box: pt(29, 46), window: pt(63, 15),
@@ -539,7 +528,8 @@ const FLAT = (() => {
       door: rectOfFlat([R.atL(LX0 + DOOR.x0 - 2, 0), R.atL(LX0 + DOOR.x1 + 1, 0), R.atL(LX0 + DOOR.x0 - 2, DOOR.h + 1), R.atL(LX0 + DOOR.x1 + 1, DOOR.h + 1)]),
     },
     lamps: [
-      { id: "lamp", at: pt(LAMP[0], LAMP[1], LAMP[2]), r: 80, power: 1.1, color: "#ffd58a", flicker: 0.04 },
+      { id: "band", at: pt(1, 26, BAND.e), r: 80, power: 1.05, color: "#ffd58a", flicker: 0.02 },
+      { id: "band2", at: pt(1, 46, BAND.e), r: 70, power: 1.0, color: "#ffd58a", flicker: 0.02 },
       { id: "deck", at: pt(27, 3, 22), r: 64, power: 1, color: "#62def0", flicker: 0.08 },
       { id: "neon", at: pt(61, 0, 28), r: 72, power: 0.9, color: "#ff4fd3", flicker: 0.12 },
     ],

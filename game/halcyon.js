@@ -16,8 +16,9 @@ const Halcyon = (/** @type {any} */ (window)).Halcyon = {
   ledger: /** @type {Record<string, {to: string, what: Record<string, string>, chits?: Record<string, number>}>} */ ({}),
   /** Cameras: what the feeds show in their display (OSD) and on the deck's map. */
   cams: /** @type {Record<string, {id: string, place: string, owner: string, map: [number, number], if?: any}>} */ ({}),
-  /** Named people in the feeds: the name their tag shows once known (flag), else "UNBEKANNT". */
-  people: /** @type {Record<string, {name: string, known?: string}>} */ ({}),
+  /** Named people in the feeds: the name their tag shows once known (flag `known`), else "UNBEKANNT"; until
+   * then their hover label and subtitles say `label` (a stranger), after it `speaker`. */
+  people: /** @type {Record<string, {name: string, known?: string, label?: string, speaker?: string}>} */ ({}),
   /** The date of game day 1. */
   day1: [2091, 11, 3],
 };
@@ -58,3 +59,21 @@ Cutaway.script.action("ledger", (s) => {
 // The zoom window closes with the room, and when the script that opened it is done.
 Cutaway.events.on("room.enter", () => { Halcyon.zoom = null; });
 Cutaway.events.on("script.busy", (busy) => { if (!busy) Halcyon.zoom = null; });
+
+// People are strangers until Juno knows them: their hover label and subtitles follow what she knows.
+Halcyon.names = function () {
+  for (const [id, p] of Object.entries(Halcyon.people)) {
+    const a = Cutaway.actors.get(id);
+    if (a && p.label && p.speaker) a.name = p.known && Cutaway.state.flag(p.known) ? p.speaker : p.label;
+  }
+};
+Cutaway.events.on("state.changed", Halcyon.names);
+Cutaway.events.on("room.enter", Halcyon.names);
+
+// { forward: true } fast-forwards to the next change in the feeds (anyone's routine, a moment), showing the
+// new time big in the picture while it jumps; when nothing more happens tonight, Juno says so
+Cutaway.script.action("forward", async (s, ctx) => {
+  const n = Cutaway.time.next();
+  if (n === null) return Cutaway.script.exec(["Heute Nacht passiert hier nichts mehr."], ctx);
+  await Cutaway.script.exec([{ caption: Cutaway.time.format(n), at: "c", ms: 900, wait: false }, { time: "next" }], ctx);
+});

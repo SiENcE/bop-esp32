@@ -6,6 +6,7 @@
 Halcyon.deckLayout = {
   map: [4, 18, 150, 142],                 // the map's panel [x, y, w, h]
   side: 162,                              // where the right column (messages, cache, Kassenbuch) starts
+  buttons: { wait: [76, 2, 40, 10], close: [118, 2, 40, 10] },   // in the header
   streets: [[10, 60, 138, 3], [10, 112, 138, 3], [60, 24, 3, 130], [118, 24, 3, 130]],
   mails: [
     { id: "kessler", from: "M. KESSLER", subject: "Mein Mann" },
@@ -31,8 +32,9 @@ Halcyon.deckLayout = {
     hotspots[`mail_${m.id}`] = { name: `${m.from}: ${m.subject}`, rect: [D.side - 2, 28 + i * 12, W - D.side - 2, 11],
       ...(m.if ? { if: m.if } : {}), use: [{ set: `read_${m.id}` }, { dialog: `mail_${m.id}` }], look: "Eine Nachricht." };
   });
-  hotspots.wait = { name: "Warten", rect: [4, 165, 58, 11], use: [{ if: "time<22:00", then: ["Bis zehn passiert da nichts."] }, { time: "next" }] };
-  hotspots.close = { name: "Zurück", rect: [70, 165, 58, 11], exit: { to: "flat", at: Halcyon.at.flat.deck, face: "ne" } };
+  // the buttons sit in the header (the bottom edge belongs to the satchel's bar)
+  hotspots.wait = { name: "Warten", rect: D.buttons.wait, use: [{ forward: true }] };
+  hotspots.close = { name: "Zurück", rect: D.buttons.close, exit: { to: "flat", at: Halcyon.at.flat.deck, face: "ne" } };
 
   Cutaway.room("deck", { name: "Deck", color: "#131a2a", observe: true, deck: true, hotspots });
 })();

@@ -20,7 +20,7 @@ Object.assign(Halcyon.ledger, {
 Cutaway.time.configure({
   start: "18:00", end: "04:00",
   // where the button for waiting is (play.mjs clicks it): on the deck and in every feed
-  waitPoint: () => Cutaway.scene.room?.deck ? { x: 33, y: 170 } : Cutaway.scene.room?.feed ? { x: 253, y: 18 } : null,
+  waitPoint: () => Cutaway.scene.room?.deck ? { x: 96, y: 7 } : Cutaway.scene.room?.feed ? { x: 253, y: 18 } : null,
 });
 
 // ---- routines (where everyone is when)
@@ -39,6 +39,11 @@ const exits = [A3.exitRight, A3.exitFar, A3.exitRight, A3.exitFar];
 });
 
 // ---- moments: Kessler's call (once Juno has tagged him), the ring at Yuen's
+// 22:00 on cam03: the shift ends, the crowd comes out; Juno says what to look for (once)
+Cutaway.moment("shift_end", {
+  room: "cam03", day: 1, from: "22:00", to: "22:15",
+  play: ["Schichtende. Da kommen sie.", "Einer davon ist Kessler. Frau Kesslers Foto: ein heller Schal.", "Den markier ich. Linksklick."],
+});
 Cutaway.moment("kessler_call", {
   room: "cam03", day: 1, from: "22:00", to: "22:15", if: "tag_kessler",
   play: [
@@ -49,7 +54,7 @@ Cutaway.moment("kessler_call", {
     { set: "heard_yuens" },
     "Yuen's. Der Imbiss an der Ecke. Da hängt 'ne Kamera. Hab ich bloß nicht.",
   ],
-  unseen: [{ set: "call_missed" }],
+  unseen: [{ set: "call_missed" }, "Mist. Kessler ist weg. Aber die Kamera hat alles im Puffer."],
 });
 Cutaway.moment("kessler_ring", {
   room: "cam04", day: 1, from: "22:30", to: "22:50",
@@ -108,7 +113,9 @@ Cutaway.room("flat", {
   name: "Junos Wohnung", background: "flat_bg",
   walk: AF.walk, holes: AF.holes, props: AF.props,
   light: { ambient: 0.38, color: "#8a9cff", lamps: [
-    { id: "lamp", at: [158, 72], r: 80, power: 1.1, color: "#ffd58a", flicker: 0.04, glow: { r: 4, strength: 0.35 } },
+    // the warm LED strip high on the left wall, over the bed (its two ends); it keeps Juno warm at the deck
+    { id: "band", at: [116, 45], r: 150, power: 1.3, color: "#ffd58a", flicker: 0.02 },
+    { id: "band2", at: [76, 65], r: 110, power: 1.15, color: "#ffd58a", flicker: 0.02 },
     { id: "deck", at: [214, 70], r: 64, power: 1.0, color: "#62def0", flicker: 0.08 },
     { id: "neon", at: [288, 95], r: 72, power: 0.9, color: "#ff4fd3", flicker: 0.12 },
   ] },

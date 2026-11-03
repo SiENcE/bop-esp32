@@ -122,9 +122,9 @@
       text(ctx, `${e.to}: ${e.what[v] ?? v}${pay ? `  +${pay}` : ""}`, D.side, 144 + i * 10, C.amber);
     });
     // the buttons (hotspots wait and close)
-    for (const [label, x] of [["WARTEN", 4], ["ZURÜCK", 70]]) {
-      ctx.fillStyle = C.steel2; ctx.fillRect(/** @type {number} */ (x), 165, 58, 11);
-      text(ctx, /** @type {string} */ (label), /** @type {number} */ (x) + 29, 167, C.cyan, "center");
+    for (const [label, [x, y, w, h]] of /** @type {[string, number[]][]} */ ([["WARTEN", D.buttons.wait], ["ZURÜCK", D.buttons.close]])) {
+      ctx.fillStyle = C.steel3; ctx.fillRect(x, y, w, h);
+      text(ctx, label, x + w / 2, y + 1, C.cyanPale, "center");
     }
   }
 

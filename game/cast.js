@@ -17,17 +17,18 @@ Cutaway.actor("juno", {
 });
 
 // ---- people in the feeds (only ever seen through cameras in the prologue)
-Halcyon.people.kessler = { name: "KESSLER", known: "tag_kessler" };
+// a stranger in the crowd ("Pendler") until Juno tags him; then "Kessler" (Halcyon.names)
+Halcyon.people.kessler = { name: "KESSLER", known: "tag_kessler", label: "Pendler", speaker: "Kessler" };
 Cutaway.actor("kessler", {
-  name: "Kessler", color: "#b8c890",
+  name: "Pendler", color: "#b8c890",
   costume: { idle: "kessler_feed", walk: "kessler_feed_walk", talk: "kessler_feed_phone" },
   poses: [{ if: "at:kessler=cam04", idle: "kessler_feed_sit", talk: "kessler_feed_sit", walk: "kessler_feed_walk" }],
   speed: [14, 10], voice: { pitch: 50, wave: "square", syllable: 80 },
-  look: ["Kleiner Mann, großer Mantel.", { if: "!tag_kessler", then: ["Ein heller Schal. Hell gestrickt."], else: ["Kessler. Der Schal, den sie ihm gestrickt hat."] }],
+  look: ["Kleiner Mann, großer Mantel.", { if: "!tag_kessler", then: ["Ein heller Schal. Selbst gestrickt, so wie der aussieht."], else: ["Kessler. Der Schal, den sie ihm gestrickt hat."] }],
   talk: [{ if: "tag_kessler", then: ["Den hab ich schon."], else: [{ tag: "kessler" }, "Heller Schal. Hab dich, Herr Kessler."] }],
 });
 
-Halcyon.people.varga = { name: "VARGA", known: "saw_varga" };
+Halcyon.people.varga = { name: "VARGA", known: "saw_varga", label: "Mann im grauen Mantel", speaker: "Varga" };
 Cutaway.actor("varga", {
   name: "Mann im grauen Mantel", color: "#a0a0b8",
   costume: { idle: "varga_feed", walk: "varga_feed_walk", talk: "varga_feed" },

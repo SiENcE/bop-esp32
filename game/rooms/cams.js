@@ -37,7 +37,7 @@ Halcyon.camRoom = function (id, o) {
   const hotspots = {
     rec: { name: "REC", rect: O.rec, z: 5,
       use: [{ if: "rec_on", then: [{ unset: "rec_on" }, "Aufnahme aus."], else: [{ set: "rec_on" }, "Aufnahme läuft."] }] },
-    wait: { name: "Vorspulen", rect: O.wait, z: 5, use: [{ time: "next" }] },
+    wait: { name: "Vorspulen", rect: O.wait, z: 5, use: [{ forward: true }] },
     back: { name: "Deck", rect: O.back, z: 5, exit: { to: "deck" } },
     ...o.hotspots,
   };
