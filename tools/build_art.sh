@@ -6,8 +6,8 @@
 #                                          -> assets/characters.js)
 #        sh tools/build_art.sh ui       (the feed's zoom windows and the interface's sprites: art/ui/zooms.px.js,
 #                                         art/ui/hud.px.js -> assets/ui.js)
-#        sh tools/build_art.sh title    (the title screen: the logo, art/ui/logo.px.js, and the street behind it,
-#                                         art/ui/title_bg.px.js (for now the mockup's street) -> assets/title.js)
+#        sh tools/build_art.sh title    (the title screen, art/ui/splash.px.js; the menu screen's logo, art/ui/logo.px.js,
+#                                         and the street behind it, art/ui/title_bg.px.js -> assets/title.js)
 #        sh tools/build_art.sh cams     (the feed cameras: art/cams/*.px.js -> assets/cams.js; review_* stay out)
 #        sh tools/build_art.sh room flat (a street-mode room: art/rooms/flat.px.js -> assets/room_flat.js, its
 #                                         flat_* assets only; art/rooms/flat_review.px.js is not built)
@@ -43,9 +43,10 @@ ui() {
 
 title() {
     rm -rf build/art/title
+    $PXL build art/ui/splash.px.js --out build/art/title --no-preview | tail -n 1
     $PXL build art/ui/logo.px.js --out build/art/title --no-preview | tail -n 1
     $PXL build art/ui/title_bg.px.js --out build/art/title --no-preview | tail -n 1
-    $ATLAS build/art/title assets/title.js --only "title_logo,title_bg"
+    $ATLAS build/art/title assets/title.js --only "splash_bg,title_logo,title_bg"
 }
 
 cams() {

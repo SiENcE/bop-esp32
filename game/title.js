@@ -1,7 +1,16 @@
-// Glass Sister: the title screen (docs/style-guide.md §8a "Title screen"): rain over the Kowalski street at
-// night, the broken HALCYON screen with the eye in its static (art/ui/title_bg.px.js), the logo glitching
-// (art/ui/logo.px.js), the menu in the chamfered frame (game/skin.js). Juno's theme with the drums in.
+// Glass Sister: the screens before the game (docs/style-guide.md §8a "Title screen").
+//   the title screen   (title.splash) the people the story is about in their panels, GLASS SISTER, the
+//                      place (art/ui/splash.px.js), rain over it, the engine's prompt; on start-up only
+//   the menu screen    rain over the Kowalski street at night, the broken HALCYON screen with the eye in
+//                      its static (art/ui/title_bg.px.js), a small flat logo (art/ui/logo.px.js), the menu
+//                      in the chamfered frame (game/skin.js); Juno's theme with the drums in
 "use strict";
+
+Cutaway.room("splash", {
+  name: "Glass Sister", background: "splash_bg",
+  fx: [{ kind: "rain", rect: [0, 0, 320, 180], count: 46, color: "#41547a", speed: 170, slant: 0.18, length: 4 }],
+  ambience: ["rain", { sfx: "city_far", gain: 0.6 }],
+});
 
 Cutaway.room("title", {
   name: "Glass Sister", background: "title_bg",
@@ -11,7 +20,7 @@ Cutaway.room("title", {
 
 Halcyon.title = {
   room: "title", logo: "title_logo", name: "Glass Sister",
-  menu: { x: -8, y: 34, w: 100, dim: 0.45 },  // on the right: the left holds the people and the title (art/ui/logo.px.js)
+  splash: { room: "splash" },
   tagline: "JACK IN",                          // the city's tech speaks English (story §10)
   footer: "v0.1",
 };
