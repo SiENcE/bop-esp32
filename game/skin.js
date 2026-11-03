@@ -141,7 +141,7 @@
         const w = f.measure(line) * 2, x = Math.round(W / 2 - w / 2);
         glitchText(ctx, (dx, color) => {
           ctx.save(); ctx.translate(x + dx, y); ctx.scale(2, 2);
-          f.draw(ctx, shown, 0, 0, { color, shadow: C.cyanDeep }); ctx.restore();
+          f.draw(ctx, shown, 0, 0, { color }); ctx.restore();
         }, g, C.cyanPale);
         cursor = { x: x + f.measure(shown) * 2 + 2, y, h: 12 };
       } else {

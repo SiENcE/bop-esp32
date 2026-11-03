@@ -11,6 +11,7 @@ Cutaway.room("title", {
 
 Halcyon.title = {
   room: "title", logo: "title_logo", name: "Glass Sister",
+  menu: { x: -8, y: 34, w: 100, dim: 0.45 },  // on the right: the left holds the people and the title (art/ui/logo.px.js)
   tagline: "JACK IN",                          // the city's tech speaks English (story §10)
   footer: "v0.1",
 };
