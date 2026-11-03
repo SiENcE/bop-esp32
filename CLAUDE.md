@@ -1,4 +1,4 @@
-An original cyberpunk point-and-click adventure (working title "Halcyon"), inspired by the mood of
+An original cyberpunk point-and-click adventure, **Glass Sister** (the city it plays in is Halcyon), inspired by the mood of
 Dreamweb (`docs/dreamweb.txt`, `docs/screenshots/`) but with its own world, characters and story. It runs on
 our engine Cutaway.js (MIT, separate repo `B:\Github_my\cutaway\`, must stay free of game content); the
 previous game on it, `B:\Github_my\the_goonies\`, shows how a game is laid out and built.
@@ -10,7 +10,7 @@ skill's `.claude/skills/claude-pxl/SKILL.md`.
 
 The story bible (first draft, in German: world, cast, the secret, 6 chapters, branches, endings; decisions in
 its §10) is `docs/story.md`. Game text is German first, English later (all text through i18n; the city's
-signs and ads stay English in both). Violent scenes have two variants (black bars, the default, and shown).
+signs and ads stay English in both, and so does its slang: Glass, Glasser, Shine, Sinker, Chits). Violent scenes have two variants (black bars, the default, and shown).
 
 The build plan (engine work C1–C11, game phases H0–H10) is `docs/PLAN.md`. Running and checks:
 - open `index.html` (file:// works);
@@ -24,7 +24,7 @@ Dialogue (role model: Disco Elysium's depth; Juno's six inner voices, determinis
 written in the engine's node editor): `docs/dialog-design.md` (German) and `docs/PLAN.md` C12/C13.
 
 Detailed designs (German): `docs/kapitel0-design.md` (the prologue, plus the rules every chapter uses: the
-deck, feed mode, game time and routines) and `docs/kapitel1-design.md` (Chapter 1 "Glas": three jobs over
+deck, feed mode, game time and routines) and `docs/kapitel1-design.md` (Chapter 1 "Glass": three jobs over
 three evenings, the WREN thread, the murder in cam31).
 
 Premise: Juno, a hacker, watches people through the city's cameras and sells what

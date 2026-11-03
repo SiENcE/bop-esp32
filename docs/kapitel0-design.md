@@ -67,7 +67,7 @@ alles. Vor dem Bau kommt ein Mockup (`docs/mockups/mock_f_deck`), das Lesbarkeit
 | **CACHE** | Junos Dateien: Clips (Filmstreifen), Standbilder, Notizen (Karteikarten), mit Metadaten (wer, wo, wann). Das Inventar des Feed-Modus (8 Plätze). Ein Clip öffnet sich im **Clip-Editor** (§2.4). | Prolog |
 | **BUCH** | das Kassenbuch: jede Lieferung, was, an wen, für wie viel, und später, was daraus wurde (Story §5). | Prolog |
 | **KONTO** | Chits, die Miete mit der Hüllenabgabe (die Flutschuld, Story §3), Schulden bei Bao. | Prolog |
-| **NETZ** | HalcyonNet: Nachrichten („Kriminalität im Neunten auf Rekordtief"), Werbung (englisch, Stadtschrift), das **Glaser-Brett** (ein Forum: Gerüchte über Sinker, Codes zu verkaufen, Hilferufe, aus denen kleine Aufträge werden), Anzeigen für NINTH LIVE. Ändert sich jeden Abend; billiger, wirksamer Weltbau. | Kap. 1 (im Prolog nur die Startseite) |
+| **NETZ** | HalcyonNet: Nachrichten („Kriminalität im Neunten auf Rekordtief"), Werbung (englisch, Stadtschrift), das **Glasser-Brett** (ein Forum: Gerüchte über Sinker, Codes zu verkaufen, Hilferufe, aus denen kleine Aufträge werden), Anzeigen für NINTH LIVE. Ändert sich jeden Abend; billiger, wirksamer Weltbau. | Kap. 1 (im Prolog nur die Startseite) |
 | **RADIO** | Junos Musik (die Spielmusik als Sender zum Umschalten); ab Kap. 2 Lanterns Piratensender, wenn Juno die Frequenz kennt. | Prolog |
 | **MÜLL** | der Papierkorb: Junos Kündigungsschreiben von Halcyon (nie geöffnet), Entwürfe von Nachrichten an Teo, die sie nie geschickt hat. Kür, keine Rätsel. | Prolog |
 
@@ -257,7 +257,7 @@ kein Zuhause." (Die Nudeln sind der Schlüssel für Kap. 1, Auftrag A.) Anhang: 
 | 15 | `kessel_lobby` | Der Aufzug: „AUSSER BETRIEB · DI WIEDER". Die Briefkästen: eine Mietmahnung, „Fällig in 3 Tagen: 900 Chits (davon Hüllenabgabe 310)". Juno: „Dreihundertzehn für die Ringe über meinem Kopf. Die ich nie bestellt hab." Das ist das Ziel von Kapitel 1. | `rent_notice` |
 | 16 | `kowalski` | Die Straße aus dem Mockup. Bao an seiner Garküche: „Wie immer? Ich schreib's an." (Hat Juno Geld, kann sie bar zahlen; Bao freut sich, sagt aber dasselbe.) Juno isst unter seinem Schirm. | `ate_bao` |
 | 17 | `kowalski` | Nach dem Essen: der kaputte Werbebildschirm über der Straße stottert. Halbes Werbegesicht, halbes Rauschen. Wenn Juno ihn ansieht (oder nach ein paar Sekunden von selbst): das Auge im Rauschen dreht sich zu ihr. Schrift über den ganzen Bildschirm: **JUNO.** Dann wieder Werbung. Bao hat nichts gesehen. Juno: „Hast du ... nichts. Schon gut." Aus der Tasche, ganz leise, EVI: „Das war nicht ich. Ehrlich." | Ende |
-| 18 | — | Abblende. Titelkarte „Kapitel 1: Glas". | `act: next` |
+| 18 | — | Abblende. Titelkarte „Kapitel 1: Glass". | `act: next` |
 
 ### 6.3 Entscheidung P1: was Frau Kessler bekommt
 

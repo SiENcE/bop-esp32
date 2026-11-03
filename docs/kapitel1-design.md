@@ -1,4 +1,4 @@
-# Kapitel 1 „Glas": Design
+# Kapitel 1 „Glass": Design
 
 Stand: Entwurf (2026-11-03). Story: `docs/story.md` (§7 Kapitel 1). Regeln für Deck, Feed-Modus und
 Zeit: `docs/kapitel0-design.md` §2–4. Stil: `docs/style-guide.md`.
@@ -142,10 +142,10 @@ zahlt." Die Kette ist dieselbe; nur die Entscheidung am Ende (C9) ändert sich.
 | Wahl | Was geschieht | Kassenbuch |
 |---|---|---|
 | **Senden** | 750 Chits (der Rest). WREN: „Danke. Und schauen Sie heute Nacht zu. Für die Live-Übertragung zahlen wir das Doppelte." Juno sieht zu. | „WREN: Ines Calder, Metro 31, Fr 23:00. 1500." |
-| **Nicht senden** | WREN: „Schade. Es gibt andere Glaser." Juno sieht trotzdem zu, um Ines zu warnen; aber um 22:45 kommt sie nicht mehr an sie heran (Ines' Komm ist aus; Juno kann ihr nur zusehen). Später im Kassenbuch: „WREN hat es von jemand anderem." | „WREN: nichts geliefert. 750 (behalten oder zurückgeschickt)." |
+| **Nicht senden** | WREN: „Schade. Es gibt andere Glasser." Juno sieht trotzdem zu, um Ines zu warnen; aber um 22:45 kommt sie nicht mehr an sie heran (Ines' Komm ist aus; Juno kann ihr nur zusehen). Später im Kassenbuch: „WREN hat es von jemand anderem." | „WREN: nichts geliefert. 750 (behalten oder zurückgeschickt)." |
 
 Beide Wege führen in dieselbe Szene. Der Unterschied zeigt sich im Kassenbuch, in den Zeilen und in
-Kap. 2 (die Quiet weiß dann, dass Juno die Glaserin war, oder sucht sie erst).
+Kap. 2 (die Quiet weiß dann, dass Juno die Glasserin war, oder sucht sie erst).
 
 ## 7. Das Leben drumherum
 
@@ -153,10 +153,10 @@ Kap. 2 (die Quiet weiß dann, dass Juno die Glaserin war, oder sucht sie erst).
 |---|---|---|
 | Abend 1, 18:30 | `flat` | **Teo** klopft. Orange Weste, Gehörschutz um den Hals, ein Lull-Pflaster hinter dem Ohr. Er bringt Essen von Bao. Er lacht über seine Doppelschichten („Vier Stunden Lull, und ich bin wie neu."). Ansehen des Pflasters: Juno: „Seit wann?" Teo: „Seit es gratis ist." Ein Dialog über ihre Halcyon-Zeit (Teo: „Du redest noch immer, als hätten sie dich gefeuert, weil du schlecht warst."). |
 | jeder Abend | `kowalski` | Der Werbebildschirm stottert, wenn Juno vorbeigeht. Abend 2 zeigt er eine Sekunde lang das Bild aus `cam03` (Kessler unterm Vordach, eine Nacht alt). Abend 3 nur das Auge. |
-| Abend 1–3 | `kessel_14` | **Motte** wartet auf der Treppe. Wenn Juno ihm im Prolog freundlich geantwortet hat: „Zeigst du mir was?" Drei Lektionen (je eine pro Abend, ein kleiner Dialog): was eine Kamera ist, wie man einen Code findet, warum man nie seinen eigenen Block glast. Nach der zweiten baut er den Abzweiger (B5). Nach der dritten: `moth_student` (in Kap. 3 warnt er Juno vor der Razzia). |
+| Abend 1–3 | `kessel_14` | **Motte** wartet auf der Treppe. Wenn Juno ihm im Prolog freundlich geantwortet hat: „Zeigst du mir was?" Drei Lektionen (je eine pro Abend, ein kleiner Dialog): was eine Kamera ist, wie man einen Code findet, warum man nie seinen eigenen Block glasst. Nach der zweiten baut er den Abzweiger (B5). Nach der dritten: `moth_student` (in Kap. 3 warnt er Juno vor der Razzia). |
 | Abend 2 | `kessel_14` | Frau Haldane, wach, an ihrer Tür: Ihr Sohn schreibt nicht mehr aus den mittleren Ringen. Eine Nebengeschichte beginnt (Story §9). |
 | Abend 2 | `lucky_static` | Die Bar von innen: Stammgäste, ein Fernseher mit Halcyon-Nachrichten („Kriminalität im Neunten auf Rekordtief"), die Wirtin Mei (`#ff9a7a`), die Juno anschreiben lässt. Gespräche: Gerüchte über Sinker („Der Sohn vom Fischmann ist nicht aufgewacht. Ruhe-Erschöpfung, sagen sie."). |
-| Abend 1 | Deck | Die App **NETZ** ist neu (Prolog-Design §2.1): HalcyonNet mit den Nachrichten des Abends, Werbung und dem Glaser-Brett. EVI liest die Schlagzeilen vor und versteht sie falsch („Kriminalität auf Rekordtief. Heißt das, die Verbrecher schlafen?"). Jeden Abend neue Einträge; am Abend 2 ein Beitrag auf dem Brett: „Wer weiß was über Ruhe-Erschöpfung? Mein Vater wacht nicht auf." |
+| Abend 1 | Deck | Die App **NETZ** ist neu (Prolog-Design §2.1): HalcyonNet mit den Nachrichten des Abends, Werbung und dem Glasser-Brett. EVI liest die Schlagzeilen vor und versteht sie falsch („Kriminalität auf Rekordtief. Heißt das, die Verbrecher schlafen?"). Jeden Abend neue Einträge; am Abend 2 ein Beitrag auf dem Brett: „Wer weiß was über Ruhe-Erschöpfung? Mein Vater wacht nicht auf." |
 | Abend 2 | Deck | **Vesper** schreibt im Chat, ein Einkäufer für NINTH LIVE (Story §3, §9): „Ich höre, Sie haben ein Auge für das Echte. Ich zahle das Doppelte von Sable. Für jeden rohen Clip." Juno kann ihm jeden Clip aus dem Cache verkaufen (Kesslers Ring, Morrows Umschlag, Okonkwo am Tresor). EVI zeigt dabei das **Anonymisieren** im Clip-Editor („Ich kann Gesichter wegmachen!"); anonymisierte Clips nimmt Vesper nicht. Jeder Verkauf an Vesper steht im Kassenbuch mit der Zahl der Zuschauer, die später dazukommt. Optional, nie nötig. |
 | Abend 3, 21:00 | Deck | Teos Nachricht wegen der Miete (§5), falls nötig. |
 

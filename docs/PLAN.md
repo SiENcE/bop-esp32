@@ -1,4 +1,4 @@
-# Plan: Halcyon on Cutaway.js
+# Plan: Glass Sister on Cutaway.js
 
 Status (2026-11-03): **design done; H0 done** (without `git init`).
 
@@ -57,7 +57,7 @@ order to build it. The model is the Loonies' plan (`B:\Github_my\the_goonies\doc
 ## 0. Ground rules
 
 - **Two repos, one cut.**
-  - The engine is `B:\Github_my\cutaway\` (MIT). It stays free of game content: no Halcyon names,
+  - The engine is `B:\Github_my\cutaway\` (MIT). It stays free of game content: no names from this game,
     art or text, and every new feature is shown in its own demo with placeholder art.
   - The game is this folder and uses a pinned copy in `lib/cutaway/` (synced with
     `tools/sync-engine.sh`, as in the Loonies; never edited here).
@@ -166,7 +166,7 @@ Each item gets tests (`node tests/run.mjs`, "all passed"), `npm run check`, a se
 | **E-b** | engine | C4, C5, C6 (time, routines, moments, watching rooms) | tests, demo: a watched square with two people on a schedule |
 | **E-c** | engine | C7, C8, C9, C10, C11 (post-effects, overheard lines, overlays, settings, tools) | tests, solver plays the demo |
 | **H2** | game | **Vertical slice:** prologue steps 0–10. Juno's `flat` with the deck; `cam03` and `cam04`; Kessler and Varga on their routine; tag, listen, zoom, link, REC and the buffer; the clip; choice P1. | it plays through by hand and in `play.mjs`; the solver proves it |
-| **H2c** | game + engine | **The cyberpunk pass** (`docs/style-guide.md` §8a): every part that still looks like the engine's defaults gets the Halcyon look. Done: frames, cards (engine `frame.draw`/`card.draw`, `game/skin.js`), the fonts (`game/font.js`: the 5x7 terminal face as the default, the 3x5 HUD font for the camera display and the deck's header), the cursor, the satchel and the buttons (`art/ui/hud.px.js`, EVI as the hint button), the hover labels and the choice panel (engine `label`, `choices.draw`), the room changes (`game/transitions.js`: glitch scan, jack-in, static), a first set of sounds (`game/sounds.js`, `tools/render-sounds.mjs`), the first music (`game/music.js`: Juno's theme, the feeds' drone), the title screen (`game/title.js`). **The pass is done**; what stays a rule for new work (characters, rooms, animation, words) is in §8a | nothing on screen or in the speakers is an engine default; screenshots of each part next to the mockups |
+| **H2c** | game + engine | **The cyberpunk pass** (`docs/style-guide.md` §8a): every part that still looks like the engine's defaults gets the game's look. Done: frames, cards (engine `frame.draw`/`card.draw`, `game/skin.js`), the fonts (`game/font.js`: the 5x7 terminal face as the default, the 3x5 HUD font for the camera display and the deck's header), the cursor, the satchel and the buttons (`art/ui/hud.px.js`, EVI as the hint button), the hover labels and the choice panel (engine `label`, `choices.draw`), the room changes (`game/transitions.js`: glitch scan, jack-in, static), a first set of sounds (`game/sounds.js`, `tools/render-sounds.mjs`), the first music (`game/music.js`: Juno's theme, the feeds' drone), the title screen (`game/title.js`). **The pass is done**; what stays a rule for new work (characters, rooms, animation, words) is in §8a | nothing on screen or in the speakers is an engine default; screenshots of each part next to the mockups |
 | **H2b** | game | **The deck as a computer and EVI** (`docs/kapitel0-design.md` §2): first the mockup `docs/mockups/mock_f_deck` (desktop, chat, clip editor, EVI's faces at 320x180), then `deck.js` and `evi.js` replace the current one-panel deck; the prologue's steps 0a–12 get EVI's lines; the hints become EVI's | the prologue plays through the new deck by hand and in `play.mjs`; the solver still proves it |
 | **E-d** | engine | C12, C13 (dialogue v2 and the node editor), then a mockup of the log panel at 320x180 | tests; the demo's dialogue in the node view; The Loonies' dialogues load and solve unchanged |
 | **H3** | game | The rest of the prologue: the intro "Die letzte Schicht", `kessel_14`, `kessel_lobby`, `kowalski`, Bao, "JUNO.", hints, music | the prologue solves and plays from the title screen |
@@ -191,7 +191,7 @@ else is drawn at scale. If feed mode doesn't feel right there, change the design
   - "skip to the next change" should be the solver's only way to wait.
 - **Readability of the duotone:** check every feed with the overlay off (style guide §9).
 - **The engine cut:** feed mode is the game's heart, but its mechanisms must stay generic.
-  - If a feature can only be described with Halcyon words, it belongs in `game/`.
+  - If a feature can only be described with this game's words, it belongs in `game/`.
 
 ## 6. Open
 

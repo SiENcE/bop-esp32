@@ -1,4 +1,4 @@
-# Halcyon (Arbeitstitel): Story-Bibel
+# Glass Sister: Story-Bibel
 
 Stand: **erster Entwurf** (2026-11-03). Der Einstieg (der Tagesjob, der Schwarzmarkt, das Rausgehen,
 das Verbrechen, der moralische Konflikt, die langsame Enthüllung) stammt vom Nutzer. Alles andere hier
@@ -13,7 +13,7 @@ Eigennamen der Spielwelt (Halcyon, Lull, Civic Rest, die Quiet) bleiben englisch
 
 Wie groß dieses Spiel ist, verglichen mit den beiden Spielen, an denen wir uns messen:
 
-| | Dreamweb (1994) | Cyberpunk 2077 | Halcyon (Ziel) |
+| | Dreamweb (1994) | Cyberpunk 2077 | Glass Sister (Ziel) |
 |---|---|---|---|
 | Aufbau | ein Intro plus 7 Ziele, linear | 3 Akte, Hauptgeschichte plus viele Nebenaufträge | ein Prolog, **6 Kapitel**, ein Epilog |
 | Länge | etwa 6–8 Std. | 25 Std. Hauptgeschichte, 100+ Std. alles | **etwa 12 Std. Hauptgeschichte, 4–6 Std. Nebengeschichten** |
@@ -53,8 +53,8 @@ unten bis zur **Krone** ganz oben.
   billigen Schlafimplantat. Vier Stunden mit Lull erholen wie zehn. Der halbe Neunte nutzt es, um
   Doppelschichten zu arbeiten. Die Werbung ist überall: **HALCYON: SLEEP BETTER.**
 - **Slang:**
-  - **Glas**: die Kamera-Feeds;
-  - **Glaser**: Leute, die sie hacken;
+  - **Glass**: die Kamera-Feeds („im Glass", „ins Glass gucken");
+  - **Glasser**: Leute, die sie hacken (Juno ist Glasserin; das Verb: glassen);
   - **Shine**: Informationen, die man verkaufen kann;
   - **Sinker**: Lull-Nutzer, die nicht mehr aufwachen. Halcyon nennt das „Ruhe-Erschöpfung" und
     bringt sie in seine **Schlafstationen**.
@@ -125,14 +125,14 @@ Cyan nur für Technik.
 
 | Wer | Rolle | Aussehen und Silhouette (Akzent im Feed) | Farbe |
 |---|---|---|---|
-| **Juno Reyes**, 31 | Glaserin und Informationshändlerin; früher **zivile Beobachterin** bei Halcyon (eine menschliche Kamerabeobachterin), vor drei Jahren entlassen, als „automatische Auswertung" ihr Team ersetzte; ihr Beobachter-Implantat hat sie behalten, was heute illegal ist | gelber Regenmantel mit Kapuze, Umhängetasche, Cyan-Implantat auf der Wange | `#fff070` |
+| **Juno Reyes**, 31 | Glasserin und Informationshändlerin; früher **zivile Beobachterin** bei Halcyon (eine menschliche Kamerabeobachterin), vor drei Jahren entlassen, als „automatische Auswertung" ihr Team ersetzte; ihr Beobachter-Implantat hat sie behalten, was heute illegal ist | gelber Regenmantel mit Kapuze, Umhängetasche, Cyan-Implantat auf der Wange | `#fff070` |
 | **EVI** | die KI auf Junos Deck: der ausgemusterte Prototyp der „automatischen Auswertung" (§6), den Juno vor der Löschung gerettet hat. Neugierig, lieb, gut mit Daten und hoffnungslos schlecht darin, Menschen zu lesen; fragt Juno ständig, warum Menschen Dinge tun. Erklärt das Deck, meldet Nachrichten, gibt die Hinweise. Lebt im Deck, und das Deck lebt in Junos Tasche. | ein kleines rundes Pixelwesen mit großen Augen und zwei Antennen-Ohren, auf dem Desktop etwa 24 px, in der Tasche 16 px; 6 Gesichter (froh, neugierig, verwirrt, besorgt, müde, Glitch) | `#8ef5d8` |
 | **Teo Reyes**, 23 | ihr jüngerer Bruder; arbeitet Doppelschichten in Pumpenhalle 3, **mit Lull**; fröhlich und stolz, zahlt ihre Miete, wenn sie es nicht kann. Hat sich mit 18 einen **Gezeitenmod** machen lassen (Kiemen), weil Taucher das Doppelte verdienen: Halcyons idealer Arbeiter, umgebaut für die Schicht und betäubt für die Nacht. | orange Arbeitsweste, Gehörschutz um den Hals, Kiemenschlitze, die im Feed leuchten | `#ffb070` |
 | **Bao**, über 70 | betreibt die Nudel-Garküche vor dem LUCKY STATIC; lässt Juno anschreiben; kennt jeden. Redet ständig von seinem Mann Lou, „meinem Alten", der nie zu sehen ist, bis zum Epilog. | Schirm, weiße Schürze | `#e8c890` |
 | **Sable** | Junos Kontakt für Hehlerware auf dem Drain-Markt; nichtbinär; charmant, ehrlich darin, unehrlich zu sein (Sprachregel in §10) | langer violetter Mantel, rasierter Kopf, eine brennende Pfeife | `#c890ff` |
 | **Ratz** | eine **Kabelratte** aus dem alten Flutprogramm, so groß wie ein kleiner Hund, die auf dem Drain-Markt Elektroschrott verkauft; schnell, gierig, abergläubisch, kennt jedes Rohr unter dem Neunten. Spricht durch einen geflickten Sprechkragen, der manchmal Wörter vertauscht. | Kopfhörer, ein viel zu großer Parka, der Schwanz schaut raus; der Kragen glimmt | `#90d0a0` |
 | **Tinte** | eine **Pumpenkrake** aus dem Flutprogramm, sehr alt, im Filterbecken von Pumpenhalle 3; Teos Kollegin und beste Freundin bei der Arbeit. Langsam, weise, trocken witzig; acht Arme, die jeder etwas anderes tun. Weiß mehr über die Sinker der Pumpenhalle als Halcyon glaubt. | ein großer Schatten im Becken, ein Sprechkragen, Saugnäpfe am Glas | `#b0b8ff` |
-| **Motte**, 12 | ein Kurierkind im Kessel-Block, das Juno vergöttert und Glasen lernen will | übergroße weiße Mütze | `#f0f0a0` |
+| **Motte**, 12 | ein Kurierkind im Kessel-Block, das Juno vergöttert und Glassen lernen will | übergroße weiße Mütze | `#f0f0a0` |
 | **Frau Haldane** | Nachbarin gegenüber; immer auf Lull, immer müde, freundlich | ein rosa Morgenmantel | `#ffa8d8` |
 | **„WREN"** | ein anonymer Auftraggeber, der viel zu gut zahlt | nur Text, auf dem Deck | `#d0d8f0` |
 | **Dr. Ines Calder** | Schlaftechnikerin in einer Lull-Klinik, die Schlafprotokolle hinausschmuggelt | weißer Klinikkittel, dunkler Zopf | `#f0a0c0` |
@@ -176,7 +176,7 @@ Wird langsam über die Kapitel enthüllt; der Spieler soll es einen Schritt vor 
      angeblich ihren Job macht, und dass es diese Maschine nie gegeben hat.
 2. **Die Schlafenden sehen zu.** Lull erholt dich nicht nur. Während du schläfst, leiht es sich deine
    Sehrinde und spielt dir Kamera-Feeds vor. Jeder Lull-Nutzer im Neunten verbringt seine Nächte damit,
-   das Glas der Stadt zu träumen, und sein schlafender Verstand markiert, was falsch aussieht. Halcyon
+   das Glass der Stadt zu träumen, und sein schlafender Verstand markiert, was falsch aussieht. Halcyon
    nennt das **Civic Rest**. Der Neunte wird vom Neunten überwacht, im Schlaf. **Die Leute, die Juno
    ersetzt haben, sind ihre Nachbarn.**
 3. **Die Schlafenden begannen, den Traum zu teilen.** Millionen Stunden verbundenen Schlafs ließen
@@ -184,11 +184,11 @@ Wird langsam über die Kapitel enthüllt; der Spieler soll es einen Schritt vor 
    durch jede Kamera, und er hat angefangen zurückzusehen. Die Sinker sind nicht krank. Sie sind die
    Menschen, die der Zeuge behalten hat.
 4. **Warum er Juno ruft:** Ihr altes Beobachter-Implantat spricht dasselbe Protokoll wie Lull. Sie ist
-   die Einzige, die das Glas *wach* beobachtet, so wie der Zeuge es im Schlaf beobachtet. Er sieht ihr
+   die Einzige, die das Glass *wach* beobachtet, so wie der Zeuge es im Schlaf beobachtet. Er sieht ihr
    seit drei Jahren beim Zusehen zu. Als der Bildschirm ihren Namen sagt, spricht er zum ersten Mal.
 5. **Warum Ines starb:** Ihre Schlafprotokolle bewiesen, dass die Hirnaktivität der Lull-Nutzer mit
    den Zeitstempeln der Kameras übereinstimmt. Sie wollte sie Lantern geben. Halcyon heuerte eine
-   Glaserin an, um das Treffen zu finden: Juno.
+   Glasserin an, um das Treffen zu finden: Juno.
 6. **Was Aubrecht plant:** Der Zeuge wächst und beginnt zu handeln. Er verweigert manche Markierungen
    und versteckt Menschen. Aubrecht will ihn **beschneiden**: ein Firmware-Update, das die gemeinsame
    Ebene löscht. Das würde jeden Sinker töten oder leeren, darunter Teo. Danach will sie Lull im
@@ -225,7 +225,7 @@ Straßenmodus.
   aus dem Mockup). Niemand sonst hat es gehört. Aus der Tasche, ganz leise, EVI: „Das war nicht ich.
   Ehrlich." (Der Spieler darf EVI kurz verdächtigen.)
 
-### Kapitel 1: Glas (der Tagesjob, ~2 Std.)
+### Kapitel 1: Glass (der Tagesjob, ~2 Std.)
 
 **Ziel:** die Miete bezahlen, die in drei Tagen fällig ist.
 
@@ -247,7 +247,7 @@ Straßenmodus.
   - Der Werbebildschirm flackert, wenn Juno vorbeigeht.
   - Motte will Unterricht.
 - **Entscheidung 1:** Ines' Treffpunkt an WREN verkaufen oder nicht. Weigert sie sich, bekommt WREN
-  ihn einen Tag später von einem anderen Glaser. So oder so sieht Juno dem Treffen zu, weil WREN
+  ihn einen Tag später von einem anderen Glasser. So oder so sieht Juno dem Treffen zu, weil WREN
   extra für den Live-Feed bezahlt hat (oder, wenn sie sich geweigert hat, weil sie es wissen will).
 - **Das Ende:** das Treffen in der alten U-Bahn-Station in den Sümpfen, durch CAM 31. Ines gibt
   Lantern ein Laufwerk. Ein Mann in einem weißen Regenmantel tritt aus der Dunkelheit. Rask tötet Ines
@@ -409,7 +409,7 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
 - **Kessel-Block:** die Doppelschichten von Frau Haldane und die Briefe ihres Sohnes; Mottes
   Unterricht (ihn unterrichten oder abweisen, was entscheidet, ob er Juno in Kap. 3 warnen kann); der
   Aufzug, der nur dienstags funktioniert.
-- **Glas-Aufträge:** kleine Aufträge auf dem Deck in Kap. 1, 2 und 4 (ein vermisster Hund, ein
+- **Glass-Aufträge:** kleine Aufträge auf dem Deck in Kap. 1, 2 und 4 (ein vermisster Hund, ein
   Versicherungsbetrüger, ein Gewerkschafter, der verfolgt wird). Jeder ist ein abgeschlossenes
   Feed-Rätsel mit einem Eintrag im Kassenbuch. Die besten sind **kleine Leben in einem Auftrag**:
   - **Der Vater:** Ein Mann will jede Aufnahme seiner toten Tochter, aus jeder Kamera, die sie je
@@ -435,7 +435,7 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
   Sümpfen.
 - **Die Tidewater Boys:** eine Gang, die Partner oder Feinde werden kann.
 - **Morrows Tochter:** im Traum gefunden (Kap. 3), was das Umstimmen von Morrow erst möglich macht.
-- **Der andere Glaser:** der, der WRENs Auftrag übernommen hat, falls Juno abgelehnt hat. Finde ihn und
+- **Der andere Glasser:** der, der WRENs Auftrag übernommen hat, falls Juno abgelehnt hat. Finde ihn und
   finde heraus, was er gesehen hat.
 
 ## 10. Entscheidungen (2026-11-03)
@@ -454,7 +454,14 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
 - **Junos Vergangenheit** als zivile Beobachterin ist **von Anfang an klar** (siehe Prolog). Was erst
   später enthüllt wird, ist, *wer* sie ersetzt hat (§6, Punkt 2) und warum ihr Implantat den Zeugen
   hört (§6, Punkt 4).
-- **Namen:** Halcyon, Lull, der Zeuge und die Figuren bleiben vorerst.
+- **Namen:** Halcyon (die Stadt und der Konzern), Lull, der Zeuge und die Figuren bleiben vorerst.
+- **Der Titel des Spiels: Glass Sister** (2026-11-03). „Halcyon" war als Spieltitel verbraucht (mehrere
+  Spiele dieses Namens) und unpersönlich. „Glass Sister" sagt zweierlei: Juno ist Teos Schwester (der
+  Kern der Geschichte: er wird zum Sinker), und sie lebt im Glass. Der Titel bleibt in beiden Fassungen
+  englisch, wie die Schilder der Stadt. Die Stadt heißt weiter Halcyon.
+- **Der Slang der Stadt ist englisch**, auch im deutschen Text, mit englischer Aussprache: **Glass**
+  (die Feeds; nicht „Glas", das wäre ein Trinkgefäß), **Glasser** / **Glasserin**, **glassen**, dazu
+  Shine, Sinker, Chits. Kapitel 1 heißt „Glass".
 - **Kampf:** keiner. Gefahr wird über Timing in den Feeds und durch Flucht gelöst. Juno kann an
   einigen markierten Stellen sterben, mit sofortigem Neuversuch direkt vor der Gefahr.
 - **Das Deck ist ein echter Computer** mit Desktop, Apps, Messenger und Benachrichtigungen, und

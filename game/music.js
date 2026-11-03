@@ -5,7 +5,7 @@
 //          holds the chords, the bass beats like a heart (two beats, a rest). With the intensity come a
 //          cold arpeggio with echoes (layer "arp"), a sparse drum machine with a gated snare ("drums"),
 //          and a CS-80 brass voice over it all ("lead"). On the deck it plays through the wall (speaker).
-//   glas   the feeds: the theme steps back; a low drone on D, a glass bell now and then, the rain and
+//   glass  the feeds: the theme steps back; a low drone on D, a glass bell now and then, the rain and
 //          the camera's hiss (ambience) do the rest. With the intensity a slow pulse comes in ("pulse").
 // Stingers: "clue" (a moment caught), "witness" (the screen says JUNO.: everything else stops for it).
 // Listen: node lib/cutaway/tools/render-music.mjs index.html --out build/music/juno.wav --steps '[...]'
@@ -70,7 +70,7 @@
     },
   });
 
-  Cutaway.score.theme("glas", {
+  Cutaway.score.theme("glass", {
     tempo: 72, key: "D",
     tracks: { drone: { inst: "drone" }, bell: { inst: "glassbell" }, pulse: { inst: "pulse", layer: "pulse" } },
     layers: { pulse: [0.4, 0.7] },
