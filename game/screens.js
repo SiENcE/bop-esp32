@@ -128,6 +128,20 @@
     }
   }
 
+  // REC can be pressed while a scene in a feed plays (a moment is a script: clicks would only skip its
+  // lines): a modal layer takes the click on the REC button then. Otherwise the room's `rec` hotspot does.
+  Cutaway.ui.addLayer({
+    z: 60, modal: true,
+    click(/** @type {{x: number, y: number, button: number}} */ p) {
+      if (!Cutaway.scene.room?.feed || !Cutaway.script.busy || p.button !== 0) return false;
+      const [x, y, w, h] = Halcyon.osd.rec;
+      if (p.x < x || p.x >= x + w || p.y < y || p.y >= y + h) return false;
+      if (S().flag("rec_on")) S().unset("rec_on"); else S().set("rec_on");
+      Cutaway.events.emit("sfx", { sfx: "rec" });
+      return true;
+    },
+  });
+
   // Drawn after the room and its post-effects, before the interface (lines, hover labels, dialogue
   // choices stay on top): the engine's "frame.ui" moment.
   Cutaway.events.on("frame.ui", (/** @type {CanvasRenderingContext2D} */ ctx) => {

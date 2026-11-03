@@ -56,17 +56,22 @@ Cutaway.moment("kessler_call", {
   ],
   unseen: [{ set: "call_missed" }, "Mist. Kessler ist weg. Aber die Kamera hat alles im Puffer."],
 });
+// the handover at Yuen's: whether Juno has it is decided at its end, so REC can be pressed any time
+// while it plays (game/screens.js lets the REC button take clicks during a scene)
 Cutaway.moment("kessler_ring", {
   room: "cam04", day: 1, from: "22:30", to: "22:50",
   play: [
+    { if: "!rec_on", then: ["Da sitzt er. Und gegenüber einer im grauen Mantel. REC, schnell."] },
     { say: "varga", text: "Das ist nicht alles, Kessler." },
-    { say: "kessler", text: "Mehr hab ich nicht." },
+    { say: "kessler", text: "Mehr hab ich nicht. Ehrlich." },
+    { say: "varga", text: "Dann gib mir, was du hast." },
     { zoom: "zoom_ring" },
     "Er zieht den Ring ab.",
-    { if: "rec_on", then: [{ cache: "clip_kessler_ring" }, "Und ich hab's."],
-      else: ["Mist. REC war aus. Der Puffer hat es noch."] },
+    "Und schiebt ihn rüber.",
     { zoom: false },
     { say: "varga", text: "Bis Freitag, Kessler. Sonst holen wir uns mehr als einen Ring." },
+    { if: "rec_on", then: [{ cache: "clip_kessler_ring" }, "Hab's. Alles drauf."],
+      else: ["Mist. REC war aus. Der Puffer hat es noch."] },
     { set: "saw_varga" }, { cache: "note_kessler_debt" },
     "Gus Varga. Kein Liebhaber. Ein Kredithai.",
   ],
