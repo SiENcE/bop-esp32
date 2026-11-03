@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Halcyon: style mockups</title>
+<style>
+  body { background: #0d0f16; color: #c8d0e0; font: 15px/1.5 system-ui, sans-serif; margin: 24px; }
+  h1 { color: #ff5fb0; margin: 0 0 4px; }
+  p.lead { color: #8a94aa; margin: 0 0 24px; }
+  .card { margin: 0 0 40px; }
+  .card h2 { color: #5fe0ff; margin: 0 0 6px; font-size: 18px; }
+  .card p { margin: 0 0 10px; max-width: 960px; }
+  .card img { image-rendering: pixelated; display: block; max-width: 100%; border: 1px solid #2a3044; }
+  .missing { color: #ff6060; }
+  label { color: #8a94aa; font-size: 13px; }
+</style>
+</head>
+<body>
+<h1>Halcyon: style mockups</h1>
+<p class="lead">The same moment in every picture: night, rain, outside the LUCKY STATIC noodle bar; Juno looks
+at the broken ad screen that just said her name. Only the view, rendering and interface change.
+See BRIEF.md. <label><input type="checkbox" id="anim" checked> animated where available</label></p>
+<div id="cards"></div>
+<script>
+  const MOCKS = [
+    ["mock_a_topdown", "A: Dreamweb-like top-down", "Straight down, a small play window inside a chunky industrial HUD (portrait, location bar, watch, zoom window). Grim and dithered."],
+    ["mock_b_side", "B: Cutaway side stage, neon noir", "The Loonies setup at night: full screen, flat colours with outlines, strong neon light pools, modern verb-less UI."],
+    ["mock_c_iso", "C: Isometric", "A 2:1 dimetric street corner like the 90s cyber RPGs, full screen, slim UI."],
+    ["mock_d_section", "D: Megablock cross-section", "The building sliced open: several floors at once like an ant farm, tiny characters, a tall scrolling room."],
+    ["mock_e_cctv", "E: Hacked CCTV feed", "Seen through cameras Juno hijacks: duotone phosphor, scanlines, OSD; implant overlays in colour; switching cameras = changing room."],
+  ];
+  const cards = document.getElementById("cards");
+  const anim = document.getElementById("anim");
+  function render() {
+    cards.innerHTML = "";
+    for (const [id, title, text] of MOCKS) {
+      const div = document.createElement("div");
+      div.className = "card";
+      div.innerHTML = `<h2>${title}</h2><p>${text}</p>`;
+      const img = new Image();
+      const png = id + "_x3.png", gif = id + "_x3.gif";
+      img.alt = title;
+      img.onerror = () => {
+        if (img.src.endsWith(".gif")) { img.src = png; return; }
+        div.insertAdjacentHTML("beforeend", `<p class="missing">${png} not built yet</p>`);
+        img.remove();
+      };
+      img.src = anim.checked ? gif : png;
+      div.appendChild(img);
+      cards.appendChild(div);
+    }
+  }
+  anim.onchange = render;
+  render();
+</script>
+</body>
+</html>

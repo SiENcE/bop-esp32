@@ -1,0 +1,11 @@
+# raw pxl output, screenshots and scratch files (assets/*.js are the checked-in build)
+build/
+out/
+node_modules/
+*.log
+# the pxl skill is its own repository
+.claude/skills/
+# third-party reference (Dreamweb screenshots and a walkthrough by Stijn Bolle): internal reference only,
+# kept out of the history so the repository can go public later without them
+docs/screenshots/
+docs/dreamweb.txt

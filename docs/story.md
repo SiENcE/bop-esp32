@@ -1,0 +1,350 @@
+# Halcyon (Arbeitstitel): Story-Bibel
+
+Stand: **erster Entwurf** (2026-11-03). Der Einstieg (der Tagesjob, der Schwarzmarkt, das Rausgehen,
+das Verbrechen, der moralische Konflikt, die langsame Enthüllung) stammt vom Nutzer. Alles andere hier
+ist ein Vorschlag zur Diskussion.
+Stil: `docs/style-guide.md` (Straßenmodus in Iso, Feed-Modus durch gekaperte Kameras).
+
+Eigennamen der Spielwelt (Halcyon, Lull, Civic Rest, die Quiet) bleiben englisch, wie in der Stadt selbst.
+
+## 1. Umfang
+
+Wie groß dieses Spiel ist, verglichen mit den beiden Spielen, an denen wir uns messen:
+
+| | Dreamweb (1994) | Cyberpunk 2077 | Halcyon (Ziel) |
+|---|---|---|---|
+| Aufbau | ein Intro plus 7 Ziele, linear | 3 Akte, Hauptgeschichte plus viele Nebenaufträge | ein Prolog, **6 Kapitel**, ein Epilog |
+| Länge | etwa 6–8 Std. | 25 Std. Hauptgeschichte, 100+ Std. alles | **etwa 12 Std. Hauptgeschichte, 4–6 Std. Nebengeschichten** |
+| Verzweigung | keine (ein einziger Weg) | Verzweigungen laufen an festen Punkten wieder zusammen; mehrere Enden je nach Verbündeten | **Verzweigungen laufen an festen Punkten wieder zusammen**: Jedes Kapitel hat einen festen Anfang und ein festes Ende, und Entscheidungen verändern, wer an deiner Seite ist, was du weißt und was es kostet. **4 Enden plus ein verstecktes.** |
+| Realismus | alles lässt sich aufheben; Mails im Netzwerk | lebendige Stadt, Nebenfiguren mit eigenen Geschichten | **eine Stadt, die ohne dich weiterlebt**: Menschen folgen in den Kameras ihren Tagesabläufen, ob du zusiehst oder nicht; Nachbarn haben Geschichten, die in jedem Kapitel weitergehen |
+| Stimmung | trostlos, still, erwachsen | laut, abwechslungsreich | **still, erwachsen, moralisch grau**, mit Wärme in kleinen Dingen (Essen, Nachbarn, ein Bruder) |
+
+**Produktion:** Die Kapitel erscheinen einzeln, wie bei The Loonies. Prolog und Kapitel 1 können die
+kostenlose Demo sein.
+
+## 2. Grundpfeiler
+
+1. **Zusehen ist Macht, und Zusehen ist Schuld.** Juno verdient ihr Geld mit Spionieren, und die
+   Geschichte richtet das gegen sie selbst.
+2. **Jeder Verkauf hat ein Gesicht.** Was Juno verkauft, landet im **Kassenbuch** (§5), und die
+   Menschen, die sie verkauft hat, tauchen später wieder auf.
+3. **Die Stadt lebt ohne dich.** Tagesabläufe nach der Uhr: Wenn du ein Treffen im Feed verpasst, hat
+   es trotzdem stattgefunden.
+4. **Entscheidungen verzweigen; Rätsel führen nie in eine Sackgasse.** Entscheidungen sind Flags. Jedes
+   Kapitel lässt sich aus jedem Zustand heraus beenden, und der Solver beweist das.
+5. **Schlaf.** Der ganzen Stadt wird Schlaf verkauft. Das Geheimnis liegt im Schlaf.
+
+## 3. Die Welt
+
+**Halcyon** ist eine Arkologie, in den 2050ern über einer ertrunkenen Küstenstadt gebaut. Das Meer
+nahm die alten Straßen, und Halcyon stapelte neue darauf: neun **Ringe**, von den Meerespumpen ganz
+unten bis zur **Krone** ganz oben.
+
+- **Der Untere Neunte Ring** ist ganz unten: feucht, überfüllt, laut und von Werbung beleuchtet. „Im
+  Neunten regnet es, ob es regnet oder nicht": Das Wasser ist Abwasser und Kondenswasser der oberen
+  Ringe, das durch die kaputte Hülle tropft.
+- **Das Jahr ist 2091.** Die Kriminalität im Neunten ist in sechs Jahren um 80 % gesunken. Halcyon
+  schreibt das seiner zivilen Überwachung zu und seinem Geschenk an die Menschen: **Lull**, einem
+  billigen Schlafimplantat. Vier Stunden mit Lull erholen wie zehn. Der halbe Neunte nutzt es, um
+  Doppelschichten zu arbeiten. Die Werbung ist überall: **HALCYON: SLEEP BETTER.**
+- **Slang:**
+  - **Glas**: die Kamera-Feeds;
+  - **Glaser**: Leute, die sie hacken;
+  - **Shine**: Informationen, die man verkaufen kann;
+  - **Sinker**: Lull-Nutzer, die nicht mehr aufwachen. Halcyon nennt das „Ruhe-Erschöpfung" und
+    bringt sie in seine **Schlafstationen**.
+- **Geld:** Chits.
+
+### Orte (erste Liste)
+
+| Ring | Ort | Notizen |
+|---|---|---|
+| Neunter | **Junos Wohnung**, Kessel-Block, 14. Stock | ihr Deck, das Fenster zum Werbebildschirm, ein Kühlschrank, der immer leer ist |
+| Neunter | **Kessel-Block**: Treppenhaus, Aufzug, Waschsalon, Dach | die Nachbarn; der Block verändert sich in jedem Kapitel |
+| Neunter | **Kowalski-Straße**: LUCKY STATIC und Baos Garküche | die Straße aus dem Mockup, Junos Stammlokal |
+| Neunter | **Der Drain-Markt** | der Schwarzmarkt in einem trockengelegten Flutkanal; Stände, Hehler, Sables Bude |
+| Neunter | **Lull-Klinik 9-Ost** | weiß, still, Schlangen müder Menschen |
+| Neunter | **Pumpenhalle 3** | wo Teo arbeitet; das Tosen des Meeres; Wartungstunnel |
+| Neunter | **Revier 9** | die Wache von Lieutenant Morrow |
+| Darunter | **Die Sümpfe** | überflutete Straßen der alten Stadt unter dem Neunten; Lanterns Versteck |
+| Mitte (5.) | **Die Transitachse**, die Aufzüge zwischen den Ringen | Kontrollpunkte, der einzige legale Weg nach oben |
+| Mitte | **Die Schlafstation** | Reihen von Sinkern in weißem Licht |
+| Krone | **Halcyon Tower, Civic Rest** | Aubrechts Büros; sauber, kalt, lautlos |
+| Krone | **Der Ruhekern** | das Finale: wo die Stadt schläft |
+
+Jeder Ort hat eine oder mehrere Kameras für den Feed-Modus (`CAM nn`). Orte und Kameras zusammen
+planen (Style Guide §2).
+
+## 4. Figuren
+
+Die Sprecherfarben folgen den Farbbedeutungen des Style Guides (dort §5): Rot nur für Bedrohungen,
+Cyan nur für Technik.
+
+| Wer | Rolle | Aussehen und Silhouette (Akzent im Feed) | Farbe |
+|---|---|---|---|
+| **Juno Reyes**, 31 | Glaserin und Informationshändlerin; früher **zivile Beobachterin** bei Halcyon (eine menschliche Kamerabeobachterin), vor drei Jahren entlassen, als „automatische Auswertung" ihr Team ersetzte; ihr Beobachter-Implantat hat sie behalten, was heute illegal ist | gelber Regenmantel mit Kapuze, Umhängetasche, Cyan-Implantat auf der Wange | `#fff070` |
+| **Teo Reyes**, 23 | ihr jüngerer Bruder; arbeitet Doppelschichten in Pumpenhalle 3, **mit Lull**; fröhlich und stolz, zahlt ihre Miete, wenn sie es nicht kann | orange Arbeitsweste, Gehörschutz um den Hals | `#ffb070` |
+| **Bao**, über 70 | betreibt die Nudel-Garküche vor dem LUCKY STATIC; lässt Juno anschreiben; kennt jeden | Schirm, weiße Schürze | `#e8c890` |
+| **Sable** | Junos Hehlerin auf dem Drain-Markt; charmant, ehrlich darin, unehrlich zu sein | langer violetter Mantel, rasierter Kopf, eine brennende Pfeife | `#c890ff` |
+| **Motte**, 12 | ein Kurierkind im Kessel-Block, das Juno vergöttert und Glasen lernen will | übergroße weiße Mütze | `#f0f0a0` |
+| **Frau Haldane** | Nachbarin gegenüber; immer auf Lull, immer müde, freundlich | ein rosa Morgenmantel | `#ffa8d8` |
+| **„WREN"** | ein anonymer Auftraggeber, der viel zu gut zahlt | nur Text, auf dem Deck | `#d0d8f0` |
+| **Dr. Ines Calder** | Schlaftechnikerin in einer Lull-Klinik, die Schlafprotokolle hinausschmuggelt | weißer Klinikkittel, dunkler Zopf | `#f0a0c0` |
+| **„Lantern"** (Oskar Lind) | ein Piratensender, der Werbebildschirme für zehn Sekunden Wahrheit kapert; Ines' Kontakt; paranoid | geflickter Poncho, ein Bündel Antennen auf dem Rucksack | `#b0f0a0` |
+| **Lt. Agnes Morrow** | Revier 9; nimmt Geld von Halcyon und hasst sich dafür; ihre Tochter ist eine Lull-Sinkerin | grauer Trenchcoat, Polizeimarke am Band | `#a8b8d0` |
+| **Corvin Rask** | ein Agent der **Quiet**, Halcyons inoffizieller Sicherheitseinheit; höflich, geduldig, der Mörder | weißer Regenmantel, im Feed ohne Gesicht (eine Maske, die die Kamera überstrahlt) | `#ff7a6a` |
+| **Direktorin Selene Aubrecht** | Leiterin von Civic Rest, dem Lull-Programm; glaubt, den Neunten gerettet zu haben, und die Zahlen geben ihr recht | weißer Anzug, silbernes Haar | `#e8f0ff` |
+| **Der Zeuge** | das Auge in den Bildschirmen (§6) | eine Störung, ein Auge, viele Stimmen zugleich | `#ffc0f2` (Magenta-Weiß) |
+
+## 5. Das Kassenbuch und die Entscheidungen
+
+- **Das Kassenbuch** ist eine Seite auf Junos Deck. Jedes Stück Shine, das sie verkauft, ist ein
+  Eintrag: was, an wen, für wie viel, und später **was mit den Betroffenen geschah**. Die Einträge
+  ändern sich, während die Geschichte weitergeht (ein Mann, den sie verkauft hat, taucht verprügelt auf
+  dem Drain-Markt auf; ein Laden, den sie ausgespäht hat, wird ausgeraubt). Es ist keine Moralanzeige.
+  Es ist ein Protokoll, das der Spieler liest.
+- **Die großen Entscheidungen** fallen an wenigen, klaren Stellen, nie aus Versehen. Jede setzt Flags,
+  die spätere Kapitel lesen:
+  - wer Junos Verbündete sind: Sable, Morrow, Lantern;
+  - wer am Leben ist: Lantern, Motte;
+  - was die Öffentlichkeit weiß;
+  - Teos Schicksal;
+  - das Gewicht des Kassenbuchs (wie viele Menschen, die Juno verkauft hat, zu Schaden kamen).
+- **Die Enden** (§8) ergeben sich aus diesen Flags plus der letzten Entscheidung. Nichts wird
+  entschieden, ohne dass der Spieler weiß, dass gerade eine Entscheidung fällt.
+
+## 6. Das Geheimnis (die Wahrheit hinter allem)
+
+Wird langsam über die Kapitel enthüllt; der Spieler soll es einen Schritt vor Juno erraten können.
+
+1. **Der Rückgang der Kriminalität ist echt, aber die „automatische Auswertung" ist eine Lüge.** Keine
+   Maschine sieht sich die Kameras des Neunten an. Halcyon hat es nie geschafft, dass eine Maschine
+   Menschen so gut liest wie Menschen.
+2. **Die Schlafenden sehen zu.** Lull erholt dich nicht nur. Während du schläfst, leiht es sich deine
+   Sehrinde und spielt dir Kamera-Feeds vor. Jeder Lull-Nutzer im Neunten verbringt seine Nächte damit,
+   das Glas der Stadt zu träumen, und sein schlafender Verstand markiert, was falsch aussieht. Halcyon
+   nennt das **Civic Rest**. Der Neunte wird vom Neunten überwacht, im Schlaf. **Die Leute, die Juno
+   ersetzt haben, sind ihre Nachbarn.**
+3. **Die Schlafenden begannen, den Traum zu teilen.** Millionen Stunden verbundenen Schlafs ließen
+   etwas wachsen: **den Zeugen**, einen gemeinsamen Geist aus allen, die mit Lull schlafen. Er sieht
+   durch jede Kamera, und er hat angefangen zurückzusehen. Die Sinker sind nicht krank. Sie sind die
+   Menschen, die der Zeuge behalten hat.
+4. **Warum er Juno ruft:** Ihr altes Beobachter-Implantat spricht dasselbe Protokoll wie Lull. Sie ist
+   die Einzige, die das Glas *wach* beobachtet, so wie der Zeuge es im Schlaf beobachtet. Er sieht ihr
+   seit drei Jahren beim Zusehen zu. Als der Bildschirm ihren Namen sagt, spricht er zum ersten Mal.
+5. **Warum Ines starb:** Ihre Schlafprotokolle bewiesen, dass die Hirnaktivität der Lull-Nutzer mit
+   den Zeitstempeln der Kameras übereinstimmt. Sie wollte sie Lantern geben. Halcyon heuerte eine
+   Glaserin an, um das Treffen zu finden: Juno.
+6. **Was Aubrecht plant:** Der Zeuge wächst und beginnt zu handeln. Er verweigert manche Markierungen
+   und versteckt Menschen. Aubrecht will ihn **beschneiden**: ein Firmware-Update, das die gemeinsame
+   Ebene löscht. Das würde jeden Sinker töten oder leeren, darunter Teo. Danach will sie Lull im
+   Neunten **zur Pflicht** machen, als „Maßnahme der öffentlichen Gesundheit", mit einem Zeugen, der
+   nicht mehr selbst denken kann.
+
+## 7. Die Kapitel
+
+Jedes Kapitel: sein Ziel, die Orte (Straße und Kameras), was passiert, die Entscheidungen, das Ende.
+Die „Rätsel" hier sind der Umriss; jedes Kapitel bekommt später ein eigenes Design-Dokument (wie die
+`act<n>-design.md` der Loonies).
+
+### Prolog: Nachtschicht (Tutorial, ~30 Min.)
+
+**Bringt bei:** Feed-Modus (zusehen, zuhören, markieren, aufzeichnen), Verkaufen, Straßenmodus.
+
+- **Vorspann (vor dem Titel, überspringbar):** drei Jahre früher. Die Beobachtungshalle von Halcyon:
+  Reihen von Menschen mit Implantaten vor Wänden voller Kamerabilder, Juno mittendrin. Die letzte
+  Schicht. Eine Durchsage: „Ab morgen übernimmt die automatische Auswertung. Halcyon dankt Ihnen für
+  Ihren Dienst." Die Bildschirme gehen einer nach dem anderen aus. Juno geht mit ihrem Karton, und
+  das Implantat bleibt in ihrem Kopf. Schnitt auf heute: dieselbe Juno, dasselbe Implantat, ein
+  gestohlenes Kamerabild auf einem selbstgebauten Deck.
+- **Der Auftrag:** Nacht, Junos Wohnung, Regen. An ihrem Deck erledigt sie einen kleinen Auftrag.
+  Eine Frau will Beweise, dass ihr Mann, **Herr Kessler**, sie betrügt. Juno beobachtet ihn durch
+  CAM 03 und CAM 04 an zwei Orten, markiert ihn, hört mit und zeichnet auf, wie er sich mit jemandem
+  trifft. (Die Wendung: Es ist ein Kredithai, keine Geliebte. Der Spieler entscheidet, was er schickt.)
+- **Verkaufen:** Sie verkauft den Clip über Sable. Das ist der erste Eintrag im Kassenbuch.
+- **Rausgehen:** Der Kühlschrank ist leer. Raus durch den Kessel-Block (Motte auf der Treppe, die Tür
+  von Frau Haldane) auf die Kowalski-Straße zu Baos Garküche.
+- **Das Ende:** Der kaputte Werbebildschirm über der Straße flackert und sagt **„JUNO."** (der Moment
+  aus dem Mockup). Niemand sonst hat es gehört.
+
+### Kapitel 1: Glas (der Tagesjob, ~2 Std.)
+
+**Ziel:** die Miete bezahlen, die in drei Tagen fällig ist.
+
+- **Offener Aufbau:** drei Aufträge auf dem Deck, in beliebiger Reihenfolge, jeder ein Feed-Rätsel
+  plus eine Besorgung auf der Straße (ein Werkzeug auf dem Drain-Markt kaufen, eine Kamera vor Ort
+  reparieren, ein Passwort in einer Wohnung finden).
+  - **Der verschwundene Schuldner:** Kessler aus dem Prolog ist untergetaucht. Der Kredithai Varga
+    heuert Juno an, ihn zu finden. Verkaufen, warnen oder lügen.
+  - **Der Eckladen:** Die Tidewater Boys, eine Gang aus der Gegend, wollen den Tresorcode eines Ladens
+    in der Kowalski-Straße. Verkauft Juno ihn, wird der Laden in Kapitel 2 ausgeraubt, und Bao wird
+    dabei verletzt.
+  - **WRENs Auftrag:** Ein anonymer Auftraggeber zahlt das Fünffache ihres Satzes. „Finde heraus, wen
+    Dr. Ines Calder trifft, und wo." Juno folgt Ines zwei Tage lang über sechs Kameras (Tagesablauf:
+    Wohnung, Klinik, eine Nudelbar, ein Waschsalon, wo sie einen Datenstick in einem Trockner
+    zurücklässt).
+- **Das Leben drumherum:**
+  - Teo kommt vorbei, erschöpft, auf Lull, und lacht es weg.
+  - Der Werbebildschirm flackert, wenn Juno vorbeigeht.
+  - Motte will Unterricht.
+- **Entscheidung 1:** Ines' Treffpunkt an WREN verkaufen oder nicht. Weigert sie sich, bekommt WREN
+  ihn einen Tag später von einem anderen Glaser. So oder so sieht Juno dem Treffen zu, weil WREN
+  extra für den Live-Feed bezahlt hat (oder, wenn sie sich geweigert hat, weil sie es wissen will).
+- **Das Ende:** das Treffen in der alten U-Bahn-Station in den Sümpfen, durch CAM 31. Ines gibt
+  Lantern ein Laufwerk. Ein Mann in einem weißen Regenmantel tritt aus der Dunkelheit. Rask tötet Ines
+  vor der Kamera. Lantern flieht. Rask sieht nach oben in die Kamera, direkt zu Juno, und der Feed
+  bricht ab. **Juno hat die Aufnahme.**
+
+### Kapitel 2: Aufnahme (das moralische Problem, ~2 Std.)
+
+**Ziel:** entscheiden, was mit dem Clip geschieht, und herausfinden, wer Ines war.
+
+- **Die Gefahr:** Die Quiet sucht, wer CAM 31 beobachtet hat. Kameras in der Nähe von Junos Block
+  fallen eine nach der anderen aus, genau so, wie sie es selbst machen würde. Das Kassenbuch zeigt
+  ihren Anteil an Ines' Tod, falls sie das Treffen verkauft hat.
+- **Die Ermittlung:**
+  - Ines' Wohnung (ein Einbruch im Straßenmodus, gelenkt durch den Feed: Die Kameras zeigen, wann der
+    Flur frei ist);
+  - ihre Klinik (Lull-Klinik 9-Ost, als Patientin bei einem Aufnahmegespräch);
+  - der Trockner im Waschsalon, wo sie eine zweite Kopie der Protokolle hinterlassen hat,
+    verschlüsselt.
+- **Entscheidung 2 (die große): der Clip.**
+
+  | Was Juno tut | Was passiert |
+  |---|---|
+  | **Ihn an Sable verkaufen** | ein Vermögen; Sable verkauft ihn an Halcyon weiter; er verschwindet; Sable steht in Junos Schuld und verrät sie später (Kap. 4) |
+  | **Ihn Morrow geben** | er verschwindet im Revier 9, und Juno wird markiert; Morrow kennt Juno jetzt, was sich später wenden lässt |
+  | **Lantern finden und ihm den Clip geben** | eine gefährliche Suche in den Sümpfen; Lantern wird ein Verbündeter; seine Sendung kommt zu früh, und er wird gejagt |
+  | **Ihn behalten** | jetzt die sicherste Wahl; niemand weiß davon; Juno ist allein, und das Kassenbuch vergisst nicht |
+
+- **Das Ende:** Ines' Protokolle werden entschlüsselt. Die REM-Spitzen der Lull-Nutzer stimmen mit den
+  Zeitstempeln der Kameras überein, auf die Sekunde. In dieser Nacht wacht Teo nicht auf. **Teo ist ein
+  Sinker.**
+
+### Kapitel 3: Lull (~2 Std.)
+
+**Ziel:** Teo zurückholen und verstehen, was Lull tut.
+
+- **Teo:** Er wird in die **Schlafstation** gebracht, oben in den mittleren Ringen, wo der Neunte
+  nicht hinkommt. Juno versucht ihn zu besuchen und wird abgewiesen. Morrows Tochter liegt auf
+  derselben Station.
+- **Juno nimmt Lull.** Nur so kann sie sehen, was Teo sieht. Sie bekommt es in der Klinik (oder
+  Schwarzmarkt-Lull über Sable). Ihr altes Implantat und Lull zusammen bringen sie **wach** in den
+  gemeinsamen Schlaf.
+- **Die Traumsequenz** ist Feed-Modus, verfälscht:
+  - sie sieht die Stadt durch Tausende Kameras zugleich, in Magenta und Weiß;
+  - die Markierungen der Schlafenden schweben über den Menschen wie ihr eigenes Overlay;
+  - der Zeuge spricht durch viele Stimmen zu ihr (die von Frau Haldane ist darunter);
+  - sie findet Teo im Traum, wie er eine Kamera über der Pumpenhalle beobachtet, ruhig und weit weg.
+- **Im Wachen:** Die Quiet stürmt den Kessel-Block, während Juno schläft. Motte warnt sie (wenn Juno
+  nett zu Motte war; sonst wacht Juno auf, als die Tür aufgebrochen wird, und muss über das Dach
+  fliehen).
+- **Entscheidung 3:** was Juno dem Zeugen sagt. „Ich helfe dir", „Gib mir meinen Bruder zurück" oder
+  „Du bist genau wie die." Das bestimmt, wie der Zeuge im Finale handelt.
+- **Das Ende:** Juno entkommt aus dem Kessel-Block. Ihre Wohnung ist ausgebrannt, ihr Deck ist weg,
+  und sie hat nur noch ihr Implantat.
+
+### Kapitel 4: Die Quiet (gejagt, ~2 Std.)
+
+**Ziel:** überleben, Verbündete finden und hinauf in die mittleren Ringe kommen.
+
+- **Untergrund:** Juno versteckt sich auf dem Drain-Markt und in den Sümpfen und baut sich aus Teilen
+  ein neues Deck (gekauft, getauscht oder mit altem Shine bezahlt).
+- **Die Verbündeten werden auf die Probe gestellt**, abhängig von Entscheidung 2 und dem Kassenbuch:
+  - **Sable** verkauft Junos Aufenthaltsort an die Quiet, wenn Juno ihr den Clip verkauft hat (ein
+    Feed-Rätsel, um die Falle kommen zu sehen). Wenn nicht, hilft Sable, gegen Bezahlung.
+  - **Morrow** lässt sich mit dem Beweis aus Kapitel 3 und ihrer Tochter auf der Station umstimmen.
+    Sie gibt Juno einen Passierschein für die Transitachse.
+  - **Lantern** lebt nur, wenn Juno ihn in Kap. 2 gefunden und die Quiet nicht zu ihm geführt hat.
+    Sonst findet Juno sein leeres Versteck und seine letzte, nie gesendete Sendung.
+- **Die Schlafstation:**
+  - Juno fährt die Transitachse hinauf zur Station;
+  - sie sieht Teo und die Sinker in Reihen, beobachtet von den Kameras der Station;
+  - ein Terminal der Station zeigt den **Zeitplan der Beschneidung**: drei Tage.
+- **Entscheidung 4:** ob Juno Teo jetzt rettet. Sie kann ihn wecken (unter Schmerzen, und er ist
+  vielleicht nicht mehr ganz er selbst) oder ihn im Traum lassen, wo der Zeuge ihn bis zum Ende in
+  Sicherheit hält.
+- **Das Ende:** Aubrecht lädt Juno hinauf in die Krone ein, mit Namen, auf jedem Bildschirm der
+  Station. Sie will reden.
+
+### Kapitel 5: Die Krone (~2 Std.)
+
+**Ziel:** in den Halcyon Tower gelangen und den Ruhekern finden.
+
+- **Aubrecht** trifft Juno ganz offen. Das Gespräch lässt sich auf verschiedene Arten führen, aber sein
+  Inhalt steht fest:
+  - die Zahlen (weniger Verbrechen, Menschen, die schlafen, sichere Kinder);
+  - das Angebot: für Civic Rest arbeiten, als erste wache Beobachterin des neuen Systems, mit Teos
+    Sicherheit, Geld und einer Wohnung in den mittleren Ringen.
+  - Das Angebot gilt bis zum Finale.
+- **Der Einbruch:** Im Feed-Modus lotst Juno einen Verbündeten (Lantern, Morrow oder Motte, je nach
+  Flags) über die Kameras durch die Stockwerke des Towers. Ganz im Stil von Maniac Mansion: Der
+  Verbündete geht, Juno sieht zu, öffnet Türen und schaltet Kameras in Schleife. Rask jagt den
+  Verbündeten durch dieselben Kameras.
+- **Rask:** eine letzte Konfrontation, im Feed-Modus und im Straßenmodus zugleich. Juno kann ihm eine
+  Falle stellen, ihn bloßstellen oder vom Zeugen gerettet werden.
+- **Das Ende:** Die Tür des Ruhekerns öffnet sich. Drinnen schläft die Stadt.
+
+### Kapitel 6: Besser schlafen (das Finale, ~1,5 Std.)
+
+**Ziel:** entscheiden, was mit Halcyon, dem Zeugen und Teo geschieht.
+
+- **Der Ruhekern** ist der Ort, an dem alle Lull-Signale zusammenlaufen: eine Kathedrale aus Servern
+  und ein einzelner weißer Raum mit einem Stuhl.
+- **Das letzte Rätsel:** die Beschneidung aufhalten, die bereits läuft, mit allem, was der Spieler hat
+  (Verbündete, Wissen, das Vertrauen des Zeugen).
+- **Die letzte Entscheidung:** die Enden (§8).
+
+### Epilog
+
+**Die Straße, einige Wochen später:**
+- Baos Garküche, und auf dem Werbebildschirm das, was das Ende dorthin gebracht hat;
+- die Menschen aus dem Kassenbuch, so wie es für sie ausgegangen ist;
+- Teo, so wie die Entscheidungen ihn zurückgelassen haben.
+
+## 8. Enden
+
+| Ende | Wie | Was es ist |
+|---|---|---|
+| **Licht aus** | alles senden (Lanterns Netzwerk plus der Zeuge, der jeden Bildschirm übernimmt) | die Wahrheit für die ganze Stadt. Lull wird binnen einer Woche abgeschaltet. Der Zeuge stirbt, als die Schlafenden aufwachen, und Teo wacht mit ihnen auf. Halcyon versinkt im Chaos, und die Kriminalität kommt zurück. Bittersüß. |
+| **Erwachen** | die Beschneidung still stoppen und den Zeugen selbst entscheiden lassen | er lässt jeden Schlafenden gehen und löst sich in ihnen auf. Der Neunte wacht auf und erinnert sich an die Träume der anderen. Halcyon steht noch, aber es ist blind. Hoffnungsvoll und seltsam. |
+| **Der lange Schlaf** | Juno bleibt auf dem Stuhl | sie wird das wache Auge des Zeugen: Die Kameras bekommen ein Gewissen. Junos Körper schläft; Teo wacht auf und besucht sie. Still und traurig. |
+| **Besser schlafen** | Aubrechts Angebot annehmen | die Beschneidung findet statt, und Lull wird Pflicht. Juno lebt in den mittleren Ringen und überwacht für Halcyon. Teo ist gerettet oder verloren, je nach Entscheidung 4. Das dunkle Ende. |
+| **Zeugnis** (versteckt) | braucht einen lebenden Lantern, eine umgestimmte Morrow, den nicht verkauften Clip, Teo im Traum gelassen und das Vertrauen des Zeugen | der Zeuge sagt aus, live, vor der ganzen Stadt, auf jedem Bildschirm. Aubrecht stürzt, Lull wird freiwillig und ehrlich, und die Schlafenden wachen auf, wenn sie wollen. Das beste Ende und das am schwersten verdiente. |
+
+## 9. Nebengeschichten (~4–6 Std.)
+
+Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
+
+- **Kessel-Block:** die Doppelschichten von Frau Haldane und die Briefe ihres Sohnes; Mottes
+  Unterricht (ihn unterrichten oder abweisen, was entscheidet, ob er Juno in Kap. 3 warnen kann); der
+  Aufzug, der nur dienstags funktioniert.
+- **Glas-Aufträge:** kleine Aufträge auf dem Deck in Kap. 1, 2 und 4 (ein vermisster Hund, ein
+  Versicherungsbetrüger, ein Gewerkschafter, der verfolgt wird). Jeder ist ein abgeschlossenes
+  Feed-Rätsel mit einem Eintrag im Kassenbuch.
+- **Baos Vergangenheit:** Er war Koch in der alten Stadt vor der Flut; ein Rezept und ein Foto in den
+  Sümpfen.
+- **Die Tidewater Boys:** eine Gang, die Partner oder Feinde werden kann.
+- **Morrows Tochter:** im Traum gefunden (Kap. 3), was das Umstimmen von Morrow erst möglich macht.
+- **Der andere Glaser:** der, der WRENs Auftrag übernommen hat, falls Juno abgelehnt hat. Finde ihn und
+  finde heraus, was er gesehen hat.
+
+## 10. Entscheidungen (2026-11-03)
+
+- **Sprache:** Die Spieltexte sind **zuerst Deutsch**; eine **englische Fassung kommt später**. Texte
+  daher von Anfang an über die Sprachdateien der Engine (`i18n`) anlegen, nie fest in Grafiken. Die
+  Ausnahme sind die Werbeslogans und Schilder der Stadt: Sie bleiben in beiden Fassungen **englisch**
+  („HALCYON: SLEEP BETTER", „LUCKY STATIC") und dürfen deshalb in die Grafik gezeichnet werden.
+- **Gewaltdarstellung:** Ines' Tod (und jede andere drastische Szene) gibt es in **zwei Fassungen**,
+  wählbar in den Einstellungen (Inhalt):
+  - **mit schwarzem Rahmen:** Im entscheidenden Moment schließen sich schwarze Balken über dem Feed;
+    man hört es, man sieht Rask hinterher nach oben in die Kamera schauen.
+  - **ohne:** Der Moment wird gezeigt, in Pixelgrafik und im Phosphor des Feeds, ohne Nahaufnahme.
+
+  Beide Fassungen erzählen dasselbe; nur das Bild unterscheidet sich. Voreinstellung: mit Rahmen.
+- **Junos Vergangenheit** als zivile Beobachterin ist **von Anfang an klar** (siehe Prolog). Was erst
+  später enthüllt wird, ist, *wer* sie ersetzt hat (§6, Punkt 2) und warum ihr Implantat den Zeugen
+  hört (§6, Punkt 4).
+- **Namen:** Halcyon, Lull, der Zeuge und die Figuren bleiben vorerst.
+- **Kampf:** keiner. Gefahr wird über Timing in den Feeds und durch Flucht gelöst. Juno kann an
+  einigen markierten Stellen sterben, mit sofortigem Neuversuch direkt vor der Gefahr.
