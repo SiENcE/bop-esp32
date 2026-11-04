@@ -84,40 +84,52 @@
   });
 
   // ---------------------------------------------------------------- memory: the old photo on the deck
-  // Juno and Teo as children on the roof (art/ui/deck_wallpaper.px.js). Sentimental, slow, in the line of
-  // the Blade Runner end titles: CS-80 strings that swell in over seconds, a soft e-piano breaking the
-  // chords in slow eighths and a melody with long echoes, later a brass voice with a wide vibrato singing
-  // over it, a sine bass under it, a glass bell like a drop now and then. The same key as Juno's theme.
-  I("memstrings", { type: "sub", wave: "saw", voices: 4, detune: 18, filter: { cutoff: 520, env: 700, a: 2.4, decay: 3, sustain: 0.6, q: 1.5 },
-    amp: { a: 1.2, d: 2, s: 0.85, r: 4.5 }, vibrato: { rate: 3.6, depth: 9, delay: 1.5 }, gain: 0.06, reverb: 0.8, delay: 0.1 });
-  I("mempiano", { type: "fm", ratio: 1, index: 0.8, indexDecay: 0.9, amp: { a: 0.006, d: 2.4, s: 0.15, r: 1.6 }, gain: 0.12, reverb: 0.7, delay: 0.38, pan: -0.15 });
-  I("memlead", { type: "sub", wave: "saw", voices: 2, detune: 8, filter: { cutoff: 700, env: 1800, a: 0.9, decay: 1.5, sustain: 0.6, q: 2.5 },
-    amp: { a: 0.6, d: 0.8, s: 0.85, r: 2.4 }, vibrato: { rate: 4.8, depth: 18, delay: 0.7 }, gain: 0.075, reverb: 0.75, delay: 0.35, pan: 0.12 });
-  I("membass", { type: "sub", wave: "sine", filter: { cutoff: 180, q: 0.8 }, amp: { a: 0.25, d: 1, s: 0.9, r: 2.5 }, gain: 0.3 });
+  // Juno and Teo as children on the roof (art/ui/deck_wallpaper.px.js). In the line of Vangelis's Blade
+  // Runner, our own tune: a pedal D under everything; wide CS-80 brass swelling up over seconds; a lead
+  // that scoops up into every note from below (the ribbon) with a vibrato that comes late and deepens;
+  // far thunder falling into a long hall; crystal bells; a soft Rhodes breaking the chords. The Dorian
+  // sixth (B) keeps it between sad and warm. 56 bpm, the same key as Juno's theme.
+  I("br_brass", { type: "sub", wave: "saw", voices: 4, detune: 22, filter: { cutoff: 380, env: 1500, a: 1.8, decay: 2.5, sustain: 0.55, q: 2.2 },
+    amp: { a: 1.4, d: 2, s: 0.85, r: 5 }, bend: { from: -25, time: 1.2 }, vibrato: { rate: 3.2, depth: 7, delay: 1.5, rise: 2 }, gain: 0.055, reverb: 0.2, hall: 0.75 });
+  I("br_ribbon", { type: "sub", wave: "saw", voices: 2, detune: 9, filter: { cutoff: 600, env: 2200, a: 0.7, decay: 1.6, sustain: 0.65, q: 3 },
+    amp: { a: 0.35, d: 0.9, s: 0.9, r: 3 }, bend: { from: -180, time: 0.32 }, vibrato: { rate: 4.6, depth: 26, delay: 0.7, rise: 1.6 },
+    gain: 0.07, reverb: 0.15, hall: 0.8, delay: 0.32, pan: 0.1 });
+  I("br_bells", { type: "fm", ratio: 3.51, index: 2.2, indexDecay: 1.8, amp: { a: 0.002, d: 3.5, s: 0, r: 3 }, gain: 0.045, hall: 0.9, delay: 0.45, pan: -0.25 });
+  I("br_rhodes", { type: "fm", ratio: 1, index: 0.7, indexDecay: 1.1, amp: { a: 0.008, d: 2.8, s: 0.12, r: 2 }, bend: { from: -8, time: 0.05 },
+    vibrato: { rate: 5.2, depth: 5, delay: 0.1, rise: 0.6 }, gain: 0.1, reverb: 0.3, hall: 0.5, delay: 0.25, pan: -0.12 });
+  I("br_pedal", { type: "sub", wave: "sine", filter: { cutoff: 160, q: 0.7 }, amp: { a: 2.5, d: 2, s: 1, r: 5 }, gain: 0.32, hall: 0.15 });
+  I("br_thunder", { type: "drum", kind: "tom", tune: 0.32, decay: 2.2, gain: 0.5, hall: 1 });
   /** slow broken chords: eighths over four notes @param {string[]} n */
   const slow = (n) => `${n[0]} . ${n[1]} . ${n[2]} . ${n[3]} . ${n[2]} . ${n[1]} . ${n[2]} . ${n[3]} .`;
-  const Fmaj7 = "F2+C3+E3+A3", Dm9 = "D2+A2+E3+F3", Bbmaj9 = "Bb1+F2+A2+C3+D3", FA = "A1+F2+C3+E3", Gm9m = "G1+D2+F2+A2+Bb2", Asus4 = "A1+E2+A2+D3", Amaj = "A1+E2+A2+C#3", Csus2 = "C2+G2+D3+G3";
+  const empty = ". . . . . . . . . . . . . . . .";
+  const mDm9 = "D3+A3+E4+F4", Dadd9 = "D3+A3+E4+F4+B4", BbM7 = "Bb2+D3+F3+A3+E4", Gm9D = "D3+G3+Bb3+F4+A4", A7sus = "A2+D3+E3+G3", mA7 = "A2+C#3+E3+G3",
+    FC = "C3+F3+A3+E4", Cadd9 = "C3+G3+D4+E4", Bbmaj9 = "Bb2+F3+A3+C4+D4";
   Cutaway.score.theme("memory", {
-    tempo: 60, key: "D",
-    tracks: { strings: { inst: "memstrings" }, piano: { inst: "mempiano" }, lead: { inst: "memlead" }, bass: { inst: "membass" }, bell: { inst: "glassbell" } },
+    tempo: 56, key: "D",
+    tracks: { brass: { inst: "br_brass" }, lead: { inst: "br_ribbon" }, bells: { inst: "br_bells" }, rhodes: { inst: "br_rhodes" },
+      pedal: { inst: "br_pedal" }, thunder: { inst: "br_thunder" } },
     start: "intro",
     sections: {
-      intro: { bars: 2, next: "a", tracks: {
-        strings: bars(hold(Fmaj7), hold(Dm9)), bass: bars(hold("F1"), hold("D1")),
-        bell: bars(". . . . . . . . . . . . A5 . . .", ". . . . . . . . . . . . . . . ."),
+      intro: { bars: 4, next: "a", tracks: {
+        brass: bars(hold(mDm9), hold(mDm9), hold(Dadd9), hold(mDm9)),
+        pedal: bars(hold("D1"), hold("D1"), hold("D1"), hold("D1")),
+        thunder: bars("x . . . . . . . . . . . . . . .", empty, ". . . . . . . . x . . . . . . .", empty),
+        bells: bars(". . . . . . . . A6 . . . . . . .", ". . . . E6 . . . . . . . . . . .", ". . . . . . . . . . . . B6 . . .", ". . . . . . . . . . . . . . . ."),
       } },
       a: { bars: 4, next: "b", tracks: {
-        strings: bars(hold(Bbmaj9), hold(FA), hold(Gm9m), half(Asus4, Amaj)),
-        bass: bars(hold("Bb0"), hold("A0"), hold("G0"), hold("A0")),
-        piano: bars("D5 - - - - - C5 - A4 - - - - - - -", "C5 - - - - - A4 - G4 - - - F4 - - -", "Bb4 - - - - - A4 - F4 - - - D4 - - -", "E4 - - - - - - - - - - - C#4 - - -"),
-        bell: bars(". . . . . . . . . . . . . . . .", ". . . . . . . . . . . . . . . .", ". . . . . . . . . . . . . . . .", ". . . . . . . . E6 . . . . . . ."),
+        brass: bars(hold(mDm9), hold(BbM7), hold(Gm9D), half(A7sus, mA7)),
+        pedal: bars(hold("D1"), hold("D1"), hold("D1"), hold("A0")),
+        lead: bars("A4 - - - - - - - - - - - D5 - - -", "F5 - - - - - - - E5 - - - - - D5 -", "D5 - - - - - - - C5 - - - Bb4 - - -", "A4 - - - - - - - - - - - - - - -"),
+        bells: bars(empty, ". . . . . . . . . . . . A6 . . .", empty, ". . . . . . . . C#6 . . . E6 . . ."),
+        thunder: bars("x . . . . . . . . . . . . . . .", empty, empty, empty),
       } },
       b: { bars: 4, next: "a", exits: [2, 4], tracks: {
-        strings: bars(hold(Dm9), hold(Bbmaj9), hold(Fmaj7), hold(Csus2)),
-        bass: bars(hold("D1"), hold("Bb0"), hold("F1"), hold("C1")),
-        piano: bars(slow(["D4", "A4", "E5", "F5"]), slow(["Bb3", "F4", "A4", "D5"]), slow(["F3", "C4", "E4", "A4"]), slow(["C4", "G4", "D5", "G5"])),
-        lead: bars("A4 - - - - - - - G4 - - - F4 - - -", "F4 - - - - - - - E4 - D4 - - - - -", "C4 - - - - - - - E4 - - - A4 - - -", "G4 - - - - - - - - - - - - - - -"),
-        bell: bars(". . . . . . . . . . . . . . . .", ". . . . . . . . . . . . . . . .", ". . . . . . . . . . . . . . . .", ". . . . . . . . . . . . D6 . . ."),
+        brass: bars(hold(FC), hold(Cadd9), hold(Bbmaj9), half(A7sus, mA7)),
+        pedal: bars(hold("F1"), hold("C1"), hold("Bb0"), hold("A0")),
+        rhodes: bars(slow(["C4", "F4", "A4", "E5"]), slow(["C4", "G4", "D5", "E5"]), slow(["Bb3", "F4", "A4", "D5"]), slow(["A3", "D4", "E4", "G4"])),
+        lead: bars("C5 - - - - - E5 - G5 - - - - - - -", "G5 - - - - - - - F5 - - - E5 - - -", "D5 - - - - - - - - - - - F5 - - -", "E5 - - - - - - - - - - - - - - -"),
+        bells: bars(empty, empty, ". . . . . . . . . . . . . . . .", ". . . . . . . . . . . . B5 . . ."),
+        thunder: bars(empty, ". . . . . . . . x . . . . . . .", empty, empty),
       } },
     },
   });
