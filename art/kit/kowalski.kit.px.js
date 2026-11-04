@@ -294,7 +294,103 @@ const KOW = (() => {
   })
 
   // ---------------------------------------------------------------- the big ad screen, half broken
+  // What the screen shows (y down, its top-left at (X, Y), aw x ah px), every key unlit ("!"), so the opening and
+  // the prologue's moment (art/rooms/kowalski.px.js, kowalski_ad_*) draw the same screen:
+  //   "normal"   the advert (HALCYON, a woman asleep on her pillow, SLEEP BETTER) and the broken half: static,
+  //              cracks from an impact, a glitch sliding through the advert
+  //   "stutter"  it fails: torn rows, the static eating into the advert, the picture dropping out
+  //   "eye"      all static; an eye opens in it and turns to look down-left, at the street (n: 0..19)
+  //   "juno"     JUNO. over the whole screen, flickering
   const SCREEN_IMPACT = [0.78, 0.62]                   // where something hit it, in the screen's own fractions
+  const noise = (x, y, f) => ih(x * 7 + f * 131, y * 13 + f * 17)
+  const staticKey = (n) => (n < 0.3 ? "!k" : n < 0.55 ? "!2" : n < 0.75 ? "!4" : n < 0.88 ? "!c" : n < 0.96 ? "!6" : "!v")
+  // our 5x7 face, drawn big (each glyph pixel a q x q block)
+  const big = (c, x, y, text, k, q) => {
+    let cx = x
+    for (const ch of text) {
+      const g = HALCYON_GLYPHS.halcyon[ch] ?? HALCYON_GLYPHS.halcyon["?"], rows = Array.isArray(g) ? g : g.rows, dy = Array.isArray(g) ? 0 : g.dy
+      rows.forEach((r, ry) => { for (let rx = 0; rx < r.length; rx++) if (r[rx] === "#") c.rect(cx + rx * q, y + (dy + ry) * q, q, q, k) })
+      cx += (rows[0].length + 1) * q
+    }
+  }
+  const bigWidth = (text, q) => [...text].reduce((w, ch) => { const g = HALCYON_GLYPHS.halcyon[ch] ?? HALCYON_GLYPHS.halcyon["?"]; return w + ((Array.isArray(g) ? g : g.rows)[0].length + 1) * q }, -q)
+  function adScreen(c, X, Y, aw, ah, f, mode = "normal", n = 0) {
+    const half = fl(aw * 0.52)
+    if (mode === "eye") {
+      // all static, darker where the eye forms; the eye opens (its lids part) and then looks down-left
+      for (let y = Y; y < Y + ah; y++) for (let x = X; x < X + aw; x++) c.px(x, y, staticKey(noise(x, y, f) * 0.92))
+      const cx = X + fl(aw / 2), cy = Y + fl(ah / 2), open = n < 2 ? 0 : Math.min(1, (n - 1) / 5)
+      const look = n < 11 ? 0 : Math.min(1, (n - 10) / 5), ix = -7 * look, iy = 3 * look
+      for (let y = cy - 14; y <= cy + 14; y++) for (let x = cx - 26; x <= cx + 26; x++) {
+        const ex = x - cx, ey = y - cy, lid = 12 * open * (1 - (ex / 24) ** 2)
+        if (Math.abs(ex) > 24) continue
+        if (Math.abs(ey) <= lid + 2 && Math.abs(ey) > lid - 1) { c.px(x, y, "!k"); continue }   // the lids' line
+        if (Math.abs(ey) > lid) continue
+        const r = Math.hypot(ex - ix, ey - iy), nz = noise(x, y, f)
+        c.px(x, y, r < 2 && ex - ix < 0 && ey - iy < 0 ? "!V" : r < 3.8 ? "!k" : r < 6.5 ? (nz < 0.25 ? "!C" : "!v") : r < 9 ? (nz < 0.3 ? "!c" : "!C") : nz < 0.12 ? "!6" : "!V")
+      }
+      return
+    }
+    if (mode === "juno") {
+      // the name over the whole screen, white on the screen's dark, its shadow; the static thin round it; a
+      // band rolling up through it; on two frames it jumps a pixel and dims
+      for (let y = Y; y < Y + ah; y++) for (let x = X; x < X + aw; x++) { const nz = noise(x, y, f); c.px(x, y, nz < 0.72 ? "!c" : nz < 0.9 ? "!k" : "!C") }
+      const q = 3, w = bigWidth("JUNO.", q), jx = X + fl((aw - w) / 2) + (f === 3 ? 1 : 0), jy = Y + fl((ah - 7 * q) / 2) - 2
+      big(c, jx + 1, jy + 1, "JUNO.", "!k", q)
+      big(c, jx, jy, "JUNO.", f === 3 || f === 7 ? "!v" : "!V", q)
+      const band = Y + ((ah - 1) - ((f * 9) % ah))
+      for (let x = X; x < X + aw; x++) { const k = c.key(x, band); c.px(x, band, k === "!V" ? "!v" : k === "!c" ? "!C" : k) }
+      return
+    }
+    // the advert: HALCYON, a sleeping face, SLEEP BETTER
+    c.rect(X, Y, half + 4, ah, "!C"); c.rect(X, Y, half + 4, 12, "!c")
+    TXT.draw(c, X + 4, Y + 3, "HALCYON", "!V")
+    // a woman asleep, her cheek on a pillow, smiling: the pillow, her hair, her face, eyes shut
+    const fx = X + fl(half / 2) + 1, fy = Y + 33
+    c.rect(X + 3, fy + 6, half - 4, 12, "!H"); c.hline(X + 3, fy + 6, half - 4, "!V"); c.hline(X + 3, fy + 17, half - 4, "!h")
+    c.ellipse(fx, fy - 1, 12, 12, "!c"); c.rect(fx - 12, fy, 25, 10, "!c")               // her hair, down onto the pillow
+    c.ellipse(fx, fy + 1, 9, 10, "!V"); c.ellipse(fx + 4, fy + 3, 4, 7, "!v")              // her face, its shade
+    c.rect(fx - 9, fy - 10, 19, 4, "!c"); c.px(fx - 2, fy - 6, "!c"); c.px(fx + 3, fy - 6, "!c")   // the fringe
+    for (const ex of [fx - 4, fx + 4]) { c.px(ex - 2, fy, "!C"); c.hline(ex - 1, fy + 1, 3, "!c"); c.px(ex + 2, fy, "!C") }   // shut, content
+    c.px(fx - 6, fy + 4, "!C"); c.px(fx + 6, fy + 4, "!C")                                 // blush
+    c.hline(fx - 1, fy + 6, 3, "!c"); c.px(fx - 2, fy + 5, "!c"); c.px(fx + 2, fy + 5, "!c") // the smile
+    c.rect(X, Y + ah - 11, half + 4, 11, "!c")
+    TXT.draw(c, X + 3, Y + ah - 8, "SLEEP BETTER", "!V", { font: "hud" })
+    // a glitch: a slice of the advert slid sideways, another each frame
+    const g0 = [20, 41, 28, 50, 33, 14][f % 6], sh = 2 + (f % 3)
+    for (let y = Y + g0; y < Y + g0 + 2; y++) for (let x = X + half; x >= X + sh; x--) { const k = c.key(x - sh, y); if (k) c.px(x, y, k) }
+    const stutter = mode === "stutter"
+    if (stutter) {
+      // torn rows: bands of the advert thrown sideways, further each frame
+      for (let b = 0; b < 4; b++) {
+        const y0 = Y + fl(ih(b, f) * (ah - 6)), d = 4 + fl(ih(b + 9, f) * 10), sgn = b % 2 ? 1 : -1
+        for (let y = y0; y < y0 + 2 + (b % 3); y++) {
+          const row = []; for (let x = X; x < X + half + 4; x++) row.push(c.key(x, y))
+          for (let x = X; x < X + half + 4; x++) { const k = row[(x - X - sgn * d + 10 * row.length) % row.length]; if (k) c.px(x, y, k) }
+        }
+      }
+    }
+    // the broken half: static, a bright band rolling through it (stuttering: it eats into the advert)
+    const eat = stutter ? 10 + (f % 4) * 9 : 0
+    const tear = (y) => X + half - eat + fl(2.5 * Math.sin(y * 0.55 + 1)) + (y % 9 === 4 ? 3 : 0) - (y % 13 === 2 ? 4 : 0)
+    for (let y = Y; y < Y + ah; y++) for (let x = X; x < X + aw; x++) {
+      const tx = tear(y)
+      if (x < tx - 3) continue
+      const nz = noise(x, y, f)
+      if (x < tx) { if (nz < 0.45) c.px(x, y, nz < 0.2 ? "!6" : "!k"); continue }
+      let k = staticKey(nz)
+      if ((y - Y + f * 6) % ah < 2) k = nz < 0.4 ? "!6" : "!V"
+      c.px(x, y, k)
+    }
+    const ix = X + fl(aw * SCREEN_IMPACT[0]), iy = Y + fl(ah * SCREEN_IMPACT[1])
+    for (const [ex, ey] of [[X + half + 6, Y + ah - 1], [X + aw - 1, Y + 20], [X + aw - 8, Y + ah - 1], [X + half + 12, Y], [X + half, Y + ah - 20], [X + aw - 1, Y + ah - 10], [X + aw - 20, Y]]) {
+      c.line(ix, iy, ex, ey, "!V"); c.line(ix, iy + 1, ex, ey + 1, "!k")
+    }
+    for (const [dx, dy] of [[0, 0], [1, 0], [-1, 0], [0, 1], [0, -1]]) c.px(ix + dx, iy + dy, "!V")
+    c.vline(X + half + 22, Y, ah, "!k")                                                    // a dead column of pixels
+    // stuttering, the picture drops out on two frames: every other row dark
+    if (stutter && (f === 2 || f === 5)) for (let y = Y; y < Y + ah; y += 2) c.hline(X, y, aw, "!k")
+  }
   ISOKIT.opening("ad_screen", {
     pad: 0.12,
     halo: [{ color: "#62def0", reach: 0.8, power: 1.4 }],
@@ -304,42 +400,7 @@ const KOW = (() => {
         // the housing
         c.rect(X - 4, Y - 4, aw + 8, ah + 8, "k"); c.rect(X - 3, Y - 3, aw + 6, ah + 6, "4")
         c.hline(X - 3, Y + ah + 2, aw + 6, "5"); c.vline(X - 3, Y - 3, ah + 6, "5"); c.rect(X - 1, Y - 1, aw + 2, ah + 2, "k")
-        const half = fl(aw * 0.52)
-        // the advert: HALCYON, a sleeping face, SLEEP BETTER
-        c.rect(X, Y, half + 4, ah, "!C"); c.rect(X, Y, half + 4, 12, "!c")
-        TXT.draw(c, X + 4, Y + 3, "HALCYON", "!V")
-        // a woman asleep, her cheek on a pillow, smiling: the pillow, her hair, her face, eyes shut
-        const fx = X + fl(half / 2) + 1, fy = Y + 33
-        c.rect(X + 3, fy + 6, half - 4, 12, "!H"); c.hline(X + 3, fy + 6, half - 4, "!V"); c.hline(X + 3, fy + 17, half - 4, "!h")
-        c.ellipse(fx, fy - 1, 12, 12, "!c"); c.rect(fx - 12, fy, 25, 10, "!c")               // her hair, down onto the pillow
-        c.ellipse(fx, fy + 1, 9, 10, "!V"); c.ellipse(fx + 4, fy + 3, 4, 7, "!v")              // her face, its shade
-        c.rect(fx - 9, fy - 10, 19, 4, "!c"); c.px(fx - 2, fy - 6, "!c"); c.px(fx + 3, fy - 6, "!c")   // the fringe
-        for (const ex of [fx - 4, fx + 4]) { c.px(ex - 2, fy, "!C"); c.hline(ex - 1, fy + 1, 3, "!c"); c.px(ex + 2, fy, "!C") }   // shut, content
-        c.px(fx - 6, fy + 4, "!C"); c.px(fx + 6, fy + 4, "!C")                                 // blush
-        c.hline(fx - 1, fy + 6, 3, "!c"); c.px(fx - 2, fy + 5, "!c"); c.px(fx + 2, fy + 5, "!c") // the smile
-        c.rect(X, Y + ah - 11, half + 4, 11, "!c")
-        TXT.draw(c, X + 3, Y + ah - 8, "SLEEP BETTER", "!V", { font: "hud" })
-        // a glitch: a slice of the advert slid sideways, another each frame
-        const g0 = [20, 41, 28, 50, 33, 14][f % 6], sh = 2 + (f % 3)
-        for (let y = Y + g0; y < Y + g0 + 2; y++) for (let x = X + half; x >= X + sh; x--) { const k = c.key(x - sh, y); if (k) c.px(x, y, k) }
-        // the broken half: static, a bright band rolling through it, cracks from the impact
-        const tear = (y) => X + half + fl(2.5 * Math.sin(y * 0.55 + 1)) + (y % 9 === 4 ? 3 : 0) - (y % 13 === 2 ? 4 : 0)
-        for (let y = Y; y < Y + ah; y++) for (let x = X; x < X + aw; x++) {
-          const tx = tear(y)
-          if (x < tx - 3) continue
-          const n = ih(x * 7 + f * 131, y * 13 + f * 17)
-          if (x < tx) { if (n < 0.45) c.px(x, y, n < 0.2 ? "!6" : "!k"); continue }
-          let k = n < 0.3 ? "!k" : n < 0.55 ? "!2" : n < 0.75 ? "!4" : n < 0.88 ? "!c" : n < 0.96 ? "!6" : "!v"
-          if ((y - Y + f * 6) % ah < 2) k = n < 0.4 ? "!6" : "!V"
-          c.px(x, y, k)
-        }
-        const ix = X + fl(aw * SCREEN_IMPACT[0]), iy = Y + fl(ah * SCREEN_IMPACT[1])
-        for (const [ex, ey] of [[X + half + 6, Y + ah - 1], [X + aw - 1, Y + 20], [X + aw - 8, Y + ah - 1], [X + half + 12, Y], [X + half, Y + ah - 20], [X + aw - 1, Y + ah - 10], [X + aw - 20, Y]]) {
-          c.line(ix, iy, ex, ey, "!V"); c.line(ix, iy + 1, ex, ey + 1, "!k")
-        }
-        for (const [dx, dy] of [[0, 0], [1, 0], [-1, 0], [0, 1], [0, -1]]) c.px(ix + dx, iy + dy, "!V")
-        // a dead column of pixels
-        c.vline(X + half + 22, Y, ah, "!k")
+        adScreen(c, X, Y, aw, ah, f)
       })
     },
   })
@@ -578,5 +639,5 @@ const KOW = (() => {
       })
     },
   })
-  return { inPuddle, PUDDLES, cellAt }
+  return { inPuddle, PUDDLES, cellAt, adScreen }
 })()

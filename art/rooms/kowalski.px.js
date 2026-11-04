@@ -8,6 +8,10 @@
 //                     out of the drain
 //   kowalski_vending, kowalski_cart, kowalski_umbrella, kowalski_bins, kowalski_lights   the props, pivot
 //                     bottom-centre (the string lights and cables without an outline)
+//   kowalski_ad_stutter, kowalski_ad_eye, kowalski_ad_juno   the prologue's moment (step 17) on the ad screen,
+//                     each the size of the screen's rect in the layout (openings.ad), its top-left there:
+//                     the screen failing (8 frames, a loop), the eye opening in the static and turning to look
+//                     down at the street (20 frames, once), JUNO. over the whole screen (8 frames, a loop)
 // KOWALSKI.layout has the measured numbers (tools/iso-layout.mjs writes the same for the game).
 include("../lib/iso.js", { palette: true })
 include("../lib/isomap.js")
@@ -38,5 +42,27 @@ const KOWALSKI = ISOKIT.bake(KW_MAP, {
   sheen: { reach: 3.4, map: (u, v) => (KOW.inPuddle(u, v) ? ISO.MIRROR : ISO.SHEEN), keys: (u, v) => KOW.cellAt(u, v) !== "." },
   glows: [kwSplashes, kwSteam, glow("m", { r: 5, strength: 0.45 }), glow("vV", { r: 4, strength: 0.3 }), glow("RW", { r: 4, strength: 0.35 }), glow("q", { r: 3, strength: 0.6 })],
 })
+
+// ---- the moment: the screen's own picture (art/kit/kowalski.kit.px.js, KOW.adScreen) laid onto the wall's
+// slope pixel by pixel, as the bake lays the opening (the same mapping, so it sits exactly on it)
+{
+  const AD = KW_MAP.openings.find((o) => o.id === "ad"), [CX, CY] = KW_MAP.at, BOX = KOWALSKI.layout.openings.ad
+  const AW = Math.round((AD.to - AD.from) * 32), AH = Math.round((AD.h[1] - AD.h[0]) * 30)
+  const onScreen = (mode) => (c) => {
+    const f = c.frame ?? 0, R = ISOKIT.raster(AW, AH, (r) => KOW.adScreen(r, 0, 0, AW, AH, f, mode, f))
+    for (let y = 0; y < BOX[3]; y++) for (let x = 0; x < BOX[2]; x++) {
+      const X = BOX[0] + x, Y = BOX[1] + y, u = (X + 0.5 - CX) / 32
+      if (u < AD.from || u >= AD.to) continue
+      const h = (CY + 16 * u - Y - 0.5) / 30
+      if (h < AD.h[0] || h >= AD.h[1]) continue
+      const k = R(Math.floor((u - AD.from) * 32), Math.floor((h - AD.h[0]) * 30))
+      if (k) c.px(x, y, k.startsWith("!") ? k.slice(1) : k)
+    }
+  }
+  const glows = [glow("vV", { r: 4, strength: 0.35 })]
+  anim("kowalski_ad_stutter", { w: BOX[2], h: BOX[3], frames: 8, fps: 10 }, onScreen("stutter"), ...glows)
+  anim("kowalski_ad_eye", { w: BOX[2], h: BOX[3], frames: 20, fps: 10 }, onScreen("eye"), ...glows)
+  anim("kowalski_ad_juno", { w: BOX[2], h: BOX[3], frames: 8, fps: 10 }, onScreen("juno"), ...glows)
+}
 
 console.log("ISO_LAYOUT " + JSON.stringify({ id: "kowalski", ...KOWALSKI.layout }))

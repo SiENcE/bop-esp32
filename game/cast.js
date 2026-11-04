@@ -40,11 +40,11 @@ Cutaway.actor("motte", {
 });
 
 // Bao, over 70, behind his noodle cart on Kowalski Street (art/characters/bao.px.js: drawn facing SE, flipped
-// for SW, the way he faces Juno across the cart); she talks to him from where she eats, in front of it
+// for SW, the way he faces Juno across the cart). Not clickable himself: the street's hotspot "bao" over him
+// (game/rooms/kowalski.js) talks to him, from where Juno eats, and knows its room for the moment after
 Cutaway.actor("bao", {
-  name: "Bao", color: "#e8c890",
+  name: "Bao", color: "#e8c890", hidden: true,
   room: "kowalski", at: Halcyon.at.kowalski.bao, facing: "sw",
-  walkTo: Halcyon.at.kowalski.eat, face: "ne",
   // the same pose for every facing: he stays behind his cart
   costume: {
     idle: { se: "bao_idle_sw", sw: "bao_idle_sw", ne: "bao_idle_sw", nw: "bao_idle_sw" },
@@ -52,8 +52,6 @@ Cutaway.actor("bao", {
     talk: { se: "bao_talk_sw", sw: "bao_talk_sw", ne: "bao_talk_sw", nw: "bao_talk_sw" },
   },
   voice: { pitch: 44, range: 5, wave: "triangle", syllable: 78, speed: 0.85 },
-  look: ["Bao. Über siebzig, und sein Topf ist älter als ich.", "Das Licht hinter seinem Ohr ist sein Hörgerät. Er hört trotzdem nur, was er will."],
-  talk: [{ if: "!ate_bao", then: [{ dialog: "bao" }], else: [{ say: "bao", text: "Noch eine Schale? Morgen. Morgen hast du wieder Hunger." }] }],
 });
 
 // ---- people in the feeds (only ever seen through cameras in the prologue)

@@ -7,8 +7,40 @@
 (function () {
   const AW = Halcyon.at.kowalski, AL = Halcyon.at.kessel_lobby;
 
+  // Step 17 (kapitel0-design §6.2): after the meal the broken screen over the street stutters, the eye in its
+  // static turns to Juno, JUNO. over the whole screen (the stinger "witness"); then the advert again. Bao saw
+  // nothing; EVI, very quietly, from the bag. Step 18: the fade, the card for Chapter 1.
+  const JUNO = [
+    { wait: 900 }, { camera: [80, 0], ms: 1400 },
+    { show: "ad_fx" }, { play: "ad_fx", anim: "kowalski_ad_stutter", loop: true, wait: false }, { sfx: "glitch" },
+    { wait: 1400 }, "Was ...",
+    { play: "ad_fx", anim: "kowalski_ad_eye" },
+    { stinger: "witness" }, { play: "ad_fx", anim: "kowalski_ad_juno", loop: true, wait: false }, { sfx: "static" },
+    { wait: 2600 },
+    { play: "ad_fx", anim: "kowalski_ad_stutter", loop: true, wait: false }, { wait: 500 }, { hide: "ad_fx" }, { wait: 700 },
+    "Bao. Hast du ...", { say: "bao", text: "Hm? Noch Brühe?" }, "... nichts. Schon gut.",
+    { wait: 500 }, { evi: "besorgt" }, { say: "evi", text: "Das war nicht ich. Ehrlich." },
+    { wait: 800 }, { camera: "follow" },
+    { fade: "out", ms: 900 }, { card: "Glass", title: "Kapitel 1" },
+    { end: "Hier endet der Prolog. Kapitel 1 kommt als Nächstes." },
+  ];
+  // Step 16 (kapitel0-design §6.2): "Wie immer? Ich schreib's an." With money Juno may pay cash (bao_paid);
+  // Bao is glad and writes it down all the same. Then she eats under his umbrella (ate_bao), and step 17 follows.
+  const EAT = [
+    { say: "bao", text: "Kommt sofort." }, { wait: 600 },
+    { say: "bao", text: "Mein Alter sagt, ich salz zu viel. Er isst seit vierzig Jahren hier." },
+    "Und hat er recht?",
+    { say: "bao", text: "Er hat nie recht. Darum ist er mein Alter." },
+    "Heiß. Salzig. Genau richtig.", { set: "ate_bao" },
+  ];
+  // talking to Bao (or using his cart): his dialogue, and once Juno has eaten, the moment (a script of the
+  // street's own, so it may play the screen's prop)
+  const BAO = [{ if: "!ate_bao", then: [{ dialog: "bao" }, { if: "ate_bao", then: JUNO }],
+    else: [{ say: "bao", text: "Noch eine Schale? Morgen. Morgen hast du wieder Hunger." }] }];
   const LOOK = {
-    background: "kowalski_bg", size: /** @type {[number, number]} */ ([416, 180]), props: AW.props,
+    background: "kowalski_bg", size: /** @type {[number, number]} */ ([416, 180]),
+    // the props, and over the ad screen the prologue's moment (hidden until it comes: step 17)
+    props: [...AW.props, { id: "ad_fx", image: "kowalski_ad_stutter", at: [AW.adRect[0], AW.adRect[1]], anchor: [0, 0], baseline: 0, hidden: true }],
     // the map's lamps: the bar's warm light, its sign's magenta, the screen's cyan, the machine, the lantern
     light: { ambient: 0.8, color: "#d4dcf4", lamps: AW.lamps.map((/** @type {any} */ { bake, zone, ...lamp }) => lamp) },
     // the rain in two layers (far and dim, near and bright), the light hanging in it, glints, drops
@@ -48,23 +80,16 @@
         use: "Nicht heute Nacht." },
       bins: { name: "Mülltonne", poly: AW.binsPoly, walkTo: AW.bins, face: "ne",
         look: "Die Tonne ist so voll, dass der Deckel auf einem Sack steht." },
+      bao: { name: "Bao", rect: AW.baoRect, walkTo: AW.eat, face: "ne", z: 2,
+        look: ["Bao. Über siebzig, und sein Topf ist älter als ich.", "Das Licht hinter seinem Ohr ist sein Hörgerät. Er hört trotzdem nur, was er will."],
+        talk: BAO },
       cart: { name: "Baos Garküche", poly: AW.cartPoly, walkTo: AW.eat, face: "ne",
         look: ["Baos Garküche. Der Topf dampft, seit ich denken kann.", "BAO steht drauf. Für den Fall, dass jemand fragt."],
-        use: [{ if: "!ate_bao", then: [{ dialog: "bao" }], else: ["Die Schale ist leer. Ich bin's nicht mehr."] }] },
+        use: BAO },
     },
     enter: [{ once: ["Draußen. Regen, Neon und Brühe. Die Kowalski-Straße."] }],
   });
 
-  // Step 16 (kapitel0-design §6.2): "Wie immer? Ich schreib's an." With money Juno may pay cash (bao_paid);
-  // Bao is glad and writes it down all the same. Then she eats under his umbrella (ate_bao).
-  const EAT = [
-    { say: "bao", text: "Kommt sofort." }, { wait: 600 },
-    { say: "bao", text: "Mein Alter sagt, ich salz zu viel. Er isst seit vierzig Jahren hier." },
-    "Und hat er recht?",
-    { say: "bao", text: "Er hat nie recht. Darum ist er mein Alter." },
-    "Heiß. Salzig. Genau richtig.", { set: "ate_bao" },
-    { end: "Ende des Testabschnitts. Als Nächstes: der Werbebildschirm, JUNO. (H3)" },
-  ];
   Cutaway.dialog("bao", {
     main: {
       enter: [{ say: "bao", text: "Juno! Wie immer? Ich schreib's an." }],
