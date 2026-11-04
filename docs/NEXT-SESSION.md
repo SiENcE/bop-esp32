@@ -8,62 +8,87 @@ We're continuing work on "Glass Sister", our cyberpunk point-and-click adventure
 (engine: Cutaway.js in B:\Github_my\cutaway\). Read CLAUDE.md first; it lists the docs, the commands and
 the checks. Talk to me in German (the docs are German, code comments English).
 
-Where we are (everything is committed, in both repos; the engine copy is at Cutaway.js e2bc1d6):
-- Design: docs/story.md (decisions in §10), docs/kapitel0-design.md (the prologue; §5 the intro, §6.2 the steps,
-  §7.1 the rooms, §8 the people as decided), docs/kapitel1-design.md, docs/dialog-design.md, docs/PLAN.md
-  (status at the top), docs/style-guide.md (§4 the iso scale, rooms from maps, other views, see-through props;
-  §6 characters; §8a the look, the title screen).
-- **The prologue plays from the flat to its end card** (steps 0a-18). Done in H3 (2026-11-04):
-  - kessel_14 (Motte on his bench, the look down the stairwell), kessel_lobby (the rent notice);
-  - **Kowalski Street** (art/rooms/kowalski.map.js, art/kit/kowalski.kit.px.js, game/rooms/kowalski.js): 416 px,
-    scrolls; LUCKY STATIC, the half-broken ad screen, the noodle machine with its tired face, the alley shut,
-    the bins, Bao's cart on wheels with its umbrella (see-through over whoever it hides: the engine's
-    seeThrough), string lights and cables, strong light pools, a wet sheen and puddles that mirror the neon,
-    rain in two layers, splashes, steam from the pot and a drain, haze, glints, drips;
-  - **Bao** (art/characters/bao.px.js, head A), behind his cart (drawn SE, used flipped for every facing; the
-    street's hotspot "bao" talks to him, he is an unclickable actor); step 16: "Wie immer? Ich schreib's an.",
-    cash with 8 Chits (bao_paid), eating (ate_bao);
-  - **JUNO.** (steps 17-18): the screen stutters, the eye in its static turns to Juno, JUNO. over the screen,
-    the stinger "witness", Bao saw nothing, EVI "Das war nicht ich. Ehrlich.", the card Kapitel 1: Glass
-    (the screen's picture is one function, KOW.adScreen, for the opening and the moment's three animations);
-  - **the menu screen**: Kowalski Street whole as a still (art/ui/title_bg.px.js bakes it tall with its props and
-    a patrol drone, art/characters/drone.px.js; tools/title-backdrop.mjs brings it down to 320x180, the colours
-    kept to its own);
-  - Juno's street sprites have no implant pixel any more (mirroring moved it between her cheeks).
-  - Engine (Cutaway.js): see-through props (seeThrough), an actor's walkTo/face (where to stand to talk to them).
-- Checks now: validate 0 errors (3 known warnings: flags set but not yet tested), solve --full no soft-locks,
-  every state has a hint, play.mjs all passed (to the end card).
+Where we are (everything is committed; the engine copy is at Cutaway.js e2bc1d6, unchanged this time):
+- The prologue plays from the flat to its end card. In the JUNO. moment the implant's cyan brackets now lie round the
+  ad screen (the action { implant_mark }, game/screens.js) and Juno says "Das war nicht auf dem Schirm. Das war in
+  meinem Auge."
+- **The intro "Die letzte Schicht" is half done** (docs/kapitel0-design.md §5 has the table of shots, decided). It is
+  the sequence "intro" in game/intro.js, in the game (Cutaway.start({ intro }): by itself on the first start, and
+  "Intro ansehen" in the menu). Done and approved: A1, A2, C, 1, 2, 3, 4. Its shot marks: a1, a2, c, hall, desk,
+  announce, out.
+  - A1/A2 the float over the lit sea along a dark channel, the camera masts in the water, Halcyon growing ahead
+    (game/intro_sea.js, art/intro/float.px.js); C the tower, in through a green window (game/intro_tower.js);
+    1 the hall at the street's scale, the camera drifting to Juno's desk (art/rooms/hall.map.js, art/kit/hall.kit.px.js,
+    game/intro_hall.js); 2 Juno close behind her chair's high back, marking a man (art/intro/desk.px.js,
+    game/intro_desk.js); 3 the announcement; 4 the screens going out, whoever's monitor is out stops typing, Juno's
+    goes out last in the close-up, her face from the title as a raster in the dead glass
+    (art/intro/juno_face.data.js).
+  - The look so far: docs/rooms/intro_float_a1_x3.png, intro_float_a2_x3.png, intro_tower_c2_x3.png, hall_juno_x3.png,
+    intro_desk_x3.png, intro_announce_x3.png, intro_out_rows_x3.png, intro_out_face_x3.png.
+- Checks now: validate 0 errors (3 known warnings), solve --full no soft-locks, every state has a hint, play.mjs all
+  passed. They take a few minutes together: give them a long timeout.
 
-Next: **paint the intro "Die letzte Schicht"** (kapitel0-design §5, decided 2026-11-04). Its storyboard in blocks
-(art/test/intro_blocks.px.js; docs/rooms/intro_blocks.png, the opening: docs/rooms/intro_blocks_opening_x2.png;
-Juno 2088: docs/characters/juno2088_blocks_x6.png), in this order:
-A1 one slow float, low over the lit sea over the drowned city (stilt huts, rafts, buoys to the horizon), the pumps'
-stacks standing out of the water and flaring, music, "HALCYON, 2088"; A2 Halcyon ahead in the haze, the nine rings,
-the tower through them, patrol drones' searchlights on the water, big stacks passing; C the tower close, one window
-band phosphor green, the camera goes in through one window (the neo-noir mood, our own pictures; drawn in
-perspective, lights and stacks at (X, Z), so the float can be drawn the same way in the game);
-1 the observation hall (iso, 2088-04-30 05:45); 2 Juno at her desk from behind her shoulder, tagging a man
-yellow ("Hab dich."); 3 the announcement across the width; 4 the screens going out back to front, her face in her
-dark screen; T on black: "Das Implantat durften wir behalten. Sie sagten, das Herausnehmen kostet mehr.";
-D the ride down the Transitachse (the first side view): it starts close on the box, the data stick's label
-EVAL-7 // DELETE readable for a second, then pulls back; ~10 s, no words, the rings rushing past, a slow,
-melancholic, haunting melody (to compose: game/music.js has the cs80brass); 6 today, 2091-11-03 21:30 (the deck as
-it is: CRT and mouse, on purpose); 7 the title screen with the Glass Sister logo (the splash), then the menu.
-The intro plays by itself on the first start only and from the menu; the splash comes on every start.
-To do: paint the shots (the float as a perspective layer or pictures, the hall from a map and a kit, the tower,
-the lift as a tall room the camera goes down while the rings rush past), Juno in 2088 from the side, the melody,
-then the sequence (game/intro.js) before the splash, a "seen the intro" setting, and the menu's entry.
-Open: the lens on a mast (the old shot B) is out of the float; it could come back as a moment inside it.
+**Next: the rest of the intro.** After shot 4 the sequence now just fades out. Its storyboard in blocks is approved:
+art/test/intro_blocks.px.js, docs/rooms/intro_blocks.png, docs/rooms/intro_blocks_opening_x2.png,
+docs/characters/juno2088_blocks_x6.png (older than the decisions below: where they differ, the decisions win; the
+blocks still show cables). In this order, small steps, a screenshot and my look at each:
+1. **T**, on black: "Das Implantat durften wir behalten. Sie sagten, das Herausnehmen kostet mehr."
+2. **D**, the ride down the Transitachse, the game's first side view: a glass lift going down, the rings rushing up
+   past it fast, ~10 s, **no words and no sounds, the music alone**. It starts close on the box in her arms (a cactus,
+   a cup, the yellow coat, the data stick), the stick's label EVAL-7 // DELETE readable for about a second, then the
+   whole lift: pixel art doesn't zoom, so a painted close-up and a cut, or whatever you find looks better; say which.
+   - **Juno in 2088 from the side**, about 50 px: Halcyon grey with the collar and the lanyard, short black hair, no
+     hood, the box. I have sent back bodies that were boxy, domed or out of proportion several times: for a body seen
+     whole, look up a reference or a mask for a real side view (WebSearch) and show me blocks first.
+   - **The melody**, in game/music.js: slow, melancholic, haunting (the instruments of "memory" and "opening" are there:
+     br_brass, br_ribbon, br_bells, br_pedal). "opening" faded out in shot 4. Render it with
+     lib/cutaway/tools/render-music.mjs into build/music/ for me to listen to; you can't judge it yourself.
+3. **6**, today, 2091-11-03 21:30: a phosphor feed on the CRT, the home-built deck, her hand on the mouse in the yellow
+   sleeve. The deck stays as it is, CRT and mouse, on purpose.
+4. **7**, the title screen with the Glass Sister logo (the splash), then the menu. On the first start the engine
+   already goes on to the splash after the sequence; "Intro ansehen" comes back to the menu without it
+   (acts.js watchIntro): check how that feels and ask me.
+5. **Sound on the first start:** a browser allows sound only after a click, so the intro's first playing is silent
+   until then. The engine's `gate` would solve it, but it shows on every start, a second click beside the splash's
+   prompt. Show it only when the intro will play (Cutaway.settings.seen("intro")), or find something better.
+6. Then watch the whole intro for its length and pace (planned ~1.5 min; it has grown well past that). Nobody has
+   checked it in real time except me by hand, so ask me.
 
-Open points: the post-it "ESSEN!!" painted in German in the flat (make it language-free or an overlay); the
-flat's empty front floor; the steam fx in the street was replaced by baked plumes (check the engine's steam
-fx is visible somewhere or drop it); the iso tile editor (E-e) is postponed to Chapter 1, to be decided when
-rooms need re-arranging often; dialogue v2 (E-d) later; CJK fallback in the engine; docs/walkthroughs/ (other
-games' walkthroughs, reference only) is untracked: gitignore it or keep it out.
+Decided in the last session, keep to it (story §10a, kapitel0-design §5, style guide §6):
+- No sounds in the float and the lift, only music. The hall has its hum; shot 4 is silent.
+- Shot 2 has no words: the marking is enough. No cables anywhere: the implant lays its tags over what the eye sees.
+- **The implant** sits behind the ear, where Teo wears his Lull patch on the title: a cyan point, seen only with the
+  hood down; nothing on the small street figures. The cyan line on the cheek is the title's alone. The Lull patch is a
+  plaster on the skin and must always read as one, never as the implant.
+- **Lull is the observer implant made cheap** (the waking taken out, so one protocol). The eye and JUNO. are only in
+  Juno's eye. The scenes that tell the player are planned, not built: her observer handbook on the deck, a Lull user
+  as an unknown link in her overlay (Chapter 1 or 2), the firmware's id in Ines's logs (Chapter 3).
+- The lens on a mast (the old shot B) stays out; the masts in the water took its place.
+- Red and yellow keep their meanings: the only saturated yellow is Juno's; the people in 2088 wear Halcyon's grey.
+
+Handy, found the hard way:
+- A shot the game draws itself is a room with `float: "<shot>"` and a drawer in Halcyon.intro.shots; the action
+  { float: [from, to], ms, ease } moves its progress. A room bigger than the screen needs `size` or the camera won't move.
+  Non-whole scaling ruins pixel art: draw what must grow from rectangles, in metres, so it stays crisp.
+- A prop's loop stops by playing it once: Cutaway.scene.playProp(id, {}) (it runs out, then holds its last frame).
+- Screenshots of a moment, with ?manual:
+  `node lib/cutaway/tools/shot.mjs index.html --size 960x540 --query "manual&act=prolog" --eval "await Cutaway.debug.settle(); const go=async(ms)=>{for(let i=0;i<ms/50;i++){Cutaway.clock.advance(50);await new Promise(r=>setTimeout(r,0));}}; Cutaway.sequence.play('intro', {from: 'desk'}); await go(7000)" --out build/shots/x3.png --buffer build/shots/1x.png`
+  Never await a room load or a transition under ?manual: the clock is frozen and it hangs. Start them, then step.
+- A close look at a kit prop: `node .claude/skills/claude-pxl/bin/pxl.js shot art/rooms/hall.px.js hall_d31 --frames 0 --out build/shot`.
+  Look close: I find what the 3x picture hides.
+- Long heredocs with apostrophes break in the Bash tool here: write an edit script to build/ with the Write tool and run
+  it, or use Edit.
+
+Open points, beyond the intro: small things I may still want in the hall (the hands hardly show at 1x, the coat is a
+little stiff, the room's edge and the black beyond it in the corner of the last picture, the chair back's top is rather
+straight in shot 2); the post-it "ESSEN!!" painted in German in the flat (make it language-free or an overlay); the
+flat's empty front floor; the steam fx in the street was replaced by baked plumes (check the engine's steam fx is
+visible somewhere or drop it); the iso tile editor (E-e) is postponed to Chapter 1, to be decided when rooms need
+re-arranging often; dialogue v2 (E-d) later; CJK fallback in the engine; docs/walkthroughs/ (other games' walkthroughs,
+reference only) is untracked: gitignore it or keep it out. After the intro: Chapter 1 (docs/kapitel1-design.md, PLAN H4).
 
 How I like to work:
-- Small steps; for each, show screenshots (the shot.mjs command is in CLAUDE.md; for moments, step the clock
-  in 50 ms steps with an await between them).
+- Small steps; for each, show screenshots and tell me which files to look at. Be honest about what you only saw as stills.
 - For art, block sketches or a mockup first, my approval, then paint. Before painting, read the style guide
   and .claude/skills/claude-pxl/SKILL.md. Big paintings can go to a subagent with an exact brief; check its
   result yourself.
@@ -71,4 +96,5 @@ How I like to work:
   a descriptive message. No Claude/AI attribution in commits.
 - Engine changes: in its own repo, generic, node tests/run.mjs and npm run check, commit there, then
   sh tools/sync-engine.sh "B:/Github_my/cutaway" here.
-- Ask me when a decision is mine (story, look, names); otherwise decide and say so.
+- Ask me when a decision is mine (story, look, names); otherwise decide and say so. When I ask why something is the way
+  it is, check the docs before you answer: I catch contradictions.

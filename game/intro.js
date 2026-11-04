@@ -39,8 +39,8 @@
     if (shot) shot(ctx, Halcyon.intro.p, Cutaway.clock.time);
   });
 
-  // The sequence: before the title on the first start, then from the title menu (game/game.js). For now the
-  // opening (the float, the tower) only, to its own music (game/music.js: "opening").
+  // The sequence: before the title on the first start, then from the title menu (game/game.js). So far the
+  // shots up to 4; the opening has its own music (game/music.js: "opening"). Still to come: T, D, 6, 7.
   Cutaway.sequence("intro", {
     steps: [
       { shot: "a1" },
