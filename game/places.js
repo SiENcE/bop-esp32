@@ -32,6 +32,8 @@ Halcyon.at = {
     hazeDoor: [31, 78, 60, 64, 111, 156, 82, 170], hazeAd: [258, 68, 367, 123, 329, 173, 220, 119],
     glints: [[264, 164], [123, 150], [130, 169], [285, 158]],
     drips: [[247, 2, 95], [166, 8, 77], [396, 88, 170]],
+    // the menu screen's drone over the street, before the screen, its searchlight's pool on the street
+    drone: [274, 84], searchPool: [228, 170], searchBeam: [272, 84, 276, 84, 246, 176, 210, 168],
   },
   // measured from the cameras' projections (docs/cams/cam03_layout.md, cam04_layout.md). No depth `scale`: the
   // feed figures stay at their drawn size (scaling 24 px pixel art by 0.7–1.9 would smear it; the seated

@@ -7,10 +7,9 @@
 (function () {
   const AW = Halcyon.at.kowalski, AL = Halcyon.at.kessel_lobby;
 
-  Cutaway.room("kowalski", {
-    name: "Kowalski-Straße", background: "kowalski_bg", size: [416, 180],
-    ambience: ["city_far", "neon_buzz", { sfx: "feed_rain", gain: 0.6 }], music: { theme: "juno", intensity: 0.4 },
-    walk: AW.walk, holes: AW.holes, props: AW.props,
+  /** The street's look, shared with the menu screen behind the title (game/title.js). */
+  const LOOK = Halcyon.kowalskiLook = {
+    background: "kowalski_bg", size: /** @type {[number, number]} */ ([416, 180]), props: AW.props,
     // the map's lamps: the bar's warm light, its sign's magenta, the screen's cyan, the machine, the lantern
     light: { ambient: 0.8, color: "#d4dcf4", lamps: AW.lamps.map((/** @type {any} */ { bake, zone, ...lamp }) => lamp) },
     // the rain in two layers (far and dim, near and bright), the light hanging in it, glints, drops
@@ -23,6 +22,12 @@
       { kind: "sparkle", points: AW.glints, every: 2600, color: "#dafcff" },
       ...AW.drips.map((/** @type {number[]} */ [x, y, to], /** @type {number} */ i) => ({ kind: "drip", at: [x, y], to, every: 1300 + i * 470, color: "#6c809a" })),
     ],
+  };
+
+  Cutaway.room("kowalski", {
+    name: "Kowalski-Straße", ...LOOK,
+    ambience: ["city_far", "neon_buzz", { sfx: "feed_rain", gain: 0.6 }], music: { theme: "juno", intensity: 0.4 },
+    walk: AW.walk, holes: AW.holes,
     hotspots: {
       kessel_door: { name: "Haustür", rect: AW.kessel_doorRect, walkTo: AW.kessel_door, face: "nw",
         look: "Der Kessel-Block. Vierzehn Stockwerke, und ganz oben wohn ich.",
