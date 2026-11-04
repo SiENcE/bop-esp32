@@ -41,15 +41,17 @@ ISO_MAPS.kessel_14 = {
     // the bin bags against the near wall, waiting for Tuesday
     { id: "bags", kit: "bin_bags", at: [0.85, 3.35], foot: [0.95, 0.65], h: 0.55 },
     { id: "bikes", kit: "bikes", at: [0, 2.75], foot: [0.45, 1.6], h: 1.0 },
-    { id: "rail", kit: "stair_rail", at: [2.5, 1.0], foot: [1.5, 0.06], h: 0.95 },
+    // the rail: along the well's open side and back to the wall at its far end; its top section broken off
+    // (a stub at the first step), so whoever sits at the head of the stairs is in plain view
+    { id: "rail", kit: "stair_rail", at: [3.1, 1.0], foot: [0.9, 0.06], h: 0.95, stub: 2.5 },
     // behind Frau Haldane's open door: her armchair with its back to us (her TV is deeper in the room, out of
     // sight: only its light)
     { id: "armchair", kit: "armchair", at: [0.05, -1.05], foot: [0.65, 0.7], h: 1.06, behind: "door_haldane" },
   ],
   spots: {
     arrive: [0.6, 1.85, "se"], door_juno: [0.4, 1.85, "nw"], notes: [0.45, 0.8, "nw"], haldane: [1.15, 0.45, "ne"],
-    motte: [2.25, 0.85, "ne"], stairs: [2.25, 0.45, "ne"], bikes: [0.75, 2.95, "nw"], bags: [1.75, 3.0, "sw"],
-    motte_sits: [2.95, 0.5, "sw", -0.36], haldane_sits: [0.43, -0.6, "nw", 0.4],
+    motte: [1.85, 1.05, "ne"], stairs: [2.2, 0.35, "ne"], bikes: [0.75, 2.95, "nw"], bags: [1.75, 3.0, "sw"],
+    motte_sits: [2.42, 0.75, "se"], haldane_sits: [0.43, -0.6, "nw", 0.4],
   },
   // `bake` is read by the bake only (art/lib/isokit.js): the tube lights along its length and stutters with
   // its dying end; the TV and the Lull light are in Frau Haldane's room (zone: they reach the landing only

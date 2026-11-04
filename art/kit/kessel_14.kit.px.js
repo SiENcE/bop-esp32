@@ -289,17 +289,31 @@ const K14 = (() => {
       pen.line(x - 4, y - 1, x + 5, y + 3, "g"); pen.rect(x + 4, y + 2, 2, 3, "G")
     },
   })
-  // the rail along the stairwell's open side: posts, the handrail, the newel at the top step
+  // the rail along the stairwell's open side and back to the wall at its far end (posts, the handrail, a
+  // kick bar); its top section by the first step is broken off, only a stub post left (`stub`: where)
   ISOKIT.prop("stair_rail", {
     solid: (p) => [[p.at[0], p.at[1], p.h - 0.06, p.foot[0], p.foot[1], 0.06]],
-    footprint: (p) => [[p.at[0], p.at[1], 0.06, p.foot[1]]],
+    footprint: (p) => [[p.at[0], p.at[1], 0.06, p.foot[1]], [p.at[0] + p.foot[0] - 0.06, 0, 0.06, p.at[1]]],
     draw(pen, p) {
-      const [u0, v0] = p.at, L = p.foot[0], H = p.h
-      const post = (u, w, k) => pen.box(u, v0, 0, w, 0.05, H - 0.04, () => "6", () => k, () => "5")
-      post(u0, 0.07, "4")
-      for (let u = u0 + 0.5; u < u0 + L; u += 0.5) post(u, 0.04, "4")
-      pen.box(u0, v0 - 0.01, H - 0.05, L + 0.3, 0.07, 0.06, () => "G", () => "5", () => "6")
-      pen.box(u0, v0 - 0.01, 0.1, L + 0.3, 0.05, 0.03, () => "5", () => "4", () => "4")
+      const [u0, v0] = p.at, L = p.foot[0], H = p.h, u1 = u0 + L
+      const postU = (u, w) => pen.box(u, v0, 0, w, 0.05, H - 0.04, () => "6", () => "4", () => "5")
+      // the return to the wall at the far end (behind the front run, so drawn first)
+      for (const v of [0.05, v0 / 2]) pen.box(u1 - 0.05, v, 0, 0.05, 0.05, H - 0.04, () => "6", () => "4", () => "5")
+      pen.box(u1 - 0.06, 0, H - 0.05, 0.07, v0 + 0.06, 0.06, () => "G", () => "5", () => "6")
+      pen.box(u1 - 0.05, 0, 0.1, 0.05, v0 + 0.05, 0.03, () => "5", () => "4", () => "4")
+      // the front run
+      postU(u0, 0.06)
+      for (let u = u0 + 0.5; u < u1 - 0.1; u += 0.5) postU(u, 0.04)
+      postU(u1 - 0.06, 0.06)
+      pen.box(u0, v0 - 0.01, H - 0.05, L, 0.07, 0.06, () => "G", () => "5", () => "6")
+      pen.box(u0, v0 - 0.01, 0.1, L, 0.05, 0.03, () => "5", () => "4", () => "4")
+      // the stub of the broken top section, its bent end, the bolts of its plate
+      if (p.stub != null) {
+        pen.box(p.stub, v0, 0, 0.06, 0.05, 0.32, () => "5", () => "4", () => "5")
+        const [x, y] = pen.P(p.stub + 0.06, v0 + 0.05, 0.32); pen.at(p.stub + 0.06, v0 + 0.05, 0.34, "up")
+        pen.px(x - 1, y - 1, "6"); pen.px(x, y - 2, "5")
+        pen.box(p.stub - 0.03, v0 - 0.02, 0, 0.12, 0.09, 0.01, () => "4", () => "3", () => "3")
+      }
     },
   })
   // Frau Haldane asleep in front of her TV (deeper in the room, out of sight: only its light), seen from
