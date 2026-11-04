@@ -20,7 +20,9 @@
   Cutaway.actor("evi", {
     name: "EVI", color: "#8ef5d8",
     voice: { pitch: 84, range: 7, wave: "sine", syllable: 52, speed: 1.15 },
-    lineBox: { x: 286, y: 177, w: 196, align: "right" },
+    // right-aligned, the line's end mark and its panel reach 12 px past x: 276 keeps them clear of her
+    // corner on the deck (D.evi starts at 290) and of the satchel
+    lineBox: { x: 276, y: 177, w: 196, align: "right" },
   });
   Cutaway.hints.configure({ by: "evi" });
 
