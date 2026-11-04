@@ -29,6 +29,13 @@
       ctx.fillRect(cx, dy > 0 ? cy : cy - len + 1, 1, len);
     }
   }
+  const t = Halcyon.t;
+  // the texts this layer draws (Halcyon.t translates them; declared for validate and the Texts tab)
+  Cutaway.i18n.declare("feed display", ["UNBEKANNT", "CAM {id} // {place}", "CAM {id}", "LINK: J.REYES IMPLANTAT",
+    "PUFFER", "REC", "VOR", "DECK", "CACHE {n}/8", "ZOOM x3"]);
+  Cutaway.i18n.declare("deck", ["DECK // J.REYES", "{time}   {chits} CHITS", "NETZKARTE", "CODE BEKANNT", "KEIN ZUGANG",
+    "NACHRICHTEN", "NEU {mail}", "CACHE", "CLIP  {name}", "NOTIZ  {name}", "KASSENBUCH", "{to}: {what}", "{line}  +{chits}",
+    "WARTEN", "ZURÜCK"]);
   const blink = () => Math.floor(Cutaway.clock.time / 500) % 2 === 0;
 
   // ------------------------------------------------------------------ the feeds
@@ -39,15 +46,15 @@
     for (const b of Cutaway.scene.boxes()) {
       if (!b.actor || !S().flag(`tag_${b.actor}`)) continue;
       brackets(ctx, b.box, C.implant);
-      const p = Halcyon.people[b.actor], name = p && p.known && S().flag(p.known) ? p.name : "UNBEKANNT";
+      const p = Halcyon.people[b.actor], name = t(p && p.known && S().flag(p.known) ? p.name : "UNBEKANNT");
       // beside the head; near the top (under the display's lines) beside the feet instead
       small(ctx, name, b.box[0] + b.box[2] + 3, b.box[1] < 34 ? b.box[1] + b.box[3] - 6 : b.box[1] - 2, C.implant);
     }
     // the camera's display: who, where, whose (phosphor), the link (implant cyan)
     if (cam) {
-      small(ctx, `CAM ${cam.id} // ${cam.place}`, 4, 4, C.phosphorBright);
-      small(ctx, cam.owner, 4, 12, C.phosphor);
-      small(ctx, "LINK: J.REYES IMPLANTAT", 4, 20, C.implant);
+      small(ctx, t("CAM {id} // {place}", { id: cam.id, place: t(cam.place) }), 4, 4, C.phosphorBright);
+      small(ctx, t(cam.owner), 4, 12, C.phosphor);
+      small(ctx, t("LINK: J.REYES IMPLANTAT"), 4, 20, C.implant);
     }
     small(ctx, Halcyon.stamp(), W - 4, 4, C.phosphorBright, "right");
     if (S().flag("rec_on") && blink()) { ctx.fillStyle = C.red; ctx.fillRect(W - 80, 4, 3, 3); }
@@ -58,17 +65,17 @@
       if (!S().flag(`link_${c}`)) return;
       const [x, y, w, h] = O.thumb(i), live = c === id;
       ctx.fillStyle = live ? C.phosphorDim : C.ink; ctx.fillRect(x, y, w, h);
-      small(ctx, `CAM ${Halcyon.cams[c].id}`, x + w / 2, y + 3, live ? C.phosphorBright : C.phosphor, "center");
+      small(ctx, t("CAM {id}", { id: Halcyon.cams[c].id }), x + w / 2, y + 3, live ? C.phosphorBright : C.phosphor, "center");
     });
     // the buttons under the time: buffer (only when it holds something Juno needs), REC, wait, deck
     const buttons = /** @type {[string, number[], boolean][]} */ ([["REC", O.rec, !!S().flag("rec_on")], ["VOR", O.wait, false], ["DECK", O.back, false]]);
     if (Cutaway.scene.hotspots().some((h) => h.id === "rewind")) buttons.unshift(["PUFFER", O.rewind, false]);
     for (const [label, [x, y, w, h], on] of buttons) {
       ctx.fillStyle = on ? C.red : C.ink; ctx.fillRect(x, y, w, h);
-      small(ctx, label, x + w / 2, y + 3, on ? C.phosphorBright : C.implant, "center");
+      small(ctx, t(label), x + w / 2, y + 3, on ? C.phosphorBright : C.implant, "center");
     }
     const n = Object.keys(Halcyon.cache).filter((k) => S().flag(`cache_${k}`)).length;
-    small(ctx, `CACHE ${n}/8`, 4, 28, C.implant);
+    small(ctx, t("CACHE {n}/8", { n }), 4, 28, C.implant);
   }
 
   // ------------------------------------------------------------------ the zoom window
@@ -84,7 +91,7 @@
     Cutaway.assets.draw(ctx, Halcyon.zoom, 0, 0, { anchor: [0, 0], t: Cutaway.clock.time });
     ctx.restore();
     brackets(ctx, [x - 2, y - 2, w + 4, h + 4], C.implant, 6);
-    small(ctx, "ZOOM x3", x, y + h + 5, C.implant);
+    small(ctx, t("ZOOM x3"), x, y + h + 5, C.implant);
   }
 
   // ------------------------------------------------------------------ the deck
@@ -93,43 +100,45 @@
     const D = Halcyon.deckLayout;
     ctx.fillStyle = C.steel; ctx.fillRect(0, 0, W, H);
     ctx.fillStyle = C.steel2; ctx.fillRect(0, 0, W, 14); ctx.fillRect(D.map[0], D.map[1], D.map[2], D.map[3]);
-    small(ctx, "DECK // J.REYES", 4, 4, C.cyan);
-    small(ctx, `${Halcyon.stamp()}   ${S().flag("chits") ?? 0} CHITS`, W - 4, 4, C.cyanPale, "right");
+    small(ctx, t("DECK // J.REYES"), 4, 4, C.cyan);
+    small(ctx, t("{time}   {chits} CHITS", { time: Halcyon.stamp(), chits: Number(S().flag("chits") ?? 0) }), W - 4, 4, C.cyanPale, "right");
     // the map of the quarter: streets as lines, cameras as points
     ctx.fillStyle = C.steel3;
     for (const [x, y, w, h] of D.streets) ctx.fillRect(x, y, w, h);
-    small(ctx, "NETZKARTE", D.map[0] + 3, D.map[1] + 3, C.steelText);
+    small(ctx, t("NETZKARTE"), D.map[0] + 3, D.map[1] + 3, C.steelText);
     for (const [id, cam] of Object.entries(Halcyon.cams)) {
       if (!S().test(cam.if)) continue;
       const [x, y] = cam.map, linked = !!S().flag(`link_${id}`), code = !!S().flag(`code_${id}`);
       ctx.fillStyle = linked ? C.cyan : code ? C.cyanDark : C.steel3;
       ctx.fillRect(x - 2, y - 2, 5, 5);
-      small(ctx, `CAM ${cam.id}`, x + 5, y - 2, linked ? C.cyanPale : C.steelText);
-      if (!linked) small(ctx, code ? "CODE BEKANNT" : "KEIN ZUGANG", x + 5, y + 5, code ? C.cyan : C.steelText);
+      small(ctx, t("CAM {id}", { id: cam.id }), x + 5, y - 2, linked ? C.cyanPale : C.steelText);
+      if (!linked) small(ctx, t(code ? "CODE BEKANNT" : "KEIN ZUGANG"), x + 5, y + 5, code ? C.cyan : C.steelText);
     }
     // messages: the rows the room's hotspots `mail_<id>` sit on
-    small(ctx, "NACHRICHTEN", D.side, 20, C.steelText);
+    small(ctx, t("NACHRICHTEN"), D.side, 20, C.steelText);
     D.mails.forEach((/** @type {{id: string, if?: any, from: string, subject: string}} */ m, /** @type {number} */ i) => {
       if (!S().test(m.if)) return;
       const y = 30 + i * 12, unread = !S().flag(`read_${m.id}`);
       ctx.fillStyle = C.steel2; ctx.fillRect(D.side - 2, y - 2, W - D.side - 2, 11);
-      text(ctx, `${unread ? "NEU " : ""}${m.from}: ${m.subject}`, D.side, y, unread ? C.cyanPale : C.cyan);
+      const mail = t(`${m.from}: ${m.subject}`);                  // the same text as its hotspot's name (rooms/deck.js)
+      text(ctx, unread ? t("NEU {mail}", { mail }) : mail, D.side, y, unread ? C.cyanPale : C.cyan);
     });
     // the cache
-    small(ctx, "CACHE", D.side, 84, C.steelText);
+    small(ctx, t("CACHE"), D.side, 84, C.steelText);
     Object.entries(Halcyon.cache).filter(([k]) => S().flag(`cache_${k}`)).forEach(([, c], i) => {
-      text(ctx, `${c.kind === "clip" ? "CLIP" : "NOTIZ"}  ${c.name}`, D.side, 94 + i * 10, c.kind === "clip" ? C.cyanPale : C.cyan);
+      text(ctx, t(c.kind === "clip" ? "CLIP  {name}" : "NOTIZ  {name}", { name: t(c.name) }), D.side, 94 + i * 10, c.kind === "clip" ? C.cyanPale : C.cyan);
     });
     // the Kassenbuch: its last lines
-    small(ctx, "KASSENBUCH", D.side, 134, C.steelText);
+    small(ctx, t("KASSENBUCH"), D.side, 134, C.steelText);
     Object.entries(Halcyon.ledger).filter(([k]) => S().flag(`ledger_${k}`)).slice(-3).forEach(([k, e], i) => {
       const v = String(S().flag(`ledger_${k}`)), pay = e.chits?.[v] ?? 0;
-      text(ctx, `${e.to}: ${e.what[v] ?? v}${pay ? `  +${pay}` : ""}`, D.side, 144 + i * 10, C.amber);
+      const line = t("{to}: {what}", { to: t(e.to), what: t(e.what[v] ?? v) });
+      text(ctx, pay ? t("{line}  +{chits}", { line, chits: pay }) : line, D.side, 144 + i * 10, C.amber);
     });
     // the buttons (hotspots wait and close)
     for (const [label, [x, y, w, h]] of /** @type {[string, number[]][]} */ ([["WARTEN", D.buttons.wait], ["ZURÜCK", D.buttons.close]])) {
       ctx.fillStyle = C.steel3; ctx.fillRect(x, y, w, h);
-      small(ctx, label, x + w / 2, y + 3, C.cyanPale, "center");
+      small(ctx, t(label), x + w / 2, y + 3, C.cyanPale, "center");
     }
   }
 

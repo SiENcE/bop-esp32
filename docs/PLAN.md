@@ -76,6 +76,17 @@ order to build it. The model is the Loonies' plan (`B:\Github_my\the_goonies\doc
   solved alone (`solve-act`), as the Loonies did for their acts.
 - **Text:** German first, English later. Every string goes through `i18n` from the first line. City
   signs and ads are English art.
+  - Texts in the data (lines, names, choices, hints, cards) are written inline in German, the source
+    text; the engine translates them. An English table later maps source text to English
+    (`Cutaway.i18n.table("en", {...})`, or the editor's Texts tab: CSV out, CSV in).
+  - Texts the game draws itself (the deck, the feeds' display, the skin's readouts, its own lists:
+    cache, Kassenbuch, cameras, people) go through `Halcyon.t(text, { part })` and are declared with
+    `Cutaway.i18n.declare(where, [...])`, so validate and the Texts tab see them too (done 2026-11-04,
+    engine commit c429aae). Placeholders like `{n}` are filled in after the translation.
+  - Check: a pseudo language (every letter through `t()` becomes x) in a screenshot; anything still
+    readable is a text that skips i18n.
+  - Text painted into the art is outside i18n: only signs, ads and the city's tech (English anyway).
+    Open: Juno's post-it "ESSEN!!" on the deck (art/rooms/flat.px.js) is German in the art.
 
 ## 1. What already exists and fits
 

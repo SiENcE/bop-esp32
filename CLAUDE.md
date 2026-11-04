@@ -39,7 +39,11 @@ code comments English.
 
 ## World words
 
-- Game text is German first, English later (H10). Every string should go through i18n.
+- Game text is German first, English later (H10). **Every text on screen goes through i18n.** Texts in the
+  data are written inline in German (the source text; the engine translates them). Texts the game draws
+  itself go through `Halcyon.t(text, { part })` and are declared with `Cutaway.i18n.declare(where, [...])`
+  where they are drawn (lists: `Halcyon.declareTexts`), so validate and the editor's Texts tab see them.
+  Never put German words into art; painted text is only for signs, ads and the city's tech (English).
 - The city's signs and ads are English art in both languages, and so is its slang, also inside German
   sentences: **Glass** (the feeds), **Glasser/Glasserin**, **glassen**, **Shine**, **Sinker**, **Chits**.
 - **EVI** is the cute AI on Juno's deck (Halcyon's discarded AUTO-EVAL prototype, trained on Juno's tags);
@@ -69,7 +73,7 @@ code comments English.
 
 Planned (PLAN.md §3): `game/deck.js` and `game/evi.js` (H2b, replacing the one-panel deck in
 `screens.js` and `rooms/deck.js`), `feed.js`, `ledger.js`, `money.js`, `routines/<chapter>.js`,
-`strings/de.js`.
+`strings/en.js` (H10).
 
 ## Conventions
 

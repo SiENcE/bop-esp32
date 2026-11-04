@@ -23,6 +23,31 @@ const Halcyon = (/** @type {any} */ (window)).Halcyon = {
   day1: [2091, 11, 3],
 };
 
+// ---- texts. Every text on screen goes through i18n (Cutaway.i18n.t): the data's texts by the engine,
+// the ones this game draws itself through Halcyon.t. Those are declared (Cutaway.i18n.declare) where they
+// are drawn, so validate and the editor's Texts tab see them; the lists below by Halcyon.declareTexts.
+// Only text painted into the art is not (signs and ads stay English in every language anyway).
+
+/**
+ * A text through i18n, its {name} parts filled in after the translation: Halcyon.t("CACHE {n}/8", { n: 2 }).
+ * Parts that are texts themselves are translated by the caller.
+ * @param {string} text @param {Record<string, string | number>} [vars] @returns {string}
+ */
+Halcyon.t = function (text, vars) {
+  let s = Cutaway.i18n.t(text);
+  for (const [k, v] of Object.entries(vars ?? {})) s = s.split(`{${k}}`).join(String(v));
+  return s;
+};
+
+/** Declare the texts of the game's own lists (cache, Kassenbuch, cameras, people), once all of them are loaded (game.js). */
+Halcyon.declareTexts = function () {
+  const d = Cutaway.i18n.declare;
+  d("cache", Object.values(Halcyon.cache).flatMap((c) => [c.name, c.about]));
+  d("Kassenbuch", Object.values(Halcyon.ledger).flatMap((e) => [e.to, ...Object.values(e.what)]));
+  d("cameras", Object.values(Halcyon.cams).flatMap((c) => [c.place, c.owner]));
+  d("people", Object.values(Halcyon.people).flatMap((p) => [p.name, p.label, p.speaker].filter((t) => typeof t === "string")));
+};
+
 /** The date and time as the camera's display shows it: "2091-11-03 22:15". */
 Halcyon.stamp = function () {
   const n = Cutaway.time.now, [y, m, d] = Halcyon.day1, date = new Date(Date.UTC(y, m - 1, d + n.day - 1 + (n.minutes >= 1440 ? 1 : 0)));
@@ -78,8 +103,9 @@ Cutaway.events.on("room.enter", Halcyon.names);
 
 // { forward: true } fast-forwards to the next change in the feeds (anyone's routine, a moment), showing the
 // new time big in the picture while it jumps; when nothing more happens tonight, Juno says so
+const [NOTHING_TONIGHT] = Cutaway.i18n.declare("waiting", ["Heute Nacht passiert hier nichts mehr."]);
 Cutaway.script.action("forward", async (s, ctx) => {
   const n = Cutaway.time.next();
-  if (n === null) return Cutaway.script.exec(["Heute Nacht passiert hier nichts mehr."], ctx);
+  if (n === null) return Cutaway.script.exec([NOTHING_TONIGHT], ctx);      // a line: the engine translates it
   await Cutaway.script.exec([{ caption: Cutaway.time.format(n), at: "c", ms: 900, wait: false }, { time: "next" }], ctx);
 });
