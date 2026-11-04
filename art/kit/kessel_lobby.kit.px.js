@@ -7,7 +7,7 @@
 //            m  the doormat
 //   walls    lobby_steel  riveted steel panels to the dado, painted plaster above, the conduit under the
 //            ceiling, rust run down from a rivet
-//   openings stair_arch (the stairwell: its first steps up, the rail, dark above), lift_doors (brushed
+//   openings stair_arch (the stairwell, dark: only its lowest step in the lobby's light), lift_doors (brushed
 //            steel, a dent, a taped sign, the dead floor display, the call button's amber), poster_listens
 //            (Halcyon's ad: a sleeping face, SLEPT WELL? HALCYON LISTENS.), mailboxes (Juno's with the
 //            rent notice), notice_board (flyers, a lost cat), street_door (glass, the street's magenta and
@@ -72,18 +72,11 @@ const KLOBBY = (() => {
         return a === -2 || a === aw + 1 || e === ah + 1 ? "4" : "5"
       }
       o.memo.arch ??= ISOKIT.raster(aw, ah, (c) => {
+        // the stairwell is dark: only the lowest step catches the lobby's light, the rail's foot by it
         c.rect(0, 0, aw, ah, "k")
-        // the flight rising to the left, away: treads lit from the landing, risers dark; it climbs out of
-        // the light into the dark
-        for (let i = 0; i < 10; i++) {
-          const y = ah - 1 - i * 6, x0 = Math.max(0, aw - 8 - i * 5)
-          c.rect(x0, y - 1, aw - x0, 2, i < 3 ? "6" : i < 5 ? "5" : i < 8 ? "4" : "3")
-          c.hline(x0, y - 1, aw - x0, i < 3 ? "x" : i < 6 ? "6" : "4")                 // the nosing catches the light
-          c.rect(x0, y - 5, aw - x0, 4, i < 3 ? "4" : i < 6 ? "3" : i < 8 ? "2" : "1")
-        }
-        c.line(aw - 4, ah - 24, 0, ah - 56, "G"); c.line(aw - 4, ah - 23, 0, ah - 55, "4")   // the rail
-        c.rect(aw - 5, ah - 24, 2, 24, "5")                                         // its newel
-        c.rect(0, 0, aw, 6, "k")                                                    // the landing above, unlit
+        c.rect(2, ah - 3, aw - 4, 3, "2"); c.hline(2, ah - 3, aw - 4, "4")
+        c.rect(5, ah - 7, aw - 7, 3, "1"); c.hline(5, ah - 7, aw - 7, "2")
+        c.rect(aw - 5, ah - 16, 2, 13, "2")
       }, 0, 0)
       return o.memo.arch(a, e)
     },
