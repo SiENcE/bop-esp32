@@ -239,8 +239,8 @@ Vorspann; danach das Menü.
 **Entschieden (2026-11-04, Storyboard als Blöcke: `art/test/intro_blocks.px.js`, `docs/rooms/intro_blocks.png`, der
 Anfang: `docs/rooms/intro_blocks_opening_x2.png`):** Der Anfang hat die Stimmung eines Neo-Noir-Vorspanns, mit eigenen
 Bildern: **ein einziger, langsamer Flug**, tief über die Stadt bis zum Turm und durch ein Fenster in die
-Beobachtungshalle. Der Satz über das Implantat steht **vor** der Aufzugfahrt, auf Schwarz; die Fahrt selbst (~10 s)
-hat **keinen Text**: die Ringe rasen vorbei, dazu nur eine langsame, melancholische, eindringliche Melodie. Das Deck
+Beobachtungshalle. Die Aufzugfahrt (~10 s)
+hat **keinen Text**: die Ringe rasen vorbei, dazu nur eine langsame, melancholische, eindringliche Melodie. **Der Satz über das Implantat steht nicht im Vorspann** (2026-11-04, das Intro erklärt es nirgends): Juno sagt ihn, wenn sie zum ersten Mal jemanden markiert (Kessler in `cam03`, §6). Das Deck
 2091 bleibt, wie es ist (Röhrenmonitor und Maus, mit Absicht; story §10). **Der Flug und die Aufzugfahrt haben keine
 Geräusche, nur Musik** (2026-11-04). Statt flammender Schlote stehen Kameramasten im Wasser (das Thema des Spiels).
 
@@ -253,7 +253,6 @@ Geräusche, nur Musik** (2026-11-04). Statt flammender Schlote stehen Kameramast
 | 2 | Juno an ihrem Pult, nah, von hinten: Die hohe Sessellehne verdeckt den Körper bis zum Kragen, zu sehen sind Kopf, Kragen, ein Streifen vom Arm und die Hand (Halcyon-Grau). Sie sitzt rechts im Bild und blickt nach links wie auf dem Titelbild, denn die Implantatlinie liegt auf ihrer linken Wange. Ihr Bildschirm: die Kowalski-Straße (`CAM 2217`), Passanten, ein Mann bleibt stehen. Sie markiert ihn, gelb; dabei leuchtet der Punkt hinter ihrem Ohr auf. | Kein Text (2026-11-04): das Markieren reicht. Nur der Ton der Markierung |
 | 3 | Eine Durchsage, Text über die ganze Breite | „Ab morgen übernimmt die automatische Auswertung. Halcyon dankt Ihnen für Ihren Dienst." |
 | 4 | Die Bildschirme der Halle gehen aus, von hinten nach vorn: erst die Wände, von der Ecke aus, dann die Pulte Reihe für Reihe; wessen Bildschirm aus ist, hört auf zu tippen. Die Halle wird dunkel, die Kamera geht mit bis zu Juno, ihr Bildschirm brennt noch. Dann nah wie in Einstellung 2: Erst hier geht ihr Bildschirm aus, wie eine Röhre. In ihm spiegelt sich ihr Gesicht, das Gesicht vom Titelbild ohne Kapuze und ohne Linie, ihr zugewandt, nur als Raster, das nach hinten dunkler wird und sich auflöst. | Stille (die Musik blendet aus, das Brummen ist weg) |
-| T | Schwarz | „Das Implantat durften wir behalten. Sie sagten, das Herausnehmen kostet mehr." In Junos Gelb, der zweite Satz kommt nach einer Pause dazu |
 | D | **Die Transitachse**, abwärts, die erste Seitenansicht: zuerst nah am Karton (ein Kaktus, eine Tasse und ein Datenstick mit dem Aufkleber `EVAL-7 // DELETE`, gemalt und englisch wie alle Technik der Stadt; eine Sekunde lesbar, nicht kommentiert), dann Juno mit dem Karton im gläsernen Aufzug, die Ringe rasen vorbei. **Juno ist die Figur von heute** (2026-11-04): Den gelben Mantel, der in der Halle über ihrem Sessel hing, trägt sie jetzt, die Kapuze unten; ihre Straßenfigur mit Atmen und Blinzeln, dazu der Karton (`art/intro/ride.px.js`). ~10 s. | Kein Text. Eine langsame, melancholische Melodie |
 | 6 | Schnitt: heute. Ein Phosphor-Feed auf dem Röhrenmonitor, das selbstgebaute Deck, Junos Hand auf der Maus. Gelber Ärmel. | `2091-11-03 21:30` |
 | 7 | **Der Titelbildschirm** mit dem Glass-Sister-Logo (wie bei jedem Start), dann das Menü | Junos Thema |

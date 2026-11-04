@@ -9,7 +9,6 @@ pal({
   k: "#0c0e1a", S: "#d79676", H: "#b9c6d8", W: "#fff4d8", O: "#6b4630", o: "#4d3122", P: "#8a6242", K: "#33211a",
   y: "#eec414", Y: "#fff070", j: "#9a7406", q: "#266252", Q: "#55a585", v: "#62def0",
 })
-include("../lib/text.js")
 include("../intro/ride.px.js")
 
 const W = 320, H = 180, BAR = 23

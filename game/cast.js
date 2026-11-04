@@ -63,7 +63,8 @@ Cutaway.actor("kessler", {
   poses: [{ if: "at:kessler=cam04", idle: "kessler_feed_sit", talk: "kessler_feed_sit", walk: "kessler_feed_walk" }],
   speed: [14, 10], voice: { pitch: 50, wave: "square", syllable: 80 },
   look: ["Kleiner Mann, großer Mantel.", { if: "!tag_kessler", then: ["Ein heller Schal. Selbst gestrickt, so wie der aussieht."], else: ["Kessler. Der Schal, den sie ihm gestrickt hat."] }],
-  talk: [{ if: "tag_kessler", then: ["Den hab ich schon."], else: [{ tag: "kessler" }, "Heller Schal. Hab dich, Herr Kessler."] }],
+  talk: [{ if: "tag_kessler", then: ["Den hab ich schon."], else: [{ tag: "kessler" }, "Heller Schal. Hab dich, Herr Kessler.",
+    "Die Klammern macht nicht das Deck, die macht mein Implantat.", "Das durften wir behalten, damals. Sie sagten, das Herausnehmen kostet mehr."] }],
 });
 
 Halcyon.people.varga = { name: "VARGA", known: "saw_varga", label: "Mann im grauen Mantel", speaker: "Varga" };

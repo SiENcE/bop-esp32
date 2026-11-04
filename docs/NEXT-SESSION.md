@@ -32,7 +32,7 @@ Where we are (everything is committed; the engine copy is at Cutaway.js e2bc1d6,
 art/test/intro_blocks.px.js, docs/rooms/intro_blocks.png, docs/rooms/intro_blocks_opening_x2.png,
 docs/characters/juno2088_blocks_x6.png (older than the decisions below: where they differ, the decisions win; the
 blocks still show cables). In this order, small steps, a screenshot and my look at each:
-1. **T**, on black: "Das Implantat durften wir behalten. Sie sagten, das Herausnehmen kostet mehr."
+1. **T is gone** (2026-11-04): the sentence about the implant moved to the first tag in the prologue (game/cast.js, Kessler).
 2. **D**, the ride down the Transitachse, the game's first side view: a glass lift going down, the rings rushing up
    past it fast, ~10 s, **no words and no sounds, the music alone**. It starts close on the box in her arms (a cactus,
    a cup, the data stick), the stick's label EVAL-7 // DELETE readable for about a second, then the

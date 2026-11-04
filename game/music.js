@@ -7,7 +7,7 @@
 //          and a CS-80 brass voice over it all ("lead"). On the deck it plays through the wall (speaker).
 //   glass  the feeds: the theme steps back; a low drone on D, a glass bell now and then, the rain and
 //          the camera's hiss (ambience) do the rest. With the intensity a slow pulse comes in ("pulse").
-//   opening the intro's float over the sea (below, after memory).
+//   opening the intro's float over the sea (below, after memory). descent: the ride down in the lift, after it.
 // Stingers: "clue" (a moment caught), "witness" (the screen says JUNO.: everything else stops for it).
 // Listen: node lib/cutaway/tools/render-music.mjs index.html --out build/music/juno.wav --steps '[...]'
 "use strict";
@@ -160,6 +160,25 @@
         bells: bars(empty, ". . . . . . . . . . . . E6 . . .", empty, ". . . . . . . . A6 . . . . . . ."),
         thunder: bars("x . . . . . . . . . . . . . . .", empty, empty, empty),
       } },
+    },
+  });
+
+  // ---------------------------------------------------------------- descent: the intro's ride down, no words, no sounds
+  // The opening's instruments, slow against the rings rushing by. The ribbon falls from F5 to D4 over three bars with
+  // one small lift on the way, and the chord under its end stays open (D with E against the lead's D): she has arrived
+  // somewhere, and nothing is resolved. Then only the brass and the pedal, until the cut. 56 bpm, D.
+  Cutaway.score.theme("descent", {
+    tempo: 56, key: "D",
+    tracks: { brass: { inst: "br_brass" }, lead: { inst: "br_ribbon" }, bells: { inst: "br_bells" }, pedal: { inst: "br_pedal" } },
+    start: "ride",
+    sections: {
+      ride: { bars: 3, next: "tail", tracks: {
+        brass: bars(half(oDm, oBb), half("G2+D3+Bb3+F4", oAsus), hold(oDsus)),
+        pedal: bars(hold("D1"), hold("D1"), hold("D1")),
+        lead: bars("F5 - - - - - - - E5 - - - - - D5 -", "A4 - - - - - - - Bb4 - - - A4 - G4 -", "F4 - - - - - E4 - D4 - - - - - - -"),
+        bells: bars(". . . . . . . . A6 . . . . . . .", ". . . . . . . . . . . . E6 . . .", ". . . . . . . . D6 . . . . . . ."),
+      } },
+      tail: { bars: 2, next: "tail", tracks: { brass: bars(hold(oDsus), hold(oDsus)), pedal: bars(hold("D1"), hold("D1")) } },
     },
   });
 
