@@ -20,7 +20,7 @@ Object.assign(Halcyon.ledger, {
 Cutaway.time.configure({
   start: "18:00", end: "04:00",
   // where the button for waiting is (play.mjs clicks it): on the deck and in every feed
-  waitPoint: () => Cutaway.scene.room?.deck ? { x: 96, y: 7 } : Cutaway.scene.room?.feed ? { x: 253, y: 18 } : null,
+  waitPoint: () => Cutaway.scene.room?.deck ? { x: 256, y: 5 } : Cutaway.scene.room?.feed ? { x: 253, y: 18 } : null,
 });
 
 // ---- routines (where everyone is when)
@@ -77,38 +77,56 @@ Cutaway.moment("kessler_ring", {
   ],
 });
 
-// ---- messages (opened on the deck)
-Cutaway.dialog("mail_kessler", {
-  main: {
-    enter: [{ once: [
-      { narrate: "„Mein Mann kommt seit Wochen spät. Er sagt, Überstunden. Ich will Beweise. Pumpenverwaltung Ost, er geht um 22 Uhr.“" },
-      { narrate: "„Und er isst nur noch Automatennudeln, Nummer 7, als hätte er kein Zuhause. Das Foto: den Schal hab ich ihm gestrickt. M. Kessler“" },
-    ] }],
-    choices: [
-      { text: "Ihr den ganzen Clip schicken.", if: ["cache_clip_kessler_ring", "!p1"], silent: true, goto: "end",
-        then: [{ set: "p1", value: "full" }, { ledger: "kessler", value: "full" }, { narrate: "Gesendet: der ganze Clip. Die Schulden, der Ring, Varga." },
-          { narrate: "„Schulden. Er hat mir nie was gesagt.“ 200 Chits eingegangen." }, "Die Wahrheit. Für zweihundert."] },
-      { text: "Nur den Ring schicken.", if: ["cache_clip_kessler_ring", "!p1"], silent: true, goto: "end",
-        then: [{ set: "p1", value: "cut" }, { ledger: "kessler", value: "cut" }, { narrate: "Gesendet: zwölf Sekunden. Ein Mann zieht seinen Ehering ab." },
-          { narrate: "„Ich wusste es.“ 300 Chits eingegangen. 100 davon Bonus." }, "Sie hat bekommen, was sie bestellt hat."] },
-      { text: "„Nichts gefunden.“ schreiben.", if: ["cache_clip_kessler_ring", "!p1"], silent: true, goto: "end",
-        then: [{ set: "p1", value: "nothing" }, { ledger: "kessler", value: "nothing" }, { narrate: "Gesendet: „Nichts gefunden. Kein Honorar.“" }, "Soll er's ihr selbst sagen."] },
-      { text: "Ihre Nachricht noch mal lesen.", silent: true,
-        then: [{ narrate: "„Pumpenverwaltung Ost, er geht um 22 Uhr. Nummer 7. Den Schal hab ich ihm gestrickt.“" }] },
-      { text: "Später.", silent: true, goto: "end", if: "!p1" },
-      { text: "Schließen.", silent: true, goto: "end", if: "p1" },
-    ],
-  },
+// ---- the chat (game/deck.js): who writes to Juno tonight, what they wrote, what she can answer
+// (contacts that appear later come last, so the rows stay put)
+Object.assign(Halcyon.contacts, {
+  kessler: { name: "M. KESSLER", color: "#eea040", status: "online" },
+  teo: { name: "TEO", color: "#ffa040", status: "schläft", unread: "~never" },
+  halcyon: { name: "HALCYON SERVICE", color: "#62def0", status: "Werbung", unread: "~never" },
+  sable: { name: "SABLE", color: "#ff4fd3", status: "abwesend", if: "p1", unread: ["cache_note_kessler_debt", "!ledger_sable_kessler"] },
+  // (Teo and Halcyon's spam are old news: no dot)
 });
-Cutaway.dialog("mail_sable", {
-  main: {
-    enter: [{ once: [{ narrate: "„Ruhige Nacht? Ich kaufe alles, was atmet. S.“" }] }],
-    choices: [
-      { text: "Kesslers Schulden an Sable verkaufen.", if: ["cache_note_kessler_debt", "!ledger_sable_kessler"], silent: true, goto: "end",
-        then: [{ ledger: "sable_kessler", value: "sold" }, { narrate: "„Kessler, Pumpenverwaltung, Schulden bei Varga. Nett. 120.“" }, "Jeder Verkauf landet im Kassenbuch. Jeder."] },
-      { text: "Nichts für dich heute.", silent: true, goto: "end" },
-    ],
-  },
+Object.assign(Halcyon.threads, {
+  kessler: [
+    { from: "kessler", at: "21:12", text: "Mein Mann kommt seit Wochen spät. Er sagt, Überstunden. Ich will Beweise." },
+    { from: "kessler", at: "21:12", text: "Pumpenverwaltung Ost, er geht um 22 Uhr." },
+    { from: "kessler", at: "21:13", photo: "FOTO KESSLER", text: "Den Schal hab ich ihm gestrickt." },
+    { from: "kessler", at: "21:14", text: "Und er isst nur noch Automatennudeln, Nummer 7, als hätte er kein Zuhause. M. Kessler" },
+    { from: "juno", if: "p1=full", clip: "KESSLER, RING, 22:35", text: "Der ganze Clip. Die Schulden, der Ring, Varga." },
+    { from: "kessler", if: "p1=full", text: "Schulden. Er hat mir nie was gesagt." },
+    { from: "kessler", if: "p1=full", text: "200 Chits überwiesen." },
+    { from: "juno", if: "p1=cut", clip: "KESSLER, RING, 22:35", text: "Zwölf Sekunden. Ein Mann zieht seinen Ehering ab." },
+    { from: "kessler", if: "p1=cut", text: "Ich wusste es." },
+    { from: "kessler", if: "p1=cut", text: "300 Chits überwiesen. 100 davon Bonus." },
+    { from: "juno", if: "p1=nothing", text: "Nichts gefunden. Kein Honorar." },
+  ],
+  teo: [
+    { from: "teo", at: "gestern", text: "Bin heut früh im Bett. Schlaf du auch mal, Ju." },
+  ],
+  halcyon: [
+    { from: "halcyon", at: "20:00", text: "LULL: TWO WEEKS FREE. Vier Stunden Schlaf wie zehn." },
+    { from: "halcyon", at: "20:00", text: "Ihre Hüllenabgabe wurde angepasst." },
+  ],
+  sable: [
+    { from: "sable", if: "p1", text: "Ruhige Nacht? Ich kaufe alles, was atmet. S." },
+    { from: "juno", if: "ledger_sable_kessler", text: "Kessler, Pumpenverwaltung. Schulden bei Gus Varga, Frist Freitag." },
+    { from: "sable", if: "ledger_sable_kessler", text: "Nett. 120." },
+  ],
+});
+// P1: what Frau Kessler gets (docs/kapitel0-design.md §6.3); and Sable's offer
+Object.assign(Halcyon.replies, {
+  kessler: [
+    { id: "full", text: "Den ganzen Clip schicken.", if: ["cache_clip_kessler_ring", "!p1"],
+      use: [{ set: "p1", value: "full" }, { ledger: "kessler", value: "full" }, "Die Wahrheit. Für zweihundert."] },
+    { id: "cut", text: "Nur den Ring schicken.", if: ["cache_clip_kessler_ring", "!p1"],
+      use: [{ set: "p1", value: "cut" }, { ledger: "kessler", value: "cut" }, "Sie hat bekommen, was sie bestellt hat."] },
+    { id: "nothing", text: "„Nichts gefunden.“", if: ["cache_clip_kessler_ring", "!p1"],
+      use: [{ set: "p1", value: "nothing" }, { ledger: "kessler", value: "nothing" }, "Soll er's ihr selbst sagen."] },
+  ],
+  sable: [
+    { id: "sold", text: "Kesslers Schulden verkaufen.", if: ["cache_note_kessler_debt", "!ledger_sable_kessler"],
+      use: [{ ledger: "sable_kessler", value: "sold" }, "Jeder Verkauf landet im Kassenbuch. Jeder."] },
+  ],
 });
 
 // ---- the flat (art/rooms/flat.px.js; geometry: docs/rooms/flat_layout.md). Hotspots in this order: the
@@ -144,7 +162,7 @@ Cutaway.room("flat", {
     box_old: { name: "Karton", rect: AF.boxRect, walkTo: AF.box, face: "nw",
       look: ["Ein Karton von damals.", "Mein Halcyon-Ausweis. CIVIC MONITOR, J. REYES. UNGÜLTIG.", "Und der Kaktus. Vertrocknet. Wie alles aus der Zeit."] },
   },
-  enter: [{ once: ["Halb zehn. Frau Kesslers Mann hat um zehn Schichtende.", "Erst mal ans Deck."] }],
+  enter: [{ unset: "deck_app" }, { once: ["Halb zehn. Frau Kesslers Mann hat um zehn Schichtende.", "Erst mal ans Deck."] }],
 });
 
 // ---- the act

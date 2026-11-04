@@ -8,6 +8,8 @@
 #                                         art/ui/hud.px.js -> assets/ui.js)
 #        sh tools/build_art.sh title    (the title screen, art/ui/splash.px.js; the menu screen's logo, art/ui/logo.px.js,
 #                                         and the street behind it, art/ui/title_bg.px.js -> assets/title.js)
+#        sh tools/build_art.sh deck     (the deck: icons and EVI, art/ui/deck.px.js; the old photo and the wallpaper,
+#                                         art/ui/deck_wallpaper.px.js -> assets/deck.js)
 #        sh tools/build_art.sh cams     (the feed cameras: art/cams/*.px.js -> assets/cams.js; review_* stay out)
 #        sh tools/build_art.sh room flat (a street-mode room: art/rooms/flat.px.js -> assets/room_flat.js, its
 #                                         flat_* assets only; art/rooms/flat_review.px.js is not built; a room
@@ -51,6 +53,13 @@ title() {
     $ATLAS build/art/title assets/title.js --only "splash_bg,title_logo,title_bg"
 }
 
+deck() {
+    rm -rf build/art/deck
+    $PXL build art/ui/deck.px.js --out build/art/deck --no-preview | tail -n 1
+    $PXL build art/ui/deck_wallpaper.px.js --out build/art/deck --no-preview | tail -n 1
+    $ATLAS build/art/deck assets/deck.js --only "deck_*,evi_*"
+}
+
 cams() {
     rm -rf build/art/cams
     for f in art/cams/*.px.js; do
@@ -83,9 +92,10 @@ case "${1:-all}" in
     characters) characters ;;
     cams) cams ;;
     ui) ui ;;
+    deck) deck ;;
     title) title ;;
     room) room "$2" ;;
     rooms) rooms ;;
-    all) test_art; characters; cams; ui; title; rooms ;;
+    all) test_art; characters; cams; ui; deck; title; rooms ;;
     *) echo "unknown group: $1"; exit 2 ;;
 esac

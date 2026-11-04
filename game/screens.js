@@ -1,7 +1,7 @@
 // Halcyon: what the deck and the feeds draw over their rooms (docs/style-guide.md §8–9,
 // docs/kapitel0-design.md §2–3). The rooms hold the hotspots (so the solver sees every click); this
-// layer only draws: the deck's screen, the feeds' display (OSD), the implant's overlay and the zoom window.
-// A room says what it is: `deck: true`, or `feed: "cam03"` (a key of Halcyon.cams).
+// layer only draws: the feeds' display (OSD), the implant's overlay and the zoom window (the deck is
+// game/deck.js). A room says what it is: `feed: "cam03"` (a key of Halcyon.cams).
 "use strict";
 
 (function () {
@@ -33,9 +33,6 @@
   // the texts this layer draws (Halcyon.t translates them; declared for validate and the Texts tab)
   Cutaway.i18n.declare("feed display", ["UNBEKANNT", "CAM {id} // {place}", "CAM {id}", "LINK: J.REYES IMPLANTAT",
     "PUFFER", "REC", "VOR", "DECK", "CACHE {n}/8", "ZOOM x3"]);
-  Cutaway.i18n.declare("deck", ["DECK // J.REYES", "{time}   {chits} CHITS", "NETZKARTE", "CODE BEKANNT", "KEIN ZUGANG",
-    "NACHRICHTEN", "NEU {mail}", "CACHE", "CLIP  {name}", "NOTIZ  {name}", "KASSENBUCH", "{to}: {what}", "{line}  +{chits}",
-    "WARTEN", "ZURÜCK"]);
   const blink = () => Math.floor(Cutaway.clock.time / 500) % 2 === 0;
 
   // ------------------------------------------------------------------ the feeds
@@ -94,54 +91,6 @@
     small(ctx, t("ZOOM x3"), x, y + h + 5, C.implant);
   }
 
-  // ------------------------------------------------------------------ the deck
-  /** @param {CanvasRenderingContext2D} ctx */
-  function deck(ctx) {
-    const D = Halcyon.deckLayout;
-    ctx.fillStyle = C.steel; ctx.fillRect(0, 0, W, H);
-    ctx.fillStyle = C.steel2; ctx.fillRect(0, 0, W, 14); ctx.fillRect(D.map[0], D.map[1], D.map[2], D.map[3]);
-    small(ctx, t("DECK // J.REYES"), 4, 4, C.cyan);
-    small(ctx, t("{time}   {chits} CHITS", { time: Halcyon.stamp(), chits: Number(S().flag("chits") ?? 0) }), W - 4, 4, C.cyanPale, "right");
-    // the map of the quarter: streets as lines, cameras as points
-    ctx.fillStyle = C.steel3;
-    for (const [x, y, w, h] of D.streets) ctx.fillRect(x, y, w, h);
-    small(ctx, t("NETZKARTE"), D.map[0] + 3, D.map[1] + 3, C.steelText);
-    for (const [id, cam] of Object.entries(Halcyon.cams)) {
-      if (!S().test(cam.if)) continue;
-      const [x, y] = cam.map, linked = !!S().flag(`link_${id}`), code = !!S().flag(`code_${id}`);
-      ctx.fillStyle = linked ? C.cyan : code ? C.cyanDark : C.steel3;
-      ctx.fillRect(x - 2, y - 2, 5, 5);
-      small(ctx, t("CAM {id}", { id: cam.id }), x + 5, y - 2, linked ? C.cyanPale : C.steelText);
-      if (!linked) small(ctx, t(code ? "CODE BEKANNT" : "KEIN ZUGANG"), x + 5, y + 5, code ? C.cyan : C.steelText);
-    }
-    // messages: the rows the room's hotspots `mail_<id>` sit on
-    small(ctx, t("NACHRICHTEN"), D.side, 20, C.steelText);
-    D.mails.forEach((/** @type {{id: string, if?: any, from: string, subject: string}} */ m, /** @type {number} */ i) => {
-      if (!S().test(m.if)) return;
-      const y = 30 + i * 12, unread = !S().flag(`read_${m.id}`);
-      ctx.fillStyle = C.steel2; ctx.fillRect(D.side - 2, y - 2, W - D.side - 2, 11);
-      const mail = t(`${m.from}: ${m.subject}`);                  // the same text as its hotspot's name (rooms/deck.js)
-      text(ctx, unread ? t("NEU {mail}", { mail }) : mail, D.side, y, unread ? C.cyanPale : C.cyan);
-    });
-    // the cache
-    small(ctx, t("CACHE"), D.side, 84, C.steelText);
-    Object.entries(Halcyon.cache).filter(([k]) => S().flag(`cache_${k}`)).forEach(([, c], i) => {
-      text(ctx, t(c.kind === "clip" ? "CLIP  {name}" : "NOTIZ  {name}", { name: t(c.name) }), D.side, 94 + i * 10, c.kind === "clip" ? C.cyanPale : C.cyan);
-    });
-    // the Kassenbuch: its last lines
-    small(ctx, t("KASSENBUCH"), D.side, 134, C.steelText);
-    Object.entries(Halcyon.ledger).filter(([k]) => S().flag(`ledger_${k}`)).slice(-3).forEach(([k, e], i) => {
-      const v = String(S().flag(`ledger_${k}`)), pay = e.chits?.[v] ?? 0;
-      const line = t("{to}: {what}", { to: t(e.to), what: t(e.what[v] ?? v) });
-      text(ctx, pay ? t("{line}  +{chits}", { line, chits: pay }) : line, D.side, 144 + i * 10, C.amber);
-    });
-    // the buttons (hotspots wait and close)
-    for (const [label, [x, y, w, h]] of /** @type {[string, number[]][]} */ ([["WARTEN", D.buttons.wait], ["ZURÜCK", D.buttons.close]])) {
-      ctx.fillStyle = C.steel3; ctx.fillRect(x, y, w, h);
-      small(ctx, t(label), x + w / 2, y + 3, C.cyanPale, "center");
-    }
-  }
-
   // REC can be pressed while a scene in a feed plays (a moment is a script: clicks would only skip its
   // lines): a modal layer takes the click on the REC button then. Otherwise the room's `rec` hotspot does.
   Cutaway.ui.addLayer({
@@ -162,8 +111,7 @@
   Cutaway.events.on("frame.screen", (/** @type {CanvasRenderingContext2D} */ ctx) => {
     const r = Cutaway.scene.room;
     if (!r || Cutaway.scene.backdrop) return;
-    if (r.deck) deck(ctx);
-    else if (r.feed) feed(ctx, r.feed);
+    if (r.feed) feed(ctx, r.feed);
     zoom(ctx);
   });
 })();

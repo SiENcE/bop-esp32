@@ -60,7 +60,8 @@ code comments English.
 | `game/halcyon.js` | the global `Halcyon`: the game's own actions and helpers, the registries (`cache`, `ledger`, `cams`, names); its header lists the flag conventions (`chits`, `tag_<who>`, `code_<cam>`, `link_<cam>`, `cache_<id>`, `ledger_<id>`, `rec_on`) |
 | `game/places.js` | `Halcyon.at`: every position, walk area and prop placement; rooms built from a map take theirs from `game/rooms/<id>.layout.js` (generated: never edit) |
 | `game/cast.js` | the actors (Juno in iso, the feed people) |
-| `game/rooms/<id>.js` | rooms: `deck.js` (the deck, a watched room), `cams.js` (cam03, cam04: watched rooms with the phosphor post-effects) |
+| `game/deck.js` | the deck as a computer (mockup F): its room (`buttons: false`, one flag `deck_app` for the open window, `chat_<contact>` for a thread) and its screen: the desktop with the wallpaper, the apps' windows (GLAS, CHAT, CACHE, BUCH, KONTO, NETZ, RADIO, MÜLL), EVI in her corner as the hint button; the chapters fill `Halcyon.contacts`, `threads`, `replies` |
+| `game/rooms/<id>.js` | rooms: `cams.js` (cam03, cam04: watched rooms with the phosphor post-effects), `<id>.layout.js` (generated) |
 | `game/prolog.js` | the prologue act (steps 0–11), its cache and ledger entries, game time |
 | `game/screens.js` | the UI layer that draws the deck's screen, the feeds' OSD, the implant overlay and zoom windows (rooms hold the hotspots so the solver sees every click; this layer only draws) |
 | `game/glyphs.js` | the letters of both fonts as plain data, shared by `game/font.js` and the art (`art/lib/text.js` writes with them in pxl, so mockups and interface art read as in the game) |
@@ -72,8 +73,7 @@ code comments English.
 | `build/`, `out/` | scratch (raw pxl output, screenshots, renders), not checked in |
 | `.claude/skills/claude-pxl/` | the pxl skill, its own repo (gitignored) |
 
-Planned (PLAN.md §3): `game/deck.js` and `game/evi.js` (H2b, replacing the one-panel deck in
-`screens.js` and `rooms/deck.js`), `feed.js`, `ledger.js`, `money.js`, `routines/<chapter>.js`,
+Planned (PLAN.md §3): `game/evi.js` (H2b: EVI's lines and faces), the clip editor, notification cards, `feed.js`, `ledger.js`, `money.js`, `routines/<chapter>.js`,
 `strings/en.js` (H10).
 
 ## Conventions
