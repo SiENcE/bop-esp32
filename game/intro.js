@@ -40,7 +40,7 @@
   });
 
   // The sequence: before the title on the first start, then from the title menu (game/game.js). So far the
-  // shots up to 4; the opening has its own music (game/music.js: "opening"). Still to come: T, D, 6, 7.
+  // shots up to T; the opening has its own music (game/music.js: "opening"). Still to come: D, 6, 7.
   Cutaway.sequence("intro", {
     steps: [
       { shot: "a1" },
@@ -94,6 +94,14 @@
       { wait: 3500 },
       { fade: "out", ms: 1500 },
       { music: { stop: true, fade: 1.5 } },
+      // T: her words on black, in her colour. The first sentence stands alone (its empty second line keeps it where it
+      // will stay), the second comes after a breath: the pause is what makes it land
+      { shot: "t" },
+      { wait: 1200 },
+      { caption: "„Das Implantat durften wir behalten.\n", at: "c", color: "#fff070" },
+      { wait: 2800 },
+      { caption: "„Das Implantat durften wir behalten.\nSie sagten, das Herausnehmen kostet mehr.“", at: "c", color: "#fff070", ms: 4500 },
+      { wait: 1000 },
     ],
   });
 })();
