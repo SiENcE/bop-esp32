@@ -77,10 +77,20 @@ Cutaway.moment("kessler_ring", {
   ],
 });
 
+// ---- the deck (game/deck.js, EVI: game/evi.js). Step 0a: the first time tonight it boots, EVI wakes up
+// and points at the chat (docs/kapitel0-design.md §6.2)
+Halcyon.deckEnter = [{ once: [
+  { deck_boot: true }, { evi: "froh" },
+  { say: "evi", text: "Guten Abend, Juno! Eine neue Nachricht. Null Abendessen." },
+  "Danke, EVI.",
+  { evi_point: "chat" },
+] }];
+
 // ---- the chat (game/deck.js): who writes to Juno tonight, what they wrote, what she can answer
 // (contacts that appear later come last, so the rows stay put)
 Object.assign(Halcyon.contacts, {
-  kessler: { name: "M. KESSLER", color: "#eea040", status: "online" },
+  kessler: { name: "M. KESSLER", color: "#eea040", status: "online",
+    open: [{ once: ["Überstunden. Klar.", { evi: "neugierig" }, { say: "evi", text: "Pumpenverwaltung Ost! Da hab ich eine Kamera für dich." }, { evi_point: "glas" }] }] },
   teo: { name: "TEO", color: "#ffa040", status: "schläft", unread: "~never" },
   halcyon: { name: "HALCYON SERVICE", color: "#62def0", status: "Werbung", unread: "~never" },
   sable: { name: "SABLE", color: "#ff4fd3", status: "abwesend", if: "p1", unread: ["cache_note_kessler_debt", "!ledger_sable_kessler"] },
@@ -117,15 +127,19 @@ Object.assign(Halcyon.threads, {
 Object.assign(Halcyon.replies, {
   kessler: [
     { id: "full", text: "Den ganzen Clip schicken.", if: ["cache_clip_kessler_ring", "!p1"],
-      use: [{ set: "p1", value: "full" }, { ledger: "kessler", value: "full" }, "Die Wahrheit. Für zweihundert."] },
+      use: [{ set: "p1", value: "full" }, { ledger: "kessler", value: "full" }, "Die Wahrheit. Für zweihundert.",
+        { evi: "verwirrt" }, { say: "evi", text: "Sie schreibt nichts mehr. Ist sie jetzt froh?" }, { notify: "sable" }] },
     { id: "cut", text: "Nur den Ring schicken.", if: ["cache_clip_kessler_ring", "!p1"],
-      use: [{ set: "p1", value: "cut" }, { ledger: "kessler", value: "cut" }, "Sie hat bekommen, was sie bestellt hat."] },
+      use: [{ set: "p1", value: "cut" }, { ledger: "kessler", value: "cut" }, "Sie hat bekommen, was sie bestellt hat.",
+        { evi: "besorgt" }, { say: "evi", text: "Sie hat ‚Ich wusste es‘ geschrieben. Sie hat es nicht gewusst, oder?" }, { notify: "sable" }] },
     { id: "nothing", text: "„Nichts gefunden.“", if: ["cache_clip_kessler_ring", "!p1"],
-      use: [{ set: "p1", value: "nothing" }, { ledger: "kessler", value: "nothing" }, "Soll er's ihr selbst sagen."] },
+      use: [{ set: "p1", value: "nothing" }, { ledger: "kessler", value: "nothing" }, "Soll er's ihr selbst sagen.",
+        { evi: "verwirrt" }, { say: "evi", text: "Wir haben nichts geschickt. Ist das nett oder feige? Ich weiß das nie." }, { notify: "sable" }] },
   ],
   sable: [
     { id: "sold", text: "Kesslers Schulden verkaufen.", if: ["cache_note_kessler_debt", "!ledger_sable_kessler"],
-      use: [{ ledger: "sable_kessler", value: "sold" }, "Jeder Verkauf landet im Kassenbuch. Jeder."] },
+      use: [{ ledger: "sable_kessler", value: "sold" }, "Jeder Verkauf landet im Kassenbuch. Jeder.",
+        { evi: "froh" }, { say: "evi", text: "Ich schreib alles auf. Du hast gesagt, ich soll." }] },
   ],
 });
 
@@ -162,7 +176,9 @@ Cutaway.room("flat", {
     box_old: { name: "Karton", rect: AF.boxRect, walkTo: AF.box, face: "nw",
       look: ["Ein Karton von damals.", "Mein Halcyon-Ausweis. CIVIC MONITOR, J. REYES. UNGÜLTIG.", "Und der Kaktus. Vertrocknet. Wie alles aus der Zeit."] },
   },
-  enter: [{ unset: "deck_app" }, { once: ["Halb zehn. Frau Kesslers Mann hat um zehn Schichtende.", "Erst mal ans Deck."] }],
+  enter: [{ unset: "deck_app" },
+    { if: "p1", then: [{ once: [{ say: "evi", text: "Bringst du mir was mit?" }, "Du isst nicht.", { say: "evi", text: "Ich weiß. Bringst du mir was mit?" }] }] },
+    { once: ["Halb zehn. Frau Kesslers Mann hat um zehn Schichtende.", "Erst mal ans Deck."] }],
 });
 
 // ---- the act

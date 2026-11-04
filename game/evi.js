@@ -1,0 +1,91 @@
+// Halcyon: EVI, the AI on Juno's deck (docs/kapitel0-design.md §2.2; story §4, §6: Halcyon's discarded
+// AUTO-EVAL prototype). For the player she is first of all the cute AI in the deck's corner: curious, kind,
+// good with data, hopeless at reading people. She explains the deck in her own voice (no tutorial boxes),
+// reports messages and gives the hints (she is the hint button: in the satchel, on the deck in her corner).
+//   the actor "evi"          a voice only: her lines show in their own place (lineBox), bottom right beside
+//                            her corner and the satchel, in her mint, short
+//   { evi: "froh" }          her face from now until the script ends (froh, neugierig, verwirrt, besorgt,
+//                            muede, glitch; the deck draws it: game/deck.js)
+//   { evi_point: "chat" }    she points at an app: its icon pulses until it is opened
+//   { deck_boot: true }      the deck boots (lines scroll, a glitch, EVI wakes); a second, once a night
+//   { notify: "sable" }      a message card slides in at the top right, over every mode: the contact and its
+//                            newest line (a click opens the chat on the deck)
+// Faces, pointing, the boot and the cards are only what the screen shows: none of it is saved state.
+"use strict";
+
+(function () {
+  Halcyon.evi = { face: /** @type {string | null} */ (null), point: /** @type {string | null} */ (null), boot: -1,
+    /** @type {{who: string, since: number} | null} */ card: null };
+
+  Cutaway.actor("evi", {
+    name: "EVI", color: "#8ef5d8",
+    voice: { pitch: 84, range: 7, wave: "sine", syllable: 52, speed: 1.15 },
+    lineBox: { x: 286, y: 177, w: 196, align: "right" },
+  });
+  Cutaway.hints.configure({ by: "evi" });
+
+  Cutaway.script.action("evi", (s) => { Halcyon.evi.face = s.evi ? String(s.evi) : null; });
+  Cutaway.script.action("evi_point", (s) => { Halcyon.evi.point = s.evi_point ? String(s.evi_point) : null; });
+  Cutaway.script.action("deck_boot", async (s, ctx) => {
+    if (Cutaway.script.fast) return;
+    Halcyon.evi.boot = Cutaway.clock.time;
+    Cutaway.events.emit("sfx", { sfx: "boot" });
+    await Cutaway.script.exec([{ wait: 1300 }], ctx);
+    Halcyon.evi.boot = -1;
+  });
+  Cutaway.script.action("notify", (s) => {
+    if (Cutaway.script.fast) return;
+    Halcyon.evi.card = { who: String(s.notify), since: Cutaway.clock.time };
+    Cutaway.events.emit("sfx", { sfx: "mail" });
+  });
+  // her face lasts as long as the script that set it
+  Cutaway.events.on("script.busy", (/** @type {boolean} */ busy) => { if (!busy) Halcyon.evi.face = null; });
+  Cutaway.events.on("room.enter", () => { Halcyon.evi.boot = -1; });
+
+  // ---------------------------------------------------------------- the message card (every mode)
+  const CARD = { x: 192, y: 15, w: 124, h: 25, ms: 5200 };
+  const cardRect = () => [CARD.x, CARD.y, CARD.w, CARD.h];
+  const cardOn = () => !!Halcyon.evi.card && Cutaway.clock.time - Halcyon.evi.card.since < CARD.ms;
+  Cutaway.i18n.declare("message card", ["{time}"]);
+
+  /** @param {CanvasRenderingContext2D} ctx */
+  function card(ctx) {
+    if (!cardOn()) return;
+    const c = /** @type {{who: string, since: number}} */ (Halcyon.evi.card), contact = Halcyon.contacts[c.who];
+    if (!contact) return;
+    const msgs = (Halcyon.threads[c.who] ?? []).filter((m) => Cutaway.state.test(m.if)), last = msgs[msgs.length - 1];
+    const age = Cutaway.clock.time - c.since, slide = Math.min(1, age / 220), out = Math.max(0, (age - (CARD.ms - 300)) / 300);
+    const x = Math.round(CARD.x + (1 - slide) * 130 + out * 130), y = CARD.y, { w, h } = CARD;
+    const hud = Cutaway.font.get("hud"), f = Cutaway.ui.font(), t = Halcyon.t;
+    // a chamfered card (the skin's), its sender in their colour, the first line
+    ctx.fillStyle = "#090d18";
+    for (let r = 0; r < h; r++) { const a = Math.max(0, 4 - r), b = w - 1 - Math.max(0, 4 - (h - 1 - r)); ctx.fillRect(x + a, y + r, b - a + 1, 1); }
+    ctx.fillStyle = "#1f88a4"; ctx.fillRect(x + 4, y, w - 4, 1); ctx.fillRect(x, y + h - 1, w - 4, 1); ctx.fillRect(x, y + 4, 1, h - 5); ctx.fillRect(x + w - 1, y, 1, h - 4);
+    ctx.fillStyle = "#62def0"; ctx.fillRect(x + 4, y, 12, 1);
+    ctx.fillStyle = "#ff4fd3"; ctx.fillRect(x + w - 2, y + 4, 2, 6);
+    ctx.fillStyle = "#dafcff"; ctx.fillRect(x + 4, y + 4, 9, 7); ctx.fillStyle = "#131a2a"; ctx.fillRect(x + 5, y + 5, 7, 5);
+    ctx.fillStyle = "#dafcff"; for (const [a, b] of [[5, 5], [11, 5], [6, 6], [10, 6], [7, 7], [9, 7], [8, 8]]) ctx.fillRect(x + a, y + b, 1, 1);
+    hud.draw(ctx, t(contact.name).toUpperCase(), x + 17, y + 5, { color: contact.color });
+    hud.draw(ctx, Cutaway.time.now.text, x + w - 6, y + 5, { color: "#617aa0", align: "right" });
+    if (last?.text) {
+      let s = t(last.text);
+      while (s.length > 1 && f.measure(s + "…") > w - 10) s = s.slice(0, -1);
+      f.draw(ctx, s === t(last.text) ? s : s + "…", x + 5, y + 14, { color: "#dafcff", outline: "#0c0e1a" });
+    }
+  }
+
+  Cutaway.ui.addLayer({
+    z: 58, modal: true,
+    click(/** @type {{x: number, y: number}} */ p) {
+      if (!cardOn()) return false;
+      const [x, y, w, h] = cardRect();
+      if (p.x < x || p.y < y || p.x >= x + w || p.y >= y + h) return false;
+      const who = /** @type {any} */ (Halcyon.evi.card).who;
+      Halcyon.evi.card = null;
+      // on the deck the card opens the chat on that thread; elsewhere it just goes away
+      if (Cutaway.scene.room?.deck && !Cutaway.script.busy) Cutaway.script.run([{ set: "deck_app", value: `chat_${who}` }]);
+      return true;
+    },
+    render: card,
+  });
+})();

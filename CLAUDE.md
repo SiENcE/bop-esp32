@@ -61,6 +61,7 @@ code comments English.
 | `game/places.js` | `Halcyon.at`: every position, walk area and prop placement; rooms built from a map take theirs from `game/rooms/<id>.layout.js` (generated: never edit) |
 | `game/cast.js` | the actors (Juno in iso, the feed people) |
 | `game/deck.js` | the deck as a computer (mockup F): its room (`buttons: false`, one flag `deck_app` for the open window, `chat_<contact>` for a thread) and its screen: the desktop with the wallpaper, the apps' windows (GLAS, CHAT, CACHE, BUCH, KONTO, NETZ, RADIO, MÜLL), EVI in her corner as the hint button; the chapters fill `Halcyon.contacts`, `threads`, `replies` |
+| `game/evi.js` | EVI: her voice (lines in their own place beside her corner, `lineBox`), she says the hints (`hints.configure({ by: "evi" })`); actions `{ evi: face }`, `{ evi_point: app }`, `{ deck_boot }`, `{ notify: contact }` (the message card over every mode) |
 | `game/rooms/<id>.js` | rooms: `cams.js` (cam03, cam04: watched rooms with the phosphor post-effects), `<id>.layout.js` (generated) |
 | `game/prolog.js` | the prologue act (steps 0–11), its cache and ledger entries, game time |
 | `game/screens.js` | the UI layer that draws the deck's screen, the feeds' OSD, the implant overlay and zoom windows (rooms hold the hotspots so the solver sees every click; this layer only draws) |
@@ -73,7 +74,7 @@ code comments English.
 | `build/`, `out/` | scratch (raw pxl output, screenshots, renders), not checked in |
 | `.claude/skills/claude-pxl/` | the pxl skill, its own repo (gitignored) |
 
-Planned (PLAN.md §3): `game/evi.js` (H2b: EVI's lines and faces), the clip editor, notification cards, `feed.js`, `ledger.js`, `money.js`, `routines/<chapter>.js`,
+Planned (PLAN.md §3): the clip editor and the photo view (H2b), `feed.js`, `ledger.js`, `money.js`, `routines/<chapter>.js`,
 `strings/en.js` (H10).
 
 ## Conventions

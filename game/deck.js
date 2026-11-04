@@ -33,7 +33,7 @@
     close: [297, 10, 15, 11],                                // its close box (on the frame's top line)
     buttons: { wait: [236, 1, 40, 9], back: [278, 1, 40, 9] },
     evi: [290, 154, 24, 24],
-    files: { steuer: [86, 138, 150, 10], essen: [86, 152, 70, 10] },
+    files: { steuer: [86, 122, 150, 10], essen: [86, 136, 70, 10] },     // above the strip EVI speaks in
     contacts: { x: 79, w: 82, y: 30, row: 22 },
     thread: { x: 166 },
     cache: { y: 30, row: 22 },
@@ -46,7 +46,7 @@
     "BAO", "ANGESCHRIEBEN", "STEUER_2089_NICHT_ÖFFNEN.TXT", "ESSEN!!.TXT", "Noch nichts.", "…"]);
 
   // the deck's registries, filled by the chapters
-  /** @type {Record<string, {name: string, color: string, status: string, if?: any, unread?: any}>} */
+  /** @type {Record<string, {name: string, color: string, status: string, if?: any, unread?: any, open?: any[]}>} */
   Halcyon.contacts = {};
   /** @type {Record<string, {from: string, text?: string, photo?: string, clip?: string, at?: string, if?: any}[]>} */
   Halcyon.threads = {};
@@ -77,14 +77,14 @@
         name: `CAM ${cam.id}`, rect: [x - 4, y - 4, 48, 18], if: [app("glas"), ...(cam.if ? [cam.if] : [])], z: 4,
         look: `CAM ${cam.id}, ${cam.place}.`,
         use: [{ if: `link_${id}`, then: [{ goto: id }],
-          else: [{ if: `code_${id}`, then: [{ set: `link_${id}` }, { sfx: "link" }, "Wartungscode rein. Verbunden."],
+          else: [{ if: `code_${id}`, then: [{ set: `link_${id}` }, { sfx: "link" }, ...(/** @type {any} */ (cam).linked ?? ["Wartungscode rein. Verbunden."])],
             else: ["Kein Zugang. Ich brauch den Wartungscode der Kamera."] }] }],
       };
     }
     // CHAT: the contacts (those that appear later come last, so the rows stay put), the replies
     Object.entries(Halcyon.contacts).forEach(([id, c], i) => {
       hs[`contact_${id}`] = { name: c.name, rect: [D.contacts.x, D.contacts.y - 3 + i * D.contacts.row, D.contacts.w, D.contacts.row - 1],
-        if: [anyChat, ...(c.if ? [c.if] : [])], z: 4, use: [{ set: "deck_app", value: `chat_${id}` }, ...(c.unread ? [] : [{ set: `read_${id}` }])] };
+        if: [anyChat, ...(c.if ? [c.if] : [])], z: 4, use: [{ set: "deck_app", value: `chat_${id}` }, ...(c.unread ? [] : [{ set: `read_${id}` }]), ...(/** @type {any} */ (c).open ?? [])] };
     });
     for (const [who, list] of Object.entries(Halcyon.replies)) list.forEach((r, i) => {
       hs[`reply_${who}_${r.id}`] = { name: r.text, rect: [D.thread.x - 2, Y + HH - 14 - (list.length - 1 - i) * 11, X + WW - 4 - D.thread.x, 11],
@@ -104,7 +104,7 @@
     hs.evi = { name: "EVI", rect: D.evi, z: 6, use: [{ hint: true }],
       look: "EVI. Sie wohnt auf meinem Deck und liest Kameras besser als Menschen." };
 
-    Cutaway.room("deck", { name: "Deck", color: C.night, observe: true, deck: true, buttons: false, hotspots: hs,
+    Cutaway.room("deck", { name: "Deck", color: C.night, observe: true, deck: true, buttons: false, hotspots: hs, enter: Halcyon.deckEnter ?? [],
       ambience: ["deck_fans", { sfx: "rain_glass", gain: 0.5 }, { sfx: "city_far", gain: 0.6 }],
       music: { theme: "juno", intensity: 0.4, speaker: 1 } });                    // the theme through the wall
   };
@@ -218,6 +218,18 @@
     rect(ctx, C.night, x + w - 10 - lw, y + h - 1, lw, 1); small(ctx, t("NINTH//SYS"), x + w - 8 - lw, y + h - 3, C.steel6);
   }
 
+  /** the chat's scroll: messages back from the end, per thread, and the arrows' rects (the screen only) */
+  const scroll = { thread: "", back: 0, /** @type {number[] | null} */ up: null, /** @type {number[] | null} */ down: null };
+  Cutaway.ui.addLayer({
+    z: 20,
+    click(/** @type {{x: number, y: number}} */ p) {
+      if (!Cutaway.scene.room?.deck || !String(S().flag("deck_app") ?? "").startsWith("chat_")) return false;
+      if (scroll.up && inRect(p.x, p.y, scroll.up)) { scroll.back++; Cutaway.events.emit("sfx", { sfx: "type" }); return true; }
+      if (scroll.down && inRect(p.x, p.y, scroll.down)) { scroll.back = Math.max(0, scroll.back - 1); Cutaway.events.emit("sfx", { sfx: "type" }); return true; }
+      return false;
+    },
+  });
+
   const APP_DRAW = {
     /** GLAS: the map of the quarter, every known camera a point; linked ones lit */
     glas(/** @type {CanvasRenderingContext2D} */ ctx) {
@@ -280,11 +292,16 @@
         const lines = m.text ? wrap(t(m.text), tw - 34) : [];
         return { m, lines, h: (m.photo || m.clip ? 24 : 0) + lines.length * main().lineHeight + 4 + (m.text && (m.photo || m.clip) ? 2 : 0) };
       });
-      let y = bottom;
       const top = Y + 18;
+      // scrolled back by `back` messages (the arrow at the top; a new thread starts at its end)
+      if (scroll.thread !== with_) { scroll.thread = with_; scroll.back = 0; }
+      const back = Math.min(scroll.back, Math.max(0, boxes.length - 1));
+      let y = bottom;
+      let hidden = 0;
       ctx.save(); ctx.beginPath(); ctx.rect(tx - 2, top, tw + 4, bottom - top); ctx.clip();
-      for (let i = boxes.length - 1; i >= 0 && y > top; i--) {
+      for (let i = boxes.length - 1 - back; i >= 0; i--) {
         const { m, lines, h } = boxes[i], mine = m.from === "juno";
+        if (y <= top) { hidden = i + 1; break; }
         y -= h;
         const bw = Math.max(m.photo || m.clip ? 64 : 0, ...lines.map((l) => main().measure(l))) + 8, bx = mine ? tx + tw - bw : tx;
         rect(ctx, mine ? "#2a2410" : C.steel2, bx, y, bw, h); rect(ctx, mine ? C.yellowDim : C.cyanDark, mine ? bx + bw - 1 : bx, y, 1, h);
@@ -302,6 +319,16 @@
         y -= 3;
       }
       ctx.restore();
+      // the arrows: older messages above, newer below
+      scroll.up = hidden > 0 || y < top ? [tx + tw - 9, top, 10, 8] : null;
+      scroll.down = back > 0 ? [tx + tw - 9, bottom - 8, 10, 8] : null;
+      for (const [r, up] of /** @type {[number[] | null, boolean][]} */ ([[scroll.up, true], [scroll.down, false]])) {
+        if (!r) continue;
+        const hot = inRect(p.x, p.y, r);
+        rect(ctx, hot ? C.cyanDark : C.cyanDeep, r[0], r[1], r[2], r[3]);
+        ctx.fillStyle = C.cyanPale;
+        for (let d = 0; d < 3; d++) ctx.fillRect(r[0] + 5 - d, r[1] + (up ? 2 + d : 5 - d), 1 + 2 * d, 1);
+      }
     },
     /** CACHE: clips and notes, with what they are */
     cache(/** @type {CanvasRenderingContext2D} */ ctx) {
@@ -370,13 +397,39 @@
 
   // ---------------------------------------------------------------- EVI in her corner
   function evi(/** @type {CanvasRenderingContext2D} */ ctx) {
-    const p = pointer(), hot = inRect(p.x, p.y, D.evi);
-    sprite(ctx, hot ? "evi_hover" : "evi_idle", D.evi[0], D.evi[1] - (hot ? 1 : 0));
+    const p = pointer(), hot = inRect(p.x, p.y, D.evi), E = Halcyon.evi;
+    const talking = Cutaway.ui.line?.actor === "evi", bob = talking && Math.floor(Cutaway.clock.time / 180) % 2 ? 1 : 0;
+    if (E.face) sprite(ctx, `evi_${E.face}`, D.evi[0], D.evi[1] - bob);
+    else if (talking) sprite(ctx, "evi_froh", D.evi[0], D.evi[1] - bob);
+    else sprite(ctx, hot ? "evi_hover" : "evi_idle", D.evi[0], D.evi[1] - (hot ? 1 : 0));
+    // pointing at an app: its icon pulses in brackets until it is opened
+    if (E.point && opened().app === E.point) E.point = null;
+    const i = E.point ? APPS.indexOf(E.point) : -1;
+    if (i >= 0 && Math.floor(Cutaway.clock.time / 300) % 2 === 0) {
+      const [x, y] = D.icon(i);
+      ctx.fillStyle = C.mint;
+      for (const [cx, cy, dx, dy] of [[x - 4, y - 3, 1, 1], [x + 27, y - 3, -1, 1], [x - 4, y + 32, 1, -1], [x + 27, y + 32, -1, -1]]) {
+        ctx.fillRect(dx > 0 ? cx : cx - 3, cy, 4, 1); ctx.fillRect(cx, dy > 0 ? cy : cy - 3, 1, 4);
+      }
+    }
+  }
+
+  /** the boot: a second of scrolling lines and a glitch, then EVI wakes (rubs her eyes) */
+  function boot(/** @type {CanvasRenderingContext2D} */ ctx) {
+    const age = Cutaway.clock.time - Halcyon.evi.boot;
+    if (Halcyon.evi.boot < 0 || age > 1300) return false;
+    rect(ctx, C.night, 0, 0, W, H);
+    const rows = ["NINTH//SYS 4.1", "MEM 512M OK", "GLASS LINK ... OK", "CACHE 8 SLOTS", "LEDGER ... OK", "EVAL-7 ... WAKE"];
+    rows.slice(0, Math.min(rows.length, Math.floor(age / 160) + 1)).forEach((r, i) => small(ctx, r, 8, 8 + i * 8, i === rows.length - 1 ? C.mint : C.cyanDark));
+    if (age > 500 && age < 620) for (let k = 0; k < 4; k++) rect(ctx, k % 2 ? C.magentaDark : C.cyanDeep, 0, 30 + k * 31 + (age % 13), W, 2);   // the glitch
+    if (age > 900) sprite(ctx, Math.floor(age / 120) % 2 ? "evi_muede" : "evi_schlaf", D.evi[0], D.evi[1]);
+    return true;
   }
 
   Cutaway.events.on("frame.screen", (/** @type {CanvasRenderingContext2D} */ ctx) => {
     const r = Cutaway.scene.room;
     if (!r?.deck || Cutaway.scene.backdrop) return;
+    if (boot(ctx)) return;
     desktop(ctx);
     const open = opened().app;
     if (open && /** @type {any} */ (APP_DRAW)[open]) { frame(ctx, LABEL[/** @type {keyof typeof LABEL} */ (open)]); /** @type {any} */ (APP_DRAW)[open](ctx); }
