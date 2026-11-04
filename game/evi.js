@@ -20,9 +20,9 @@
   Cutaway.actor("evi", {
     name: "EVI", color: "#8ef5d8",
     voice: { pitch: 84, range: 7, wave: "sine", syllable: 52, speed: 1.15 },
-    // right-aligned, the line's end mark and its panel reach 12 px past x: 276 keeps them clear of her
-    // corner on the deck (D.evi starts at 290) and of the satchel
-    lineBox: { x: 276, y: 177, w: 196, align: "right" },
+    // right-aligned, the line's end mark and its panel reach 12 px past x: 262 keeps them clear of her
+    // head by the satchel (x 276, drawn while she talks: below) and of her corner on the deck (x 290)
+    lineBox: { x: 262, y: 177, w: 196, align: "right" },
   });
   Cutaway.hints.configure({ by: "evi" });
 
@@ -89,5 +89,20 @@
       return true;
     },
     render: card,
+  });
+
+  // ---------------------------------------------------------------- her place outside the deck
+  // The engine hides the satchel and the hint button while a script runs, which is when she talks; so
+  // in street and feed mode she stays in sight there while her line shows: the satchel, and her head
+  // out of its pocket where the hint button sits (as the engine places it), bobbing as she talks.
+  Cutaway.ui.addLayer({
+    z: 44, modal: true,
+    render(/** @type {CanvasRenderingContext2D} */ ctx) {
+      if (Cutaway.ui.line?.actor !== "evi" || Cutaway.scene.room?.buttons === false || !Cutaway.script.busy) return;
+      const bag = Cutaway.inventory.bagCentre(), y = Cutaway.inventory.corner === "bottom" ? Cutaway.display.height - 16 : 5;
+      const bob = Math.floor(Cutaway.clock.time / 180) % 2;
+      Cutaway.assets.draw(ctx, "ui_satchel", bag.x - 8, bag.y - 7, { anchor: [0, 0], t: Cutaway.clock.time });
+      Cutaway.assets.draw(ctx, "ui_evi", bag.x - 32, y - bob, { anchor: [0, 0], t: Cutaway.clock.time });
+    },
   });
 })();
