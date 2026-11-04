@@ -3,9 +3,9 @@
 //   floor   c  carpet tiles, 0.5 m, laid in turns; a floor box under each desk where its cables go down
 //           a  the aisle along the screen wall: smooth, darker
 //   walls   screen_wall  screens from the dado to under the ceiling, 0.8 x 0.5 m in black bezels; each shows a
-//           feed in the phosphor (a street from above with people walking, a plaza, a corridor, a crowd, a car
-//           park, no signal), scanlines, some moving; under the ceiling the cable tray and the dome cameras that
-//           watch the watchers (their red lights)
+//           feed in the phosphor (someone from above on a pavement, a road with people walking, a corridor, a
+//           crowd, no signal), scanlines, some moving; under the ceiling the cable tray and the dome cameras
+//           that watch the watchers (their red lights)
 //           hall_panel   the near walls' stubs
 //   props   desk  a slab on two side panels, a cable tray under it, three monitors with their feeds, the
 //           keyboard; a stool, and on it a watcher in Halcyon's grey from behind: shoulders, the collar, the
@@ -138,9 +138,10 @@ const HALLKIT = (() => {
       // the keyboard; Juno's cactus in its pot and her cup
       p.box(cu - 0.22, v0 + 0.34, 0.74, 0.44, 0.15, 0.02, (lu) => (fl(lu * 30) % 2 ? "2" : "3"), () => "1", () => "1")
       if (juno) {
-        p.box(u0 + 0.05, v0 + 0.4, 0.74, 0.1, 0.1, 0.08, () => "O", () => "O", () => "P")       // the pot
-        p.box(u0 + 0.07, v0 + 0.42, 0.82, 0.06, 0.06, 0.12, () => "8", () => "7", () => "8")    // the cactus
-        p.box(u0 + 1.0, v0 + 0.42, 0.74, 0.08, 0.08, 0.1, () => "1", () => "h", () => "H")      // the cup
+        // on the desk's far end from her, where nothing hides them (the left end is behind her head)
+        p.box(u0 + 1.02, v0 + 0.3, 0.74, 0.11, 0.11, 0.08, () => "O", () => "O", () => "P")     // the pot
+        p.box(u0 + 1.05, v0 + 0.33, 0.82, 0.05, 0.05, 0.14, () => "8", () => "7", () => "8")    // the cactus
+        p.box(u0 + 0.84, v0 + 0.46, 0.74, 0.08, 0.08, 0.1, () => "1", () => "h", () => "H")     // the cup
       } else if (ih(seed, 40) < 0.4) {
         p.box(u0 + 0.95 + ih(seed, 41) * 0.1, v0 + 0.4, 0.74, 0.07, 0.07, 0.09, () => "1", () => "h", () => "H")
       }
