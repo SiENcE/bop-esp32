@@ -64,6 +64,15 @@ die Feeds merken nichts. Das ist genau die „Mischung“: gebaute Räume und fr
    Kamera aus derselben Karte kommen (Style Guide §9: „ein Ort, beide Ansichten“): das wäre der größte
    Gewinn, aber erst danach.
 
+## Entschieden (2026-11-04)
+
+- **Ja, so**: Karten als Quelle, beim Bauen mit dem Licht zu Bild und Props gebacken; ein Iso-Tab in der
+  Engine später. Plan: PLAN H1c (Maßstab, Baukasten, die Wohnung aus einer Karte), E-e (der Iso-Tab).
+- **Maßstab**: Bild 3 des Höhentests, 16 Einheiten pro Meter Boden, 30 px pro Meter Höhe (Juno ~50 px).
+- **Dazu**: manche Szenen in Seitenansicht (eine Bühne wie Mockup B), Draufsicht nur, wo sie passt
+  (Style Guide §4). Für die Seitenansicht taugt dasselbe Kartenformat mit nur einer Achse (Zellen entlang
+  x, Höhe) nicht unbedingt; das entscheiden wir an der ersten solchen Szene.
+
 ## Reihenfolge, wenn wir es machen
 
 1. Den Maßstab entscheiden (Höhentest).

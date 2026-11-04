@@ -61,16 +61,28 @@ These points from the premise shape the art (the story isn't written yet):
   - `u` runs along the right-hand wall, `v` along the left-hand wall, `h` straight up.
   - `P(u, v, h) = [CX + 2u - 2v, CY + u + v - h]`, where `(CX, CY)` is the back corner at the
     foot of the walls.
-- **Scale:**
+- **Scale** (decided 2026-11-04 from the height test, `docs/rooms/iso_height_test_x2.png`, its panel 3;
+  before it heights were 18 px per meter, and rooms looked low: a camera true to the 2:1 floor would draw
+  39 px, so 30 is a compromise between that and a room that still fits the screen):
 
   | | |
   |---|---|
   | 1 m of floor | 16 units of u or v, so a 1 m floor tile is a 32x16 diamond |
-  | 1 m of height | 18 px |
-  | Juno (1.75 m) | 32 px |
-  | a door | ~40 px |
-  | a ceiling | ~54 px |
-  | a counter or table top | ~18 px |
+  | 1 m of height | **30 px** |
+  | Juno (1.68 m) | ~50 px |
+  | a door (2.0 m) | 60 px |
+  | a ceiling (2.6 m) | 78 px |
+  | a counter or table top (0.75–0.9 m) | 23–27 px |
+
+  Art drawn at the old scale (Juno, the flat, `art/lib/iso.js`) is redrawn at this one (PLAN H1c).
+- **Rooms are built from a kit** (decided 2026-11-04, `docs/ideas/iso-tiles.md`): a room's source is a map
+  (floor cells, walls on cell edges with their openings, props from the kit, lights); pxl bakes it with
+  the light into the picture and the props, and measures the layout. Unique details stay hand-painted props.
+- **Other views for variety** (decided 2026-11-04): most of the city is iso, but a scene may be drawn as a
+  **side view** (a stage, like mockup B: a corridor, a lift, a bridge, a ledge) where that tells it
+  better, and **top-down** only where it truly fits (a map, a look down a shaft). They keep the palette,
+  the light and the interface of street mode; each needs its own walk views for Juno (side: left and
+  right).
 
 - **Rooms are cutaways:**
   - Two walls stand at the back (left and right), meeting in a corner.
