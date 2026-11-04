@@ -70,9 +70,8 @@ function paint(c, mode) {
   c.rect(72, 138, 92, 13, "B"); c.hline(72, 138, 92, "E")
   for (let y = 140; y < 150; y += 3) for (let x = 74 + (y % 2); x < 161; x += 4) c.rect(x, y, 3, 2, x < 130 ? "4" : "3")
 
-  // Juno, from behind: her shoulders about two and a half heads wide, the near one falling away to the arm, the far
-  // one running out of the picture; the chair's high back nearest to us covers her from the shoulder blades down.
-  // Flat bands of the grey, not a gradient: it is cloth. Only the edge toward the monitor catches its light.
+  // Juno, from behind, in her chair: its high back is nearest to us and hides her body up to the collar. Only a
+  // strip of her near arm shows beside it, in flat bands of the grey, the edge toward the monitor catching its light.
   // The forearm first, going away from us to the keys, narrower toward the wrist; the upper arm comes over its elbow
   for (let t = 0; t <= 1; t += 0.01) {
     const x = Math.round(202 + (171 - 202) * t), y = Math.round(164 + (146 - 164) * t), r = Math.round(7 - 3 * t)
@@ -80,31 +79,30 @@ function paint(c, mode) {
   }
   c.rect(170, 142, 3, 9, "h"); c.vline(170, 142, 9, "g")                                                       // the cuff
   // the jacket: neck, the near shoulder down into the arm; the far shoulder out of the picture
-  const JACKET = [[247, 114], [232, 119], [215, 127], [203, 137], [197, 150], [193, 180], [320, 180], [320, 131], [304, 123], [288, 114]]
+  const JACKET = [[247, 112], [233, 117], [221, 124], [212, 134], [207, 150], [204, 180], [320, 180], [320, 131], [304, 123], [288, 112]]
   const inJacket = (x, y) => { let on = false; for (let i = 0, j = JACKET.length - 1; i < JACKET.length; j = i++) {
     const [xi, yi] = JACKET[i], [xj, yj] = JACKET[j]
     if ((yi > y) !== (yj > y) && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) on = !on } return on }
-  const seam = (y) => lerp([[122, 224], [140, 217], [165, 218]], y)                                             // the sleeve's seam
   for (let y = 112; y < H; y++) for (let x = 190; x < W; x++) {
     if (!inJacket(x, y)) continue
     if (!inJacket(x - 1, y) || !inJacket(x - 1, y - 1) || !inJacket(x, y - 1) && x < 248) { c.px(x, y, "8"); continue }   // the monitor's light on its edge
-    const sx = seam(y)
-    if (Math.abs(x - sx) < 1 && y > 122) { c.px(x, y, "h"); continue }
-    c.px(x, y, x < sx ? (x < sx - 12 ? "G" : "g") : x < 272 ? "g" : "h")
+    c.px(x, y, x < 214 ? "G" : "g")
   }
-  for (let t = 0; t <= 1; t += 0.03) { c.px(Math.round(238 + 22 * t), Math.round(126 + 12 * t * t), "h") }      // a fold across the back
   // the neck, into the collar
   for (let y = 100; y < 128; y++) { const l = lerp([[100, 248], [128, 244]], y), r = lerp([[100, 278], [114, 278], [128, 286]], y)
     for (let x = Math.round(l); x < r; x++) c.px(x, y, (x - l) < 4 ? "l" : (x - l) < 12 ? "S" : (x - l) < 24 ? "s" : "O") }
-  // the collar stands round the neck; the lanyard comes out of it and over the shoulder to the front
+  // the collar stands round the neck
   for (let y = 116; y < 130; y++) for (let x = 236; x < 296; x++) {
     if (inE(x, y, 266, 134, 31, 17)) c.px(x, y, !inE(x, y, 266, 136, 30, 16) ? "G" : x < 272 ? "g" : "h")
   }
-  for (let t = 0; t <= 1; t += 0.05) c.rect(Math.round(240 - 12 * t), Math.round(124 + 10 * t), 2, 1, "c")
-  // the chair's back, nearest of all: its rounded top, the lit rim, a seam
-  const chair = (x) => lerp([[222, 170], [228, 156], [238, 147], [256, 141], [290, 139], [320, 142]], x)
-  for (let x = 222; x < W; x++) { const top = Math.round(chair(x))
-    for (let y = top; y < H; y++) c.px(x, y, y === top ? "E" : x === 278 ? "A" : x < 240 ? "C" : "B") }
+  // the chair's back, nearest of all: a padded shell, its rounded top under her collar, the monitor's light on its
+  // edge, a lit rim, stitched channels running up it, darker away from the monitor
+  const chair = (x) => lerp([[213, 180], [215, 150], [222, 132], [234, 122], [250, 118], [290, 118], [320, 120]], x)
+  for (let x = 213; x < W; x++) { const top = Math.round(chair(x))
+    for (let y = top; y < H; y++) {
+      const edge = y < chair(x - 1) || x === 213
+      c.px(x, y, edge ? "7" : y === top ? "E" : (x === 240 || x === 268 || x === 296) && y > top + 2 ? "A" : x < 228 ? "D" : x < 262 ? "C" : "B")
+    } }
   // the head: skull and jaw; hair over the skull and behind the ear, skin before it (a lost profile: we see the
   // cheek, not the eye); the monitor's light along the cheek's edge and the hair's
   const head = (x, y) => inE(x, y, 254, 80, 28, 32) || inE(x, y, 241, 91, 14, 17)
