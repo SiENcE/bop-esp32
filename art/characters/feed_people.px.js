@@ -150,37 +150,41 @@ anim("kessler_feed_umbrella", { w: KU.W, h: KU.H, frames: 2, ms: [1100, 300], ou
     if (c.frame === 1) c.px(13, 9, "7")
   })
 
-// sitting at cam04's table, facing the camera (front three-quarter, facing down-right): the crown
-// bowed over the table, the scarf's two ends down his chest, the forearms on the table toward us,
-// the hands meeting. The table's top and his lap under it are the room's. 13x16 inside (15x18),
-// the pivot under the seat. Frame 1: the head sinks a pixel lower.
+// sitting at cam04's near table, facing the camera (front three-quarter, facing down-right), at his true
+// size there (cam04 measures him from the stool at y 94 to the crown at y 59; the camera stretches
+// height more than width, so he is tall and narrow): the crown bowed over the table, the scarf wrapped
+// round his neck and its two ends down his chest, the coat. The table's far edge hides him from the
+// waist down (row 27); below it only his forearms, on the table toward us, the hands meeting. 15x35
+// inside (17x37), the pivot under the stool. Frame 1: the head sinks a pixel lower.
 sprite("_ks_head", `
-  .6666.
-  666666
-  466666
-  464646
-  .66666
-  ..666.`)                       // crown, the hair at the side away from us, brows, eyes cast down
-sprite("_ks_body", `
-  ..99999999...
-  .4999999994..
-  44449449444..
-  44449449444..
-  44449449444..
-  4444944444...
-  .44444444444.
-  ..444444444..
-  ..444444444..
-  ...4444444...`)                // rows 6-15: the scarf's ends down his chest, the coat
-sprite("_ks_arms", `
-  .....24444...
-  ......244466.
-  .......24666.
-  ........666..`)                // rows 10-13: the near forearm across the body to the hands
-anim("kessler_feed_sit", { w: 13, h: 16, frames: 2, ms: [1500, 1100], outline: "1", pivot: "bottom" }, (c) => {
-  c.stamp("_ks_body", 0, 6)
-  c.stamp("_ks_arms", 0, 10)
-  c.stamp("_ks_head", 2, c.frame)
+  ..66666..
+  .6666666.
+  66666666.
+  466666666
+  446666666
+  464646665
+  .66666665
+  .6665665.
+  ..66666..`)                    // crown, the hair at the side away from us, brows and eyes cast down
+const KS = { W: 15, H: 35, EDGE: 27 }
+function kesslerSit(c) {
+  // the coat from the shoulders to the table's edge, its far side in shadow, the front's opening
+  c.rect(1, 12, 13, KS.EDGE - 12, "4"); c.rect(0, 13, 1, KS.EDGE - 13, "3"); c.rect(14, 13, 1, KS.EDGE - 13, "3")
+  c.rect(12, 14, 2, KS.EDGE - 14, "3"); c.rect(7, 22, 1, KS.EDGE - 22, "3")
+  // the scarf: wrapped round the neck, the two ends down his chest, fringed
+  c.rect(4, 10, 7, 2, "9"); c.rect(3, 11, 1, 1, "8"); c.rect(11, 11, 1, 1, "8")
+  c.rect(5, 12, 2, 9, "9"); c.rect(8, 12, 2, 11, "9"); c.px(6, 12, "8"); c.px(9, 12, "8")
+  c.px(5, 21, "8"); c.px(8, 23, "8"); c.px(9, 23, "8")
+  c.rect(6, 9, 3, 1, "4")                                                   // the neck in the collar
+  // the arms down his sides to the elbows on the table, the forearms toward us, the hands meeting
+  c.rect(0, 20, 2, 8, "3"); c.rect(13, 20, 2, 8, "3")
+  c.rect(1, 27, 3, 2, "4"); c.rect(2, 29, 3, 2, "4"); c.rect(3, 31, 3, 2, "4"); c.rect(1, 28, 1, 1, "3"); c.rect(2, 30, 1, 1, "3")
+  c.rect(11, 27, 3, 2, "4"); c.rect(10, 29, 3, 2, "4"); c.rect(9, 31, 3, 2, "4"); c.rect(13, 28, 1, 1, "3"); c.rect(12, 30, 1, 1, "3")
+  c.rect(5, 32, 5, 2, "6"); c.rect(6, 34, 3, 1, "6"); c.px(7, 33, "5")
+}
+anim("kessler_feed_sit", { w: KS.W, h: KS.H, frames: 2, ms: [1500, 1100], outline: "1", pivot: "bottom" }, (c) => {
+  kesslerSit(c)
+  c.stamp("_ks_head", 3, c.frame)
 })
 
 // ================================================================ Gus Varga
@@ -226,37 +230,34 @@ anim("varga_feed_walk", { w: V.W, h: V.H, frames: 6, fps: 10, outline: "0", pivo
   const i = c.frame
   varga(c, { bob: FP_BOB[i], swing: FP_SWING[i], feet: fpFeet(V.H, i) })
 })
-// at the table, his back to the camera: the hands rest on the table in front of him (up the
-// picture), the left one beside his hat with the watch; frame 1 its fingers drum. 17x17 inside
-// (19x19), the pivot under the seat.
-sprite("_vs_body", `
-  ......22322......
-  ...33333333333...
-  ..3333333333333..
-  .332333333333233.
-  .332333333333233.
-  .332333323333233.
-  .332333323333233.
-  ..3333323333333..
-  ..3333323333333..
-  ...33333333333...
-  ....333333333....`)            // rows 6-16
-sprite("_vs_arm_l", `
-  .44.
-  .98.
-  .33.
-  33..
-  33..`)                         // rows 2-6, cols 0-3: the forearm up onto the table, watch, hand
-sprite("_vs_arm_r", `
-  .44
-  .33
-  ..3`)                          // rows 3-5: the right hand, on the table past his shoulder
-anim("varga_feed_sit", { w: 17, h: 17, frames: 2, ms: [1300, 400], outline: "0", pivot: "bottom" }, (c) => {
-  c.stamp("_vs_body", 0, 6)
-  c.stamp("_vs_arm_l", 0, 2)
-  c.stamp("_vs_arm_r", 13, 3)
-  c.stamp("_v_hat", 1, 2)
-  if (c.frame === 1) c.px(1, 2, "_"), c.px(1, 1, "4")                   // a finger lifts, taps
+// at cam04's near table, his back to the camera, at his true size there (the stool at y 132, the hat's
+// crown at y 103): the hat, the collar turned up, the broad back of the coat with its seam and its vent
+// spread on the stool; his hands rest on the table in front of him (up the picture, beside his hat), the
+// left one with the watch; frame 1 its fingers drum. 19x29 inside (21x31), the pivot under the stool.
+sprite("_vs_hat", `
+  ..44444..
+  .4444344.
+  .4444344.
+  1111111111.
+  44444444444
+  .444444444.
+  ..1111111..`)                   // the crown with its dent and band, the brim round it, its shadow on the collar
+const VS = { W: 21, H: 29 }
+function vargaSit(c) {
+  // the coat: the collar up under the brim, the broad shoulders, the back narrowing to the stool
+  c.rect(6, 7, 9, 2, "2")
+  c.rect(2, 9, 17, 3, "3"); c.rect(3, 12, 15, 8, "3"); c.rect(4, 20, 13, 6, "3"); c.rect(5, 26, 11, 3, "3")
+  c.rect(2, 10, 1, 2, "2"); c.rect(18, 10, 1, 2, "2"); c.rect(3, 12, 1, 8, "2"); c.rect(17, 12, 1, 8, "2")
+  c.rect(10, 9, 1, 14, "2"); c.rect(10, 23, 1, 6, "1")                     // the back seam, the vent
+  c.rect(5, 27, 2, 2, "2"); c.rect(14, 27, 2, 2, "2")                       // the coat's tails over the stool
+  // the forearms forward onto the table, clear of the hat: the left (screen left) with the watch
+  c.rect(1, 6, 2, 4, "3"); c.rect(0, 4, 2, 2, "3"); c.rect(0, 3, 2, 1, "9"); c.px(1, 3, "8"); c.rect(0, 1, 2, 2, "4")
+  c.rect(18, 6, 2, 4, "3"); c.rect(19, 4, 2, 2, "3"); c.rect(19, 2, 2, 2, "4")
+}
+anim("varga_feed_sit", { w: VS.W, h: VS.H, frames: 2, ms: [1300, 400], outline: "0", pivot: "bottom" }, (c) => {
+  vargaSit(c)
+  c.stamp("_vs_hat", 5, 1)
+  if (c.frame === 1) c.px(0, 1, "_"), c.px(0, 2, "4"), c.px(1, 0, "4")          // a finger lifts, taps
 })
 
 // ================================================================ commuters (cam03, 22:00)
