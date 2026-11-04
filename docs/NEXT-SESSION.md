@@ -34,10 +34,20 @@ Where we are (everything is committed, in both repos; the engine copy is at Cuta
 - Checks now: validate 0 errors (3 known warnings: flags set but not yet tested), solve --full no soft-locks,
   every state has a hint, play.mjs all passed (to the end card).
 
-Next: **the intro "Die letzte Schicht"** (kapitel0-design §5): the observation hall three years ago, the last
-shift, the announcement, Juno with her box on the **Transitachse** going down: the first **side view** (style
-guide §4: a stage, its own walk views for Juno, left and right). Block sketches first for my approval (the hall,
-the Transitachse, Juno from the side), then painted; then it plays as the game's intro before the title.
+Next: **the intro "Die letzte Schicht"** (kapitel0-design §5). Its storyboard is drawn as blocks, for my approval
+(art/test/intro_blocks.px.js; docs/rooms/intro_blocks_x1.5.png, docs/characters/juno2088_blocks_x6.png):
+1 the observation hall (iso: rows of desks, a watcher at each with a cable into the neck, walls of phosphor
+screens, the date 2088-04-30 05:45); 2 Juno at her desk from behind her shoulder (no yellow: Halcyon grey, the
+badge on its lanyard), her screen a street, she tags a man yellow: "Hab dich."; 3 the announcement across the
+width; 4 the screens going out back to front, hers last, her face in the dark glass; 5 the Transitachse: the
+first side view, Juno with her box in a glass lift going down, the rings passing upward behind it; 6 today:
+the CRT's feed, the deck, her hand on the mouse, the yellow sleeve, 2091-11-03 21:30.
+Open questions for me: what shot 6 ends on (kapitel0 says "Titel: HALCYON"; the game is Glass Sister: its logo,
+or cut straight to the title screen); the data stick's label (§5 says `EVAL-7 · LÖSCHEN`, but painted text is
+English: `EVAL-7 // DELETE`). After approval: paint the shots (the hall from a map and a kit like the rooms, the
+close-ups as pictures, the lift as a tall room the camera goes down while the rings pass), Juno in 2088 from
+the side (her side view: standing with the box; walk views left and right only if she walks), then the
+sequence (game/intro.js: shots, captions, the announcement, the sounds), played before the title.
 
 Open points: the post-it "ESSEN!!" painted in German in the flat (make it language-free or an overlay); the
 flat's empty front floor; the steam fx in the street was replaced by baked plumes (check the engine's steam
