@@ -29,6 +29,8 @@
         look: "Zwei Fahrräder, aneinander angeschlossen. Damit keins allein geklaut wird." },
       bags: { name: "Müllsäcke", poly: AK.bagsPoly, walkTo: AK.bags, face: "ne",
         look: "Müll. Abgeholt wird dienstags. Theoretisch." },
+      bench: { name: "Bank", poly: AK.benchPoly, walkTo: AK.motte, face: "ne",
+        look: "Eine Bank, die irgendwer hochgetragen und hier vergessen hat. Motte sitzt fast jeden Abend drauf." },
       stairs: { name: "Treppe", poly: AK.railPoly, walkTo: AK.stairs, face: "ne",
         look: "Die Treppe runter. Vierzehn Stockwerke, wenn der Aufzug nicht geht. Er geht nie.",
         use: [{ end: "Ende des Testabschnitts. Weiter geht es in der Lobby (H3)." }] },

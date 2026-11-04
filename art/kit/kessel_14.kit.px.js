@@ -316,6 +316,26 @@ const K14 = (() => {
       }
     },
   })
+  // a bench someone carried up and left by the stairs: three worn slats on a steel frame, a tag scratched
+  // into the front slat, gum under it
+  ISOKIT.prop("bench", {
+    solid: (p) => [[p.at[0], p.at[1], p.h - 0.06, p.foot[0], p.foot[1], 0.06]],
+    footprint: (p) => [[p.at[0] + 0.05, p.at[1] + 0.05, 0.06, p.foot[1] - 0.1], [p.at[0] + p.foot[0] - 0.11, p.at[1] + 0.05, 0.06, p.foot[1] - 0.1]],
+    draw(pen, p) {
+      const [u0, v0] = p.at, L = p.foot[0], D = p.foot[1], H = p.h
+      // the legs: a steel U at each end, a stretcher between them
+      for (const u of [u0 + 0.05, u0 + L - 0.11]) {
+        pen.box(u, v0 + 0.05, 0, 0.06, 0.05, H - 0.06, () => "5", () => "4", () => "5")
+        pen.box(u, v0 + D - 0.1, 0, 0.06, 0.05, H - 0.06, () => "5", () => "4", () => "5")
+      }
+      pen.box(u0 + 0.05, v0 + D / 2 - 0.02, 0.12, L - 0.1, 0.04, 0.04, () => "4", () => "3", () => "3")
+      // the slats, their gaps; the front one scratched
+      for (let i = 0; i < 3; i++) {
+        const v = v0 + i * (D / 3), front = i === 2
+        pen.box(u0, v + 0.01, H - 0.06, L, D / 3 - 0.03, 0.06, (lu) => (front && lu > 0.4 && lu < 0.62 && fl(lu * 60) % 3 === 0 ? "O" : "P"), () => "O", () => (front ? "O" : "A"))
+      }
+    },
+  })
   // Frau Haldane asleep in front of her TV (deeper in the room, out of sight: only its light), seen from
   // behind: the armchair's back toward the door, over it her grey hair in curlers, fallen a little to one
   // side, the Lull light's blue at her temple; her arm hanging over the armrest, a slipper fallen off
