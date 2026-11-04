@@ -12,10 +12,11 @@ pal({
   c: "#123c4e", C: "#1f88a4", v: "#62def0", V: "#dafcff",                                     // Halcyon's cyan
   y: "#eec414", Y: "#fff070", j: "#9a7406",                                                   // Juno's yellow
   g: "#565e70", G: "#8e96a8", h: "#7d8ca4", H: "#b9c6d8",                                     // Halcyon grey, the uniform
-  s: "#93583f", S: "#d79676", u: "#1b1f2e", O: "#552b1c", R: "#ffd58a", q: "#ff3a3a",
+  s: "#93583f", S: "#d79676", u: "#1b1f2e", O: "#552b1c", R: "#ffd58a", W: "#fff4d8", q: "#ff3a3a",
   m: "#ff4fd3", M: "#a8238a", N: "#ffc0f2", w: "#3a4c64",
 })
 include("../lib/text.js")
+const ISO_BAY = (x, y) => ([0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5][(y & 3) * 4 + (x & 3)] + 0.5) / 16
 
 const W = 320, H = 180
 const label = (c, n, s) => { c.rect(0, 0, W, 9, "n"); TXT.draw(c, 3, 2, `${n}  ${s}`, "6", { font: "hud" }) }
@@ -169,7 +170,78 @@ sprite("intro_blocks_6", { w: W, h: H }, (c) => {
 
 sprite("intro_blocks_juno", { w: 60, h: 60, pivot: "bottom" }, (c) => { c.rect(0, 0, 60, 60, "3"); juno2088(c, 26, 56) })
 
-sprite("intro_blocks", { w: W * 2 + 6, h: H * 3 + 12 }, (c) => {
-  c.rect(0, 0, W * 2 + 6, H * 3 + 12, "n")
-  for (let i = 0; i < 6; i++) c.stamp(`intro_blocks_${i + 1}`, (i % 2) * (W + 6), Math.floor(i / 2) * (H + 6))
+// ---------------------------------------------------------------- the opening (after the notes of 2026-11-04):
+// the mood of a neo-noir opening, our own pictures: Halcyon at night, wide and slow; a camera's lens with the
+// city in it; the tower's green window band, and through it into the hall
+// A  the city: the nine rings stacked over the sea, the tower through them, the pumps' stacks flaring, drones
+//    and transit pods crossing, rain haze; the camera drifts in slowly
+sprite("intro_blocks_a", { w: W, h: H }, (c) => {
+  c.rect(0, 0, W, H, "n")
+  for (let y = 0; y < 70; y++) for (let x = 0; x < W; x++) if (ISO_BAY(x, y) < (70 - y) / 300) c.px(x, y, "1")   // the haze's glow over the city
+  // the sea at the bottom, the reflections of the lit rings in it
+  c.rect(0, 150, W, 30, "1"); for (let x = 0; x < W; x += 3) if ((x * 7) % 11 < 4) c.px(x, 152 + (x % 5), "R")
+  // the rings: wide bands of lit windows, narrower as they go up (the Lower Ninth widest, at the bottom)
+  for (let r = 0; r < 9; r++) {
+    const y0 = 146 - r * 14, half = 150 - r * 12
+    c.rect(160 - half, y0 - 6, half * 2, 7, r % 2 ? "2" : "3"); c.hline(160 - half, y0 - 6, half * 2, "4")
+    for (let x = 160 - half + 2; x < 160 + half - 2; x += 3) if (((x * 13 + r * 7) % 9) < 5) c.px(x, y0 - 3, r < 3 ? ((x + r) % 4 ? "R" : "m") : (x + r) % 5 ? "R" : "v")
+  }
+  // the tower through them, its lit spine, Halcyon's ring logo at its top; the green band of the hall
+  c.rect(150, 4, 20, 146, "2"); c.rect(158, 4, 4, 146, "4"); c.rect(150, 40, 20, 3, "9")
+  c.ellipse(160, 10, 5, 3, "v"); c.ellipse(160, 10, 3, 1, "2")
+  // the pumps' stacks at sea level, flaring
+  for (const x of [30, 70, 250, 292]) { c.rect(x, 128, 4, 22, "3"); c.ellipse(x + 2, 122, 3, 5, "R"); c.ellipse(x + 2, 124, 2, 3, "W") }
+  // drones (red eyes) and transit pods (white streaks)
+  for (const [x, y] of [[60, 50], [230, 34], [270, 80]]) { c.px(x, y, "q"); c.hline(x - 2, y - 1, 5, "4") }
+  for (const [x, y] of [[100, 60], [196, 26]]) c.hline(x, y, 9, "H")
+  c.rect(60, 164, 200, 12, "n"); TXT.draw(c, 160, 166, "HALCYON, 2088", "6", { align: "center", font: "hud" })
+  label(c, "A", "HALCYON BEI NACHT, WEIT, LANGSAM. MUSIK")
+})
+// B  a camera's lens on a mast, the city curved in its glass, its red light blinking, rain on it
+sprite("intro_blocks_b", { w: W, h: H }, (c) => {
+  c.rect(0, 0, W, H, "n")
+  c.rect(60, 30, 220, 120, "3"); c.rect(60, 30, 220, 6, "4"); c.rect(240, 60, 14, 10, "1"); c.ellipse(247, 65, 3, 3, "q")
+  c.ellipse(150, 92, 56, 56, "k"); c.ellipse(150, 92, 52, 52, "1"); c.ellipse(150, 92, 46, 46, "n")
+  // the city in it: the rings' bands bent round the lens, the tower
+  for (let r = 0; r < 6; r++) for (let x = -40; x <= 40; x++) {
+    const y = 92 + 26 - r * 9 + Math.round((x * x) / 160)
+    if (Math.hypot(x, y - 92) < 44 && ((x + r * 3) % 3)) c.px(150 + x, y, r < 2 ? "R" : "v")
+  }
+  c.rect(148, 52, 4, 60, "2"); c.ellipse(132, 72, 9, 6, "6")                                              // the tower, a glint
+  for (const [x, y] of [[120, 60], [176, 104], [140, 120]]) c.vline(x, y, 3, "H")                     // drops on the glass
+  label(c, "B", "EINE KAMERALINSE, DIE STADT DARIN GESPIEGELT, IHR ROTES LICHT")
+})
+// C  the tower close: its windows, one band glowing phosphor green; the camera goes in through it
+sprite("intro_blocks_c", { w: W, h: H }, (c) => {
+  c.rect(0, 0, W, H, "n")
+  for (let y = 12; y < H; y += 12) for (let x = 20; x < 300; x += 14) c.rect(x, y, 10, 7, y === 84 ? "9" : (x + y) % 5 ? "1" : "2")
+  c.rect(20, 82, 280, 11, "8"); for (let x = 22; x < 298; x += 14) c.rect(x, 84, 10, 7, "P")
+  // the way in: the frame closing on one window
+  c.rect(146, 80, 28, 15, "Y"); c.rect(147, 81, 26, 13, "P")
+  label(c, "C", "DER TURM: EIN FENSTERBAND GRÜN, DIE KAMERA GEHT HINEIN")
+})
+// D  the ride down: no words; the rings rush up past the glass in streaks, Juno still with her box; slow music
+sprite("intro_blocks_d", { w: W, h: H }, (c) => {
+  c.rect(0, 0, W, H, "n")
+  for (let x = 0; x < W; x += 2) { const y0 = (x * 37) % 180, len = 20 + (x * 11) % 40; c.vline(x, y0, len, (x * 7) % 5 ? "2" : (x % 3 ? "R" : "v")) }
+  for (const y of [20, 96]) c.rect(0, y, W, 10, "3")                                                     // a ring's deck, a blur
+  c.rect(90, 0, 3, H, "5"); c.rect(228, 0, 3, H, "5")
+  c.rect(96, 52, 128, 2, "6"); c.rect(96, 138, 128, 6, "5"); c.rect(96, 52, 3, 92, "6"); c.rect(221, 52, 3, 92, "6")
+  juno2088(c, 150, 138)
+  TXT.draw(c, 160, 160, "(KEIN TEXT. ~10 S. DIE RINGE RASEN VORBEI, DIE MUSIK LANGSAM)", "6", { align: "center", font: "hud" })
+  label(c, "D", "DIE FAHRT ABWÄRTS, OHNE WORTE")
+})
+
+// T  before the ride, on black: her words (the ride itself has none)
+sprite("intro_blocks_t", { w: W, h: H }, (c) => {
+  c.rect(0, 0, W, H, "n")
+  TXT.draw(c, 160, 80, "„Das Implantat durften wir behalten.", "Y", { align: "center" })
+  TXT.draw(c, 160, 92, "Sie sagten, das Herausnehmen kostet mehr.“", "Y", { align: "center" })
+  label(c, "T", "VOR DER FAHRT, AUF SCHWARZ")
+})
+
+const STORY = ["a", "b", "c", 1, 2, 3, 4, "t", "d", 6]
+sprite("intro_blocks", { w: W * 3 + 12, h: H * 4 + 18 }, (c) => {
+  c.rect(0, 0, W * 3 + 12, H * 4 + 18, "n")
+  STORY.forEach((n, i) => c.stamp(`intro_blocks_${n}`, (i % 3) * (W + 6), Math.floor(i / 3) * (H + 6)))
 })

@@ -233,6 +233,15 @@ alten Beobachter-Protokoll (nur bestimmte alte Kameras, Kap. 1).
 
 Eine Sequenz (wie das Intro der Loonies), überspringbar, im Titelmenü wieder abspielbar.
 
+**Überarbeitet (2026-11-04, Storyboard als Blöcke: `art/test/intro_blocks.px.js`, `docs/rooms/intro_blocks.png`):**
+Der Anfang hat die Stimmung eines Neo-Noir-Vorspanns (in der Art von Blade Runner, mit eigenen Bildern): (A) Halcyon
+bei Nacht, weit und langsam, die neun Ringe über dem Meer, der Turm hindurch, die Pumpenschlote flammen, Drohnen
+und Transitkapseln, Musik; (B) eine Kameralinse an einem Mast, die Stadt darin gespiegelt, ihr rotes Licht; (C) der
+Turm von nah, ein Fensterband glimmt phosphorgrün, die Kamera geht hindurch: in die Halle (Einstellung 1). Der Satz
+über das Implantat steht **vor** der Aufzugfahrt, auf Schwarz; die Fahrt selbst (~10 s) hat **keinen Text**: die Ringe
+rasen vorbei, schnell animiert, dazu nur eine langsame, melancholische, eindringliche Melodie. Die Tabelle unten
+ist die erste Fassung; offen: womit Einstellung 6 endet, wie das Deck 2091 aussieht.
+
 | Einstellung | Bild | Ton und Text |
 |---|---|---|
 | 1 | **Die Beobachtungshalle**, Halcyon Tower, drei Jahre früher: Iso-Ansicht, Reihen von Pulten, jedes mit einem Menschen vor einer Wand aus Phosphor-Bildschirmen. Kabel aus den Pulten in die Implantate. | Brummen, leises Tippen. Datum unten: `2088-04-30 05:45` |
