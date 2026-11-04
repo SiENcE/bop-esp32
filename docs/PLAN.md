@@ -12,9 +12,12 @@ where it hides someone: the engine's `seeThrough`), the alley shut; the cart end
 schreib's an.", paying cash with `bao_paid`, eating: `ate_bao`); the menu screen shows the street whole as a still. Steps 17-18 follow it: the broken screen
 stutters, the eye in its static turns to Juno, JUNO. over the whole screen with the stinger "witness", Bao saw
 nothing, EVI: "Das war nicht ich. Ehrlich.", the card for Chapter 1 (`docs/rooms/kowalski_juno_x3.png`). **The
-prologue plays from the flat to its end.** The intro "Die letzte Schicht" (kapitel0-design §5) is drawn as a storyboard in blocks for approval
-(`art/test/intro_blocks.px.js`, `docs/rooms/intro_blocks_x1.5.png`).
-The engine is at Cutaway.js commit 9db22f4 (`lib/cutaway/VERSION.txt`).
+prologue plays from the flat to its end.** The intro "Die letzte Schicht" (kapitel0-design §5) is decided as a storyboard in blocks
+(`art/test/intro_blocks.px.js`, `docs/rooms/intro_blocks.png`, the opening `intro_blocks_opening_x2.png`): one slow
+float over the lit sea to the tower and in through its green window, the hall, the ride down without words; it plays
+on the first start only (and from the menu) and ends on the title screen with the logo, which comes on every start.
+The deck keeps its CRT and mouse. Next: paint it.
+The engine is at Cutaway.js commit e2bc1d6 (`lib/cutaway/VERSION.txt`).
 
 What was added on 2026-11-04 (in order):
 - every text through i18n (`Halcyon.t`, the engine's `i18n.declare`); a Chinese layout test

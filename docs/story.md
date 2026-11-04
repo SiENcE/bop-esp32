@@ -480,3 +480,13 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
   Montieren (aus idea2), Aufträge als kleine Leben und NINTH LIVE (aus idea2), die vererbte Flutschuld
   (aus idea1). Nicht übernommen: Erinnerungshandel als Prämisse und der Twist „alles ist eine
   Simulation, du bist die KI".
+
+## 10a. Entscheidungen (2026-11-04)
+
+- **Der Vorspann „Die letzte Schicht"** (`docs/kapitel0-design.md` §5) beginnt mit einem einzigen, langsamen Flug
+  tief über das Lichtermeer zum Turm und durch ein grünes Fenster in die Beobachtungshalle, in der Stimmung eines
+  Neo-Noir-Vorspanns, mit eigenen Bildern. Er läuft nur beim ersten Start von selbst und ist im Menü wieder
+  abspielbar; der Titelbildschirm mit dem Glass-Sister-Logo kommt bei jedem Start.
+- **Der Datenstick** im Karton trägt `EVAL-7 // DELETE` (gemalter Text ist englisch, wie alle Technik der Stadt).
+- **Das Deck bleibt, wie es ist**: Röhrenmonitor, Maus, selbstgebaute Platinen. Der Retro-Look ist Absicht (die
+  Welt des Neunten ist zusammengeflickt), keine Vorhersage.

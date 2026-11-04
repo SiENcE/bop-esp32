@@ -231,25 +231,31 @@ alten Beobachter-Protokoll (nur bestimmte alte Kameras, Kap. 1).
 
 ## 5. Vorspann: Die letzte Schicht (vor dem Titel, ~1,5 Min.)
 
-Eine Sequenz (wie das Intro der Loonies), überspringbar, im Titelmenü wieder abspielbar.
+Eine Sequenz (wie das Intro der Loonies), überspringbar. **Sie läuft nur beim ersten Start** von selbst und ist im
+Titelmenü jederzeit wieder abspielbar. Sie endet auf dem **Titelbildschirm mit dem Glass-Sister-Logo** (die
+Geschwister hinter dem gesprungenen Glas, `art/ui/splash.px.js`), der **bei jedem Spielstart** kommt, mit oder ohne
+Vorspann; danach das Menü.
 
-**Überarbeitet (2026-11-04, Storyboard als Blöcke: `art/test/intro_blocks.px.js`, `docs/rooms/intro_blocks.png`):**
-Der Anfang hat die Stimmung eines Neo-Noir-Vorspanns (in der Art von Blade Runner, mit eigenen Bildern): (A) Halcyon
-bei Nacht, weit und langsam, die neun Ringe über dem Meer, der Turm hindurch, die Pumpenschlote flammen, Drohnen
-und Transitkapseln, Musik; (B) eine Kameralinse an einem Mast, die Stadt darin gespiegelt, ihr rotes Licht; (C) der
-Turm von nah, ein Fensterband glimmt phosphorgrün, die Kamera geht hindurch: in die Halle (Einstellung 1). Der Satz
-über das Implantat steht **vor** der Aufzugfahrt, auf Schwarz; die Fahrt selbst (~10 s) hat **keinen Text**: die Ringe
-rasen vorbei, schnell animiert, dazu nur eine langsame, melancholische, eindringliche Melodie. Die Tabelle unten
-ist die erste Fassung; offen: womit Einstellung 6 endet, wie das Deck 2091 aussieht.
+**Entschieden (2026-11-04, Storyboard als Blöcke: `art/test/intro_blocks.px.js`, `docs/rooms/intro_blocks.png`, der
+Anfang: `docs/rooms/intro_blocks_opening_x2.png`):** Der Anfang hat die Stimmung eines Neo-Noir-Vorspanns, mit eigenen
+Bildern: **ein einziger, langsamer Flug**, tief über die Stadt bis zum Turm und durch ein Fenster in die
+Beobachtungshalle. Der Satz über das Implantat steht **vor** der Aufzugfahrt, auf Schwarz; die Fahrt selbst (~10 s)
+hat **keinen Text**: die Ringe rasen vorbei, dazu nur eine langsame, melancholische, eindringliche Melodie. Das Deck
+2091 bleibt, wie es ist (Röhrenmonitor und Maus, mit Absicht; story §10).
 
 | Einstellung | Bild | Ton und Text |
 |---|---|---|
+| A1 | **Über dem Lichtermeer**: Die Kamera schwebt tief und langsam vorwärts über das Meer über der ertrunkenen Stadt, voller Lichter bis zum Horizont (Pfahlhütten, Flöße, Bojen); die Schlote der Meerespumpen ragen aus dem Wasser und flammen; der Dunst glimmt. In Perspektive (Lichter und Schlote in der Tiefe, die Kamera bewegt sich vorwärts), damit der Flug im Spiel genauso gezeichnet werden kann. | Musik. Unten: `HALCYON, 2088` |
+| A2 | **Halcyon voraus** im Dunst: die neun Ringe übereinander, der Turm hindurch, sein Ringlogo; Patrouillendrohnen leuchten das Wasser ab; große Schlote ziehen links und rechts vorbei, Transitkapseln. Der Flug geht auf den Turm zu. | Musik |
+| C | **Der Turm von nah**: Reihen dunkler Fenster, ein Band glimmt phosphorgrün; die Kamera fährt auf ein Fenster zu (dahinter Pulte und Menschen) und hindurch. | Musik, dann Brummen |
 | 1 | **Die Beobachtungshalle**, Halcyon Tower, drei Jahre früher: Iso-Ansicht, Reihen von Pulten, jedes mit einem Menschen vor einer Wand aus Phosphor-Bildschirmen. Kabel aus den Pulten in die Implantate. | Brummen, leises Tippen. Datum unten: `2088-04-30 05:45` |
 | 2 | Juno an ihrem Pult (ohne gelben Mantel: Halcyon-Grau, Ausweis am Band). Ihr Bildschirm: eine Straße, ein Mann bleibt stehen. Sie markiert ihn, gelb. | Juno, leise: „Hab dich." |
 | 3 | Eine Durchsage, Text über die ganze Breite | „Ab morgen übernimmt die automatische Auswertung. Halcyon dankt Ihnen für Ihren Dienst." |
 | 4 | Die Bildschirme der Halle gehen aus, einer nach dem anderen, von hinten nach vorn. Junos zuletzt. In ihrem schwarzen Bildschirm spiegelt sich ihr Gesicht. | Stille |
-| 5 | Juno mit einem Karton auf der Transitachse, abwärts. Im Karton: ein Kaktus, eine Tasse, der gelbe Regenmantel und ein Datenstick mit einem Aufkleber `EVAL-7 · LÖSCHEN` (eine Sekunde im Bild, nicht kommentiert). | „Das Implantat durften wir behalten. Sie sagten, das Herausnehmen kostet mehr." |
-| 6 | Schnitt: heute. Ein Phosphor-Feed, ein selbstgebautes Deck, Junos Hand auf der Maus. Gelber Ärmel. | `2091-11-03 21:30` Titel: **HALCYON** |
+| T | Schwarz | „Das Implantat durften wir behalten. Sie sagten, das Herausnehmen kostet mehr." |
+| D | **Die Transitachse**, abwärts, die erste Seitenansicht: zuerst nah am Karton (ein Kaktus, eine Tasse, der gelbe Regenmantel und ein Datenstick mit dem Aufkleber `EVAL-7 // DELETE`, gemalt und englisch wie alle Technik der Stadt; eine Sekunde lesbar, nicht kommentiert), dann zieht die Kamera auf: Juno mit dem Karton im gläsernen Aufzug, die Ringe rasen vorbei. ~10 s. | Kein Text. Eine langsame, melancholische Melodie |
+| 6 | Schnitt: heute. Ein Phosphor-Feed auf dem Röhrenmonitor, das selbstgebaute Deck, Junos Hand auf der Maus. Gelber Ärmel. | `2091-11-03 21:30` |
+| 7 | **Der Titelbildschirm** mit dem Glass-Sister-Logo (wie bei jedem Start), dann das Menü | Junos Thema |
 
 ## 6. Der Prolog Schritt für Schritt
 

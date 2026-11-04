@@ -34,25 +34,26 @@ Where we are (everything is committed, in both repos; the engine copy is at Cuta
 - Checks now: validate 0 errors (3 known warnings: flags set but not yet tested), solve --full no soft-locks,
   every state has a hint, play.mjs all passed (to the end card).
 
-Next: **the intro "Die letzte Schicht"** (kapitel0-design §5, revised 2026-11-04). Its storyboard is drawn as
-blocks (art/test/intro_blocks.px.js; docs/rooms/intro_blocks.png, the opening: docs/rooms/intro_blocks_opening_x1.5.png;
+Next: **paint the intro "Die letzte Schicht"** (kapitel0-design §5, decided 2026-11-04). Its storyboard in blocks
+(art/test/intro_blocks.px.js; docs/rooms/intro_blocks.png, the opening: docs/rooms/intro_blocks_opening_x2.png;
 Juno 2088: docs/characters/juno2088_blocks_x6.png), in this order:
-A Halcyon at night, wide and slow, in the mood of a neo-noir opening (like Blade Runner's, our own pictures): the
-nine rings over the sea, the tower through them, the pumps' stacks flaring, drones and transit pods, music;
-B a camera's lens on a mast, the city curved in its glass, its red light (instead of the film's eye);
-C the tower close, one window band glowing phosphor green, the camera goes in through it;
+A1 one slow float, low over the lit sea over the drowned city (stilt huts, rafts, buoys to the horizon), the pumps'
+stacks standing out of the water and flaring, music, "HALCYON, 2088"; A2 Halcyon ahead in the haze, the nine rings,
+the tower through them, patrol drones' searchlights on the water, big stacks passing; C the tower close, one window
+band phosphor green, the camera goes in through one window (the neo-noir mood, our own pictures; drawn in
+perspective, lights and stacks at (X, Z), so the float can be drawn the same way in the game);
 1 the observation hall (iso, 2088-04-30 05:45); 2 Juno at her desk from behind her shoulder, tagging a man
 yellow ("Hab dich."); 3 the announcement across the width; 4 the screens going out back to front, her face in her
 dark screen; T on black: "Das Implantat durften wir behalten. Sie sagten, das Herausnehmen kostet mehr.";
-D the ride down the Transitachse (the first side view): ~10 s, no words, the rings rushing past fast, a slow,
-melancholic, haunting melody (to compose: game/music.js has the cs80brass); 6 today, 2091-11-03 21:30.
-Waiting for my decisions: approval of the storyboard; what shot 6 ends on (the Glass Sister logo, or straight to
-the title screen); the data stick's label (painted text is English: EVAL-7 // DELETE); and **how the deck looks**
-(I questioned the CRT and the mouse: 80s retro that isn't even right today; keep the retro-future look on
-purpose, or a salvaged modern rig: thin cracked glass panels, a projected display, the implant overlay, a worn
-touch slab; this touches the flat's deck too). After that: paint the shots (the hall from a map and a kit, the
-city, the lens and the tower as pictures, the lift as a tall room the camera goes down while the rings rush
-past), Juno in 2088 from the side, the melody, then the sequence (game/intro.js) before the title.
+D the ride down the Transitachse (the first side view): it starts close on the box, the data stick's label
+EVAL-7 // DELETE readable for a second, then pulls back; ~10 s, no words, the rings rushing past, a slow,
+melancholic, haunting melody (to compose: game/music.js has the cs80brass); 6 today, 2091-11-03 21:30 (the deck as
+it is: CRT and mouse, on purpose); 7 the title screen with the Glass Sister logo (the splash), then the menu.
+The intro plays by itself on the first start only and from the menu; the splash comes on every start.
+To do: paint the shots (the float as a perspective layer or pictures, the hall from a map and a kit, the tower,
+the lift as a tall room the camera goes down while the rings rush past), Juno in 2088 from the side, the melody,
+then the sequence (game/intro.js) before the splash, a "seen the intro" setting, and the menu's entry.
+Open: the lens on a mast (the old shot B) is out of the float; it could come back as a moment inside it.
 
 Open points: the post-it "ESSEN!!" painted in German in the flat (make it language-free or an overlay); the
 flat's empty front floor; the steam fx in the street was replaced by baked plumes (check the engine's steam

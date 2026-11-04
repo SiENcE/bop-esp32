@@ -1,10 +1,12 @@
-// H3: the intro "Die letzte Schicht" (kapitel0-design §5) as a storyboard in blocks, for approval before it is
-// painted: six shots at 320x180, each a sketch of what the camera sees, and Juno three years ago from the side
+// H3: the intro "Die letzte Schicht" (kapitel0-design §5) as a storyboard in blocks, decided 2026-11-04, before it
+// is painted: each shot at 320x180, a sketch of what the camera sees, and Juno three years ago from the side
 // (the first side view, style guide §4: the scale of the street, 30 px per meter of height).
-//   intro_blocks_1 .. intro_blocks_6   the shots (1 the hall, 2 Juno at her desk, 3 the announcement, 4 the
-//                                      screens going out and her face in the dark one, 5 the Transitachse, 6 today)
+//   intro_blocks_a1, _a2, _c           the opening: one float over the lit sea to the tower and in through a window
+//   intro_blocks_1 .. intro_blocks_4   the hall, Juno at her desk, the announcement, the screens going out
+//   intro_blocks_t, _d                 her words on black; the ride down the Transitachse, no words
+//   intro_blocks_6, _7                 today; the title screen with the logo
 //   intro_blocks_juno                  Juno in 2088 from the side: Halcyon grey, the badge on its lanyard, the box
-//   intro_blocks                       all of them on one sheet, numbered
+//   intro_blocks, intro_blocks_opening all of them on one sheet; the opening and the ride
 // The words on the screen are the game's (German, through i18n); painted text only the city's (English).
 pal({
   k: "#0c0e1a", n: "#06080f", 1: "#131a2a", 2: "#1a2337", 3: "#232f47", 4: "#2f3e5a", 5: "#41547a", 6: "#617aa0",
@@ -123,7 +125,7 @@ sprite("intro_blocks_4", { w: W, h: H }, (c) => {
   label(c, 4, "DIE SCHIRME GEHEN AUS, VON HINTEN NACH VORN. STILLE")
 })
 
-// ---------------------------------------------------------------- 5 the Transitachse: down, in a glass lift
+// ---------------------------------------------------------------- Juno in 2088, for the Transitachse (D)
 function juno2088(c, x, y, flip = false) {
   // side view, facing right (or left): 50 px; short black hair, Halcyon grey, dark trousers, the badge on its
   // lanyard, the box in her arms (a cactus, a cup, the yellow coat folded, the data stick)
@@ -137,23 +139,6 @@ function juno2088(c, x, y, flip = false) {
   r(5, -35, 3, 5, "9"); r(9, -33, 3, 3, "H"); r(12, -32, 4, 2, "y"); r(15, -33, 2, 3, "v")
   r(1, -31, 3, 6, "h")                                                                              // her arm round it
 }
-sprite("intro_blocks_5", { w: W, h: H }, (c) => {
-  c.rect(0, 0, W, H, "n")
-  // the city's rings passing upward behind the glass: decks, their lit windows, ads (the lift goes down)
-  for (const [y0, k] of [[14, "4"], [60, "3"], [104, "4"], [150, "3"]]) {
-    c.rect(0, y0, W, 6, k); c.rect(0, y0 + 6, W, 2, "1")
-    for (let x = 6; x < W; x += 14) if ((x * 7 + y0) % 3) c.rect(x, y0 + 10, 6, 4, (x + y0) % 5 ? "R" : "C")
-  }
-  c.rect(250, 70, 46, 18, "M"); c.rect(252, 72, 42, 14, "m"); TXT.draw(c, 256, 76, "LULL", "N", { font: "hud" })
-  // the shaft's rails, the cabin: a glass box with a steel frame and floor; motion lines (it falls)
-  c.rect(90, 0, 3, H, "5"); c.rect(228, 0, 3, H, "5")
-  c.rect(96, 52, 128, 2, "6"); c.rect(96, 138, 128, 6, "5"); c.rect(96, 52, 3, 92, "6"); c.rect(221, 52, 3, 92, "6")
-  for (let y = 54; y < 138; y++) for (let x = 99; x < 221; x++) if ((x + y * 3) % 23 === 0) c.px(x, y, "w")   // the glass
-  for (let i = 0; i < 9; i++) c.vline(40 + i * 33, 10 + (i * 37) % 120, 14, "5")
-  juno2088(c, 150, 138)
-  c.rect(30, 156, 260, 14, "n"); TXT.draw(c, 160, 160, "„Das Implantat durften wir behalten.“", "Y", { align: "center" })
-  label(c, 5, "DIE TRANSITACHSE, ABWÄRTS: DIE ERSTE SEITENANSICHT")
-})
 
 // ---------------------------------------------------------------- 6 today
 sprite("intro_blocks_6", { w: W, h: H }, (c) => {
@@ -167,57 +152,102 @@ sprite("intro_blocks_6", { w: W, h: H }, (c) => {
   c.rect(0, H - 12, W, 12, "n"); TXT.draw(c, 6, H - 9, "2091-11-03  21:30", "9", { font: "hud" })
   label(c, 6, "SCHNITT: HEUTE. EIN FEED, DAS SELBSTGEBAUTE DECK, GELBER ÄRMEL")
 })
+// 7  the end: the title screen with the Glass Sister logo (art/ui/splash.px.js), as on every start, then the menu
+sprite("intro_blocks_7", { w: W, h: H }, (c) => {
+  c.rect(0, 0, W, H, "n")
+  c.line(160, 20, 150, 70, "4"); c.line(150, 70, 166, 120, "4"); c.line(166, 120, 158, 170, "4")      // the crack in the glass
+  c.rect(90, 80, 140, 20, "k"); TXT.draw(c, 160, 86, "GLASS SISTER", "V", { align: "center" })
+  label(c, 7, "DAS LOGO: DER TITELBILDSCHIRM WIE BEI JEDEM START, DANN DAS MENÜ")
+})
 
 sprite("intro_blocks_juno", { w: 60, h: 60, pivot: "bottom" }, (c) => { c.rect(0, 0, 60, 60, "3"); juno2088(c, 26, 56) })
 
 // ---------------------------------------------------------------- the opening (after the notes of 2026-11-04):
-// the mood of a neo-noir opening, our own pictures: Halcyon at night, wide and slow; a camera's lens with the
-// city in it; the tower's green window band, and through it into the hall
-// A  the city: the nine rings stacked over the sea, the tower through them, the pumps' stacks flaring, drones
-//    and transit pods crossing, rain haze; the camera drifts in slowly
-sprite("intro_blocks_a", { w: W, h: H }, (c) => {
+// the mood of a neo-noir opening, our own pictures: one slow float, low over the lit sea to the tower and in
+// through its green window band. The ground is seen in perspective (a camera 20 m over the water, the horizon
+// at HZ), so the float can be drawn the same way in the game: lights and stacks at (X, Z), the camera moving in Z.
+// A1 low over the water: the drowned city's roofs, stilt huts, rafts and buoys lit to the horizon, the pumps'
+//    stacks standing out of the sea and flaring, the haze glowing; the camera drifts forward, slowly
+// A2 further on: Halcyon ahead in the haze, the nine rings stacked, the tower through them; the patrol
+//    drones' searchlights sweeping the water; big stacks passing on both sides
+// C  the tower close, one window band glowing phosphor green; the camera goes in through one window
+const HZ = 60, F = 160, CAM_H = 20
+const rnd = (i, s) => { let h = (i * 374761393 + s * 668265263) | 0; h = Math.imul(h ^ (h >>> 13), 1274126177); return ((h ^ (h >>> 16)) >>> 0) / 4294967296 }
+const proj = (X, Z, Y = 0) => [Math.round(160 + (X * F) / Z), Math.round(HZ + ((CAM_H - Y) * F) / Z)]
+// the sky, its haze glowing over the horizon, and the dark water
+function skyAndSea(c) {
   c.rect(0, 0, W, H, "n")
-  for (let y = 0; y < 70; y++) for (let x = 0; x < W; x++) if (ISO_BAY(x, y) < (70 - y) / 300) c.px(x, y, "1")   // the haze's glow over the city
-  // the sea at the bottom, the reflections of the lit rings in it
-  c.rect(0, 150, W, 30, "1"); for (let x = 0; x < W; x += 3) if ((x * 7) % 11 < 4) c.px(x, 152 + (x % 5), "R")
-  // the rings: wide bands of lit windows, narrower as they go up (the Lower Ninth widest, at the bottom)
-  for (let r = 0; r < 9; r++) {
-    const y0 = 146 - r * 14, half = 150 - r * 12
-    c.rect(160 - half, y0 - 6, half * 2, 7, r % 2 ? "2" : "3"); c.hline(160 - half, y0 - 6, half * 2, "4")
-    for (let x = 160 - half + 2; x < 160 + half - 2; x += 3) if (((x * 13 + r * 7) % 9) < 5) c.px(x, y0 - 3, r < 3 ? ((x + r) % 4 ? "R" : "m") : (x + r) % 5 ? "R" : "v")
+  for (let y = HZ - 34; y < HZ; y++) for (let x = 0; x < W; x++) if (ISO_BAY(x, y) < (y - HZ + 34) / 40) c.px(x, y, (y > HZ - 6 && ISO_BAY(x, y) < 0.3) ? "2" : "1")
+  c.rect(0, HZ, W, H - HZ, "k")
+}
+// the lights on the water: clusters (huts on stilts, rafts) of warm windows, a few cold and pink ones, spread
+// evenly down the screen (Z drawn uniform in 1/Z), the near ones two pixels wide with a glint below; seed: which
+function seaLights(c, seed) {
+  for (let i = 0; i < 520; i++) {
+    const u = rnd(i, seed + 2) ** 2.6, cz = 1 / (1 / 600 + u * (1 / 30 - 1 / 600)), cx = (rnd(i, seed + 1) - 0.5) * cz * 2.4
+    const n = 2 + Math.floor(rnd(i, seed + 3) * 6)
+    for (let j = 0; j < n; j++) {
+      const X = cx + (rnd(i * 8 + j, seed + 4) - 0.5) * 8, Z = cz + (rnd(i * 8 + j, seed + 5) - 0.5) * 8
+      if (Z < 26) continue
+      const [x, y] = proj(X, Z, rnd(i * 8 + j, seed + 6) * 4)
+      if (x < 0 || x >= W || y < HZ || y >= H) continue
+      const t = rnd(i * 8 + j, seed + 7), k = t < 0.72 ? "R" : t < 0.86 ? "W" : t < 0.95 ? "6" : "m"
+      c.px(x, y, Z > 180 && t < 0.6 ? "O" : k)
+      if (Z < 60) c.px(x + 1, y, k)
+      if (Z < 120 && rnd(i * 8 + j, seed + 9) < 0.5) c.px(x, y + 1, "O")                              // its glint in the water
+    }
   }
-  // the tower through them, its lit spine, Halcyon's ring logo at its top; the green band of the hall
-  c.rect(150, 4, 20, 146, "2"); c.rect(158, 4, 4, 146, "4"); c.rect(150, 40, 20, 3, "9")
-  c.ellipse(160, 10, 5, 3, "v"); c.ellipse(160, 10, 3, 1, "2")
-  // the pumps' stacks at sea level, flaring
-  for (const x of [30, 70, 250, 292]) { c.rect(x, 128, 4, 22, "3"); c.ellipse(x + 2, 122, 3, 5, "R"); c.ellipse(x + 2, 124, 2, 3, "W") }
-  // drones (red eyes) and transit pods (white streaks)
-  for (const [x, y] of [[60, 50], [230, 34], [270, 80]]) { c.px(x, y, "q"); c.hline(x - 2, y - 1, 5, "4") }
-  for (const [x, y] of [[100, 60], [196, 26]]) c.hline(x, y, 9, "H")
+}
+// a pump's stack standing out of the sea, its flame at the top (Y in metres)
+function stack(c, X, Z, top = 34) {
+  const [x0, y0] = proj(X, Z), [, y1] = proj(X, Z, top), w = Math.max(2, Math.round((5 * F) / Z))
+  c.rect(x0 - (w >> 1), y1, w, y0 - y1, "2"); c.rect(x0 - (w >> 1), y1, 1, y0 - y1, "4"); c.rect(x0 - (w >> 1) - 1, y1, w + 2, 2, "3")
+  for (let b = y1 + 4; b < y0; b += Math.max(4, w * 2)) c.hline(x0 - (w >> 1), b, w, "3")            // its rings and ladders
+  c.px(x0 + (w >> 1), y1 + 2, "q")
+  // the flame, billowing up, its smoke lit from below
+  const f = Math.max(2, Math.round((4 * F) / Z))
+  c.ellipse(x0 + 1, y1 - f * 4, f + 1, f + 1, "2"); c.ellipse(x0, y1 - f * 3, f + 2, f + 1, "O")
+  c.ellipse(x0, y1 - f * 2, f + 1, f * 2, "R"); c.ellipse(x0, y1 - f, Math.max(1, f >> 1), f, "W")
+}
+// a patrol drone (its red eye) and its searchlight cone down to the water, dithered
+function droneBeam(c, x, y, gx, gy, spread) {
+  for (let yy = y + 2; yy <= gy; yy++) {
+    const t = (yy - y) / (gy - y), cx = x + (gx - x) * t, hw = 1 + spread * t
+    for (let xx = Math.floor(cx - hw); xx <= cx + hw; xx++) if (ISO_BAY(xx, yy) < 0.22 + 0.2 * t) c.px(xx, yy, yy > gy - 3 ? "6" : "4")
+  }
+  c.ellipse(gx, gy, spread + 2, 2, "5"); c.hline(x - 2, y - 1, 5, "4"); c.px(x, y, "q")
+}
+sprite("intro_blocks_a1", { w: W, h: H }, (c) => {
+  skyAndSea(c); seaLights(c, 0)
+  for (const [X, Z, t] of [[-150, 360, 40], [-70, 220, 44], [90, 280, 42], [130, 140, 40], [-95, 110, 46], [40, 460, 40], [230, 500, 38], [-30, 520, 40]]) stack(c, X, Z, t)
   c.rect(60, 164, 200, 12, "n"); TXT.draw(c, 160, 166, "HALCYON, 2088", "6", { align: "center", font: "hud" })
-  label(c, "A", "HALCYON BEI NACHT, WEIT, LANGSAM. MUSIK")
+  label(c, "A1", "TIEF ÜBER DEM LICHTERMEER, LANGSAM VORWÄRTS. FLAMMENDE SCHLOTE. MUSIK")
 })
-// B  a camera's lens on a mast, the city curved in its glass, its red light blinking, rain on it
-sprite("intro_blocks_b", { w: W, h: H }, (c) => {
-  c.rect(0, 0, W, H, "n")
-  c.rect(60, 30, 220, 120, "3"); c.rect(60, 30, 220, 6, "4"); c.rect(240, 60, 14, 10, "1"); c.ellipse(247, 65, 3, 3, "q")
-  c.ellipse(150, 92, 56, 56, "k"); c.ellipse(150, 92, 52, 52, "1"); c.ellipse(150, 92, 46, 46, "n")
-  // the city in it: the rings' bands bent round the lens, the tower
-  for (let r = 0; r < 6; r++) for (let x = -40; x <= 40; x++) {
-    const y = 92 + 26 - r * 9 + Math.round((x * x) / 160)
-    if (Math.hypot(x, y - 92) < 44 && ((x + r * 3) % 3)) c.px(150 + x, y, r < 2 ? "R" : "v")
+sprite("intro_blocks_a2", { w: W, h: H }, (c) => {
+  skyAndSea(c)
+  // Halcyon ahead in the haze: the nine rings stacked, narrower going up, their window bands dim with distance;
+  // the tower through them, its ring logo, the hall's green band
+  for (let r = 0; r < 9; r++) {
+    const y0 = HZ + 2 - r * 5, half = 112 - r * 11
+    c.rect(160 - half, y0 - 5, half * 2, 6, r % 2 ? "1" : "2"); c.hline(160 - half, y0 - 5, half * 2, "3")
+    for (let x = 160 - half + 2; x < 160 + half - 2; x += 2) if (rnd(x, r) < 0.45) c.px(x, y0 - 3, r < 3 ? (rnd(x, r + 20) < 0.85 ? "O" : "M") : rnd(x, r + 20) < 0.7 ? "O" : "c")
   }
-  c.rect(148, 52, 4, 60, "2"); c.ellipse(132, 72, 9, 6, "6")                                              // the tower, a glint
-  for (const [x, y] of [[120, 60], [176, 104], [140, 120]]) c.vline(x, y, 3, "H")                     // drops on the glass
-  label(c, "B", "EINE KAMERALINSE, DIE STADT DARIN GESPIEGELT, IHR ROTES LICHT")
+  c.rect(155, 14, 10, HZ - 14, "1"); c.rect(159, 14, 2, HZ - 14, "3"); c.rect(155, 24, 10, 2, "9")
+  c.ellipse(160, 12, 4, 2, "C"); c.ellipse(160, 12, 2, 1, "1")
+  for (let y = HZ - 30; y < HZ + 4; y++) for (let x = 30; x < 290; x++) if (ISO_BAY(x, y) < 0.18) c.px(x, y, "1")   // the haze in front of it
+  seaLights(c, 40)
+  droneBeam(c, 96, 40, 82, 112, 9); droneBeam(c, 236, 30, 252, 96, 7)
+  for (const [X, Z, t] of [[-40, 70, 40], [44, 96, 42], [-110, 220, 40], [130, 260, 38]]) stack(c, X, Z, t)
+  for (const [x, y] of [[120, 50], [208, 18]]) c.hline(x, y, 7, "H")                                  // transit pods
+  label(c, "A2", "HALCYON VORAUS IM DUNST. DROHNEN LEUCHTEN DAS WASSER AB. AUF DEN TURM ZU")
 })
-// C  the tower close: its windows, one band glowing phosphor green; the camera goes in through it
 sprite("intro_blocks_c", { w: W, h: H }, (c) => {
   c.rect(0, 0, W, H, "n")
   for (let y = 12; y < H; y += 12) for (let x = 20; x < 300; x += 14) c.rect(x, y, 10, 7, y === 84 ? "9" : (x + y) % 5 ? "1" : "2")
   c.rect(20, 82, 280, 11, "8"); for (let x = 22; x < 298; x += 14) c.rect(x, 84, 10, 7, "P")
-  // the way in: the frame closing on one window
+  // the way in: the frame closing on one window, the desks and their watchers behind it
   c.rect(146, 80, 28, 15, "Y"); c.rect(147, 81, 26, 13, "P")
+  for (let x = 150; x < 172; x += 6) { c.rect(x, 89, 4, 4, "7"); c.ellipse(x + 1, 87, 1, 1, "7") }
   label(c, "C", "DER TURM: EIN FENSTERBAND GRÜN, DIE KAMERA GEHT HINEIN")
 })
 // D  the ride down: no words; the rings rush up past the glass in streaks, Juno still with her box; slow music
@@ -228,8 +258,13 @@ sprite("intro_blocks_d", { w: W, h: H }, (c) => {
   c.rect(90, 0, 3, H, "5"); c.rect(228, 0, 3, H, "5")
   c.rect(96, 52, 128, 2, "6"); c.rect(96, 138, 128, 6, "5"); c.rect(96, 52, 3, 92, "6"); c.rect(221, 52, 3, 92, "6")
   juno2088(c, 150, 138)
+  // where the ride begins: close on the box, the data stick's label readable for a second, then the camera pulls back
+  c.rect(4, 14, 86, 44, "6"); c.rect(5, 15, 84, 42, "O"); c.rect(5, 15, 84, 3, "s")
+  c.rect(10, 26, 74, 14, "4"); c.rect(10, 26, 74, 1, "5"); c.rect(12, 28, 70, 10, "H")
+  TXT.draw(c, 47, 31, "EVAL-7 // DELETE", "k", { align: "center", font: "hud" })
+  c.rect(60, 44, 20, 10, "y"); c.rect(14, 44, 8, 10, "9")
   TXT.draw(c, 160, 160, "(KEIN TEXT. ~10 S. DIE RINGE RASEN VORBEI, DIE MUSIK LANGSAM)", "6", { align: "center", font: "hud" })
-  label(c, "D", "DIE FAHRT ABWÄRTS, OHNE WORTE")
+  label(c, "D", "DIE FAHRT ABWÄRTS, OHNE WORTE. ZUERST NAH: DER STICK")
 })
 
 // T  before the ride, on black: her words (the ride itself has none)
@@ -240,8 +275,13 @@ sprite("intro_blocks_t", { w: W, h: H }, (c) => {
   label(c, "T", "VOR DER FAHRT, AUF SCHWARZ")
 })
 
-const STORY = ["a", "b", "c", 1, 2, 3, 4, "t", "d", 6]
+const STORY = ["a1", "a2", "c", 1, 2, 3, 4, "t", "d", 6, 7]
 sprite("intro_blocks", { w: W * 3 + 12, h: H * 4 + 18 }, (c) => {
   c.rect(0, 0, W * 3 + 12, H * 4 + 18, "n")
   STORY.forEach((n, i) => c.stamp(`intro_blocks_${n}`, (i % 3) * (W + 6), Math.floor(i / 3) * (H + 6)))
+})
+// the opening on its own: the float and the ride
+sprite("intro_blocks_opening", { w: W * 2 + 6, h: H * 2 + 6 }, (c) => {
+  c.rect(0, 0, W * 2 + 6, H * 2 + 6, "n")
+  ;["a1", "a2", "c", "d"].forEach((n, i) => c.stamp(`intro_blocks_${n}`, (i % 2) * (W + 6), Math.floor(i / 2) * (H + 6)))
 })
