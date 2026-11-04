@@ -27,6 +27,8 @@ Cutaway.hints([
     text: ["Frau Kessler wartet. Sie ist online.", "Ihre Nachricht ist im CHAT. Die Antwort auch.", "Antworte ihr. Welche Antwort, weiß ich nicht. Das weißt du."] },
   { if: ["p1", "!fridge_empty"], about: ["fridge", "close", "back"],
     text: ["Du hast seit Stunden nichts gegessen. Ich zähle mit.", "Im Kühlschrank ist vielleicht etwas.", "Schau in den Kühlschrank."] },
-  { if: "fridge_empty", about: "door",
+  { if: ["fridge_empty", "!visited:kessel_14"], about: "door",
     text: ["Der Kühlschrank ist leer. Ich hab es gehört.", "Bao hat immer was.", "Geh durch die Tür."] },
+  { if: ["fridge_empty", "visited:kessel_14"], about: ["stairs", "door"],
+    text: ["Bao ist unten auf der Straße. Unten ist da, wo die Treppe hingeht.", "Die Treppe ist rechts, hinter dem Geländer.", "Geh die Treppe runter."] },
 ]);

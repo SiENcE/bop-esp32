@@ -8,7 +8,8 @@
 function fromLayout(/** @type {any} */ L) {
   /** @type {Record<string, any>} */
   const at = { ...L.spots, walk: L.walk, holes: L.holes, face: L.face, lamps: L.lamps };
-  at.props = Object.entries(L.props).map(([id, p]) => ({ id, image: /** @type {any} */ (p).sprite, at: /** @type {any} */ (p).at, front: /** @type {any} */ (p).front, baseline: /** @type {any} */ (p).baseline }));
+  // props seen through an open door are baked into the picture: no sprite of their own
+  at.props = Object.entries(L.props).filter(([, p]) => /** @type {any} */ (p).sprite).map(([id, p]) => ({ id, image: /** @type {any} */ (p).sprite, at: /** @type {any} */ (p).at, front: /** @type {any} */ (p).front, baseline: /** @type {any} */ (p).baseline }));
   for (const [id, p] of Object.entries(L.props)) { at[`${id}Poly`] = /** @type {any} */ (p).poly; at[`${id}Rect`] = /** @type {any} */ (p).box; }
   for (const [id, r] of Object.entries(L.openings ?? {})) at[`${id}Rect`] = r;
   return at;
@@ -17,6 +18,8 @@ function fromLayout(/** @type {any} */ L) {
 Halcyon.at = {
   // measured from the flat's map and its bake (art/rooms/flat.map.js, game/rooms/flat.layout.js)
   flat: fromLayout(Halcyon.layouts.flat),
+  // the 14th floor's landing (art/rooms/kessel_14.map.js, game/rooms/kessel_14.layout.js)
+  kessel_14: fromLayout(Halcyon.layouts.kessel_14),
   // measured from the cameras' projections (docs/cams/cam03_layout.md, cam04_layout.md). No depth `scale`: the
   // feed figures stay at their drawn size (scaling 24 px pixel art by 0.7–1.9 would smear it; the seated
   // people in cam04 are drawn at their size there)

@@ -16,7 +16,16 @@
 //   props: [{ id, kit, at: [u, v], foot: [du, dv], h, block }]
 //                       a thing from the kit standing on its footprint; `block: false` lets people walk
 //                       through it (a rug)
-//   spots: { name: [u, v, face] }   where people stand and look (the game's places)
+//   stairs: { id, kit, from: [u, v], to: [u, v], down: "+u", rise, tread }
+//                       a flight going down through a hole in the floor (its cells "."), from the top step
+//                       at from[0] along +u and on under the floor past the hole (the bake draws it; the
+//                       walk area ends at its edge)
+//   openings may be open: { open: { depth, floor, wall } } shows a room behind the wall through it, depth
+//                       meters deep, its floor and walls from the kit; props with { behind: <opening id> }
+//                       stand in it (baked into the picture, seen only through the opening)
+//   nowalk: [[u, v, du, dv], ...]  floor that is drawn but not walked (a corner the screen's edge cuts off)
+//   spots: { name: [u, v, face, h] }  where people stand and look (the game's places); h: on a step
+//                       above or below the floor (meters, default 0)
 //   lights: [{ id, at: [u, v, h], r, power, color, flicker }]
 //   margin: 0.2         how far feet keep from walls and props
 "use strict";
@@ -54,8 +63,9 @@ const ISOMAP = (function () {
         const along = alongU ? u : v, across = alongU ? v - w.from[1] : u - w.from[0]
         if (along > a0 - m && along < a1 + m && Math.abs(across) < m) ok = false
       }
+      for (const [u0, v0, du, dv] of map.nowalk ?? []) if (u > u0 && u < u0 + du && v > v0 && v < v0 + dv) ok = false
       for (const p of map.props ?? []) {
-        if (p.block === false) continue
+        if (p.block === false || p.behind) continue
         if (u > p.at[0] - m && u < p.at[0] + p.foot[0] + m && v > p.at[1] - m && v < p.at[1] + p.foot[1] + m) ok = false
       }
       open[j * nu + i] = ok ? 1 : 0
@@ -136,7 +146,7 @@ const ISOMAP = (function () {
       openings[o.id] = [Math.min(...xs) - 1, Math.min(...ys) - 1, Math.max(...xs) - Math.min(...xs) + 3, Math.max(...ys) - Math.min(...ys) + 3]
     }
     const spots = {}, face = {}
-    for (const [k, [u, v, f]] of Object.entries(map.spots ?? {})) { spots[k] = P(u, v); if (f) face[k] = f }
+    for (const [k, [u, v, f, h]] of Object.entries(map.spots ?? {})) { spots[k] = P(u, v, h ?? 0); if (f) face[k] = f }
     const lamps = (map.lights ?? []).map((l) => ({ ...l, at: P(...l.at) }))
     return { walk: loops.filter((l) => l.outer).map((l) => clip(l.pts)).filter((l) => l.length >= 6),
       holes: loops.filter((l) => !l.outer).map((l) => clip(l.pts)).filter((l) => l.length >= 6), props, openings, spots, face, lamps }

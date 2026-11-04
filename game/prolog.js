@@ -192,7 +192,7 @@ Cutaway.room("flat", {
       look: "Die Tür zum Flur.",
       use: [{ if: "!p1", then: ["Erst der Auftrag. Dann Essen."],
         else: [{ if: "!fridge_empty", then: ["Hunger. Mal sehen, was der Kühlschrank sagt."],
-          else: ["Bao hat immer was.", { end: "Ende des Testabschnitts. Weiter geht es im Flur (H3)." }] }] }] },
+          else: [{ goto: "kessel_14", at: Halcyon.at.kessel_14.arrive, face: "se" }] }] }] },
     laundry: { name: "Wäsche", rect: AF.laundryRect, walkTo: AF.laundry, face: "ne",
       look: "Wäsche. Sauber oder nicht, das weiß inzwischen niemand mehr." },
     noodles: { name: "Nudelbecher", rect: AF.noodlesRect, walkTo: AF.noodles, face: "ne",

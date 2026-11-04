@@ -25,6 +25,12 @@
 //                                pass(s, h, w, h) -> whether light from outside comes through there (glass,
 //                                the gap under a door); halo: [{ color, reach, power, rect }] what glows in
 //                                it lighting its own wall round it (rect in its own meters, default all)
+//   ISOKIT.stairs(kit, { tread, riser, well })
+//                                a flight down (the map's stairs): tread(lu, lv, i, o) -> key on step i's
+//                                top (lu meters from its back edge, lv from the well's back wall),
+//                                riser(a, e, i, o) on the face above it (toward +u, a px from its screen-left
+//                                edge, e px up), well(s, h, o) the back wall beside the flight below the
+//                                floor (s meters along it from the top step, h < 0); o = { x, y, f }
 //   ISOKIT.raster(w, h, draw, ox, oy) a small y-down drawing read back as a painter's (a, e)
 //   ISOKIT.prop(kit, { draw, frames, solid, footprint, glows })
 //                                draw(pen, p, f): paints the prop where it stands (p = the map's prop:
@@ -60,7 +66,12 @@
 //   window's). The strongest light at a pixel wins (their borders dithered); it steps the pixel's key one
 //   or two steps along its family's table (ISOKIT.TINT: warm, cyan, magenta, cold); then contact shadows
 //   on the floor round walls and props, and the light dying out up the walls (ISOKIT.SHADE).
-//   A map light: { id, at, r, power, color, flicker, bake: { reach, line, dir, through, from, off } }
+//   ZONES: an open opening (the map's `open`) is a room of its own behind the wall. Its pixels take light
+//   from lights in it ({ zone: <opening id> } on the map's light) and from the room's lights only through
+//   the opening; its lights reach the room only through the opening.
+//   A kit may add a light family: ISOKIT.TINT.green = { key: [one step, two] } (a light whose green is well
+//   over its red and blue), and its own keys to ISOKIT.SHADE.
+//   A map light: { id, at, r, power, color, flicker, zone, bake: { reach, line, dir, through, from, off } }
 //   (the engine uses at/r/power/color/flicker; `bake` only here): reach meters (default r / 32), off the
 //   frames it stutters on, at/power where the bake's lamp differs from the engine's (a screen's light
 //   from its top edge, so the desk's edge throws a short shadow), wrap how much a face turned away from
@@ -79,7 +90,7 @@
 
 const ISOKIT = (() => {
   const fl = Math.floor, bay = ISO.bay
-  const KIT = { floor: {}, wall: {}, opening: {}, prop: {} }
+  const KIT = { floor: {}, wall: {}, opening: {}, prop: {}, stairs: {} }
 
   // ---------------------------------------------------------------- the light's palette tables
   // family -> base key -> [one step lit, two steps lit]; keys not listed stay as they are (they are
@@ -124,6 +135,7 @@ const ISOKIT = (() => {
     if (r > b + 40 && g > b) return "warm"
     if (r > g + 40 && b > g + 40) return "magenta"
     if (b > r + 40 && g > r + 40) return "cyan"
+    if (g > r + 30 && g > b + 25) return "green"
     return "cold"
   }
 
@@ -132,6 +144,7 @@ const ISOKIT = (() => {
   const wall = (kit, fn) => { KIT.wall[kit] = fn }
   const opening = (kit, def) => { KIT.opening[kit] = { pad: 0, ...def } }
   const prop = (kit, def) => { KIT.prop[kit] = { frames: 1, ...def } }
+  const stairs = (kit, def) => { KIT.stairs[kit] = def }
   /** a face shader drawing a hand grid: rows top down, its top-left at (a0, eTop) */
   const grid = (rows, a0, eTop, map = {}) => (a, e) => {
     const j = eTop - e, i = a - a0, row = rows[j]
@@ -164,7 +177,8 @@ const ISOKIT = (() => {
   const NVEC = [null, [0, 0, 1], [1, 0, 0], [0, 1, 0], [-1, 0, 0], [0, -1, 0]]
   function buffer(W, H) {
     const n = W * H
-    return { W, H, k: new Array(n).fill(null), pos: new Float32Array(n * 3), nrm: new Int8Array(n), lit: new Uint8Array(n), has: new Uint8Array(n) }
+    // zone: 0 the room, 1.. the rooms seen through open openings (ctx.zones[i] its opening's id)
+    return { W, H, k: new Array(n).fill(null), pos: new Float32Array(n * 3), nrm: new Int8Array(n), lit: new Uint8Array(n), has: new Uint8Array(n), zone: new Uint8Array(n) }
   }
   function put(B, x, y, k, pos, n) {
     if (!k || x < 0 || y < 0 || x >= B.W || y >= B.H) return
@@ -172,7 +186,7 @@ const ISOKIT = (() => {
     let lit = 1
     if (k.length === 2 && k[0] === "!") { k = k[1]; lit = 0 }
     if (k === "_") { B.k[i] = null; B.has[i] = 0; return }
-    B.k[i] = k; B.lit[i] = lit
+    B.k[i] = k; B.lit[i] = lit; B.zone[i] = B.zoneNow ?? 0
     if (pos) { B.pos[i * 3] = pos[0]; B.pos[i * 3 + 1] = pos[1]; B.pos[i * 3 + 2] = pos[2]; B.nrm[i] = n || 0; B.has[i] = 1 }
   }
 
@@ -281,7 +295,7 @@ const ISOKIT = (() => {
       // a flicker that is a pure function of the frame: a small wobble, a stutter on its `off` frames
       const wob = l.flicker ? 1 + l.flicker * (Math.sin((f / 12) * Math.PI * 2 * 3 + l.id.length) * 0.5) : 1
       return {
-        id: l.id, at: b.at ?? l.at, line: b.line, dir: b.dir, through: b.through, from: b.from,
+        id: l.id, zone: l.zone ?? null, at: b.at ?? l.at, line: b.line, dir: b.dir, through: b.through, from: b.from,
         reach: b.reach ?? (l.r ?? 64) / 32, power: (b.power ?? l.power ?? 1) * wob * (off ? 0.72 : 1),
         fam: b.family ?? familyOf(l.color ?? "#ffffff"), gamma: b.gamma ?? 1, wrap: b.wrap ?? 0.5, floor: b.floor ?? 1,
         stutters: !!(b.off && b.off.length) || (l.flicker ?? 0) >= 0.1,
@@ -310,10 +324,16 @@ const ISOKIT = (() => {
     return [a[0] + d[0] * t, a[1] + d[1] * t, a[2] + d[2] * t]
   }
   /** how strongly light L falls on world point p with normal n (0..) */
-  function intensity(L, p, n, ctx) {
+  function intensity(L, p, n, ctx, zone = null) {
     let src = L.line ? closest(L.line[0], L.line[1], p) : L.at
     const q = n ? [p[0] + n[0] * 0.02, p[1] + n[1] * 0.02, p[2] + n[2] * 0.02] : [p[0], p[1], p[2] + 0.02]
     let toward = src
+    // a light and a pixel in different zones: only through the opening between them
+    if ((L.zone ?? null) !== zone) {
+      if (L.zone && zone) return 0
+      const o = ctx.openings[L.zone ?? zone]
+      if (!o || L.through || !o.cross(q, src)) return 0
+    } else if (zone && L.through) return 0
     if (L.through) {
       // from a source beyond an opening: lit only where the line to the source passes through it
       const o = ctx.openings[L.through]
@@ -359,10 +379,11 @@ const ISOKIT = (() => {
         }
         li++
       }
-      for (const L of lights) take(L, intensity(L, p, n, ctx))
+      const zone = B.zone[i] ? ctx.zones[B.zone[i]] : null
+      for (const L of lights) take(L, intensity(L, p, n, ctx, zone))
       // an opening's halo: what glows in it (a window's view, a strip) lights its own wall round it
       for (const hl of ctx.halos ?? []) {
-        if (B.nrm[i] !== hl.nrm || Math.abs(p[hl.ax] - hl.plane) > 0.01) { li++; continue }
+        if (B.zone[i] || B.nrm[i] !== hl.nrm || Math.abs(p[hl.ax] - hl.plane) > 0.01) { li++; continue }
         const s = p[1 - hl.ax], dx = Math.max(hl.s0 - s, 0, s - hl.s1), dh = Math.max(hl.h0 - p[2], 0, p[2] - hl.h1), d = Math.hypot(dx, dh)
         take(hl, d > 0 && d < hl.reach ? hl.power * (1 - d / hl.reach) : 0)
       }
@@ -373,7 +394,7 @@ const ISOKIT = (() => {
         if (T) { if (lv >= 2) k = T[1]; else if (lv >= 1) k = T[0] }
       }
       // the floor's contact shadows: round what stands on it and along the walls' feet
-      if (B.nrm[i] === NRM.up && p[2] < 0.01) {
+      if (B.nrm[i] === NRM.up && Math.abs(p[2]) < 0.01 && !B.zone[i]) {
         const dd = ctx.contact(p[0], p[1])
         if (dd < 0.07 || (dd < 0.14 && bay(x, y) < (0.14 - dd) / 0.1)) k = SHADE[k] ?? k
       }
@@ -450,11 +471,56 @@ const ISOKIT = (() => {
       halos.push({ id: o.id + "_halo", fam: hl.family ?? familyOf(hl.color), reach: hl.reach, power: hl.power ?? 1,
         ax: o.alongU ? 1 : 0, plane: o.plane, nrm: o.alongU ? NRM.v : NRM.u, s0, s1, h0: o.h[0] + q0, h1: o.h[0] + q1 })
     }
-    const ctx = { openings, solids, contact, ceiling, halos }
+    // the zones: each open opening's room behind its wall
+    const zones = [null]
+    for (const o of Object.values(openings)) if (o.open) { o.zone = zones.length; zones.push(o.id) }
+    const ctx = { openings, solids, contact, ceiling, halos, zones }
+
+    // ---- a flight down through the floor (the map's stairs): drawn first, so the floor in front of the
+    // hole hides its lower steps
+    function drawStairs(B, f) {
+      const s = map.stairs, k = KIT.stairs[s.kit] ?? {}, [u0, v0] = s.from, [u1, v1] = s.to
+      const n = Math.ceil((u1 - u0) / s.tread) + 1, deep = (n + 1) * s.rise
+      const well = k.well ?? (() => "1"), riser = k.riser ?? (() => "2"), tread = k.tread ?? (() => "3")
+      G.faceV(B, v0, u0, u1 + s.tread, -deep, 0, (a, e, o) => well(o.s, o.h - deep, { x: o.x, y: o.y, f }))
+      for (let i = 0; i < n; i++) {
+        const a = u0 + i * s.tread, top = -(i + 1) * s.rise
+        G.faceU(B, a, v0, v1, top, top + s.rise, (aa, e, o) => riser(aa, e, i, { x: o.x, y: o.y, f }))
+        G.top(B, a, v0, a + s.tread, v1, top, (u, v, x, y) => tread(u - a, v - v0, i, { x, y, f }))
+      }
+    }
+    // ---- the room behind an open opening: its floor, its far and side walls, the props standing in it;
+    // drawn into a buffer of its own, of which the opening shows what lies inside it
+    function renderBehind(op, f) {
+      const B2 = buffer(W, H)
+      B2.zoneNow = op.zone
+      const d = op.open.depth, side = op.open.side ?? 1.5, wh = op.open.h ?? ceiling
+      const fsh = KIT.floor[op.open.floor] ?? (() => "1"), wk = KIT.wall[op.open.wall]
+      const wsh = typeof wk === "function" ? wk : wk?.face ?? (() => "2")
+      if (op.alongU) {
+        const ua = op.base + op.from - side, ub = op.base + op.to + side, v0 = op.plane - d
+        G.top(B2, ua, v0, ub, op.plane, 0, (u, v, x, y) => fsh(u, v, { x, y, f, map }))
+        G.faceV(B2, v0, ua, ub, 0, wh, (a, e, o) => wsh(o.s, o.h, { a, e, len: ub - ua, H: wh, x: o.x, y: o.y, f, wall: null }))
+        G.faceU(B2, ua, v0, op.plane, 0, wh, (a, e, o) => wsh(o.s, o.h, { a, e, len: d, H: wh, x: o.x, y: o.y, f, wall: null }))
+      } else {
+        const va = op.base + op.from - side, vb = op.base + op.to + side, u0 = op.plane - d
+        G.top(B2, u0, va, op.plane, vb, 0, (u, v, x, y) => fsh(u, v, { x, y, f, map }))
+        G.faceU(B2, u0, va, vb, 0, wh, (a, e, o) => wsh(o.s, o.h, { a, e, len: vb - va, H: wh, x: o.x, y: o.y, f, wall: null }))
+        G.faceV(B2, va, u0, op.plane, 0, wh, (a, e, o) => wsh(o.s, o.h, { a, e, len: d, H: wh, x: o.x, y: o.y, f, wall: null }))
+      }
+      for (const p of (map.props ?? []).filter((q) => q.behind === op.id)) {
+        const k = KIT.prop[p.kit], fallback = [p.at[0] + p.foot[0] / 2, p.at[1] + p.foot[1] / 2, p.h]
+        const draw = k?.draw ?? ((pen) => pen.box(p.at[0], p.at[1], 0, p.foot[0], p.foot[1], p.h, () => "4", () => "3", () => "2"))
+        draw(makePen(G, B2, f, fallback), p, f)
+      }
+      return B2
+    }
 
     // ---- the background: floor, the walls' bodies, their inner faces with the openings, the stubs
     function renderBg(f) {
       const B = buffer(W, H)
+      const holes = {}                      // per open opening: the wall's pixels inside it
+      if (map.stairs) drawStairs(B, f)
       // the floor, cell by cell (each cell's key picks its shader; the shader sees the floor point)
       map.floor.forEach((row, j) => [...row].forEach((key, i) => {
         if (key === ".") return
@@ -504,6 +570,7 @@ const ISOKIT = (() => {
             const [gx, gy] = alongU ? P(op.base + op.from, fix, op.h[1]) : P(fix, op.base + op.to, op.h[1])
             const mk = op.id + ":" + f
             memo[mk] ??= {}
+            if (op.open && ls >= 0 && ls < ow && lh >= 0 && lh < oh) (holes[op.id] ??= []).push([o.x, o.y])
             const k = op.def?.paint?.(ls, lh, { a: fl(ls * G.SU), e: fl(lh * G.VPM), w: ow, h: oh, aw, ah, x: o.x, y: o.y, f, gx, gy, memo: memo[mk], op })
             if (k) return k
           }
@@ -513,6 +580,19 @@ const ISOKIT = (() => {
         if (alongU) G.faceV(B, fix, a0, a1, 0, w.h, (a, e, o) => shade(o.s, o.h, { a, e, len, H: w.h, x: o.x, y: o.y, f, wall: w }))
         else G.faceU(B, fix, a0, a1, 0, w.h, (a, e, o) => shade(len - o.s, o.h, { a, e, len, H: w.h, x: o.x, y: o.y, f, wall: w }))
       })
+      // through each open opening, its room (the opening's own paint keeps its frame)
+      for (const op of Object.values(openings)) {
+        if (!op.open || !holes[op.id]) continue
+        const B2 = renderBehind(op, f)
+        for (const [x, y] of holes[op.id]) {
+          const i = y * W + x
+          if (B2.k[i]) {
+            B.k[i] = B2.k[i]; B.lit[i] = B2.lit[i]; B.has[i] = B2.has[i]; B.nrm[i] = B2.nrm[i]
+            for (let c = 0; c < 3; c++) B.pos[i * 3 + c] = B2.pos[i * 3 + c]
+          } else { B.k[i] = "k"; B.has[i] = 0 }
+          B.zone[i] = op.zone
+        }
+      }
       lightPass(B, ctx, lightsOf(map, f))
       if (sheen) sheenPass(B)
       return B
@@ -551,6 +631,7 @@ const ISOKIT = (() => {
     // ---- the props: each drawn where it stands, lit, cut to its box, outlined, pivot bottom-centre
     const props = {}
     for (const p of map.props ?? []) {
+      if (p.behind) continue                                  // baked into the picture, through its opening
       const k = KIT.prop[p.kit]
       const fallback = [p.at[0] + p.foot[0] / 2, p.at[1] + p.foot[1] / 2, p.h]
       const draw = k?.draw ?? ((pen) => pen.box(p.at[0], p.at[1], 0, p.foot[0], p.foot[1], p.h, () => "4", () => "3", () => "2"))
@@ -591,5 +672,5 @@ const ISOKIT = (() => {
     return { map, P, props, layout, G, ctx }
   }
 
-  return { KIT, TINT, SHADE, familyOf, floor, wall, opening, prop, grid, first, raster, bake, intensity, lightsOf, buffer, geometry, makePen, lightPass }
+  return { KIT, TINT, SHADE, familyOf, floor, wall, opening, prop, stairs, grid, first, raster, bake, intensity, lightsOf, buffer, geometry, makePen, lightPass }
 })()
