@@ -8,5 +8,7 @@
   Cutaway.start({
     width: 320, height: 180, id: "halcyon", version: 1, language: "de", languages: ["de"],
     actor: "juno", party: ["juno"], dev: true, title: Halcyon.title,
+    // the intro (game/intro.js): by itself on the first start only, then from the menu; the splash comes after it
+    intro: "intro",
   });
 })();

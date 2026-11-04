@@ -18,7 +18,7 @@ float over the lit sea to the tower and in through its green window, the hall, t
 on the first start only (and from the menu) and ends on the title screen with the logo, which comes on every start.
 The deck keeps its CRT and mouse. Painting it: the opening float (A1, A2) plays (`game/intro.js` draws it in
 perspective, the painted parts in `art/intro/float.px.js` -> `assets/intro.js`; `docs/rooms/intro_float_a1_x3.png`,
-`intro_float_a2_x3.png`), as the sequence "intro", not yet before the title.
+`intro_float_a2_x3.png`), as the sequence "intro": on the first start before the splash, and from the menu ("Intro ansehen").
 The engine is at Cutaway.js commit e2bc1d6 (`lib/cutaway/VERSION.txt`).
 
 What was added on 2026-11-04 (in order):

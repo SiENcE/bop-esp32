@@ -138,8 +138,8 @@
     draw(ctx, SHOTS[r.float], Halcyon.intro.p, Cutaway.clock.time);
   });
 
-  // The sequence. Played from the title menu ("Watch intro") and, once it is whole, before the title on the
-  // first start (game/game.js). For now the opening float only.
+  // The sequence: before the title on the first start, then from the title menu (game/game.js). For now the
+  // opening float only.
   Cutaway.sequence("intro", {
     steps: [
       { shot: "a1" },
