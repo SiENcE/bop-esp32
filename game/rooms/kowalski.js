@@ -13,9 +13,15 @@
     walk: AW.walk, holes: AW.holes, props: AW.props,
     // the map's lamps: the bar's warm light, its sign's magenta, the screen's cyan, the machine, the lantern
     light: { ambient: 0.8, color: "#d4dcf4", lamps: AW.lamps.map((/** @type {any} */ { bake, zone, ...lamp }) => lamp) },
+    // the rain in two layers (far and dim, near and bright), the light hanging in it, glints, drops
+    // (the steam and the splashes are in the picture)
     fx: [
-      { kind: "rain", rect: [0, 0, 416, 180], count: 70, color: "#6c809a", speed: 170, slant: 0.3, length: 4 },
-      { kind: "steam", at: AW.steam, count: 9, rise: 24, color: "#b9c6d8" },
+      { kind: "rain", rect: [0, 0, 416, 180], count: 70, color: "#41547a", speed: 140, slant: 0.3, length: 3 },
+      { kind: "rain", rect: [0, 0, 416, 180], count: 55, color: "#6c809a", speed: 210, slant: 0.3, length: 5 },
+      { kind: "haze", poly: AW.hazeDoor, color: "#ffd58a", alpha: 0.1, fade: 0.4 },
+      { kind: "haze", poly: AW.hazeAd, color: "#62def0", alpha: 0.07, fade: 0.4, lamp: "ad" },
+      { kind: "sparkle", points: AW.glints, every: 2600, color: "#dafcff" },
+      ...AW.drips.map((/** @type {number[]} */ [x, y, to], /** @type {number} */ i) => ({ kind: "drip", at: [x, y], to, every: 1300 + i * 470, color: "#6c809a" })),
     ],
     hotspots: {
       kessel_door: { name: "Haustür", rect: AW.kessel_doorRect, walkTo: AW.kessel_door, face: "nw",

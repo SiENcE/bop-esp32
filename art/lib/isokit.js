@@ -82,7 +82,9 @@
 // THE BAKE
 //   ISOKIT.bake(map, { id, frames, fps, bg, glows, sheen }) defines `<id>_bg` (floor, walls with their openings,
 //   the back walls' cut tops, the near walls as stubs over the slab's section; an anim of `frames`; with
-//   sheen = { reach, map, keys(u, v) } a glossy floor mirrors the walls' bright keys faintly) and
+//   sheen = { reach, map, keys(u, v) } a glossy floor mirrors the walls' bright keys faintly: map a table
+//   of key -> key, or (u, v) -> a table (a puddle mirrors, wet paving only takes a sheen); glows are pxl
+//   items run over the picture, glow() or (c) => {} layers: steam, splashes) and
 //   `<id>_<prop id>` per prop (outlined in ink, pivot bottom-centre, drawn where it stands; an anim when its
 //   kit animates or a stuttering light lies on it). Returns { map, P, props, layout }: props[id] = { name,
 //   box: [x, y, w, h] (the sprite on the screen, outline included), at: [x, y] (its bottom-centre, where the
@@ -602,7 +604,7 @@ const ISOKIT = (() => {
     // glossy floor: the bright things on the back walls (a window's neon, a screen, a strip) show in it
     // faintly, mirrored about the wall's foot, fading with their height (style guide §4, SHEEN)
     function sheenPass(B) {
-      const keys = sheen.map ?? ISO.SHEEN, reach = sheen.reach ?? 1.2, gloss = sheen.keys ?? null
+      const table = sheen.map ?? ISO.SHEEN, reach = sheen.reach ?? 1.2, gloss = sheen.keys ?? null
       const out = []
       for (let y = 0; y < B.H; y++) for (let x = 0; x < B.W; x++) {
         const i = y * B.W + x
@@ -620,7 +622,7 @@ const ISOKIT = (() => {
           if (my < 0 || my >= B.H) continue
           const j = my * B.W + x, k = B.k[j]
           if (!k || B.nrm[j] !== (alongU ? NRM.v : NRM.u)) continue
-          const to = keys[k]
+          const keys = typeof table === "function" ? table(u, v) : table, to = keys && keys[k]
           if (to && bay(x + 2, y + 1) < 0.85 * (1 - d / reach)) { out.push([i, to]); break }
         }
       }

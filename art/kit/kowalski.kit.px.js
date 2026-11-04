@@ -68,22 +68,22 @@ const KOW = (() => {
     for (const c of CRACKS) if (toLine(u, v, c) < 0.02) return "e"
     return "f"
   }
-  ISOKIT.floor("a", asphalt)
+  ISOKIT.floor("a", (u, v, o) => (inPuddle(u, v) ? KIT_PUDDLE(u, v, o) : asphalt(u, v, o)))
   // puddles where the asphalt sags: dark water, the bake's sheen puts the neon in it; rain rings by frame
-  const PUDDLES = [[4.35, 1.75, 0.55, 0.42], [1.55, 3.7, 0.5, 0.42], [1.95, 3.15, 0.3, 0.22]]
+  const PUDDLES = [[4.1, 1.9, 0.5, 0.38], [1.55, 3.7, 0.5, 0.42], [1.95, 3.15, 0.3, 0.22], [2.45, 4.15, 0.62, 0.36], [5.4, 3.0, 0.4, 0.3]]
   const inPuddle = (u, v) => PUDDLES.some(([pu, pv, ru, rv]) => Math.hypot((u - pu) / ru, (v - pv) / rv) < 1)
-  const RINGS = [[4.2, 1.7, 0], [4.6, 1.9, 5], [1.4, 3.6, 3], [1.75, 3.85, 8], [2.0, 3.15, 10]]
-  ISOKIT.floor("w", (u, v, o) => {
-    if (!inPuddle(u, v)) return asphalt(u, v, o)
+  const RINGS = [[4.0, 1.85, 0], [4.35, 2.0, 5], [1.4, 3.6, 3], [1.75, 3.85, 8], [2.0, 3.15, 10], [2.3, 4.1, 2], [2.7, 4.2, 7], [5.35, 3.0, 4]]
+  const KIT_PUDDLE = (u, v, o) => {
     for (const [ru, rv, t0] of RINGS) {
       const t = (o.f - t0 + 12) % 12
       if (t < 4 && near(Math.hypot(u - ru, (v - rv) * 1.0), 0.04 + t * 0.045, 0.012)) return "Z"
     }
     return "e"
-  })
+  }
+  ISOKIT.floor("w", (u, v, o) => (inPuddle(u, v) ? KIT_PUDDLE(u, v, o) : asphalt(u, v, o)))
   // the drain: a steel frame, bars across a dark pit
   ISOKIT.floor("g", (u, v) => {
-    const lu = u - 6.0, lv = v - 2.0
+    const lu = u % 0.5, lv = v % 0.5
     if (lu < 0.05 || lu > 0.45 || lv < 0.05 || lv > 0.45) return lu < 0.03 || lu > 0.47 || lv < 0.03 || lv > 0.47 ? "f" : "4"
     return near(lu % 0.08, 0.04, 0.016) ? "3" : "k"
   })
@@ -468,26 +468,34 @@ const KOW = (() => {
       const [u0, v0] = p.at, du = p.foot[0], dv = p.foot[1], H = p.h
       // painted on the front: BAO, a bowl with steam and chopsticks
       const FRONT = (aw, ah) => (CART_FRONT[aw + "x" + ah] ??= ISOKIT.raster(aw, ah, (c) => {
-        TXT.draw(c, 5, 9, "BAO", "Q", { font: "hud" })
-        c.grid(19, 9, ["..h.h...P", "...h.h.P.", "HHHHHHHH.", ".HhhhhH..", "..HHHH..."])
+        // in the 5x7 face: the 3x5 one breaks up on the face's slope
+        TXT.draw(c, 3, 7, "BAO", "Q")
+        c.grid(23, 7, ["..h.h...P", "...h.h.P.", "HHHHHHHH.", ".HhhhhH..", "..HHHH..."])
       }))
       const front = (a, e, o) => {
         const aw = o.aw, ah = o.ah
         if (e >= ah - 2) return e === ah - 1 ? "R" : "P"                                             // the counter's wooden lip
+        if (e < 2) return e === 0 ? "O" : "P"                                                        // the frame's bottom rail
         const art = FRONT(aw, ah)(a, e); if (art) return art
-        const w = [[6, 3], [aw - 7, 3]].find(([wx, we]) => Math.hypot(a - wx, e - we) < 3.6)          // wheels
-        if (w) { const d = Math.hypot(a - w[0], e - w[1]); return d < 1.2 ? "5" : d < 2.4 ? "1" : "k" }
-        if (e < 5) return "O"
-        if (a <= 1 || a >= aw - 2 || e <= 6 || e >= ah - 4) return "n"
+        if (a <= 1 || a >= aw - 2 || e <= 3 || e >= ah - 4) return "n"
         return "M"
       }
       const side = (a, e, o) => {
         if (e >= o.ah - 2) return e === o.ah - 1 ? "R" : "P"
-        if (e < 5) return "O"
-        if (a >= 4 && a <= 8 && e >= 9 && e <= 20) return a === 4 || e === 20 ? "h" : "H"            // a towel on its hook
+        if (e < 2) return "O"
+        if (a >= 4 && a <= 8 && e >= 5 && e <= 16) return a === 4 || e === 16 ? "h" : "H"            // a towel on its hook
         return e % 5 === 0 ? "O" : "P"
       }
-      pen.box(u0, v0, 0, du, dv, H, (lu, lv) => (lu > du - 0.06 || lv > dv - 0.06 ? "6" : "5"), side, front)
+      // the body on its frame, a hand's breadth over the street; under it the dark, the axle, the wheels
+      const LIFT = 0.22
+      pen.box(u0 + 0.06, v0 + 0.06, 0.12, du - 0.12, dv - 0.12, 0.03, null, () => "1", () => "1")    // the axle frame
+      pen.box(u0, v0, LIFT, du, dv, H - LIFT, (lu, lv) => (lu > du - 0.06 || lv > dv - 0.06 ? "6" : "5"), side, front)
+      const wheel = (a, e) => {
+        const d = Math.hypot(a - 4, e - 4)
+        return d > 4.3 ? null : d < 1.2 ? "5" : d < 2.6 ? (fl(Math.atan2(e - 4, a - 4) * 2) % 2 ? "3" : "2") : "1"
+      }
+      for (const uc of [u0 + 0.18, u0 + du - 0.18]) { pen.at(uc, v0 + dv, 0.13, "v"); pen.faceV(v0 + dv - 0.03, uc - 0.13, uc + 0.13, 0, 0.27, (a, e) => wheel(a, e)) }
+      pen.at(u0 + du, v0 + 0.18, 0.13, "u"); pen.faceU(u0 + du - 0.03, v0 + 0.05, v0 + 0.31, 0, 0.27, (a, e) => wheel(a, e))
       // on the counter: the stockpot, the bowls stacked, the chopsticks in their cup
       const top = (u, v, h) => { pen.at(u, v, h, "up"); return pen.P(u, v, h) }
       { const [x, y] = top(u0 + 0.75, v0 + 0.3, H); pen.ellipse(x, y, 7, 3, "3"); pen.rect(x - 7, y - 8, 15, 8, "4"); pen.vline(x - 7, y - 8, 8, "5"); pen.vline(x + 7, y - 8, 8, "3")
@@ -545,6 +553,13 @@ const KOW = (() => {
     footprint: () => [],
     draw(pen, p, f) {
       const RUNS = [[[0, 1.6, 3.45], [2.6, 0, 3.55]], [[0, 3.4, 3.35], [4.8, 0, 3.6]]]
+      // bare cables first (no bulbs): sagging more, darker
+      for (const [a, b, s] of [[[0, 2.3, 4.0], [3.6, 0, 4.1], 0.7], [[0, 4.6, 3.8], [6.2, 0, 4.3], 0.9], [[0, 0.9, 3.0], [1.4, 0, 3.1], 0.35]]) {
+        for (let t = 0; t <= 1.0001; t += 0.003) {
+          const q = [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t - Math.sin(t * Math.PI) * s]
+          const [x, y] = pen.P(...q); pen.at(...q, "up"); pen.px(x, y, "k")
+        }
+      }
       RUNS.forEach(([a, b], r) => {
         let last = null, n = 0
         for (let t = 0; t <= 1.0001; t += 0.004) {
@@ -563,5 +578,5 @@ const KOW = (() => {
       })
     },
   })
-  return { inPuddle, PUDDLES }
+  return { inPuddle, PUDDLES, cellAt }
 })()

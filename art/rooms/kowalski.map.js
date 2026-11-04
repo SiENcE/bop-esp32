@@ -8,13 +8,13 @@
 
 ISO_MAPS.kowalski = {
   size: [7.0, 6.0], cell: 0.5, at: [188, 66], screen: [416, 180], margin: 0.2,
-  // "s" the sidewalk's slabs along the facades, "a" the street's asphalt, "w" puddles, "g" the drain grate
+  // "s" the sidewalk's slabs along the facades, "a" the street's asphalt, "w" puddles, "g" the drain grate (in the gutter by the kerb)
   floor: [
     "ssssssssssssss",
     "ssssssssssssss",
-    "ssssaaaaaaaaaa",
+    "ssssaaaaagaaaa",
     "ssaaaaawwaaaaa",
-    "ssaaaaawwaaaga",
+    "ssaaaaawwaaaaa",
     "ssaawaaaaaaaaa",
     "ssawwaaaaaaaaa",
     "ssaaaaaaaaaaaa",
@@ -53,11 +53,13 @@ ISO_MAPS.kowalski = {
     steam: [2.95, 2.3, null, 1.22],    // over Bao's pot (the steam's fx rises from it)
   },
   lights: [
-    { id: "lucky", at: [0.05, 2.7, 1.4], r: 110, power: 1.0, color: "#ffb860", flicker: 0.05 },
-    { id: "sign", at: [0.1, 3.1, 2.9], r: 90, power: 0.9, color: "#ff4fd3", flicker: 0.1 },
+    // the bar's warm light pours out of its window and door far into the street; its sign's magenta over it
+    { id: "lucky", at: [0.05, 2.7, 1.4], r: 110, power: 1.0, color: "#ffb860", flicker: 0.05, bake: { reach: 4.6, power: 1.9, floor: 1.5 } },
+    { id: "lucky_door", at: [0.05, 4.45, 1.2], r: 70, power: 0.8, color: "#ffd58a", flicker: 0.05, bake: { reach: 3.6, power: 2.0, floor: 1.6 } },
+    { id: "sign", at: [0.1, 3.1, 2.9], r: 90, power: 0.9, color: "#ff4fd3", flicker: 0.1, bake: { reach: 4.0, power: 1.6, off: [3, 4, 10] } },
     // the screen's cyan: full in the bake, gentler on people in the game (Juno stays yellow)
-    { id: "ad", at: [3.9, 0.2, 2.6], r: 150, power: 0.55, color: "#62def0", flicker: 0.2, bake: { power: 1.1 } },
-    { id: "vending", at: [1.25, 0.65, 1.2], r: 50, power: 0.8, color: "#dafcff", flicker: 0.05 },
-    { id: "lantern", at: [2.47, 2.72, 1.95], r: 50, power: 0.8, color: "#ffd58a", flicker: 0.1 },
+    { id: "ad", at: [3.9, 0.2, 2.6], r: 150, power: 0.55, color: "#62def0", flicker: 0.2, bake: { power: 1.7, reach: 5.5, floor: 1.4 } },
+    { id: "vending", at: [1.25, 0.65, 1.2], r: 50, power: 0.8, color: "#dafcff", flicker: 0.05, glow: 5, bake: { reach: 2.0, power: 1.4 } },
+    { id: "lantern", at: [2.47, 2.72, 1.95], r: 50, power: 0.8, color: "#ffd58a", flicker: 0.1, glow: 6, bake: { reach: 1.9, power: 1.6 } },
   ],
 };

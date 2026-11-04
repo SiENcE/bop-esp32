@@ -24,7 +24,15 @@ Halcyon.at = {
   // the lobby (art/rooms/kessel_lobby.map.js, game/rooms/kessel_lobby.layout.js)
   kessel_lobby: fromLayout(Halcyon.layouts.kessel_lobby),
   // Kowalski Street (art/rooms/kowalski.map.js, game/rooms/kowalski.layout.js)
-  kowalski: fromLayout(Halcyon.layouts.kowalski),
+  kowalski: {
+    ...fromLayout(Halcyon.layouts.kowalski),
+    // the room's effects, on the screen (from the map's projection): the light hanging in the rain out of
+    // LUCKY STATIC's door and under the ad screen, glints on the puddles, drops off an AC unit, the Kessel
+    // Block's transom and the cornice by the alley
+    hazeDoor: [31, 78, 60, 64, 111, 156, 82, 170], hazeAd: [258, 68, 367, 123, 329, 173, 220, 119],
+    glints: [[264, 164], [123, 150], [130, 169], [285, 158]],
+    drips: [[247, 2, 95], [166, 8, 77], [396, 88, 170]],
+  },
   // measured from the cameras' projections (docs/cams/cam03_layout.md, cam04_layout.md). No depth `scale`: the
   // feed figures stay at their drawn size (scaling 24 px pixel art by 0.7–1.9 would smear it; the seated
   // people in cam04 are drawn at their size there)
