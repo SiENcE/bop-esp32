@@ -34,6 +34,9 @@ Halcyon.at = {
     hazeDoor: [31, 78, 60, 64, 111, 156, 82, 170], hazeAd: [258, 68, 367, 123, 329, 173, 220, 119],
     glints: [[264, 164], [123, 150], [130, 169], [285, 158]],
     drips: [[247, 2, 95], [166, 8, 77], [396, 88, 170]],
+    // the implant's brackets round the ad screen in the JUNO. moment
+    adMark: [Halcyon.layouts.kowalski.openings.ad[0] - 3, Halcyon.layouts.kowalski.openings.ad[1] + 2,
+      Halcyon.layouts.kowalski.openings.ad[2] + 6, Halcyon.layouts.kowalski.openings.ad[3] + 1],
     // Bao's hotspot: his top half over the counter (the cart's own below it)
     baoRect: [Halcyon.layouts.kowalski.spots.bao[0] - 15, Halcyon.layouts.kowalski.spots.bao[1] - 48, 31, 25],
   },

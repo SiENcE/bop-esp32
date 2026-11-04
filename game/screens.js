@@ -101,6 +101,12 @@
     small(ctx, t("ZOOM x3"), x, y + h + 5, C.implant);
   }
 
+  // { implant_mark: [x, y, w, h] } (room pixels): the implant's corner brackets round something in street mode, for
+  // a moment of a script (false clears them; not saved). The JUNO. moment: they say the picture comes from her implant.
+  /** @type {number[] | null} */
+  let mark = null;
+  Cutaway.script.action("implant_mark", (s) => { mark = s.implant_mark || null; });
+
   // REC can be pressed while a scene in a feed plays (a moment is a script: clicks would only skip its
   // lines): a modal layer takes the click on the REC button then. Otherwise the room's `rec` hotspot does.
   Cutaway.ui.addLayer({
@@ -123,5 +129,6 @@
     if (!r || Cutaway.scene.backdrop) return;
     if (r.feed) feed(ctx, r.feed);
     zoom(ctx);
+    if (mark) brackets(ctx, [mark[0] - Cutaway.scene.camera.x, mark[1] - Cutaway.scene.camera.y, mark[2], mark[3]], C.implant, 10);
   });
 })();

@@ -8,17 +8,20 @@
   const AW = Halcyon.at.kowalski, AL = Halcyon.at.kessel_lobby;
 
   // Step 17 (kapitel0-design §6.2): after the meal the broken screen over the street stutters, the eye in its
-  // static turns to Juno, JUNO. over the whole screen (the stinger "witness"); then the advert again. Bao saw
-  // nothing; EVI, very quietly, from the bag. Step 18: the fade, the card for Chapter 1.
+  // static turns to Juno, JUNO. over the whole screen (the stinger "witness"); then the advert again. Only the
+  // stutter is on the screen: the eye and the word are in Juno's eye (story §10a), the implant's brackets round
+  // them say so, and she says it. Bao saw nothing; EVI, very quietly, from the bag. Step 18: the fade, the card
+  // for Chapter 1.
   const JUNO = [
     { wait: 900 }, { camera: [80, 0], ms: 1400 },
     { show: "ad_fx" }, { play: "ad_fx", anim: "kowalski_ad_stutter", loop: true, wait: false }, { sfx: "glitch" },
     { wait: 1400 }, "Was ...",
-    { play: "ad_fx", anim: "kowalski_ad_eye" },
+    { implant_mark: AW.adMark }, { play: "ad_fx", anim: "kowalski_ad_eye" },
     { stinger: "witness" }, { play: "ad_fx", anim: "kowalski_ad_juno", loop: true, wait: false }, { sfx: "static" },
     { wait: 2600 },
-    { play: "ad_fx", anim: "kowalski_ad_stutter", loop: true, wait: false }, { wait: 500 }, { hide: "ad_fx" }, { wait: 700 },
+    { implant_mark: false }, { play: "ad_fx", anim: "kowalski_ad_stutter", loop: true, wait: false }, { wait: 500 }, { hide: "ad_fx" }, { wait: 700 },
     "Bao. Hast du ...", { say: "bao", text: "Hm? Noch Brühe?" }, "... nichts. Schon gut.",
+    { wait: 400 }, "Das war nicht auf dem Schirm. Das war in meinem Auge.",
     { wait: 500 }, { evi: "besorgt" }, { say: "evi", text: "Das war nicht ich. Ehrlich." },
     { wait: 800 }, { camera: "follow" },
     { fade: "out", ms: 900 }, { card: "Glass", title: "Kapitel 1" },

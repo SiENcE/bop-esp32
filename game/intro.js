@@ -1,7 +1,8 @@
 // Halcyon: the intro "Die letzte Schicht" (docs/kapitel0-design.md §5; storyboard art/test/intro_blocks.px.js).
 // The sequence and what its shots share. The shots the game draws itself (the camera really moves through them)
 // are rooms with `float: "<shot>"`: their files register a drawer in Halcyon.intro.shots (game/intro_sea.js: the
-// float over the sea, A1 and A2; game/intro_tower.js: the tower and in through its window, C), drawn over the
+// float over the sea, A1 and A2; game/intro_tower.js: the tower and in through its window, C; game/intro_desk.js:
+// what moves in shot 2), drawn over the
 // room each frame; the action { float: [from, to], ms, ease } moves the camera through the shot (its progress
 // Halcyon.intro.p, 0..1). The opening has no sounds, the music alone.
 "use strict";
@@ -66,6 +67,14 @@
       { caption: "2088-04-30  05:45", at: "bl", ms: 4000, wait: false },
       { camera: [20, 180], ms: 9000, ease: "inOut" },              // to the front row, Juno's desk (d31)
       { wait: 1000 },
+      // 2: Juno at her desk, close: a man stops in her feed, she marks him
+      { shot: "desk" },
+      { goto: "intro_desk", transition: "dissolve" },
+      { float: [0, 1], ms: 9000, wait: false },
+      { wait: 5600 }, { sfx: "tag" },
+      { wait: 800 },
+      { caption: "„Hab dich.“", at: "bl", color: "#fff070", ms: 2200 },
+      { wait: 400 },
       { fade: "out", ms: 1200 },
       { music: { stop: true, fade: 1.5 } },
     ],
