@@ -7,7 +7,7 @@ pal({
   k: "#0c0e1a", n: "#06080f", 1: "#131a2a", 2: "#1a2337", 3: "#232f47", 4: "#2f3e5a", 5: "#41547a", 6: "#617aa0",
   j: "#9a7406", y: "#eec414", Y: "#fff070", s: "#93583f", S: "#d79676", g: "#565e70", G: "#8e96a8", v: "#62def0", h: "#0f1118",
 })
-include("../characters/juno.px.js")
+include("../old/juno_h1.px.js")
 include("../lib/text.js")
 
 /** Juno as blocks, her feet's centre at (fx, fy): view "se" or "ne", hood up or down, standing or a walk contact */

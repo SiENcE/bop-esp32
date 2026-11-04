@@ -58,7 +58,7 @@ code comments English.
 | `index.html` | loads the engine (in its load order), the built art, then the game; `file://` works |
 | `game/game.js` | start-up (`Cutaway.start`: 320x180, `de`, title screen), loaded last |
 | `game/halcyon.js` | the global `Halcyon`: the game's own actions and helpers, the registries (`cache`, `ledger`, `cams`, names); its header lists the flag conventions (`chits`, `tag_<who>`, `code_<cam>`, `link_<cam>`, `cache_<id>`, `ledger_<id>`, `rec_on`) |
-| `game/places.js` | `Halcyon.at`: every position, walk area and prop placement, from the layout notes |
+| `game/places.js` | `Halcyon.at`: every position, walk area and prop placement; rooms built from a map take theirs from `game/rooms/<id>.layout.js` (generated: never edit) |
 | `game/cast.js` | the actors (Juno in iso, the feed people) |
 | `game/rooms/<id>.js` | rooms: `deck.js` (the deck, a watched room), `cams.js` (cam03, cam04: watched rooms with the phosphor post-effects) |
 | `game/prolog.js` | the prologue act (steps 0–11), its cache and ledger entries, game time |
@@ -85,7 +85,11 @@ Planned (PLAN.md §3): `game/deck.js` and `game/evi.js` (H2b, replacing the one-
   routines are discrete (15-minute ticks, routines as pure functions of the tick); keep state small so
   `solve --full` stays exhaustive. Every chapter must solve without soft-locks, and every state on the way
   needs a hint.
-- Positions live in `game/places.js`, measured from the art's layout notes, not scattered in room files.
+- Positions live in `game/places.js`, not scattered in room files. A street-mode room is a map
+  (`art/rooms/<id>.map.js`, format in `art/lib/isomap.js`) baked with the kit and its light
+  (`art/lib/isokit.js`, `art/kit/`); `sh tools/build_art.sh room <id>` builds the art and writes the measured
+  walk area, front lines, prop places, opening rects and spots to `game/rooms/<id>.layout.js`. Change the
+  map or the kit, never the numbers. Superseded art (the old scale) is in `art/old/`.
 - Room art files export only names starting with the room id (`flat_bg`, `flat_<prop>`); runtime `light`
   uses the same lamp numbers as the pxl art.
 - Comments say why, not what. Keep files small and focused.

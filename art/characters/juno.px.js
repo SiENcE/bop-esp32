@@ -1,187 +1,292 @@
-// Juno Reyes, the protagonist: production sprites (style guide §4-§6, §9).
+// Juno Reyes, the protagonist, at the new scale (style guide §4: 30 px per meter of height, so her
+// 1.68 m are 50 px; §5, §6). It exports the names the game uses, so it can replace juno.px.js.
 //
 // Street mode (iso 2:1): two drawn views, the engine mirrors them for SW and NW.
-//   juno_idle_se / juno_walk_se / juno_talk_se   front three-quarter, facing down-right
-//   juno_idle_ne / juno_walk_ne / juno_talk_ne   back three-quarter, facing up-right
-//   (the NE view is the approved mockup's, art/mockups/mock_c_iso.px.js "juno", without the
-//   ad screen's cyan rim, which belongs to that scene's light, not to her)
-// Every street frame is 21x32: pivot bottom-centre (column 10, under the bottom row), the soles'
-// outline on the bottom row in the idle and talk; in the walk the lower foot's at each contact (SE
-// the leading foot, NE the trailing one), the planted foot rising 1-3 rows as it slides back up
-// the 2:1 floor line between. Odd width, so the engine's mirror keeps the anchor on the same column.
-// Feed mode (the hijacked cameras): juno_feed, juno_feed_walk, 15x24, the phosphor ramp only:
-// rim 1, trousers and satchel 3, slicker 6, hood 8 (her signature, the brightest value).
+//   juno_idle_se / juno_walk_se / juno_talk_se            front three-quarter, facing down-right, hood up
+//   juno_idle_ne / juno_walk_ne / juno_talk_ne            back three-quarter, facing up-right, hood up
+//   juno_in_idle_se ... juno_in_talk_ne                   the same indoors, the hood down
+// The face is the approved one, "B AUGEN" of art/test/juno50_faces.px.js (eyes two rows tall, a small
+// mouth, the fringe under the hood, the implant on her left cheekbone); the proportions are those of
+// art/test/juno50_blocks.px.js (the head about 1/6 of her, the slicker to mid-thigh). Shaded as the
+// 32 px sprite: light from the upper left, Y the lit side, y the slicker, j the shade, the seams and the
+// far edge; the strap from her right shoulder to the satchel on her left hip.
 //
-// How it is built: the body is hand-drawn parts (hood, torso, arms, satchel) in the mockup's
-// 16-column frame, stamped over legs drawn from a foot table (the walk's feet step 2:1 along
-// the iso floor). The outline is the anim's own (ink k), so parts carry only inner lines.
+// Every street frame is 27x50: pivot bottom-centre (column 13, under the bottom row), the soles'
+// outline on the bottom row in the idle and talk; in the walk the lower foot's at each contact (SE the
+// leading foot, NE the trailing one), the planted foot rising 1 row for every 2 px it slides back along
+// the 2:1 floor line (8 px across and 4 up a step, so the actor travels 20 px/s across and 10 px/s down
+// or up the screen at 100 ms a frame). Odd width, so the engine's mirror keeps the anchor on its column.
+// Feed mode (the hijacked cameras): juno_feed, juno_feed_walk, 15x24, unchanged from juno.px.js (feed
+// mode keeps its own scale).
+//
+// How it is built: hand-drawn parts (head, torso, arm pieces, satchel, the hood lying down) stamped over
+// legs drawn from a foot table. The outline is the anim's own (ink k), so parts carry only inner lines.
+// Everything sits in a function scope, so this file and juno.px.js can be included side by side.
+;(() => {
 
 pal({
   k: "#0c0e1a",                                                       // ink
   1: "#131a2a", 2: "#1a2337", 3: "#232f47", 4: "#2f3e5a",             // trousers, boots (night steel)
   j: "#9a7406", y: "#eec414", Y: "#fff070",                           // the slicker
-  s: "#93583f", S: "#d79676",                                         // skin
+  s: "#93583f", S: "#d79676", m: "#7a3a34",                           // skin, the mouth
+  h: "#1b1f2e", u: "#2e3550",                                         // short black hair, its light
   g: "#565e70", G: "#8e96a8",                                         // satchel grey
   v: "#62def0",                                                       // the implant line
   x: "#6c809a", H: "#b9c6d8",                                         // a raindrop
 })
 
 // ---------------------------------------------------------------- frame
-const IW = 19, IH = 30          // inside the outline: the sprites come out 21x32
-const OX = 1, OY = -1           // part grids are written in the mockup's 16x32 frame (its row 0 and
-                                // column 0 are outline); this puts them in ours
-const GROUND = IH - 1           // the soles' last row, inside the outline
-const HEM = 21                  // the first row under the slicker's hem (body not bobbed)
+const IW = 25, IH = 48           // inside the outline: the sprites come out 27x50
+const GROUND = IH - 1            // the soles' last row, inside the outline
+const HIP = 31                   // where the legs start, under the slicker (body not bobbed)
+const MS = (...a) => a           // frame durations
 
-// ---------------------------------------------------------------- parts, NE (back three-quarter)
-// rows 1-8 of the mockup
-sprite("_hood_ne", `
-  ......yYYY......
-  .....yYYYYY.....
-  ....yYYYYYYy....
-  ....yYYYYYyjS...
-  ....yyYYYyyjS...
-  ....yyyyyyjjv...
-  ....jyyyyyjjS...
-  ....kjjjjjjjk...`)
-// talking: the jaw moves, a pixel more cheek shows at the hood's edge
-sprite("_hood_ne_talk", `
-  ......yYYY......
-  .....yYYYYY.....
-  ....yYYYYYYy....
-  ....yYYYYYyjS...
-  ....yyYYYyySS...
-  ....yyyyyyjjv...
-  ....jyyyyyjss...
-  ....kjjjjjjjk...`)
-// rows 9-21: the back, the strap from her right shoulder to her left hip, without the arms'
-// swinging parts and the satchel
-sprite("_torso_ne", `
-  ...yyyjjjjjjgG..
-  ..yYYyyyyyyyGj..
-  ..yYYyyyyyyGyj..
-  ..yYyjyyyyGyyj..
-  ..yYyjyyyGyyyj..
-  .....jyyGyyyyj..
-  .....jyGyyyyyj..
-  .....jGyyyyyyj..
-  .....Gyyyyyyyj..
-  .....jyyyyyyjj..
-  .....jyyyyyyjj..
-  .....jjyyyyjjj..
-  .....jjjjjjjj...`)
-sprite("_farm_ne", `
-  yyy
-  yyy
-  jyy`)                         // her left forearm (screen left), rows 14-16, cols 2-4
-sprite("_narm_ne_up", `
-  yy
-  yy
-  jy
-  jy
-  jy
-  jy`)                          // her right arm (screen right), rows 10-15, cols 13-14
-sprite("_narm_ne_lo", `
-  jy
-  jj
-  jj
-  jS
-  kS`)                          // rows 16-20, the hand at the bottom
-sprite("_bag_ne", `
-  gGGgG
-  gGGGg
-  gGGGg
-  ggggk`)                       // rows 17-20, cols 1-5
+// ---------------------------------------------------------------- heads (13 wide, at x 6)
+// SE, hood up: face B. The fringe under the hood's rim, the near eye and the far eye (2 rows each, 2 px
+// of skin between), the implant under the far eye on her left cheekbone, the mouth in the skin's shade.
+sprite("_se_hood", `
+  ....YYYYY....
+  ..YYYYYYYYy..
+  .YYYYYYYYYyy.
+  .YYYYYjjjjjy.
+  YYYYYjhuhuhj.
+  YYYYjhhSShSS.
+  yYYYjhSkSSkS.
+  yYYYjSSkSSkv.
+  yyYYjsSSSSSS.
+  jyyyjjsSSmS..
+  .jyyyjjsss...
+  .jjjjjjj.....`)
+// SE, hood down: the same face under short black hair, the fringe where the hood's rim was, the ear
+// behind the near eye, the nape dark; the hood lies round her neck (_se_roll)
+sprite("_se_hair", `
+  .............
+  ....uuhhh....
+  ..huuuuuhhh..
+  .hhuuhuuuhhh.
+  .hhuhhhhhuhuh
+  hhhhhhhSShSS.
+  .hhhhhhSkSSkS
+  .hhhhSSSkSSkv
+  ..hhhssSSSSSS
+  ...hhsssSSmS.
+  ......sssss..`)
+// NE, hood up: the hood from behind, its seam, a sliver of cheek and the implant at its edge
+sprite("_ne_hood", `
+  ....yYYYY....
+  ..yYYjYYYYYy.
+  .yYYYjYYYYYyy
+  .yYYYjYYYYyyj
+  yYYYjYYYyyyj.
+  yYYYjYYyyyjS.
+  yyYYjyyyyyjS.
+  yyYyjyyyyjjv.
+  yyyyjyyyyjjS.
+  jyyyjyyyyjs..
+  .jyyjyyyjj...
+  .jjjjjjj.....`)
+// NE, hood down: the back of her head, lit at the crown, darkest at the nape, ending in points
+sprite("_ne_hair", `
+  .............
+  ....uuuhh....
+  ..huuuuuuhh..
+  .hhuhhhhuuhh.
+  .hhhhhhhhhuh.
+  hhhhhhhhhhhS.
+  hhhhhhhhhhhS.
+  hhhhhhhhhhsv.
+  .hhhhhhhhhsS.
+  ..hhhhhhhs...
+  ...shhhs.....`)
+// the hood lying down: a roll round the back of her neck and over her shoulders
+sprite("_se_roll", `
+  ..jyYy.......
+  .jyYYYy......
+  yYYYyyyj.....
+  jyyyyyjj.....
+  .jjjjj.......`)              // at x 5, y 9: behind the nape, over the near shoulder
+sprite("_ne_roll", `
+  ...yYYYYYy....
+  .yYYYYYyyyyj..
+  yYYyyyyyyyyjj.
+  jyyyyyyyyyjj..
+  .jjjjjjjjjj...`)             // at x 5, y 9: across her upper back under the head
 
-// ---------------------------------------------------------------- parts, SE (front three-quarter)
-// The face in the hood's opening on the leading side: a fringe of black hair, the near eye, the
-// far eye at the face's edge, the implant under it on her left cheekbone.
-sprite("_hood_se", `
-  ......yYYY......
-  .....yYYYYY.....
-  ....yYYYYYYy....
-  ....yYYYYjjjy...
-  ....yyYYj1SSS...
-  ....yyyyjkSkS...
-  ....jyyyjsSSv...
-  ....kjjjjjSsk...`)
-// talking: the mouth opens a little, the jaw a step darker
-sprite("_hood_se_talk", `
-  ......yYYY......
-  .....yYYYYY.....
-  ....yYYYYYYy....
-  ....yYYYYjjjy...
-  ....yyYYj1SSS...
-  ....yyyyjkSkS...
-  ....jyyyjsSSv...
-  ....kjjjjjksk...`)
-// the front: collar, the slicker's opening a third in from the leading edge, the strap from her
-// right shoulder (near, screen left) across the chest to her left hip (far, screen right)
-sprite("_torso_se", `
-  ..yYYGjjjjjyy...
-  ....yGyyyjyyj...
-  ....yyGyyjyyj...
-  ....yyyGyjyyj...
-  ....yyyyGjyyj...
-  ....yyyyyGyyj...
-  ....yyyyyjGyj...
-  ....yyyyyjyGj...
-  ....yyyyyjyyj...
-  ....jyyyyjyyj...
-  ....jyyyyjyyj...
-  ....jjyyyjjj....
-  ....jjjjjjjj....`)
-sprite("_narm_se_up", `
+// ---------------------------------------------------------------- torsos (at x 4, y 12)
+// SE: the collar in the hood's shadow, the slicker's opening a third in from the leading (right) edge,
+// the strap from her right shoulder (near, screen left) across the chest to her left hip
+sprite("_se_torso", `
+  ..YGgjjjjjyyyyj...
+  ...YGgyyyyyjyyj...
+  ...yYGgyyyyjyyj...
+  ...yYyGgyyyjyyj...
+  ..yyyyyGgyyjyyyj..
+  ..yyyyyyGgyjyyyj..
+  ..yyyyyyyGgjyyyj..
+  ..yyyyyyyyGgyyyj..
+  ..yyyyyyyyyGgyyj..
+  ..yyyyyyyyyjGgyj..
+  .yyyyyyyyyyjyGgjj.
+  .yyyyyyyyyyjyyyjj.
+  .yyyyyyyyyyjyyyjj.
+  .yyyyyyyyyyjyyyjj.
+  .yyyyyyyyyyjyyyjj.
+  .yyyyyyyyyyjyyyjj.
+  .jYyyyyjyyyjyyyjj.
+  jYYyyyjyyyyjyyyyjj
+  jYyyyyjyyyyjyyjyjj
+  jjyyyjjyyyyjjyyjjj
+  .jjjjjjjjjjjjjjjj.`)
+// NE: the back, lit on the left; the strap from her right shoulder (screen right) to her left hip
+sprite("_ne_torso", `
+  ..YYjjjjjjyyyGg...
+  ...YYyyyyyyyGgj...
+  ...yYyyyyyyGgyj...
+  ...yyyyyyyGgyyj...
+  ..yyyyyyyGgyyyyj..
+  ..yyyyyyGgyyyyyj..
+  ..yyyyyGgyyyyyyj..
+  ..yyyyGgyyyyyyyj..
+  ..yyyGgyyyyyyyyj..
+  ..yyGgyyyyyyyyyj..
+  .yyGgyyyyyyyyyyjj.
+  .yyyyyyyyyyyyyyjj.
+  .yyyyyyyyyyyyyyjj.
+  .yyyyyyyyyyyyyyjj.
+  .yyyyyyyyyyyyyyjj.
+  .yyyyyyyyyyyyyyjj.
+  .yyyyyyjyyyyyyyjj.
+  jyyyyyyyjyyyyyyyjj
+  jYyyyyyyyjyyyyyyjj
+  jjyyyyyyyjjyyyyjjj
+  .jjjjjjjjjjjjjjjj.`)
+
+// ---------------------------------------------------------------- arms
+// each arm in three pieces: the upper arm (still), the forearm and the hand (swinging by whole pixels)
+sprite("_lit_up", `
+  yYYy
+  yYYj
+  yYYj
+  yYYj
   yYyj
   yYyj
-  yyyj
-  yyyj
-  jyyj`)                        // her right arm (near, screen left), rows 10-14, cols 1-4
-sprite("_narm_se_lo", `
+  yYyj`)                       // a lit arm, rows 13-19: SE's near arm (screen left)
+sprite("_lit_lo", `
+  yYyj
+  jYyj
+  jyyj
+  jjyj
+  jjjj`)                       // rows 20-24, the cuff at the bottom
+sprite("_lit_hand", `
+  .SS.
+  .SSs
+  ..s.`)                       // rows 25-27
+sprite("_se_far_up", `
+  yj.
+  yyj
+  jyj
+  jyj
+  jyj
+  jyj
+  jyj`)                        // SE's far arm (her left, screen right), rows 13-19, partly behind her
+sprite("_se_far_lo", `
+  jyj
+  jyj
+  jjj
+  jjj
+  jjj`)                        // rows 20-24, mostly behind the satchel
+sprite("_se_far_hand", `
+  ss
+  s.`)
+sprite("_ne_far_up", `
+  yYj
+  yYj
+  yYj
+  yyj
+  yyj
+  yyj
+  jyj`)                        // NE's far arm (her left, screen left, lit), rows 13-19
+sprite("_ne_far_lo", `
+  jyj
+  jyj
+  jyj
+  jjj
+  jjj`)
+sprite("_shade_up", `
+  yyy.
+  jyyj
+  jyyj
+  jyyj
+  jyyj
+  jyyj
+  jyyj`)                       // NE's near arm (her right, screen right, the shade side), rows 13-19
+sprite("_shade_lo", `
   jyyj
   jyyj
   jjyj
-  .SSj
-  .Ss.`)                        // rows 15-19, the hand under the cuff
-sprite("_bag_se", `
-  gG..
-  gGGg
-  gGGg
-  gGGg
-  gggg`)                        // rows 16-20, cols 12-15: the bag at her far hip
+  jjjj
+  jjjj`)
+sprite("_shade_hand", `
+  .sS.
+  .ss.
+  .s..`)
+
+// ---------------------------------------------------------------- the satchel
+sprite("_se_bag", `
+  GGGGGGg
+  GGGGGGg
+  GGGGGGg
+  GGGGGGg
+  gGGGGgg
+  ggggggg
+  GGGGGgg
+  gggggg.`)                    // at x 16, y 23: her left hip (far, screen right)
+sprite("_ne_bag", `
+  GGGGGGg
+  GGGGGGg
+  GGGGGgg
+  GGGGGgg
+  GGGGGgg
+  GGGGGgg
+  gGGGGgg
+  .gggggg`)                    // at x 2, y 23: her left hip (screen left)
 
 // ---------------------------------------------------------------- legs
-// A leg is a band 4 px wide from the hem to the ankle, its columns lit to dark, and a boot.
-// near leg: [3,3,2,1] with a knee light; far leg a step darker. Boots, 3 rows:
+// A leg is a band 5 px wide from the hip to the ankle, its columns lit to dark, a cargo pocket on the near
+// thigh, a knee light; the far leg a step darker. Boots, 4 rows, heavy soles:
 const BOOT = {
-  se: ["2211.", "22141", "21111"],       // toe toward the screen's right
-  ne: [".2211", "24111", "21111"],       // heel toward the screen's left (the mockup's)
+  se: ["22221..", "222221.", "2222141", "1111111"],     // toe toward the screen's right
+  ne: [".22221.", "222221.", "2421111", "1111111"],     // heel toward the screen's left
 }
-const BOOT_X = { se: 0, ne: -1 }         // where the boot grid starts against the leg's left column
-const LEG_NEAR = "3321", LEG_FAR = "2111"
+const BOOT_X = { se: 0, ne: -1 }       // where the boot grid starts against the leg's left column
+const LEG_NEAR = "34321", LEG_FAR = "22111"
 const DARKER = { 4: "3", 3: "2", 2: "1", 1: "1" }
 
 /** feet: { near: { x, dx, gy, lift }, far: {...} }, x = the leg's left column at the hip. */
-function legs(c, view, feet, bob) {
-  const own = new Map()                  // "x,y" -> "near" | "far"
+const legs = (c, view, feet, bob) => {
+  const own = new Map()                // "x,y" -> "near" | "far"
   const put = (x, y, k, who) => { if (x < 0 || x >= IW || y < 0 || y >= IH) return; c.px(x, y, k); own.set(x + "," + y, who) }
   for (const who of ["far", "near"]) {
     const f = feet[who], cols = who === "near" ? LEG_NEAR : LEG_FAR
-    const hipY = HEM + bob, sole = GROUND + f.gy - f.lift, ankleY = sole - 3
-    const span = Math.max(1, ankleY - hipY)
+    const hipY = HIP + bob, sole = GROUND + f.gy - f.lift, ankleY = sole - 4
+    const span = Math.max(1, ankleY - hipY), bend = f.lift >= 2 ? 2 : f.lift ? 1 : 0
     for (let y = hipY; y <= ankleY; y++) {
-      const t = (y - hipY) / span, knee = f.lift ? Math.round(Math.sin(Math.PI * t)) : 0    // a swinging leg bends forward
-      const x0 = f.x + Math.round(f.dx * t) + knee
-      for (let i = 0; i < 4; i++) {
+      const t = (y - hipY) / span, knee = Math.round(Math.sin(Math.PI * t) * bend)   // a swinging leg bends forward
+      const x0 = f.x + Math.round(f.dx * t) + knee, r = y - hipY
+      for (let i = 0; i < 5; i++) {
         let k = cols[i]
-        if (who === "near" && i === 1 && y === hipY + 2 && ankleY - hipY >= 4) k = "4"      // the knee
+        if (who === "near") {
+          if (r === 4 && i < 3) k = "4"                                   // the pocket's flap
+          else if (r >= 5 && r <= 7 && i === 3) k = "1"                    // its side, in shadow
+          else if (r === 9 && i === 1 && span >= 9) k = "4"                // the knee
+        }
         put(x0 + i, y, k, who)
       }
     }
     const bx = f.x + f.dx + BOOT_X[view]
     BOOT[view].forEach((row, j) => [...row].forEach((k, i) => {
       if (k === ".") return
-      put(bx + i, sole - 2 + j, who === "far" ? (DARKER[k] ?? k) : k, who)
+      put(bx + i, sole - 3 + j, who === "far" ? (DARKER[k] ?? k) : k, who)
     }))
   }
   // the near leg in front of the far one: a line of ink on the far leg where they touch
@@ -194,71 +299,92 @@ function legs(c, view, feet, bob) {
 }
 
 // ---------------------------------------------------------------- the figure
-// o: { bob, near, far, bag (x offsets of the swinging parts), talk, hood (dy) }
-const LEG_X = { se: { near: 5, far: 10 }, ne: { near: 10, far: 5 } }
-const STAND = { dx: 0, gy: 0, lift: 0 }
+// o: { bob, bagBob, hood (false: indoors), near, nearHand, far, farHand, bag (x offsets), talk, blink, nod }
+const LEG_X = { se: { near: 7, far: 13 }, ne: { near: 13, far: 7 } }
+const STAND = { near: { dx: 0, gy: 0, lift: 0 }, far: { dx: 0, gy: -1, lift: 0 } }
 
-function juno(c, view, o = {}) {
-  const b = o.bob ?? 0, at = (name, x, y) => c.stamp(name, x + OX, y + OY + b)
-  const fe = o.feet ?? { near: STAND, far: STAND }
+const juno = (c, view, o = {}) => {
+  const b = o.bob ?? 0, at = (name, x, y, dy = b) => c.stamp(name, x, y + dy)
+  const fe = o.feet ?? STAND, hood = o.hood ?? true
   legs(c, view, { near: { ...fe.near, x: LEG_X[view].near }, far: { ...fe.far, x: LEG_X[view].far } }, b)
-  const hood = "_hood_" + view + (o.talk ? "_talk" : "")
+  const bagY = 23 + (o.bagBob ?? b)
   if (view === "se") {
-    at("_torso_se", 0, 9)
-    at("_bag_se", 12 + (o.bag ?? 0), 16)
-    at("_narm_se_up", 1, 10)
-    at("_narm_se_lo", 1 + (o.near ?? 0), 15)
+    at("_se_far_up", 19, 13); at("_se_far_lo", 19 + (o.far ?? 0), 20); at("_se_far_hand", 20 + (o.farHand ?? 0), 25)
+    at("_se_torso", 4, 12)
+    at("_se_bag", 16 + (o.bag ?? 0), bagY, 0)
+    at("_lit_up", 4, 13); at("_lit_lo", 4 + (o.near ?? 0), 20); at("_lit_hand", 4 + (o.nearHand ?? 0), 25)
   } else {
-    at("_torso_ne", 0, 9)
-    at("_farm_ne", 2 + (o.far ?? 0), 14)
-    at("_bag_ne", 1 + (o.bag ?? 0), 17)
-    at("_narm_ne_up", 13, 10)
-    at("_narm_ne_lo", 13 + (o.near ?? 0), 16)
+    at("_ne_torso", 4, 12)
+    at("_ne_far_up", 4, 13); at("_ne_far_lo", 4 + (o.far ?? 0), 20)
+    at("_ne_bag", 2 + (o.bag ?? 0), bagY, 0)
+    at("_shade_up", 18, 13); at("_shade_lo", 18 + (o.near ?? 0), 20); at("_shade_hand", 18 + (o.nearHand ?? 0), 25)
   }
-  at(hood, 0, 1 + (o.hood ?? 0))
+  if (!hood) at(`_${view}_roll`, 5, 9)
+  const hy = b + (o.nod ?? 0)
+  at(`_${view}_${hood ? "hood" : "hair"}`, 6, 0, hy)
+  // the face's moving pixels (SE: eyes at x 13 and 16, rows 6-7; the mouth at 15, 9)
+  if (view === "se") {
+    if (o.blink) for (const ex of [13, 16]) { c.px(ex, 6 + hy, "S"); c.px(ex, 7 + hy, "s") }
+    if (o.talk) { c.px(15, 9 + hy, "k"); c.px(15, 10 + hy, "m") }
+  } else if (o.talk) {
+    c.px(17, 9 + hy, "S"); c.px(16, 10 + hy, "s")                       // the jaw moves, a pixel more cheek
+  }
 }
 
 // ---------------------------------------------------------------- walk
-// 8 frames x 100 ms. The near foot: contact in front (0), planted and sliding back along the
-// floor's 2:1 line (1-4), swinging forward lifted (5-7); the far foot the same, 4 frames later.
-// gy is the sole's row against the bottom (0) for SE, where forward is down-right; NE (forward
-// up-right) takes -3 - gy. Walking, the far foot treads a row higher (it is a step further
-// back across the floor), so it shows past the near leg when they cross. The planted foot moves 6 px across and 3 up a step: at 100 ms a
-// frame the actor travels 15 px/s across and 7.5 px/s down (or up) the screen.
+// 8 frames x 100 ms: contact, down, passing, up, for each foot. The near foot: contact in front (0),
+// planted and sliding back along the floor's 2:1 line (1-4), swinging forward lifted (5-7); the far foot
+// the same, 4 frames later, a row higher (a step further back across the floor). gy is the sole's row
+// against the bottom (0) for SE, where forward is down-right; NE (forward up-right) takes -4 - gy.
 const FOOT = [
-  { dx: 3, gy: 0, lift: 0 }, { dx: 2, gy: -1, lift: 0 }, { dx: 0, gy: -1, lift: 0 }, { dx: -2, gy: -2, lift: 0 },
-  { dx: -3, gy: -3, lift: 0 }, { dx: -1, gy: -2, lift: 1 }, { dx: 1, gy: -1, lift: 2 }, { dx: 2, gy: 0, lift: 1 },
+  { dx: 4, gy: 0, lift: 0 }, { dx: 2, gy: -1, lift: 0 }, { dx: 0, gy: -2, lift: 0 }, { dx: -2, gy: -3, lift: 0 },
+  { dx: -4, gy: -4, lift: 0 }, { dx: -2, gy: -3, lift: 2 }, { dx: 0, gy: -2, lift: 3 }, { dx: 2, gy: -1, lift: 1 },
 ]
-const BOB = [0, 1, 0, 0, 0, 1, 0, 0]                // lowest just after each contact
-const ARM = [-1, -1, 0, 1, 1, 1, 0, -1]             // the near hand: back while the near foot leads
-const BAG = [0, 0, 1, 1, 0, 0, -1, -1]              // the satchel swings a pixel, late
-// Where the legs cross (SE: the far foot behind, NE: the far foot ahead) the far foot reaches 2-3 px
-// further, so its heel or toe still shows past the near leg.
-const FAR_REACH = { se: { 2: -1, 3: -3, 4: -3 }, ne: { 7: 3, 0: 3, 1: 2, 2: 1 } }
+const BOB = [1, 2, 1, 0, 1, 2, 1, 0]             // lowest just after each contact, highest passing
+const ARM = [-1, -1, -1, 0, 1, 1, 1, 0]          // the near forearm: back while the near foot leads
+const HAND = [-1, -2, -1, 0, 1, 2, 1, 0]         // the near hand, a pixel further at the extremes
+const BAG = [0, 0, 1, 1, 0, 0, -1, -1]           // the satchel swings a pixel, late
+// Where the legs cross (SE: the far foot behind, NE: the far foot ahead) the far foot reaches further, so
+// its boot still shows past the near leg; it grows by a pixel a frame, so the foot slides evenly
+const FAR_REACH = { se: [1, 0, -1, -2, -3, -2, -1, 0], ne: [3, 2, 1, 0, -1, 0, 1, 2] }
 const foot = (view, i, far) => {
-  const j = (i + 8) % 8, f = FOOT[j], gy = (view === "se" ? f.gy : -3 - f.gy) - (far ? 1 : 0)
-  return { ...f, dx: f.dx + (far ? FAR_REACH[view][j] ?? 0 : 0), gy }
+  const j = (i + 8) % 8, f = FOOT[j], gy = (view === "se" ? f.gy : -4 - f.gy) - (far ? 1 : 0)
+  return { ...f, dx: f.dx + (far ? FAR_REACH[view][j] : 0), gy }
+}
+const walkPose = (view, i, hood) => ({
+  hood, bob: BOB[i], bagBob: BOB[(i + 7) % 8], near: ARM[i], nearHand: HAND[i], far: -ARM[i], farHand: -HAND[i],
+  bag: BAG[i], feet: { near: foot(view, i), far: foot(view, i + 4, true) },
+})
+
+// idle: a slow breath (the body settles a pixel), a blink in SE; outside, rain gathering on the hood's
+// brim and falling
+const DRIP = {
+  se: [null, [[17, 3, "H"]], [[18, 6, "x"], [18, 7, "H"]], null],
+  ne: [null, [[16, 2, "H"]], [[18, 5, "x"], [18, 6, "H"]], null],
 }
 
-for (const view of ["se", "ne"]) {
-  anim(`juno_walk_${view}`, { w: IW, h: IH, frames: 8, fps: 10, outline: "k", pivot: "bottom" }, (c) => {
-    const i = c.frame
-    juno(c, view, { bob: BOB[i], near: ARM[i], far: -ARM[i], bag: BAG[i], feet: { near: foot(view, i), far: foot(view, i + 4, true) } })
-  })
+for (const view of ["se", "ne"]) for (const hood of [true, false]) {
+  const name = (what) => `juno_${hood ? "" : "in_"}${what}_${view}`
+  const opts = (more) => ({ w: IW, h: IH, outline: "k", pivot: "bottom", ...more })
 
-  // idle: a slow breath (the body settles a pixel), and rain gathering on the hood's brim, falling
-  const DRIP = view === "se"
-    ? [null, [[13, 4, "H"]], [[14, 7, "x"], [14, 8, "H"]], null]
-    : [null, [[12, 3, "H"]], [[14, 6, "x"], [14, 7, "H"]], null]
-  anim(`juno_idle_${view}`, { w: IW, h: IH, frames: 4, ms: [800, 500, 100, 900], outline: "k", pivot: "bottom" },
-    (c) => juno(c, view, { bob: c.frame >= 2 ? 1 : 0 }),
-    layer("drip", { outline: false }, (c) => { for (const [x, y, k] of DRIP[c.frame] ?? []) c.px(x + OX, y + OY, k) }))
+  anim(name("walk"), opts({ frames: 8, fps: 10 }), (c) => juno(c, view, walkPose(view, c.frame, hood)))
 
-  anim(`juno_talk_${view}`, { w: IW, h: IH, frames: 2, ms: [200, 200], outline: "k", pivot: "bottom" },
-    (c) => juno(c, view, { talk: c.frame === 1 }))
+  const idle = [
+    (c) => juno(c, view, { hood }),
+    (c) => juno(c, view, { hood }),
+    (c) => juno(c, view, { hood, bob: 1, blink: true }),
+    (c) => juno(c, view, { hood, bob: 1 }),
+  ]
+  const items = [(c) => idle[c.frame](c)]
+  if (hood) items.push(layer("drip", { outline: false }, (c) => { for (const [x, y, k] of DRIP[view][c.frame] ?? []) c.px(x, y, k) }))
+  anim(name("idle"), opts({ frames: 4, ms: MS(900, 600, 120, 1100) }), ...items)
+
+  anim(name("talk"), opts({ frames: 2, ms: MS(200, 200) }),
+    (c) => juno(c, view, { hood, talk: c.frame === 1, nod: view === "ne" ? c.frame : 0 }))
 }
 
 // ================================================================ feed mode
+// (unchanged from juno.px.js)
 // How a ceiling or corner camera sees her: from about 45 degrees above and behind (as in
 // art/mockups/mock_e_cctv.px.js), facing up-right; the engine mirrors it for up-left. Only the
 // phosphor ramp: from here on the digit keys are its steps (the street sprites above keep theirs).
@@ -330,3 +456,5 @@ anim("juno_feed_walk", { w: FW, h: FH, frames: 6, fps: 10, outline: "1", pivot: 
   const i = c.frame, f = (j) => { const q = FEED_FOOT[j % 6]; return { dx: q.dx, lift: q.lift, y: FH - 2 + q.gy } }
   junoFeed(c, { bob: FEED_BOB[i], bag: FEED_BAG[i], feet: { near: f(i), far: f(i + 3) } })
 })
+
+})()

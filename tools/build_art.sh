@@ -10,7 +10,9 @@
 #                                         and the street behind it, art/ui/title_bg.px.js -> assets/title.js)
 #        sh tools/build_art.sh cams     (the feed cameras: art/cams/*.px.js -> assets/cams.js; review_* stay out)
 #        sh tools/build_art.sh room flat (a street-mode room: art/rooms/flat.px.js -> assets/room_flat.js, its
-#                                         flat_* assets only; art/rooms/flat_review.px.js is not built)
+#                                         flat_* assets only; art/rooms/flat_review.px.js is not built; a room
+#                                         baked from a map, art/rooms/flat.map.js, prints its measured layout,
+#                                         written to game/rooms/flat.layout.js by tools/iso-layout.mjs)
 #        sh tools/build_art.sh rooms    (every room in art/rooms/, *_review.px.js left out)
 # The raw pxl output goes to build/art/ (not checked in); assets/*.js are checked in, so the game
 # runs without Node.
@@ -28,7 +30,7 @@ test_art() {
 
 characters() {
     rm -rf build/art/characters
-    $PXL build art/characters/juno.px.js --out build/art/characters --no-preview | tail -n 1
+    $PXL build art/characters/juno.px.js --out build/art/characters --no-preview | tail -n 1    # 50 px (H1c)
     $PXL build art/characters/feed_people.px.js --out build/art/characters --no-preview | tail -n 1
     # build-atlas's --only matches exact names or a trailing *, so the feed people go by prefix
     $ATLAS build/art/characters assets/characters.js --only "juno_*,kessler_*,varga_*,commuter_*,yuen_*"
@@ -61,13 +63,17 @@ room() {
     id="$1"
     if [ -z "$id" ] || [ ! -f "art/rooms/$id.px.js" ]; then echo "usage: sh tools/build_art.sh room <id> (art/rooms/<id>.px.js)"; exit 2; fi
     rm -rf "build/art/rooms/$id"
-    $PXL build "art/rooms/$id.px.js" --out "build/art/rooms/$id" --no-preview | tail -n 1
+    $PXL build "art/rooms/$id.px.js" --out "build/art/rooms/$id" --no-preview > "build/art/rooms/$id.log"
+    tail -n 1 "build/art/rooms/$id.log"
+    if grep -q "^ISO_LAYOUT " "build/art/rooms/$id.log"; then
+        node tools/iso-layout.mjs "$id" --stdin --out "game/rooms/$id.layout.js" < "build/art/rooms/$id.log"
+    fi
     $ATLAS "build/art/rooms/$id" "assets/room_$id.js" --only "${id}_*"
 }
 
 rooms() {
     for f in art/rooms/*.px.js; do
-        case "$f" in *_review.px.js) continue ;; esac
+        case "$f" in *_review.px.js|*.map.js) continue ;; esac
         room "$(basename "$f" .px.js)"
     done
 }

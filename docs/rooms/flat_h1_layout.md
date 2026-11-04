@@ -1,3 +1,5 @@
+> Superseded (H1c, 2026-11-04): the old flat at 18 px/m. The flat is now baked from its map (`art/rooms/flat.map.js`); its numbers are measured into `game/rooms/flat.layout.js` by `sh tools/build_art.sh room flat`.
+
 # flat layout: Juno's flat, Kessel Block, 14th floor
 
 Art: `art/rooms/flat.px.js` → `flat_bg` and the prop sprites, packed into `assets/room_flat.js`

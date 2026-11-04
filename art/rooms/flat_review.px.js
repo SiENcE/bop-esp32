@@ -1,59 +1,50 @@
-// Review images for Juno's flat (not game art: the atlas takes flat_* only).
-//   review_flat         the room as the game draws it: flat_bg, the props at their `at`, sorted by
-//                       baseline, Juno (juno_idle_se) by the deck for scale
-//   review_flat_layout  FLAT.layout over the dimmed picture: walk area (cyan), holes (red), spots
-//                       (yellow), hotspot rects (cyan corners), prop front lines (magenta)
-// Build: PXL build art/rooms/flat_review.px.js --only review_flat --share 3 --out build/review
-// (it prints FLAT.layout as JSON: docs/rooms/flat_layout.md is written from it)
+// Review images for the kit-baked flat (not game art).
+//   review_flat_kit       the room as the engine draws it: flat_bg, the props at their `at`, sorted back to
+//                         front by baseline, a Juno-sized block (1.68 m = 50 px, yellow) at the start spot
+//   review_flat_kit_vs    the old flat (art/rooms/flat.px.js, its picture) beside the new one
+// Build: PXL build art/rooms/flat_kit_review.px.js --only review_flat_kit --share 3 --out build/review
 include("flat.px.js", { palette: true })
 include("../characters/juno.px.js")
 
-console.log("FLAT_LAYOUT " + JSON.stringify(FLAT.layout))
+const RVK = (() => {
+  const L = FLAT_KIT.layout, map = FLAT_KIT.map, P = FLAT_KIT.P
+  // the engine's order (lib/cutaway/room.js): props by baseline; someone right after the last prop whose
+  // front line they stand at or below
+  const frontY = (line, x) => {
+    const pts = []; for (let i = 0; i < line.length; i += 2) pts.push([line[i], line[i + 1]])
+    pts.sort((a, b) => a[0] - b[0])
+    if (x <= pts[0][0]) return pts[0][1]
+    for (let i = 1; i < pts.length; i++) if (x <= pts[i][0]) { const [x0, y0] = pts[i - 1], [x1, y1] = pts[i]; return y0 + ((y1 - y0) * (x - x0)) / (x1 - x0) }
+    return pts[pts.length - 1][1]
+  }
+  // Juno as a block: 0.36 x 0.26 m, 1.68 m tall, her yellow (lit side, shade side, top)
+  const [ju, jv] = map.spots.start
+  const juno = (c) => {
+    const G = ISOKIT.geometry(map), B = ISOKIT.buffer(320, 180), pen = ISOKIT.makePen(G, B, 0, [ju, jv, 1])
+    pen.box(ju - 0.18, jv - 0.13, 0, 0.36, 0.26, 1.68, () => "Y", () => "j", (a, e, o) => (a === 0 ? "Y" : "y"))
+    for (let y = 0; y < 180; y++) for (let x = 0; x < 320; x++) { const k = B.k[y * 320 + x]; if (k) c.px(x, y, k) }
+  }
+  const feet = P(ju, jv)
+  function draw(c, who = juno) {
+    const t = (c.frame ?? 0) * 100
+    const props = Object.entries(FLAT_KIT.props).map(([id, d]) => [id, d, L.props[id]]).sort((a, b) => a[2].baseline - b[2].baseline)
+    let after = -1
+    props.forEach(([, , l], i) => { if (feet[1] >= frontY(l.front, feet[0])) after = i })
+    if (after < 0) who(c)
+    props.forEach(([id, d], i) => { c.stamp(d.name, d.at[0], d.at[1], { t }); if (i === after) who(c) })
+  }
+  // the new Juno (art/characters/juno50.px.js), hood down indoors, at the start spot
+  const real = (c) => c.stamp("juno_in_idle_se", feet[0], feet[1], { t: (c.frame ?? 0) * 100 })
+  return { draw, real }
+})()
 
-const RV = { JUNO: FLAT.P(30, 19) }
-// the engine's order (lib/cutaway/room.js): props by baseline; Juno right after the last prop she
-// stands in front of (her feet at or below its front line where she stands)
-const frontY = (line, x) => {
-  const pts = []; for (let i = 0; i < line.length; i += 2) pts.push([line[i], line[i + 1]])
-  pts.sort((a, b) => a[0] - b[0])
-  if (x <= pts[0][0]) return pts[0][1]
-  for (let i = 1; i < pts.length; i++) if (x <= pts[i][0]) { const [x0, y0] = pts[i - 1], [x1, y1] = pts[i]; return y0 + ((y1 - y0) * (x - x0)) / (x1 - x0) }
-  return pts[pts.length - 1][1]
-}
-function rvProps(c, juno) {
-  const L = FLAT.layout, t = (c.frame ?? 0) * 100
-  const props = Object.entries(L.props).sort((a, b) => a[1].baseline - b[1].baseline)
-  let after = -1
-  if (juno) props.forEach(([, d], i) => { if (juno[1] >= frontY(d.front, juno[0])) after = i })
-  if (juno && after < 0) c.stamp("juno_idle_se", juno[0], juno[1], { t: 0 })
-  props.forEach(([name, d], i) => {
-    c.stamp(name, d.at[0], d.at[1], { t })
-    if (juno && i === after) c.stamp("juno_idle_se", juno[0], juno[1], { t: 0 })
-  })
-}
-
-scene("review_flat", { w: 320, h: 180, bg: "k", frames: 12, fps: 10 },
+scene("review_flat_kit", { w: 320, h: 180, bg: "k", frames: 12, fps: 10 },
   (c) => c.stamp("flat_bg", 0, 0, { t: (c.frame ?? 0) * 100 }),
-  (c) => rvProps(c, RV.JUNO),
+  (c) => RVK.draw(c),
 )
 
-scene("review_flat_layout", { w: 320, h: 180, bg: "k" },
-  (c) => c.stamp("flat_bg", 0, 0),
-  (c) => rvProps(c, null),
-  layer("dim", { opacity: 0.55 }, (c) => c.rect(0, 0, 320, 180, "k")),
-  (c) => {
-    const L = FLAT.layout
-    const ring = (pts, k) => { for (let i = 0; i < pts.length; i += 2) { const j = (i + 2) % pts.length; c.line(pts[i], pts[i + 1], pts[j], pts[j + 1], k) } }
-    L.walk.forEach((w) => ring(w, "v"))
-    L.holes.forEach((w) => ring(w, "q"))
-    for (const d of Object.values(L.props)) for (let i = 0; i + 3 < d.front.length; i += 2) c.line(d.front[i], d.front[i + 1], d.front[i + 2], d.front[i + 3], "m")
-    for (const [x, y, w, h] of Object.values(L.hotspots)) {
-      for (const [cx, cy, dx, dy] of [[x, y, 1, 1], [x + w - 1, y, -1, 1], [x, y + h - 1, 1, -1], [x + w - 1, y + h - 1, -1, -1]]) {
-        c.hline(Math.min(cx, cx + dx * 2), cy, 3, "C"); c.vline(cx, Math.min(cy, cy + dy * 2), 3, "C")
-      }
-    }
-    for (const q of Object.values(L.polys)) ring(q, "C")
-    for (const [x, y] of Object.values(L.spots)) { c.hline(x - 1, y, 3, "Y"); c.vline(x, y - 1, 3, "Y") }
-    for (const l of L.lamps) { c.ellipse(l.at[0], l.at[1], 1, 1, "W") }
-  },
+// the room with the new Juno in it
+scene("review_flat_kit_juno", { w: 320, h: 180, bg: "k", frames: 12, fps: 10 },
+  (c) => c.stamp("flat_bg", 0, 0, { t: (c.frame ?? 0) * 100 }),
+  (c) => RVK.draw(c, RVK.real),
 )

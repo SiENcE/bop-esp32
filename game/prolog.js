@@ -118,13 +118,8 @@ Cutaway.room("flat", {
   name: "Junos Wohnung", background: "flat_bg",
   ambience: ["rain_glass", "city_far", "neon_buzz", "fridge_hum"], music: { theme: "juno", intensity: 0.4 },
   walk: AF.walk, holes: AF.holes, props: AF.props,
-  light: { ambient: 0.38, color: "#8a9cff", lamps: [
-    // the warm LED strip high on the left wall, over the bed (its two ends); it keeps Juno warm at the deck
-    { id: "band", at: [116, 45], r: 150, power: 1.3, color: "#ffd58a", flicker: 0.02 },
-    { id: "band2", at: [76, 65], r: 110, power: 1.15, color: "#ffd58a", flicker: 0.02 },
-    { id: "deck", at: [214, 70], r: 64, power: 1.0, color: "#62def0", flicker: 0.08 },
-    { id: "neon", at: [288, 95], r: 72, power: 0.9, color: "#ff4fd3", flicker: 0.12 },
-  ] },
+  // the lamps of the map (the same that baked the art's light): they tint Juno where she stands
+  light: { ambient: 0.38, color: "#8a9cff", lamps: AF.lamps.map((/** @type {any} */ { bake, ...lamp }) => lamp) },
   hotspots: {
     bed: { name: "Bett", poly: AF.bedPoly, walkTo: AF.bed, face: "nw",
       look: "Eine Matratze auf einer Palette. Schlafen kann ich später. Oder nie." },

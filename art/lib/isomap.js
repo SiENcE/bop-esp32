@@ -127,11 +127,19 @@ const ISOMAP = (function () {
         poly: [P(u0, v0, p.h), P(u0 + du, v0, p.h), P(u0 + du, v0), P(u0 + du, v0 + dv), P(u0, v0 + dv), P(u0, v0 + dv, p.h)].flat(),
       }
     }
+    // each opening's screen rect (its corners on the wall, 1 px round): a hotspot's shape
+    const openings = {}
+    for (const o of map.openings ?? []) {
+      const w = map.walls[o.wall], alongU = w.from[1] === w.to[1]
+      const pt = (s, h) => (alongU ? P(w.from[0] + s, w.from[1], h) : P(w.from[0], w.from[1] + s, h))
+      const pts = [pt(o.from, o.h[0]), pt(o.to, o.h[0]), pt(o.from, o.h[1]), pt(o.to, o.h[1])], xs = pts.map((q) => q[0]), ys = pts.map((q) => q[1])
+      openings[o.id] = [Math.min(...xs) - 1, Math.min(...ys) - 1, Math.max(...xs) - Math.min(...xs) + 3, Math.max(...ys) - Math.min(...ys) + 3]
+    }
     const spots = {}, face = {}
     for (const [k, [u, v, f]] of Object.entries(map.spots ?? {})) { spots[k] = P(u, v); if (f) face[k] = f }
     const lamps = (map.lights ?? []).map((l) => ({ ...l, at: P(...l.at) }))
     return { walk: loops.filter((l) => l.outer).map((l) => clip(l.pts)).filter((l) => l.length >= 6),
-      holes: loops.filter((l) => !l.outer).map((l) => clip(l.pts)).filter((l) => l.length >= 6), props, spots, face, lamps }
+      holes: loops.filter((l) => !l.outer).map((l) => clip(l.pts)).filter((l) => l.length >= 6), props, openings, spots, face, lamps }
   }
 
   return { UPM, VPM, projector, walkLoops, layout }

@@ -12,7 +12,11 @@ Cutaway.actor("juno", {
     walk: { se: "juno_walk_se", ne: "juno_walk_ne" },
     talk: { se: "juno_talk_se", ne: "juno_talk_ne" },
   },
-  speed: [16, 8],                                         // 2:1 along the iso lines; the walk's stride doesn't skate
+  // indoors the hood is down (style guide §6)
+  poses: [{ if: "at:juno=flat",
+    idle: { se: "juno_in_idle_se", ne: "juno_in_idle_ne" }, walk: { se: "juno_in_walk_se", ne: "juno_in_walk_ne" },
+    talk: { se: "juno_in_talk_se", ne: "juno_in_talk_ne" } }],
+  speed: [20, 10],                                        // 2:1 along the iso lines; the walk's stride (8 px a step) doesn't skate
   voice: { pitch: 62, wave: "triangle", syllable: 70 },
 });
 
