@@ -98,10 +98,10 @@ pal({
   const JUNO_FRONT = [[30, -4], [34, -2], [38, -1], [42, 0], [44, 1], [46, 1], [48, -1], [50, 0], [53, 2], [56, 4], [58, 5], [59, 5], [60, 4], [61, 2], [62, 1], [64, 1], [65, 2], [66, 2], [67, 1], [68, 0], [69, 1], [70, 1], [71, 0], [73, -2], [75, -1], [78, 0], [80, -1], [82, -3], [83, -6], [84, -10]]
   const JUNO_PLANE = [[30, -4], [38, -1], [44, 1], [56, 1], [70, 0], [78, 0], [82, -3], [84, -10]]
   const JUNO_LIT = [[30, 9], [44, 10], [50, 10], [56, 13], [60, 14], [64, 12], [70, 10], [76, 11], [84, 7]]
-  const SLICKER = [-9, 34, -7, 28, -1, 21, 8, 14, 21, 9, 37, 8, 51, 12, 62, 21, 69, 34, 73, 50, 75, 66, 78, 80, 92, 88, 112, 96, 126, 106, 133, 117, -40, 117, -40, 100,
+  const SLICKER = [-9, 34, -7, 28, -1, 21, 8, 14, 21, 9, 31, 7, 45, 11, 57, 20, 66, 33, 72, 50, 71, 62, 68, 72, 64, 80, 72, 85, 81, 88, 99, 94, 117, 100, 126, 107, 130, 117, -40, 117, -40, 100,
     -14, 96, -6, 92, 1, 90, 11, 85, 17, 77, 20, 67, 21, 57, 20, 48, 15, 41, 7, 37, 1, 35].map((v, i) => (i % 2 ? v : v + JF))
   const HEM = [[34, -2], [35, 1], [37, 7], [41, 15], [48, 20], [57, 21], [67, 20], [77, 17], [85, 11], [90, 1], [92, -6], [96, -14]]
-  const DRAPE = [[4, 93], [20, 95], [40, 94], [58, 90], [70, 86], [78, 81]]   // where the hood's drape lies on the shoulders (x from JF -> y)
+  const DRAPE = [[4, 93], [20, 95], [36, 93], [50, 89], [59, 84], [64, 80]]   // where the hood's drape lies on the shoulders (x from JF -> y)
 
   function paint(c, o = {}) {
     const B = new Array(W * H).fill(null), FIG = new Uint8Array(W * H)
@@ -138,7 +138,12 @@ pal({
       const skull = (X, y) => ((X - (TF - 28)) / 31) ** 2 + ((y - 50) / 33) ** 2 <= 1 && (X > TF - 36 || y < 66)
       const hash = (a, b = 0) => { let h = (a * 374761393 + b * 668265263) | 0; h = (h ^ (h >>> 13)) * 1274126177; return ((h ^ (h >>> 16)) >>> 0) / 4294967296 }
       const crown = (X, y) => Math.atan2(y - 20, X - (TF - 34))       // the hair grows out from the crown
-      const hairE = (X, y) => ((X - (TF - 28)) / 32.5) ** 2 + ((y - 49) / 34.5) ** 2 <= 1 + (hash(Math.floor(crown(X, y) * 9)) > 0.6 ? 0.05 : 0)
+      // the hair's outline, on the screen: a round dome about (122, 50), r 38 over the back and top, narrower
+      // toward the forehead; a few tufts break it
+      const hairE = (X, y) => {
+        const dx = X + teoShift(y) - 122, dy = y - 50
+        return (dx / (dx < 0 ? 38 : 29.5)) ** 2 + (dy / 38) ** 2 <= 1 + (hash(Math.floor(crown(X, y) * 9)) > 0.6 ? 0.04 : 0)
+      }
       const chinLine = (X) => 87 - (TF - 10 - X) * (15 / 24)
       const face = (X, y) => y >= 28 && X <= front(y) && X >= TF - 36 && y <= chinLine(X)
       const ear = (X, y) => ((X - (TF - 30)) / 5) ** 2 + ((y - 54) / 9) ** 2 <= 1
@@ -175,8 +180,8 @@ pal({
       cup(TF - 28, 96, true)
 
       // the head (X = the column before the lean)
-      const hairV = dome((x, y) => hair(x - teoShift(y), y), 70, 10, 158, 80, 6)
-      fill(70, 12, 158, 90, (x, y) => {
+      const hairV = dome((x, y) => hair(x - teoShift(y), y), 70, 6, 158, 80, 6)
+      fill(70, 8, 158, 90, (x, y) => {
         const X = x - teoShift(y)
         if (hair(X, y)) {
           const l = hairV.light(x, y, LT), [nx, ny] = hairV.normal(x, y)
