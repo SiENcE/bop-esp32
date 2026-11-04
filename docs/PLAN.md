@@ -1,11 +1,12 @@
 # Plan: Glass Sister on Cutaway.js
 
-Status (2026-11-04): **H0, H1, H1c, H2, H2c and H2b done.** The prologue plays through steps 0a–12 in the
-new scale (the flat baked from its map, Juno at 50 px), on the deck as a computer with EVI. Next: **H3**,
-the rest of the prologue (`kessel_14`, `kessel_lobby`, `kowalski`, Bao, "JUNO."). `kessel_14` is decided as an
-iso landing (its map and block sketch: `art/rooms/kessel_14.map.js`, `art/test/kessel14_blocks.px.js`); its kit
-is next. The engine is at
-Cutaway.js commit 9db22f4 (`lib/cutaway/VERSION.txt`).
+Status (2026-11-04): **H0, H1, H1c, H2, H2c and H2b done; H3 under way.** The prologue plays through steps
+0a–15 in the new scale: the flat, the deck with EVI, the feeds (cam04's people at their true size), the 14th
+floor's landing `kessel_14` (Frau Haldane asleep through her open door, the note war, Motte on his bench
+with his first dialogue, the look down the stairwell: the first top-down view, `look_shaft`) and the lobby
+`kessel_lobby` (the rent notice: `rent_notice`). Kowalski Street is approved as a map and blocks
+(`art/rooms/kowalski.map.js`, `docs/rooms/kowalski_blocks_x2.png`); its kit, Bao and "JUNO." are next.
+The engine is at Cutaway.js commit 9db22f4 (`lib/cutaway/VERSION.txt`).
 
 What was added on 2026-11-04 (in order):
 - every text through i18n (`Halcyon.t`, the engine's `i18n.declare`); a Chinese layout test
