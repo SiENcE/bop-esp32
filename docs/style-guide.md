@@ -191,7 +191,9 @@ A location takes one key hue from this set and plays it against the night blues.
   - **face and hair:** short black hair, a thin cyan implant line along her left cheekbone (it
     glows when she is jacked in).
   - **face at 50 px** (decided 2026-11-04, variant B of `docs/characters/juno50_faces_x3.png`): eyes two
-    pixels tall, a small mouth, the fringe showing under the hood; cute, but not a cartoon.
+    pixels tall, a small mouth, the fringe showing under the hood; cute, but not a cartoon. The street
+    sprites leave the implant out (decided 2026-11-04): the engine mirrors them for SW and NW, so a
+    pixel on one cheek jumped to the other; it shows where she is drawn unmirrored (the title, close-ups).
 - **Faces are 2–4 px in the world.** Feeling comes from posture, from what people do and from the
   words.
   - **Close-up portraits (to try):** for important conversations, a bust portrait (about 64x64,

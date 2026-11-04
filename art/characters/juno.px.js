@@ -6,7 +6,7 @@
 //   juno_idle_ne / juno_walk_ne / juno_talk_ne            back three-quarter, facing up-right, hood up
 //   juno_in_idle_se ... juno_in_talk_ne                   the same indoors, the hood down
 // The face is the approved one, "B AUGEN" of art/test/juno50_faces.px.js (eyes two rows tall, a small
-// mouth, the fringe under the hood, the implant on her left cheekbone); the proportions are those of
+// mouth, the fringe under the hood; no implant: mirrored for SW/NW it would jump cheeks); the proportions are those of
 // art/test/juno50_blocks.px.js (the head about 1/6 of her, the slicker to mid-thigh). Shaded as the
 // 32 px sprite: light from the upper left, Y the lit side, y the slicker, j the shade, the seams and the
 // far edge; the strap from her right shoulder to the satchel on her left hip.
@@ -31,7 +31,6 @@ pal({
   s: "#93583f", S: "#d79676", m: "#7a3a34",                           // skin, the mouth
   h: "#1b1f2e", u: "#2e3550",                                         // short black hair, its light
   g: "#565e70", G: "#8e96a8",                                         // satchel grey
-  v: "#62def0",                                                       // the implant line
   x: "#6c809a", H: "#b9c6d8",                                         // a raindrop
 })
 
@@ -43,7 +42,7 @@ const MS = (...a) => a           // frame durations
 
 // ---------------------------------------------------------------- heads (13 wide, at x 6)
 // SE, hood up: face B. The fringe under the hood's rim, the near eye and the far eye (2 rows each, 2 px
-// of skin between), the implant under the far eye on her left cheekbone, the mouth in the skin's shade.
+// of skin between), the mouth in the skin's shade.
 sprite("_se_hood", `
   ....YYYYY....
   ..YYYYYYYYy..
@@ -52,7 +51,7 @@ sprite("_se_hood", `
   YYYYYjhuhuhj.
   YYYYjhhSShSS.
   yYYYjhSkSSkS.
-  yYYYjSSkSSkv.
+  yYYYjSSkSSkS.
   yyYYjsSSSSSS.
   jyyyjjsSSmS..
   .jyyyjjsss...
@@ -67,11 +66,11 @@ sprite("_se_hair", `
   .hhuhhhhhuhuh
   hhhhhhhSShSS.
   .hhhhhhSkSSkS
-  .hhhhSSSkSSkv
+  .hhhhSSSkSSkS
   ..hhhssSSSSSS
   ...hhsssSSmS.
   ......sssss..`)
-// NE, hood up: the hood from behind, its seam, a sliver of cheek and the implant at its edge
+// NE, hood up: the hood from behind, its seam, a sliver of cheek at its edge
 sprite("_ne_hood", `
   ....yYYYY....
   ..yYYjYYYYYy.
@@ -80,7 +79,7 @@ sprite("_ne_hood", `
   yYYYjYYYyyyj.
   yYYYjYYyyyjS.
   yyYYjyyyyyjS.
-  yyYyjyyyyjjv.
+  yyYyjyyyyjjS.
   yyyyjyyyyjjS.
   jyyyjyyyyjs..
   .jyyjyyyjj...
@@ -94,7 +93,7 @@ sprite("_ne_hair", `
   .hhhhhhhhhuh.
   hhhhhhhhhhhS.
   hhhhhhhhhhhS.
-  hhhhhhhhhhsv.
+  hhhhhhhhhhsS.
   .hhhhhhhhhsS.
   ..hhhhhhhs...
   ...shhhs.....`)
