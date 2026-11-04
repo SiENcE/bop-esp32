@@ -1,6 +1,6 @@
 // The menu screen's logo (style guide §8a "Title screen"): the same title block as on the title screen
-// (art/ui/letters.px.js titleBlock: GLASS SISTER as outline letters tagged by the implant's brackets, a
-// camera readout under it). No plate behind it, so the street stays whole: a thin ink edge round every
+// (art/ui/letters.px.js titleBlock: GLASS SISTER as outline letters between two magenta rules, the place
+// spaced out under it). No plate behind it, so the street stays whole: a thin ink edge round every
 // stroke keeps it readable over the neon.
 //
 //   title_logo   an animation: still, now and then the letters split into magenta and cyan for a moment

@@ -63,35 +63,25 @@ function hudText(put, x, y, text, key) {
 const hudWidth = (text) => [...text].reduce((w, ch) => w + (HUD3[ch] ?? HUD3["?"]).split(" ")[0].length + 1, 0) - 1
 
 /**
- * The title block, the same on the title screen and the menu screen: GLASS SISTER as outline letters at
- * 3x in one pale colour, tagged by the implant's corner brackets (as Juno tags a face in a feed); under
- * it a camera readout, a magenta tick and HALCYON // LOWER NINTH // 2091 on the left, a red REC dot on
- * the right. `w` and `h` its size from its top left. Keys: "V" the letters, "v" the brackets and the
- * readout, "m" the tick and the glitch's magenta, "q" the REC dot.
+ * The title block, the same on the title screen and the menu screen: a magenta rule, GLASS SISTER as
+ * outline letters at 3x in one pale colour (no gradient, no shadow), a magenta rule, and the place spaced
+ * out under it: HALCYON . LOWER NINTH . 2091. `w` and `h` its size from its top left. Keys: "V" the
+ * letters, "m" the rules and the glitch's magenta, "v" the place and the glitch's cyan.
  */
 function titleBlock() {
-  const T = titleLetters("GLASS SISTER", 3, 3), B = 6
-  const w = T.w + 2 * B, h = T.h + 2 * B - 2 + 10
+  const T = titleLetters("GLASS SISTER", 3, 3), SIDE = 10
+  const place = "HALCYON . LOWER NINTH . 2091", STEP = 6, pw = place.length * STEP - 3
+  const w = T.w + 2 * SIDE, h = T.h + 21
   return {
     w, h,
     /** into a buffer: put(x, y, key); o.split: the glitch's split in px */
     draw(put, x0, y0, o = {}) {
-      const tx = x0 + B, ty = y0 + B
-      // the brackets round the letters
-      const bx0 = x0, by0 = y0, bx1 = x0 + w - 1, by1 = ty + T.h + B - 1, arm = 8
-      for (let i = 0; i < arm; i++) {
-        put(bx0 + i, by0, "v"); put(bx0, by0 + i, "v"); put(bx1 - i, by0, "v"); put(bx1, by0 + i, "v")
-        put(bx0 + i, by1, "v"); put(bx0, by1 - i, "v"); put(bx1 - i, by1, "v"); put(bx1, by1 - i, "v")
-      }
+      const tx = x0 + SIDE, ty = y0 + 6
+      for (let x = x0; x < x0 + w; x++) { put(x, y0, "m"); put(x, ty + T.h + 5, "m") }
       if (o.split) for (let y = 0; y < T.h; y++) for (let x = 0; x < T.w; x++) if (T.stroke(x, y)) { put(tx + x - o.split, ty + y, "m"); put(tx + x + o.split, ty + y, "v") }
       for (let y = 0; y < T.h; y++) for (let x = 0; x < T.w; x++) if (T.stroke(x, y)) put(tx + x, ty + y, "V")
-      // the readout under it
-      const ry = by1 + 4
-      for (let j = 0; j < 5; j++) { put(bx0 + 1, ry + j, "m"); put(bx0 + 2, ry + j, "m") }
-      hudText(put, bx0 + 6, ry, "HALCYON // LOWER NINTH // 2091", "v")
-      const rec = "REC", rw = hudWidth(rec)
-      hudText(put, bx1 - rw, ry, rec, "v")
-      for (let j = 1; j < 4; j++) for (let i = 0; i < 3; i++) put(bx1 - rw - 6 + i, ry + j, "q")
+      const px0 = x0 + Math.round((w - pw) / 2)
+      ;[...place].forEach((ch, i) => { if (ch !== " ") hudText(put, px0 + i * STEP, ty + T.h + 10, ch, "v") })
     },
   }
 }
