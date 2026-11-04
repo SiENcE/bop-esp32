@@ -14,7 +14,7 @@ Where we are (everything is committed; the engine copy is at Cutaway.js e2bc1d6,
   meinem Auge."
 - **The intro "Die letzte Schicht" is half done** (docs/kapitel0-design.md §5 has the table of shots, decided). It is
   the sequence "intro" in game/intro.js, in the game (Cutaway.start({ intro }): by itself on the first start, and
-  "Intro ansehen" in the menu). Done and approved: A1, A2, C, 1, 2, 3, 4. Its shot marks: a1, a2, c, hall, desk,
+  "Intro ansehen" in the menu). Done, with my notes worked in: A1, A2, C, 1, 2, 3, 4. Its shot marks: a1, a2, c, hall, desk,
   announce, out.
   - A1/A2 the float over the lit sea along a dark channel, the camera masts in the water, Halcyon growing ahead
     (game/intro_sea.js, art/intro/float.px.js); C the tower, in through a green window (game/intro_tower.js);
@@ -51,8 +51,8 @@ blocks still show cables). In this order, small steps, a screenshot and my look 
 5. **Sound on the first start:** a browser allows sound only after a click, so the intro's first playing is silent
    until then. The engine's `gate` would solve it, but it shows on every start, a second click beside the splash's
    prompt. Show it only when the intro will play (Cutaway.settings.seen("intro")), or find something better.
-6. Then watch the whole intro for its length and pace (planned ~1.5 min; it has grown well past that). Nobody has
-   checked it in real time except me by hand, so ask me.
+6. Then the whole intro's length and pace: it was planned at ~1.5 min, and by the timings in game/intro.js it takes
+   about that already up to shot 4. You only see stills, so ask me how it feels in real time.
 
 Decided in the last session, keep to it (story §10a, kapitel0-design §5, style guide §6):
 - No sounds in the float and the lift, only music. The hall has its hum; shot 4 is silent.
