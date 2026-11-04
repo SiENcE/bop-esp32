@@ -59,6 +59,13 @@
       { shot: "c" },
       { goto: "intro_c", transition: "dissolve" },
       { float: [0, 1], ms: 10000, ease: "inOut" },
+      // 1: the hall, the camera drifting down over the rows of desks towards the front
+      { shot: "hall" },
+      { goto: "intro_hall", transition: "dissolve" },
+      { camera: [100, 20], ms: 0 },
+      { caption: "2088-04-30  05:45", at: "bl", ms: 4000, wait: false },
+      { camera: [150, 190], ms: 9000, ease: "inOut" },
+      { wait: 1000 },
       { fade: "out", ms: 1200 },
       { music: { stop: true, fade: 1.5 } },
     ],

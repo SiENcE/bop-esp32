@@ -23,6 +23,8 @@ Halcyon.at = {
   kessel_14: fromLayout(Halcyon.layouts.kessel_14),
   // the lobby (art/rooms/kessel_lobby.map.js, game/rooms/kessel_lobby.layout.js)
   kessel_lobby: fromLayout(Halcyon.layouts.kessel_lobby),
+  // the observation hall, the intro's shot 1 (art/rooms/hall.map.js, game/rooms/hall.layout.js)
+  hall: fromLayout(Halcyon.layouts.hall),
   // Kowalski Street (art/rooms/kowalski.map.js, game/rooms/kowalski.layout.js)
   kowalski: {
     ...fromLayout(Halcyon.layouts.kowalski),
