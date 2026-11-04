@@ -35,9 +35,10 @@ characters() {
     $PXL build art/characters/juno.px.js --out build/art/characters --no-preview | tail -n 1    # 50 px (H1c)
     $PXL build art/characters/feed_people.px.js --out build/art/characters --no-preview | tail -n 1
     $PXL build art/characters/motte.px.js --out build/art/characters --no-preview | tail -n 1        # Motte (H3)
+    $PXL build art/characters/bao.px.js --out build/art/characters --no-preview | tail -n 1          # Bao (H3)
     $PXL build art/characters/drone.px.js --out build/art/characters --no-preview | tail -n 1        # the patrol drone (the title)
     # build-atlas's --only matches exact names or a trailing *, so the feed people go by prefix
-    $ATLAS build/art/characters assets/characters.js --only "juno_*,kessler_*,varga_*,commuter_*,yuen_*,motte_*,drone_*"
+    $ATLAS build/art/characters assets/characters.js --only "juno_*,kessler_*,varga_*,commuter_*,yuen_*,motte_*,bao_*,drone_*"
 }
 
 ui() {

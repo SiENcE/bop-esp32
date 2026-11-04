@@ -7,8 +7,9 @@ with his first dialogue, the look down the stairwell: the first top-down view, `
 `kessel_lobby` (the rent notice: `rent_notice`) and out into Kowalski Street, painted and baked from its map
 (`art/kit/kowalski.kit.px.js`, 416 px wide, it scrolls; `docs/rooms/kowalski_x3.png`, `kowalski_right_x3.png`):
 LUCKY STATIC, the half-broken ad screen, the noodle machine with its tired face, Bao's cart and umbrella (see-through
-where it hides someone: the engine's `seeThrough`), the alley shut; the cart ends the test section. Bao is drawn
-as blocks for approval (`docs/characters/bao_blocks_x4.png`, `bao_blocks_room_x3.png`); painting him and "JUNO." are next.
+where it hides someone: the engine's `seeThrough`), the alley shut; the cart ends the test section. Bao is painted
+(head A, `art/characters/bao.px.js`, `docs/characters/bao_game_x3.png`) behind his cart with step 16 ("Wie immer? Ich
+schreib's an.", paying cash with `bao_paid`, eating: `ate_bao`); the menu screen shows the street whole as a still. "JUNO." (step 17) is next.
 The engine is at Cutaway.js commit 9db22f4 (`lib/cutaway/VERSION.txt`).
 
 What was added on 2026-11-04 (in order):

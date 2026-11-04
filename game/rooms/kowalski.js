@@ -48,10 +48,32 @@
         use: "Nicht heute Nacht." },
       bins: { name: "Mülltonne", poly: AW.binsPoly, walkTo: AW.bins, face: "ne",
         look: "Die Tonne ist so voll, dass der Deckel auf einem Sack steht." },
-      cart: { name: "Baos Garküche", poly: AW.cartPoly, walkTo: AW.eat, face: "nw",
-        look: ["Baos Garküche. Der Topf dampft.", "Bao ist gleich wieder da. Bao ist immer gleich wieder da."],
-        use: [{ end: "Ende des Testabschnitts. Bao kommt als Nächstes (H3)." }] },
+      cart: { name: "Baos Garküche", poly: AW.cartPoly, walkTo: AW.eat, face: "ne",
+        look: ["Baos Garküche. Der Topf dampft, seit ich denken kann.", "BAO steht drauf. Für den Fall, dass jemand fragt."],
+        use: [{ if: "!ate_bao", then: [{ dialog: "bao" }], else: ["Die Schale ist leer. Ich bin's nicht mehr."] }] },
     },
     enter: [{ once: ["Draußen. Regen, Neon und Brühe. Die Kowalski-Straße."] }],
+  });
+
+  // Step 16 (kapitel0-design §6.2): "Wie immer? Ich schreib's an." With money Juno may pay cash (bao_paid);
+  // Bao is glad and writes it down all the same. Then she eats under his umbrella (ate_bao).
+  const EAT = [
+    { say: "bao", text: "Kommt sofort." }, { wait: 600 },
+    { say: "bao", text: "Mein Alter sagt, ich salz zu viel. Er isst seit vierzig Jahren hier." },
+    "Und hat er recht?",
+    { say: "bao", text: "Er hat nie recht. Darum ist er mein Alter." },
+    "Heiß. Salzig. Genau richtig.", { set: "ate_bao" },
+    { end: "Ende des Testabschnitts. Als Nächstes: der Werbebildschirm, JUNO. (H3)" },
+  ];
+  Cutaway.dialog("bao", {
+    main: {
+      enter: [{ say: "bao", text: "Juno! Wie immer? Ich schreib's an." }],
+      choices: [
+        { text: "„Wie immer.“", goto: "end", then: EAT },
+        { text: "„Heute zahl ich bar.“", if: "chits>=8", goto: "end", then: [{ inc: "chits", by: -8 }, { set: "bao_paid" },
+          { say: "bao", text: "Bar! Das glaubt mir mein Alter nie." }, { say: "bao", text: "Ich schreib's trotzdem an. Sonst weiß ich ja nicht, dass du da warst." }, ...EAT] },
+        { text: "„Was gibt's heute?“", then: [{ say: "bao", text: "Brühe. Wie gestern. Morgen auch. Darum heißt es ja: wie immer." }], goto: "main" },
+      ],
+    },
   });
 })();

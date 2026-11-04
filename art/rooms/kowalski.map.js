@@ -23,6 +23,8 @@ ISO_MAPS.kowalski = {
     "ssaaaaaaaaaaaa",
     "ssaaaaaaaaaaaa",
   ],
+  // behind the cart, where Bao stands (a notch left where his feet are, as the engine wants him on the floor)
+  nowalk: [[2.35, 1.45, 0.32, 0.5], [2.83, 1.45, 0.32, 0.5]],
   walls: [
     { from: [0, 0], to: [7.0, 0], h: 6.0, kit: "facade_right" },        // 0: the right facade (ad screen)
     { from: [0, 0], to: [0, 6.0], h: 6.0, kit: "facade_left" },         // 1: the left facade (LUCKY STATIC)
