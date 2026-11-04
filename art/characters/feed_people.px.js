@@ -398,46 +398,28 @@ anim("commuter_d_feed_walk", { w: CD.W, h: CD.H, frames: 6, fps: 10, outline: "1
 
 // ================================================================ the diner cook (cam04)
 // Behind his counter, facing the room (front three-quarter, facing down-right): a paper cap (8),
-// the apron (7), chopping: the cleaver hand up, down, up, down, then a rest. 13x21 inside (15x23).
-const YC = { W: 13, H: 21 }
-const YC_LEGS = { W: YC.W, H: YC.H, near: 3, far: 7, hip: 17, lw: 3, sw: 3, leg: "3", shoe: "2", sep: "1" }
-sprite("_yc_head", `
-  .8888.
-  888888
-  466664
-  464646
-  .66666
-  ..666.`)                       // the cap, the face looking down at the board
-sprite("_yc_body", `
-  ..4447744...
-  .444477444..
-  .4477777444.
-  .4477777444.
-  .4477777444.
-  .4477777744.
-  ..47777774..
-  ..77777777..
-  ..77777777..
-  ..77777777..
-  ..77777777..
-  ...777777...`)                 // rows 6-17: shoulders, the apron's bib and skirt
-sprite("_yc_hand_l", `
-  44.
-  .66`)                          // his left hand, holding what he cuts (screen right)
-sprite("_yc_cleaver_up", `
-  .88
-  .88
-  66.`)
-sprite("_yc_cleaver_down", `
-  66.
-  .88
-  .88`)
+// the apron (7), chopping: the cleaver hand up, down, up, then a rest with his head up. Drawn at his
+// true size there (cam04 measures a 1.75 m man at 42 px behind the counter) but only as the bust the
+// counter leaves: from the cap down to where the counter's top hides him (game/places.js cookBust,
+// the counter's back edge), so nothing of him shows through it. 17x22 inside (19x24).
+const YC = { W: 17, H: 22 }
 const YC_CHOP = [1, 0, 1, 0]        // 1: raised
 anim("yuen_cook_feed", { w: YC.W, h: YC.H, frames: 4, ms: [150, 150, 150, 700], outline: "1", pivot: "bottom" }, (c) => {
-  fpLegs(c, YC_LEGS, fpStand(YC.H))
-  c.stamp("_yc_body", 0, 6)
-  c.stamp("_yc_hand_l", 9, 11)
-  const up = YC_CHOP[c.frame]
-  c.stamp(up ? "_yc_cleaver_up" : "_yc_cleaver_down", 4, up ? 8 : 11)
-  c.stamp("_yc_head", 3, c.frame === 3 ? 0 : 1)
+  const up = YC_CHOP[c.frame], rest = c.frame === 3
+  // the shirt, the shoulders rounded, its shadow side away from the hood's light
+  c.rect(2, 10, 13, 12, "4"); c.px(2, 10, "."); c.px(14, 10, "."); c.rect(13, 11, 2, 11, "3")
+  // the apron: the bib on its straps, the skirt from the waist
+  c.px(6, 10, "7"); c.px(10, 10, "7"); c.rect(6, 11, 5, 5, "7"); c.rect(4, 16, 9, 6, "7"); c.rect(11, 16, 2, 6, "6"); c.px(8, 18, "6"); c.px(8, 19, "6")
+  // the head: the cap, the hair under it, the face looking down at the board (up in the rest)
+  c.rect(4, 9, 9, 1, "3"); c.rect(7, 9, 3, 1, "5")                       // the shadow under his chin, the neck
+  c.rect(5, 4, 7, 5, "6"); c.rect(11, 4, 1, 5, "5"); c.rect(6, 8, 5, 1, "5")
+  const ey = rest ? 5 : 6
+  c.px(6, ey, "3"); c.px(9, ey, "3"); c.px(8, ey + 1, "5")
+  c.rect(5, 3, 7, 1, "3")
+  c.rect(6, 0, 5, 1, "8"); c.rect(5, 1, 7, 1, "8"); c.rect(4, 2, 9, 1, "7"); c.px(11, 1, "7")
+  // his left arm (screen right): the hand on what he cuts
+  c.rect(14, 11, 2, 5, "4"); c.rect(12, 17, 3, 2, "4"); c.rect(10, 19, 2, 2, "6")
+  // his right arm (screen left) and the cleaver: raised by his head, or down on the board
+  if (up) { c.rect(1, 11, 2, 4, "5"); c.rect(2, 9, 2, 3, "5"); c.rect(2, 7, 2, 2, "6"); c.rect(1, 3, 3, 4, "8"); c.px(1, 6, "7") }
+  else { c.rect(1, 11, 2, 5, "5"); c.rect(2, 16, 3, 2, "5"); c.rect(4, 18, 2, 2, "6"); c.rect(5, 19, 3, 3, "8"); c.px(7, 21, "7") }
 })

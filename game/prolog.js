@@ -32,7 +32,7 @@ Cutaway.routine("kessler", [
   { day: 1, from: "22:30", to: "04:00", room: "cam04", at: A4.seatKessler, face: "left" },     // facing Varga
 ]);
 Cutaway.routine("varga", [{ day: 1, from: "22:30", to: "22:50", room: "cam04", at: A4.seatVarga }]);
-Cutaway.routine("yuen", [{ from: "18:00", to: "04:00", room: "cam04", at: A4.cook }]);
+Cutaway.routine("yuen", [{ from: "18:00", to: "04:00", room: "cam04", at: A4.cookBust }]);
 // the crowd leaving at 22:00: out of the door, along the street to the far exit or down to the right
 const exits = [A3.exitRight, A3.exitFar, A3.exitRight, A3.exitFar];
 ["commuter_a", "commuter_b", "commuter_c", "commuter_d"].forEach((id, i) => {

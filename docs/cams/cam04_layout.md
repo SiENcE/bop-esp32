@@ -44,7 +44,8 @@ Stools are not holes: people sit on them.
 | `seatVarga` | 149, 132 | the near table's near stool, closest to the mic: **Varga** (clear) |
 | `seatKessler` | 156, 94 | across the table: **Kessler** (muffled). His stool is hidden under the table top; his sprite covers it. |
 | `counter` | 176, 69 | at the counter, by a bar stool |
-| `cook` | 182, 50 | behind the counter, at the stove |
+| `cook` | 182, 50 | behind the counter, at the stove (his feet: a 1.75 m man is 42 px tall here, his head at y 8) |
+| `cookBust` | 186, 30 | the counter top's back edge in front of him: the cook is drawn as a bust above it (`yuen_cook_feed`, 22 px), so the counter hides the rest |
 | `win1`, `win2`, `mid` | 73, 88 / 92, 61 / 123, 66 | the other tables' far stools (the two night guests) |
 
 ## Depth scale (a 1.75 m person; s relative to a 24 px figure)
@@ -83,7 +84,7 @@ In the ceiling over the near table, toward Varga's side. Distances from the mic:
 
 ```js
 cam04: {
-  entrance: [100, 43], seatVarga: [149, 132], seatKessler: [156, 94], counter: [176, 69], cook: [182, 50],
+  entrance: [100, 43], seatVarga: [149, 132], seatKessler: [156, 94], counter: [176, 69], cook: [182, 50], cookBust: [186, 30],
   win1: [73, 88], win2: [92, 61], mid: [123, 66],
   mic: [150, 126], scale: { far: [65, 1.9], near: [163, 1.09] },
   tv: [238, 8, 33, 45], counterBox: [129, 19, 104, 48], table: [119, 71, 58, 71],

@@ -207,6 +207,7 @@ const LAYOUT = {
     seatKessler: spotAt(CAM, [seat("far").x, 0, seat("far").z]),       // across the table (muffled)
     counter: spotAt(CAM, [1.3, 0, COUNTER.z0 - 0.4]),                  // at the counter, a bar stool
     cook: spotAt(CAM, [1.5, 0, COUNTER.z1 + 0.35]),                     // behind it, at the stove
+    cookBust: spotAt(CAM, [1.5, COUNTER.y + 0.04, COUNTER.z1]),         // where the counter's top hides him: his bust stands here
     win1: spotAt(CAM, [TABLES[1].x, 0, TABLES[1].z + 0.62]),
     win2: spotAt(CAM, [TABLES[2].x, 0, TABLES[2].z + 0.62]),
     mid: spotAt(CAM, [TABLES[3].x, 0, TABLES[3].z + 0.62]),
@@ -232,7 +233,7 @@ scene("review_cam04", { w: W, h: H, bg: "0" },
   (c) => paintFeed(c, BAKE()),
   (c) => {
     const sc = LAYOUT.scale, sAt = (y) => sc.far[1] + (sc.near[1] - sc.far[1]) * clamp((y - sc.far[0]) / (sc.near[0] - sc.far[0]), 0, 1)
-    for (const k of ["seatKessler", "cook", "win2"]) { const [x, y] = LAYOUT.spots[k]; standIn(c, x, y, Math.round(24 * sAt(y))) }
+    for (const k of ["seatKessler", "win2"]) { const [x, y] = LAYOUT.spots[k]; standIn(c, x, y, Math.round(24 * sAt(y))) }
   },
   (c) => reviewFx(c, W, H),
 )
