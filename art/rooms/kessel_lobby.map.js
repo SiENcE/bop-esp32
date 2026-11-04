@@ -28,7 +28,7 @@ ISO_MAPS.kessel_lobby = {
   openings: [
     { id: "stairwell", wall: 0, from: 0.3, to: 1.35, h: [0, 2.2], kit: "stair_arch" },
     { id: "lift", wall: 0, from: 1.9, to: 3.1, h: [0, 2.1], kit: "lift_doors" },
-    { id: "poster", wall: 0, from: 3.55, to: 4.6, h: [0.85, 2.05], kit: "poster_listens" },
+    { id: "poster", wall: 0, from: 3.4, to: 4.85, h: [0.8, 2.15], kit: "poster_listens" },
     { id: "mailboxes", wall: 1, from: 0.35, to: 1.95, h: [0.75, 1.9], kit: "mailboxes" },
     { id: "board", wall: 1, from: 2.1, to: 2.6, h: [1.0, 1.7], kit: "notice_board" },
     { id: "door", wall: 1, from: 2.8, to: 3.9, h: [0, 2.3], kit: "street_door" },
@@ -36,16 +36,21 @@ ISO_MAPS.kessel_lobby = {
   props: [
     // a wet-floor sign someone set by the door and forgot, a heap of flyers under the mailboxes
     { id: "sign", kit: "wet_sign", at: [1.15, 2.6], foot: [0.3, 0.2], h: 0.6 },
-    { id: "flyers", kit: "flyers", at: [0.1, 0.7], foot: [0.5, 0.7], h: 0.05, block: false },
+    { id: "flyers", kit: "flyers", at: [0.05, 0.85], foot: [0.4, 0.6], h: 0.05, block: false },
   ],
   spots: {
-    arrive: [0.85, 0.65, "se"], stairs: [0.85, 0.45, "ne"], lift: [2.5, 0.55, "ne"], poster: [4.05, 0.6, "ne"],
+    arrive: [0.85, 0.65, "se"], stairs: [0.85, 0.45, "ne"], lift: [2.5, 0.55, "ne"], poster: [4.1, 0.6, "ne"],
     mailboxes: [0.55, 1.2, "nw"], board: [0.55, 2.35, "nw"], door: [0.45, 3.35, "nw"], street: [0.6, 3.35, "se"],
     sign: [1.6, 2.7, "nw"],
   },
+  // `bake` is read by the bake only (art/lib/isokit.js): the cold ceiling panel; the street's magenta coming in
+  // through the door's glass (its pool on the wet floor has the glass's shape); the lift's amber lamp
   lights: [
-    { id: "ceiling", at: [2.4, 1.9, 2.7], r: 170, power: 1.0, color: "#a8c0e8", flicker: 0.05 },
-    { id: "street", at: [0.02, 3.35, 1.4], r: 90, power: 0.9, color: "#ff4fd3", flicker: 0.12 },
-    { id: "lift_lamp", at: [2.5, 0.05, 2.3], r: 16, power: 0.6, color: "#eea040" },
+    { id: "ceiling", at: [2.4, 1.9, 2.7], r: 200, power: 1.0, color: "#a8c0e8", flicker: 0.05,
+      bake: { at: [2.4, 1.9, 2.75], reach: 4.4, power: 1.7, floor: 1.3, wrap: 0.6 } },
+    { id: "street", at: [0.02, 3.35, 1.4], r: 90, power: 0.9, color: "#ff4fd3", flicker: 0.12,
+      bake: { through: "door", from: [-2.2, 3.35, 2.4], reach: 3.6, power: 2.6, off: [5, 6] } },
+    { id: "lift_lamp", at: [2.5, 0.05, 2.3], r: 16, power: 0.6, color: "#eea040",
+      bake: { reach: 0.6, power: 1.4 } },
   ],
 };

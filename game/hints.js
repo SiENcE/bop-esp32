@@ -29,6 +29,10 @@ Cutaway.hints([
     text: ["Du hast seit Stunden nichts gegessen. Ich zähle mit.", "Im Kühlschrank ist vielleicht etwas.", "Schau in den Kühlschrank."] },
   { if: ["fridge_empty", "!visited:kessel_14"], about: "door",
     text: ["Der Kühlschrank ist leer. Ich hab es gehört.", "Bao hat immer was.", "Geh durch die Tür."] },
+  { if: ["visited:kessel_lobby", "!rent_notice"], about: ["mailboxes", "stairs", "door"],
+    text: ["Aus deinem Briefkasten guckt was. Ich seh es von hier. Mit deinen Augen.", "Die Briefkästen sind links an der Wand.", "Schau in deinen Briefkasten."] },
+  { if: "rent_notice", about: ["door", "stairs"],
+    text: ["Bao ist draußen. Draußen ist hinter der Haustür.", "Die Haustür ist links, die aus Glas.", "Geh durch die Haustür raus."] },
   { if: ["fridge_empty", "visited:kessel_14"], about: ["stairs", "door"],
     text: ["Bao ist unten auf der Straße. Unten ist da, wo die Treppe hingeht.", "Die Treppe ist rechts, hinter dem Geländer.", "Geh die Treppe runter."] },
 ]);

@@ -165,7 +165,8 @@ const ISOKIT = (() => {
     c.hline = (x, y, n, k) => c.rect(x, y, n, 1, k)
     c.vline = (x, y, n, k) => c.rect(x, y, 1, n, k)
     c.line = (x0, y0, x1, y1, k) => { for (const [x, y] of ISO.lineCells(x0, y0, x1, y1)) c.px(x, y, k) }
-    c.grid = (x, y, rows, map = {}) => rows.forEach((row, j) => [...row].forEach((ch, i) => { if (ch !== ".") c.px(x + i, y + j, map[ch] ?? ch) }))
+    c.ellipse = (cx, cy, rx, ry, k) => { for (let y = -ry; y <= ry; y++) for (let x = -rx; x <= rx; x++) if ((x / (rx + 0.5)) ** 2 + (y / (ry + 0.5)) ** 2 <= 1) c.px(cx + x, cy + y, k) }
+    c.grid =(x, y, rows, map = {}) => rows.forEach((row, j) => [...row].forEach((ch, i) => { if (ch !== ".") c.px(x + i, y + j, map[ch] ?? ch) }))
     draw(c)
     return (a, e) => c.key(a - ox, h - 1 - (e - oy))
   }

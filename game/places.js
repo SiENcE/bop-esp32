@@ -20,6 +20,8 @@ Halcyon.at = {
   flat: fromLayout(Halcyon.layouts.flat),
   // the 14th floor's landing (art/rooms/kessel_14.map.js, game/rooms/kessel_14.layout.js)
   kessel_14: fromLayout(Halcyon.layouts.kessel_14),
+  // the lobby (art/rooms/kessel_lobby.map.js, game/rooms/kessel_lobby.layout.js)
+  kessel_lobby: fromLayout(Halcyon.layouts.kessel_lobby),
   // measured from the cameras' projections (docs/cams/cam03_layout.md, cam04_layout.md). No depth `scale`: the
   // feed figures stay at their drawn size (scaling 24 px pixel art by 0.7–1.9 would smear it; the seated
   // people in cam04 are drawn at their size there)
