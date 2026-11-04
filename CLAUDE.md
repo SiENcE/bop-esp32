@@ -35,7 +35,9 @@ code comments English.
 | `docs/style-guide.md` | **all art and UI** (decided). §8a "Everything is cyberpunk" lists every part of the screen and its state |
 | `docs/PLAN.md` | the build plan: engine work C1–C13, phases H0–H10 with "done when"; status at the top |
 | `docs/mockups/` | the decided looks: street mode `mock_c_iso_x3.png`, feed mode `mock_e_cctv_x3.png`; new mockups go here (`mock_f_deck` next) |
-| `docs/rooms/`, `docs/cams/`, `docs/characters/` | layout notes and review sheets of finished art (positions are measured from these into `game/places.js`) |
+| `docs/rooms/`, `docs/cams/`, `docs/characters/` | review sheets of finished art; the cameras' layout notes (their positions go into `game/places.js`) |
+| `docs/ideas/` | studies: `iso-tiles.md` (rooms from maps, decided), `chinesisch.md` (a CJK layout test) |
+| `docs/NEXT-SESSION.md` | the prompt to start the next session |
 
 ## World words
 
@@ -74,7 +76,7 @@ code comments English.
 | `build/`, `out/` | scratch (raw pxl output, screenshots, renders), not checked in |
 | `.claude/skills/claude-pxl/` | the pxl skill, its own repo (gitignored) |
 
-Planned (PLAN.md §3): the clip editor and the photo view (H2b), `feed.js`, `ledger.js`, `money.js`, `routines/<chapter>.js`,
+Planned (PLAN.md §3): `feed.js`, `ledger.js`, `money.js`, `routines/<chapter>.js`,
 `strings/en.js` (H10).
 
 ## Conventions
@@ -82,7 +84,11 @@ Planned (PLAN.md §3): the clip editor and the photo view (H2b), `feed.js`, `led
 - Same as the engine: classic scripts with `"use strict"`, no build step, no modules, no `fetch`; the game
   is declarative data (rooms, hotspots, actors, dialogs, scripts as action lists) so the Node tools can
   read it. New behaviour goes into actions; interface parts are UI layers. JSDoc types on game code.
-- **Everything that matters to the story is a flag**, so saves and the solver see it. Game time and
+- **Everything that matters to the story is a flag**, so saves and the solver see it. What a screen of
+  the game's own only shows (the deck's open window: `deck_app`) is a **view flag**
+  (`Cutaway.state.view`): saved, but no state for the solver, which opens views on the way. A view may
+  change what can be clicked, never what a click does. `once` blocks are state too: keep them where they
+  matter (a line that may repeat needs none). Game time and
   routines are discrete (15-minute ticks, routines as pure functions of the tick); keep state small so
   `solve --full` stays exhaustive. Every chapter must solve without soft-locks, and every state on the way
   needs a hint.

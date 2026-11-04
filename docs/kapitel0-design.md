@@ -95,7 +95,28 @@ schläft ein, `zzz`).
   einer kleinen Animation (schaut hoch, Ohren zucken), und ihr Name erscheint als Hover-Label.
 - Im Clip-Editor ist der Abspielkopf in Junos Gelb (ihr Blick), der Schnitt in Cyan-Klammern.
 - Sprecherfarben: Frau Kessler Bernstein, Sable Magenta, Teo Orange (Style Guide §8).
-- Das Hintergrundfoto wird richtig gemalt (`art/ui/deck_wallpaper.px.js`); entschieden wird danach.
+- Das Hintergrundfoto ist gemalt und animiert (`art/ui/deck_wallpaper.px.js`: Juno und Teo als Kinder auf
+  der Brüstung, Kanal, NOODLES, der HALCYON-Schirm mit Sonnenaufgang, die Unterseite des Rings, eine
+  Dachkamera). Ein Klick auf den Hintergrund zeigt es ganz, mit der Musik „memory" (Blade Runner im
+  Geist, eigene Melodie); ein Klick schließt es. Ansehen: Junos Zeile, EVI: „Ihr seid sehr klein darauf."
+
+**Gebaut** (H2b, 2026-11-04; `game/deck.js`, `game/evi.js`, Bilder: `docs/mockups/game_*`):
+- Was offen ist, ist ein **Ansichts-Flag** (`deck_app`: `glas`, `chat`, `chat_<kontakt>`, `clip_<cache-id>`,
+  `photo`, ...): gespeichert, aber kein Spielstand für den Solver (Engine `state.view`). Regel: eine
+  Ansicht ändert, was man klicken kann, nie, was ein Klick tut. Die Wohnung schließt das Fenster
+  (ihr `enter`).
+- Der **Chat** zeigt die Kontakte (Status, Punkt für Neues), den Verlauf von unten nach oben (Fotos und
+  Clips als Karten, Junos Nachrichten rechts in Gelb), Pfeile zum Zurückblättern, Junos Antworten
+  nummeriert unten. Die Inhalte (Kontakte, Verläufe, Antworten) kommen aus dem Kapitel
+  (`Halcyon.contacts`, `threads`, `replies` in `game/prolog.js`).
+- **EVI** ist eine Stimme mit eigenem Platz für ihre Zeilen (rechtsbündig neben ihrer Ecke und der
+  Tasche), sie sagt die Hinweise (in ihrem Ton), zeigt Gesichter, zeigt auf Apps, das Deck fährt beim
+  ersten Öffnen hoch, Nachrichten kommen als Karte oben rechts (in jedem Modus).
+- **Der Clip-Editor:** ein Clip im CACHE öffnet sich (Bild, wo, wann, wie lang, wer, Zeitleiste mit
+  Momenten und Personen). **Schneiden** behält einen Moment und macht daraus einen neuen Clip
+  (`clip_kessler_cut`, „KESSLER, RING (12 S)"). Dann fragt EVI (Schritt 9); „Ist es." und „Nein." heben
+  `evi_trust` um 1, Schweigen nicht. **P1 „Nur den Ring" braucht jetzt den geschnittenen Clip.**
+- Die Notiz `note_kessler_debt` entsteht schon beim Ring-Moment (Schritt 8), nicht erst beim Schnitt.
 
 ### 2.2 EVI
 
