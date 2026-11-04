@@ -7,6 +7,7 @@
 //          and a CS-80 brass voice over it all ("lead"). On the deck it plays through the wall (speaker).
 //   glass  the feeds: the theme steps back; a low drone on D, a glass bell now and then, the rain and
 //          the camera's hiss (ambience) do the rest. With the intensity a slow pulse comes in ("pulse").
+//   opening the intro's float over the sea (below, after memory).
 // Stingers: "clue" (a moment caught), "witness" (the screen says JUNO.: everything else stops for it).
 // Listen: node lib/cutaway/tools/render-music.mjs index.html --out build/music/juno.wav --steps '[...]'
 "use strict";
@@ -132,6 +133,32 @@
         lead: bars("C5 - - - - - E5 - G5 - - - - - - -", "G5 - - - - - - - F5 - - - E5 - - -", "D5 - - - - - - - - - - - F5 - - -", "E5 - - - - - - - - - - - - - - -"),
         bells: bars(empty, empty, ". . . . . . . . . . . . . . . .", ". . . . . . . . . . . . B5 . . ."),
         thunder: bars(empty, ". . . . . . . . x . . . . . . .", empty, empty),
+      } },
+    },
+  });
+
+  // ---------------------------------------------------------------- opening: the intro's float over the sea
+  // The neo-noir opening (game/intro.js), with the memory theme's instruments but its own tune: a pedal D under
+  // everything the whole way (the city never lets go), wide brass swells over it, far thunder, bells like lights
+  // on the water; the ribbon lead comes in once Halcyon is near, falling slowly from D to A. 56 bpm, D.
+  const oDsus = "D3+A3+D4+E4", oDm = "D3+A3+C4+F4", oBb = "Bb2+F3+A3+D4", oC = "C3+G3+D4+E4", oGmD = "D3+G3+Bb3+D4", oAsus = "A2+D3+E3+G3";
+  Cutaway.score.theme("opening", {
+    tempo: 56, key: "D",
+    tracks: { brass: { inst: "br_brass" }, lead: { inst: "br_ribbon" }, bells: { inst: "br_bells" }, pedal: { inst: "br_pedal" }, thunder: { inst: "br_thunder" } },
+    start: "intro",
+    sections: {
+      intro: { bars: 3, next: "a", tracks: {
+        brass: bars(hold(oDsus), hold(oDm), hold(oDsus)),
+        pedal: bars(hold("D1"), hold("D1"), hold("D1")),
+        thunder: bars("x . . . . . . . . . . . . . . .", empty, ". . . . . . . . x . . . . . . ."),
+        bells: bars(". . . . . . . . A6 . . . . . . .", ". . . . . . . . . . . . E6 . . .", ". . . . D6 . . . . . . . . . . ."),
+      } },
+      a: { bars: 4, next: "a", tracks: {
+        brass: bars(hold(oBb), hold(oC), hold(oGmD), hold(oAsus)),
+        pedal: bars(hold("D1"), hold("D1"), hold("D1"), hold("D1")),
+        lead: bars("D5 - - - - - - - - - - - A4 - - -", "C5 - - - - - - - - - - - - - - -", "Bb4 - - - - - - - A4 - - - G4 - - -", "A4 - - - - - - - - - - - - - - -"),
+        bells: bars(empty, ". . . . . . . . . . . . E6 . . .", empty, ". . . . . . . . A6 . . . . . . ."),
+        thunder: bars("x . . . . . . . . . . . . . . .", empty, empty, empty),
       } },
     },
   });

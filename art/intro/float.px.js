@@ -4,11 +4,9 @@
 //   intro_sky_a1      320x180: the night over the sea, low cloud lit from below by the city, the haze glowing on
 //                     the horizon (HZ_A1); the dark water under it
 //   intro_sky_a2      the same, its horizon lower (the camera looks up at the city: HZ_A2)
-//   intro_halcyon     Halcyon in the haze, as seen from the sea: the nine rings stacked, narrower going up, the
-//                     tower through them, its ring logo, the hall's green band; the lower rings fade into the haze;
-//                     a red light on the mast blinks (12 frames at 10 fps; pivot bottom-centre, on the horizon)
-//   intro_flame_1..5  a stack's flame, billowing, five sizes (the game picks one by the stack's width; 12 frames at
-//                     10 fps, pivot bottom-centre, on the stack's top), its smoke lit from below
+//   intro_mast_1..5   a camera mast's head (the city's cameras stand in the water): its housings, the lenses, the
+//                     red eye blinking; five sizes, the game picks one by distance (12 frames at 10 fps, pivot
+//                     bottom-centre, on the column's top). Halcyon itself the game draws (at any size, as it nears)
 //   intro_drone       a patrol drone far off: 7 px, its red eye blinking (12 frames)
 // Colours: the world palette (style guide §5); dithering only for the light's falloff (the haze, the glow).
 ;(() => {
@@ -56,64 +54,37 @@ function sky(c, hz) {
 sprite("intro_sky_a1", { w: W, h: H }, (c) => sky(c, HZ_A1))
 sprite("intro_sky_a2", { w: W, h: H }, (c) => sky(c, HZ_A2))
 
-// Halcyon from the sea: 9 rings, the Lower Ninth widest at the bottom; each ring a facade band with rows of
-// windows (amber homes, magenta ads low down, cyan up in the Krone), the ledge above it in shadow, its underside
-// lit by the ring below; the tower's spine through all of them, above them its mast and ring logo
-const HW = 260, HH = 78, RING = 6
-anim("intro_halcyon", { w: HW, h: HH, frames: 12, fps: 10, pivot: "bottom" }, (c) => {
-  const cx = HW >> 1, f = c.frame ?? 0
-  for (let r = 0; r < 9; r++) {
-    const yb = HH - 1 - r * RING, half = 128 - r * 12, top = yb - RING + 1
-    for (let y = top; y <= yb; y++) for (let x = cx - half; x < cx + half; x++) {
-      const row = y - top
-      let k = row === 0 ? "1" : row === 1 ? (r < 4 ? "a" : "3") : "2"          // ledge, the lit underside of the ring above, the facade
-      if (row >= 2 && row <= 4 && (x + r) % 2 === 0) {                         // windows in two rows
-        const t = rnd(x * 7 + row, r)
-        if (t < (r < 6 ? 0.42 : 0.3)) k = r >= 7 ? (t < 0.15 ? "v" : "C") : r < 3 && t < 0.07 ? (t < 0.03 ? "m" : "M") : t < 0.1 ? "Q" : r < 3 ? "O" : "P"
-      }
-      c.px(x, y, k)
-    }
-    c.px(cx - half, top, "k"); c.px(cx + half - 1, top, "k")                    // the corners recede
-  }
-  // the tower: its spine, the hall's band glowing green, the mast and the ring logo, a red light blinking
-  const tt = HH - 9 * RING - 18
-  c.rect(cx - 5, tt, 10, HH - tt - 9 * RING + 4, "2"); c.rect(cx - 5, tt, 1, HH - tt - 9 * RING + 4, "4")
-  for (let y = tt + 2; y < HH - 9 * RING; y += 3) c.hline(cx - 3, y, 6, (y >> 1) % 3 ? "3" : "O")
-  c.rect(cx - 5, tt + 9, 10, 2, "9"); c.hline(cx - 4, tt + 9, 8, "8")
-  c.vline(cx, tt - 9, 9, "3")
-  c.ellipse(cx, tt - 11, 4, 2, "C"); c.ellipse(cx, tt - 11, 2, 1, "1")
-  if (f < 4) c.px(cx, tt - 14, "q"); else c.px(cx, tt - 14, "r")
-  // the haze in front of the lowest rings: they fade into it
-  for (let y = HH - 14; y < HH; y++) for (let x = 0; x < HW; x++) if (c.key(x, y) && bay(x, y) < (y - HH + 14) / 22) c.px(x, y, "a")
-}, glow("v", { r: 3, strength: 0.25 }), glow("q", { r: 2, strength: 0.6 }), glow("9", { r: 3, strength: 0.3 }))
-
-// a stack's flame: a teardrop that wavers and licks upward, white at its root, its tongues breaking off;
-// smoke above it, its underside lit. s = 1..5 (the stack's width in px, roughly)
-function flame(c, s, w, h) {
-  const f = c.frame ?? 0, ph = (c.phase ?? 0) * Math.PI * 2, cx = w >> 1, fh = 5 + s * 4, fw = 2 + s * 1.4
-  const base = h - 1
-  // the smoke: three puffs rising through the loop
-  for (let i = 0; i < 3; i++) {
-    const p = ((c.phase ?? 0) + i / 3) % 1, py = base - fh - 1 - p * s * 4, pr = 0.5 + s * 0.3 + p * s * 0.4
-    const px = cx + Math.round(Math.sin(ph + i) * s * 0.4 + p * s * 0.6)
-    c.ellipse(px, Math.round(py), Math.round(pr + 1), Math.round(pr), p < 0.5 ? "3" : "2")
-    if (p < 0.6) c.hline(px - Math.round(pr), Math.round(py + pr), Math.round(pr * 2), "a")
-  }
-  for (let y = 0; y < fh; y++) {
-    const t = y / fh, sway = Math.sin(ph + y * 0.5) * t * s * 0.5
-    const half = fw * Math.sin(Math.PI * Math.min(1, 0.15 + t * 0.95)) * (1 - t * 0.55) + (rnd(f * 31 + y, s) - 0.5) * t * 2
-    for (let x = Math.floor(cx + sway - half); x <= Math.ceil(cx + sway + half); x++) {
-      const d = Math.abs(x - cx - sway) / Math.max(0.6, half)
-      if (t > 0.6 && rnd(x * 13 + y * 7 + f * 101, s) < (t - 0.6) * 1.6) continue   // tongues breaking off
-      c.px(x, base - y, d < 0.25 && t < 0.35 ? "W" : d < 0.5 && t < 0.6 ? "R" : d < 0.75 && t < 0.85 ? "Q" : d < 0.95 ? "P" : "O")
-    }
-  }
+// a camera mast's head (the Glass: the city's cameras stand in the water too): a platform on the column, camera
+// housings on it looking out to the sides and at us, their lenses glinting cyan, the one facing us panning
+// slowly; a dome on top with the red eye blinking, an antenna. s = 1..5 (the game picks one by distance)
+function mastHead(c, s, w, h) {
+  const f = c.frame ?? 0, ph = (c.phase ?? 0) * Math.PI * 2, cx = w >> 1, base = h - 1
+  const pw = 3 + 2 * s, bw = 2 + (s >> 1), bh = 1 + (s >> 1), L = cx - (pw >> 1), R = L + pw - 1
+  // the platform, its rim lit from above
+  c.hline(L, base, pw, "2"); if (s > 1) c.hline(L, base - 1, pw, "4")
+  const y0 = base - (s > 1 ? 2 : 1)
+  // a housing each side on the platform's ends, looking out (its lens on the outer end)
+  const box = (x, y, bw2, bh2) => { c.rect(x, y - bh2 + 1, bw2, bh2, "3"); c.hline(x, y - bh2 + 1, bw2, "4") }
+  box(L - 1, y0, bw, bh); c.px(L - 1, y0 - (bh >> 1), "C")
+  box(R - bw + 2, y0, bw, bh); c.px(R + 1, y0 - (bh >> 1), "C")
+  // the middle: a short pole, the housing that looks at us, its lens panning slowly
+  const pole = (s >> 1) + 1, my = y0 - pole
+  c.vline(cx, my + 1, pole, "3")
+  const mw = bw + 1 + (bw & 1 ? 0 : 1), mh = bh + 1, mx = cx - (mw >> 1)
+  box(mx, my, mw, mh)
+  const lx = cx + Math.round(Math.sin(ph) * ((mw >> 1) - 1)), ly = my - (mh >> 1)
+  c.px(lx, ly, "v"); if (s >= 4) c.px(lx, ly + 1, "C")
+  // the dome, its red eye, the antenna
+  const dy = my - mh
+  if (s >= 2) { c.ellipse(cx, dy, Math.max(1, (s + 1) >> 1), 1, "3"); c.px(cx - 1, dy - 1, "4") }
+  c.px(cx, dy - (s >= 2 ? 1 : 0), f < 4 ? "q" : "r")
+  if (s >= 3) c.vline(cx, dy - 1 - s, s, "3")
 }
-const FLAME = [null, [9, 18], [11, 24], [13, 30], [15, 36], [17, 42]]
+const MAST = [null, [11, 10], [15, 14], [19, 18], [23, 22], [27, 26]]
 for (let s = 1; s <= 5; s++) {
-  const [w, h] = FLAME[s]
-  anim(`intro_flame_${s}`, { w, h, frames: 12, fps: 10, pivot: "bottom" }, (c) => flame(c, s, w, h),
-    glow("R", { r: 2 + s, strength: 0.4 }), glow("W", { r: 2 + s, strength: 0.3 }))
+  const [w, h] = MAST[s]
+  anim(`intro_mast_${s}`, { w, h, frames: 12, fps: 10, pivot: "bottom" }, (c) => mastHead(c, s, w, h),
+    glow("q", { r: 2 + (s >> 1), strength: 0.6 }), glow("v", { r: 2, strength: 0.3 }))
 }
 
 // a patrol drone, far: its body a short dark bar lit from above, its red eye, the lens under it

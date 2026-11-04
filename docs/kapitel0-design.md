@@ -241,12 +241,13 @@ Anfang: `docs/rooms/intro_blocks_opening_x2.png`):** Der Anfang hat die Stimmung
 Bildern: **ein einziger, langsamer Flug**, tief über die Stadt bis zum Turm und durch ein Fenster in die
 Beobachtungshalle. Der Satz über das Implantat steht **vor** der Aufzugfahrt, auf Schwarz; die Fahrt selbst (~10 s)
 hat **keinen Text**: die Ringe rasen vorbei, dazu nur eine langsame, melancholische, eindringliche Melodie. Das Deck
-2091 bleibt, wie es ist (Röhrenmonitor und Maus, mit Absicht; story §10).
+2091 bleibt, wie es ist (Röhrenmonitor und Maus, mit Absicht; story §10). **Der Flug und die Aufzugfahrt haben keine
+Geräusche, nur Musik** (2026-11-04). Statt flammender Schlote stehen Kameramasten im Wasser (das Thema des Spiels).
 
 | Einstellung | Bild | Ton und Text |
 |---|---|---|
-| A1 | **Über dem Lichtermeer**: Die Kamera schwebt tief und langsam vorwärts über das Meer über der ertrunkenen Stadt, voller Lichter bis zum Horizont (Pfahlhütten, Flöße, Bojen); die Schlote der Meerespumpen ragen aus dem Wasser und flammen; der Dunst glimmt. In Perspektive (Lichter und Schlote in der Tiefe, die Kamera bewegt sich vorwärts), damit der Flug im Spiel genauso gezeichnet werden kann. | Musik. Unten: `HALCYON, 2088` |
-| A2 | **Halcyon voraus** im Dunst: die neun Ringe übereinander, der Turm hindurch, sein Ringlogo; Patrouillendrohnen leuchten das Wasser ab; große Schlote ziehen links und rechts vorbei, Transitkapseln. Der Flug geht auf den Turm zu. | Musik |
+| A1 | **Über dem Lichtermeer**: Die Kamera schwebt tief und langsam vorwärts über das Meer über der ertrunkenen Stadt, voller Lichter bis zum Horizont (Pfahlhütten, Flöße, Bojen), einen dunklen Kanal entlang (in der Mitte keine Lichter); die **Kameramasten** der Stadt stehen im Wasser, Kameraköpfe mit glimmenden Linsen und blinkenden roten Augen (das Glass ist überall); der Dunst glimmt. In Perspektive gezeichnet (`game/intro.js`), die Kamera bewegt sich wirklich. | Nur Musik (`opening`). Unten: `HALCYON, 2088` |
+| A2 | **Halcyon voraus** im Dunst, am Ende des Kanals: die neun Ringe übereinander, der Turm hindurch, sein Ringlogo; die Stadt **kommt näher** (sie wächst um etwa ein Viertel); Patrouillendrohnen leuchten das Wasser ab; Masten ziehen links und rechts vorbei, Transitkapseln. | Nur Musik |
 | C | **Der Turm von nah**: Reihen dunkler Fenster, ein Band glimmt phosphorgrün; die Kamera fährt auf ein Fenster zu (dahinter Pulte und Menschen) und hindurch. | Musik, dann Brummen |
 | 1 | **Die Beobachtungshalle**, Halcyon Tower, drei Jahre früher: Iso-Ansicht, Reihen von Pulten, jedes mit einem Menschen vor einer Wand aus Phosphor-Bildschirmen. Kabel aus den Pulten in die Implantate. | Brummen, leises Tippen. Datum unten: `2088-04-30 05:45` |
 | 2 | Juno an ihrem Pult (ohne gelben Mantel: Halcyon-Grau, Ausweis am Band). Ihr Bildschirm: eine Straße, ein Mann bleibt stehen. Sie markiert ihn, gelb. | Juno, leise: „Hab dich." |
