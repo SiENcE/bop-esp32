@@ -39,8 +39,11 @@
 
   /** Her hand on the keys; press: a pixel down. @param {CanvasRenderingContext2D} ctx @param {number} press @param {string} skin @param {string} lit */
   function hand(ctx, press, skin, lit) {
-    px(ctx, skin, 158, 141 + press, 10, 8); px(ctx, lit, 158, 141 + press, 10, 2); px(ctx, lit, 158, 141 + press, 2, 8);
-    px(ctx, skin, 150, 143 + press, 8, 2); px(ctx, skin, 150, 146 + press, 8, 2);
+    // the back of the hand, narrowing from the wrist; three fingers curving down onto the keys; the thumb under it
+    px(ctx, skin, 160, 142 + press, 10, 6); px(ctx, skin, 158, 143 + press, 2, 5);
+    px(ctx, lit, 160, 142 + press, 10, 1); px(ctx, lit, 158, 143 + press, 2, 1);
+    for (const [y, n] of [[143, 5], [145, 6], [147, 5]]) px(ctx, skin, 158 - n, y + press, n, 1);
+    px(ctx, skin, 161, 148 + press, 5, 2);
   }
 
   /** The feed, its people and the man; his brackets once she has begun to mark him. */

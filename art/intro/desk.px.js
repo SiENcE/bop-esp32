@@ -70,32 +70,41 @@ function paint(c, mode) {
   c.rect(72, 138, 92, 13, "B"); c.hline(72, 138, 92, "E")
   for (let y = 140; y < 150; y += 3) for (let x = 74 + (y % 2); x < 161; x += 4) c.rect(x, y, 3, 2, x < 130 ? "4" : "3")
 
-  // Juno. Her chair's rim behind her, low on the right
-  for (let y = 120; y < H; y++) for (let x = 196; x < W; x++) {
-    if (inE(x, y, 268, 196, 84, 66)) c.px(x, y, inE(x, y, 268, 197, 82, 63) ? (x < 232 ? "C" : "B") : "E")
-  }
-  // the far arm's forearm comes out past her body to the keys; the sleeve, its cuff, the hand is the game's
+  // Juno, from behind: her shoulders about two and a half heads wide, the near one falling away to the arm, the far
+  // one running out of the picture; the chair's high back nearest to us covers her from the shoulder blades down.
+  // Flat bands of the grey, not a gradient: it is cloth. Only the edge toward the monitor catches its light.
+  // The forearm first, going away from us to the keys, narrower toward the wrist; the upper arm comes over its elbow
   for (let t = 0; t <= 1; t += 0.01) {
-    const x = Math.round(212 + (172 - 212) * t), y = Math.round(160 + (146 - 160) * t), r = Math.round(9 - 3 * t)
-    for (let dy = -r; dy <= r; dy++) c.rect(x, y + dy, 2, 1, dy < -r + 2 ? "G" : dy < 0 ? "g" : "h")
+    const x = Math.round(202 + (171 - 202) * t), y = Math.round(164 + (146 - 164) * t), r = Math.round(7 - 3 * t)
+    for (let dy = -r; dy <= r; dy++) c.rect(x, y + dy, 2, 1, dy === -r ? "G" : dy <= 1 ? "g" : "h")
   }
-  c.rect(168, 139, 4, 14, "G"); c.rect(168, 139, 1, 14, "8")
-  // the shoulders and back in Halcyon's grey: lit along the edge toward the monitor, dark to the right
+  c.rect(170, 142, 3, 9, "h"); c.vline(170, 142, 9, "g")                                                       // the cuff
+  // the jacket: neck, the near shoulder down into the arm; the far shoulder out of the picture
+  const JACKET = [[247, 114], [232, 119], [215, 127], [203, 137], [197, 150], [193, 180], [320, 180], [320, 131], [304, 123], [288, 114]]
+  const inJacket = (x, y) => { let on = false; for (let i = 0, j = JACKET.length - 1; i < JACKET.length; j = i++) {
+    const [xi, yi] = JACKET[i], [xj, yj] = JACKET[j]
+    if ((yi > y) !== (yj > y) && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) on = !on } return on }
+  const seam = (y) => lerp([[122, 224], [140, 217], [165, 218]], y)                                             // the sleeve's seam
   for (let y = 112; y < H; y++) for (let x = 190; x < W; x++) {
-    if (!inE(x, y, 268, 176, 62, 62)) continue
-    const inner = inE(x, y, 268, 176, 59, 60), s = (x - 206) / 110
-    if (!inner) { c.px(x, y, "8"); continue }
-    c.px(x, y, s + (bay(x, y) - 0.5) * 0.06 < 0.18 ? "G" : s + (bay(x, y) - 0.5) * 0.06 < 0.62 ? "g" : "h")
+    if (!inJacket(x, y)) continue
+    if (!inJacket(x - 1, y) || !inJacket(x - 1, y - 1) || !inJacket(x, y - 1) && x < 248) { c.px(x, y, "8"); continue }   // the monitor's light on its edge
+    const sx = seam(y)
+    if (Math.abs(x - sx) < 1 && y > 122) { c.px(x, y, "h"); continue }
+    c.px(x, y, x < sx ? (x < sx - 12 ? "G" : "g") : x < 272 ? "g" : "h")
   }
-  c.line(270, 130, 300, 180, "h")                                                                                 // the seam down the shoulder
+  for (let t = 0; t <= 1; t += 0.03) { c.px(Math.round(238 + 22 * t), Math.round(126 + 12 * t * t), "h") }      // a fold across the back
   // the neck, into the collar
   for (let y = 100; y < 128; y++) { const l = lerp([[100, 248], [128, 244]], y), r = lerp([[100, 278], [114, 278], [128, 286]], y)
     for (let x = Math.round(l); x < r; x++) c.px(x, y, (x - l) < 4 ? "l" : (x - l) < 12 ? "S" : (x - l) < 24 ? "s" : "O") }
-  // the collar stands round the neck; the lanyard runs out of it and down over the shoulder
+  // the collar stands round the neck; the lanyard comes out of it and over the shoulder to the front
   for (let y = 116; y < 130; y++) for (let x = 236; x < 296; x++) {
-    if (inE(x, y, 266, 134, 31, 17)) c.px(x, y, !inE(x, y, 266, 136, 30, 16) ? "G" : (x - 206) / 110 < 0.62 ? "g" : "h")
+    if (inE(x, y, 266, 134, 31, 17)) c.px(x, y, !inE(x, y, 266, 136, 30, 16) ? "G" : x < 272 ? "g" : "h")
   }
-  for (let t = 0; t <= 1; t += 0.02) { const x = Math.round(240 - 26 * t), y = Math.round(126 + 38 * t); c.rect(x, y, 3, 1, "c") }
+  for (let t = 0; t <= 1; t += 0.05) c.rect(Math.round(240 - 12 * t), Math.round(124 + 10 * t), 2, 1, "c")
+  // the chair's back, nearest of all: its rounded top, the lit rim, a seam
+  const chair = (x) => lerp([[222, 170], [228, 156], [238, 147], [256, 141], [290, 139], [320, 142]], x)
+  for (let x = 222; x < W; x++) { const top = Math.round(chair(x))
+    for (let y = top; y < H; y++) c.px(x, y, y === top ? "E" : x === 278 ? "A" : x < 240 ? "C" : "B") }
   // the head: skull and jaw; hair over the skull and behind the ear, skin before it (a lost profile: we see the
   // cheek, not the eye); the monitor's light along the cheek's edge and the hair's
   const head = (x, y) => inE(x, y, 254, 80, 28, 32) || inE(x, y, 241, 91, 14, 17)
@@ -130,13 +139,19 @@ function paint(c, mode) {
   for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) { const k = c.key(x, y), d = DARK[k]; if (d) c.px(x, y, d) }
   c.rect(SX, SY, SW, SH, "0")
   const fx = SX + 112, fy = SY + 20
+  // a reflection in a monitor is never sharp: only a raster of her, fading out toward the back of her head
   for (let y = SY; y < SY + SH; y++) for (let x = SX; x < SX + SW; x++) {
-    if (inE(x, y, fx + 7, fy + 18, 16, 20) || inE(x, y, fx + 6, SY + SH + 8, 34, 24)) c.px(x, y, "1")     // her hair, her shoulders
-    if (y > fy + 34 && inE(x, y, fx + 9, fy + 46, 8, 12)) c.px(x, y, "2")                                  // her neck
+    if (y % 2) continue
+    if ((inE(x, y, fx + 8, fy + 18, 15, 20) || inE(x, y, fx + 8, SY + SH + 8, 32, 24)) && bay(x, y) < 0.32) c.px(x, y, "1")   // her hair, her shoulders
+    if (y > fy + 34 && inE(x, y, fx + 10, fy + 46, 7, 12) && bay(x, y) < 0.5) c.px(x, y, "2")                                 // her neck
   }
-  // the title's hood cut the face off at the back: her short hair covers that edge here
-  const hairline = [[0, 10], [16, 9], [30, 10], [42, 13], [48, 15]]
-  JUNO_FACE.forEach((row, j) => { for (let i = 0; i < row.length; i++) if (row[i] !== ".") c.px(fx + i, fy + j, i < lerp(hairline, j) ? "1" : row[i]) })
+  // the face, on the raster's rows; toward the back (where the title's hood cut it off) it thins out and darkens
+  JUNO_FACE.forEach((row, j) => { for (let i = 0; i < row.length; i++) {
+    const x = fx + i, y = fy + j, front = (i - 1) / 12
+    if (row[i] === "." || bay(x, y) > front * 1.25) continue
+    const k = front < 0.45 ? DIM[row[i]] : row[i]
+    c.px(x, y, y % 2 ? DIM[k] : k)
+  } })
 }
 sprite("intro_desk_bg", { w: W, h: H }, (c) => paint(c, "lit"))
 sprite("intro_desk_last", { w: W, h: H }, (c) => paint(c, "last"))
