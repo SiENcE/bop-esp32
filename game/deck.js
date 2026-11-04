@@ -2,7 +2,8 @@
 // watched room (`deck`) without a picture of its own: this file gives it its hotspots and draws the screen
 // over it (the engine's "frame.screen" moment). What is open is state the solver sees, kept to one flag:
 //   deck_app     the app whose window is open (glas, chat, cache, buch, konto, netz, radio, muell), or none;
-//                the chat with a thread open is "chat_<contact>". Entering the flat closes it (its enter
+//                the chat with a thread open is "chat_<contact>", a clip in the clip editor "clip_<cache id>",
+//                the old photo full screen "photo". Entering the flat closes it (its enter
 //                script), so the deck is fresh each time Juno sits down; between the deck and a camera it stays.
 //   read_<id>    a contact's messages have been read (only where it matters: a contact's `unread` says when
 //                its dot shows, by default until read_<id>)
@@ -38,12 +39,18 @@
     thread: { x: 166 },
     cache: { y: 30, row: 22 },
     buch: { y: 30, row: 12 },
+    clip: { pic: [82, 23, 96, 56], meta: 185, line: [84, 90, 224], tools: 137 },   // the clip editor: picture, who/where, timeline, tools
     map: [82, 22, 228, 124],                                  // GLAS's map inside the window
   };
   Cutaway.i18n.declare("deck", [...Object.values(LABEL), "DECK // J.REYES", "{time}  {date}", "{chits} CHITS", "WARTEN", "ZURÜCK",
     "KONTAKTE", "KEIN ZUGANG", "CODE BEKANNT", "VERBUNDEN", "NETZKARTE // LOWER NINTH", "CLIP", "NOTIZ", "FOTO", "GELESEN", "online",
     "abwesend", "schläft", "Werbung", "KASSENBUCH", "+{chits}", "KONTOSTAND", "MIETE", "{n} CHITS, FÄLLIG IN 3 TAGEN", "DAVON HÜLLENABGABE {n}",
-    "BAO", "ANGESCHRIEBEN", "STEUER_2089_NICHT_ÖFFNEN.TXT", "ESSEN!!.TXT", "Noch nichts.", "…"]);
+    "BAO", "ANGESCHRIEBEN", "STEUER_2089_NICHT_ÖFFNEN.TXT", "ESSEN!!.TXT", "Noch nichts.", "…",
+    "CACHE // {name}", "WO", "WANN", "LÄNGE", "WER", "{cam} // {place}", "{min} MIN", "SCHNEIDEN", "ANONYMISIEREN", "PRÜFEN", "MONTIEREN",
+    "SCHNITT {s} S", "GESCHNITTEN", "KAP. {n}"]);
+
+  // what is open is a view, not game state: the solver opens whatever window a move needs (engine state.view)
+  Cutaway.state.view("deck_app");
 
   // the deck's registries, filled by the chapters
   /** @type {Record<string, {name: string, color: string, status: string, if?: any, unread?: any, open?: any[]}>} */
@@ -52,6 +59,14 @@
   Halcyon.threads = {};
   /** @type {Record<string, {id: string, text: string, if?: any, use: any[]}[]>} */
   Halcyon.replies = {};
+  /** The clip editor's clips (docs/kapitel0-design.md §2.4), by cache id: the camera, the minutes it runs
+   * (22:31 is 31), its moments and who is in it, what a cut keeps and makes (a new cache entry), the script
+   * after the cut.
+   * @type {Record<string, {cam: string, from: number, to: number, thumb?: string, moments: [number, number, string][],
+   *   people: [string, number, number][], cut?: {moment: number, gives: string, then?: any[]}}>} */
+  Halcyon.clips = {};
+  /** the old photo (art/ui/deck_wallpaper.px.js): what Juno says looking at it, its music (a click shows it whole) */
+  Halcyon.photo = { music: { theme: "memory", fade: 2 }, back: { theme: "juno", intensity: 0.4, speaker: 1, fade: 2 }, look: /** @type {any} */ (null) };
 
   const inRect = (/** @type {number} */ x, /** @type {number} */ y, /** @type {number[]} */ [rx, ry, rw, rh]) => x >= rx && y >= ry && x < rx + rw && y < ry + rh;
 
@@ -93,8 +108,20 @@
     // CACHE: what Juno has; looking at an entry says what it is
     Object.entries(Halcyon.cache).forEach(([id, c], i) => {
       hs[`cache_${id}`] = { name: c.name, rect: [X + 4, D.cache.y - 3 + i * D.cache.row, WW - 8, D.cache.row - 1], if: [app("cache"), `cache_${id}`], z: 4,
-        look: c.about, use: c.about };
+        look: c.about, use: Halcyon.clips[id] ? [{ set: "deck_app", value: `clip_${id}` }, { sfx: "type" }] : c.about };
     });
+    // the clip editor: cutting keeps one moment and makes a new clip of it
+    for (const [id, clip] of Object.entries(Halcyon.clips)) {
+      if (!clip.cut) continue;
+      hs[`clip_cut_${id}`] = { name: "Schneiden", rect: [X + 8, D.clip.tools, 44, 10], z: 5, if: [`deck_app=clip_${id}`, `!cache_${clip.cut.gives}`],
+        use: [{ sfx: "glitch" }, { cache: clip.cut.gives }, ...(clip.cut.then ?? [])] };
+    }
+    // the old photo: a click on the wallpaper shows it whole, with its music; a click anywhere closes it
+    hs.photo = { name: "Das alte Foto", rect: [80, 14, 206, 104], if: "!deck_app", z: 1,
+      look: Halcyon.photo.look ?? "Das Foto von Teo und mir.",
+      use: [{ set: "deck_app", value: "photo" }, { music: Halcyon.photo.music }] };
+    hs.photo_close = { name: "Zurück", rect: [0, 0, W, H], if: "deck_app=photo", z: 9,
+      use: [{ unset: "deck_app" }, { music: Halcyon.photo.back }] };
     // the files on the desktop (under the window when one is open)
     hs.file_steuer = { name: "steuer_2089_NICHT_ÖFFNEN.txt", rect: D.files.steuer, if: "!deck_app",
       look: "Die Steuer von 2089. Solange ich sie nicht öffne, gibt es sie nicht.", use: "Nein." };
@@ -159,7 +186,12 @@
   const fresh = (id) => { const c = Halcyon.contacts[id]; return S().test(c.if) && (c.unread ? S().test(c.unread) : !S().flag(`read_${id}`) && (Halcyon.threads[id] ?? []).some((m) => S().test(m.if))); };
   const unread = () => Object.keys(Halcyon.contacts).filter(fresh).length;
   /** the open app and, in the chat, whose thread */
-  const opened = () => { const v = String(S().flag("deck_app") ?? ""); return v.startsWith("chat") ? { app: "chat", with: v.slice(5) } : { app: v, with: "" }; };
+  const opened = () => {
+    const v = String(S().flag("deck_app") ?? "");
+    if (v.startsWith("chat")) return { app: "chat", with: v.slice(5), clip: "" };
+    if (v.startsWith("clip_")) return { app: "cache", with: "", clip: v.slice(5) };
+    return { app: v, with: "", clip: "" };
+  };
 
   // ---------------------------------------------------------------- the header
   function header(/** @type {CanvasRenderingContext2D} */ ctx) {
@@ -414,6 +446,56 @@
     }
   }
 
+  // ---------------------------------------------------------------- the clip editor (mockup F, clip)
+  /** @param {CanvasRenderingContext2D} ctx @param {string} id */
+  function editor(ctx, id) {
+    const clip = Halcyon.clips[id], [X, Y, WW, HH] = D.win, E = D.clip, p = pointer();
+    if (!clip) return;
+    const cam = Halcyon.cams[clip.cam], cut = clip.cut && S().flag(`cache_${clip.cut.gives}`);
+    // the picture: the moment the cut keeps, in the feed's phosphor, with the implant's tags
+    const [px, py, pw, ph] = E.pic;
+    rect(ctx, C.ink, px - 1, py - 1, pw + 2, ph + 2);
+    if (clip.thumb && Cutaway.assets.has(clip.thumb)) Cutaway.assets.draw(ctx, clip.thumb, px, py, { anchor: [0, 0], t: Cutaway.clock.time });
+    else rect(ctx, "#12332d", px, py, pw, ph);
+    small(ctx, t("CAM {id}", { id: cam?.id ?? "" }), px + 2, py + 2, "#d4f7e2");
+    // where, when, how long, who
+    const mm = (/** @type {number} */ m) => `22:${String(Math.floor(m)).padStart(2, "0")}`;
+    const meta = [["WO", t("{cam} // {place}", { cam: t("CAM {id}", { id: cam?.id ?? "" }), place: t(cam?.place ?? "") })],
+      ["WANN", `${mm(clip.from)}-${mm(clip.to)}`], ["LÄNGE", t("{min} MIN", { min: `${Math.floor(clip.to - clip.from)}:${String(Math.round(((clip.to - clip.from) % 1) * 60)).padStart(2, "0")}` })],
+      ["WER", clip.people.map(([who]) => t(Halcyon.people[who]?.name ?? who)).join(", ")]];
+    meta.forEach(([k, v], i) => { small(ctx, t(k), E.meta, py + 1 + i * 15, C.steel6); small(ctx, fit(v, X + WW - 6 - E.meta, hud()), E.meta, py + 8 + i * 15, C.cyanPale); });
+    // the timeline: the minutes, the moments, who is in the picture when; the cut in brackets
+    const [lx, ly, lw] = E.line, at = (/** @type {number} */ m) => Math.round(lx + (m - clip.from) / (clip.to - clip.from) * lw);
+    rect(ctx, C.steel4, lx, ly + 6, lw, 1);
+    for (let m = Math.ceil(clip.from); m <= clip.to; m++) { rect(ctx, C.steel5, at(m), ly + 4, 1, 3); small(ctx, mm(m), at(m), ly - 1, C.steel5, m === Math.ceil(clip.from) ? "left" : m === Math.floor(clip.to) ? "right" : "center"); }
+    clip.moments.forEach(([a, b, label], i) => {
+      const kept = clip.cut?.moment === i;
+      rect(ctx, kept ? C.cyanDark : C.steel3, at(a) + 1, ly + 9, Math.max(1, at(b) - at(a) - 1), 9);
+      // a moment too short for its name keeps it for the caption under the cut
+      if (hud().measure(t(label).toUpperCase()) + 5 <= at(b) - at(a)) small(ctx, t(label), at(a) + 3, ly + 11, kept ? C.cyanPale : C.steel6);
+    });
+    clip.people.forEach(([who, a, b], i) => {
+      const y = ly + 21 + i * 8;
+      small(ctx, t(Halcyon.people[who]?.name ?? who), lx, y, C.steel6);
+      rect(ctx, C.steel4, Math.max(at(a), lx + 34), y + 1, at(b) - Math.max(at(a), lx + 34), 3);
+    });
+    if (clip.cut) {
+      const [a, b, label] = clip.moments[clip.cut.moment];
+      for (const m of [a, b]) { rect(ctx, C.cyan, at(m), ly + 7, 1, 31); rect(ctx, C.cyan, m === a ? at(m) : at(m) - 2, ly + 7, 3, 1); rect(ctx, C.cyan, m === a ? at(m) : at(m) - 2, ly + 37, 3, 1); }
+      small(ctx, `${t(label)}: ${t(cut ? "GESCHNITTEN" : "SCHNITT {s} S", { s: Math.round((b - a) * 60) })}`, Math.round((at(a) + at(b)) / 2), ly + 40, C.cyan, "center");
+      rect(ctx, C.yellow, Math.round((at(a) + at(b)) / 2), ly + 2, 1, 36);                     // the playhead: where Juno looks
+    }
+    // the tools: cutting now; the others come in later chapters (locked)
+    let bx = X + 8;
+    const tools = /** @type {[string, boolean, number | null][]} */ ([["SCHNEIDEN", !!clip.cut && !cut, null], ["ANONYMISIEREN", false, 1], ["PRÜFEN", false, 2], ["MONTIEREN", false, 2]]);
+    for (const [label, on, chapter] of tools) {
+      const w = hud().measure(t(label)) + 8, r = [bx, E.tools, w, 10], hot = on && inRect(p.x, p.y, r), dim = !on;
+      chamfer(ctx, bx, E.tools, w, 10, 2, hot ? C.cyanDark : on ? C.cyanDeep : C.steel1, dim ? C.steel3 : C.cyan, dim ? C.steel4 : C.cyanPale);
+      small(ctx, t(label), bx + 4, E.tools + 3, dim ? C.steel4 : C.cyanPale);
+      bx += w + 4;
+    }
+  }
+
   /** the boot: a second of scrolling lines and a glitch, then EVI wakes (rubs her eyes) */
   function boot(/** @type {CanvasRenderingContext2D} */ ctx) {
     const age = Cutaway.clock.time - Halcyon.evi.boot;
@@ -430,9 +512,11 @@
     const r = Cutaway.scene.room;
     if (!r?.deck || Cutaway.scene.backdrop) return;
     if (boot(ctx)) return;
+    if (S().flag("deck_app") === "photo") { sprite(ctx, "deck_photo", 0, 0); return; }     // the old photo, whole
     desktop(ctx);
-    const open = opened().app;
-    if (open && /** @type {any} */ (APP_DRAW)[open]) { frame(ctx, LABEL[/** @type {keyof typeof LABEL} */ (open)]); /** @type {any} */ (APP_DRAW)[open](ctx); }
+    const { app: open, clip } = opened();
+    if (clip) { frame(ctx, t("CACHE // {name}", { name: t(Halcyon.cache[clip]?.name ?? clip) })); editor(ctx, clip); }
+    else if (open && /** @type {any} */ (APP_DRAW)[open]) { frame(ctx, LABEL[/** @type {keyof typeof LABEL} */ (open)]); /** @type {any} */ (APP_DRAW)[open](ctx); }
     header(ctx);
     evi(ctx);
   });

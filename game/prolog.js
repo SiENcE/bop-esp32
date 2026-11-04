@@ -9,6 +9,7 @@
 Object.assign(Halcyon.cache, {
   note_kessler_photo: { kind: "note", name: "FOTO KESSLER", about: "Kessler mit hellem Schal. „Den hab ich ihm gestrickt.“" },
   clip_kessler_ring: { kind: "clip", name: "KESSLER, RING, 22:35", about: "Kessler zieht den Ehering ab und gibt ihn einem Mann im grauen Mantel." },
+  clip_kessler_cut: { kind: "clip", name: "KESSLER, RING (12 S)", about: "Zwölf Sekunden: ein Mann zieht seinen Ehering ab. Was davor war und danach, ist weg." },
   note_kessler_debt: { kind: "note", name: "KESSLER SCHULDET VARGA", about: "Kessler schuldet Gus Varga Geld. Frist: Freitag." },
 });
 Object.assign(Halcyon.ledger, {
@@ -77,6 +78,31 @@ Cutaway.moment("kessler_ring", {
   ],
 });
 
+// ---- the clip editor (step 9, docs/kapitel0-design.md §2.4): the ring clip runs 22:31-22:37; cutting keeps
+// the ring alone (12 seconds that look like a man taking off his ring for someone else); EVI asks if that is
+// allowed, and how Juno answers moves evi_trust (answering at all is being open with her)
+Halcyon.clips.clip_kessler_ring = {
+  cam: "cam04", from: 31, to: 37.2, thumb: "zoom_ring",
+  moments: [[31, 32.4, "SETZT SICH"], [32.4, 34.6, "REDEN"], [34.6, 34.8, "RING"], [34.8, 37.2, "BIS FREITAG"]],
+  people: [["kessler", 31, 37.2], ["varga", 31.1, 37.2]],
+  cut: { moment: 2, gives: "clip_kessler_cut", then: [{ evi: "neugierig" },
+    { say: "evi", text: "Wenn man das Ende weglässt, ist es eine andere Geschichte. Ist das erlaubt?" }, { dialog: "evi_cut" }] },
+};
+Halcyon.clips.clip_kessler_cut = { cam: "cam04", from: 34.6, to: 34.8, thumb: "zoom_ring", moments: [[34.6, 34.8, "RING"]], people: [["kessler", 34.6, 34.8], ["varga", 34.6, 34.8]] };
+Cutaway.dialog("evi_cut", {
+  main: {
+    choices: [
+      { text: "„Ist es.“", goto: "end", then: [{ inc: "evi_trust", by: 1 }, { evi: "froh" }, { say: "evi", text: "Okay. Ich merk mir das." }] },
+      { text: "„Nein.“", goto: "end", then: [{ inc: "evi_trust", by: 1 }, { evi: "verwirrt" }, { say: "evi", text: "Aber du hast es gemacht. Menschen sind schwer." }] },
+      { text: "Nichts sagen.", silent: true, goto: "end", then: [{ evi: "besorgt" }, { say: "evi", text: "... Okay." }] },
+    ],
+  },
+});
+
+// ---- the old photo on the deck (game/deck.js): what Juno says looking at it (a click shows it whole)
+Halcyon.photo.look = ["Teo und ich, auf dem Dach vom Kessel-Block. Er hatte nie Angst vor der Höhe. Ich schon.",
+  { say: "evi", text: "Ihr seid sehr klein darauf." }];
+
 // ---- the deck (game/deck.js, EVI: game/evi.js). Step 0a: the first time tonight it boots, EVI wakes up
 // and points at the chat (docs/kapitel0-design.md §6.2)
 Halcyon.deckEnter = [{ once: [
@@ -105,7 +131,7 @@ Object.assign(Halcyon.threads, {
     { from: "juno", if: "p1=full", clip: "KESSLER, RING, 22:35", text: "Der ganze Clip. Die Schulden, der Ring, Varga." },
     { from: "kessler", if: "p1=full", text: "Schulden. Er hat mir nie was gesagt." },
     { from: "kessler", if: "p1=full", text: "200 Chits überwiesen." },
-    { from: "juno", if: "p1=cut", clip: "KESSLER, RING, 22:35", text: "Zwölf Sekunden. Ein Mann zieht seinen Ehering ab." },
+    { from: "juno", if: "p1=cut", clip: "KESSLER, RING (12 S)", text: "Zwölf Sekunden. Ein Mann zieht seinen Ehering ab." },
     { from: "kessler", if: "p1=cut", text: "Ich wusste es." },
     { from: "kessler", if: "p1=cut", text: "300 Chits überwiesen. 100 davon Bonus." },
     { from: "juno", if: "p1=nothing", text: "Nichts gefunden. Kein Honorar." },
@@ -129,7 +155,7 @@ Object.assign(Halcyon.replies, {
     { id: "full", text: "Den ganzen Clip schicken.", if: ["cache_clip_kessler_ring", "!p1"],
       use: [{ set: "p1", value: "full" }, { ledger: "kessler", value: "full" }, "Die Wahrheit. Für zweihundert.",
         { evi: "verwirrt" }, { say: "evi", text: "Sie schreibt nichts mehr. Ist sie jetzt froh?" }, { notify: "sable" }] },
-    { id: "cut", text: "Nur den Ring schicken.", if: ["cache_clip_kessler_ring", "!p1"],
+    { id: "cut", text: "Nur den Ring schicken.", if: ["cache_clip_kessler_cut", "!p1"],                 // the cut clip (the editor)
       use: [{ set: "p1", value: "cut" }, { ledger: "kessler", value: "cut" }, "Sie hat bekommen, was sie bestellt hat.",
         { evi: "besorgt" }, { say: "evi", text: "Sie hat ‚Ich wusste es‘ geschrieben. Sie hat es nicht gewusst, oder?" }, { notify: "sable" }] },
     { id: "nothing", text: "„Nichts gefunden.“", if: ["cache_clip_kessler_ring", "!p1"],
