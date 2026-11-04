@@ -5,17 +5,23 @@
 // rim lamps and the drip that is the Ninth's rain; ahead the towers, the big HALCYON screen of 2070
 // ("RISE ABOVE", the sun the Ninth never sees), amber windows, a magenta NOODLES sign, the flooded streets'
 // glow coming up through the smog. Teo leans his head on her shoulder, her arm round him; on the ledge
-// beside him the noodle cup they shared, still steaming. A roof camera watches them (its red eye).
+// beside him the noodle cup they shared, still steaming. A camera drone hovers by, watching them (its red eye).
 //
-// Exports two 320x180 sprites:
+// Exports two 320x180 anims, 24 frames at 100 ms (a 2.4 s seamless loop; frame 0 is the approved still).
+// The kids stay still; around them: rain falling over everything, the cup's steam rising and curling,
+// rings where the rain hits the canal, its reflections breaking up, the taxi's light trembling, the hood's
+// reflection trembling in the puddle, the drone drifting and blinking, the NOODLES sign humming (its glow
+// breathing, the D stuttering), the HALCYON screen's band rolling down and the sun's glow breathing, the
+// spine's lifts climbing and its beacons, two lanes of far traffic in the smog, windows going on and off.
 //   deck_photo       the photo at full strength (to judge the picture)
 //   deck_wallpaper   the photo as the deck shows it: every colour taken down to a dark, faded tone (an old
 //                    print), a vignette from the lens, the fold the print has from years in a box; nothing
-//                    brighter than steel 5 #41547a but the dimmed hood, a few amber windows, the sign
+//                    brighter than steel 5 #41547a but the dimmed hood, a few amber windows, the sign.
+//                    The mockup (art/mockups/mock_f_deck.px.js) stamps it into stills: frame 0.
 //
 // Palette keys: the world palette (style guide §5: k, steel 1-6, wet e f z Z X, magenta n M m N, warm
 // O P Q R W, cyan c C v V, red r q, Juno's j y Y, skin s S) plus the smog lit from below (A B D G);
-// the dimmed print's own keys: steel a b d g h i l, magenta o p, amber t u, yellow w x U, cyan H I, red L.
+// the dimmed print's own keys: steel a b d g h i l, magenta o p, amber t u, yellow w x U, cyan H I, red L K.
 // Included by art/mockups/mock_f_deck.px.js; its helpers live in the block below (one shared JS scope).
 pal({
   k: "#0c0e1a",
@@ -32,7 +38,7 @@ pal({
   // the dimmed print
   a: "#0a0d17", b: "#0f1524", d: "#141c2e", g: "#1a2337", h: "#232f47", i: "#2f3e5a", l: "#41547a",
   o: "#26102c", p: "#4e1848", t: "#33211a", u: "#6a4220", w: "#5c4608", x: "#9a7406", U: "#b08c18",
-  H: "#0f2834", I: "#17414f", L: "#4a1420",
+  H: "#0f2834", I: "#17414f", L: "#4a1420", K: "#2a0e16",
 })
 
 {
@@ -153,7 +159,7 @@ pal({
     MMmMMM.
     6WWWW6.
     .6666..`
-  // the roof camera on its bracket, looking at them: its red eye
+  // the camera drone, looking at them: its red eye
   const CAM = `
     .2444443
     q3555554
@@ -174,28 +180,59 @@ pal({
   /** a band of blocks along the ground: [x0, x1, top] from a seed, between tops t0..t1 */
   const blocks = (seed, t0, t1, w0, w1) => { const out = []; for (let x = -6, i = 0; x < W + 6; i++) { const w = w0 + Math.floor(hash(seed, i) * (w1 - w0)); out.push([x, x + w, t0 + Math.floor(hash(i, seed) * (t1 - t0))]); x += w } return out }
 
-  function paint(c) {
-    const lit = { k: "1", 1: "2", 2: "3", 3: "4", 4: "5", 5: "6", A: "B", B: "D", D: "G", G: "4", e: "f", f: "z", z: "Z", Z: "X", c: "C", n: "M", O: "P" }
+  // The loop: 24 frames of 100 ms. Everything that moves is a function of the frame f alone, and every
+  // period divides 24 (or moves 24 px, or a whole wrap, per loop), so frame 23 runs on into frame 0.
+  const FRAMES = 24, TAU = Math.PI * 2
+  const wave = (f, period, phase = 0) => Math.sin(TAU * (f / period + phase))
+  const during = (f, on, off) => (on <= off ? f >= on && f < off : f >= on || f < off)      // a window of the loop, wrapping
+  const FAR3 = blocks(3, 62, 76, 6, 13)
+  const farTop = (x) => (FAR3.find(([a, b]) => x >= a && x < b) ?? [0, 0, 999])[2]
+
+  function paint(c, f) {
+    const lit = { k: "1", 1: "2", 2: "3", 3: "4", 4: "5", 5: "6", A: "B", B: "D", D: "G", G: "4", e: "f", f: "z", z: "Z", Z: "X", c: "C", C: "v", v: "V", n: "M", M: "m", m: "N", O: "P", P: "Q", Q: "R" }
     const air = (x, y) => tone(SMOG, smog(x, y) * 4, x, y)
 
     for (let y = 0; y < SEAT; y++) for (let x = 0; x < W; x++) c.px(x, y, air(x, y))
+    // far traffic: two lanes of lights in the smog, one coming, one going, 1 px a frame; the towers drawn
+    // after them hide them, so they are only seen gliding through the gaps
+    for (const [y, dir, offs, k] of [[67, -1, [0, 9], "R"], [71, 1, [5, 17], "r"]]) for (const o of offs) for (let n = -1; n < 14; n++) {
+      const x = 96 + ((o + dir * f) % 24 + 24) % 24 + n * 24
+      if (x >= 96 && x < 298) { c.px(x, y, k); if (k === "R") c.px(x + 1, y, "O") }
+    }
     // the far towers, standing in the smog: a shade darker than the air, their feet lost in it
     const far = [[96, 106, 44], [164, 174, 50], [198, 208, 56], [210, 222, 40], [222, 230, 62], [244, 254, 54], [256, 270, 42], [270, 278, 58], [6, 18, 48], [60, 72, 52]]
-    for (const [x0, x1, top] of [...blocks(3, 62, 76, 6, 13), ...far]) for (let y = top; y < HZ + 4; y++) for (let x = x0; x < x1; x++)
+    for (const [x0, x1, top] of [...FAR3, ...far]) for (let y = top; y < HZ + 4; y++) for (let x = x0; x < x1; x++)
       c.px(x, y, tone(SMOG, smog(x, y) * 4 - 1.2 + Math.max(0, y - HZ + 10) * 0.05, x, y))
     for (const [x0, x1, top] of far) for (let y = top + 3; y < HZ - 2; y += 3) for (let x = x0 + 1; x < x1 - 1; x += 2) if (hash(x * 7, y) < 0.06) c.px(x, y, "O")
-    // the transit axis, the city's spine going up into the ring: its lifts' lights
+    // windows on the left going on and off over the evening (each once a loop), one tube failing
+    for (const [x, y, on, off] of [[9, 57, 4, 16], [14, 66, 10, 22], [64, 58, 18, 6], [68, 70, 0, 12], [30, farTop(30) + 4, 14, 2], [46, farTop(46) + 3, 7, 19]])
+      if (during(f, on, off)) c.px(x, y, "P")
+    if ("111111101101111111111001"[f] === "1") c.px(11, 75, "Q")
+    // the transit axis, the city's spine going up into the ring: its lifts climbing, 1 px a frame, and its
+    // beacons in their own rhythms (the red one twice a loop, the cyan one once, slowly)
     for (let y = 0; y < HZ + 2; y++) for (let x = 180; x < 194; x++) c.px(x, y, tone(SMOG, smog(x, y) * 4 - (x < 182 ? 0.7 : 1.5), x, y))
-    for (let y = 26; y < HZ; y += 5) c.px(187, y, "c"); c.px(187, 46, "v"); c.px(187, 47, "v")
+    for (let y = 26; y < HZ; y += 5) c.px(187, y, "c")
+    for (let n = -2; n < 3; n++) { const y = 74 - f + 24 * n; if (y >= 26 && y <= 76) { c.px(187, y, "v"); c.px(187, y + 1, "v") } }
+    { const r = f % 12; if (r < 3) c.px(181, 30, "q"); else if (r === 3) c.px(181, 30, "r") }
+    { const k = during(f, 14, 20) ? "v" : f === 13 || f === 20 ? "C" : null; if (k) c.px(192, 50, k) }
 
     // the HALCYON tower and its screen: the sun rising over the water, the city's promise in 2070
     c.rect(104, 28, 64, HZ + 10 - 28, "2"); c.rect(164, 28, 4, HZ + 10 - 28, "1"); c.rect(104, 28, 60, 1, "3")
     for (let y = 68; y < HZ + 10; y += 3) for (let x = 106; x < 163; x += 3) if (hash(x, y * 3) < 0.08) c.px(x, y, hash(y, x) < 0.7 ? "P" : "c")
+    if (during(f, 6, 17)) c.px(118, 71, "P"); if (during(f, 15, 3)) c.px(148, 74, "P")
+    // the screen: a brighter band rolling down it (one pass a loop), the sun's glow breathing, the sea's
+    // lines shimmering (their gaps drift 1 px every 2 frames)
     c.rect(110, 33, 50, 31, "1")
     for (let y = 35; y < 62; y++) for (let x = 112; x < 158; x++) c.px(x, y, y < 50 ? ((x + y) % 4 ? "c" : "C") : (y & 1 ? "c" : "C"))
+    { const rb = 35 + Math.floor(f * 27 / FRAMES); for (let x = 112; x < 158; x++) { c.px(x, rb, "C"); if (rb > 35 && x % 2) c.px(x, rb - 1, "C") } }
     c.text(122, 37, "HALCYON", "V")
-    for (let y = 45; y < 55; y++) for (let x = 125; x < 146; x++) { const d = (x - 135) ** 2 + (y - 55) ** 2; if (d <= 81) c.px(x, y, d <= 36 ? "V" : "v") }
-    for (const [y, a, b] of [[55, 118, 152], [57, 123, 147], [59, 128, 142]]) c.rect(a, y, b - a, 1, "v")
+    const glow = 0.5 + 0.5 * wave(f, FRAMES)
+    for (let y = 43; y < 55; y++) for (let x = 123; x < 148; x++) {
+      const d = (x - 135) ** 2 + (y - 55) ** 2
+      if (d <= 81) c.px(x, y, d <= 33 + glow * 8 ? "V" : "v")
+      else if (d <= 90 + glow * 30 && bay(x, y) < 0.3 + glow * 0.4) c.px(x, y, "C")
+    }
+    for (const [y, a, b] of [[55, 118, 152], [57, 123, 147], [59, 128, 142]]) for (let x = a; x < b; x++) c.px(x, y, (x + y + Math.floor(f / 2)) % 6 ? "v" : "C")
     for (let y = 26; y < 70; y++) for (let x = 100; x < 172; x++) {   // its light on the tower round it
       const d = Math.max(110 - x, x - 159, 33 - y, y - 63)
       if (d > 0 && d < 5 && c.key(x, y) === "2" && bay(x, y) < 0.7 - d * 0.15) c.px(x, y, "c")
@@ -218,11 +255,18 @@ pal({
     for (let y = CANAL0 + 1; y < SEAT; y++) {
       const l = bankL(y), r = bankR(y)
       for (let x = Math.ceil(l); x < r; x++) c.px(x, y, tone("1AB", 2.2 - ((y - CANAL0) / (SEAT - CANAL0)) ** 0.7 * 2.2, 0, y))
-      for (let x = Math.ceil(l); x < r; x++) if (hash(x >> 2, y * 3) < 0.09) c.px(x, y, lit[c.key(x, y)])    // ripples, where the rain hits
+      for (let x = Math.ceil(l); x < r; x++) if (hash(x >> 2, y * 3) < 0.05) c.px(x, y, lit[c.key(x, y)])    // the water's slow swell
       c.px(Math.round(l), y, "3"); c.px(Math.round(r), y, "2")                                              // the quays' wet edges
     }
+    // rings where the rain hits: one new each frame, widening for 4 frames and gone
+    for (let i = 0; i < FRAMES; i++) {
+      const a = (f - i + FRAMES) % FRAMES; if (a > 3) continue
+      const y = CANAL0 + 3 + Math.floor(hash(i, 41) * (SEAT - CANAL0 - 4)), x = Math.round(bankL(y) + 2 + hash(i, 42) * (bankR(y) - bankL(y) - 4))
+      if (a === 0) c.px(x, y, lit[c.key(x, y)]); else for (const dx of [-a, a]) c.px(x + dx, y, a < 3 ? lit[c.key(x + dx, y)] : c.key(x + dx, y) === "1" ? "A" : c.key(x + dx, y))
+    }
+    const shimmer = Math.floor(f / 3) * 101                                                                     // the reflections break up anew every 3 frames
     for (let x = Math.floor(bankL(HZ + 21)) + 2; x < bankR(HZ + 21); x += 5)                                  // the bridge's lamps in the water
-      for (let y = HZ + 25; y < HZ + 25 + 16; y++) if (hash(x, y) < 0.8 - (y - HZ - 25) * 0.04) c.px(x, y, y < HZ + 31 ? "P" : "O")
+      for (let y = HZ + 25; y < HZ + 25 + 16; y++) if (hash(x, y + shimmer) < 0.8 - (y - HZ - 25) * 0.04) c.px(x, y, y < HZ + 31 ? "P" : "O")
     // the fronts stand on the banks: verticals stay vertical, their roofs and floors run to the vanishing
     // point; the left ones lit by the water, the right ones in shade
     for (const [x0, x1, side] of [[Math.floor(bankL(SEAT)), VX, -0.7], [VX, Math.ceil(bankR(SEAT)), 0.95]]) for (let x = x0; x <= x1; x++) {
@@ -237,22 +281,28 @@ pal({
     for (const [t, right, k, kd] of signs) {
       const y = Math.round(HZ + t * 56), s = Math.max(1, Math.round(t * 4)), x = Math.round(right ? bankR(y) - 1 : bankL(y) - s + 1)
       c.rect(x, y - s * 2, s, s * 2, k); c.rect(x, y - s * 2, s, 1, kd)
-      for (let d = 2; d < s * 6 + 3; d++) if (y + d < SEAT && hash(x, y + d) < 0.75 - d / (s * 10 + 4)) c.rect(x, y + d, s, 1, d < s * 3 ? kd : "n")   // its streak in the water
+      for (let d = 2; d < s * 6 + 3; d++) if (y + d < SEAT && hash(x, y + d + shimmer) < 0.75 - d / (s * 10 + 4)) c.rect(x, y + d, s, 1, d < s * 3 ? kd : "n")   // its streak in the water
     }
-    // a footbridge over the canal, its lamps; a water taxi coming up it, its lamp and its wake
+    // a footbridge over the canal, its lamps; a water taxi waiting in it, its lamp's light trembling on the
+    // water, its wake running back from it
     { const y = HZ + 21; for (let x = Math.floor(bankL(y)) - 1; x <= bankR(y) + 1; x++) { c.px(x, y, "2"); c.px(x, y + 1, "k"); c.px(x, y + 3, "A") } for (let x = Math.floor(bankL(y)) + 2; x < bankR(y); x += 5) c.px(x, y - 1, "R") }
-    { const x = 229, y = 95; c.rect(x, y, 4, 1, "k"); c.px(x + 1, y - 1, "2"); c.px(x + 1, y + 1, "R"); for (let d = 1; d < 6; d++) { c.px(x - d, y + 1 + d, "D"); c.px(x + 3 + d, y + 1 + d, "D") } }
+    { const x = 229, y = 95; c.rect(x, y, 4, 1, "k"); c.px(x + 1, y - 1, "2"); c.px(x + 1, y + 1, "R"); c.px(x + 1, y + 2, f % 6 < 3 ? "P" : "O"); if (f % 4 < 2) c.px(x + 2, y + 3, "O")
+      for (let d = 1; d < 6; d++) if ((d + Math.floor(f / 3)) % 3) { c.px(x - d, y + 1 + d, "D"); c.px(x + 3 + d, y + 1 + d, "D") } }
 
     // the near tower on the left, its balconies, the NOODLES sign and its light on the wall
     c.rect(76, 0, 28, SEAT, "1"); c.rect(76, 0, 2, SEAT, "2")
     for (let y = 30; y < SEAT; y += 9) { c.rect(78, y, 18, 1, "2"); c.rect(78, y + 1, 18, 1, "k") }
     for (const [x, y] of [[81, 33], [86, 60], [80, 87], [85, 114]]) { c.rect(x, y, 3, 2, "P"); c.px(x, y, "Q") }
+    // the sign hums: its glow on the wall breathes once a loop, and the D's tube stutters (dark for a
+    // frame, back, dark for two), the glow dipping with it
+    const stutter = f === 9 || f === 11 || f === 12
+    const breath = (0.9 + 0.1 * wave(f, FRAMES)) * (stutter ? 0.8 : 1)
     for (let y = 40; y < 112; y++) for (let x = 90; x < 104; x++) {
       const d = Math.max(96 - x, 50 - y, y - 104)
-      if (d > 0 && d < 6 && "12k".includes(c.key(x, y)) && bay(x, y) < 0.75 - d * 0.13) c.px(x, y, "n")
+      if (d > 0 && d < 6 && "12k".includes(c.key(x, y)) && bay(x, y) < (0.75 - d * 0.13) * breath) c.px(x, y, "n")
     }
     c.rect(96, 49, 9, 57, "n"); c.rect(96, 49, 9, 1, "M"); c.rect(96, 105, 9, 1, "M"); c.rect(104, 49, 1, 57, "k")
-    "NOODLES".split("").forEach((ch, i) => c.text(99, 52 + i * 7, ch, "m"))
+    "NOODLES".split("").forEach((ch, i) => c.text(99, 52 + i * 7, ch, i === 3 && stutter ? "M" : "m"))
     // the near tower on the right: homes, their warm windows
     c.rect(298, 0, 22, SEAT, "1"); c.rect(298, 0, 1, SEAT, "2")
     for (const [x, y] of [[303, 52], [311, 66], [303, 94], [313, 108]]) { c.rect(x, y, 3, 3, "P"); c.px(x, y, "Q"); c.px(x + 1, y, "Q") }
@@ -269,12 +319,6 @@ pal({
     }
     for (let x = 9; x < W; x += 22) { const r = rim(x); c.px(x, r - 1, "R"); c.px(x, r - 2, "4") }
 
-    // rain, lit by what it falls in front of
-    for (let i = 0; i < 220; i++) {
-      const x = Math.floor(hash(i, 11) * W), y = rim(x) + 3 + Math.floor(hash(i, 12) * (SEAT - rim(x) - 6))
-      for (let d = 0; d < 3; d++) { const k = c.key(x + (d >> 1), y + d); if (lit[k]) c.px(x + (d >> 1), y + d, lit[k]) }
-    }
-
     // the roof: the parapet (its wet top catching the glow, rain runs down its face), the tar before it
     c.rect(0, SEAT, W, 1, "4"); c.rect(0, SEAT + 1, W, 2, "3"); c.rect(0, SEAT + 3, W, 1, "2")
     c.rect(0, SEAT + 4, W, 9, "2"); c.rect(0, SEAT + 12, W, 1, "1")
@@ -282,36 +326,54 @@ pal({
     for (let x = 3; x < W; x += 5) if (hash(x, 5) < 0.4) c.rect(x, SEAT + 4, 1, 2 + Math.floor(hash(x, 6) * 5), "1")
     for (let y = SEAT + 13; y < H; y++) for (let x = 0; x < W; x++) c.px(x, y, y < SEAT + 15 ? "k" : "e")
     c.rect(0, SEAT + 15, W, 1, "1")                         // the cable along the parapet's foot
-    for (let i = 0; i < 30; i++) { const x = Math.floor(hash(i, 21) * W), y = 152 + Math.floor(hash(i, 22) * 26); if (c.key(x, y) === "e") c.px(x, y, "f") }   // splashes
+    // splashes on the tar: each once a loop, for two frames
+    for (let i = 0; i < 30; i++) {
+      const x = Math.floor(hash(i, 21) * W), y = 152 + Math.floor(hash(i, 22) * 26), a = (f - Math.floor(hash(i, 23) * FRAMES) + FRAMES) % FRAMES
+      if (a === 0 && c.key(x, y) === "e") c.px(x, y, "f"); if (a === 1 && c.key(x - 1, y) === "e") { c.px(x - 1, y, "f"); c.px(x + 1, y, "f") }
+    }
 
-    // the two of them on the ledge, the cup beside Teo, its steam, the camera on its bracket
+    // rain over everything below the ring's rim but the two of them: thin streaks slanting down to the
+    // right, a step lighter than what they fall in front of (so brightest before the lights), 7.5 px a
+    // frame: each drop falls the picture's height once a loop
+    for (let i = 0; i < 150; i++) {
+      const y0 = (Math.floor(hash(i, 12) * H) + Math.floor(7.5 * f)) % H, x0 = Math.floor(hash(i, 11) * (W + 45)) - 45
+      for (let d = 0; d < 3; d++) { const y = y0 + d, x = x0 + Math.floor(y / 4); if (y > rim(x) + 1 && y < H) { const k = c.key(x, y); if (lit[k]) c.px(x, y, lit[k]) } }
+    }
+
+    // the two of them on the ledge (still), the cup beside Teo, its steam rising and curling (half a px a
+    // frame, 12 px a loop, fading as it goes), the camera drone hovering by the tower, its eye blinking
     c.grid(JUNO, 197, 105)
     c.grid(TEO, 213, 110)
     c.grid(ARM, 214, 122)
     c.grid(CUP, 236, 127)
-    for (const [x, y] of [[240, 126], [241, 125], [241, 124], [240, 123], [239, 122], [240, 120], [241, 119]]) c.px(x, y, "5")
-    c.grid(CAM, 289, 104)
+    for (let j = 0; j < 6; j++) {
+      const h = (f * 0.5 + j * 2) % 12, y = Math.round(127 - h), x = 240 + Math.round(Math.sin(h * 0.6 + 1) * 1.2 + h * 0.08)
+      if (h < 10) { c.px(x, y, h < 6 ? "5" : "4"); if (h < 7) c.px(x, y - 1, "4") }
+    }
+    { const dx = Math.round(1.5 * wave(f, FRAMES)), dy = Math.round(0.7 * wave(f, 12, 0.25)); c.grid(CAM, 289 + dx, 104 + dy); c.px(290 + dx, 106 + dy, f % 12 < 2 ? "q" : "r") }
 
     // puddles in the tar: they mirror what stands above the parapet's foot (the ledge, the two of them, the
-    // glow), a step darker, broken by the rain's ripples
+    // glow), a step darker; the rain's ripples drift through them and the hood's reflection trembles
     const below = { k: "e", 1: "e", 2: "1", 3: "2", 4: "3", 5: "4", 6: "5", A: "1", B: "A", D: "B", G: "D", y: "j", Y: "y", j: "O", e: "e", f: "e" }
+    const drift = Math.floor(f / 4)
     for (const [cx, cy, rx, ry] of [[226, 165, 34, 4], [128, 171, 22, 3], [290, 174, 18, 2]])
       for (let y = cy - ry; y <= cy + ry; y++) for (let x = cx - rx; x <= cx + rx; x++) if (((x - cx) / rx) ** 2 + ((y - cy) / ry) ** 2 < 1) {
-        const k = c.key(x + (y % 3 === 0 ? 1 : 0), 2 * (SEAT + 13) - y - 14)
-        c.px(x, y, Math.abs(y - cy) === ry || y % 3 === 0 ? "f" : below[k] ?? "z")
+        const k = c.key(x + Math.round(0.7 * wave(f, 12, y * 0.27)), 2 * (SEAT + 13) - y - 14)
+        c.px(x, y, Math.abs(y - cy) === ry || (y + drift) % 3 === 0 ? "f" : below[k] ?? "z")
       }
   }
-  const PHOTO = (() => { const p = pen(); paint(p); return p.buf })()
-  sprite("deck_photo", { w: W, h: H }, (c) => { for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) c.px(x, y, PHOTO[y][x]) })
+  const PHOTOS = []
+  const photo = (f) => (PHOTOS[f] ??= (() => { const p = pen(); paint(p, f); return p.buf })())
+  anim("deck_photo", { w: W, h: H, frames: FRAMES, fps: 10 }, (c) => { const P = photo(c.frame); for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) c.px(x, y, P[y][x]) })
 
   // ---------------------------------------------------------------- the photo as the deck shows it
   const DIM = { k: "a", 1: "a", 2: "b", 3: "d", 4: "g", 5: "h", 6: "i", e: "a", f: "b", z: "b", Z: "d", X: "g",
     n: "o", M: "p", m: "p", N: "p", O: "t", P: "t", Q: "u", R: "u", F: "u", W: "i", c: "H", C: "I", v: "I", V: "i",
-    r: "L", q: "L", j: "w", y: "x", Y: "U", s: "t", S: "t", T: "b", A: "b", B: "d", D: "g", G: "h" }
-  const DARKER = { l: "i", i: "h", h: "g", g: "d", d: "b", b: "a", a: "a", U: "x", x: "w", w: "t", u: "t", t: "b", p: "o", o: "b", I: "H", H: "b", L: "o" }
+    r: "K", q: "L", j: "w", y: "x", Y: "U", s: "t", S: "t", T: "b", A: "b", B: "d", D: "g", G: "h" }
+  const DARKER = { l: "i", i: "h", h: "g", g: "d", d: "b", b: "a", a: "a", U: "x", x: "w", w: "t", u: "t", t: "b", p: "o", o: "b", I: "H", H: "b", L: "o", K: "b" }
   const LIGHTER = { a: "b", b: "d", d: "g", g: "h", h: "i", i: "i", o: "p", t: "u", H: "I" }
-  sprite("deck_wallpaper", { w: W, h: H }, (c) => {
-    const out = PHOTO.map((row) => row.map((k) => DIM[k] ?? "a"))
+  anim("deck_wallpaper", { w: W, h: H, frames: FRAMES, fps: 10 }, (c) => {
+    const out = photo(c.frame).map((row) => row.map((k) => DIM[k] ?? "a"))
     for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
       let k = out[y][x]
       const r = ((x - 200) / 230) ** 2 + ((y - 100) / 150) ** 2   // the lens's vignette, darkest at the corners
