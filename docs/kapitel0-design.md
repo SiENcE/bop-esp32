@@ -85,6 +85,18 @@ schläft ein, `zzz`).
   Bildschirmstörungen beim Öffnen. In Kap. 3 wird das Deck zerstört; das zweite Deck in Kap. 4 ist
   zusammengeflickt, Bernstein statt Cyan, und hat anfangs nur GLAS, CHAT und CACHE.
 
+**Entschieden mit Mockup F** (2026-11-04, `docs/mockups/mock_f_deck_*`):
+- Die acht Symbole stehen in zwei Spalten zu je vier (24x24 passen nicht in eine Spalte); das App-Fenster
+  ist etwa 240x137, der Schließknopf sitzt auf der oberen Rahmenlinie gegenüber dem Titel-Tab.
+- **EVIs Zeilen** stehen auf dem Deck im Streifen unter dem Fenster, links neben ihr (über ihr liegt das
+  Fenster), höchstens zwei Zeilen, in Minze mit Tuschekante.
+- **Auf dem Deck ist EVI selbst der Hinweis-Knopf**: ein Klick auf sie gibt den Hinweis; die Tasche und
+  der Knopf unten rechts sind auf dem Deck ausgeblendet. Fährt der Zeiger über sie, reagiert sie mit
+  einer kleinen Animation (schaut hoch, Ohren zucken), und ihr Name erscheint als Hover-Label.
+- Im Clip-Editor ist der Abspielkopf in Junos Gelb (ihr Blick), der Schnitt in Cyan-Klammern.
+- Sprecherfarben: Frau Kessler Bernstein, Sable Magenta, Teo Orange (Style Guide §8).
+- Das Hintergrundfoto wird richtig gemalt (`art/ui/deck_wallpaper.px.js`); entschieden wird danach.
+
 ### 2.2 EVI
 
 EVI ist der ausgemusterte Prototyp EVAL-7 der „automatischen Auswertung" (Story §4, §6). Für den

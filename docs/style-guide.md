@@ -233,6 +233,9 @@ Reference: the UI in `mock_c_iso`.
   |---|---|
   | Juno | `#fff070` |
   | EVI | `#8ef5d8` (mint: cyan's meaning, technology, but softer and greener than the tech cyan) |
+  | Frau Kessler | `#eea040` (amber: home, warmth; decided 2026-11-04 with mockup F) |
+  | Sable | `#ff4fd3` (magenta: commerce, the black market) |
+  | Teo | `#ffa040` (the orange of his vest) |
 
   Every other character gets a fixed colour when first drawn; add it here. Avoid red and cyan for
   anyone harmless (the meanings in §5). EVI is the exception, because she is technology.
