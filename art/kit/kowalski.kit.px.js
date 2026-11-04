@@ -496,7 +496,8 @@ const KOW = (() => {
       { const [x, y] = top(u0 + 0.12, v0 + 0.15, H); pen.rect(x - 1, y - 4, 3, 4, "O"); pen.line(x - 1, y - 9, x, y - 4, "P"); pen.line(x + 1, y - 9, x + 1, y - 4, "R") }
     },
   })
-  // the umbrella over Bao's cart, a prop of its own, so people can draw in front of it (the map's `back`)
+  // the umbrella over Bao's cart, a prop of its own, so the engine can draw it see-through over whoever it
+  // hides (the map's seeThrough)
   ISOKIT.prop("bao_umbrella", {
     frames: 12,
     solid: () => [],

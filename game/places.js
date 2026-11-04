@@ -9,7 +9,8 @@ function fromLayout(/** @type {any} */ L) {
   /** @type {Record<string, any>} */
   const at = { ...L.spots, walk: L.walk, holes: L.holes, face: L.face, lamps: L.lamps };
   // props seen through an open door are baked into the picture: no sprite of their own
-  at.props = Object.entries(L.props).filter(([, p]) => /** @type {any} */ (p).sprite).map(([id, p]) => ({ id, image: /** @type {any} */ (p).sprite, at: /** @type {any} */ (p).at, front: /** @type {any} */ (p).front, baseline: /** @type {any} */ (p).baseline }));
+  at.props = Object.entries(L.props).filter(([, p]) => /** @type {any} */ (p).sprite).map(([id, p]) => ({ id, image: /** @type {any} */ (p).sprite, at: /** @type {any} */ (p).at, front: /** @type {any} */ (p).front, baseline: /** @type {any} */ (p).baseline,
+    ...(/** @type {any} */ (p).seeThrough ? { seeThrough: true } : {}) }));
   for (const [id, p] of Object.entries(L.props)) { at[`${id}Poly`] = /** @type {any} */ (p).poly; at[`${id}Rect`] = /** @type {any} */ (p).box; }
   for (const [id, r] of Object.entries(L.openings ?? {})) at[`${id}Rect`] = r;
   return at;

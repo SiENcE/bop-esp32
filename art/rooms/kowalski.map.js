@@ -40,9 +40,9 @@ ISO_MAPS.kowalski = {
     { id: "vending", kit: "vending", at: [0.9, 0.05], foot: [0.7, 0.55], h: 1.85 },
     { id: "cart", kit: "bao_cart", at: [2.2, 2.0], foot: [1.1, 0.6], h: 0.95 },
     { id: "bins", kit: "bins", at: [5.3, 0.05], foot: [0.6, 0.45], h: 0.9 },
-    // the cart's umbrella (2.4 m) over the cart: people always draw in front of it (else it would hide whoever
-    // stands at the Kessel Block's door or the vending machine)
-    { id: "umbrella", kit: "bao_umbrella", over: "cart", at: [2.2, 2.0], foot: [1.1, 0.6], h: 2.4, block: false, back: true },
+    // the cart's umbrella (2.4 m), standing where the cart stands (after it, so over it); see-through where it
+    // hides someone behind it (at the Kessel Block's door, at the vending machine)
+    { id: "umbrella", kit: "bao_umbrella", over: "cart", at: [2.2, 2.0], foot: [1.1, 0.6], h: 2.4, block: false, seeThrough: true },
     // the string lights across the street, high over everyone (block: false: they stand on nothing)
     { id: "lights", kit: "string_lights", at: [0.05, 0.05], foot: [0.1, 0.1], h: 3.5, block: false },
   ],

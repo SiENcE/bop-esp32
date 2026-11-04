@@ -96,6 +96,9 @@ These points from the premise shape the art (the story isn't written yet):
 - **Stage rule:** what matters stands against the back walls or on the floor in the middle. The
   front third of the screen is open floor for walking, puddles and the UI. Don't let tall props hide
   hotspots.
+  Where a tall thing stands in front of where people walk (Bao's umbrella, a lamp post), it is
+  see-through over whoever it hides: every other pixel of it over their figure, a checkerboard (decided
+  2026-11-04; the engine's `seeThrough`, the map's prop option of the same name).
 - **Rooms wider than the screen** scroll horizontally (and vertically if needed). Keep the back
   corner in view in single-screen rooms.
 
