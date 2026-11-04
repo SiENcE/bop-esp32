@@ -49,7 +49,7 @@ ISO_MAPS.kowalski = {
   spots: {
     arrive: [0.6, 0.75, "se"], kessel_door: [0.4, 0.7, "nw"], vending: [1.25, 0.85, "ne"], ad: [3.8, 1.2, "ne"],
     alley: [6.0, 0.9, "ne"], lucky: [0.6, 2.8, "nw"], lucky_door: [0.5, 4.45, "nw"], bins: [5.6, 0.85, "ne"],
-    bao: [1.85, 2.3, "se"], eat: [2.75, 2.95, "ne"],
+    bao: [2.75, 1.7, "sw"], eat: [2.75, 2.95, "ne"],
     steam: [2.95, 2.3, null, 1.22],    // over Bao's pot (the steam's fx rises from it)
   },
   lights: [

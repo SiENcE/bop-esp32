@@ -6,9 +6,9 @@ floor's landing `kessel_14` (Frau Haldane asleep through her open door, the note
 with his first dialogue, the look down the stairwell: the first top-down view, `look_shaft`) and the lobby
 `kessel_lobby` (the rent notice: `rent_notice`) and out into Kowalski Street, painted and baked from its map
 (`art/kit/kowalski.kit.px.js`, 416 px wide, it scrolls; `docs/rooms/kowalski_x3.png`, `kowalski_right_x3.png`):
-LUCKY STATIC, the half-broken ad screen, the noodle machine with its tired face, Bao's cart and umbrella (people
-always draw in front of the umbrella: the map's `back`), the alley shut; the cart ends the test section. Bao and
-"JUNO." are next.
+LUCKY STATIC, the half-broken ad screen, the noodle machine with its tired face, Bao's cart and umbrella (see-through
+where it hides someone: the engine's `seeThrough`), the alley shut; the cart ends the test section. Bao is drawn
+as blocks for approval (`docs/characters/bao_blocks_x4.png`, `bao_blocks_room_x3.png`); painting him and "JUNO." are next.
 The engine is at Cutaway.js commit 9db22f4 (`lib/cutaway/VERSION.txt`).
 
 What was added on 2026-11-04 (in order):
