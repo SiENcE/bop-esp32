@@ -194,6 +194,9 @@ A location takes one key hue from this set and plays it against the night blues.
   - **face and hair:** short black hair, a thin cyan implant line along her left cheekbone (it
     glows when she is jacked in). The implant itself sits behind her ear, where Teo wears his Lull patch (decided
     2026-11-04, story §10a): under the hood only the line shows; with the hood down and from behind, a cyan point.
+    **Never confuse it with a Lull patch:** the patch is a plaster stuck on the skin, flat with a visible edge, cheap and
+    disposable, pale blue; the implant is inside the head, only a cyan point and the line. Only the place is the same.
+    The title's patch already reads as one; keep that wherever patches appear (Lull users, the clinic, Chapter 3).
   - **face at 50 px** (decided 2026-11-04, variant B of `docs/characters/juno50_faces_x3.png`): eyes two
     pixels tall, a small mouth, the fringe showing under the hood; cute, but not a cartoon. The street
     sprites leave the implant out (decided 2026-11-04): the engine mirrors them for SW and NW, so a

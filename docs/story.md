@@ -496,6 +496,10 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
   genau hinsieht, kann es erraten). Von dort läuft die dünne Cyan-Linie über die Wange, die leuchtet, wenn Juno
   eingeklinkt ist. Unter der Kapuze sieht man nur die Linie, und auf den kleinen Straßenfiguren gar nichts. Ohne Kapuze
   und von hinten (die Beobachtungshalle) sieht man den Punkt hinter dem Ohr.
+- **Pflaster und Implantat darf man nicht verwechseln:** Das Lull-Pflaster ist ein aufgeklebtes Pflaster, außen auf der
+  Haut, billig, zum Wegwerfen, blass leuchtend. Das Implantat steckt im Kopf: nur ein Cyan-Punkt und die Linie. Gleich
+  ist nur die Stelle. Auf dem Titelbild ist das Pflaster schon als Pflaster zu erkennen; wo es später kleiner oder
+  näher vorkommt (Lull-Nutzer, die Klinik, Kapitel 3), muss es das auch bleiben.
 - **Das Auge und „JUNO." sind nur in Junos Auge**, auf demselben Weg wie ihre Markierungen; auf dem Bildschirm selbst
   ist nichts (das Stottern ist echt, er ist kaputt). Deshalb sieht Bao nichts, und deshalb verdächtigt man EVI: Außer
   dem Deck kann sonst niemand in dieses Overlay schreiben. Der Zeuge sieht Juno durch die Kameras, und ihr Link fällt
