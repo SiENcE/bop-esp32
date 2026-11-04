@@ -5,8 +5,9 @@
 //                     the horizon (HZ_A1); the dark water under it
 //   intro_sky_a2      the same, its horizon lower (the camera looks up at the city: HZ_A2)
 //   intro_mast_1..5   a camera mast's head (the city's cameras stand in the water): its housings, the lenses, the
-//                     red eye blinking; five sizes, the game picks one by distance (12 frames at 10 fps, pivot
-//                     bottom-centre, on the column's top). Halcyon itself the game draws (at any size, as it nears)
+//                     red eye blinking; five sizes, the game picks one by distance (24 frames at 4 fps: the lens
+//                     pans once in 6 s; pivot bottom-centre, on the column's top). Halcyon itself the game draws
+//                     (at any size, as it nears)
 //   intro_drone       a patrol drone far off: 7 px, its red eye blinking (12 frames)
 // Colours: the world palette (style guide §5); dithering only for the light's falloff (the haze, the glow).
 ;(() => {
@@ -77,13 +78,13 @@ function mastHead(c, s, w, h) {
   // the dome, its red eye, the antenna
   const dy = my - mh
   if (s >= 2) { c.ellipse(cx, dy, Math.max(1, (s + 1) >> 1), 1, "3"); c.px(cx - 1, dy - 1, "4") }
-  c.px(cx, dy - (s >= 2 ? 1 : 0), f < 4 ? "q" : "r")
+  c.px(cx, dy - (s >= 2 ? 1 : 0), f % 12 < 2 ? "q" : "r")
   if (s >= 3) c.vline(cx, dy - 1 - s, s, "3")
 }
 const MAST = [null, [11, 10], [15, 14], [19, 18], [23, 22], [27, 26]]
 for (let s = 1; s <= 5; s++) {
   const [w, h] = MAST[s]
-  anim(`intro_mast_${s}`, { w, h, frames: 12, fps: 10, pivot: "bottom" }, (c) => mastHead(c, s, w, h),
+  anim(`intro_mast_${s}`, { w, h, frames: 24, fps: 4, pivot: "bottom" }, (c) => mastHead(c, s, w, h),
     glow("q", { r: 2 + (s >> 1), strength: 0.6 }), glow("v", { r: 2, strength: 0.3 }))
 }
 
