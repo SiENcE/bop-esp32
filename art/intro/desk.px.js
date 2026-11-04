@@ -91,9 +91,12 @@ function paint(c, mode) {
   // the neck, into the collar
   for (let y = 100; y < 128; y++) { const l = lerp([[100, 248], [128, 244]], y), r = lerp([[100, 278], [114, 278], [128, 286]], y)
     for (let x = Math.round(l); x < r; x++) c.px(x, y, (x - l) < 4 ? "l" : (x - l) < 12 ? "S" : (x - l) < 24 ? "s" : "O") }
-  // the collar stands round the neck
-  for (let y = 116; y < 130; y++) for (let x = 236; x < 296; x++) {
-    if (inE(x, y, 266, 134, 31, 17)) c.px(x, y, !inE(x, y, 266, 136, 30, 16) ? "G" : x < 272 ? "g" : "h")
+  // the collar closes round the neck: the neckline curves up from both shoulders, a lit lip along it, rolled and
+  // darker at its ends; nothing of the neck shows below it
+  for (let y = 104; y < 122; y++) for (let x = 230; x < 298; x++) {
+    if (!inE(x, y, 262, 124, 33, 15)) continue
+    const lip = !inE(x, y, 262, 126, 32, 15), end = x < 238 || x > 287
+    c.px(x, y, lip ? (end ? "g" : "G") : end ? "h" : x < 272 ? "g" : "h")
   }
   // the chair's back, nearest of all: a padded shell, its rounded top under her collar, the monitor's light on its
   // edge, a lit rim, stitched channels running up it, darker away from the monitor
