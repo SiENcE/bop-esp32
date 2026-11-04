@@ -34,7 +34,9 @@ ISO_MAPS.kessel_14 = {
     { id: "notes", wall: 1, from: 0.45, to: 1.15, h: [1.05, 1.65], kit: "note_war" },
   ],
   // the corner right of the stairwell: the picture's bottom edge cuts it off from the rest of the floor
-  nowalk: [[4.0, 0, 1.0, 1.2]],
+  // and the floor in front of the bench round Motte's feet (a notch is left where they stand: an actor
+  // stands on walkable floor), so nobody squeezes past him
+  nowalk: [[4.0, 0, 1.0, 1.2], [2.55, 1.6, 1.55, 0.22], [2.55, 1.82, 0.7, 0.4], [3.38, 1.82, 0.72, 0.4]],
   // the stairs go down along +u from the top step at u 2.5 (they run on under the floor past the well)
   stairs: { id: "stairs", kit: "stairs_concrete", from: [2.5, 0], to: [4.0, 1.0], down: "+u", rise: 0.18, tread: 0.3 },
   props: [

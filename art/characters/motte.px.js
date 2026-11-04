@@ -8,6 +8,7 @@
 // sits on the bench in kessel_14 facing the landing:
 //   motte_sit_se    on the bench, bent over the handheld: his thumbs on it, its screen flickering on his face
 //   motte_talk_se   on the bench, looking up at Juno, talking; the handheld lowered to his lap
+//   motte_sit_sw, motte_talk_sw   the same flipped (the game's: he faces the landing whichever way he turns)
 // Every frame is 37x48 inside the outline: pivot bottom-centre, at his feet on the floor in front of the
 // bench; the seat is 19 rows above the soles and 11 columns back (his thighs run forward
 // along the 2:1 floor line to the knees, the shins straight down). Light from the upper left, as Juno's.
@@ -142,9 +143,14 @@ const motte = (c, o = {}) => {
 }
 
 const opts = (more) => ({ w: IW, h: IH, outline: "k", pivot: "bottom", ...more })
-anim("motte_sit_se", opts({ frames: 4, ms: [380, 380, 380, 1100] }),
-  (c) => motte(c, { tap: c.frame % 2 === 1, glow: c.frame === 2 }))
-anim("motte_talk_se", opts({ frames: 2, ms: [200, 200] }),
-  (c) => motte(c, { up: true, talk: c.frame === 1, nod: -1 }))
+// drawn facing SE; the game uses them flipped (facing SW, the landing), for every facing: he stays on his
+// bench when the engine turns him toward whoever talks to him
+for (const [dir, flip] of [["se", null], ["sw", "x"]]) {
+  const o = flip ? { flip } : {}
+  anim(`motte_sit_${dir}`, opts({ frames: 4, ms: [380, 380, 380, 1100], ...o }),
+    (c) => motte(c, { tap: c.frame % 2 === 1, glow: c.frame === 2 }))
+  anim(`motte_talk_${dir}`, opts({ frames: 2, ms: [200, 200], ...o }),
+    (c) => motte(c, { up: true, talk: c.frame === 1, nod: -1 }))
+}
 
 })()

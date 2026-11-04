@@ -25,7 +25,12 @@ Cutaway.actor("juno", {
 Cutaway.actor("motte", {
   name: "Motte", color: "#f0f0a0",
   room: "kessel_14", at: Halcyon.at.kessel_14.motte_feet, facing: "sw",
-  costume: { idle: { se: "motte_sit_se" }, walk: { se: "motte_sit_se" }, talk: { se: "motte_talk_se" } },
+  // the same pose for every facing (the engine turns him toward Juno when she talks to him: he stays on the bench)
+  costume: {
+    idle: { se: "motte_sit_sw", sw: "motte_sit_sw", ne: "motte_sit_sw", nw: "motte_sit_sw" },
+    walk: { se: "motte_sit_sw", sw: "motte_sit_sw", ne: "motte_sit_sw", nw: "motte_sit_sw" },
+    talk: { se: "motte_talk_sw", sw: "motte_talk_sw", ne: "motte_talk_sw", nw: "motte_talk_sw" },
+  },
   voice: { pitch: 76, range: 6, wave: "triangle", syllable: 58, speed: 1.2 },
   look: ["Motte. Zwölf, Kurier, und immer da, wo ich gerade hinwill.", "Die Mütze ist ihm drei Nummern zu groß. Er würde sie nie hergeben."],
   talk: [{ face: "se" }, { if: "!moth_met", then: [{ dialog: "motte" }],
