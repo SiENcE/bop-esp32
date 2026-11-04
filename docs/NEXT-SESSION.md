@@ -8,49 +8,42 @@ We're continuing work on "Glass Sister", our cyberpunk point-and-click adventure
 (engine: Cutaway.js in B:\Github_my\cutaway\). Read CLAUDE.md first; it lists the docs, the commands and
 the checks. Talk to me in German (the docs are German, code comments English).
 
-Where we are (everything is committed, in both repos; the engine copy is at Cutaway.js 9db22f4):
-- Design: docs/story.md (decisions in §10), docs/kapitel0-design.md (the prologue; §6.2 the steps, §7.1 the
-  rooms, §8 the people as decided), docs/kapitel1-design.md, docs/dialog-design.md, docs/PLAN.md (status at
-  the top), docs/style-guide.md (§4 the iso scale, rooms from maps, other views; §6 characters; §8a the look).
-- Done in H3 so far (2026-11-04):
-  - **kessel_14**, the 14th floor's landing (art/rooms/kessel_14.map.js, art/kit/kessel_14.kit.px.js,
-    game/rooms/kessel.js): Juno's door, Frau Haldane asleep in her armchair seen from behind through her open
-    door (only her curlers over the chair's back, the TV's blue light), the note war (no words: the game reads
-    them out), the dying tube, the stairs down with the rail, bikes, bin bags, a bench.
-  - **Motte** (art/characters/motte.px.js): white beanie with teal stripes and a pink pompom, loud pink
-    jacket, teal bag, a handheld; he sits on the bench (his frames flipped to SW for every facing, so the
-    engine's turning doesn't move him). His dialogue: kind / evasive / dismissive (moth_met, moth_kind,
-    moth_brushed).
-  - **The look down the stairwell** (art/ui/looks.px.js, look_shaft): right-click (look) on the stairs in
-    kessel_14; street close-ups (look_*) show at their own size in the interface's frame, the lines in the
-    bottom bar while they show. The first top-down view.
-  - **kessel_lobby** (art/rooms/kessel_lobby.map.js, art/kit/kessel_lobby.kit.px.js): the dark arch to the
-    stairs, the lift OUT OF ORDER, Halcyon's poster SLEPT WELL? HALCYON LISTENS., the mailboxes with the rent
-    notice (rent_notice), the notice board, the glass street door; the street door ends the test section.
-  - cam04's cook, Kessler and Varga at their true size; EVI visible by the satchel while she talks.
-  - The bake (art/lib/isokit.js) learnt: stairs down through the floor, rooms seen through open doors
-    (open: { depth, floor, wall }, props with behind), light zones, kit light families (green), sheen on
-    chosen floor cells; the map format (art/lib/isomap.js): nowalk areas, spots on a step.
-- Checks now: validate 0 errors (3 known warnings), solve --full no soft-locks, every state has a hint,
-  play.mjs all passed.
+Where we are (everything is committed, in both repos; the engine copy is at Cutaway.js e2bc1d6):
+- Design: docs/story.md (decisions in §10), docs/kapitel0-design.md (the prologue; §5 the intro, §6.2 the steps,
+  §7.1 the rooms, §8 the people as decided), docs/kapitel1-design.md, docs/dialog-design.md, docs/PLAN.md
+  (status at the top), docs/style-guide.md (§4 the iso scale, rooms from maps, other views, see-through props;
+  §6 characters; §8a the look, the title screen).
+- **The prologue plays from the flat to its end card** (steps 0a-18). Done in H3 (2026-11-04):
+  - kessel_14 (Motte on his bench, the look down the stairwell), kessel_lobby (the rent notice);
+  - **Kowalski Street** (art/rooms/kowalski.map.js, art/kit/kowalski.kit.px.js, game/rooms/kowalski.js): 416 px,
+    scrolls; LUCKY STATIC, the half-broken ad screen, the noodle machine with its tired face, the alley shut,
+    the bins, Bao's cart on wheels with its umbrella (see-through over whoever it hides: the engine's
+    seeThrough), string lights and cables, strong light pools, a wet sheen and puddles that mirror the neon,
+    rain in two layers, splashes, steam from the pot and a drain, haze, glints, drips;
+  - **Bao** (art/characters/bao.px.js, head A), behind his cart (drawn SE, used flipped for every facing; the
+    street's hotspot "bao" talks to him, he is an unclickable actor); step 16: "Wie immer? Ich schreib's an.",
+    cash with 8 Chits (bao_paid), eating (ate_bao);
+  - **JUNO.** (steps 17-18): the screen stutters, the eye in its static turns to Juno, JUNO. over the screen,
+    the stinger "witness", Bao saw nothing, EVI "Das war nicht ich. Ehrlich.", the card Kapitel 1: Glass
+    (the screen's picture is one function, KOW.adScreen, for the opening and the moment's three animations);
+  - **the menu screen**: Kowalski Street whole as a still (art/ui/title_bg.px.js bakes it tall with its props and
+    a patrol drone, art/characters/drone.px.js; tools/title-backdrop.mjs brings it down to 320x180, the colours
+    kept to its own);
+  - Juno's street sprites have no implant pixel any more (mirroring moved it between her cheeks).
+  - Engine (Cutaway.js): see-through props (seeThrough), an actor's walkTo/face (where to stand to talk to them).
+- Checks now: validate 0 errors (3 known warnings: flags set but not yet tested), solve --full no soft-locks,
+  every state has a hint, play.mjs all passed (to the end card).
 
-Next: **Kowalski Street** (approved as a map and blocks: art/rooms/kowalski.map.js, art/test/kowalski_blocks.px.js,
-docs/rooms/kowalski_blocks_x2.png; mockup C is the look, docs/mockups/mock_c_iso_x3.png):
-- its kit, painted and baked like the others (the facades going up past the picture's top, LUCKY STATIC's
-  window, door and neon, the Kessel Block's door, the vending machine, the big broken ad screen, the alley to
-  the Drain Market closed tonight, bins, sidewalk and wet asphalt with puddles mirroring the neon, string
-  lights); the room is 416 px wide and scrolls; rain and Bao's steam as the engine's fx (lib/cutaway/fx.js);
-- **Bao** (story §4; kapitel0-design §8: umbrella, white apron, #e8c890), block sketch first for my approval,
-  then painted; "Wie immer? Ich schreib's an." (step 16), Juno eats under his umbrella (ate_bao);
-- the moment **"JUNO."** (step 17): the ad screen stutters, half face, half static, the eye in the static
-  turns to her, JUNO. over the whole screen, the stinger "witness"; Bao saw nothing; EVI from the bag: "Das war
-  nicht ich. Ehrlich."; then the end card leading to Chapter 1 (step 18);
-- hints for every new step, in EVI's voice;
-- then the intro "Die letzte Schicht" (kapitel0-design §5) with the descent on the Transitachse as the first
-  side view (style guide §4).
+Next: **the intro "Die letzte Schicht"** (kapitel0-design §5): the observation hall three years ago, the last
+shift, the announcement, Juno with her box on the **Transitachse** going down: the first **side view** (style
+guide §4: a stage, its own walk views for Juno, left and right). Block sketches first for my approval (the hall,
+the Transitachse, Juno from the side), then painted; then it plays as the game's intro before the title.
 
 Open points: the post-it "ESSEN!!" painted in German in the flat (make it language-free or an overlay); the
-flat's empty front floor; dialogue v2 (E-d) and the Iso tab (E-e) are later phases; CJK fallback in the engine.
+flat's empty front floor; the steam fx in the street was replaced by baked plumes (check the engine's steam
+fx is visible somewhere or drop it); the iso tile editor (E-e) is postponed to Chapter 1, to be decided when
+rooms need re-arranging often; dialogue v2 (E-d) later; CJK fallback in the engine; docs/walkthroughs/ (other
+games' walkthroughs, reference only) is untracked: gitignore it or keep it out.
 
 How I like to work:
 - Small steps; for each, show screenshots (the shot.mjs command is in CLAUDE.md; for moments, step the clock
