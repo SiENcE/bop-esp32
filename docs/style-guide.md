@@ -191,11 +191,11 @@ A location takes one key hue from this set and plays it against the night blues.
 - **Juno Reyes** (placeholder name), freelance hacker and info broker:
   - **clothes:** a yellow hooded rain slicker (hood up outside, down indoors), black cargo trousers,
     heavy boots, a grey satchel on a strap (her deck lives in it);
-  - **face and hair:** short black hair, a thin cyan implant line along her left cheekbone (it
-    glows when she is jacked in). The implant itself sits behind her ear, where Teo wears his Lull patch (decided
-    2026-11-04, story §10a): under the hood only the line shows; with the hood down and from behind, a cyan point.
+  - **face and hair:** short black hair. The implant sits behind her ear, where Teo wears his Lull patch (decided
+    2026-11-04, story §10a): with the hood down, a cyan point there; under the hood nothing shows. The thin cyan line
+    along her left cheekbone is the title's alone, a sign on that picture; nowhere else (decided 2026-11-04).
     **Never confuse it with a Lull patch:** the patch is a plaster stuck on the skin, flat with a visible edge, cheap and
-    disposable, pale blue; the implant is inside the head, only a cyan point and the line. Only the place is the same.
+    disposable, pale blue; the implant is inside the head, only a cyan point. Only the place is the same.
     The title's patch already reads as one; keep that wherever patches appear (Lull users, the clinic, Chapter 3).
   - **face at 50 px** (decided 2026-11-04, variant B of `docs/characters/juno50_faces_x3.png`): eyes two
     pixels tall, a small mouth, the fringe showing under the hood; cute, but not a cartoon. The street

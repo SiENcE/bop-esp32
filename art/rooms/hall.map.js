@@ -25,7 +25,10 @@ ISO_MAPS.hall = {
   // the desks: d<row><column>, row 0 at the back; each with its watcher and armchair (1.2 x 1.3 m)
   props: [0, 1, 2, 3].flatMap((r) => [0, 1, 2, 3, 4].map((c) =>
     ({ id: `d${r}${c}`, kit: "desk", at: [0.9 + c * 1.8, 1.6 + r * 1.55], foot: [1.2, 1.3], h: 1.45, ...(r === 3 && c === 1 ? { juno: true } : {}) }))),
-  spots: { juno: [3.3, 6.6, "ne"] },
+  // the game's places for the screens going out (game/intro_hall.js): the back corner at the foot of the walls;
+  // m<row><column>, the top left of each desk's first monitor picture
+  spots: { juno: [3.3, 6.6, "ne"], corner: [0, 0],
+    ...Object.fromEntries([0, 1, 2, 3].flatMap((r) => [0, 1, 2, 3, 4].map((c) => [`m${r}${c}`, [0.94 + c * 1.8, 1.73 + r * 1.55, undefined, 1.16]]))) },
   // `bake` is read by the bake only: the walls of screens light the room green; each row's screens light their
   // watchers from the front (a strip along the row at the monitors' height)
   lights: [

@@ -4,7 +4,10 @@
 // monitor with a camera's street in the phosphor; behind it the hall's wall of screens, out of focus. In 2.39:1
 // bars, so what matters lies between y 23 and y 157.
 //   intro_desk_bg   320x180, a still: all of that. What moves is the game's (game/intro_desk.js): the people in
-//                   the feed, the man who stops, her yellow brackets, the cheek line lighting, her hand on the keys.
+//                   the feed, the man who stops, her yellow brackets, the implant's point lighting, her hand.
+//   intro_desk_last the same when the hall has gone dark round her: the wall behind out, her monitor the last one on
+//   intro_desk_dark her monitor out too, the room almost black, her face from the title in the dead glass, turned
+//                   to her (art/intro/juno_face.data.js)
 // The feed's text is the city's tech, in English.
 pal({
   0: "#030a0a", 1: "#071514", 2: "#0c221f", 3: "#12332d", 4: "#1a483e", 5: "#266252", 6: "#388169", 7: "#55a585", 8: "#8acfae", 9: "#d4f7e2",   // the phosphor
@@ -14,6 +17,7 @@ pal({
   c: "#123c4e", v: "#62def0",                                                                                                                // the lanyard, the implant
 })
 include("../lib/text.js")
+include("./juno_face.data.js")
 
 const W = 320, H = 180
 const BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5]
@@ -42,11 +46,12 @@ function street(x, y) {
   return bay(x, y) < lit ? "4" : "3"
 }
 
-sprite("intro_desk_bg", { w: W, h: H }, (c) => {
+// mode: "lit" everything on; "last" the wall out, her monitor on; "dark" all out
+function paint(c, mode) {
   // the hall behind: its wall of screens, out of focus: soft blocks, nothing to read
   for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
     const i = Math.floor(x / 26), j = Math.floor(y / 17), edge = x % 26 < 2 || y % 17 < 2, q = hash(i * 13 + j, 1)
-    c.px(x, y, edge ? "1" : q < 0.2 ? "4" : q < 0.65 ? "3" : "2")
+    c.px(x, y, mode !== "lit" ? (edge ? "1" : "0") : edge ? "1" : q < 0.2 ? "4" : q < 0.65 ? "3" : "2")
   }
   // the desk, lit by the monitor: brightest under the picture, falling off to the right
   for (let y = 130; y < H; y++) for (let x = 0; x < W; x++) {
@@ -87,8 +92,8 @@ sprite("intro_desk_bg", { w: W, h: H }, (c) => {
   for (let y = 100; y < 128; y++) { const l = lerp([[100, 248], [128, 244]], y), r = lerp([[100, 278], [114, 278], [128, 286]], y)
     for (let x = Math.round(l); x < r; x++) c.px(x, y, (x - l) < 4 ? "l" : (x - l) < 12 ? "S" : (x - l) < 24 ? "s" : "O") }
   // the collar stands round the neck; the lanyard runs out of it and down over the shoulder
-  for (let y = 116; y < 152; y++) for (let x = 236; x < 296; x++) {
-    if (inE(x, y, 266, 134, 31, 17)) c.px(x, y, !inE(x, y, 266, 136, 30, 16) ? "G" : x < 252 ? "g" : "h")
+  for (let y = 116; y < 130; y++) for (let x = 236; x < 296; x++) {
+    if (inE(x, y, 266, 134, 31, 17)) c.px(x, y, !inE(x, y, 266, 136, 30, 16) ? "G" : (x - 206) / 110 < 0.62 ? "g" : "h")
   }
   for (let t = 0; t <= 1; t += 0.02) { const x = Math.round(240 - 26 * t), y = Math.round(126 + 38 * t); c.rect(x, y, 3, 1, "c") }
   // the head: skull and jaw; hair over the skull and behind the ear, skin before it (a lost profile: we see the
@@ -109,7 +114,8 @@ sprite("intro_desk_bg", { w: W, h: H }, (c) => {
     }
     // skin: the cheek in the monitor's light, warm further back, the shadow under the jaw
     const back = x - lerp([[64, 228], [80, 227], [96, 228], [108, 238]], y)
-    c.px(x, y, back < 2 ? "l" : back < 4 ? "m" : y > 102 ? "s" : "S")
+    // the cheek's plane, turning away toward the ear; the jaw's shadow
+    c.px(x, y, back < 2 ? "l" : back < 4 ? "m" : y > 102 || back > 15 - Math.max(0, y - 88) * 0.4 ? "s" : "S")
   }
   // the fringe over the temple, a few strands past the hairline
   for (const [x, y, n] of [[232, 66, 7], [236, 68, 8], [240, 70, 8]]) c.vline(x, y, n, "k")
@@ -118,5 +124,20 @@ sprite("intro_desk_bg", { w: W, h: H }, (c) => {
   for (let y = 80; y < 100; y++) for (let x = 248; x < 262; x++) if (inE(x, y, 255, 90, 6, 10)) c.px(x, y, inE(x, y, 256, 90, 3, 6) ? "s" : x < 252 ? "S" : "s")
   c.rect(255, 86, 2, 7, "O")
   c.rect(264, 88, 3, 3, "c"); c.px(265, 89, "v")
-  c.line(246, 86, 228, 83, "c")
-})
+  if (mode !== "dark") return
+  // all out: only what little light is left, then the dead glass with her face in it, turned to her
+  const DARK = { 9: "C", 8: "C", 7: "B", 6: "B", 5: "2", 4: "2", 3: "1", 2: "1", G: "g", g: "h", h: "C", S: "s", s: "O", l: "s", m: "s", O: "A", E: "C", D: "C", C: "B", B: "A", A: "k", c: "A", v: "c" }
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) { const k = c.key(x, y), d = DARK[k]; if (d) c.px(x, y, d) }
+  c.rect(SX, SY, SW, SH, "0")
+  const fx = SX + 112, fy = SY + 20
+  for (let y = SY; y < SY + SH; y++) for (let x = SX; x < SX + SW; x++) {
+    if (inE(x, y, fx + 7, fy + 18, 16, 20) || inE(x, y, fx + 6, SY + SH + 8, 34, 24)) c.px(x, y, "1")     // her hair, her shoulders
+    if (y > fy + 34 && inE(x, y, fx + 9, fy + 46, 8, 12)) c.px(x, y, "2")                                  // her neck
+  }
+  // the title's hood cut the face off at the back: her short hair covers that edge here
+  const hairline = [[0, 10], [16, 9], [30, 10], [42, 13], [48, 15]]
+  JUNO_FACE.forEach((row, j) => { for (let i = 0; i < row.length; i++) if (row[i] !== ".") c.px(fx + i, fy + j, i < lerp(hairline, j) ? "1" : row[i]) })
+}
+sprite("intro_desk_bg", { w: W, h: H }, (c) => paint(c, "lit"))
+sprite("intro_desk_last", { w: W, h: H }, (c) => paint(c, "last"))
+sprite("intro_desk_dark", { w: W, h: H }, (c) => paint(c, "dark"))

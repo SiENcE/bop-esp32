@@ -125,7 +125,7 @@ Cyan nur für Technik.
 
 | Wer | Rolle | Aussehen und Silhouette (Akzent im Feed) | Farbe |
 |---|---|---|---|
-| **Juno Reyes**, 31 | Glasserin und Informationshändlerin; früher **zivile Beobachterin** bei Halcyon (eine menschliche Kamerabeobachterin), vor drei Jahren entlassen, als „automatische Auswertung" ihr Team ersetzte; ihr Beobachter-Implantat hat sie behalten, was heute illegal ist | gelber Regenmantel mit Kapuze, Umhängetasche, Implantat hinter dem Ohr (unter der Kapuze), davon sichtbar die Cyan-Linie über der Wange | `#fff070` |
+| **Juno Reyes**, 31 | Glasserin und Informationshändlerin; früher **zivile Beobachterin** bei Halcyon (eine menschliche Kamerabeobachterin), vor drei Jahren entlassen, als „automatische Auswertung" ihr Team ersetzte; ihr Beobachter-Implantat hat sie behalten, was heute illegal ist | gelber Regenmantel mit Kapuze, Umhängetasche, Implantat hinter dem Ohr (unter der Kapuze nicht zu sehen; auf dem Titelbild als Cyan-Linie über der Wange) | `#fff070` |
 | **EVI** | die KI auf Junos Deck: der ausgemusterte Prototyp der „automatischen Auswertung" (§6), den Juno vor der Löschung gerettet hat. Neugierig, lieb, gut mit Daten und hoffnungslos schlecht darin, Menschen zu lesen; fragt Juno ständig, warum Menschen Dinge tun. Erklärt das Deck, meldet Nachrichten, gibt die Hinweise. Lebt im Deck, und das Deck lebt in Junos Tasche. | ein kleines rundes Pixelwesen mit großen Augen und zwei Antennen-Ohren, auf dem Desktop etwa 24 px, in der Tasche 16 px; 6 Gesichter (froh, neugierig, verwirrt, besorgt, müde, Glitch) | `#8ef5d8` |
 | **Teo Reyes**, 23 | ihr jüngerer Bruder; arbeitet Doppelschichten in Pumpenhalle 3, **mit Lull**; fröhlich und stolz, zahlt ihre Miete, wenn sie es nicht kann. Hat sich mit 18 einen **Gezeitenmod** machen lassen (Kiemen), weil Taucher das Doppelte verdienen: Halcyons idealer Arbeiter, umgebaut für die Schicht und betäubt für die Nacht. | orange Arbeitsweste, Gehörschutz um den Hals, Kiemenschlitze, die im Feed leuchten | `#ffb070` |
 | **Bao**, über 70 | betreibt die Nudel-Garküche vor dem LUCKY STATIC; lässt Juno anschreiben; kennt jeden. Redet ständig von seinem Mann Lou, „meinem Alten", der nie zu sehen ist, bis zum Epilog. | Schirm, weiße Schürze | `#e8c890` |
@@ -493,11 +493,11 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
   Zeugen empfangen, aber nicht in die gemeinsame Ebene hinein. Lull öffnet diese Ebene und schaltet dabei das
   Bewusstsein ab. Beides zusammen: Lull öffnet die Tür, das Implantat hält Juno wach.
 - **Wo es sitzt:** hinter dem Ohr, wie Teos Lull-Pflaster auf dem Titelbild (dieselbe Stelle, derselbe Ursprung; wer
-  genau hinsieht, kann es erraten). Von dort läuft die dünne Cyan-Linie über die Wange, die leuchtet, wenn Juno
-  eingeklinkt ist. Unter der Kapuze sieht man nur die Linie, und auf den kleinen Straßenfiguren gar nichts. Ohne Kapuze
-  und von hinten (die Beobachtungshalle) sieht man den Punkt hinter dem Ohr.
+  genau hinsieht, kann es erraten). Sichtbar ist es nur als Cyan-Punkt hinter dem Ohr, ohne Kapuze (die
+  Beobachtungshalle, Junos Pult im Vorspann); unter der Kapuze und auf den kleinen Straßenfiguren sieht man nichts.
+  **Die Cyan-Linie auf der Wange gibt es nur auf dem Titelbild**, als Bildzeichen (2026-11-04).
 - **Pflaster und Implantat darf man nicht verwechseln:** Das Lull-Pflaster ist ein aufgeklebtes Pflaster, außen auf der
-  Haut, billig, zum Wegwerfen, blass leuchtend. Das Implantat steckt im Kopf: nur ein Cyan-Punkt und die Linie. Gleich
+  Haut, billig, zum Wegwerfen, blass leuchtend. Das Implantat steckt im Kopf: nur ein Cyan-Punkt. Gleich
   ist nur die Stelle. Auf dem Titelbild ist das Pflaster schon als Pflaster zu erkennen; wo es später kleiner oder
   näher vorkommt (Lull-Nutzer, die Klinik, Kapitel 3), muss es das auch bleiben.
 - **Das Auge und „JUNO." sind nur in Junos Auge**, auf demselben Weg wie ihre Markierungen; auf dem Bildschirm selbst
