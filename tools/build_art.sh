@@ -52,7 +52,10 @@ title() {
     rm -rf build/art/title
     $PXL build art/ui/splash.px.js --out build/art/title --no-preview | tail -n 1
     $PXL build art/ui/logo.px.js --out build/art/title --no-preview | tail -n 1
-    $ATLAS build/art/title assets/title.js --only "splash_bg,title_logo"
+    # the menu screen's backdrop: Kowalski Street whole, baked tall and brought down to 320x180
+    $PXL build art/ui/title_bg.px.js --out build/art/title --no-preview | tail -n 1
+    node tools/title-backdrop.mjs build/art/title/anims
+    $ATLAS build/art/title assets/title.js --only "splash_bg,title_logo,title_bg"
 }
 
 deck() {

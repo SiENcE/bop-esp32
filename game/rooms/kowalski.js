@@ -7,8 +7,7 @@
 (function () {
   const AW = Halcyon.at.kowalski, AL = Halcyon.at.kessel_lobby;
 
-  /** The street's look, shared with the menu screen behind the title (game/title.js). */
-  const LOOK = Halcyon.kowalskiLook = {
+  const LOOK = {
     background: "kowalski_bg", size: /** @type {[number, number]} */ ([416, 180]), props: AW.props,
     // the map's lamps: the bar's warm light, its sign's magenta, the screen's cyan, the machine, the lantern
     light: { ambient: 0.8, color: "#d4dcf4", lamps: AW.lamps.map((/** @type {any} */ { bake, zone, ...lamp }) => lamp) },
