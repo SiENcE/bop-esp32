@@ -163,9 +163,11 @@ A location takes one key hue from this set and plays it against the night blues.
 
   | Who | Height | Width |
   |---|---|---|
-  | Juno | 32 px | about 16 px |
-  | adults | 30–34 px | |
-  | children | 22–26 px | |
+  | Juno | ~50 px (1.68 m at 30 px/m, §4) | about 20 px |
+  | adults | 48–56 px | |
+  | children | 30–40 px | |
+
+  (Until H1c everything was drawn at 32 px; the old sprites are replaced as they are redrawn.)
 
   Heads are about 1/5 of the height. These are realistic proportions, unlike the Loonies' cartoon
   heads.
@@ -184,6 +186,8 @@ A location takes one key hue from this set and plays it against the night blues.
     heavy boots, a grey satchel on a strap (her deck lives in it);
   - **face and hair:** short black hair, a thin cyan implant line along her left cheekbone (it
     glows when she is jacked in).
+  - **face at 50 px** (decided 2026-11-04, variant B of `docs/characters/juno50_faces_x3.png`): eyes two
+    pixels tall, a small mouth, the fringe showing under the hood; cute, but not a cartoon.
 - **Faces are 2–4 px in the world.** Feeling comes from posture, from what people do and from the
   words.
   - **Close-up portraits (to try):** for important conversations, a bust portrait (about 64x64,

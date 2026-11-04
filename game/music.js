@@ -110,11 +110,13 @@
       pedal: { inst: "br_pedal" }, thunder: { inst: "br_thunder" } },
     start: "intro",
     sections: {
-      intro: { bars: 4, next: "a", tracks: {
-        brass: bars(hold(mDm9), hold(mDm9), hold(Dadd9), hold(mDm9)),
-        pedal: bars(hold("D1"), hold("D1"), hold("D1"), hold("D1")),
-        thunder: bars("x . . . . . . . . . . . . . . .", empty, ". . . . . . . . x . . . . . . .", empty),
-        bells: bars(". . . . . . . . A6 . . . . . . .", ". . . . E6 . . . . . . . . . . .", ". . . . . . . . . . . . B6 . . .", ". . . . . . . . . . . . . . . ."),
+      // two bars of swelling brass and a bell; the lead's pickup in the second bar leads into the tune
+      intro: { bars: 2, next: "a", tracks: {
+        brass: bars(hold(mDm9), hold(Dadd9)),
+        pedal: bars(hold("D1"), hold("D1")),
+        thunder: bars("x . . . . . . . . . . . . . . .", empty),
+        bells: bars(". . . . . . . . A6 . . . . . . .", ". . . . E6 . . . . . . . . . . ."),
+        lead: bars(empty, ". . . . . . . . D4 - - - E4 - F4 -"),
       } },
       a: { bars: 4, next: "b", tracks: {
         brass: bars(hold(mDm9), hold(BbM7), hold(Gm9D), half(A7sus, mA7)),
