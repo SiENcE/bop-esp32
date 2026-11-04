@@ -11,7 +11,9 @@
     ambience: ["neon_buzz", "city_far"], music: { theme: "juno", intensity: 0.3 },
     walk: AK.walk, holes: AK.holes, props: AK.props,
     // the map's lamps (the bake's): the tube's green, the TV's blue from Frau Haldane's door
-    light: { ambient: 0.4, color: "#9fd8b0", lamps: AK.lamps.map((/** @type {any} */ { bake, zone, ...lamp }) => lamp) },
+    // (the stairwell's cold light and the Lull light only bake the art: in the game they would dim whoever sits by them)
+    light: { ambient: 0.78, color: "#e8f4ec",
+      lamps: AK.lamps.filter((/** @type {any} */ l) => !["below", "lull"].includes(l.id)).map((/** @type {any} */ { bake, zone, ...lamp }) => lamp) },
     hotspots: {
       door_juno: { name: "Meine Tür", rect: AK.door_junoRect, walkTo: AK.door_juno, face: "nw",
         look: "Meine Tür. Drei Schlösser, zwei davon von mir. Und die Kamera drüber auch.",
@@ -29,12 +31,30 @@
         look: "Zwei Fahrräder, aneinander angeschlossen. Damit keins allein geklaut wird." },
       bags: { name: "Müllsäcke", poly: AK.bagsPoly, walkTo: AK.bags, face: "ne",
         look: "Müll. Abgeholt wird dienstags. Theoretisch." },
-      bench: { name: "Bank", poly: AK.benchPoly, walkTo: AK.motte, face: "ne",
+      bench: { name: "Bank", poly: AK.benchPoly, walkTo: AK.motte, face: "ne", z: -1,
         look: "Eine Bank, die irgendwer hochgetragen und hier vergessen hat. Motte sitzt fast jeden Abend drauf." },
       stairs: { name: "Treppe", poly: AK.railPoly, walkTo: AK.stairs, face: "ne",
         look: "Die Treppe runter. Vierzehn Stockwerke, wenn der Aufzug nicht geht. Er geht nie.",
-        use: [{ end: "Ende des Testabschnitts. Weiter geht es in der Lobby (H3)." }] },
+        // the first time down Motte calls her back: his question (kapitel0-design §6.2 step 14)
+        use: [{ if: "!moth_met", then: [{ say: "motte", text: "Juno! Warte mal." }, { face: "sw" }, { dialog: "motte" }] },
+          { end: "Ende des Testabschnitts. Weiter geht es in der Lobby (H3)." }] },
     },
     enter: [{ once: ["Der Flur. Grün wie ein Aquarium, nur ohne Fische."] }],
+  });
+
+  // Motte's question, the first value for him (story §5: moth_kind, moth_brushed; kapitel1-design §7: if
+  // she was kind he asks for lessons). Every answer meets him (moth_met).
+  Cutaway.dialog("motte", {
+    main: {
+      enter: [{ say: "motte", text: "Was machst du eigentlich? Den ganzen Tag?" }],
+      choices: [
+        { text: "„Ich schau Leuten zu. Und verkauf, was ich sehe.“", goto: "end", then: [{ set: "moth_met" }, { set: "moth_kind" },
+          { say: "motte", text: "Durch die Kameras? Echt? Zeigst du mir das mal?" }, "Vielleicht. Wenn du alt genug bist, es zu bereuen."] },
+        { text: "„Reparaturen.“", goto: "end", then: [{ set: "moth_met" },
+          { say: "motte", text: "Reparaturen. Klar. Darum hast du drei Schlösser." }] },
+        { text: "„Geh schlafen, Motte.“", goto: "end", then: [{ set: "moth_met" }, { set: "moth_brushed" },
+          { say: "motte", text: "Ich bin nicht müde." }, "Er schaut wieder auf sein Handheld. Aber er tippt nicht."] },
+      ],
+    },
   });
 })();

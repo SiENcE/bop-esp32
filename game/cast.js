@@ -20,6 +20,20 @@ Cutaway.actor("juno", {
   voice: { pitch: 62, wave: "triangle", syllable: 70 },
 });
 
+// Motte, 12, a courier kid in the Kessel Block: on the bench by the stairs of the 14th floor, bent over his
+// handheld (art/characters/motte.px.js: drawn facing SE, mirrored for SW, the way he faces the landing)
+Cutaway.actor("motte", {
+  name: "Motte", color: "#f0f0a0",
+  room: "kessel_14", at: Halcyon.at.kessel_14.motte_feet, facing: "sw",
+  costume: { idle: { se: "motte_sit_se" }, walk: { se: "motte_sit_se" }, talk: { se: "motte_talk_se" } },
+  voice: { pitch: 76, range: 6, wave: "triangle", syllable: 58, speed: 1.2 },
+  look: ["Motte. Zwölf, Kurier, und immer da, wo ich gerade hinwill.", "Die Mütze ist ihm drei Nummern zu groß. Er würde sie nie hergeben."],
+  talk: [{ face: "se" }, { if: "!moth_met", then: [{ dialog: "motte" }],
+    else: [{ if: "moth_kind", then: [{ say: "motte", text: "Morgen zeigst du's mir. Versprochen ist versprochen." }],
+      else: [{ if: "moth_brushed", then: [{ say: "motte", text: "Ich bin nicht müde." }],
+        else: [{ say: "motte", text: "Reparaturen. Klar." }] }] }] }],
+});
+
 // ---- people in the feeds (only ever seen through cameras in the prologue)
 // a stranger in the crowd ("Pendler") until Juno tags him; then "Kessler" (Halcyon.names)
 Halcyon.people.kessler = { name: "KESSLER", known: "tag_kessler", label: "Pendler", speaker: "Kessler" };

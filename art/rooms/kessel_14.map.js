@@ -51,14 +51,14 @@ ISO_MAPS.kessel_14 = {
   ],
   spots: {
     arrive: [0.6, 1.85, "se"], door_juno: [0.4, 1.85, "nw"], notes: [0.45, 0.8, "nw"], haldane: [1.15, 0.45, "ne"],
-    motte: [3.05, 2.15, "ne"], stairs: [2.2, 0.35, "ne"], bikes: [0.75, 2.95, "nw"], bags: [1.75, 3.0, "sw"],
-    motte_sits: [3.3, 1.41, "sw", 0.45], haldane_sits: [0.43, -0.6, "nw", 0.4],
+    motte: [2.2, 1.95, "se"], stairs: [2.2, 0.35, "ne"], bikes: [0.75, 2.95, "nw"], bags: [1.75, 3.0, "sw"],
+    motte_feet: [3.3, 1.86, "sw"], haldane_sits: [0.43, -0.6, "nw", 0.4],
   },
   // `bake` is read by the bake only (art/lib/isokit.js): the tube lights along its length and stutters with
   // its dying end; the TV and the Lull light are in Frau Haldane's room (zone: they reach the landing only
   // through her door); a cold light comes up the stairwell from the floor below
   lights: [
-    { id: "tube", at: [1.6, 0.1, 2.45], r: 140, power: 1.1, color: "#c8f5d0", flicker: 0.15,
+    { id: "tube", at: [1.6, 0.1, 2.45], r: 200, power: 1.1, color: "#c8f5d0", flicker: 0.15,
       bake: { line: [[0.32, 0.05, 2.42], [2.98, 0.05, 2.42]], reach: 4.6, power: 1.5, floor: 1.4, wrap: 0.6, off: [3, 4, 9] } },
     { id: "tv", zone: "door_haldane", at: [-0.55, -1.75, 0.78], r: 60, power: 0.9, color: "#5a8cff", flicker: 0.2,
       bake: { reach: 2.8, power: 1.8, wrap: 0.4, off: [2, 7] } },

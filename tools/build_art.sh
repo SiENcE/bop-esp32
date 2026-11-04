@@ -2,7 +2,7 @@
 # Build the pxl art and pack it into atlas scripts the game loads (assets/<group>.js).
 # Usage: sh tools/build_art.sh          (everything)
 #        sh tools/build_art.sh test     (phase H0's test street: art/test/street.px.js -> assets/test.js)
-#        sh tools/build_art.sh characters (Juno and the feed people: art/characters/{juno,feed_people}.px.js
+#        sh tools/build_art.sh characters (Juno, Motte and the feed people: art/characters/{juno,motte,feed_people}.px.js
 #                                          -> assets/characters.js)
 #        sh tools/build_art.sh ui       (the feed's zoom windows and the interface's sprites: art/ui/zooms.px.js,
 #                                         art/ui/hud.px.js -> assets/ui.js)
@@ -34,8 +34,9 @@ characters() {
     rm -rf build/art/characters
     $PXL build art/characters/juno.px.js --out build/art/characters --no-preview | tail -n 1    # 50 px (H1c)
     $PXL build art/characters/feed_people.px.js --out build/art/characters --no-preview | tail -n 1
+    $PXL build art/characters/motte.px.js --out build/art/characters --no-preview | tail -n 1        # Motte (H3)
     # build-atlas's --only matches exact names or a trailing *, so the feed people go by prefix
-    $ATLAS build/art/characters assets/characters.js --only "juno_*,kessler_*,varga_*,commuter_*,yuen_*"
+    $ATLAS build/art/characters assets/characters.js --only "juno_*,kessler_*,varga_*,commuter_*,yuen_*,motte_*"
 }
 
 ui() {
