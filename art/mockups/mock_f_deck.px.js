@@ -30,6 +30,7 @@ pal({
   s: "#0f1626", t: "#1d2638", u: "#2a3550", x: "#3a2a20", X: "#5a4428",                 // the wallpaper photo, dimmed
 })
 include("../lib/text.js")
+include("../ui/deck_wallpaper.px.js")
 
 const W = 320, H = 180
 const T = (c, x, y, s, k, o) => TXT.draw(c, x, y, s, k, o)
@@ -79,34 +80,10 @@ function wrap(s, w, font = "halcyon") {
 }
 
 // ================================================================ the wallpaper: an old photo, dimmed
-// Juno and Teo as kids from behind, sitting on a roof's edge in the rain, the city below; a pale corner
-// of the print shows where it was scanned. Kept in the darkest values so everything on it reads.
+// Juno and Teo as kids from behind, sitting on a roof's edge in the rain, the city below: the picture is
+// art/ui/deck_wallpaper.px.js (deck_wallpaper, already dimmed so everything on it reads).
 function wallpaper(c) {
-  for (let y = 0; y < H; y++) c.rect(0, y, W, 1, y < 60 ? "s" : y < 120 ? "1" : "s")
-  for (let y = 40; y < 100; y++) for (let x = 0; x < W; x++) if (((x * 7 + y * 13) % 11 === 0) && y > 60 + Math.sin(x / 9) * 4) c.px(x, y, "t")
-  // the city: blocks of towers, a few windows still warm in the print
-  const towers = [[96, 70, 18], [116, 58, 14], [132, 74, 20], [154, 50, 12], [168, 66, 22], [192, 78, 16], [210, 56, 18], [230, 72, 14], [246, 62, 20], [268, 80, 16], [286, 68, 22], [306, 76, 14]]
-  for (const [x, top, w] of towers) {
-    c.rect(x, top, w, 130 - top, "t")
-    for (let wy = top + 4; wy < 126; wy += 5) for (let wx = x + 2; wx < x + w - 2; wx += 4) if ((wx * 3 + wy * 7) % 13 < 2) c.px(wx, wy, (wx + wy) % 3 ? "x" : "X")
-  }
-  // the roof they sit on, and its edge
-  c.rect(84, 128, W - 84, 52, "u"); c.rect(84, 128, W - 84, 1, "4")
-  for (let x = 84; x < W; x += 9) c.rect(x, 129, 1, 51, "t")
-  // the two of them from behind: Teo smaller, leaning on her; her hood the only colour left (dimmed yellow)
-  const grid = (x0, y0, rows) => rows.forEach((r, y) => { for (let x = 0; x < r.length; x++) if (r[x] !== ".") c.px(x0 + x, y0 + y, r[x]) })
-  grid(198, 109, [                                                     // Juno, the hood already then (dimmed yellow)
-    ".....OOyy.......", "....Oyyyyyy.....", "...Oyyyyyyyy....", "...Oyyyyyyyy....", "..OOyyyyyyyyy...",
-    "..Oyyyyyyyyyy...", "..Oyyyyyyyyyy...", "...Oyyyyyyyy....", "..OOyyyyyyyyy...", ".OOyyyyyyyyyyy..",
-    "OOyyyyyyyyyyyyy.", "OOyyyyyyyyyyyyyy", "OOyyyyyyyyyyyyyy", "OOyyyyyyyyyyyyyy", "OOyyyyyyyyyyyyyy",
-    "OOyyyyyyyyyyyyyy", "OOyyyyyyyyyyyyyy", "OOyyyyyyyyyyyyyy", "OOyyyyyyyyyyyyyy", "OOyyyyyyyyyyyyyy"])
-  grid(212, 113, [                                                     // Teo, a size smaller, his head on her shoulder
-    "..tttt......", ".tuuuut.....", "tuuuuuut....", "tuuuuuut....", ".tuuuut.....", "..tuut......",
-    "..tuuuuuu...", ".tuuuuuuuu..", "tuuuuuuuuuu.", "tuuuuuuuuuu.", "tuuuuuuuuuuu", "tuuuuuuuuuuu",
-    "tuuuuuuuuuuu", "tuuuuuuuuuuu", "tuuuuuuuuuuu", "tuuuuuuuuuuu"])
-  // rain over the print, and the scan's pale corner
-  for (let i = 0; i < 70; i++) { const x = (i * 53) % W, y = (i * 37) % (H - 6); c.px(x, y, "3"); c.px(x + 1, y + 2, "3") }
-  c.rect(W - 1, 11, 1, H - 11, "2"); c.rect(0, H - 1, W, 1, "2")
+  c.stamp("deck_wallpaper", 0, 0)
 }
 
 // ================================================================ the header (10 px)
