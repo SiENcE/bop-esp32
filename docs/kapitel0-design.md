@@ -352,7 +352,7 @@ Klarheit zu verlieren.
 | Juno | 32 px | Kapuze, Tasche | `#fff070` | Iso 4 Richtungen (SE, NE, gespiegelt) + Feed-Figur |
 | Herr Kessler | 31 px | kleiner Mann, Mantel, **heller Schal** | `#b8c890` | nur Feed |
 | Gus Varga | 34 px | breit, grauer Mantel, Hut; im Feed sehr dunkel bis auf die Uhr am Handgelenk | `#a0a0b8` | nur Feed (Kap. 1 auch Iso) |
-| Motte | 22 px | weiße Mütze | `#f0f0a0` | Iso |
+| Motte | 43 px stehend (1,45 m); sitzt auf einer Bank vor dem Treppengeländer in `kessel_14` | übergroße weiße Strickmütze mit Bommel (entschieden 2026-11-04: Mütze A, zwei Petrolstreifen in der Krempe, rosa Bommel; `docs/characters/motte_blocks_x4.png`), knallrosa Jacke, zu groß, mit Reflexstreifen, Kuriertasche in Petrol, ein altes Handheld | `#f0f0a0` | Iso (stehend SE/NE, sitzend) |
 | Frau Haldane | 28 px (sitzend) | rosa Morgenmantel, Lull-Licht | `#ffa8d8` | Iso (sitzend, schlafend) |
 | Bao | 30 px | Schirm, weiße Schürze | `#e8c890` | Iso |
 | Juno im Vorspann | 32 px | Halcyon-Grau, Ausweis | — | Iso, eine Pose |
