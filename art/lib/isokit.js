@@ -39,7 +39,8 @@
 //                                that stop light (default: its whole footprint and height); footprint(p) ->
 //                                [[u, v, du, dv], ...] where it touches the floor (contact shadows; default
 //                                its footprint: a desk stands on its legs); glows: pxl glow() items run on
-//                                its sprite
+//                                its sprite; outline: false leaves its ink outline off (a thin thing in
+//                                the air: a cable, a string of bulbs)
 //
 // THE PEN (room meters in, the room's screen px out; every mark carries a world point and a normal for
 // the light; a key "!k" is drawn as k and never lit: screens, lamps, the view through a window)
@@ -661,7 +662,7 @@ const ISOKIT = (() => {
       if (x0 === Infinity) continue
       const bw = x1 - x0 + 1, bh = y1 - y0 + 1, name = `${id}_${p.id}`
       const paint = (c) => blit(c, BF[(c.frame ?? 0) % BF.length], x0, y0)
-      const opts = { w: bw, h: bh, outline: "k", pivot: "bottom" }
+      const opts = { w: bw, h: bh, pivot: "bottom", ...(k?.outline === false ? {} : { outline: "k" }) }
       if (nf > 1) anim(name, { ...opts, frames: nf, fps }, paint, ...(k?.glows ?? []))
       else sprite(name, opts, paint, ...(k?.glows ?? []))
       // the outline grows it 1 px all round; the engine anchors it bottom-centre

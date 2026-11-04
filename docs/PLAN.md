@@ -4,8 +4,11 @@ Status (2026-11-04): **H0, H1, H1c, H2, H2c and H2b done; H3 under way.** The pr
 0a–15 in the new scale: the flat, the deck with EVI, the feeds (cam04's people at their true size), the 14th
 floor's landing `kessel_14` (Frau Haldane asleep through her open door, the note war, Motte on his bench
 with his first dialogue, the look down the stairwell: the first top-down view, `look_shaft`) and the lobby
-`kessel_lobby` (the rent notice: `rent_notice`). Kowalski Street is approved as a map and blocks
-(`art/rooms/kowalski.map.js`, `docs/rooms/kowalski_blocks_x2.png`); its kit, Bao and "JUNO." are next.
+`kessel_lobby` (the rent notice: `rent_notice`) and out into Kowalski Street, painted and baked from its map
+(`art/kit/kowalski.kit.px.js`, 416 px wide, it scrolls; `docs/rooms/kowalski_x3.png`, `kowalski_right_x3.png`):
+LUCKY STATIC, the half-broken ad screen, the noodle machine with its tired face, Bao's cart and umbrella (people
+always draw in front of the umbrella: the map's `back`), the alley shut; the cart ends the test section. Bao and
+"JUNO." are next.
 The engine is at Cutaway.js commit 9db22f4 (`lib/cutaway/VERSION.txt`).
 
 What was added on 2026-11-04 (in order):

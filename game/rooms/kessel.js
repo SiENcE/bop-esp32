@@ -69,7 +69,7 @@
       door: { name: "Haustür", rect: AL.doorRect, walkTo: AL.door, face: "nw",
         look: "Die Haustür. Draußen regnet's. Draußen regnet's immer.",
         use: [{ if: "!rent_notice", then: ["Erst noch die Post. Wenn ich schon unten bin."],
-          else: [{ end: "Ende des Testabschnitts. Weiter geht es auf der Kowalski-Straße (H3)." }] }] },
+          else: [{ goto: "kowalski", at: Halcyon.at.kowalski.arrive, face: "se" }] }] },
       sign: { name: "Warnschild", poly: AL.signPoly, walkTo: AL.sign, face: "nw",
         look: "Vorsicht, nass. Das Schild steht seit Wochen hier. Der Boden ist seitdem nass." },
       flyers: { name: "Werbezettel", poly: AL.flyersPoly, walkTo: AL.mailboxes, face: "nw",

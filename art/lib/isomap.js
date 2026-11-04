@@ -15,7 +15,9 @@
 //                       a door or a window in wall i, from..to meters along it
 //   props: [{ id, kit, at: [u, v], foot: [du, dv], h, block }]
 //                       a thing from the kit standing on its footprint; `block: false` lets people walk
-//                       through it (a rug)
+//                       through it (a rug); `back: true` draws every actor in front of it (a thing high
+//                       over the floor, an umbrella over a cart: it still sorts with the props by its
+//                       baseline, but never hides a person)
 //   stairs: { id, kit, from: [u, v], to: [u, v], down: "+u", rise, tread }
 //                       a flight going down through a hole in the floor (its cells "."), from the top step
 //                       at from[0] along +u and on under the floor past the hole (the bake draws it; the
@@ -131,7 +133,8 @@ const ISOMAP = (function () {
     for (const p of map.props ?? []) {
       const [u0, v0] = p.at, [du, dv] = p.foot, ext = 0.6         // each front edge carried on past its corner
       props[p.id] = {
-        front: [...P(u0 - ext, v0 + dv), ...P(u0, v0 + dv), ...P(u0 + du, v0 + dv), ...P(u0 + du, v0), ...P(u0 + du, v0 - ext)],
+        front: p.back ? [0, -9999, 1, -9999]
+          : [...P(u0 - ext, v0 + dv), ...P(u0, v0 + dv), ...P(u0 + du, v0 + dv), ...P(u0 + du, v0), ...P(u0 + du, v0 - ext)],
         baseline: P(u0 + du, v0 + dv)[1],
         // the silhouette of the box it stands in (a hotspot's shape)
         poly: [P(u0, v0, p.h), P(u0 + du, v0, p.h), P(u0 + du, v0), P(u0 + du, v0 + dv), P(u0, v0 + dv), P(u0, v0 + dv, p.h)].flat(),
