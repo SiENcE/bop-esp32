@@ -1,7 +1,7 @@
 // The observation hall (the intro's shot 1) baked from its map (art/rooms/hall.map.js) with its kit
-// (art/kit/hall.kit.px.js) and its light (art/lib/isokit.js). Blocks for now.
-//   hall_bg       576x416, a 12-frame loop: a few of the screens change picture
-//   hall_d<r><c>  the desks with their watchers (props, outlined, pivot bottom-centre)
+// (art/kit/hall.kit.px.js) and its light (art/lib/isokit.js).
+//   hall_bg       576x416, a 12-frame loop: the screens' feeds, some of them moving
+//   hall_d<r><c>  the desks with their watchers, typing (props, 12 frames, outlined, pivot bottom-centre)
 include("../lib/iso.js", { palette: true })
 include("../lib/isomap.js")
 include("../rooms/hall.map.js")

@@ -64,7 +64,7 @@
       { goto: "intro_hall", transition: "dissolve" },
       { camera: [100, 20], ms: 0 },
       { caption: "2088-04-30  05:45", at: "bl", ms: 4000, wait: false },
-      { camera: [150, 190], ms: 9000, ease: "inOut" },
+      { camera: [20, 180], ms: 9000, ease: "inOut" },              // to the front row, Juno's desk (d31)
       { wait: 1000 },
       { fade: "out", ms: 1200 },
       { music: { stop: true, fade: 1.5 } },
