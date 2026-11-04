@@ -199,23 +199,70 @@ const K14 = (() => {
   })
 
   // ---------------------------------------------------------------- props
-  // three bags of rubbish in the corner by the stairs, one split: a noodle cup, a takeaway box
+  // three bags of rubbish against the near wall, one split: a noodle cup, a takeaway box
   ISOKIT.prop("bin_bags", {
+    // bin bags are lumps, not balls: each a hand grid, its neck twisted and tied with the two ears of the
+    // knot up, slumped wider at the foot, the black plastic's shine in short creases
     draw(pen, p) {
       const [u0, v0] = p.at
-      const bag = (u, v, r, hh, body) => {
-        const [x, y] = pen.P(u, v, hh * 0.45), rx = Math.round(r * 30), ry = Math.round(hh * 13 + r * 6)
-        pen.at(u, v, hh * 0.5, "u"); pen.ellipse(x, y, rx, ry, body)
-        pen.at(u, v, hh, "up"); pen.ellipse(x - 1, y - Math.round(ry / 2), Math.max(1, Math.round(rx / 2)), Math.max(1, Math.round(ry / 3)), "4")
-        pen.px(x, y - ry - 1, "3"); pen.px(x - 1, y - ry - 2, "3"); pen.px(x + 1, y - ry - 2, "3")      // the knot
-        pen.at(u, v, 0.05, "v"); pen.hline(x - rx + 2, y + ry, rx * 2 - 3, "1")
+      const BAG_TALL = [
+        ".....3...3......",
+        ".....33.33......",
+        "......333.......",
+        "......232.......",
+        ".....22322......",
+        "....2222252.....",
+        "...222222522....",
+        "..22222225222...",
+        ".2222222522222..",
+        ".22222252222252.",
+        "222222522222522.",
+        "2222252222252222",
+        "2222522222522221",
+        "2222222225222221",
+        "2222222222222221",
+        "1222222222222211",
+        "1122222222222111",
+        ".11111111111111.",
+      ]
+      const BAG_LOW = [
+        ".......3..3.......",
+        ".......3333.......",
+        "........33........",
+        "......223222......",
+        "....2222222252....",
+        "..222252222225222.",
+        ".22225222222252222",
+        "222252222222522222",
+        "222222222225222221",
+        "222222222222222221",
+        "122222222222222211",
+        ".11111111111111111",
+      ]
+      const BAG_TORN = [
+        "....3.3......",
+        "....333......",
+        "...22322.....",
+        "..2225222....",
+        ".22252222....",
+        "2225222.H22..",
+        "222222.hHh21.",
+        "222222.hh.221",
+        "1222221...21.",
+        ".1111111111..",
+      ]
+      const put = (u, v, h, rows) => {
+        const [x, y] = pen.P(u, v, 0)
+        pen.at(u, v, h, "v")
+        pen.grid(x - fl(rows[0].length / 2), y - rows.length + 1, rows)
       }
-      bag(u0 + 0.22, v0 + 0.2, 0.22, 0.55, "2")
-      bag(u0 + 0.5, v0 + 0.18, 0.18, 0.45, "2")
-      bag(u0 + 0.35, v0 + 0.42, 0.2, 0.4, "3")
-      const [x, y] = pen.P(u0 + 0.45, v0 + 0.55, 0)
-      pen.at(u0 + 0.45, v0 + 0.55, 0.05, "up")
-      pen.rect(x - 2, y - 3, 3, 3, "H"); pen.hline(x - 2, y - 3, 3, "h"); pen.rect(x + 2, y - 2, 4, 2, "h"); pen.px(x + 3, y - 2, "Q")
+      put(u0 + 0.25, v0 + 0.2, 0.6, BAG_TALL)
+      put(u0 + 0.7, v0 + 0.3, 0.35, BAG_TORN)
+      put(u0 + 0.4, v0 + 0.55, 0.4, BAG_LOW)
+      // what spilled from the torn one: a noodle cup on its side, a takeaway box
+      const [x, y] = pen.P(u0 + 0.85, v0 + 0.55, 0)
+      pen.at(u0 + 0.85, v0 + 0.55, 0.05, "up")
+      pen.grid(x - 3, y - 2, ["HHh.hh", "Hhh.hQ"])
     },
   })
   // two bikes leaning on the wall, one behind the other: their wheels, the frames, a lock through both

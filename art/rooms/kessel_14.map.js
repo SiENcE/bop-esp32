@@ -2,7 +2,7 @@
 // Juno's flat. Every length in meters. Juno's door 14B in the left back wall, the note war beside it;
 // Frau Haldane's door 14C in the right one, open, her armchair just inside in the TV's blue light; the
 // stairs down to the lobby along the right wall (the well is kept near the back: the front of the floor
-// falls off the screen), with Motte on them; bikes along the left wall, bin bags in the right corner.
+// falls off the screen), with Motte on them; bikes along the left wall, bin bags against the near wall.
 "use strict";
 
 ISO_MAPS.kessel_14 = {
@@ -38,7 +38,8 @@ ISO_MAPS.kessel_14 = {
   // the stairs go down along +u from the top step at u 2.5 (they run on under the floor past the well)
   stairs: { id: "stairs", kit: "stairs_concrete", from: [2.5, 0], to: [4.0, 1.0], down: "+u", rise: 0.18, tread: 0.3 },
   props: [
-    { id: "bags", kit: "bin_bags", at: [4.3, 0], foot: [0.7, 0.6], h: 0.6 },
+    // the bin bags against the near wall, waiting for Tuesday
+    { id: "bags", kit: "bin_bags", at: [0.85, 3.35], foot: [0.95, 0.65], h: 0.55 },
     { id: "bikes", kit: "bikes", at: [0, 2.75], foot: [0.45, 1.6], h: 1.0 },
     { id: "rail", kit: "stair_rail", at: [2.5, 1.0], foot: [1.5, 0.06], h: 0.95 },
     // behind Frau Haldane's open door: her armchair with its back to us (her TV is deeper in the room, out of
@@ -47,7 +48,7 @@ ISO_MAPS.kessel_14 = {
   ],
   spots: {
     arrive: [0.6, 1.85, "se"], door_juno: [0.4, 1.85, "nw"], notes: [0.45, 0.8, "nw"], haldane: [1.15, 0.45, "ne"],
-    motte: [2.25, 0.85, "ne"], stairs: [2.25, 0.45, "ne"], bikes: [0.7, 3.4, "nw"], bags: [3.95, 1.4, "ne"],
+    motte: [2.25, 0.85, "ne"], stairs: [2.25, 0.45, "ne"], bikes: [0.75, 2.95, "nw"], bags: [1.75, 3.0, "sw"],
     motte_sits: [2.95, 0.5, "sw", -0.36], haldane_sits: [0.43, -0.6, "nw", 0.4],
   },
   // `bake` is read by the bake only (art/lib/isokit.js): the tube lights along its length and stutters with
