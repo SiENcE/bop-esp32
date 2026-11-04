@@ -10,8 +10,8 @@
 //   props   desk  a slab on two side panels, a cable tray under it, three monitors with their feeds, the
 //           keyboard; a round tub armchair on a round foot, its high back toward us, so no legs show; in it
 //           a watcher in Halcyon's grey: round shoulders over the chair's rim, the arms forward to the keys
-//           (typing), the head with its hair (cut, colour and skin vary by desk), the implant's cyan point on
-//           the nape (no cable: the implant lays its tags over what the eye sees on the monitors). Juno's (the
+//           (typing), the head with its hair (cut, colour and skin vary by desk), the implant's cyan point behind
+//           the ear (no cable: the implant lays its tags over what the eye sees on the monitors). Juno's (the
 //           map's `juno: true`): her short black hair, the cactus and the cup, her yellow coat over the chair
 // Screens are "!" keys: they are the light and are never lit themselves.
 pal({ 0: "#0c221f", 7: "#266252", 8: "#55a585", 9: "#8acfae", L: "#d4f7e2",     // the phosphor
@@ -154,7 +154,8 @@ const HALLKIT = (() => {
     sleeve(p, x0, y0, xe, ye); sleeve(p, xe, ye, x1, y1 - lift)
     p.rect(x1 + 2, y1 - lift, 3, 2, skin)
   }
-  /** A head seen from behind and a little to its right: round, the hair over it, the ear and cheek at its right. */
+  /** A head seen from behind and a little to its right: round, the hair over it; the ear, the jaw and the neck
+   *  run together at its right; the implant's point just behind the ear. */
   function head(p, x, y, hair, skin, style) {
     const [dark, lit] = hair
     for (let dy = -5; dy <= 5; dy++) {
@@ -162,14 +163,15 @@ const HALLKIT = (() => {
       for (let dx = -half; dx <= half; dx++) {
         let k = style === "bald" ? skin : dx < -1 && dy < -1 ? lit : dark                              // lit from the screens, ahead and left
         if (style === "bald" && dx === -half) k = "O"
-        if (style !== "bald" && dx >= half - 1 && dy > 0 && dy < 4) k = skin                           // the cheek and the ear
+        if (style !== "bald" && dy >= 1 && dx >= 3 - ((dy - 1) >> 1)) k = skin                         // the ear, down the jaw to the neck
         p.px(x + dx, y + dy, k)
       }
     }
     if (style === "bun") { p.ellipse(x - 1, y - 6, 2, 2, dark); p.px(x - 2, y - 7, lit) }
     if (style === "long") p.rect(x - 4, y + 3, 8, 5, dark)
+    p.px(x + 2, y + 1, "!v")
   }
-  const HAIR = [["k", "1"], ["k", "1"], ["O", "A"], ["h", "H"], ["1", "2"], ["O", "P"]]   // black, brown, grey, dark brown
+  const HAIR = [["k", "1"], ["k", "1"], ["O", "A"], ["w", "x"], ["1", "2"], ["O", "P"]]   // black, brown, grey (darker than the uniform), dark brown
   ISOKIT.prop("desk", {
     frames: NF,
     solid: (m) => [[m.at[0], m.at[1], 0.7, m.foot[0], 0.65, 0.05], [m.at[0] + 0.32, m.at[1] + 0.72, 0, 0.56, 0.54, 1.3]],
@@ -238,13 +240,12 @@ const HALLKIT = (() => {
       }
       // the near arm over the armrest
       arm(p, cu + 0.2, pv, cu + 0.17, v0 + 0.42, tap(2), skin)
-      // the neck, the head; the implant's point on the nape
+      // the neck, the head (the implant's point is the head's)
       const nod = !juno && ih(seed, 60) < 0.2 && f >= 6 && f < 9 ? 1 : 0
       const [hx, hy] = p.P(cu, pv, 1.27)
       p.at(cu, pv, 1.2, "v")
-      p.rect(hx - 2, hy + 4 + nod, 4, 3, skin)
+      p.rect(hx - 1, hy + 4 + nod, 4, 3, skin)
       head(p, hx, hy + nod, hair, skin, style)
-      if (style !== "long") p.px(hx - 1, hy + 6 + nod, "!v")                                         // under long hair it does not show
       p.at(null)
     },
   })

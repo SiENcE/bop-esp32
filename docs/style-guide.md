@@ -192,7 +192,8 @@ A location takes one key hue from this set and plays it against the night blues.
   - **clothes:** a yellow hooded rain slicker (hood up outside, down indoors), black cargo trousers,
     heavy boots, a grey satchel on a strap (her deck lives in it);
   - **face and hair:** short black hair, a thin cyan implant line along her left cheekbone (it
-    glows when she is jacked in).
+    glows when she is jacked in). The implant itself sits behind her ear, where Teo wears his Lull patch (decided
+    2026-11-04, story §10a): under the hood only the line shows; with the hood down and from behind, a cyan point.
   - **face at 50 px** (decided 2026-11-04, variant B of `docs/characters/juno50_faces_x3.png`): eyes two
     pixels tall, a small mouth, the fringe showing under the hood; cute, but not a cartoon. The street
     sprites leave the implant out (decided 2026-11-04): the engine mirrors them for SW and NW, so a

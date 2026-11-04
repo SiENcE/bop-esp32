@@ -125,7 +125,7 @@ Cyan nur für Technik.
 
 | Wer | Rolle | Aussehen und Silhouette (Akzent im Feed) | Farbe |
 |---|---|---|---|
-| **Juno Reyes**, 31 | Glasserin und Informationshändlerin; früher **zivile Beobachterin** bei Halcyon (eine menschliche Kamerabeobachterin), vor drei Jahren entlassen, als „automatische Auswertung" ihr Team ersetzte; ihr Beobachter-Implantat hat sie behalten, was heute illegal ist | gelber Regenmantel mit Kapuze, Umhängetasche, Cyan-Implantat auf der Wange | `#fff070` |
+| **Juno Reyes**, 31 | Glasserin und Informationshändlerin; früher **zivile Beobachterin** bei Halcyon (eine menschliche Kamerabeobachterin), vor drei Jahren entlassen, als „automatische Auswertung" ihr Team ersetzte; ihr Beobachter-Implantat hat sie behalten, was heute illegal ist | gelber Regenmantel mit Kapuze, Umhängetasche, Implantat hinter dem Ohr (unter der Kapuze), davon sichtbar die Cyan-Linie über der Wange | `#fff070` |
 | **EVI** | die KI auf Junos Deck: der ausgemusterte Prototyp der „automatischen Auswertung" (§6), den Juno vor der Löschung gerettet hat. Neugierig, lieb, gut mit Daten und hoffnungslos schlecht darin, Menschen zu lesen; fragt Juno ständig, warum Menschen Dinge tun. Erklärt das Deck, meldet Nachrichten, gibt die Hinweise. Lebt im Deck, und das Deck lebt in Junos Tasche. | ein kleines rundes Pixelwesen mit großen Augen und zwei Antennen-Ohren, auf dem Desktop etwa 24 px, in der Tasche 16 px; 6 Gesichter (froh, neugierig, verwirrt, besorgt, müde, Glitch) | `#8ef5d8` |
 | **Teo Reyes**, 23 | ihr jüngerer Bruder; arbeitet Doppelschichten in Pumpenhalle 3, **mit Lull**; fröhlich und stolz, zahlt ihre Miete, wenn sie es nicht kann. Hat sich mit 18 einen **Gezeitenmod** machen lassen (Kiemen), weil Taucher das Doppelte verdienen: Halcyons idealer Arbeiter, umgebaut für die Schicht und betäubt für die Nacht. | orange Arbeitsweste, Gehörschutz um den Hals, Kiemenschlitze, die im Feed leuchten | `#ffb070` |
 | **Bao**, über 70 | betreibt die Nudel-Garküche vor dem LUCKY STATIC; lässt Juno anschreiben; kennt jeden. Redet ständig von seinem Mann Lou, „meinem Alten", der nie zu sehen ist, bis zum Epilog. | Schirm, weiße Schürze | `#e8c890` |
@@ -487,6 +487,28 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
   tief über das Lichtermeer zum Turm und durch ein grünes Fenster in die Beobachtungshalle, in der Stimmung eines
   Neo-Noir-Vorspanns, mit eigenen Bildern. Er läuft nur beim ersten Start von selbst und ist im Menü wieder
   abspielbar; der Titelbildschirm mit dem Glass-Sister-Logo kommt bei jedem Start.
+- **Was das Beobachter-Implantat ist** (klärt §6, Punkt 4, und Kapitel 3): **Lull ist das Beobachter-Implantat in
+  billig.** Halcyon hat Lull aus dem Beobachterprogramm gebaut und das Wachsein herausgenommen; deshalb sprechen
+  beide dasselbe Protokoll. Das Implantat kann wach Kameras verbinden, Markierungen ins eigene Auge legen und den
+  Zeugen empfangen, aber nicht in die gemeinsame Ebene hinein. Lull öffnet diese Ebene und schaltet dabei das
+  Bewusstsein ab. Beides zusammen: Lull öffnet die Tür, das Implantat hält Juno wach.
+- **Wo es sitzt:** hinter dem Ohr, wie Teos Lull-Pflaster auf dem Titelbild (dieselbe Stelle, derselbe Ursprung; wer
+  genau hinsieht, kann es erraten). Von dort läuft die dünne Cyan-Linie über die Wange, die leuchtet, wenn Juno
+  eingeklinkt ist. Unter der Kapuze sieht man nur die Linie, und auf den kleinen Straßenfiguren gar nichts. Ohne Kapuze
+  und von hinten (die Beobachtungshalle) sieht man den Punkt hinter dem Ohr.
+- **Das Auge und „JUNO." sind nur in Junos Auge**, auf demselben Weg wie ihre Markierungen; auf dem Bildschirm selbst
+  ist nichts (das Stottern ist echt, er ist kaputt). Deshalb sieht Bao nichts, und deshalb verdächtigt man EVI: Außer
+  dem Deck kann sonst niemand in dieses Overlay schreiben. Der Zeuge sieht Juno durch die Kameras, und ihr Link fällt
+  ihm auf, weil sie die Einzige ist, die wach auf dem Protokoll ist. Die Steigerung: erst nur in ihrem Kopf, im Finale
+  übernimmt er wirklich die Bildschirme.
+- **Wie der Spieler es erfährt** (nicht nur in der Bibel): über Dokumente und Junos innere Stimme, Schritt für Schritt.
+  - Früh, auf dem Deck: Junos altes **Beobachter-Handbuch** von Halcyon (eine Notiz im CACHE), mit dem, was das
+    Implantat kann, wo es sitzt, und dem Namen des Protokolls.
+  - Kapitel 1 oder 2: Ein Lull-Nutzer taucht im Feed kurz als unbekannter Link in ihrem Overlay auf. Niemand erklärt es.
+  - Kapitel 3, bevor sie Lull nimmt: In Ines' Schlafprotokollen steht die Kennung der Lull-Firmware, und sie ist die aus
+    dem Handbuch, nur fehlt die Wach-Ebene (Technik der Stadt, englisch: `OBS-4 // WAKE LAYER: REMOVED`). Die innere
+    Stimme DAS IMPLANTAT erkennt sie, und Juno sagt es laut. Damit ist auch klar, warum sie Lull nehmen muss und warum
+    sie dabei wach bleibt.
 - **Der Datenstick** im Karton trägt `EVAL-7 // DELETE` (gemalter Text ist englisch, wie alle Technik der Stadt).
 - **Das Deck bleibt, wie es ist**: Röhrenmonitor, Maus, selbstgebaute Platinen. Der Retro-Look ist Absicht (die
   Welt des Neunten ist zusammengeflickt), keine Vorhersage.
