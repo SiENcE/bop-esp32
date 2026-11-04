@@ -68,9 +68,15 @@ Cutaway.script.action("tag", async (s) => {
 }, { sets: (s) => [`tag_${s.tag}`] });
 
 // { zoom: "zoom_ring" } opens the zoom window over the feed; { zoom: false } closes it (the window is the
-// feed layer's; nothing here waits, so the lines that follow are read while it shows)
+// feed layer's; nothing here waits, so the lines that follow are read while it shows). A street close-up
+// ({ zoom: "look_shaft" }) covers the speaker, so while it shows the room's lines go to the bottom bar.
+/** @type {{room: any, lines: any} | null} */
+let lookLines = null;
 Cutaway.script.action("zoom", (s) => {
   Halcyon.zoom = s.zoom ? String(s.zoom) : null;
+  if (lookLines) { lookLines.room.lines = lookLines.lines; lookLines = null; }
+  const room = Cutaway.scene.room;
+  if (Halcyon.zoom?.startsWith("look_") && room) { lookLines = { room, lines: room.lines }; room.lines = "bottom"; }
   if (s.zoom && !Cutaway.script.fast) Cutaway.events.emit("sfx", { sfx: "zoom" });
 });
 

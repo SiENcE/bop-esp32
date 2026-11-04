@@ -81,6 +81,16 @@
     if (!Halcyon.zoom) return;
     const a = Cutaway.assets.get(Halcyon.zoom);
     if (!a) return;
+    // street mode's close-ups (look_*, art/ui/looks.px.js): at their own size, in the interface's frame
+    if (Halcyon.zoom.startsWith("look_")) {
+      const f = a.frames[0], x = Math.round((W - f.w) / 2), y = Math.max(6, Math.round((150 - f.h) / 2));
+      ctx.fillStyle = C.ink; ctx.fillRect(x - 3, y - 3, f.w + 6, f.h + 6);
+      ctx.fillStyle = C.cyanDark; ctx.fillRect(x - 2, y - 2, f.w + 4, 1); ctx.fillRect(x - 2, y + f.h + 1, f.w + 4, 1);
+      ctx.fillRect(x - 2, y - 2, 1, f.h + 4); ctx.fillRect(x + f.w + 1, y - 2, 1, f.h + 4);
+      Cutaway.assets.draw(ctx, Halcyon.zoom, x, y, { anchor: [0, 0], t: Cutaway.clock.time });
+      brackets(ctx, [x - 2, y - 2, f.w + 4, f.h + 4], C.cyan, 6);
+      return;
+    }
     const f = a.frames[0], w = f.w * 2, h = f.h * 2, x = Math.round((W - w) / 2), y = 34;
     ctx.fillStyle = C.ink; ctx.fillRect(x - 3, y - 3, w + 6, h + 6);
     ctx.imageSmoothingEnabled = false;

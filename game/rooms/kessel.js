@@ -36,7 +36,9 @@
       bench: { name: "Bank", poly: AK.benchPoly, walkTo: AK.motte, face: "ne", z: -1,
         look: "Eine Bank, die irgendwer hochgetragen und hier vergessen hat. Motte sitzt fast jeden Abend drauf." },
       stairs: { name: "Treppe", poly: AK.railPoly, walkTo: AK.stairs, face: "ne",
-        look: "Die Treppe runter. Vierzehn Stockwerke, wenn der Aufzug nicht geht. Er geht nie.",
+        // looking over the rail: the stairwell straight down (art/ui/looks.px.js, the first top-down view)
+        look: [{ zoom: "look_shaft" }, "Vierzehn Stockwerke runter. Von oben sieht's aus wie ein Brunnen.",
+          "Ganz unten das Schild in der Lobby. Gelb, winzig. Der Aufzug geht nie.", { zoom: false }],
         // the first time down Motte calls her back: his question (kapitel0-design §6.2 step 14)
         use: [{ if: "!moth_met", then: [{ say: "motte", text: "Juno! Warte mal." }, { face: "sw" }, { dialog: "motte" }] },
           { goto: "kessel_lobby", at: AL.arrive, face: "se" }] },

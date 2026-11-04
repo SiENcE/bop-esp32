@@ -4,8 +4,8 @@
 #        sh tools/build_art.sh test     (phase H0's test street: art/test/street.px.js -> assets/test.js)
 #        sh tools/build_art.sh characters (Juno, Motte and the feed people: art/characters/{juno,motte,feed_people}.px.js
 #                                          -> assets/characters.js)
-#        sh tools/build_art.sh ui       (the feed's zoom windows and the interface's sprites: art/ui/zooms.px.js,
-#                                         art/ui/hud.px.js -> assets/ui.js)
+#        sh tools/build_art.sh ui       (the feed's zoom windows, street mode's close-ups and the interface's sprites:
+#                                         art/ui/zooms.px.js, art/ui/looks.px.js, art/ui/hud.px.js -> assets/ui.js)
 #        sh tools/build_art.sh title    (the title screen, art/ui/splash.px.js; the menu screen's logo, art/ui/logo.px.js,
 #                                         and the street behind it, art/ui/title_bg.px.js -> assets/title.js)
 #        sh tools/build_art.sh deck     (the deck: icons and EVI, art/ui/deck.px.js; the old photo and the wallpaper,
@@ -43,7 +43,8 @@ ui() {
     rm -rf build/art/ui
     $PXL build art/ui/zooms.px.js --out build/art/ui --no-preview | tail -n 1
     $PXL build art/ui/hud.px.js --out build/art/ui --no-preview | tail -n 1
-    $ATLAS build/art/ui assets/ui.js --only "zoom_*,ui_*"
+    $PXL build art/ui/looks.px.js --out build/art/ui --no-preview | tail -n 1
+    $ATLAS build/art/ui assets/ui.js --only "zoom_*,ui_*,look_*"
 }
 
 title() {

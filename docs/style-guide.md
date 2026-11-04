@@ -83,6 +83,10 @@ These points from the premise shape the art (the story isn't written yet):
   better, and **top-down** only where it truly fits (a map, a look down a shaft). They keep the palette,
   the light and the interface of street mode; each needs its own walk views for Juno (side: left and
   right).
+  The first top-down view (2026-11-04): the Kessel Block's stairwell from the 14th floor's rail, a
+  close-up (`look_shaft`, `art/ui/looks.px.js`): street mode's close-ups (`look_*`) show at their own size
+  in the interface's frame over the room, the lines in the bottom bar while they show; its depth is
+  drawn compressed, as through a long lens, so the floors below stay apart as rings.
 
 - **Rooms are cutaways:**
   - Two walls stand at the back (left and right), meeting in a corner.
