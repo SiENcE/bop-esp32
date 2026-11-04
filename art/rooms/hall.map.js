@@ -2,7 +2,7 @@
 // (art/lib/isomap.js has the format). Every length in meters. At the street's scale (style guide §4), so the
 // hall is bigger than the screen and the camera moves over it: both back walls are screens from the dado to
 // under the ceiling; four rows of desks run along u, five desks each, a watcher at every one facing the right
-// back wall (their backs to us), a cable from the desk into the neck. Juno's desk is in the front row (d31).
+// back wall (their backs to us), in round armchairs. Juno's desk is in the front row (d31).
 // Nobody walks here: the intro shows it.
 "use strict";
 
@@ -22,7 +22,7 @@ ISO_MAPS.hall = {
     { from: [0, 8], to: [10, 8], h: 4.0, kit: "hall_panel", stub: true },
     { from: [10, 0], to: [10, 8], h: 4.0, kit: "hall_panel", stub: true },
   ],
-  // the desks: d<row><column>, row 0 at the back; each with its watcher and chair (1.2 x 1.3 m)
+  // the desks: d<row><column>, row 0 at the back; each with its watcher and armchair (1.2 x 1.3 m)
   props: [0, 1, 2, 3].flatMap((r) => [0, 1, 2, 3, 4].map((c) =>
     ({ id: `d${r}${c}`, kit: "desk", at: [0.9 + c * 1.8, 1.6 + r * 1.55], foot: [1.2, 1.3], h: 1.45, ...(r === 3 && c === 1 ? { juno: true } : {}) }))),
   spots: { juno: [3.3, 6.6, "ne"] },

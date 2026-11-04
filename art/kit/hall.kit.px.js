@@ -8,10 +8,11 @@
 //           that watch the watchers (their red lights)
 //           hall_panel   the near walls' stubs
 //   props   desk  a slab on two side panels, a cable tray under it, three monitors with their feeds, the
-//           keyboard; a stool, and on it a watcher in Halcyon's grey from behind: shoulders, the collar, the
-//           arms forward to the keys (typing), the head with its hair (cut, colour and skin vary by desk), the
-//           cable from the desk into the nape and the implant's point. Juno's (the map's `juno: true`): her
-//           short black hair, the cactus and the cup on her desk, her yellow coat over the stool
+//           keyboard; a round tub armchair on a round foot, its high back toward us, so no legs show; in it
+//           a watcher in Halcyon's grey: round shoulders over the chair's rim, the arms forward to the keys
+//           (typing), the head with its hair (cut, colour and skin vary by desk), the implant's cyan point on
+//           the nape (no cable: the implant lays its tags over what the eye sees on the monitors). Juno's (the
+//           map's `juno: true`): her short black hair, the cactus and the cup, her yellow coat over the chair
 // Screens are "!" keys: they are the light and are never lit themselves.
 pal({ 0: "#0c221f", 7: "#266252", 8: "#55a585", 9: "#8acfae", L: "#d4f7e2",     // the phosphor
   d: "#4a2e22", D: "#6e4632" })                                                // darker skin, lit
@@ -111,11 +112,68 @@ const HALLKIT = (() => {
   ISOKIT.wall("hall_panel", (s, h) => (h < 0.06 ? "1" : "2"))
 
   // ---------------------------------------------------------------- the desks and their watchers
+  // round things in iso: a circle of radius R on the floor is an ellipse of 45 R x 22.6 R px
+  /** a flat disc at height h @param {any} p @param {number} u @param {number} v @param {number} h @param {number} R @param {string} key */
+  function disc(p, u, v, h, R, key) {
+    const [x, y] = p.P(u, v, h)
+    p.at(u, v, h, "up")
+    p.ellipse(x, y, Math.max(1, Math.round(R * 45)), Math.max(1, Math.round(R * 22.6)), key)
+  }
+  /**
+   * The wall of a round thing, between the angles t0..t1 (degrees: 0 +u, 90 +v, 45 faces the camera), from h0 to
+   * top(t), column by column, nearest to the camera last. shade(t, e, E) -> key or null: e rows up of E.
+   */
+  function shell(p, u, v, R, h0, h1, t0, t1, top, shade) {
+    const ts = []
+    for (let t = t0; t <= t1; t += 1) ts.push(t)
+    ts.sort((a, b) => Math.abs(b - 45) - Math.abs(a - 45))
+    for (const t of ts) {
+      const a = (t * Math.PI) / 180, wu = u + R * Math.cos(a), wv = v + R * Math.sin(a), ht = Math.min(h1, top(t))
+      const [x, y0] = p.P(wu, wv, h0), [, y1] = p.P(wu, wv, ht), E = y0 - y1
+      p.at(wu, wv, (h0 + ht) / 2, t < 45 ? "u" : "v")
+      for (let e = 0; e <= E; e++) { const k = shade(t, e, E); if (k) p.px(x, y0 - e, k) }
+    }
+  }
+  // the chair's dark leatherette: lightest where it faces us, the rim catching the light
+  const leather = (t, e, E) => {
+    const a = Math.abs(t - 45)
+    if (e >= E - 1) return a < 70 ? "5" : "4"
+    return a < 30 ? "4" : a < 75 ? "3" : "2"
+  }
+  /** A thick line of 3 px, its upper edge lit: a sleeve. */
+  function sleeve(p, x0, y0, x1, y1) {
+    const n = Math.max(Math.abs(x1 - x0), Math.abs(y1 - y0), 1), pts = []
+    for (let i = 0; i <= n; i++) pts.push([Math.round(x0 + ((x1 - x0) * i) / n), Math.round(y0 + ((y1 - y0) * i) / n)])
+    for (const [x, y] of pts) p.rect(x, y, 3, 3, "g")
+    for (const [x, y] of pts) p.rect(x, y, 2, 1, "G")
+  }
+  /** An arm: down from the shoulder to the elbow, then forward to the hand on the keys (it lifts when it taps). */
+  function arm(p, su, sv, hu, hv, lift, skin) {
+    const [x0, y0] = p.P(su, sv, 0.98), [xe, ye] = p.P(su, sv - 0.12, 0.76), [x1, y1] = p.P(hu, hv, 0.8)
+    p.at(hu, hv, 0.9, "up")
+    sleeve(p, x0, y0, xe, ye); sleeve(p, xe, ye, x1, y1 - lift)
+    p.rect(x1 + 2, y1 - lift, 3, 2, skin)
+  }
+  /** A head seen from behind and a little to its right: round, the hair over it, the ear and cheek at its right. */
+  function head(p, x, y, hair, skin, style) {
+    const [dark, lit] = hair
+    for (let dy = -5; dy <= 5; dy++) {
+      const half = Math.round(Math.sqrt(Math.max(0, 1 - (dy / 5.6) ** 2)) * 4.6)
+      for (let dx = -half; dx <= half; dx++) {
+        let k = style === "bald" ? skin : dx < -1 && dy < -1 ? lit : dark                              // lit from the screens, ahead and left
+        if (style === "bald" && dx === -half) k = "O"
+        if (style !== "bald" && dx >= half - 1 && dy > 0 && dy < 4) k = skin                           // the cheek and the ear
+        p.px(x + dx, y + dy, k)
+      }
+    }
+    if (style === "bun") { p.ellipse(x - 1, y - 6, 2, 2, dark); p.px(x - 2, y - 7, lit) }
+    if (style === "long") p.rect(x - 4, y + 3, 8, 5, dark)
+  }
   const HAIR = [["k", "1"], ["k", "1"], ["O", "A"], ["h", "H"], ["1", "2"], ["O", "P"]]   // black, brown, grey, dark brown
   ISOKIT.prop("desk", {
     frames: NF,
-    solid: (m) => [[m.at[0], m.at[1], 0.7, m.foot[0], 0.65, 0.05], [m.at[0] + 0.38, m.at[1] + 0.78, 0, 0.44, 0.4, 1.35]],
-    footprint: (m) => [[m.at[0], m.at[1], 0.06, 0.65], [m.at[0] + 1.14, m.at[1], 0.06, 0.65], [m.at[0] + 0.38, m.at[1] + 0.78, 0.44, 0.4]],
+    solid: (m) => [[m.at[0], m.at[1], 0.7, m.foot[0], 0.65, 0.05], [m.at[0] + 0.32, m.at[1] + 0.72, 0, 0.56, 0.54, 1.3]],
+    footprint: (m) => [[m.at[0], m.at[1], 0.06, 0.65], [m.at[0] + 1.14, m.at[1], 0.06, 0.65], [m.at[0] + 0.38, m.at[1] + 0.78, 0.44, 0.42]],
     draw(p, m, f) {
       const [u0, v0] = m.at, cu = u0 + 0.6, seed = ih(u0 * 10 | 0, v0 * 10 | 0) * 1e6 | 0, juno = !!m.juno
       // the desk: a slab with a lit front edge on two side panels; the cable tray under it; the floor box
@@ -141,49 +199,53 @@ const HALLKIT = (() => {
         // on the desk's far end from her, where nothing hides them (the left end is behind her head)
         p.box(u0 + 1.02, v0 + 0.3, 0.74, 0.11, 0.11, 0.08, () => "O", () => "O", () => "P")     // the pot
         p.box(u0 + 1.05, v0 + 0.33, 0.82, 0.05, 0.05, 0.14, () => "8", () => "7", () => "8")    // the cactus
-        p.box(u0 + 0.84, v0 + 0.46, 0.74, 0.08, 0.08, 0.1, () => "1", () => "h", () => "H")     // the cup
+        p.box(u0 + 1.02, v0 + 0.5, 0.74, 0.08, 0.08, 0.1, () => "1", () => "h", () => "H")      // the cup
       } else if (ih(seed, 40) < 0.4) {
-        p.box(u0 + 0.95 + ih(seed, 41) * 0.1, v0 + 0.4, 0.74, 0.07, 0.07, 0.09, () => "1", () => "h", () => "H")
+        p.box(u0 + 1.0 + ih(seed, 41) * 0.08, v0 + 0.45, 0.74, 0.07, 0.07, 0.09, () => "1", () => "h", () => "H")
       }
-      // the stool
-      p.box(cu - 0.03, v0 + 0.95, 0, 0.06, 0.06, 0.42, () => "2", () => "1", () => "1")
-      p.box(cu - 0.18, v0 + 0.82, 0.42, 0.36, 0.34, 0.05, () => "3", () => "2", () => "2")
-      if (juno) {
-        // her yellow coat over the stool, hanging down behind her
-        p.box(cu - 0.16, v0 + 1.12, 0.1, 0.32, 0.05, 0.34, () => "Y", () => "j", (a, e, o) => {
-          if (e === 0 && (a * 7) % 3 === 0) return null                                         // the hem, uneven
-          if (e > o.ah - 3) return "Y"                                                           // draped over the seat
-          if (a % 3 === 1 && e < o.ah - 3) return "j"                                            // its folds
-          return a === o.aw - 1 ? "j" : "y"
-        })
-        p.box(cu - 0.17, v0 + 0.84, 0.44, 0.34, 0.3, 0.02, () => "y", () => "j", () => "y")       // over the seat
-      }
-      // the watcher, seated, back to us; typing: the hands move on the keys
+      // the armchair and the watcher in it, drawn from round shapes, back to front
+      const cv = v0 + 0.98, R = 0.3, pv = cv - 0.05
       const hair = juno ? ["k", "1"] : HAIR[fl(ih(seed, 50) * HAIR.length)], skin = juno ? "S" : ih(seed, 51) < 0.4 ? "d" : "s"
-      const bun = !juno && ih(seed, 52) < 0.25, bald = !juno && !bun && ih(seed, 53) < 0.15
-      p.box(cu - 0.17, v0 + 0.84, 0.47, 0.34, 0.26, 0.18, () => "g", () => "4", () => "g")       // the hips
-      p.box(cu - 0.2, v0 + 0.86, 0.65, 0.4, 0.22, 0.42, () => "G", () => "g", (a, e, o) => {      // the back
-        if (e > o.ah - 3) return a < 2 || a > o.aw - 3 ? "G" : "g"                                // the shoulders' edge
-        if (Math.abs(a - o.aw / 2) < 0.6 && e > 2) return "4"                                   // the seam down the back
-        return "g"
-      })
-      p.box(cu - 0.06, v0 + 0.92, 1.05, 0.12, 0.08, 0.04, () => "G", () => "g", () => "G")        // the collar
+      const style = juno ? "short" : ih(seed, 52) < 0.2 ? "bun" : ih(seed, 53) < 0.15 ? "bald" : ih(seed, 54) < 0.25 ? "long" : "short"
+      disc(p, cu, cv, 0.02, 0.24, "1"); disc(p, cu, cv, 0.04, 0.2, "2")                             // the round foot
+      shell(p, cu, cv, 0.05, 0.04, 0.24, -45, 225, () => 0.24, (t) => (Math.abs(t - 45) < 40 ? "3" : "2"))   // its column
+      // the bowl: narrow at the column, widening up to the rim like a tub chair's, a row of pixels at a time
+      for (let h = 0.2; h < 0.62; h += 1 / 30) {
+        const up = (h - 0.2) / 0.42, Rh = 0.14 + (R - 0.14) * Math.sqrt(up)
+        shell(p, cu, cv, Rh, h, h + 1 / 30, -45, 225, () => h + 1 / 30, (t) => {
+          const a = Math.abs(t - 45)
+          return a < 30 ? (up < 0.25 ? "3" : "4") : a < 75 ? (up < 0.25 ? "2" : "3") : "2"
+        })
+      }
+      disc(p, cu, cv, 0.62, R - 0.03, "2")                                                          // the seat
+      // the far arm goes to the keys behind the body
       const tap = (k) => (ih(seed + k, f) < 0.35 ? 1 : 0)
-      p.box(cu - 0.25, v0 + 0.6, 0.82 + tap(1) * 0.03, 0.07, 0.3, 0.1, () => "G", () => "4", () => "g")   // the arms
-      p.box(cu + 0.18, v0 + 0.6, 0.82 + tap(2) * 0.03, 0.07, 0.3, 0.1, () => "G", () => "4", () => "g")
-      p.box(cu - 0.05, v0 + 0.93, 1.09, 0.1, 0.07, 0.05, () => skin, () => skin, () => skin)        // the nape
-      // the head: rounded (its corner pixels left out), the hair over the back of it
-      const round = (a, e, o) => (a === 0 || a === o.aw - 1) && (e === 0 || e === o.ah - 1)
-      const nod = !juno && ih(seed, 60) < 0.2 && f >= 6 && f < 9 ? -0.02 : 0
-      p.box(cu - 0.1, v0 + 0.86, 1.14 + nod, 0.2, 0.19, 0.22,
-        () => (bald ? skin : hair[1]),
-        (a, e, o) => (round(a, e, o) ? null : bald ? skin : e < 2 && !bun ? skin : a === 1 ? hair[0] : hair[1]),     // its side, the ear below the hair
-        (a, e, o) => (round(a, e, o) ? null : bald ? (e === o.ah - 2 ? hair[0] : skin) : e === 0 ? skin : hair[a % 3 === 1 ? 0 : 1]))
-      if (bun) p.box(cu - 0.05, v0 + 1.0, 1.32 + nod, 0.1, 0.08, 0.08, () => hair[1], () => hair[0], () => hair[1])
-      // the cable from the desk's edge into the nape, the implant's point
-      const [x0, y0] = p.P(cu + 0.2, v0 + 0.62, 0.74), [x1, y1] = p.P(cu + 0.03, v0 + 1.0, 1.1)
-      p.line(x0, y0, x1, y1, "1"); p.line(x0 + 1, y0, x1 + 1, y1, "k")
-      p.px(x1, y1, "!v")
+      arm(p, cu - 0.2, pv, cu - 0.17, v0 + 0.42, tap(1), skin)
+      // the body: rounder toward the shoulders
+      shell(p, cu, pv, 0.18, 0.62, 1.0, -45, 225, () => 1.0, (t) => (Math.abs(t - 45) < 35 ? "G" : "g"))
+      disc(p, cu, pv, 1.01, 0.18, "G"); disc(p, cu, pv, 1.04, 0.15, "G"); disc(p, cu, pv, 1.07, 0.1, "G")
+      // the chair's rim round them, high at the back, low over the arms
+      const rim = (t) => 0.8 + 0.22 * Math.max(0, 1 - ((t - 70) / 100) ** 2)
+      shell(p, cu, cv, R, 0.62, 1.02, -20, 200, rim, leather)
+      if (juno) {
+        // her yellow coat over the chair's back, hanging down it, the hem uneven
+        shell(p, cu, cv, R + 0.012, 0.5, 1.04, 64, 108, (t) => rim(t) + 0.02, (t, e, E) => {
+          if (e < 3 && fl(t / 3) % 3 === 0) return null
+          if (e > E - 3) return "Y"
+          if (t < 68 || t > 104) return "j"
+          return fl(t) % 11 === 0 ? "j" : "y"
+        })
+      }
+      // the near arm over the armrest
+      arm(p, cu + 0.2, pv, cu + 0.17, v0 + 0.42, tap(2), skin)
+      // the neck, the head; the implant's point on the nape
+      const nod = !juno && ih(seed, 60) < 0.2 && f >= 6 && f < 9 ? 1 : 0
+      const [hx, hy] = p.P(cu, pv, 1.27)
+      p.at(cu, pv, 1.2, "v")
+      p.rect(hx - 2, hy + 4 + nod, 4, 3, skin)
+      head(p, hx, hy + nod, hair, skin, style)
+      if (style !== "long") p.px(hx - 1, hy + 6 + nod, "!v")                                         // under long hair it does not show
+      p.at(null)
     },
   })
   return { feed, KINDS }

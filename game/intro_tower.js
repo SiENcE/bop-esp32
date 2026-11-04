@@ -91,8 +91,6 @@
       for (const d of [7, 3]) {                                               // the rows of desks, far then near
         for (let w = Math.floor(L / 1.3) * 1.3 + 0.65; w < R; w += 1.3) {
           const hx = w + (rnd(Math.round(w * 10) + d, 9) - 0.5) * 0.3;
-          rectAt(d, hx + 0.3, -0.72, hx + 0.34, -0.12, C.greenDim, box);      // the cable from the desk up into the neck
-          rectAt(d, hx + 0.06, -0.16, hx + 0.34, -0.12, C.greenDim, box);
           watcher(d, hx, box);
         }
         rectAt(d - 0.4, L, -3, R, -0.72, C.ink, box);                          // the desks
@@ -113,7 +111,7 @@
         let half;
         if (m < 0.26) half = Math.sqrt(Math.max(0, r * r - (m * u - r) ** 2));  // the head
         else if (m < 0.32) half = 0.07 * u;                                     // the neck
-        else half = Math.min(0.27, 0.1 + (m - 0.32) * 1.6) * u;                  // the shoulders, sloping out
+        else half = Math.min(0.3, 0.1 + (m - 0.32) * 1.6) * u;                   // the shoulders into the chair's round back
         const l = Math.max(bl, Math.round(cx - half)), rr = Math.min(bl + bw, Math.round(cx + half));
         if (rr > l) px(ctx, C.ink, l, y, rr - l, 1);
       }
