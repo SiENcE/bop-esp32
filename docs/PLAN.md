@@ -16,7 +16,9 @@ prologue plays from the flat to its end.** The intro "Die letzte Schicht" (kapit
 (`art/test/intro_blocks.px.js`, `docs/rooms/intro_blocks.png`, the opening `intro_blocks_opening_x2.png`): one slow
 float over the lit sea to the tower and in through its green window, the hall, the ride down without words; it plays
 on the first start only (and from the menu) and ends on the title screen with the logo, which comes on every start.
-The deck keeps its CRT and mouse. Next: paint it.
+The deck keeps its CRT and mouse. Painting it: the opening float (A1, A2) plays (`game/intro.js` draws it in
+perspective, the painted parts in `art/intro/float.px.js` -> `assets/intro.js`; `docs/rooms/intro_float_a1_x3.png`,
+`intro_float_a2_x3.png`), as the sequence "intro", not yet before the title.
 The engine is at Cutaway.js commit e2bc1d6 (`lib/cutaway/VERSION.txt`).
 
 What was added on 2026-11-04 (in order):

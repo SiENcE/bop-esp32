@@ -66,10 +66,11 @@ code comments English.
 | `game/evi.js` | EVI: her voice (lines in their own place beside her corner, `lineBox`), she says the hints (`hints.configure({ by: "evi" })`); actions `{ evi: face }`, `{ evi_point: app }`, `{ deck_boot }`, `{ notify: contact }` (the message card over every mode) |
 | `game/rooms/<id>.js` | rooms: `cams.js` (cam03, cam04: watched rooms with the phosphor post-effects), `<id>.layout.js` (generated) |
 | `game/prolog.js` | the prologue act (steps 0–11), its cache and ledger entries, game time |
+| `game/intro.js` | the intro "Die letzte Schicht" (kapitel0-design §5): the sequence `intro` and its shots; the opening float over the lit sea drawn in perspective (rooms with `float: "a1"`, the action `{ float: [from, to], ms }`), its painted parts in `art/intro/` |
 | `game/screens.js` | the UI layer that draws the deck's screen, the feeds' OSD, the implant overlay and zoom windows (rooms hold the hotspots so the solver sees every click; this layer only draws) |
 | `game/glyphs.js` | the letters of both fonts as plain data, shared by `game/font.js` and the art (`art/lib/text.js` writes with them in pxl, so mockups and interface art read as in the game) |
 | `game/skin.js`, `font.js`, `transitions.js`, `sounds.js`, `music.js`, `title.js`, `hints.js` | the look (frames, cards, labels, choices), the fonts, room transitions, synthesised sounds and music, title and menu screens, hints |
-| `art/**/*.px.js` | pxl sources: `lib/` (shared `iso.js`, `feed.js`), `characters/`, `rooms/`, `cams/`, `ui/`, `mockups/`, `test/`; `*_review.px.js` are review sheets, never built into the game |
+| `art/**/*.px.js` | pxl sources: `lib/` (shared `iso.js`, `feed.js`), `characters/`, `rooms/`, `cams/`, `ui/`, `intro/`, `mockups/`, `test/`; `*_review.px.js` are review sheets, never built into the game |
 | `assets/*.js` | built atlases (checked in, so the game runs without Node) |
 | `tools/` | `build_art.sh`, `sync-engine.sh`, `render-sounds.mjs` |
 | `studio.json` | the editor's studio: writable folders, layer files, tasks |
@@ -107,7 +108,7 @@ Planned (PLAN.md §3): `feed.js`, `ledger.js`, `money.js`, `routines/<chapter>.j
   prologue (dev), `?manual` freezes the clock, `?nointro`, `?edit` / F10 the editor, F9 the debug overlay.
 - The editor with the studio: `node lib/cutaway/tools/studio.mjs` (guide: the engine's `docs/editor.md`, F1).
 - Engine copy: `sh tools/sync-engine.sh`.
-- Art: `sh tools/build_art.sh [test | characters | ui | title | cams | room <id> | rooms]` (no argument:
+- Art: `sh tools/build_art.sh [test | characters | ui | title | intro | cams | room <id> | rooms]` (no argument:
   everything).
 - Sounds: `node tools/render-sounds.mjs` (every sound of `game/sounds.js` into `build/sounds/`, `all.wav`
   in turn).

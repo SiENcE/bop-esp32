@@ -10,6 +10,7 @@
 #                                         and the street behind it, art/ui/title_bg.px.js -> assets/title.js)
 #        sh tools/build_art.sh deck     (the deck: icons and EVI, art/ui/deck.px.js; the old photo and the wallpaper,
 #                                         art/ui/deck_wallpaper.px.js -> assets/deck.js)
+#        sh tools/build_art.sh intro    (the intro "Die letzte Schicht": art/intro/*.px.js -> assets/intro.js)
 #        sh tools/build_art.sh cams     (the feed cameras: art/cams/*.px.js -> assets/cams.js; review_* stay out)
 #        sh tools/build_art.sh room flat (a street-mode room: art/rooms/flat.px.js -> assets/room_flat.js, its
 #                                         flat_* assets only; art/rooms/flat_review.px.js is not built; a room
@@ -66,6 +67,14 @@ deck() {
     $ATLAS build/art/deck assets/deck.js --only "deck_*,evi_*"
 }
 
+intro() {
+    rm -rf build/art/intro_game
+    for f in art/intro/*.px.js; do
+        $PXL build "$f" --out build/art/intro_game --no-preview | tail -n 1
+    done
+    $ATLAS build/art/intro_game assets/intro.js --only "intro_*"
+}
+
 cams() {
     rm -rf build/art/cams
     for f in art/cams/*.px.js; do
@@ -97,11 +106,12 @@ case "${1:-all}" in
     test) test_art ;;
     characters) characters ;;
     cams) cams ;;
+    intro) intro ;;
     ui) ui ;;
     deck) deck ;;
     title) title ;;
     room) room "$2" ;;
     rooms) rooms ;;
-    all) test_art; characters; cams; ui; deck; title; rooms ;;
+    all) test_art; characters; cams; ui; deck; title; intro; rooms ;;
     *) echo "unknown group: $1"; exit 2 ;;
 esac
