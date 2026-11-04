@@ -35,11 +35,11 @@ blocks still show cables). In this order, small steps, a screenshot and my look 
 1. **T**, on black: "Das Implantat durften wir behalten. Sie sagten, das Herausnehmen kostet mehr."
 2. **D**, the ride down the Transitachse, the game's first side view: a glass lift going down, the rings rushing up
    past it fast, ~10 s, **no words and no sounds, the music alone**. It starts close on the box in her arms (a cactus,
-   a cup, the yellow coat, the data stick), the stick's label EVAL-7 // DELETE readable for about a second, then the
+   a cup, the data stick), the stick's label EVAL-7 // DELETE readable for about a second, then the
    whole lift: pixel art doesn't zoom, so a painted close-up and a cut, or whatever you find looks better; say which.
-   - **Juno in 2088 from the side**, about 50 px: Halcyon grey with the collar and the lanyard, short black hair, no
-     hood, the box. I have sent back bodies that were boxy, domed or out of proportion several times: for a body seen
-     whole, look up a reference or a mask for a real side view (WebSearch) and show me blocks first.
+   - **Juno is today's Juno** (decided 2026-11-04): her street sprite with its breath and blink, the hood down, in the
+     yellow coat that hung over her chair in the hall; the box over it (art/intro/ride.px.js: intro_d_juno). So the coat
+     is not in the box: a cactus, a cup, the stick. Blocks: art/test/intro_d_blocks.px.js, docs/rooms/intro_d_blocks.png.
    - **The melody**, in game/music.js: slow, melancholic, haunting (the instruments of "memory" and "opening" are there:
      br_brass, br_ribbon, br_bells, br_pedal). "opening" faded out in shot 4. Render it with
      lib/cutaway/tools/render-music.mjs into build/music/ for me to listen to; you can't judge it yourself.
