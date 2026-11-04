@@ -5,7 +5,7 @@
 //
 //   floor    c  concrete screed in slabs (joints, a crack, an oil drip under the bikes, gum)
 //            l  lino laid in front of the doors, worn through to the concrete where everyone steps
-//            carpet  Frau Haldane's (behind her door)
+//            carpet  Frau Haldane's (behind her door; her room lies in her TV's blue)
 //   walls    concrete_green  the block's paint to the dado, bare shuttered concrete above (tie holes),
 //            the cable tray under the ceiling, a spray tag by the stairs
 //            wallpaper  Frau Haldane's (stripes, a framed picture)
@@ -55,7 +55,7 @@ const K14 = (() => {
     if (near(u % 0.25, 0, 1 / 50) || near(v % 0.25, 0, 1 / 50)) return "a"
     return "A"
   })
-  ISOKIT.floor("carpet", (u, v) => (near((u + v) % 0.5, 0, 1 / 40) || near((u - v + 10) % 0.5, 0, 1 / 40) ? "O" : "a"))
+  ISOKIT.floor("carpet", (u, v) => (near((u + v + 10) % 0.5, 0, 1 / 40) || near((u - v + 10) % 0.5, 0, 1 / 40) ? "t" : "f"))
 
   // ---------------------------------------------------------------- walls
   // the block's walls: the green paint to the dado (scuffed, a bike's tyre marks), bare shuttered concrete
@@ -82,9 +82,9 @@ const K14 = (() => {
     return "2"
   })
   ISOKIT.wall("wallpaper", (s, h) => {
-    if (h < 0.08) return "O"
-    if (s > 1.2 && s < 1.6 && h > 1.25 && h < 1.6) return s < 1.23 || s > 1.57 || h < 1.28 || h > 1.57 ? "P" : "c"   // a framed picture: the sea
-    return fl(s * 8) % 2 ? "u" : "U"
+    if (h < 0.08) return "1"
+    if (s > 1.2 && s < 1.6 && h > 1.25 && h < 1.6) return s < 1.23 || s > 1.57 || h < 1.28 || h > 1.57 ? "a" : "c"   // a framed picture: the sea
+    return fl(s * 8) % 2 ? "t" : "c"
   })
 
   // ---------------------------------------------------------------- doors
@@ -255,52 +255,33 @@ const K14 = (() => {
       pen.box(u0, v0 - 0.01, 0.1, L + 0.3, 0.05, 0.03, () => "5", () => "4", () => "4")
     },
   })
-  // Frau Haldane's armchair, turned toward her TV (behind the wall right of her door, out of sight), and
-  // her in it, asleep, facing us three-quarters: curlers, the eyes shut, the mouth a little open, the head
-  // fallen toward the wing; the pink robe, a hand in her lap, the other over the arm; her feet out toward
-  // the TV in their slippers; the Lull light at her temple, breathing slowly
-  const HALDANE = [
-    "..hHHh........",
-    ".hHHhHh.......",
-    ".HHHHHH.......",
-    ".HSSSSSh......",
-    ".sS1S1SS......",
-    ".sSSSSSS......",
-    "..SS1SSs......",
-    "...sSSs.......",
-    "..ppoopp......",
-    ".opppppppp....",
-    "oopppppppp....",
-    "oppppppppp....",
-    "opppppppppp...",
-    "opppppSSSpp...",
-    "oppppppppppp..",
-    "opppppppppppp.",
-    ".oopppppppppp.",
-    "..ooopppppppppp",
-    ".......ooppppp",
-    ".........oooo.",
-    "...........oo.",
-    "...........SS.",
-    "...........SS.",
-    "..........MNNN",
-  ]
+  // Frau Haldane asleep in front of her TV (out of sight deeper in the room, only its blue light), seen
+  // from behind and half hidden by the door's frame: the armchair's dark back, over it only her grey hair in
+  // curlers, fallen to one side, the Lull light's blue at her temple; a hand hanging down beside the chair,
+  // a slipper fallen off on the floor
   ISOKIT.prop("armchair", {
     frames: 12,
     draw(pen, p, f) {
-      const [u0, v0] = p.at, du = p.foot[0], dv = p.foot[1]
-      pen.box(u0, v0, 0, 0.18, dv, p.h, () => "U", () => "u", () => "u")                            // the back
-      pen.box(u0, v0 - 0.02, 0.75, 0.24, 0.13, 0.22, () => "U", () => "u", () => "u")               // the wing
-      pen.box(u0 + 0.18, v0 + 0.04, 0, du - 0.18, dv - 0.08, 0.4, () => "U", () => "u", () => "u")  // the seat
-      // her, over the chair (a hand grid), then the near arm in front of her lap
-      const [sx, sy] = pen.P(u0 + 0.3, v0 + 0.3, 0.4)
-      pen.at(u0 + 0.4, v0 + dv, 0.7, "u")
-      pen.grid(sx - 3, sy - 19, HALDANE)
-      pen.box(u0 + 0.12, v0 + dv - 0.12, 0, du - 0.14, 0.12, 0.52, () => "U", () => "u", () => "u")  // the near arm
-      pen.at(u0 + 0.4, v0 + dv, 0.5, "v")
-      const [ax, ay] = pen.P(u0 + 0.42, v0 + dv, 0.52)
-      pen.grid(ax, ay - 1, ["pp", "SS", ".S"])                                                       // the hand over it
-      pen.px(sx + 3, sy - 15, f % 6 < 3 ? "!V" : "!v")                                                // the Lull light
+      const [u0, v0] = p.at, du = p.foot[0], dv = p.foot[1], back = v0 + dv - 0.15
+      const dark = () => "i", rim = () => "I"
+      pen.box(u0, v0, 0, du, dv - 0.15, 0.4, rim, dark, dark)                                        // the seat
+      const [hx, hy] = pen.P(u0 + du * 0.3, back - 0.12, 1.0)
+      pen.at(u0 + du * 0.3, back - 0.12, 1.02, "up")
+      pen.grid(hx - 2, hy - 3, [".gGg.", "gGGGg", "GgGGG", "gGGg."])                                // her hair, the curlers
+      // the back: its upholstery in vertical channels, piping along its top
+      const channels = (a, e, o) => (e >= o.ah - 1 ? "I" : a % 6 === 0 && e > 6 ? "1" : "i")
+      pen.box(u0, back, 0, du, 0.15, 0.85, rim, dark, channels)                                      // the back
+      pen.box(u0, back, 0.85, 0.12, 0.15, 0.12, rim, dark, dark)                                     // the wings
+      pen.box(u0 + du - 0.12, back, 0.85, 0.12, 0.15, 0.12, rim, dark, dark)
+      // her hand, hanging down beside the chair
+      const [ax, ay] = pen.P(u0, back, 0.5)
+      pen.at(u0, back, 0.45, "v")
+      pen.grid(ax - 1, ay - 2, ["p", "S", "S"])
+      // the slipper, fallen off
+      const [sx, sy] = pen.P(u0 - 0.12, back + 0.05, 0)
+      pen.at(u0 - 0.12, back + 0.05, 0.03, "up")
+      pen.grid(sx - 2, sy - 1, ["NNM", ".MM"])
+      pen.px(hx + 2, hy - 1, f % 6 < 3 ? "!C" : "!c")                                                // the Lull light (no glow: her hair stays hers)
     },
   })
   return {}
