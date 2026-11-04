@@ -83,6 +83,45 @@
     },
   });
 
+  // ---------------------------------------------------------------- memory: the old photo on the deck
+  // Juno and Teo as children on the roof (art/ui/deck_wallpaper.px.js). Sentimental, slow, in the line of
+  // the Blade Runner end titles: CS-80 strings that swell in over seconds, a soft e-piano breaking the
+  // chords in slow eighths and a melody with long echoes, later a brass voice with a wide vibrato singing
+  // over it, a sine bass under it, a glass bell like a drop now and then. The same key as Juno's theme.
+  I("memstrings", { type: "sub", wave: "saw", voices: 4, detune: 18, filter: { cutoff: 520, env: 700, a: 2.4, decay: 3, sustain: 0.6, q: 1.5 },
+    amp: { a: 1.2, d: 2, s: 0.85, r: 4.5 }, vibrato: { rate: 3.6, depth: 9, delay: 1.5 }, gain: 0.06, reverb: 0.8, delay: 0.1 });
+  I("mempiano", { type: "fm", ratio: 1, index: 0.8, indexDecay: 0.9, amp: { a: 0.006, d: 2.4, s: 0.15, r: 1.6 }, gain: 0.12, reverb: 0.7, delay: 0.38, pan: -0.15 });
+  I("memlead", { type: "sub", wave: "saw", voices: 2, detune: 8, filter: { cutoff: 700, env: 1800, a: 0.9, decay: 1.5, sustain: 0.6, q: 2.5 },
+    amp: { a: 0.6, d: 0.8, s: 0.85, r: 2.4 }, vibrato: { rate: 4.8, depth: 18, delay: 0.7 }, gain: 0.075, reverb: 0.75, delay: 0.35, pan: 0.12 });
+  I("membass", { type: "sub", wave: "sine", filter: { cutoff: 180, q: 0.8 }, amp: { a: 0.25, d: 1, s: 0.9, r: 2.5 }, gain: 0.3 });
+  /** slow broken chords: eighths over four notes @param {string[]} n */
+  const slow = (n) => `${n[0]} . ${n[1]} . ${n[2]} . ${n[3]} . ${n[2]} . ${n[1]} . ${n[2]} . ${n[3]} .`;
+  const Fmaj7 = "F2+C3+E3+A3", Dm9 = "D2+A2+E3+F3", Bbmaj9 = "Bb1+F2+A2+C3+D3", FA = "A1+F2+C3+E3", Gm9m = "G1+D2+F2+A2+Bb2", Asus4 = "A1+E2+A2+D3", Amaj = "A1+E2+A2+C#3", Csus2 = "C2+G2+D3+G3";
+  Cutaway.score.theme("memory", {
+    tempo: 60, key: "D",
+    tracks: { strings: { inst: "memstrings" }, piano: { inst: "mempiano" }, lead: { inst: "memlead" }, bass: { inst: "membass" }, bell: { inst: "glassbell" } },
+    start: "intro",
+    sections: {
+      intro: { bars: 2, next: "a", tracks: {
+        strings: bars(hold(Fmaj7), hold(Dm9)), bass: bars(hold("F1"), hold("D1")),
+        bell: bars(". . . . . . . . . . . . A5 . . .", ". . . . . . . . . . . . . . . ."),
+      } },
+      a: { bars: 4, next: "b", tracks: {
+        strings: bars(hold(Bbmaj9), hold(FA), hold(Gm9m), half(Asus4, Amaj)),
+        bass: bars(hold("Bb0"), hold("A0"), hold("G0"), hold("A0")),
+        piano: bars("D5 - - - - - C5 - A4 - - - - - - -", "C5 - - - - - A4 - G4 - - - F4 - - -", "Bb4 - - - - - A4 - F4 - - - D4 - - -", "E4 - - - - - - - - - - - C#4 - - -"),
+        bell: bars(". . . . . . . . . . . . . . . .", ". . . . . . . . . . . . . . . .", ". . . . . . . . . . . . . . . .", ". . . . . . . . E6 . . . . . . ."),
+      } },
+      b: { bars: 4, next: "a", exits: [2, 4], tracks: {
+        strings: bars(hold(Dm9), hold(Bbmaj9), hold(Fmaj7), hold(Csus2)),
+        bass: bars(hold("D1"), hold("Bb0"), hold("F1"), hold("C1")),
+        piano: bars(slow(["D4", "A4", "E5", "F5"]), slow(["Bb3", "F4", "A4", "D5"]), slow(["F3", "C4", "E4", "A4"]), slow(["C4", "G4", "D5", "G5"])),
+        lead: bars("A4 - - - - - - - G4 - - - F4 - - -", "F4 - - - - - - - E4 - D4 - - - - -", "C4 - - - - - - - E4 - - - A4 - - -", "G4 - - - - - - - - - - - - - - -"),
+        bell: bars(". . . . . . . . . . . . . . . .", ". . . . . . . . . . . . . . . .", ". . . . . . . . . . . . . . . .", ". . . . . . . . . . . . D6 . . ."),
+      } },
+    },
+  });
+
   Cutaway.score.stinger("clue", { inst: "glassbell", notes: "D6 A6 D7 - - -", key: "D" });
   Cutaway.score.stinger("witness", { inst: "cs80brass", notes: "D3+Eb3+A3 - - - - - - - - - - - - - - -", key: "D", stepsPerNote: 1 });
 })();
