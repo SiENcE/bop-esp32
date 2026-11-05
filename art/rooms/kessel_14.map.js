@@ -57,7 +57,7 @@ ISO_MAPS.kessel_14 = {
   ],
   spots: {
     arrive: [0.6, 1.85, "se"], door_juno: [0.4, 1.85, "nw"], notes: [0.45, 1.1, "nw"], haldane: [0.6, 3.7, "nw"], lift: [0.85, 0.95, "ne"],
-    motte: [2.2, 1.95, "se"], stairs: [2.2, 0.35, "ne"],
+    motte: [2.2, 1.95, "se"], stairs: [2.2, 0.35, "se"],
     motte_feet: [3.3, 1.86, "sw"], haldane_sits: [-0.72, 3.1, "nw", 0.4],
   },
   // `bake` is read by the bake only (art/lib/isokit.js): the tube lights along its length and stutters with

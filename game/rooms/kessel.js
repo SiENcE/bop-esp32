@@ -53,12 +53,12 @@
         look: "Halcyons Kamera, oben in der Ecke. Ich weiß genau, wie der Flur von da oben aussieht." },
       bench: { name: "Bank", poly: AK.benchPoly, walkTo: AK.motte, face: "ne", z: -1,
         look: "Eine Bank, die irgendwer hochgetragen und hier vergessen hat. Motte sitzt fast jeden Abend drauf." },
-      stairs: { name: "Treppe", poly: AK.railPoly, walkTo: AK.stairs, face: "ne",
+      stairs: { name: "Treppe", poly: AK.railPoly, walkTo: AK.stairs, face: "se",
         // looking over the rail: the stairwell straight down (art/ui/looks.px.js, the first top-down view)
         look: [{ zoom: "look_shaft" }, "Vierzehn Stockwerke runter. Von oben sieht's aus wie ein Brunnen.",
           "Ganz unten das Schild in der Lobby. Gelb, winzig. Der Aufzug geht nie.", { zoom: false }],
         // the first time down Motte calls her back: his question (kapitel0-design §6.2 step 14)
-        use: [{ if: "!moth_met", then: [{ say: "motte", text: "Juno! Warte mal." }, { face: "sw" }, { dialog: "motte" }] },
+        use: [{ if: "!moth_met", then: [{ say: "motte", text: "Juno! Warte mal." }, { face: "sw" }, { dialog: "motte" }, { face: "se" }] },
           ...STAIRS_DOWN] },
     },
     enter: [{ if: "day=1", then: [{ once: ["Der Flur. Grün wie ein Aquarium, nur ohne Fische."] }] }],
