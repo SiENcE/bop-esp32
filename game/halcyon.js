@@ -47,6 +47,7 @@ Halcyon.declareTexts = function () {
   d("cameras", Object.values(Halcyon.cams).flatMap((c) => [c.place, c.owner]));
   d("chat", Object.values(Halcyon.contacts ?? {}).map((c) => c.status));
   d("chat", Object.values(Halcyon.threads ?? {}).flatMap((list) => list.flatMap((m) => [m.text, m.photo, m.clip, m.at].filter((x) => typeof x === "string"))));
+  d("evenings", Object.values(Halcyon.nights ?? {}).flatMap((n) => [n.date, n.evening]));
   d("people", Object.values(Halcyon.people).flatMap((p) => [p.name, p.label, p.speaker].filter((t) => typeof t === "string")));
 };
 
@@ -66,6 +67,9 @@ Cutaway.script.action("tag", async (s) => {
   Cutaway.events.emit("sfx", { sfx: "tag" });
   await Cutaway.time.check();
 }, { sets: (s) => [`tag_${s.tag}`] });
+
+// { been_to: ["flat", ...] } rooms Juno knows already, when a chapter begins (nobody asks; each one left open would double the solver's states)
+Cutaway.script.action("been_to", (s) => { for (const room of s.been_to) Cutaway.state.visit(room); });
 
 // { zoom: "zoom_ring" } opens the zoom window over the feed; { zoom: false } closes it (the window is the
 // feed layer's; nothing here waits, so the lines that follow are read while it shows). A street close-up
@@ -113,6 +117,8 @@ Cutaway.events.on("room.enter", Halcyon.names);
 // new time big in the picture while it jumps; when nothing more happens tonight, Juno says so
 const [NOTHING_TONIGHT] = Cutaway.i18n.declare("waiting", ["Heute Nacht passiert hier nichts mehr."]);
 Cutaway.script.action("forward", async (s, ctx) => {
+  const held = Cutaway.time.holding();                                     // a chapter may stop the clock, and says why
+  if (held) return Cutaway.script.exec([held], ctx);
   const n = Cutaway.time.next();
   if (n === null) return Cutaway.script.exec([NOTHING_TONIGHT], ctx);      // a line: the engine translates it
   await Cutaway.script.exec([{ caption: Cutaway.time.format(n), at: "c", ms: 900, wait: false }, { time: "next" }], ctx);

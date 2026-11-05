@@ -44,7 +44,7 @@
   };
   Cutaway.i18n.declare("deck", [...Object.values(LABEL), "DECK // J.REYES", "{time}  {date}", "{chits} CHITS", "WARTEN", "ZURÜCK",
     "KONTAKTE", "KEIN ZUGANG", "CODE BEKANNT", "VERBUNDEN", "NETZKARTE // LOWER NINTH", "CLIP", "NOTIZ", "FOTO", "GELESEN", "online",
-    "abwesend", "schläft", "Werbung", "KASSENBUCH", "+{chits}", "KONTOSTAND", "MIETE", "{n} CHITS, FÄLLIG IN 3 TAGEN", "DAVON HÜLLENABGABE {n}",
+    "abwesend", "schläft", "Werbung", "KASSENBUCH", "+{chits}", "KONTOSTAND", "MIETE", "{n} CHITS, FÄLLIG IN 3 TAGEN", "{n} CHITS, FÄLLIG IN 2 TAGEN", "{n} CHITS, FÄLLIG MORGEN", "{n} CHITS, FÄLLIG HEUTE", "{n} CHITS, BEZAHLT", "{n} CHITS, BEZAHLT VON TEO", "DAVON HÜLLENABGABE {n}",
     "BAO", "ANGESCHRIEBEN", "STEUER_2089_NICHT_ÖFFNEN.TXT", "ESSEN!!.TXT", "Noch nichts.", "…",
     "CACHE // {name}", "WO", "WANN", "LÄNGE", "WER", "{cam} // {place}", "{min} MIN", "SCHNEIDEN", "ANONYMISIEREN", "PRÜFEN", "MONTIEREN",
     "SCHNITT {s} S", "GESCHNITTEN", "KAP. {n}"]);
@@ -113,7 +113,7 @@
     // the clip editor: cutting keeps one moment and makes a new clip of it
     for (const [id, clip] of Object.entries(Halcyon.clips)) {
       if (!clip.cut) continue;
-      hs[`clip_cut_${id}`] = { name: "Schneiden", rect: [X + 8, D.clip.tools, 44, 10], z: 5, if: [`deck_app=clip_${id}`, `!cache_${clip.cut.gives}`],
+      hs[`clip_cut_${id}`] = { name: "Schneiden", rect: [X + 8, D.clip.tools, 44, 10], z: 5, if: [`deck_app=clip_${id}`, `!cache_${clip.cut.gives}`, ...(clip.cut.if ? [clip.cut.if] : [])],
         use: [{ sfx: "glitch" }, { cache: clip.cut.gives }, ...(clip.cut.then ?? [])] };
     }
     // the old photo: a click on the wallpaper shows it whole, with its music; a click anywhere closes it
@@ -396,7 +396,9 @@
       small(ctx, t("KONTOSTAND"), X + 8, Y + 10, C.steel6);
       text(ctx, t("{chits} CHITS", { chits: Number(S().flag("chits") ?? 0) }), X + 8, Y + 19, C.cyanPale);
       small(ctx, t("MIETE"), X + 8, Y + 40, C.steel6);
-      text(ctx, t("{n} CHITS, FÄLLIG IN 3 TAGEN", { n: 900 }), X + 8, Y + 49, C.amber);
+      const rent = S().flag("rent"), left = 4 - (Number(S().flag("day")) || 1);       // day 4 is Friday, when it is due
+      text(ctx, t(rent === "paid" ? "{n} CHITS, BEZAHLT" : rent === "teo" ? "{n} CHITS, BEZAHLT VON TEO"
+        : left >= 3 ? "{n} CHITS, FÄLLIG IN 3 TAGEN" : left === 2 ? "{n} CHITS, FÄLLIG IN 2 TAGEN" : left === 1 ? "{n} CHITS, FÄLLIG MORGEN" : "{n} CHITS, FÄLLIG HEUTE", { n: 900 }), X + 8, Y + 49, C.amber);
       small(ctx, t("DAVON HÜLLENABGABE {n}", { n: 310 }), X + 8, Y + 61, C.steel5);
       small(ctx, t("BAO"), X + 8, Y + 80, C.steel6);
       text(ctx, t("ANGESCHRIEBEN"), X + 8, Y + 89, C.cyanPale);

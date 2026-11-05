@@ -46,7 +46,7 @@
         use: [{ if: "!moth_met", then: [{ say: "motte", text: "Juno! Warte mal." }, { face: "sw" }, { dialog: "motte" }] },
           { goto: "kessel_lobby", at: AL.arrive, face: "sw" }] },
     },
-    enter: [{ once: ["Der Flur. Grün wie ein Aquarium, nur ohne Fische."] }],
+    enter: [{ if: "day=1", then: [{ once: ["Der Flur. Grün wie ein Aquarium, nur ohne Fische."] }] }],
   });
 
   Cutaway.room("kessel_lobby", {
@@ -78,7 +78,7 @@
       flyers: { name: "Werbezettel", poly: AL.flyersPoly, walkTo: AL.mailboxes, face: "nw",
         look: "Werbung. Lull zum halben Preis. Schlaf besser, schlaf Halcyon. Hundertmal, auf dem Boden." },
     },
-    enter: [{ once: ["Unten. Es riecht nach Regen und nach dem Müll von vierzehn Stockwerken."] }],
+    enter: [{ if: "day=1", then: [{ once: ["Unten. Es riecht nach Regen und nach dem Müll von vierzehn Stockwerken."] }] }],
   });
 
   // Motte's question, the first value for him (story §5: moth_kind, moth_brushed; kapitel1-design §7: if

@@ -56,7 +56,7 @@ Cutaway.moment("kessler_call", {
     { set: "heard_yuens" },
     "Yuen's. Der Imbiss an der Ecke. Da hängt 'ne Kamera. Hab ich bloß nicht.",
   ],
-  unseen: [{ set: "call_missed" }, "Mist. Kessler ist weg. Aber die Kamera hat alles im Puffer."],
+  unseen: [{ if: "day=1", then: [{ set: "call_missed" }, "Mist. Kessler ist weg. Aber die Kamera hat alles im Puffer."] }],   // (not when a later act begins)
 });
 // the handover at Yuen's: whether Juno has it is decided at its end, so REC can be pressed any time
 // while it plays (game/screens.js lets the REC button take clicks during a scene)
@@ -86,7 +86,7 @@ Halcyon.clips.clip_kessler_ring = {
   cam: "cam04", from: 31, to: 37.2, thumb: "zoom_ring",
   moments: [[31, 32.4, "SETZT SICH"], [32.4, 34.6, "REDEN"], [34.6, 34.8, "RING"], [34.8, 37.2, "BIS FREITAG"]],
   people: [["kessler", 31, 37.2], ["varga", 31.1, 37.2]],
-  cut: { moment: 2, gives: "clip_kessler_cut", then: [{ evi: "neugierig" },
+  cut: { moment: 2, gives: "clip_kessler_cut", if: "day=1", then: [{ evi: "neugierig" },
     { say: "evi", text: "Wenn man das Ende weglässt, ist es eine andere Geschichte. Ist das erlaubt?" }, { dialog: "evi_cut" }] },
 };
 Halcyon.clips.clip_kessler_cut = { cam: "cam04", from: 34.6, to: 34.8, thumb: "zoom_ring", moments: [[34.6, 34.8, "RING"]], people: [["kessler", 34.6, 34.8], ["varga", 34.6, 34.8]] };
@@ -106,21 +106,27 @@ Halcyon.photo.look = ["Teo und ich, auf dem Dach vom Kessel-Block. Er hatte nie 
 
 // ---- the deck (game/deck.js, EVI: game/evi.js). Step 0a: the first time tonight it boots, EVI wakes up
 // and points at the chat (docs/kapitel0-design.md §6.2)
-Halcyon.deckEnter = [{ once: [
+Halcyon.deckEnter = [{ unset: "rec_on" }, { if: "day=1", then: [{ once: [
   { deck_boot: true }, { evi: "froh" },
   { say: "evi", text: "Guten Abend, Juno! Eine neue Nachricht. Null Abendessen." },
   "Danke, EVI.",
   { evi_point: "chat" },
-] }];
+] }], else: [{ if: "!read_wren", then: [
+  { deck_boot: true }, { evi: "neugierig" },
+  { say: "evi", text: "Guten Abend, Juno! Eine neue Nachricht. Sie hat keinen Absender. Nur WREN." },
+  { evi_point: "chat" },
+] }] }];
 
 // ---- the chat (game/deck.js): who writes to Juno tonight, what they wrote, what she can answer
 // (contacts that appear later come last, so the rows stay put)
 Object.assign(Halcyon.contacts, {
   kessler: { name: "M. KESSLER", color: "#eea040", status: "online",
-    open: [{ once: ["Überstunden. Klar.", { evi: "neugierig" }, { say: "evi", text: "Pumpenverwaltung Ost! Da hab ich eine Kamera für dich." }, { evi_point: "glas" }] }] },
+    // the dot: her first message, and in Chapter 1 the new one (a view: reading it changes nothing else)
+    unread: { or: ["!read_kessler", ["day>1", "!read_kessler_again"]] },
+    open: [{ set: "read_kessler" }, { set: "read_kessler_again" }, { if: "day=1", then: [{ once: ["Überstunden. Klar.", { evi: "neugierig" }, { say: "evi", text: "Pumpenverwaltung Ost! Da hab ich eine Kamera für dich." }, { evi_point: "glas" }] }] }] },
   teo: { name: "TEO", color: "#ffa040", status: "schläft", unread: "~never" },
   halcyon: { name: "HALCYON SERVICE", color: "#62def0", status: "Werbung", unread: "~never" },
-  sable: { name: "SABLE", color: "#ff4fd3", status: "abwesend", if: "p1", unread: ["cache_note_kessler_debt", "!ledger_sable_kessler"] },
+  sable: { name: "SABLE", color: "#ff4fd3", status: "abwesend", if: "p1", unread: ["day=1", "cache_note_kessler_debt", "!ledger_sable_kessler"] },
   // (Teo and Halcyon's spam are old news: no dot)
 });
 Object.assign(Halcyon.threads, {
@@ -164,7 +170,7 @@ Object.assign(Halcyon.replies, {
         { evi: "verwirrt" }, { say: "evi", text: "Wir haben nichts geschickt. Ist das nett oder feige? Ich weiß das nie." }, { notify: "sable" }] },
   ],
   sable: [
-    { id: "sold", text: "Kesslers Schulden verkaufen.", if: ["cache_note_kessler_debt", "!ledger_sable_kessler"],
+    { id: "sold", text: "Kesslers Schulden verkaufen.", if: ["day=1", "cache_note_kessler_debt", "!ledger_sable_kessler"],
       use: [{ ledger: "sable_kessler", value: "sold" }, "Jeder Verkauf landet im Kassenbuch. Jeder.",
         { evi: "froh" }, { say: "evi", text: "Ich schreib alles auf. Du hast gesagt, ich soll." }] },
   ],
@@ -181,7 +187,8 @@ Cutaway.room("flat", {
   light: { ambient: 0.38, color: "#8a9cff", lamps: AF.lamps.map((/** @type {any} */ { bake, ...lamp }) => lamp) },
   hotspots: {
     bed: { name: "Bett", poly: AF.bedPoly, walkTo: AF.bed, face: "nw",
-      look: "Eine Matratze auf einer Palette. Schlafen kann ich später. Oder nie." },
+      look: "Eine Matratze auf einer Palette. Schlafen kann ich später. Oder nie.",
+      use: [{ if: "day>1", then: Halcyon.sleep, else: ["Schlafen kann ich später. Oder nie."] }] },
     fridge: { name: "Kühlschrank", poly: AF.fridgePoly, walkTo: AF.fridge, face: "ne",
       look: "Der Kühlschrank. Er brummt, als hätte er was zu sagen.", use: [{ set: "fridge_empty" }, "Licht. Sonst nichts."] },
     deck: { name: "Deck", poly: AF.deckPoly, walkTo: AF.deck, face: "ne",
@@ -204,8 +211,10 @@ Cutaway.room("flat", {
       look: ["Ein Karton von damals.", "Mein Halcyon-Ausweis. CIVIC MONITOR, J. REYES. UNGÜLTIG.", "Und der Kaktus. Vertrocknet. Wie alles aus der Zeit."] },
   },
   enter: [{ unset: "deck_app" },
-    { if: "p1", then: [{ once: [{ say: "evi", text: "Bringst du mir was mit?" }, "Du isst nicht.", { say: "evi", text: "Ich weiß. Bringst du mir was mit?" }] }] },
-    { once: ["Halb zehn. Frau Kesslers Mann hat um zehn Schichtende.", "Erst mal ans Deck."] }],
+    { if: "day=1", then: [
+      { if: "p1", then: [{ once: [{ say: "evi", text: "Bringst du mir was mit?" }, "Du isst nicht.", { say: "evi", text: "Ich weiß. Bringst du mir was mit?" }] }] },
+      { once: ["Halb zehn. Frau Kesslers Mann hat um zehn Schichtende.", "Erst mal ans Deck."] }],
+    else: [{ once: ["Mittwoch. Bis Freitag brauch ich neunhundert Chits."] }] }],
 });
 
 // ---- the act

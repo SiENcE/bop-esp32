@@ -4,7 +4,19 @@
 // (solve.mjs --full checks both).
 "use strict";
 
+// Chapter 1 comes first: on its days one of these always holds, so the prologue's below don't speak there
+const HOME = ["door", "door_juno", "stairs", "kessel_door", "deck", "back"];       // the way back to the deck
 Cutaway.hints([
+  { if: ["day>1", "!know_meeting"], about: ["reply_wren_mock_know", "contact_wren", "app_chat", ...HOME],
+    text: ["WREN will wissen, wen Ines Calder trifft. Und wo. Das weißt du noch nicht.", "Dafür kommt hier später eine lange Kette.", "[MOCK] Im CHAT bei WREN: die Zeile mit MOCK."] },
+  { if: ["day>1", "!link_cam31"], about: ["reply_wren_mock_link", "contact_wren", "app_chat", ...HOME],
+    text: ["Die alte Metro hat eine Kamera. Du bist nicht drauf.", "Kein Code findet sie.", "[MOCK] Im CHAT bei WREN: die Zeile mit MOCK."] },
+  { if: ["day>1", "day<4"], about: ["bed", "close", "back", "door_juno", "stairs", "kessel_door"],
+    text: ["Es ist noch nicht Freitag. Das Treffen ist Freitag.", "Du schläfst zu wenig. Das sage ich seit Jahren.", "Geh ins Bett. Dann ist der nächste Abend."] },
+  { if: ["day=4", "time<22:55"], about: ["wait", ...HOME],
+    text: ["Noch nicht fünf vor elf. Ich zähle mit.", "Warten geht am Deck und in jedem Feed.", "Drück WARTEN, bis es 22:55 ist."] },
+  { if: "day=4", about: ["cam_cam31", "app_glas", ...HOME],
+    text: ["Es ist so weit.", "CAM 31 ist in GLASS.", "Öffne GLASS und klick CAM 31 an."] },
   { if: "!visited:deck", about: ["deck", "app_chat"],
     text: ["Juno! Frau Kessler hat einen Auftrag für dich.", "Der Auftrag ist auf mir. Auf dem Deck, meine ich.", "Setz dich ans Deck."] },
   { if: ["!read_kessler"], about: ["app_chat", "contact_kessler"],

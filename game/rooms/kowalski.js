@@ -90,7 +90,7 @@
         look: ["Baos Garküche. Der Topf dampft, seit ich denken kann.", "BAO steht drauf. Für den Fall, dass jemand fragt."],
         use: BAO },
     },
-    enter: [{ once: ["Draußen. Regen, Neon und Brühe. Die Kowalski-Straße."] }],
+    enter: [{ if: "day=1", then: [{ once: ["Draußen. Regen, Neon und Brühe. Die Kowalski-Straße."] }] }],
   });
 
   Cutaway.dialog("bao", {

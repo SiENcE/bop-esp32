@@ -23,10 +23,11 @@ Where we are (everything is committed; the engine copy is at Cutaway.js 5f165f8)
 - Checks now: validate 0 errors (3 known warnings), solve --full no soft-locks, every state has a hint, play.mjs all
   passed; play.mjs --intro plays the intro through as well. They take a few minutes together: give them a long timeout.
 
-**Next: Chapter 1** (docs/kapitel1-design.md, PLAN H4). Before building, settle with me: the open points at the end of
-docs/story-lesefassung.md, and the proposal for how Chapter 2 gets at the data (story §7, Chapter 2's end: there is one wallet, Lantern has it,
-he opens it with the stick and sends it out, nobody believes him, only Juno can lay it beside her cameras). Propose an order of small steps
-for Chapter 1 and show me blocks first; what the game needs is in kapitel1-design §13.
+**Next: Chapter 1** (docs/kapitel1-design.md, PLAN H4), as a playable mock first; I check everything by playing it. All open points are decided for now (story §10b).
+Order, agreed: 1. the frame without art (done: game/kapitel1.js, ?act=kapitel1) 2. job C with block cameras (replaces the two [MOCK] replies) 3. the end in cam31
+4. job A 5. job B 6. life around it, then the prologue goes on into the act (`{ act: "next" }` instead of its end card, Teo and the rest) 7. the painting, blocks first.
+The solver: `node tools/solve-act.mjs kapitel1 --full`. The frame has 1264 states in 2 s; the first try had over 146000, because every flag nobody asks about doubles them. Keep it that way (CLAUDE.md, checks).
+Still to decide: who Ashe is beyond the Quiet (see story §10b when it is written).
 
 Decided, keep to it (story §10a, §10b, kapitel0-design §5, style guide §4, §6):
 - No sounds in the float and the lift, only music. The hall has its hum; shot 4 is silent. Shot 2 has no words: the marking is enough.
@@ -38,7 +39,7 @@ Decided, keep to it (story §10a, §10b, kapitel0-design §5, style guide §4, �
   observer handbook in the CACHE from Chapter 1's first evening, someone in cam21's queue as a pulsing `UNKNOWN LINK` in her overlay (kapitel1 §7), the firmware's id in Ines's logs (Chapter 3).
 - **The data wallet** (never "Laufwerk") holds Ines's encrypted logs, there is one; **the stick** in the dryer is its key, and the meeting is on the
   ticket, not the stick. **Kessler** works until he has given Varga the ring, then goes under. **WREN** is Halcyon: if Juno sold, the Quiet knows her
-  at once; if she refused, it has to search. **Rask** looks into the camera, a disturbance runs through the picture, the feed is lost; nothing more dramatic.
+  at once; if she refused, it has to search. **Ashe** looks into the camera, a disturbance runs through the picture, the feed is lost; nothing more dramatic.
 - **EVI is always in the bag;** that is only why she is there in every scene, bottom right she stands for the help. Leave that and her lines as they are.
 - **One building, one plan:** a lift and stairs stand at the same place on every floor. The lift never runs ("supposedly on Tuesdays" stays as a joke).
 - Words: the app is **GLASS**; signs in art are English, planned ones too (GLASSER LIES, SUDS & SPIN). Red and yellow keep their meanings: the only

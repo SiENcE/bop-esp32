@@ -1,6 +1,6 @@
 # Plan: Glass Sister on Cutaway.js
 
-Status (2026-11-05): **H0, H1, H1c, H2, H2c and H2b done; H3 under way.** The intro "Die letzte Schicht" plays whole, from the float over the sea to the ride down in the lift, then the title screen (about 1:45; approved 2026-11-05). The prologue plays through steps
+Status (2026-11-05): **H0, H1, H1c, H2, H2c and H2b done; H3 under way; H4 (Chapter 1) begun, its frame stands as a mock.** The intro "Die letzte Schicht" plays whole, from the float over the sea to the ride down in the lift, then the title screen (about 1:45; approved 2026-11-05). The prologue plays through steps
 0a–15 in the new scale: the flat, the deck with EVI, the feeds (cam04's people at their true size), the 14th
 floor's landing `kessel_14` (Frau Haldane asleep through her open door, the note war, Motte on his bench
 with his first dialogue, the look down the stairwell: the first top-down view, `look_shaft`) and the lobby

@@ -49,7 +49,9 @@ Halcyon.camRoom = function (id, o) {
   });
   Cutaway.room(id, { name: `CAM ${Halcyon.cams[id].id}`, background: `${id}_bg`, observe: true, feed: id,
     post: Halcyon.FEED_POST, lines: "bottom", label: true, ambience: ["feed_hiss", "feed_rain", "city_far"],
-    music: { theme: "glass", intensity: 0.2 }, ...o, hotspots });
+    music: { theme: "glass", intensity: 0.2 }, ...o, hotspots,
+    // REC belongs to the camera it was pressed on: leaving it stops the recording (kapitel0-design §3)
+    enter: [{ unset: "rec_on" }, ...(o.enter ?? [])] });
 };
 
 const A3 = Halcyon.at.cam03, A4 = Halcyon.at.cam04;
