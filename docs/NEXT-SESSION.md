@@ -24,8 +24,8 @@ Where we are (everything is committed; the engine copy is at Cutaway.js 5f165f8)
   passed; play.mjs --intro plays the intro through as well. They take a few minutes together: give them a long timeout.
 
 **Next: Chapter 1** (docs/kapitel1-design.md, PLAN H4), as a playable mock first; I check everything by playing it. All open points are decided for now (story §10b).
-Order, agreed: 1. the frame without art (done: game/kapitel1.js, ?act=kapitel1) 2. job C with block cameras (done: art/mock/ch1_blocks.px.js) 3. the end in cam31
-4. the city (kapitel1-design "Die Stadt": alley, roof, three stories, three people) 5. job A 6. job B 7. life around it, then the prologue goes on into the act (`{ act: "next" }` instead of its end card, Teo and the rest) 8. the painting, blocks first.
+Order, agreed: 1. the frame without art (done: game/kapitel1.js, ?act=kapitel1) 2. job C with block cameras (done: art/mock/ch1_blocks.px.js) 3. the city (kapitel1-design "Die Stadt": alley, roof, three stories, three people)
+4. the end in cam31 5. job A 6. job B 7. life around it, then the prologue goes on into the act (`{ act: "next" }` instead of its end card, Teo and the rest) 8. the painting, blocks first.
 The solver: `node tools/solve-act.mjs kapitel1 --full`; job C on blocks has 16314 states in 12 s, after detours over 177000 (CLAUDE.md, checks, says how to keep it small). What the mock simplifies: kapitel1-design §2.
 Still to decide: who Ashe is beyond the Quiet (see story §10b when it is written).
 

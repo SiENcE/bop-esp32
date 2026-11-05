@@ -192,7 +192,7 @@ Die Abende sollen nach Leben in der Stadt schmecken, nicht nach Warten aufs Bett
 
 **Die Abende:** Mittwoch ist Ankommen (Teo, die Aufträge, die Gasse, der erste Gang zum Drain-Markt). Donnerstag ist die Stadt (das Dach, der Zeitungskrieg, die weißen Träger; nebenbei Ines' Stick). Freitag wird alles still: dieselben Orte, aber der Bildschirm zeigt das Auge, Bao redet weniger, die Regenleserin sagt: „Heute schmeckt's nach gar nichts.“
 
-**Reihenfolge im Mock:** nach Auftrag C und dem Ende, vor den Aufträgen A und B.
+**Reihenfolge im Mock:** gleich nach Auftrag C, vor den Aufträgen A und B.
 
 ## 8. Das Ende: CAM 31
 
