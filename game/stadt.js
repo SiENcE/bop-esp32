@@ -97,9 +97,11 @@ Halcyon.camRoom("cam14", { background: "cam14_bg", mic: { at: AC.mic, clear: 40,
   doors: { name: "Türen", rect: AC.doorsRect, look: "Der Flur von oben. Genau wie ich's in Erinnerung hab. Ich hab den ja mal beobachtet, von Berufs wegen." },
 } });
 const haldaneUse = floor14.haldane.use;
-floor14.haldane.use = [{ if: ["day>1", "!news_stack", "!off_zeitung"], then: ["Die Tür steht offen. Sie schläft wirklich.", "Hinter dem Sessel. Ein Stapel Zeitungen, so hoch wie Motte.", { zoom: "look_zeitung" }, "Jede Seite. Gesichter, angestrichen.", "Nicht angestrichen. Vier Ecken. Um jedes Gesicht vier kleine Ecken.", "So markier ich.", { zoom: false }, { set: "news_stack" }, { cache: "note_haldane_marks" },
+// the point behind a sleeper's ear: the beat cam31 waits for (and nobody says why)
+const PUNKT = ["Der Punkt hinter ihrem Ohr. Lang, kurz, kurz, lang. Immer gleich.", "Woher kenn ich das?"];
+floor14.haldane.use = [{ if: ["day>1", "!news_stack", "!off_zeitung"], then: ["Die Tür steht offen. Sie schläft wirklich.", "Hinter dem Sessel. Ein Stapel Zeitungen, so hoch wie Motte.", { zoom: "look_zeitung" }, "Jede Seite. Gesichter, angestrichen.", "Nicht angestrichen. Vier Ecken. Um jedes Gesicht vier kleine Ecken.", "So markier ich.", { zoom: false }, { set: "news_stack" }, { cache: "note_haldane_marks" }, ...PUNKT,
     { evi: "besorgt" }, { say: "evi", text: "Warum macht sie das?" }, "Weiß ich nicht. Sie auch nicht."],
-  else: [haldaneUse] }];
+  else: [{ if: "day>1", then: PUNKT, else: [haldaneUse] }] }];
 Halcyon.cache.note_haldane_marks = { kind: "note", name: "FRAU HALDANES ZEITUNGEN", about: "Ein Stapel hinter ihrem Sessel. Jedes Gesicht darin: vier Ecken. Wie meine." };
 
 // ---- the woman who remembers (story §9): a Lull user is sure she saw a murder in a street she has never been to, from above, as
@@ -116,10 +118,10 @@ Halcyon.threads.imai = [
 Halcyon.ledger.imai = { to: "R. IMAI", what: { truth: "die Wahrheit", dream: "ein Traum" } };
 Cutaway.actor("imai", { name: "Frau Imai", color: "#c8d8b0", room: "lucky_static", at: AI.imai, facing: "sw",
   costume: { idle: "mock_imai", walk: "mock_imai", talk: "mock_imai" }, voice: { pitch: 60, range: 4, wave: "triangle", syllable: 85, speed: 0.9 },
-  look: ["Eine Frau vor einem Tee, der kalt ist. Hinter dem Ohr der blasse Punkt.", "Die kenn ich. Aus der Schlange vor der Klinik."],
+  look: ["Eine Frau vor einem Tee, der kalt ist. Hinter dem Ohr der blasse Punkt: lang, kurz, kurz, lang.", "Die kenn ich. Aus der Schlange vor der Klinik."],
   talk: [
     { if: ["imai_step=0", "!off_imai"], then: [
-      { say: "imai", text: "Sie sind die Glasserin. Danke. Keiner glaubt mir, nicht mal ich." },
+      "Die kenn ich. Aus der Schlange vor der Klinik. Hinter dem Ohr der blasse Punkt: lang, kurz, kurz, lang.", { say: "imai", text: "Sie sind die Glasserin. Danke. Keiner glaubt mir, nicht mal ich." },
       { say: "imai", text: "Eine Treppe. Über der Treppe ein Schild mit einem Fisch. Regen von links. Ein Mann fällt, und einer geht weg." },
       { say: "imai", text: "Das Komische: Ich hab von oben draufgeschaut. Als würde ich an einer Laterne hängen." },
       "Und das war wann?", { say: "imai", text: "Vor einer Woche, im Schlaf. Ich schlafe von drei bis sieben. Vier Stunden Lull, wie alle." },

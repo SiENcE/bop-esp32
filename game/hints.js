@@ -20,7 +20,7 @@ Cutaway.hints([
   { if: ["day>1", "day<4", "!know_meeting"], about: ["menu", "cam_cam23", "wait", "bed", "app_glas", ...HOME],
     text: ["Folg ihr. Sie isst gegenüber der Klinik.", "Die Speisekarte im Fenster hat das WLAN. Dann der Waschsalon, der hat einen Werkscode.", "Zoom auf die Speisekarte in CAM 21, dann klick in GLASS CAM 23 an."] },
   { if: ["day>1", "!link_cam31"], about: ["cam_cam31", "app_glas", ...HOME],
-    text: ["CAM 31 ist älter als Halcyon.", "Keine Codes, kein Netz. Nur ein altes Protokoll. Steht in deinem Handbuch.", "In GLASS: CAM 31 anklicken. Das macht dein Implantat."] },
+    text: ["CAM 31 ist älter als Halcyon. Sie will einen Takt, keinen Code.", "Den Takt hat jeder, der mit Lull schläft. Hinter dem Ohr. Frau Haldane schläft im Flur.", "Lang, kurz, kurz, lang. Klick CAM 31 an und gib das ein."] },
   { if: ["day>1", "day<4"], about: ["bed", "wait", "close", "back", "door_juno", "stairs", "kessel_door"],
     text: ["Es ist noch nicht Freitag. Das Treffen ist Freitag.", "Du schläfst zu wenig. Das sage ich seit Jahren.", "Warte bis eins und geh ins Bett. Dann ist der nächste Abend."] },
   { if: ["day=4", "time<22:45"], about: ["wait", ...HOME],

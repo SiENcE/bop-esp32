@@ -16,7 +16,7 @@ Where we are (everything is committed; the engine copy is at Cutaway.js e6eba2c)
   playing it, and I decide what gets painted afterwards. Design: docs/kapitel1-design.md (the mock's simplifications at the end of §2, "Die Stadt" in §7);
   decisions: story §10b, marked provisional until the mock has been played.
   - **game/kapitel1.js:** the evenings (game/evenings.js: the bed opens at 01:00, not on Friday), WREN, the rent, job C: Ines in cam21 to cam24, the stick in
-    dryer 6 and the ticket, Lantern at 03:00, the fallback on Friday at the swamp stairs (cam30), cam31 linked by choosing the old protocol.
+    dryer 6 and the ticket, Lantern at 03:00, the fallback on Friday at the swamp stairs (cam30), cam31 linked by giving the old protocol's handshake, long, short, short, long: the beat of every Lull point (kapitel1 C7; the art already painted, the armchair, the title, the intro, still pulses evenly).
   - **game/stadt.js:** the alley, the Drain Market (so far only the preacher), LUCKY STATIC; side stories: the way on to the roof (the ID on the window, the lift's hook
     on the ladder, the ledge), the Rain Reader, the newspaper war (Frau Haldane steals her own paper in her sleep; cam14), Frau Imai (the UNKNOWN LINK in the queue, cam18's
     archive, the truth or the lie), the white carriers (Thursday 23:30), the half repair.

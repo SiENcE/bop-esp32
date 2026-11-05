@@ -51,7 +51,7 @@
     for (const link of Halcyon.links ?? []) {
       const b = Cutaway.scene.boxes().find((x) => x.actor === link.actor);
       if (!b || !S().test(link.if)) continue;
-      const on = Math.sin(Cutaway.clock.time / 420) > 0;
+      const on = Halcyon.lullBeat(Cutaway.clock.time);
       brackets(ctx, b.box, on ? C.implant : C.phosphorDim);
       small(ctx, t("UNKNOWN LINK"), b.box[0] + b.box[2] + 3, b.box[1] - 2, on ? C.implant : C.phosphorDim);
     }

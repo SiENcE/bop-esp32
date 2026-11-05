@@ -51,6 +51,12 @@ Halcyon.declareTexts = function () {
   d("people", Object.values(Halcyon.people).flatMap((p) => [p.name, p.label, p.speaker].filter((t) => typeof t === "string")));
 };
 
+/** The beat of a Lull point, and of the old protocol's handshake: long, short, short, long, then a pause. @param {number} ms */
+Halcyon.lullBeat = function (ms) {
+  const t = ms % 3600;
+  return t < 800 || (t >= 1100 && t < 1350) || (t >= 1650 && t < 1900) || (t >= 2200 && t < 3000);
+};
+
 /** The date and time as the camera's display shows it: "2091-11-06 22:15". */
 Halcyon.stamp = function () {
   const n = Cutaway.time.now, [y, m, d] = Halcyon.day1, date = new Date(Date.UTC(y, m - 1, d + n.day - 1 + (n.minutes >= 1440 ? 1 : 0)));

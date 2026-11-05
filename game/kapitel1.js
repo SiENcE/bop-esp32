@@ -58,12 +58,21 @@ Halcyon.cams.cam24 = { id: "24", place: "WOHNBLOCK LERCHE", owner: "PRIVAT", map
 Halcyon.cams.cam12 = { id: "12", place: "DRAIN-MARKT, EINGANG", owner: "HALCYON", map: [180, 60], if: "tag_lantern" };
 Halcyon.cams.cam30 = { id: "30", place: "SUMPF-ABGANG", owner: "HALCYON", map: [180, 88], if: { or: ["tag_lantern", "day=4"] } };
 Halcyon.cams.cam31 = { id: "31", place: "ALTE METRO, LINIE 31", owner: "UNBEKANNT", map: [120, 96], if: "know_meeting",
-  // the old protocol is in Juno's head, and she chooses to use it: the eye in the noise for a beat (kapitel1-design C7)
-  tryIt: ["Kein Code findet die. Das Ding ist älter als Halcyon.", { dialog: "cam31_protokoll" }] };
-Cutaway.dialog("cam31_protokoll", { main: { choices: [
-  { text: "Das alte Protokoll.", goto: "end", then: ["Das kann nur noch mein Kopf.", { sfx: "static" }, { stinger: "witness" }, { set: "code_cam31" }, { set: "link_cam31" }, "...", "Verbunden."] },
-  { text: "Noch nicht.", goto: "end", then: ["Noch nicht."] },
-] } });
+  // the old protocol is in Juno's head, and it wants a beat: the eye in the noise when she has it (kapitel1-design C7)
+  tryIt: ["Kein Code findet die. Das Ding ist älter als Halcyon.", "Aber sie wartet auf was. Das alte Protokoll will einen Takt.", { dialog: "cam31_takt" }] };
+// The old protocol's handshake, the same beat behind every sleeper's ear: long, short, short, long (story §10b). Each choice goes on to
+// the next beat without saying whether it was right; the end says. Nothing has to be found first: whoever knows it can give it at once.
+const STEPS = ["ein", "zwei", "drei", "vier"], BEAT = [0, 1, 1, 0];      // 0 long, 1 short: the choices' order
+const OPEN = ["Das kann nur noch mein Kopf.", { sfx: "static" }, { stinger: "witness" }, { set: "code_cam31" }, { set: "link_cam31" }, "...", "Verbunden."];
+const SHUT = ["Rauschen. Das war's nicht."];
+const beat = (/** @type {number} */ n, /** @type {boolean} */ right) => [0, 1].map((c) => {
+  const good = right && c === BEAT[n], text = c ? "Kurz." : "Lang.";
+  return n === 3 ? { text, goto: "end", then: good ? OPEN : SHUT } : { text, goto: `${STEPS[n + 1]}_${good ? "ok" : "no"}`, then: [{ sfx: "tag" }] };
+});
+/** @type {Record<string, any>} */
+const takt = { main: [...beat(0, true), { text: "Noch nicht.", goto: "end", then: ["Noch nicht."] }] };
+for (let n = 1; n < 4; n++) { takt[`${STEPS[n]}_ok`] = beat(n, true); takt[`${STEPS[n]}_no`] = beat(n, false); }
+Cutaway.dialog("cam31_takt", takt);
 
 // ---- the people of job C (the blocks use the prologue's figures: nothing of them is painted yet)
 const A21 = Halcyon.at.cam21, A22 = Halcyon.at.cam22, A23 = Halcyon.at.cam23, A24 = Halcyon.at.cam24, A12 = Halcyon.at.cam12, A30 = Halcyon.at.cam30, A31 = Halcyon.at.cam31;
@@ -120,7 +129,7 @@ Cutaway.moment("ines_meeting", {
 
 // ---- WREN and the rest of the chat
 // the handbook (story §10a): in the cache from the first evening; it has the word C7 needs
-Halcyon.cache.note_obs_handbook = { kind: "note", name: "BEOBACHTER-HANDBUCH", about: "Halcyon, Zivile Beobachtung. Hinter dem Ohr. Protokoll OBS-4. Die Wach-Ebene hält Sie bei Bewusstsein." };
+Halcyon.cache.note_obs_handbook = { kind: "note", name: "BEOBACHTER-HANDBUCH", about: "Halcyon, Zivile Beobachtung. Hinter dem Ohr. Protokoll OBS-4. Die Wach-Ebene hält Sie bei Bewusstsein. Handshake: siehe Anlage C. Die Anlage fehlt." };
 
 Object.assign(Halcyon.ledger, {
   wren_advance: { to: "WREN", what: { paid: "der Vorschuss", back: "der Vorschuss, zurückgeschickt" }, chits: { paid: 250 } },
