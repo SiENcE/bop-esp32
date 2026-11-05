@@ -58,6 +58,7 @@ Halcyon.at = {
   cam23: { door: [300, 150], dryer6: [168, 76], counter: [262, 150], mic: [168, 100], dryers: [16, 28, 236, 40], tickets: [268, 80, 44, 60] },
   cam24: { door: [160, 96], off: [40, 150], mic: [160, 110], entrance: [124, 24, 72, 66] },
   cam12: { top: [160, 66], bottom: [160, 148], mic: [160, 100], ladder: [140, 60, 40, 90] },
+  cam15: { door: [60, 150], spot: [262, 100], mic: [160, 100], capsules: [44, 28, 272, 52], c23: [248, 28, 30, 25] },
   cam30: { top: [160, 84], water: [160, 146], mic: [160, 100], sign: [88, 30, 144, 11] },
   cam31: { stairs: [62, 80], edge: [150, 124], behind: [136, 122], tunnel: [270, 136], lantern: [176, 136], mic: [150, 110], tries: [244, 26, 72] },
   gasse: {
@@ -75,8 +76,12 @@ Halcyon.at = {
     hatchRect: [4, 114, 28, 40], ringsRect: [0, 0, 320, 22], placeRect: [192, 100, 58, 50], screenRect: [110, 33, 50, 31], noodlesRect: [96, 49, 9, 57], droneRect: [284, 98, 26, 18],
   },
   drain_market: {
-    walk: [[12, 118, 308, 118, 316, 176, 4, 176]], arrive: [24, 150], up: [12, 148], preacher: [226, 136], stalls: [110, 124],
-    upRect: [0, 50, 18, 120], kidneysRect: [30, 56, 66, 52], jarsRect: [106, 56, 58, 52], stallsRect: [170, 56, 30, 52],
+    walk: [[12, 118, 308, 118, 316, 176, 4, 176]], arrive: [24, 150], up: [12, 148], preacher: [226, 136], stalls: [110, 124], curtain: [284, 124],
+    upRect: [0, 50, 18, 120], kidneysRect: [30, 56, 66, 52], jarsRect: [106, 56, 58, 52], stallsRect: [170, 56, 30, 52], curtainRect: [262, 50, 44, 66],
+  },
+  sable_booth: {
+    walk: [[12, 118, 308, 118, 316, 176, 4, 176]], arrive: [24, 150], door: [10, 150], front: [150, 128], sable: [176, 118],
+    curtainRect: [0, 50, 16, 126], pricesRect: [224, 14, 86, 36], screensRect: [112, 42, 100, 38], birdRect: [36, 40, 30, 44],
   },
   lucky_static: {
     walk: [[12, 118, 308, 118, 316, 176, 4, 176]], arrive: [24, 150], door: [10, 150], bar: [200, 122], imai: [110, 134],

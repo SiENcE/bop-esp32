@@ -209,6 +209,35 @@ scene("drain_market_bg", { w: W, h: H, bg: "k" }, (c) => {
   c.rect(106, 66, 58, 42, "d"); for (let i = 0; i < 5; i++) c.rect(112 + i * 10, 78, 6, 12, "g")
   c.rect(170, 66, 30, 42, "e"); c.rect(0, 50, 18, 120, "e"); for (let y = 56; y < 170; y += 9) c.hline(2, y, 14, "g")
   c.rect(214, 136, 24, 10, "e")
+  c.rect(262, 50, 44, 66, "n"); for (let x = 266; x < 306; x += 8) c.rect(x, 50, 2, 66, "m")
+})
+// Sable's booth behind the curtain: violet and amber, a table full of screens, the price list, a wire bird in its cage
+scene("sable_booth_bg", { w: W, h: H, bg: "k" }, (c) => {
+  c.rect(0, 0, W, 112, "p"); c.rect(0, 112, W, 68, "a"); c.hline(0, 112, W, "y")
+  c.rect(0, 50, 16, 126, "n"); for (let y = 54; y < 170; y += 8) c.hline(2, y, 12, "m")
+  c.rect(100, 84, 124, 30, "n"); c.hline(100, 84, 124, "y")
+  for (const x of [114, 148, 182]) { c.rect(x, 46, 28, 32, "d"); c.rect(x + 2, 48, 24, 28, "a"); c.rect(x + 8, 58, 12, 3, "v") }
+  c.rect(224, 14, 86, 36, "b")
+  TXT.draw(c, 267, 17, "NAMES 50.", "y", { font: "hud", align: "center" }); TXT.draw(c, 267, 27, "ADDRESSES 80.", "y", { font: "hud", align: "center" }); TXT.draw(c, 267, 37, "SECRETS: ASK.", "y", { font: "hud", align: "center" })
+  c.rect(36, 40, 30, 44, "b"); for (let x = 38; x < 66; x += 5) c.rect(x, 40, 1, 44, "g"); c.rect(46, 60, 10, 6, "h"); c.rect(44, 58, 3, 3, "h")
+})
+// the Morpheus from its corridor's ceiling: two rows of capsules with their numbers, each with a small screen
+scene("cam15_bg", { w: W, h: H, bg: "0" }, (c) => {
+  ROOM(c, "4", "7", 84)
+  for (let row = 0; row < 2; row++) for (let i = 0; i < 8; i++) {
+    const x = 44 + i * 34, y = 28 + row * 27, n = 17 + row * 8 + i
+    c.rect(x, y, 30, 25, "2"); c.rect(x + 2, y + 2, 26, 21, "3"); c.rect(x + 20, y + 4, 6, 4, "8")
+    TXT.draw(c, x + 11, y + 12, String(n), "9", { font: "hud", align: "center" })
+  }
+  SIGN(c, 110, 0, 100, "MORPHEUS"); c.rect(46, 110, 28, 70, "6")
+})
+// who walks through cam03 and cam15 now: a hood where the scarf was
+anim("mock_kessler_hood", { w: 13, h: 24, frames: 1, fps: 1, outline: "1", pivot: "bottom" }, (c) => {
+  c.rect(4, 0, 5, 7, "5"); c.rect(5, 3, 3, 3, "2"); c.rect(2, 7, 9, 10, "6"); c.rect(3, 17, 3, 7, "4"); c.rect(7, 17, 3, 7, "4")
+})
+// Sable, sitting behind the table: magenta to the floor, a bald head, the pipe's ember
+anim("mock_sable", { w: 21, h: 42, frames: 1, fps: 1, outline: "k", pivot: "bottom" }, (c) => {
+  c.rect(7, 0, 7, 8, "h"); c.rect(4, 8, 13, 34, "M"); c.rect(9, 10, 3, 30, "m"); c.rect(14, 5, 5, 1, "d"); c.rect(18, 3, 2, 2, "y")
 })
 // a close-up: the white van, two in white carrying a stretcher, a girl in a door
 scene("look_traeger", { w: 170, h: 112, bg: "a" }, (c) => {

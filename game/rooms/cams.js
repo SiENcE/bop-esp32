@@ -29,7 +29,7 @@ Halcyon.FEED_POST = [
 Halcyon.osd = {
   rewind: [172, 13, 40, 10], rec: [214, 13, 24, 10], wait: [240, 13, 26, 10], back: [268, 13, 48, 10],
   /** @param {number} i */
-  thumb: (i) => [4, 42 + i * 13, 34, 10],
+  thumb: (i) => [4 + Math.floor(i / 8) * 36, 42 + (i % 8) * 13, 34, 10],      // two columns: eight rows reach down to where the bag's bar begins
 };
 
 Halcyon.camRoom = function (id, o) {

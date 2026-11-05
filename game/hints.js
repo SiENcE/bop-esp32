@@ -11,6 +11,15 @@ Cutaway.hints([
     text: ["Ich hab nichts. Keine Tür, kein Licht, keine Nummer.", "Ich such weiter. Ich find nichts, was geht.", "Du kannst nichts tun, Juno. Ich auch nicht."] },
   { if: "end_beat=after", about: "self",
     text: ["Juno?", "Du sitzt nur da.", "Sag was. Bitte."] },
+  // job A speaks only when Ines has gone home and before Kessler has gone to bed: nothing of it is needed, so they have no `about`, and
+  // the rest of the evening belongs to WREN's hints
+  ...[
+    [["!varga_step"], ["Kessler versteckt sich. Aber Gewohnheiten versteckt man schlecht.", "Was hat Frau Kessler über sein Essen geschrieben?", "Zoom um 22:15 auf den Nudelautomaten in CAM 03. Wer zieht die Nummer 7?"]],
+    [["varga_step", "!code_cam15"], ["Das Kapselhotel hat ein eigenes Netz.", "Wer verkauft Zugänge?", "Kauf Sable den Code zu CAM 15 ab. Der Vorhang auf dem Drain-Markt."]],
+    [["code_cam15", "!link_cam15"], ["Du hast den Code vom Morpheus. Ich will die Kamera.", "In GLASS ist jetzt CAM 15.", "Öffne GLASS und klick CAM 15 an."]],
+    [["link_cam15", "!cache_note_kessler_hideout"], ["Er kommt um halb elf ins Morpheus.", "Schau zu, welche Kapsel er nimmt. Sonst hat der Puffer es.", "Öffne CAM 15 um 22:30 und klick ihn an."]],
+    [["cache_note_kessler_hideout", "!k1a"], ["Du weißt, wo er ist. Varga will das auch wissen.", "Varga ist im CHAT. Kapsel 23 hat einen Bildschirm.", "Antworte Varga, oder schreib auf den Bildschirm. Was davon, weiß ich nicht. Das weißt du."]],
+  ].map(([when, text]) => ({ if: ["day<4", "time>=20:30", "time<22:45", "!off_varga", ...when], text })),
   { if: ["day=3", "saw_drop", "!know_meeting", "time<03:00"], about: ["counter", "laundromat", "alley", "cam_cam31", ...HOME],
     text: ["Ines hat etwas im Waschsalon gelassen.", "Geh selbst hin, oder sieh um drei zu, wer es holt.", "Durch die Gasse zum Waschsalon: Trockner 6 und die Theke."] },
   { if: ["day=3", "tag_lantern", "!know_meeting"], about: ["cam_cam30", "cam_cam31", ...HOME],

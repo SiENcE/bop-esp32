@@ -24,7 +24,7 @@ Halcyon.sleep = [
 Cutaway.script.action("night_passes", (s, ctx) => {
   const n = Halcyon.nights[Number(Cutaway.state.flag("day")) + 1];
   return n?.passes ? Cutaway.script.exec(n.passes, ctx) : undefined;
-}, { sets: () => Object.values(Halcyon.nights).flatMap((n) => (n.passes ?? []).map((/** @type {any} */ p) => p.set).filter(Boolean)) });
+}, { sets: () => Object.values(Halcyon.nights).flatMap((n) => (n.passes ?? []).flatMap((/** @type {any} */ p) => [p.set, ...(p.then ?? []).map((/** @type {any} */ q) => q.set)]).filter(Boolean)) });
 
 // { evening_card: true } the card for the evening that has just begun (its text declared by Halcyon.declareTexts)
 Cutaway.script.action("evening_card", (s, ctx) => {

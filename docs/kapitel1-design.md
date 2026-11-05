@@ -59,6 +59,16 @@ Juno Sable im Prolog Kessler verkauft hat, sagt Varga das offen: „Sable sagt, 
 | A6 | `cam15` | Der Gang des Kapselhotels, Reihen von Kapseln mit Nummern. Kessler kriecht in Kapsel 23. Zoom: Nummer lesen. | `note_kessler_hideout` |
 | A7 | **Entscheidung K1a** | siehe unten | |
 
+**Im Mock gebaut** (`game/auftrag_varga.js`, auf Blöcken; Zeilen und Abläufe sind beim Durchspielen zu prüfen). Ein eigener Faden, `off_varga`, mit `varga_step`, `k1a` und `kessler_gone`. Abweichungen von der Kette und von K1a:
+
+- **Annehmen entfällt** (kein `job_a`): Vargas Nachricht steht ab Mittwoch im Chat, und wer Kessler findet, kann ihn senden. Der Fall „Varga findet ihn selbst“ (A1) kommt mit dem NETZ.
+- **Erkennen:** Ein Klick auf die Kapuze oder auf den Automaten um 22:15 reicht. Beides zeigt die Nummer 7 und den hellen Streifen am Finger, und `cam15` steht auf der Karte. Ein Zoom auf die Hand fehlt noch.
+- **Die Zeiten:** 22:15 bis 22:30 in `cam03`, 22:30 bis 22:45 in `cam15`, an allen drei Abenden. Wer später kommt, findet die Kapsel im Puffer von `cam15`. Das sind drei neue Halte der Uhr am Mittwoch und Donnerstag.
+- **Sable** sitzt hinter einem Vorhang auf dem Drain-Markt. Der Code kostet 80 Chits oder geht im Tausch gegen die Notiz über Kesslers Schulden, solange sie nicht verkauft ist. Mit WRENs Vorschuss reicht das Geld immer.
+- **Warnen** geht über den Klick auf Kapsel 23, sobald Juno die Nummer kennt, und Kessler kommt ab da nicht mehr. Nach dem Verkaufen kommt er am Abend darauf nicht mehr, und die Kapsel steht offen.
+- **Der falsche Ort** ist das Pfandhaus am Fischmarkt.
+- **EVIs Hinweise** zu A sprechen nur am Mittwoch und Donnerstag von 20:30 bis 22:45, den Rest des Abends gehören sie WREN. Am Freitag sagt sie zu A nichts.
+
 ### Entscheidung K1a
 
 | Wahl | Was Juno tut | Folge | Kassenbuch |
