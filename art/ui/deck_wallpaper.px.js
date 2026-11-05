@@ -358,8 +358,8 @@ pal({
     // the two of them on the ledge (still), the cup beside Teo, its steam rising and curling (half a px a
     // frame, 12 px a loop, fading as it goes), the camera drone hovering by the tower, its eye blinking
     if (today) {
-      // the ladder's top over the parapet, the way Juno came up
-      c.rect(10, 116, 2, 36, "5"); c.rect(24, 116, 2, 36, "5"); for (let y = 120; y < 150; y += 6) c.rect(10, y, 16, 1, "4")
+      // the ladder's top over the parapet, the way Juno came up: it comes from outside the wall, so it ends at the parapet's top
+      c.rect(10, 116, 2, SEAT - 116, "5"); c.rect(24, 116, 2, SEAT - 116, "5"); for (let y = 120; y < SEAT; y += 6) c.rect(10, y, 16, 1, "4")
       // Juno, grown up, alone where the two of them sat (blocks: to be painted when the look is approved)
       if (sitting) {
         c.rect(198, 112, 26, 25, "k"); c.rect(199, 113, 24, 24, "y"); c.rect(199, 113, 3, 24, "Y"); c.rect(219, 113, 4, 24, "j")

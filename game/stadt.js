@@ -49,11 +49,7 @@ Cutaway.room("sims", { name: "Der Sims", background: "sims_bg", walk: AS.walk,
 Cutaway.actor("regenleserin", { name: "Regenleserin", color: "#a8c8e8", room: "dach", at: AD.reader, facing: "sw",
   costume: { idle: "mock_regen", walk: "mock_regen", talk: "mock_regen" }, voice: { pitch: 58, range: 4, wave: "triangle", syllable: 90, speed: 0.8 },
   look: ["Eine alte Frau auf einem Eimer. Sie hält einen zweiten Eimer unter das Tropfen und kostet.", "So sicher, wie andere die Zeitung lesen."],
-  talk: [
-    { if: "day=2", then: [{ say: "regenleserin", text: "Der Vierte. Die gießen ihre Orchideen." }, "Das schmeckt man?", { say: "regenleserin", text: "Dünger, Kind. Teurer als deine Miete." }] },
-    { if: "day=3", then: [{ say: "regenleserin", text: "Der Sechste. Champagner, verdünnt. Jemand feiert, dass ein anderer schläft." }, "Sagt das der Regen?", { say: "regenleserin", text: "Alles kommt runter. Früher oder später." }] },
-    { if: "day=4", then: [{ say: "regenleserin", text: "Heute schmeckt's nach gar nichts." }, "Ist das gut?", { say: "regenleserin", text: "Das hatte ich noch nie." }] },
-  ] });
+  talk: [{ say: "regenleserin", text: "Setz dich nicht auf den Eimer. Der ist besetzt." }, { dialog: "regenleserin" }] });   // game/regenleserin.js
 Cutaway.room("dach", { name: "Das Dach", background: "dach_bg", walk: AD.walk,
   ambience: ["city_far", { sfx: "feed_rain", gain: 0.5 }], music: { theme: "juno", intensity: 0.2 },
   hotspots: {

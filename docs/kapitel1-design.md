@@ -222,6 +222,22 @@ Die Abende sollen nach Leben in der Stadt schmecken, nicht nach Warten aufs Bett
 
 **Drei merkwürdige Leute:** die **Regenleserin** auf dem Dach (kostet das Tropfwasser und sagt, von welchem Ring es kommt: „Der Vierte. Die gießen ihre Orchideen.“; ihre Wettervorhersagen sind eigentlich Klatsch), der **Prediger** der Wachen Kirche auf dem Drain-Markt (seit neun Tagen wach, zittert vor Kaffee und schenkt Juno einen ein) und **die halbe Reparatur** auf dem Gerüst am Werbebildschirm (wohnt dort und repariert nur die linke Hälfte, die rechte gehört zu einem anderen Vertrag).
 
+**Was die Regenleserin sagt** (`game/regenleserin.js`; Vorschlag, Texte zum Prüfen im Mock): Über sie erklärt sich die Welt, und nebenbei fallen Dinge, an die man sich später erinnert. Kein Flag, alles darf man wieder fragen, Juno kommentiert nichts davon.
+
+| Was sie sagt | Was es später heißt |
+|---|---|
+| Der Fünfte schmeckt seit Jahren nach Kochsalz, jede Nacht eimerweise: „Wer wäscht da oben so viele?“ | die Schlafstation in den mittleren Ringen (Kap. 3, 4) |
+| Sie wartet seit drei Jahren auf den ersten warmen Tropfen der Maschine | die automatische Auswertung hat es nie gegeben (Kap. 2) |
+| Das halbe Haus holt um drei zur selben Zeit Luft | die Schlafenden sind verbunden, Tintes „wie ein Schwarm“ (Kap. 3) |
+| Lull und Junos Implantat: „Dieselbe Stelle. Sparsam, die Leute da oben.“ | Lull ist das Beobachter-Implantat in billig (§10a) |
+| Weiß hält hier unten keinen Tag: Wer so herumläuft, kommt nicht von hier | die weißen Träger, Ashes weißer Regenmantel am Freitag |
+| Freitag: Das Wasser schmeckt nach nichts, „wenn's so still wird, räumt jemand auf“, „Frag mich morgen“ | der Mord am selben Abend, die Quiet |
+| Teo soll raufkommen, „solange er die Leiter noch findet“ | Teo wird ein Sinker (Ende Kap. 2) |
+| Licht im Wasser, einer, der mithört; zehn Sekunden Wahrheit auf dem großen Schirm | Lantern, die Sümpfe |
+| Tinte „zählt mit“, wer fehlt | die Knoten im Kabel (Kap. 3) |
+| Baos Küche mit Fenster zum Strand, sein bestes Rezept liegt noch unten | Baos Vergangenheit (§9) |
+| Aus der Krone kommt kein Tropfen | die Krone, der Ruhekern (Kap. 5, 6) |
+
 **Die Abende:** Mittwoch ist Ankommen (Teo, die Aufträge, die Gasse, der erste Gang zum Drain-Markt). Donnerstag ist die Stadt (das Dach, der Zeitungskrieg, die weißen Träger; nebenbei Ines' Stick). Freitag wird alles still: dieselben Orte, aber der Bildschirm zeigt das Auge, Bao redet weniger, die Regenleserin sagt: „Heute schmeckt's nach gar nichts.“
 
 **Reihenfolge im Mock:** gleich nach Auftrag C, vor den Aufträgen A und B.
