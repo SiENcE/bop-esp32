@@ -106,7 +106,7 @@ den Leuten wurde. EVI führt es. „Ich schreib alles auf. Du hast gesagt, ich s
 Taschen-Deck ein, und EVI kommt darauf mit. „Bringst du mir was mit?“, fragt EVI. „Du isst nicht.“ – „Ich weiß. Bringst du mir was
 mit?“ In einem alten Karton liegen Junos Ausweis, CIVIC MONITOR, J. REYES, UNGÜLTIG, und der Kaktus von ihrem Pult, vertrocknet.
 
-Der Flur ist grün wie ein Aquarium, nur ohne Fische. In der Wand der Aufzug, darauf ein Zettel: OUT OF ORDER. Frau Haldanes Tür steht offen, sie schläft im Sessel, ein blauer Punkt
+Der Flur ist grün wie ein Aquarium, nur ohne Fische. In der Wand der Aufzug, darauf ein Zettel: OUT OF ORDER, davor die Müllsäcke. Oben in der Ecke hängt Halcyons Kamera. Frau Haldanes Tür steht offen, sie schläft im Sessel, ein blauer Punkt
 pulsiert hinter ihrem Ohr. „Sie schläft, wie andere Leute blinzeln.“ Auf der Bank sitzt Motte, zwölf Jahre alt, Kurierkind, in
 einer viel zu großen weißen Mütze. „Was machst du eigentlich? Den ganzen Tag?“ Was Juno antwortet, freundlich, ausweichend oder
 abweisend, merkt er sich.
@@ -323,4 +323,3 @@ Dazu, ohne Stelle im Text:
   Design; „Niemand sonst hat es gehört“ gegen ein Wort ohne Stimme.
 - **Veraltete Maße:** Figurengrößen in kapitel0 §8 und kapitel1 §10 (Juno 32 px statt 50), Kowalski 320 statt 416 breit, und die gebaute
   Straße hat noch keinen Eckladen und keinen Automaten mit Kamera davor.
-- **Deutsch in vorhandener Grafik:** das Post-it `ESSEN!!` in der Wohnung.

@@ -169,11 +169,16 @@ const KLOBBY = (() => {
           (lu, lv) => (lu > tread - 0.05 ? "5" : near(lv, W * 0.62, 0.06) ? "2" : "3"),                 // the nosing, the worn path
           (a, e, o) => (e >= o.ah - 2 ? "4" : "2"),                                                      // the riser
           (a, e, o) => (e >= o.ah - 1 ? "4" : near((h - e / 30) % 0.8, 0, 1 / 40) ? "1" : "2"))          // the side, its panel seams
-        // the rail on the open side: a post every third step, the handrail stepping with them
-        // (near the top the floor above takes over: the rail must not stand out over the wall)
-        if (h + 0.82 > 2.75) continue
-        if (i % 3 === 0) pen.box(u + tread * 0.4, v0 + W - 0.03, h, 0.04, 0.04, 0.82, () => "6", () => "4", () => "5")
-        pen.box(u, v0 + W - 0.04, h + 0.82, tread, 0.06, 0.05, () => "G", () => "5", () => "6")
+      }
+      // the rail on the open side: its posts, then one straight handrail over them, from the top of the flight to its foot,
+      // pixel by pixel so that it stays a clean line
+      const railH = (u) => H - ((u - u0) / L) * H + 0.82, V = v0 + W - 0.03
+      for (let i = 0; i < n; i += 3) { const u = u0 + (i + 0.4) * tread; pen.box(u, V, H - i * rise, 0.04, 0.04, railH(u) - (H - i * rise), () => "6", () => "4", () => "5") }
+      { const u = u0 + (n - 0.6) * tread; pen.box(u, V, rise, 0.04, 0.04, railH(u) - rise, () => "6", () => "4", () => "5") }
+      const uA = u0 + 0.02, uB = u0 + L - 0.6 * tread, [, yA] = pen.P(uA, V, railH(uA)), [, yB] = pen.P(uB, V, railH(uB))
+      for (let y = yA; y <= yB; y++) {
+        const u = uA + ((y - yA) / Math.max(1, yB - yA)) * (uB - uA), [x] = pen.P(u, V, railH(u))
+        pen.at(u, V, railH(u), "up"); pen.px(x, y, "G"); pen.px(x, y + 1, "5"); pen.px(x + 1, y + 1, "G"); pen.px(x + 1, y + 2, "5")
       }
     },
   })

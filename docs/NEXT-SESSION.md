@@ -9,27 +9,40 @@ We're continuing work on "Glass Sister", our cyberpunk point-and-click adventure
 the checks. Talk to me in German (the docs are German, code comments English).
 
 Where we are (everything is committed; the engine copy is at Cutaway.js 5f165f8):
-- The prologue plays from the flat to its end card, on Tuesday 2091-11-06. Juno's first tag (Kessler in cam03) explains the implant.
-- **The intro "Die letzte Schicht" is done** (docs/kapitel0-design.md §5), about 1:45. It is the sequence "intro" in game/intro.js; its
-  shot marks: a1, a2, c, hall, desk, announce, out, d; it ends on the ride down in the lift (game/intro_ride.js, art/intro/ride.px.js,
-  the melody "descent"), then the title screen. "Intro ansehen" comes back to the menu. Sound: gate: { introOnly }.
-- **The story up to Chapter 1 to read, with what is still open:** docs/story-lesefassung.md. The decisions of 2026-11-05 are in story §10b.
+- **The intro "Die letzte Schicht" is done and approved** (docs/kapitel0-design.md §5), about 1:45. It is the sequence "intro" in
+  game/intro.js; its shot marks: a1, a2, c, hall, desk, announce, out, d. It ends on the ride down in the lift (game/intro_ride.js,
+  art/intro/ride.px.js, the melody "descent"), then the title screen; "Intro ansehen" comes back to the menu without it. Where a browser
+  refuses sound, the first start asks on black (gate: { introOnly }, engine 79d6952).
+- **The prologue plays from the flat to its end card**, on Tuesday 2091-11-06. Juno's first tag (Kessler in cam03, also through the buffer)
+  explains the implant. Kessler goes by the noodle machine after his shift, which Chapter 1 builds on.
+- **The Kessel Block has one plan:** the lift at the same place on the 14th floor and in the lobby (art/kit/kessel_lift.kit.px.js), the
+  lobby's flight rising to where the landing's stairs begin. On the landing Frau Haldane's door is in the left wall, the bin bags stand
+  in front of the lift, Halcyon's camera hangs in the corner.
+- **The story to read, up to and including Chapter 1:** docs/story-lesefassung.md, and at its end what is still open. Every decision so far is
+  in story §10, §10a, §10b. Chapter 1's design (docs/kapitel1-design.md) follows them; none of Chapter 1 is built.
 - Checks now: validate 0 errors (3 known warnings), solve --full no soft-locks, every state has a hint, play.mjs all
   passed; play.mjs --intro plays the intro through as well. They take a few minutes together: give them a long timeout.
 
-**Next:** the open points at the end of docs/story-lesefassung.md, then Chapter 1 (docs/kapitel1-design.md, PLAN H4).
+**Next: Chapter 1** (docs/kapitel1-design.md, PLAN H4). Before building, settle with me: the open points at the end of
+docs/story-lesefassung.md, and the proposal for how Chapter 2 gets at the data (story §7, Chapter 2's end: there is one wallet, Lantern has it,
+he opens it with the stick and sends it out, nobody believes him, only Juno can lay it beside her cameras). Propose an order of small steps
+for Chapter 1 and show me blocks first; what the game needs is in kapitel1-design §13.
 
-Decided in the last session, keep to it (story §10a, kapitel0-design §5, style guide §6):
-- No sounds in the float and the lift, only music. The hall has its hum; shot 4 is silent.
-- Shot 2 has no words: the marking is enough. No cables anywhere: the implant lays its tags over what the eye sees.
-- **The implant** sits behind the ear, where Teo wears his Lull patch on the title: a cyan point, seen only with the
-  hood down; nothing on the small street figures. The cyan line on the cheek is the title's alone. The Lull patch is a
-  plaster on the skin and must always read as one, never as the implant.
-- **Lull is the observer implant made cheap** (the waking taken out, so one protocol). The eye and JUNO. are only in
-  Juno's eye. The scenes that tell the player are planned, not built: her observer handbook on the deck, a Lull user
-  as an unknown link in her overlay (Chapter 1 or 2), the firmware's id in Ines's logs (Chapter 3).
-- The lens on a mast (the old shot B) stays out; the masts in the water took its place.
-- Red and yellow keep their meanings: the only saturated yellow is Juno's; the people in 2088 wear Halcyon's grey.
+Decided, keep to it (story §10a, §10b, kapitel0-design §5, style guide §4, §6):
+- No sounds in the float and the lift, only music. The hall has its hum; shot 4 is silent. Shot 2 has no words: the marking is enough.
+- **Lull is a pale blue point of light behind the ear that pulses**, nothing else (no patch, no pads, no light on the temple). **The implant** sits
+  at the same place, smaller, and is always cyan: the point lights only when she tags, her brackets are cyan, in 2088 too; nothing on the small
+  street figures. The cyan line on the cheek is the title's alone. Nothing else behind an ear glows.
+- **Lull is the observer implant made cheap** (the waking taken out, so one protocol). The eye and JUNO. are only in Juno's eye. Juno is not the
+  only one left with the implant: very few, scattered, some on Lull or Sinkers. The scenes that tell the player are planned, not built: her
+  observer handbook on the deck, a Lull user as an unknown link in her overlay (Chapter 1 or 2), the firmware's id in Ines's logs (Chapter 3).
+- **The data wallet** (never "Laufwerk") holds Ines's encrypted logs, there is one; **the stick** in the dryer is its key, and the meeting is on the
+  ticket, not the stick. **Kessler** works until he has given Varga the ring, then goes under. **WREN** is Halcyon: if Juno sold, the Quiet knows her
+  at once; if she refused, it has to search. **Rask** looks into the camera, a disturbance runs through the picture, the feed is lost; nothing more dramatic.
+- **EVI is always in the bag;** that is only why she is there in every scene, bottom right she stands for the help. Leave that and her lines as they are.
+- **One building, one plan:** a lift and stairs stand at the same place on every floor. The lift never runs ("supposedly on Tuesdays" stays as a joke).
+- Words: the app is **GLASS**; signs in art are English, planned ones too (GLASSER LIES, SUDS & SPIN). Red and yellow keep their meanings: the only
+  saturated yellow is Juno's; the people in 2088 wear Halcyon's grey.
 
 Handy, found the hard way:
 - A shot the game draws itself is a room with `float: "<shot>"` and a drawer in Halcyon.intro.shots; the action
@@ -44,13 +57,11 @@ Handy, found the hard way:
 - Long heredocs with apostrophes break in the Bash tool here: write an edit script to build/ with the Write tool and run
   it, or use Edit.
 
-Open points, beyond the intro: small things I may still want in the hall (the hands hardly show at 1x, the coat is a
-little stiff, the room's edge and the black beyond it in the corner of the last picture, the chair back's top is rather
-straight in shot 2); the post-it "ESSEN!!" painted in German in the flat (make it language-free or an overlay); the
-flat's empty front floor; the steam fx in the street was replaced by baked plumes (check the engine's steam fx is
-visible somewhere or drop it); the iso tile editor (E-e) is postponed to Chapter 1, to be decided when rooms need
-re-arranging often; dialogue v2 (E-d) later; CJK fallback in the engine; docs/walkthroughs/ (other games' walkthroughs,
-reference only) is untracked: gitignore it or keep it out. After the intro: Chapter 1 (docs/kapitel1-design.md, PLAN H4).
+Open points: small things I may still want in the hall (the hands hardly show at 1x, the coat is a little stiff, the room's edge and the black
+beyond it in the corner of the last picture, the chair back's top is rather straight in shot 2); the flat's empty front floor; the steam fx in the street
+was replaced by baked plumes (check the engine's steam fx is visible somewhere or drop it); the iso tile editor (E-e) is postponed to Chapter 1, to be
+decided when rooms need re-arranging often; dialogue v2 (E-d) later; CJK fallback in the engine; docs/walkthroughs/ (other games' walkthroughs,
+reference only) is untracked: gitignore it or keep it out.
 
 How I like to work:
 - Small steps; for each, show screenshots and tell me which files to look at. Be honest about what you only saw as stills.

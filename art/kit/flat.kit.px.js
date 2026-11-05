@@ -401,13 +401,9 @@ const FLATKIT = (() => {
   })
 
   // the deck: a steel desk against the right wall; on it the rig (her own build, an open frame), a wide
-  // screen with a message open and the post-it, an old CRT with a camera's feed in phosphor green, a small
+  // screen with a message open, an old CRT with a camera's feed in phosphor green, a small
   // portrait screen on a wall arm scrolling a log; the keyboard, a noodle cup; under it the battery box
   // and the power strip, cables
-  const POSTIT = (() => {
-    const c = ISOKIT.raster(25, 9, (q) => { q.rect(0, 0, 25, 9, "y"); TXT.draw(q, 1, 1, "ESSEN!!", "k", { font: "hud" }); q.hline(1, 7, 21, "k"); q.px(24, 8, "_"); q.px(23, 8, "j"); q.px(24, 7, "j") })
-    return Array.from({ length: 9 }, (_, y) => Array.from({ length: 25 }, (_, x) => c(x, 8 - y) ?? ".").join(""))
-  })()
   ISOKIT.prop("deck_rig", {
     frames: NF,
     solid: (m) => [[m.at[0], m.at[1], 0.72, m.foot[0], m.foot[1], 0.05], [m.at[0] + 1.2, m.at[1] + 0.1, 0, 0.35, 0.3, 0.26]],
@@ -504,7 +500,7 @@ const FLATKIT = (() => {
           if (e > 9 && a < 5) return "!7"
           return roll ? "!7" : "!0"
         })
-      // the keyboard (a few keys backlit), a noodle cup with its fork, the post-it on the wide screen
+      // the keyboard (a few keys backlit), a noodle cup with its fork
       // the keyboard: four rows of keys on a dark tray, the arrows and a few keys backlit
       p.box(u0 + 0.42, v0 + 0.42, TOP, 0.7, 0.24, 0.03, (lu, lv) => {
         const row = fl(lv / 0.06), col = fl(lu / 0.05)
@@ -522,9 +518,6 @@ const FLATKIT = (() => {
       const [nx, ny] = p.P(u0 + 1.66, v0 + 0.56, TOP)
       p.at(u0 + 1.66, v0 + 0.56, TOP + 0.08, null)
       p.grid(nx - 3, ny - 6, ["..G...", "..G...", "hHHHH.", "hMMMh.", "hMNMh.", ".hhh.."])
-      const [sx, sy] = p.P(u0 + 0.37, v0 + 0.22, TOP + 0.58)
-      p.at(u0 + 0.4, v0 + 0.24, TOP + 0.55, "v")
-      p.grid(sx - 3, sy - 4, POSTIT)
       p.at(null)
     },
   })

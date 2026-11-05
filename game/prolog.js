@@ -185,7 +185,7 @@ Cutaway.room("flat", {
     fridge: { name: "Kühlschrank", poly: AF.fridgePoly, walkTo: AF.fridge, face: "ne",
       look: "Der Kühlschrank. Er brummt, als hätte er was zu sagen.", use: [{ set: "fridge_empty" }, "Licht. Sonst nichts."] },
     deck: { name: "Deck", poly: AF.deckPoly, walkTo: AF.deck, face: "ne",
-      look: ["Mein Deck. Drei Bildschirme, die nicht zusammenpassen, und ein Feed, der nie schläft.", "Auf dem Post-it steht ESSEN!! Von mir. An mich."],
+      look: "Mein Deck. Drei Bildschirme, die nicht zusammenpassen, und ein Feed, der nie schläft.",
       use: [{ goto: "deck" }] },
     window: { name: "Fenster", rect: AF.windowRect, walkTo: AF.window, face: "ne",
       look: "Regen. Gegenüber das Hotel, und dahinter der große Bildschirm. HALCYON: SLEEP BETTER. Ich schlafe schlecht, danke." },

@@ -121,7 +121,6 @@ order to build it. The model is the Loonies' plan (`B:\Github_my\the_goonies\doc
   - Check: a pseudo language (every letter through `t()` becomes x) in a screenshot; anything still
     readable is a text that skips i18n.
   - Text painted into the art is outside i18n: only signs, ads and the city's tech (English anyway).
-    Open: Juno's post-it "ESSEN!!" on the deck (art/rooms/flat.px.js) is German in the art.
 
 ## 1. What already exists and fits
 

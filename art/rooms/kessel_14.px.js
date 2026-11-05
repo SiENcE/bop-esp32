@@ -4,7 +4,7 @@
 // Exports (the atlas takes kessel_14_* only):
 //   kessel_14_bg      320x180, a 12-frame loop at 10 fps: the tube's dying end, Frau Haldane's TV and her
 //                     Lull light (baked in: she and her armchair are seen through her open door), the LEDs
-//   kessel_14_bags, kessel_14_bikes, kessel_14_rail   the props, outlined, pivot bottom-centre
+//   kessel_14_bags, kessel_14_rail   the props, outlined, pivot bottom-centre
 // KESSEL_14.layout has the measured numbers (walk area, front lines, spots, lamps; tools/iso-layout.mjs
 // writes the same for the game).
 include("../lib/iso.js", { palette: true })

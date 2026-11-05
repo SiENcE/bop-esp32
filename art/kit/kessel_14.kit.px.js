@@ -13,7 +13,7 @@
 //            (open: the frame, the plate beside it), note_war (two notes, no words: a scrawl and "??",
 //            the answer with its arrow), neon_tube (its left end dying), sign_14 (stencilled)
 //   stairs   stairs_concrete (treads with a steel nosing and a worn amber stripe; the dado follows the flight)
-//   props    bin_bags, bikes, stair_rail, armchair (Frau Haldane asleep in it, the Lull point behind her ear)
+//   props    corner_cam (Halcyon's, on its arm, its red eye), bin_bags, stair_rail, armchair (Frau Haldane asleep in it, the Lull point behind her ear)
 // Keys "!k" are never lit. Small organic things are hand grids; the rest boxes and lines.
 include("../lib/text.js")
 
@@ -266,30 +266,6 @@ const K14 = (() => {
       pen.grid(x - 3, y - 2, ["HHh.hh", "Hhh.hQ"])
     },
   })
-  // two bikes leaning on the wall, one behind the other: their wheels, the frames, a lock through both
-  ISOKIT.prop("bikes", {
-    solid: (p) => [[p.at[0], p.at[1], 0, p.foot[0], p.foot[1], 0.7]],
-    draw(pen, p) {
-      const [u0, v0] = p.at
-      const bike = (u, vb, frame, light) => {
-        const R = 0.31, vf = vb + 1.0, P = (v, h) => pen.P(u, v, h)
-        const ring = (vc, k, r) => { for (let t = 0; t < 72; t++) { const th = t / 72 * Math.PI * 2, v = vc + r * Math.cos(th), h = R + r * Math.sin(th); pen.at(u, v, h, "u"); const [x, y] = P(v, h); pen.px(x, y, k) } }
-        for (const vc of [vb, vf]) { ring(vc, "k", R); ring(vc, "1", R - 0.025); ring(vc, "4", R - 0.06); pen.at(u, vc, R, "u"); const [x, y] = P(vc, R); pen.px(x, y, "5") }
-        const line = (a, b, k) => { pen.at(u, (a[0] + b[0]) / 2, (a[1] + b[1]) / 2, "u"); const [x0, y0] = P(...a), [x1, y1] = P(...b); pen.line(x0, y0, x1, y1, k) }
-        const BB = [vb + 0.45, 0.3], SEAT = [vb + 0.3, 0.85], HEAD = [vf - 0.22, 0.8], HB = [vf - 0.27, 1.0]
-        line([vb, R], BB, frame); line([vb, R], SEAT, frame); line(BB, SEAT, frame); line(BB, HEAD, frame); line(SEAT, HEAD, light); line(HEAD, [vf, R], frame)
-        line(HEAD, HB, "5"); line([SEAT[0] - 0.03, SEAT[1]], [SEAT[0] + 0.03, SEAT[1] + 0.12], "5")
-        pen.at(u, SEAT[0], 0.98, "up"); { const [x, y] = P(SEAT[0], 0.98); pen.hline(x - 3, y, 6, "1"); pen.hline(x - 2, y - 1, 4, "2") }
-        // the bars, across toward us
-        pen.at(u + 0.2, HB[0], HB[1], "up"); { const [x0, y0] = pen.P(u - 0.2, HB[0], HB[1]), [x1, y1] = pen.P(u + 0.22, HB[0], HB[1]); pen.line(x0, y0, x1, y1, "6"); pen.px(x1, y1, "1"); pen.px(x1 - 1, y1, "1") }
-      }
-      bike(u0 + 0.12, v0 + 0.08, "c", "C")
-      bike(u0 + 0.32, v0 + 0.45, "O", "P")
-      // the chain lock through both front wheels and the pipe
-      const [x, y] = pen.P(u0 + 0.25, v0 + 1.32, 0.25); pen.at(u0 + 0.25, v0 + 1.32, 0.25, "u")
-      pen.line(x - 4, y - 1, x + 5, y + 3, "g"); pen.rect(x + 4, y + 2, 2, 3, "G")
-    },
-  })
   // the rail along the stairwell's open side and back to the wall at its far end (posts, the handrail, a
   // kick bar); its top section by the first step is broken off, only a stub post left (`stub`: where)
   ISOKIT.prop("stair_rail", {
@@ -340,6 +316,19 @@ const K14 = (() => {
   // Frau Haldane asleep in front of her TV (deeper in the room, out of sight: only its light), seen from
   // behind: the armchair's back toward the door, over it her grey hair in curlers, fallen a little to one
   // side, the Lull point's blue behind her ear; her arm hanging over the armrest, a slipper fallen off
+  // Halcyon's camera up in the corner: an arm from the ceiling's edge, the housing along the wall, its lens at the end towards the
+  // landing, the red eye blinking on its side
+  ISOKIT.prop("corner_cam", {
+    frames: 12,
+    footprint: () => [],
+    draw(pen, p, f) {
+      const [u0, v0] = p.at, L = p.foot[0], W = p.foot[1], H = p.h, h0 = H - 0.34
+      pen.box(u0 + 0.04, v0 + 0.04, h0 + 0.16, 0.1, 0.1, H - h0 - 0.16, () => "6", () => "4", () => "5")   // the arm
+      pen.box(u0, v0, h0, L, W, 0.17, () => "G",
+        (a, e, o) => (a >= 2 && a < o.aw - 1 && e >= 1 && e < o.ah - 1 ? (a === 3 && e === 2 ? "!v" : "k") : "4"),   // the hood, the lens
+        (a, e, o) => (a === o.aw - 4 && e === 2 ? (f % 6 < 2 ? "!q" : "!r") : e === 0 ? "3" : e >= o.ah - 1 ? "6" : "5"))
+    },
+  })
   ISOKIT.prop("armchair", {
     frames: 12,
     draw(pen, p, f) {

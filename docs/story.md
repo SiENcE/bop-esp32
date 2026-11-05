@@ -550,6 +550,8 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
 - **EVI ist immer in der Tasche dabei:** Das erklärt, warum sie in jeder Szene da ist; unten rechts steht sie abstrakt für die Hilfe. Ihr
   „Bringst du mir was mit?“ bleibt, wie es ist.
 - **Der Aufzug fährt nie.** „Angeblich dienstags“ bleibt als Witz.
+- **Der 14. Stock:** Frau Haldanes Tür sitzt in der linken Wand vorn, die Fahrräder sind weg, die Müllsäcke stehen vor dem Aufzug, oben in
+  der Ecke hängt Halcyons Kamera. Das Post-it in der Wohnung ist gestrichen.
 - **Ein Haus, ein Grundriss:** Aufzug und Treppe stehen auf jedem Stockwerk an derselben Stelle (`kessel_14`, `kessel_lobby`).
 - **Schilder in Grafik sind englisch**, auch geplante: `GLASSER LIES`, `SUDS & SPIN` (der Waschsalon), `NO SNEAKERS IN THE DRYER`, `OUT OF ORDER`,
   `KIDNEYS ONLY`, Sables Preisliste `NAMES 50. ADDRESSES 80. SECRETS: ASK.`
