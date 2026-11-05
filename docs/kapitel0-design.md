@@ -229,10 +229,10 @@ alten Beobachter-Protokoll (nur bestimmte alte Kameras, Kap. 1).
 - **Abläufe** (die Routinen der Figuren) sind Tabellen: für jeden Takt, wo jemand ist und was er tut.
   Die Engine braucht dafür eine neue Fähigkeit (Style Guide §11, Punkt 4).
 
-## 5. Vorspann: Die letzte Schicht (vor dem Titel, ~1,5 Min.)
+## 5. Vorspann: Die letzte Schicht (vor dem Titel, 1:46 Min. nach den Zeiten in `game/intro.js`)
 
 Eine Sequenz (wie das Intro der Loonies), überspringbar. **Sie läuft nur beim ersten Start** von selbst und ist im
-Titelmenü jederzeit wieder abspielbar. Sie endet auf dem **Titelbildschirm mit dem Glass-Sister-Logo** (die
+Titelmenü jederzeit wieder abspielbar. Wo der Browser Ton erst nach einem Klick erlaubt, fragt nur dieser erste Start auf Schwarz danach (`gate: { introOnly }`). Sie endet auf dem **Titelbildschirm mit dem Glass-Sister-Logo** (die
 Geschwister hinter dem gesprungenen Glas, `art/ui/splash.px.js`), der **bei jedem Spielstart** kommt, mit oder ohne
 Vorspann; danach das Menü.
 
@@ -254,7 +254,7 @@ Geräusche, nur Musik** (2026-11-04). Statt flammender Schlote stehen Kameramast
 | 3 | Eine Durchsage, Text über die ganze Breite | „Ab morgen übernimmt die automatische Auswertung. Halcyon dankt Ihnen für Ihren Dienst." |
 | 4 | Die Bildschirme der Halle gehen aus, von hinten nach vorn: erst die Wände, von der Ecke aus, dann die Pulte Reihe für Reihe; wessen Bildschirm aus ist, hört auf zu tippen. Die Halle wird dunkel, die Kamera geht mit bis zu Juno, ihr Bildschirm brennt noch. Dann nah wie in Einstellung 2: Erst hier geht ihr Bildschirm aus, wie eine Röhre. In ihm spiegelt sich ihr Gesicht, das Gesicht vom Titelbild ohne Kapuze und ohne Linie, ihr zugewandt, nur als Raster, das nach hinten dunkler wird und sich auflöst. | Stille (die Musik blendet aus, das Brummen ist weg) |
 | D | **Die Transitachse**, abwärts, die erste Seitenansicht: zuerst nah am Karton (ein Kaktus, eine Tasse und ein Datenstick mit dem Aufkleber `EVAL-7 // DELETE`, gemalt und englisch wie alle Technik der Stadt; eine Sekunde lesbar, nicht kommentiert), dann Juno mit dem Karton im gläsernen Aufzug, die Ringe rasen vorbei. **Juno ist die Figur von heute** (2026-11-04): Den gelben Mantel, der in der Halle über ihrem Sessel hing, trägt sie jetzt, die Kapuze unten; ihre Straßenfigur mit Atmen und Blinzeln, dazu der Karton (`art/intro/ride.px.js`). ~10 s. | Kein Text. Eine langsame, melancholische Melodie |
-| 6 | Schnitt: heute. Ein Phosphor-Feed auf dem Röhrenmonitor, das selbstgebaute Deck, Junos Hand auf der Maus. Gelber Ärmel. | `2091-11-03 21:30` |
+| 6 | Schnitt: heute, auf dem letzten Ton der Melodie. Ein Phosphor-Feed auf dem Röhrenmonitor, das selbstgebaute Deck, Junos Hand auf der Maus. Gelber Ärmel. Alles aus dem Karton ist da, unkommentiert: der Kaktus, die Tasse, und der Stick steckt in ihrem Deck (`EVAL-7`). | `2091-11-03 21:30`; die Melodie klingt aus, die Lüfter des Decks |
 | 7 | **Der Titelbildschirm** mit dem Glass-Sister-Logo (wie bei jedem Start), dann das Menü | Junos Thema |
 
 ## 6. Der Prolog Schritt für Schritt

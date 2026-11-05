@@ -8,51 +8,29 @@ We're continuing work on "Glass Sister", our cyberpunk point-and-click adventure
 (engine: Cutaway.js in B:\Github_my\cutaway\). Read CLAUDE.md first; it lists the docs, the commands and
 the checks. Talk to me in German (the docs are German, code comments English).
 
-Where we are (everything is committed; the engine copy is at Cutaway.js e2bc1d6, unchanged this time):
-- The prologue plays from the flat to its end card. In the JUNO. moment the implant's cyan brackets now lie round the
-  ad screen (the action { implant_mark }, game/screens.js) and Juno says "Das war nicht auf dem Schirm. Das war in
-  meinem Auge."
-- **The intro "Die letzte Schicht" is half done** (docs/kapitel0-design.md §5 has the table of shots, decided). It is
-  the sequence "intro" in game/intro.js, in the game (Cutaway.start({ intro }): by itself on the first start, and
-  "Intro ansehen" in the menu). Done, with my notes worked in: A1, A2, C, 1, 2, 3, 4. Its shot marks: a1, a2, c, hall, desk,
-  announce, out.
-  - A1/A2 the float over the lit sea along a dark channel, the camera masts in the water, Halcyon growing ahead
-    (game/intro_sea.js, art/intro/float.px.js); C the tower, in through a green window (game/intro_tower.js);
-    1 the hall at the street's scale, the camera drifting to Juno's desk (art/rooms/hall.map.js, art/kit/hall.kit.px.js,
-    game/intro_hall.js); 2 Juno close behind her chair's high back, marking a man (art/intro/desk.px.js,
-    game/intro_desk.js); 3 the announcement; 4 the screens going out, whoever's monitor is out stops typing, Juno's
-    goes out last in the close-up, her face from the title as a raster in the dead glass
-    (art/intro/juno_face.data.js).
-  - The look so far: docs/rooms/intro_float_a1_x3.png, intro_float_a2_x3.png, intro_tower_c2_x3.png, hall_juno_x3.png,
-    intro_desk_x3.png, intro_announce_x3.png, intro_out_rows_x3.png, intro_out_face_x3.png.
+Where we are (everything is committed; the engine copy is at Cutaway.js 5f165f8):
+- The prologue plays from the flat to its end card. Juno's first tag (Kessler in cam03) now explains the implant: "Die
+  Klammern macht nicht das Deck, die macht mein Implantat. Das durften wir behalten, damals. Sie sagten, das Herausnehmen
+  kostet mehr." (game/cast.js).
+- **The intro "Die letzte Schicht" plays whole** (docs/kapitel0-design.md §5), 1:46 by its timings. It is the sequence
+  "intro" in game/intro.js; its shot marks: a1, a2, c, hall, desk, announce, out, d, today; then the title screen.
+  - A1/A2 the float (game/intro_sea.js, art/intro/float.px.js); C the tower (game/intro_tower.js); 1 the hall
+    (art/rooms/hall.map.js, game/intro_hall.js); 2 Juno close (art/intro/desk.px.js, game/intro_desk.js); 3 the
+    announcement; 4 the screens going out; D the ride, the box close, a cut, then the lift (game/intro_ride.js,
+    art/intro/ride.px.js, the melody "descent" in game/music.js); 6 today at the deck (game/intro_today.js,
+    art/intro/today.px.js). The sentence about the implant is not in the intro any more.
+  - **Juno in D is today's Juno**: her street sprite with its breath and blink, the hood down, in the yellow coat that
+    hung over her chair in the hall (intro_d_juno), with a box seen flatter than 2:1 and her arm bent to hold it.
+  - The look: docs/rooms/intro_float_a1_x3.png, intro_float_a2_x3.png, intro_tower_c2_x3.png, hall_juno_x3.png,
+    intro_desk_x3.png, intro_announce_x3.png, intro_out_rows_x3.png, intro_out_face_x3.png, intro_d_close_x3.png,
+    intro_d_lift_mid_x3.png, intro_d_lift_low_x3.png, intro_today_x3.png.
+- Sound on the first start: the gate shows on black only when the intro will play (gate: { introOnly }, engine 79d6952).
 - Checks now: validate 0 errors (3 known warnings), solve --full no soft-locks, every state has a hint, play.mjs all
-  passed. They take a few minutes together: give them a long timeout.
+  passed; play.mjs --intro plays the intro through as well. They take a few minutes together: give them a long timeout.
 
-**Next: the rest of the intro.** After shot 4 the sequence now just fades out. Its storyboard in blocks is approved:
-art/test/intro_blocks.px.js, docs/rooms/intro_blocks.png, docs/rooms/intro_blocks_opening_x2.png,
-docs/characters/juno2088_blocks_x6.png (older than the decisions below: where they differ, the decisions win; the
-blocks still show cables). In this order, small steps, a screenshot and my look at each:
-1. **T is gone** (2026-11-04): the sentence about the implant moved to the first tag in the prologue (game/cast.js, Kessler).
-2. **D**, the ride down the Transitachse, the game's first side view: a glass lift going down, the rings rushing up
-   past it fast, ~10 s, **no words and no sounds, the music alone**. It starts close on the box in her arms (a cactus,
-   a cup, the data stick), the stick's label EVAL-7 // DELETE readable for about a second, then the
-   whole lift: pixel art doesn't zoom, so a painted close-up and a cut, or whatever you find looks better; say which.
-   - **Juno is today's Juno** (decided 2026-11-04): her street sprite with its breath and blink, the hood down, in the
-     yellow coat that hung over her chair in the hall; the box over it (art/intro/ride.px.js: intro_d_juno). So the coat
-     is not in the box: a cactus, a cup, the stick. Blocks: art/test/intro_d_blocks.px.js, docs/rooms/intro_d_blocks.png.
-   - **The melody**, in game/music.js: slow, melancholic, haunting (the instruments of "memory" and "opening" are there:
-     br_brass, br_ribbon, br_bells, br_pedal). "opening" faded out in shot 4. Render it with
-     lib/cutaway/tools/render-music.mjs into build/music/ for me to listen to; you can't judge it yourself.
-3. **6**, today, 2091-11-03 21:30: a phosphor feed on the CRT, the home-built deck, her hand on the mouse in the yellow
-   sleeve. The deck stays as it is, CRT and mouse, on purpose.
-4. **7**, the title screen with the Glass Sister logo (the splash), then the menu. On the first start the engine
-   already goes on to the splash after the sequence; "Intro ansehen" comes back to the menu without it
-   (acts.js watchIntro): check how that feels and ask me.
-5. **Sound on the first start:** a browser allows sound only after a click, so the intro's first playing is silent
-   until then. The engine's `gate` would solve it, but it shows on every start, a second click beside the splash's
-   prompt. Show it only when the intro will play (Cutaway.settings.seen("intro")), or find something better.
-6. Then the whole intro's length and pace: it was planned at ~1.5 min, and by the timings in game/intro.js it takes
-   about that already up to shot 4. You only see stills, so ask me how it feels in real time.
+**Next:** my look at the whole intro in real time (you only see stills): its length and pace, the ride's speed, and what
+"Intro ansehen" should end on (it comes back to the menu without the splash, acts.js watchIntro). After the intro: Chapter 1
+(docs/kapitel1-design.md, PLAN H4).
 
 Decided in the last session, keep to it (story §10a, kapitel0-design §5, style guide §6):
 - No sounds in the float and the lift, only music. The hall has its hum; shot 4 is silent.

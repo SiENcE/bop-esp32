@@ -28,7 +28,7 @@
   /** Her hand on the mouse, in the yellow sleeve, which comes in from the corner. */
   function hand(/** @type {CanvasRenderingContext2D} */ ctx, /** @type {number} */ dx, /** @type {number} */ dy) {
     const x = MX + dx, y = MY + dy;
-    // the mouse under it, its cable away over the desk
+    // the mouse under it
     px(ctx, "#0c0e1a", x - 7, y - 3, 16, 13); px(ctx, "#3d4656", x - 6, y - 2, 14, 11); px(ctx, "#565e70", x - 6, y - 2, 14, 2); px(ctx, "#2f3e5a", x - 6, y + 3, 5, 1);
     // three fingers forward over its back, the back of the hand, the thumb along its side; the phosphor's light on the edge
     for (const [fy, n] of [[0, 9], [3, 10], [6, 9]]) { px(ctx, "#d79676", x - n + 6, y + fy, n, 2); px(ctx, "#93583f", x - n + 6, y + fy + 2, n, 1); }

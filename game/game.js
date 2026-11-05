@@ -10,5 +10,7 @@
     actor: "juno", party: ["juno"], dev: true, title: Halcyon.title,
     // the intro (game/intro.js): by itself on the first start only, then from the menu; the splash comes after it
     intro: "intro",
+    // browsers allow sound only after a click: on black, only when the intro is about to play, or it would be silent
+    gate: { introOnly: true, prompt: "Klicken zum Starten" },
   });
 })();
