@@ -39,7 +39,7 @@ also nur in den Nächten von Abend 1 und 2. Auftrag B muss bis dahin gelöst sei
 - Die Wege kosten keine Zeit, die Uhr läuft nur beim Warten (§9).
 - WRENs Antworten (zurückschicken, senden, nicht senden) gibt es erst am Freitag; vorher würde jede den ganzen Rest verdoppeln.
 - `cam22` wird mit der Speisekarte gleich verbunden; `cam22` und `cam23` stehen von Anfang an auf der Karte, Ines muss dafür nicht markiert sein. Im Trockner liegt der Stick auch für jemanden, der nur zufällig nachsieht. Am Freitag sind `cam22` und `cam23` weg (Ines geht nicht mehr hin), `cam24` ist dafür offen, bis Sable und Motte den Code geben.
-- Im Bild stehen die Figuren des Prologs für Ines und Lantern; REC geht in Kapitel 1 noch nirgends.
+- Im Bild steht eine Figur des Prologs für Ines; Lantern und Ashe sind Blöcke, ebenso die liegende Ines. REC geht in Kapitel 1 nur während der Szene in `cam31`; zu sehen ist der Knopf überall.
 
 ## 3. Auftrag A: „Der verschwundene Schuldner" (Varga)
 
@@ -179,6 +179,8 @@ Kap. 2: Nach dem Senden weiß die Quiet sofort, wer Juno ist; nach der Weigerung
 Die Abende sollen nach Leben in der Stadt schmecken, nicht nach Warten aufs Bett. Das **Bett** geht erst ab 01:00 auf („Schlafen? Ich schlaf nicht vor eins. Nie.“).
 
 **Zwei neue Orte:** die **Gasse** hinter dem Gitter in der Kowalski-Straße (Kabelbündel, Dampf, Nischen, in denen Leute wohnen; von hier geht es zum Waschsalon und zum Drain-Markt) und das **Dach des Kessel-Blocks**, von dem aus man **die Ringe** zum ersten Mal von unten sieht: Unterseiten so groß wie ein Himmel und das tropfende Wasser, das hier als Regen gilt. Das Dach hat **dieselbe Kamera wie das alte Foto am Deck** (`art/ui/deck_wallpaper.px.js`), zwanzig Jahre später: `SLEEP BETTER` statt `RISE ABOVE`, dem NOODLES-Schild fehlen zwei Buchstaben, mehr Schirme in der Stadt. Juno kann sich an die alte Stelle setzen: die große Einstellung, allein, wo sie zu zweit saßen (`dach_sitzen`). Der **Blick nach oben** ist ein Mock zum Beurteilen (`dach_blick`, `docs/mockups/mock_g_ringe_*`): A genau entlang der Hochachse, B von Junos echtem Standort aus, schräg nach oben. Im Spiel steht B: Das Foto zeigt die Achse weit weg in der Stadt, A könnte sie von dort gar nicht sehen.
+
+**Das Dach im Bild** (entschieden 2026-11-05): `dach` und `dach_sitzen` laufen in derselben Schleife wie das Foto am Deck (24 Bilder, 2,4 s). Der Regen fällt nur bis zur Oberkante der Brüstung; die Brüstung und der Teer davor sind trocken, ohne Regen und ohne Pfützen. Auch die Leiter endet an der Oberkante der Brüstung: Sie kommt von außen hoch. Das Foto selbst behält Regen und Pfützen.
 
 **Der Weg aufs Dach:** Keine Treppe führt hoch. Juno klettert aus dem Fenster auf den Sims und die Außenleiter hoch, und sie hat Höhenangst (das Foto am Deck: „Er hatte nie Angst vor der Höhe. Ich schon.“). Ein kleines Rätsel, ein Vorschlag zum Prüfen im Mock. Die Reihenfolge ist frei: Was Juno findet, kann sie sofort mitnehmen (auch überall sonst, `CLAUDE.md`, Konventionen):
 
@@ -348,6 +350,8 @@ Die Hinweise spricht EVI (Prolog-Design §2.2, §6.5). Die Tabelle nennt die sch
 | B6 | „Die Drohne passt auf." | „Ihr Licht wandert. Warte." | „Benutze den Abzweiger, wenn der Lichtkegel weg ist." |
 | C6 | „Ines hat etwas im Waschsalon gelassen." | „Geh selbst hin, oder sieh nachts zu, wer es holt." | „Öffne Trockner 6 und lies, was auf der Theke liegt." |
 | C7 | „CAM 31 ist älter als Halcyon. Sie will einen Takt, keinen Code." | „Den Takt hat jeder, der mit Lull schläft. Hinter dem Ohr. Frau Haldane schläft im Flur." | „Lang, kurz, kurz, lang. Klick CAM 31 an und gib das ein." |
+| Die Drohung in `cam31` | „Ich hab nichts. Keine Tür, kein Licht, keine Nummer." | „Ich such weiter. Ich find nichts, was geht." | „Du kannst nichts tun, Juno. Ich auch nicht." |
+| Danach, in der Wohnung | „Juno?" | „Du sitzt nur da." | „Sag was. Bitte." |
 | Miete | „900 Chits bis Freitag." | „Jeder Auftrag bringt Geld. Oder jemand hilft dir." | „Du musst nichts verkaufen. Teo zahlt, wenn es nicht reicht." |
 
 ## 13. Was die Engine zusätzlich braucht (gegenüber dem Prolog)

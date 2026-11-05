@@ -363,6 +363,9 @@ All OSD elements are in phosphor values, in 3x5 capitals; only the implant parts
 | bottom left | thumbnails of the linked cameras (`CAM 06`, `CAM 07` marked `LIVE`, `CAM 08`). A click switches cameras; switching is changing rooms. |
 | bottom middle | the audio bar: what the camera's mic hears, as `NAME> line` (the speaker's name in their colour, or `???`) |
 | bottom right | `CACHE n/8`: Juno's recorded clips, stills and data, the inventory of feed mode |
+| right, under the buttons | a room's own buttons, only while they can be clicked (the end in `cam31`: `STEUERN`, `CHAT: INES`, `LAUTSPRECHER`, `REVIER 9`, cyan); once tried, the button keeps what came back, dimmed (`KEIN ZUGRIFF`) |
+
+The overlay's brackets are cyan; the only red ones are a threat's (Ashe in `cam31`, `???` in cyan first, then `BEDROHUNG` in red). `cam31` is older than every other camera: coarser grain, a flicker, darker corners. When a feed dies, its picture goes to grain with `SIGNAL LOST` in phosphor in the middle, and the display stays.
 
 ### What the player does in a feed (the art must support it)
 

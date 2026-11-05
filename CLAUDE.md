@@ -135,7 +135,7 @@ node lib/cutaway/tools/play.mjs index.html --act kapitel1 --path tools/paths/kap
 Keep Chapter 1's state small: a flag nobody asks about doubles every state. What only shows (a dot for unread) is a view flag; what
 the prologue leaves open is closed with `day=1`; a chapter marks the rooms Juno knows with `{ been_to: [...] }`; flavour is a look, not a
 moment (seen or not doubles what follows); what no longer matters is forgotten overnight (`Halcyon.nights[day].passes`). Every time is on the
-15-minute ticks and only waiting moves the clock: one time off the grid multiplied the states by ten. All the checks at once: `sh tools/check.sh` (about ten minutes). Side stories and jobs are threads of their own: each
+15-minute ticks and only waiting moves the clock: one time off the grid multiplied the states by ten (the one exception is a chain nothing branches on, the end in cam31). All the checks at once: `sh tools/check.sh` (about ten minutes). Side stories and jobs are threads of their own: each
 checked alone with the others shut (`off_<thread>`, `game/stadt.js`), since together they would multiply each other. What they do to each other is
 not covered by the solver: keep them independent (their own `<thread>_step` number, no flag shared).
 

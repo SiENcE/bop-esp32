@@ -28,7 +28,8 @@ Where we are (everything is committed; the engine copy is at Cutaway.js 6eeb017)
   - The bag: what Juno holds is an item (ID, hook, Ines's stick; later the tap and the rice), clips and notes stay in the CACHE. EVI sits fixed in the bag and only talks.
 
   - **The end in cam31 is built on blocks** (game/kapitel1_ende.js, kapitel1-design §8): Ines, Lantern, Ashe; the four tries that all fail, in real time with the VOR button as the way the tools take; black bars or shown (settings, page "Inhalt"); SIGNAL LOST; her flat, where only Juno can be clicked; EVI; the end card. I have only seen stills of it; how long the threat should last and every line not in §8 are mine to judge by playing.
-  - **The roof and dach_sitzen are animated** with the same 24 frame loop as the deck's wallpaper; their rain is baked in, so they have no rain fx.
+  - **The roof and dach_sitzen are animated** with the same 24 frame loop as the deck's wallpaper; their rain is baked in, so they have no rain fx. It ends at the parapet's top: the parapet and the tar stay dry, no rain, no puddles, and the ladder ends there too. The photo keeps its rain and puddles.
+  - **The Rain Reader talks** (game/regenleserin.js): six topics on two levels, no flags, everything can be asked again. Her lines explain the world and plant things for later; what pays off where is in kapitel1-design §7. The texts are proposals for me to judge; the warm drop of the machine is the weak one (the Crown gives no water back, and the Ruhekern's servers are there).
 
 **Next, in the agreed order:**
 job A (Varga, Kessler), job B (Tide, Okonkwo), life around it (Teo's visit on Wednesday, Mei, Vesper, the NETZ, Motte's lessons, Bao's line, Frau Kessler's messages are in), then the prologue goes on into
@@ -44,9 +45,10 @@ a gate needs a time, knowledge the player really lacks, or a decision of mine. *
 **The solver is the risk of this chapter** (CLAUDE.md, checks). Every flag nobody asks about doubles all states. All times are on the 15-minute ticks and only waiting moves the clock (walking costs nothing,
 provisional: check by playing whether it feels right). Flavour is a look, not a moment; what no longer matters is forgotten overnight (`Halcyon.nights[day].passes`). Each side story is a thread of its own, solved alone
 with `--set off_main,know_meeting,off_<the others>`; a new one needs its name in `{ solo }` (game/halcyon.js) and in THREADS in tools/check.sh, and no flag shared with another. What threads do to each other only playing finds.
-- All the checks: `sh tools/check.sh` (about 10 minutes, with touch: run it in the background and change nothing while it runs). Now: validate 0 errors (10 known warnings), prologue 53556 states, Chapter 1's main thread 44696, the side stories 5000 to 13000 each, no soft-locks, every state has a hint, all ways clicked.
+- All the checks: `sh tools/check.sh` (about 10 minutes, with touch: run it in the background and change nothing while it runs). Now: validate 0 errors (11 known warnings), prologue 53556 states, Chapter 1's main thread 44960, the side stories 5000 to 13000 each, no soft-locks, every state has a hint, all ways clicked.
 - The ways it clicks are tools/paths/kapitel1_*.json (plain lists of moves; their generators were scratch files in build/). A new stop of the clock changes how many `wait`s a way needs: when a way fails with "nothing to click", count them first. Actors are `@id`.
 - The tools: `node tools/solve-act.mjs kapitel1 --full --set a,b [--json path.json]`, `node lib/cutaway/tools/play.mjs index.html --act kapitel1 --path p.json [--shots dir]`.
+- Times off the 15-minute grid are safe only inside a chain nothing branches on: the end in cam31 (22:55, 23:02, 23:03 and so on) is one, and its hold (game/kapitel1.js) lets only the scene move the clock.
 - A prologue flag or camera that opens in Chapter 1 needs `day=1`; a chapter's camera needs `day>1` in its `if`, or it is on the prologue's map (the solver shows it: the prologue's states jump).
 
 Decided, keep to it (story §10a, §10b, kapitel0-design §5, style guide §4, §6):
@@ -82,7 +84,7 @@ Handy, found the hard way:
 - Long heredocs with apostrophes break in the Bash tool here: write an edit script to build/ with the Write tool and run
   it, or use Edit. Read a file's line endings first: many are CRLF.
 
-Open points: in the mock, the chat's replies keep gaps in their numbers ([1], then [4]) where one is hidden; the REC button shows in Chapter 1 where it does nothing yet; the fitter stands on the street, without his scaffold; street scenes can't move the clock, so going out and waiting
+Open points: in the mock, the chat's replies keep gaps in their numbers ([1], then [4]) where one is hidden; the REC button shows in all of Chapter 1 and only does something in the scene in cam31; the fitter stands on the street, without his scaffold; street scenes can't move the clock, so going out and waiting
 mean going back to the deck (proposal: the city's scenes move it themselves). Small things I may still want in the hall (the hands hardly show at 1x, the coat is a little stiff, the room's edge and the black
 beyond it in the corner of the last picture, the chair back's top is rather straight in shot 2); the flat's empty front floor; the steam fx in the street
 was replaced by baked plumes (check the engine's steam fx is visible somewhere or drop it); the iso tile editor (E-e) to be
