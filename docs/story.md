@@ -125,7 +125,7 @@ Cyan nur für Technik.
 
 | Wer | Rolle | Aussehen und Silhouette (Akzent im Feed) | Farbe |
 |---|---|---|---|
-| **Juno Reyes**, 31 | Glasserin und Informationshändlerin; früher **zivile Beobachterin** bei Halcyon (eine menschliche Kamerabeobachterin), vor drei Jahren entlassen, als „automatische Auswertung" ihr Team ersetzte; ihr Beobachter-Implantat hat sie behalten, was heute illegal ist | gelber Regenmantel mit Kapuze, Umhängetasche, Implantat hinter dem Ohr (unter der Kapuze nicht zu sehen; auf dem Titelbild als Cyan-Linie über der Wange) | `#fff070` |
+| **Juno Reyes**, 31 | Glasserin und Informationshändlerin; früher **zivile Beobachterin** bei Halcyon (eine menschliche Kamerabeobachterin), vor drei Jahren entlassen, als „automatische Auswertung" ihr Team ersetzte; ihr Beobachter-Implantat durfte sie behalten, weil das Herausnehmen mehr gekostet hätte | gelber Regenmantel mit Kapuze, Umhängetasche, Implantat hinter dem Ohr (unter der Kapuze nicht zu sehen; auf dem Titelbild als Cyan-Linie über der Wange) | `#fff070` |
 | **EVI** | die KI auf Junos Deck: der ausgemusterte Prototyp der „automatischen Auswertung" (§6), den Juno vor der Löschung gerettet hat. Neugierig, lieb, gut mit Daten und hoffnungslos schlecht darin, Menschen zu lesen; fragt Juno ständig, warum Menschen Dinge tun. Erklärt das Deck, meldet Nachrichten, gibt die Hinweise. Lebt auf dem Deck und geht auf dem Taschen-Deck mit (§10b). | ein kleines rundes Pixelwesen mit großen Augen und zwei Antennen-Ohren, auf dem Desktop etwa 24 px, in der Tasche 16 px; 6 Gesichter (froh, neugierig, verwirrt, besorgt, müde, Glitch) | `#8ef5d8` |
 | **Teo Reyes**, 23 | ihr jüngerer Bruder; arbeitet Doppelschichten in Pumpenhalle 3, **mit Lull**; fröhlich und stolz, zahlt ihre Miete, wenn sie es nicht kann. Hat sich mit 18 einen **Gezeitenmod** machen lassen (Kiemen), weil Taucher das Doppelte verdienen: Halcyons idealer Arbeiter, umgebaut für die Schicht und betäubt für die Nacht. | orange Arbeitsweste, Gehörschutz um den Hals, Kiemenschlitze, die im Feed leuchten | `#ffa040` |
 | **Bao**, über 70 | betreibt die Nudel-Garküche vor dem LUCKY STATIC; lässt Juno anschreiben; kennt jeden. Redet ständig von seinem Mann Lou, „meinem Alten", der nie zu sehen ist, bis zum Epilog. | Schirm, weiße Schürze | `#e8c890` |
@@ -222,7 +222,7 @@ Straßenmodus.
 - **Rausgehen:** Der Kühlschrank ist leer. Raus durch den Kessel-Block (Motte auf seiner Bank, die Tür
   von Frau Haldane) auf die Kowalski-Straße zu Baos Garküche.
 - **Das Ende:** Der kaputte Werbebildschirm über der Straße flackert und sagt **„JUNO."** (der Moment
-  aus dem Mockup). Niemand sonst hat es gehört. Aus der Tasche, ganz leise, EVI: „Das war nicht ich.
+  aus dem Mockup). Niemand sonst hat es gesehen. Aus der Tasche, ganz leise, EVI: „Das war nicht ich.
   Ehrlich." (Der Spieler darf EVI kurz verdächtigen.)
 
 ### Kapitel 1: Glass (der Tagesjob, ~2 Std.)
@@ -231,7 +231,7 @@ Straßenmodus.
 
 - **Offener Aufbau:** drei Aufträge auf dem Deck, in beliebiger Reihenfolge, jeder ein Feed-Rätsel
   plus eine Besorgung auf der Straße (ein Werkzeug auf dem Drain-Markt kaufen, eine Kamera vor Ort
-  reparieren, ein Passwort in einer Wohnung finden).
+  anzapfen, im Waschsalon nachsehen).
   - **Der verschwundene Schuldner:** Kessler aus dem Prolog ist nach dem Treffen untergetaucht: Den Rest kann er nicht
     zahlen, den Ring hat Varga schon, und verschuldet traut er sich nicht mehr heim. Der Kredithai Varga
     heuert Juno an, ihn zu finden. Verkaufen, warnen oder lügen.
@@ -507,7 +507,7 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
 - **Wie der Spieler es erfährt** (nicht nur in der Bibel): über Dokumente und Junos innere Stimme, Schritt für Schritt.
   - Ab Kapitel 1, Abend 1, auf dem Deck: Junos altes **Beobachter-Handbuch** von Halcyon (eine Notiz im CACHE, `kapitel1-design` §7), mit dem, was das
     Implantat kann, wo es sitzt, und dem Namen des Protokolls.
-  - Kapitel 1, `cam21`: Ein Lull-Nutzer taucht im Feed kurz als unbekannter Link (`UNKNOWN LINK`) in ihrem Overlay auf. Niemand erklärt es.
+  - Kapitel 1, `cam21`: Über jemandem in der Schlange steht im Feed ein unbekannter Link (`UNKNOWN LINK`) in ihrem Overlay, der pulsiert, wenn er aktiv ist. Niemand erklärt es.
   - Kapitel 3, bevor sie Lull nimmt: In Ines' Schlafprotokollen steht die Kennung der Lull-Firmware, und sie ist die aus
     dem Handbuch, nur fehlt die Wach-Ebene (Technik der Stadt, englisch: `OBS-4 // WAKE LAYER: REMOVED`). Die innere
     Stimme DAS IMPLANTAT erkennt sie, und Juno sagt es laut. Damit ist auch klar, warum sie Lull nehmen muss und warum
@@ -561,5 +561,6 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
 - **Tinte** ist fast 40 Jahre alt, also aus den Anfängen des Flutprogramms der 2050er, und damit uralt für eine Krake. Sie hat Kiemen wie jede
   Krake; fürs offene Wasser ist sie nur nicht mehr gemacht.
 - **Das Beobachter-Handbuch** liegt ab Kapitel 1, Abend 1 im CACHE und nennt das Protokoll `OBS-4`, das Juno in `cam31` braucht.
-- **Der unbekannte Link** erscheint in der Schlange vor der Lull-Klinik (`cam21`) als `UNKNOWN LINK`; `???` gehört Rask.
+- **Der unbekannte Link** steht in der Schlange vor der Lull-Klinik (`cam21`) als `UNKNOWN LINK` über jemandem, pulsiert, wenn er aktiv ist, und verschwindet nicht; `???` gehört Rask.
+- **Das Implantat** durfte Juno behalten, weil das Herausnehmen mehr gekostet hätte (wie sie es im Prolog sagt). Illegal ist es nicht.
 - **Ines' Kameras:** vier am Mittwoch und Donnerstag (`cam21` bis `cam24`), am Freitag dazu `cam30` und `cam31`, zusammen sechs.
