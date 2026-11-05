@@ -19,7 +19,8 @@
 //                    brighter than steel 5 #41547a but the dimmed hood, a few amber windows, the sign.
 //                    The mockup (art/mockups/mock_f_deck.px.js) stamps it into stills: frame 0.
 //   dach_bg, dach_heute   the same roof twenty years on, the same loop (built into assets/mock.js for now): the
-//                    rooms dach and dach_sitzen, whose rain is this one, so they carry no rain fx of their own.
+//                    rooms dach and dach_sitzen, whose rain is this one, so they carry no rain fx of their own. It
+//                    ends at the parapet's top: the parapet and the tar before it have no rain and no puddles.
 //
 // Palette keys: the world palette (style guide §5: k, steel 1-6, wet e f z Z X, magenta n M m N, warm
 // O P Q R W, cyan c C v V, red r q, Juno's j y Y, skin s S) plus the smog lit from below (A B D G);
@@ -332,8 +333,8 @@ pal({
     for (let x = 3; x < W; x += 5) if (hash(x, 5) < 0.4) c.rect(x, SEAT + 4, 1, 2 + Math.floor(hash(x, 6) * 5), "1")
     for (let y = SEAT + 13; y < H; y++) for (let x = 0; x < W; x++) c.px(x, y, y < SEAT + 15 ? "k" : "e")
     c.rect(0, SEAT + 15, W, 1, "1")                         // the cable along the parapet's foot
-    // splashes on the tar: each once a loop, for two frames
-    for (let i = 0; i < 30; i++) {
+    // splashes on the tar: each once a loop, for two frames (the photo only: today the rain ends at the parapet, the roof stays dry)
+    if (!today) for (let i = 0; i < 30; i++) {
       const x = Math.floor(hash(i, 21) * W), y = 152 + Math.floor(hash(i, 22) * 26), a = (f - Math.floor(hash(i, 23) * FRAMES) + FRAMES) % FRAMES
       if (a === 0 && c.key(x, y) === "e") c.px(x, y, "f"); if (a === 1 && c.key(x - 1, y) === "e") { c.px(x - 1, y, "f"); c.px(x + 1, y, "f") }
     }
@@ -351,7 +352,7 @@ pal({
     // frame: each drop falls the picture's height once a loop
     for (let i = 0; i < 150; i++) {
       const y0 = (Math.floor(hash(i, 12) * H) + Math.floor(7.5 * f)) % H, x0 = Math.floor(hash(i, 11) * (W + 45)) - 45
-      for (let d = 0; d < 3; d++) { const y = y0 + d, x = x0 + Math.floor(y / 4); if (y > rim(x) + 1 && y < H) { const k = c.key(x, y); if (lit[k]) c.px(x, y, lit[k]) } }
+      for (let d = 0; d < 3; d++) { const y = y0 + d, x = x0 + Math.floor(y / 4); if (y > rim(x) + 1 && y < (today ? SEAT : H)) { const k = c.key(x, y); if (lit[k]) c.px(x, y, lit[k]) } }
     }
 
     // the two of them on the ledge (still), the cup beside Teo, its steam rising and curling (half a px a
@@ -381,7 +382,7 @@ pal({
     // glow), a step darker; the rain's ripples drift through them and the hood's reflection trembles
     const below = { k: "e", 1: "e", 2: "1", 3: "2", 4: "3", 5: "4", 6: "5", A: "1", B: "A", D: "B", G: "D", y: "j", Y: "y", j: "O", e: "e", f: "e" }
     const drift = Math.floor(f / 4)
-    for (const [cx, cy, rx, ry] of [[226, 165, 34, 4], [128, 171, 22, 3], [290, 174, 18, 2]])
+    if (!today) for (const [cx, cy, rx, ry] of [[226, 165, 34, 4], [128, 171, 22, 3], [290, 174, 18, 2]])
       for (let y = cy - ry; y <= cy + ry; y++) for (let x = cx - rx; x <= cx + rx; x++) if (((x - cx) / rx) ** 2 + ((y - cy) / ry) ** 2 < 1) {
         const k = c.key(x + Math.round(0.7 * wave(f, 12, y * 0.27)), 2 * (SEAT + 13) - y - 14)
         c.px(x, y, Math.abs(y - cy) === ry || (y + drift) % 3 === 0 ? "f" : below[k] ?? "z")
