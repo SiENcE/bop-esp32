@@ -156,6 +156,8 @@ Kap. 2: Nach dem Senden weiß die Quiet sofort, wer Juno ist; nach der Weigerung
 | Abend 1–3 | `kessel_14` | **Motte** wartet auf seiner Bank. Wenn Juno ihm im Prolog freundlich geantwortet hat: „Zeigst du mir was?" Drei Lektionen (je eine pro Abend, ein kleiner Dialog): was eine Kamera ist, wie man einen Code findet, warum man nie seinen eigenen Block glasst. Nach der zweiten baut er den Abzweiger (B5). Nach der dritten: `moth_student` (in Kap. 3 warnt er Juno vor der Razzia). |
 | Abend 2 | `kessel_14` | Frau Haldane, wach, an ihrer Tür: Ihr Sohn schreibt nicht mehr aus den mittleren Ringen. Eine Nebengeschichte beginnt (Story §9). |
 | Abend 2 | `lucky_static` | Die Bar von innen: Stammgäste, ein Fernseher mit Halcyon-Nachrichten („Kriminalität im Neunten auf Rekordtief"), die Wirtin Mei (`#ff9a7a`), die Juno anschreiben lässt. Gespräche: Gerüchte über Sinker („Der Sohn vom Fischmann ist nicht aufgewacht. Ruhe-Erschöpfung, sagen sie."). |
+| ab Abend 1 | Deck | **Das Beobachter-Handbuch** liegt von Anfang an im CACHE (`cache_note_obs_handbook`, gesetzt beim Start des Kapitels; story §10a). Die Notiz, Vorschlag für den Text: „Halcyon, Zivile Beobachtung. Das Implantat sitzt hinter dem Ohr. Es markiert, was Sie sehen, und verbindet Sie über das Protokoll `OBS-4` mit jeder Kamera, die es versteht. Die Wach-Ebene hält Sie dabei bei Bewusstsein. Bei Austritt abzugeben.“ Niemand weist darauf hin; es ist das Wort, das in C7 zählt, und in Kapitel 3 findet Juno `OBS-4` in Ines' Protokollen wieder. |
+| Abend 1 und 2, vor 19:00 | `cam21` | **Der unbekannte Link** (story §10a). In der Schlange vor der Klinik nickt ein Mann im Stehen ein. Solange er schläft, zuckt in Junos Overlay eine zweite Klammer über ihm, cyan, dazu `UNKNOWN LINK`; er fährt hoch, und beides ist weg. Niemand erklärt es, auch Juno und EVI nicht. Er schläft dabei, weil Lull den Link erst im Schlaf öffnet. Er kommt in jedem Takt vor 19:00 wieder, an zwei Abenden, damit nur verpasst, wer gar nicht hinsieht. Kein Moment nach kapitel0 §3: nicht aufzuzeichnen, kein Flag, kein Zustand für den Solver. |
 | Abend 1 | Deck | Die App **NETZ** ist neu (Prolog-Design §2.1): HalcyonNet mit den Nachrichten des Abends, Werbung und dem Glasser-Brett. EVI liest die Schlagzeilen vor und versteht sie falsch („Kriminalität auf Rekordtief. Heißt das, die Verbrecher schlafen?"). Jeden Abend neue Einträge; am Abend 2 ein Beitrag auf dem Brett: „Wer weiß was über Ruhe-Erschöpfung? Mein Vater wacht nicht auf." |
 | Abend 2 | Deck | **Vesper** schreibt im Chat, ein Einkäufer für NINTH LIVE (Story §3, §9): „Ich höre, Sie haben ein Auge für das Echte. Ich zahle das Doppelte von Sable. Für jeden rohen Clip." Juno kann ihm jeden Clip aus dem Cache verkaufen (Kesslers Ring, Morrows Umschlag, Okonkwo am Tresor). EVI zeigt dabei das **Anonymisieren** im Clip-Editor („Ich kann Gesichter wegmachen!"); anonymisierte Clips nimmt Vesper nicht. Jeder Verkauf an Vesper steht im Kassenbuch mit der Zahl der Zuschauer, die später dazukommt. Optional, nie nötig. |
 | Abend 3, 21:00 | Deck | Teos Nachricht wegen der Miete (§5), falls nötig. |
@@ -212,7 +214,7 @@ Größen wie in `kapitel0-design` §8: 30 px pro Meter Höhe; im Feed misst ein 
 | Wer | Größe | Silhouette und Akzent im Feed | Farbe | Ansichten |
 |---|---|---|---|---|
 | Teo | 52 px | orange Weste, Gehörschutz, Kiemenschlitze (Gezeitenmod) | `#ffa040` | Iso |
-| Sable | 53 px | langer Mantel, Glatze, Pfeifenglut | `#ff4fd3` | Iso (sitzend) |
+| Sable | 53 px | langer magentafarbener Mantel, Glatze, Pfeifenglut | `#ff4fd3` | Iso (sitzend) |
 | Ratz | 26 px (aufrecht) | Kabelratte: Kopfhörer, zu großer Parka, Schwanz, glimmender Sprechkragen | `#90d0a0` | Iso |
 | Herr Okonkwo | 48 px | Strickjacke, Lesebrille | `#d8b890` | Iso + Feed |
 | Mei | 47 px | Schürze, hochgesteckte Haare | `#ff9a7a` | Iso |
@@ -254,7 +256,7 @@ Die Hinweise spricht EVI (Prolog-Design §2.2, §6.5).
 | B5 | „Zum Anzapfen brauchst du ein Gerät." | „Auf dem Drain-Markt gibt es Elektroschrott. Oder frag Motte." | „Kauf bei Ratz einen Abzweiger." |
 | B6 | „Die Drohne passt auf." | „Ihr Licht wandert. Warte." | „Benutze den Abzweiger, wenn der Lichtkegel weg ist." |
 | C6 | „Ines hat etwas im Waschsalon gelassen." | „Geh selbst hin, oder sieh nachts zu, wer es holt." | „Öffne Trockner 6 und lies, was auf der Theke liegt." |
-| C7 | „cam31 ist älter als Halcyon." | „Keine Codes, kein Netz. Nur ein altes Protokoll." | „Rechtsklick auf cam31 in der Netzkarte: Junos Implantat." |
+| C7 | „cam31 ist älter als Halcyon." | „Keine Codes, kein Netz. Nur ein altes Protokoll. Steht in deinem Handbuch." | „Rechtsklick auf cam31 in der Netzkarte: Junos Implantat." |
 | Miete | „900 Chits bis Freitag." | „Jeder Auftrag bringt Geld. Oder jemand hilft dir." | „Du musst nichts verkaufen. Teo zahlt, wenn es nicht reicht." |
 
 ## 13. Was die Engine zusätzlich braucht (gegenüber dem Prolog)

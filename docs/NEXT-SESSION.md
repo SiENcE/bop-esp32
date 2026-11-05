@@ -35,7 +35,7 @@ Decided, keep to it (story §10a, §10b, kapitel0-design §5, style guide §4, �
   street figures. The cyan line on the cheek is the title's alone. Nothing else behind an ear glows.
 - **Lull is the observer implant made cheap** (the waking taken out, so one protocol). The eye and JUNO. are only in Juno's eye. Juno is not the
   only one left with the implant: very few, scattered, some on Lull or Sinkers. The scenes that tell the player are planned, not built: her
-  observer handbook on the deck, a Lull user as an unknown link in her overlay (Chapter 1 or 2), the firmware's id in Ines's logs (Chapter 3).
+  observer handbook in the CACHE from Chapter 1's first evening, a Lull user dozing in cam21's queue as `UNKNOWN LINK` in her overlay (kapitel1 §7), the firmware's id in Ines's logs (Chapter 3).
 - **The data wallet** (never "Laufwerk") holds Ines's encrypted logs, there is one; **the stick** in the dryer is its key, and the meeting is on the
   ticket, not the stick. **Kessler** works until he has given Varga the ring, then goes under. **WREN** is Halcyon: if Juno sold, the Quiet knows her
   at once; if she refused, it has to search. **Rask** looks into the camera, a disturbance runs through the picture, the feed is lost; nothing more dramatic.

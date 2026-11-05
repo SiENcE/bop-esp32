@@ -157,6 +157,10 @@ zahlt.“
 Die App NETZ ist neu, HalcyonNet mit Nachrichten und dem Glasser-Brett. EVI liest die Schlagzeilen vor und versteht sie falsch:
 „Kriminalität auf Rekordtief. Heißt das, die Verbrecher schlafen?“
 
+Im CACHE liegt noch Junos altes Beobachter-Handbuch von Halcyon, das sie nicht hätte behalten dürfen: Das Implantat sitzt hinter dem Ohr, es
+markiert, was sie sieht, und verbindet sie über das Protokoll `OBS-4` mit jeder Kamera, die es versteht; die Wach-Ebene hält sie dabei bei
+Bewusstsein. „Bei Austritt abzugeben.“
+
 ### Der verschwundene Schuldner
 
 Kessler war seit dem Abend bei Yuen's nicht mehr zu Hause und nicht mehr im Büro. Aber Gewohnheiten versteckt man schlecht, und Nummer 7
@@ -166,7 +170,7 @@ Kapselhotel Morpheus, dessen Kamera ein eigenes Netz hat. Den Zugang verkauft Sa
 
 Der Drain-Markt ist der Schwarzmarkt in einem trockengelegten Flutkanal: Rauch, Bernstein, gebrauchte Implantate in Gläsern,
 ein Stand mit dem Schild KIDNEYS ONLY, und ein Prediger der Wachen Kirche, der gegen Lull predigt, und niemand hört zu. Sable
-sitzt hinter einem Tisch voller Bildschirme, langer violetter Mantel, rasierter Kopf, eine brennende Pfeife. An der Wand hängt
+sitzt hinter einem Tisch voller Bildschirme, langer magentafarbener Mantel, rasierter Kopf, eine brennende Pfeife. An der Wand hängt
 die Preisliste: NAMES 50. ADDRESSES 80. SECRETS: ASK.
 
 Im Gang des Hotels kriecht Kessler in Kapsel 23. Was nun?
@@ -223,7 +227,9 @@ dazu: wie viele zugesehen haben.
 ### Dr. Ines Calder
 
 Das ist der Faden, der durch alle drei Abende läuft. CAM 21 vor der Klinik ist eine Halcyon-Kamera, und Junos alter Zugang geht
-noch. „Sie haben die Codes nie geändert.“ Um sieben kommt Ines aus der weißen Klinik, vorbei an der Schlange müder Menschen. Sie
+noch. „Sie haben die Codes nie geändert.“ In der Schlange müder Menschen nickt ein Mann im Stehen ein. Für diesen Moment zuckt in Junos
+Overlay eine zweite Klammer über ihm, dazu `UNKNOWN LINK`. Er fährt hoch, und sie ist weg. Niemand erklärt es. Um sieben kommt Ines aus der
+weißen Klinik, vorbei an der Schlange. Sie
 isst allein in der Nudelbar Pho Pump, schreibt etwas auf eine Serviette und hält die Hand darüber. Dann geht sie in den Waschsalon
 SUDS & SPIN, dessen Kamera den Code 0000 hat („Natürlich.“), und nach Hause in den Wohnblock Lerche.
 
@@ -314,8 +320,7 @@ Die Nummern beziehen sich auf die Stellen oben. Geklärtes steht in `story.md` �
 
 Dazu, ohne Stelle im Text:
 
-- **Noch nicht vorgesehen:** Das Beobachter-Handbuch und der Lull-Nutzer als unbekannter Link (story §10a) stehen weder im Spiel noch im
-  Kapitel-1-Design. Dort fehlen auch das Richtmikro (kapitel0 §3) und das „Kassenbuch-Rätsel“ (kapitel1 C4, nirgends beschrieben).
+- **Noch nicht vorgesehen:** Im Kapitel-1-Design fehlen das Richtmikro (kapitel0 §3) und das „Kassenbuch-Rätsel“ (kapitel1 C4, nirgends beschrieben).
 - **Bibel-Umriss und Design** weichen ab: Kamera reparieren und Passwort in einer Wohnung fehlen im
   Design; „Niemand sonst hat es gehört“ gegen ein Wort ohne Stimme.
 - **Noch nicht gebaut:** Die Straße hat noch keinen Eckladen und keinen Automaten mit Kamera davor.
