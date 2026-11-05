@@ -3,7 +3,7 @@
 // art/ui/zooms.px.js). The world palette (art/lib/iso.js), so they read as the rooms do.
 //
 //   look_shaft   the stairwell of the Kessel Block from the 14th floor's rail, straight down (the game's
-//                first top-down view, style guide §4): Juno's hands on the rail, the flights going round
+//                first top-down view, style guide §4): the rail at the bottom, the flights going round
 //                the well floor after floor, each a little turned and darker, a green tube on each landing
 //                (one flickering), and at the bottom, tiny, the lobby's tiles and its yellow sign
 include("../lib/iso.js", { palette: true })
@@ -64,13 +64,7 @@ pal({ b: "#16201f", B: "#1e2d29", d: "#2a3f37", D: "#3d5849", E: "#5f7f68", F: "
 
   anim("look_shaft", { w: W, h: H, frames: 4, ms: [500, 500, 500, 120] }, (c) => {
     for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) c.px(x, y, shade(x, y, c.frame))
-    // our rail across the bottom, Juno's hands on it, her yellow sleeves
+    // our rail across the bottom
     c.rect(0, H - 13, W, 4, "5"); c.hline(0, H - 13, W, "G"); c.hline(0, H - 10, W, "3"); c.rect(0, H - 9, W, 9, "2")
-    for (const [x, flip] of [[16, false], [94, true]]) {
-      const m = (dx) => (flip ? x + 18 - dx : x + dx)
-      for (let r = 0; r < 11; r++) for (let dx = Math.max(0, 7 - r); dx < 18 - Math.max(0, r - 6); dx++) c.px(m(dx), H - 11 + r, r < 2 ? "Y" : dx < 5 ? "j" : "y")
-      for (let dx = 4; dx < 14; dx++) c.px(m(dx), H - 14, dx % 3 === 0 ? "s" : "S")      // the fingers over the rail
-      for (const dx of [5, 8, 11]) c.px(m(dx), H - 15, "S")
-    }
   })
 }

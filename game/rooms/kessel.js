@@ -14,7 +14,9 @@
   const floor = (/** @type {number} */ n, /** @type {number} */ ms) => [{ sfx: "steps_metal" }, { caption: String(n), at: "c", ms }];
   const count = (/** @type {number[]} */ list, /** @type {number} */ ms) => list.flatMap((n) => floor(n, ms));
   const STAIRS_DOWN = [{ if: "!stairs_down",
-    then: [{ set: "stairs_down" }, { fade: "out", ms: 400 }, ...count([13, 12, 11, 10, 9], 300),
+    // the first time she looks over the rail before she goes (a look of its own needs no right click: the game has none)
+    then: [{ set: "stairs_down" }, { zoom: "look_shaft" }, "Vierzehn Stockwerke runter. Von oben sieht's aus wie ein Brunnen.", "Ganz unten das Schild in der Lobby. Gelb, winzig. Der Aufzug geht nie.", { zoom: false },
+      { fade: "out", ms: 400 }, ...count([13, 12, 11, 10, 9], 300),
       { if: "day=1", then: [{ caption: "Der Aufzug fährt angeblich dienstags.", at: "c", color: "#fff070", ms: 2000 }] },
       ...count([8, 7, 6, 5, 4, 3, 2, 1], 220), { goto: "kessel_lobby", at: AL.arrive, face: "sw" }, { fade: "in", ms: 400 }],
     else: [{ sfx: "steps_metal" }, { goto: "kessel_lobby", at: AL.arrive, face: "sw" }] }];
@@ -54,9 +56,7 @@
       bench: { name: "Bank", poly: AK.benchPoly, walkTo: AK.motte, face: "ne", z: -1,
         look: "Eine Bank, die irgendwer hochgetragen und hier vergessen hat. Motte sitzt fast jeden Abend drauf." },
       stairs: { name: "Treppe", poly: AK.railPoly, walkTo: AK.stairs, face: "se",
-        // looking over the rail: the stairwell straight down (art/ui/looks.px.js, the first top-down view)
-        look: [{ zoom: "look_shaft" }, "Vierzehn Stockwerke runter. Von oben sieht's aus wie ein Brunnen.",
-          "Ganz unten das Schild in der Lobby. Gelb, winzig. Der Aufzug geht nie.", { zoom: false }],
+        look: "Vierzehn Stockwerke runter, zu Fuß.",
         // the first time down Motte calls her back: his question (kapitel0-design §6.2 step 14)
         use: [{ if: "!moth_met", then: [{ say: "motte", text: "Juno! Warte mal." }, { face: "sw" }, { dialog: "motte" }, { face: "se" }] },
           ...STAIRS_DOWN] },

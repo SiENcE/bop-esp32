@@ -33,7 +33,7 @@ the act (`{ act: "next" }` instead of its end card; the act has `fresh` and `kee
 Also to come: the reading version docs/story-lesefassung.md doesn't know the city yet and still has WREN's money coming back on Wednesday (in the mock the replies are on Friday).
 
 **Rules of mine: what the player finds can be taken at once.** Nothing waits for an earlier click without a reason in the world (CLAUDE.md, conventions): each thing has its own flag;
-a gate needs a time, knowledge the player really lacks, or a decision of mine. **And nothing the game needs hangs on a right click:** touch has to work; left click moves the story, looking only tells more.
+a gate needs a time, knowledge the player really lacks, or a decision of mine. **And nothing the game needs hangs on looking:** a right click with the mouse stays, a long press on touch, a controller button later (PLAN C14); looking only tells more. Chapter 1 hasn't been played with `play.mjs --touch` yet.
 
 **The solver is the risk of this chapter** (CLAUDE.md, checks). Every flag nobody asks about doubles all states. All times are on the 15-minute ticks and only waiting moves the clock (walking costs nothing,
 provisional: check by playing whether it feels right). Flavour is a look, not a moment; what no longer matters is forgotten overnight (`Halcyon.nights[day].passes`). Each side story is a thread of its own, solved alone
