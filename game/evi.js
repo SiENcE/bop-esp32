@@ -35,7 +35,11 @@
     await Cutaway.script.exec([{ wait: 1300 }], ctx);
     Halcyon.evi.boot = -1;
   });
-  Cutaway.script.action("notify", (s) => {
+  // EVI goes along on the pocket deck in Juno's bag: always in it, of no use to anybody (story §10b)
+Cutaway.item("evi_bag", { name: "EVI", icon: "ui_evi", fixed: true,
+  look: [{ say: "evi", text: "Hallo! Ich bin in der Tasche. Benutzen kann man mich nicht. Nur fragen." }] });
+
+Cutaway.script.action("notify", (s) => {
     if (Cutaway.script.fast) return;
     Halcyon.evi.card = { who: String(s.notify), since: Cutaway.clock.time };
     Cutaway.events.emit("sfx", { sfx: "mail" });

@@ -67,7 +67,7 @@ code comments English.
 | `game/evi.js` | EVI: her voice (lines in their own place beside her corner, `lineBox`), she says the hints (`hints.configure({ by: "evi" })`); actions `{ evi: face }`, `{ evi_point: app }`, `{ deck_boot }`, `{ notify: contact }` (the message card over every mode) |
 | `game/rooms/<id>.js` | rooms: `cams.js` (cam03, cam04: watched rooms with the phosphor post-effects), `<id>.layout.js` (generated) |
 | `game/prolog.js` | the prologue act (steps 0–11), its cache and ledger entries, game time |
-| `game/stadt.js` | Chapter 1's city: the way on to the roof, the Rain Reader, the newspaper war (each a thread of its own) |
+| `game/stadt.js` | Chapter 1's city: the way on to the roof, the Rain Reader, the newspaper war, Frau Imai, the white carriers (each a thread of its own) |
 | `game/evenings.js`, `game/kapitel1.js` | what every chapter's evenings share (the bed, the evening's card); Chapter 1: its act on game days 2 to 4, WREN, the rent, Friday's clock (so far the frame, with `[MOCK]` stand-ins; begins with `?act=kapitel1`, the prologue doesn't go on into it yet) |
 | `game/intro.js`, `intro_sea.js`, `intro_tower.js`, `intro_hall.js`, `intro_desk.js`, `intro_ride.js` | the intro "Die letzte Schicht" (kapitel0-design §5): the sequence `intro` and the shots the game draws itself in perspective (rooms with `float: "<shot>"`, the action `{ float: [from, to], ms }`): the float over the lit sea (A1, A2), the tower and in through its window (C); painted parts in `art/intro/`; the observation hall (the room `intro_hall`, baked from `art/rooms/hall.map.js`); Juno at her desk (what moves over `art/intro/desk.px.js`); the ride down in the lift (`art/intro/ride.px.js`) |
 | `game/screens.js` | the UI layer that draws the deck's screen, the feeds' OSD, the implant overlay and zoom windows (rooms hold the hotspots so the solver sees every click; this layer only draws) |
@@ -75,7 +75,7 @@ code comments English.
 | `game/skin.js`, `font.js`, `transitions.js`, `sounds.js`, `music.js`, `title.js`, `hints.js` | the look (frames, cards, labels, choices), the fonts, room transitions, synthesised sounds and music, title and menu screens, hints |
 | `art/**/*.px.js` | pxl sources: `lib/` (shared `iso.js`, `feed.js`), `characters/`, `rooms/`, `cams/`, `mock/` (flat blocks of what isn't painted yet), `ui/`, `intro/`, `mockups/`, `test/`; `*_review.px.js` are review sheets, never built into the game |
 | `assets/*.js` | built atlases (checked in, so the game runs without Node) |
-| `tools/` | `build_art.sh`, `sync-engine.sh`, `render-sounds.mjs`, `solve-act.mjs` (one act alone) |
+| `tools/` | `build_art.sh`, `sync-engine.sh`, `render-sounds.mjs`, `solve-act.mjs` (one act alone), `check.sh` (all the checks), `paths/` (Chapter 1's ways to click through) |
 | `studio.json` | the editor's studio: writable folders, layer files, tasks |
 | `build/`, `out/` | scratch (raw pxl output, screenshots, renders), not checked in |
 | `.claude/skills/claude-pxl/` | the pxl skill, its own repo (gitignored) |
@@ -96,6 +96,7 @@ Planned (PLAN.md §3): `feed.js`, `ledger.js`, `money.js`, `routines/<chapter>.j
   routines are discrete (15-minute ticks, routines as pure functions of the tick); keep state small so
   `solve --full` stays exhaustive. Every chapter must solve without soft-locks, and every state on the way
   needs a hint.
+- **What the player finds can be taken and used at once.** Nothing waits for an earlier click without a reason in the world: each thing has its own flag and the test is what the world allows (the item is there, the door is open). A gate needs a reason in the world: a time, knowledge the player really lacks (a date, a code), or a decision of the user's (the bed from 01:00). The prologue's tutorial steps are the exception.
 - Positions live in `game/places.js`, not scattered in room files. A street-mode room is a map
   (`art/rooms/<id>.map.js`, format in `art/lib/isomap.js`) baked with the kit and its light
   (`art/lib/isokit.js`, `art/kit/`); `sh tools/build_art.sh room <id>` builds the art and writes the measured
@@ -125,16 +126,15 @@ After every change, all of these:
 node lib/cutaway/tools/validate.mjs index.html        # 0 errors (warnings are known: flags set but not yet tested)
 node lib/cutaway/tools/solve.mjs index.html --full    # "no soft-locks", every state has a hint (a few seconds)
 node lib/cutaway/tools/play.mjs index.html            # headless playthrough with real clicks: "all passed"
-node tools/solve-act.mjs kapitel1 --full --set off_roof,off_zeitung   # Chapter 1's main thread: "no soft-locks", every state has a hint
-node tools/solve-act.mjs kapitel1 --full --set off_zeitung            # with the way on to the roof (each side story alone: a few minutes)
-node tools/solve-act.mjs kapitel1 --full --set off_roof               # with the newspaper war
+node tools/solve-act.mjs kapitel1 --full --set off_roof,off_zeitung,off_imai,off_traeger   # Chapter 1's main thread: "no soft-locks", every state has a hint
+# and each side story alone (sh tools/check.sh does all of it): --set off_main,know_meeting and off_<the others>
 node lib/cutaway/tools/play.mjs index.html --act kapitel1 --path tools/paths/kapitel1_main.json   # its main way with real clicks: "all passed"
 ```
 
 Keep Chapter 1's state small: a flag nobody asks about doubles every state. What only shows (a dot for unread) is a view flag; what
 the prologue leaves open is closed with `day=1`; a chapter marks the rooms Juno knows with `{ been_to: [...] }`; flavour is a look, not a
 moment (seen or not doubles what follows); what no longer matters is forgotten overnight (`Halcyon.nights[day].passes`). Every time is on the
-15-minute ticks and only waiting moves the clock: one time off the grid multiplied the states by ten. Side stories and jobs are threads of their own: each
+15-minute ticks and only waiting moves the clock: one time off the grid multiplied the states by ten. All the checks at once: `sh tools/check.sh` (about ten minutes). Side stories and jobs are threads of their own: each
 checked alone with the others shut (`off_<thread>`, `game/stadt.js`), since together they would multiply each other. What they do to each other is
 not covered by the solver: keep them independent (their own `<thread>_step` number, no flag shared).
 

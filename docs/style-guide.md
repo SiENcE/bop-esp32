@@ -268,6 +268,9 @@ Reference: the UI in `mock_c_iso`.
   | Sable | `#ff4fd3` (magenta: commerce, the black market) |
   | Teo | `#ffa040` (the orange of his vest) |
   | the Rain Reader | `#a8c8e8` (pale water) |
+  | Frau Imai | `#c8d8b0` (washed-out green) |
+  | the preacher | `#d8c8a0` (coffee with too much milk) |
+  | the half repair | `#b0c0b0` (a work coat left out in the rain) |
 
   Every other character gets a fixed colour when first drawn; add it here. Avoid red and cyan for
   anyone harmless (the meanings in §5). EVI is the exception, because she is technology.

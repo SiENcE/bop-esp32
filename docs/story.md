@@ -573,6 +573,8 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
   erreichbar. Morrow sagt: „Freitag fährt keiner die Kowalski.“ Das Richtmikro kommt erst in Kapitel 2. Frau Kessler und Bao nehmen den Prolog wieder auf.
 - **Die Abende von Kapitel 1 spielen auch draußen** (`kapitel1-design`, „Die Stadt“): die Gasse und das Dach des Kessel-Blocks, von dem man die Ringe sieht; der Zeitungskrieg, die Frau, die sich erinnert, die weißen Träger; die Regenleserin, der Prediger, die halbe Reparatur. Das Bett geht erst ab 01:00 auf. **Aufs Dach führt keine Treppe:** Juno klettert aus dem Fenster auf den Sims und die Außenleiter hoch; der Blick auf die Ringe wird eine eigene große Einstellung.
 - **Das Foto am Deck** zeigt das Dach des Kessel-Blocks im Jahr 2074: Juno ist 14, Teo 6 (acht Jahre Abstand, wie heute mit 31 und 23). Das Dach heute ist derselbe Blick zwanzig Jahre später: Der Schirm sagt `SLEEP BETTER` statt `RISE ABOVE`, und Juno kann sich allein an die alte Stelle setzen.
+- **Die Frau, die sich erinnert, heißt Frau Imai** (`kapitel1-design`); sie ist der `UNKNOWN LINK` in der Schlange. Juno kann ihr die Wahrheit sagen oder die Lüge, die sie schlafen lässt.
+- **Die Tasche:** Dinge, die Juno in der Hand hält, sind Gegenstände; Clips und Notizen liegen im CACHE. EVI sitzt immer fest in der Tasche.
 - **Das Ende von Kapitel 2 steht:** Lantern öffnet die Wallet und sendet sie, niemand glaubt ihm, nur Juno kann sie neben ihre Kameras legen.
 - **Das Implantat** durfte Juno behalten, weil das Herausnehmen mehr gekostet hätte (wie sie es im Prolog sagt). Illegal ist es nicht.
 - **Ines' Kameras:** vier am Mittwoch und Donnerstag (`cam21` bis `cam24`), am Freitag dazu `cam30` und `cam31`, zusammen sechs.

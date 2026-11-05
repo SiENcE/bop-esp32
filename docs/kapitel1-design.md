@@ -38,7 +38,7 @@ also nur in den Nächten von Abend 1 und 2. Auftrag B muss bis dahin gelöst sei
 
 - Die Wege kosten keine Zeit, die Uhr läuft nur beim Warten (§9).
 - WRENs Antworten (zurückschicken, senden, nicht senden) gibt es erst am Freitag; vorher würde jede den ganzen Rest verdoppeln.
-- `cam22` wird mit der Speisekarte gleich verbunden. Am Freitag sind `cam22` und `cam23` weg (Ines geht nicht mehr hin), `cam24` ist dafür offen, bis Sable und Motte den Code geben.
+- `cam22` wird mit der Speisekarte gleich verbunden; `cam22` und `cam23` stehen von Anfang an auf der Karte, Ines muss dafür nicht markiert sein. Im Trockner liegt der Stick auch für jemanden, der nur zufällig nachsieht. Am Freitag sind `cam22` und `cam23` weg (Ines geht nicht mehr hin), `cam24` ist dafür offen, bis Sable und Motte den Code geben.
 - Im Bild stehen die Figuren des Prologs für Ines und Lantern; REC geht in Kapitel 1 noch nirgends.
 
 ## 3. Auftrag A: „Der verschwundene Schuldner" (Varga)
@@ -180,7 +180,7 @@ Die Abende sollen nach Leben in der Stadt schmecken, nicht nach Warten aufs Bett
 
 **Zwei neue Orte:** die **Gasse** hinter dem Gitter in der Kowalski-Straße (Kabelbündel, Dampf, Nischen, in denen Leute wohnen; von hier geht es zum Waschsalon und zum Drain-Markt) und das **Dach des Kessel-Blocks**, von dem aus man **die Ringe** zum ersten Mal von unten sieht: Unterseiten so groß wie ein Himmel und das tropfende Wasser, das hier als Regen gilt. Das Dach hat **dieselbe Kamera wie das alte Foto am Deck** (`art/ui/deck_wallpaper.px.js`), zwanzig Jahre später: `SLEEP BETTER` statt `RISE ABOVE`, dem NOODLES-Schild fehlen zwei Buchstaben, mehr Schirme in der Stadt. Juno kann sich an die alte Stelle setzen: die große Einstellung, allein, wo sie zu zweit saßen (`dach_sitzen`). Der **Blick nach oben** ist ein Mock zum Beurteilen (`dach_blick`, `docs/mockups/mock_g_ringe_*`): A genau entlang der Hochachse, B von Junos echtem Standort aus, schräg nach oben. Im Spiel steht B: Das Foto zeigt die Achse weit weg in der Stadt, A könnte sie von dort gar nicht sehen.
 
-**Der Weg aufs Dach:** Keine Treppe führt hoch. Juno klettert aus dem Fenster auf den Sims und die Außenleiter hoch, und sie hat Höhenangst (das Foto am Deck: „Er hatte nie Angst vor der Höhe. Ich schon.“). Ein kleines Rätsel, ein Vorschlag zum Prüfen im Mock (`roof_step`):
+**Der Weg aufs Dach:** Keine Treppe führt hoch. Juno klettert aus dem Fenster auf den Sims und die Außenleiter hoch, und sie hat Höhenangst (das Foto am Deck: „Er hatte nie Angst vor der Höhe. Ich schon.“). Ein kleines Rätsel, ein Vorschlag zum Prüfen im Mock. Die Reihenfolge ist frei: Was Juno findet, kann sie sofort mitnehmen (auch überall sonst, `CLAUDE.md`, Konventionen):
 
 | # | Wo | Was | 
 |---|---|---|
@@ -198,14 +198,27 @@ Die Abende sollen nach Leben in der Stadt schmecken, nicht nach Warten aufs Bett
 | **Die Frau, die sich erinnert** (story §9) | Sie ist sicher, einen Mord gesehen zu haben, in einer Straße, in der sie nie war. Juno trifft sie im LUCKY STATIC und findet die Straße. | Sie ist die Person mit `UNKNOWN LINK` aus `cam21`. In Kapitel 2 schreibt sie: „Ich hab wieder was gesehen. Eine Frau auf einem Bahnsteig.“ |
 | **Die weißen Träger** | Donnerstagnacht auf der Kowalski: Ein Halcyon-Wagen holt einen Sinker aus dem Haus, zwei freundliche Leute in Weiß. Die Nachbarn sehen weg. Juno kann zusehen, filmen und an Vesper verkaufen, oder die Tochter trösten. | Zeigt, was mit Sinkern geschieht, lange bevor Teo einer wird. Im NETZ ist es der Beitrag „Mein Vater wacht nicht auf“. |
 
-**Der Zeitungskrieg im Einzelnen (ein Vorschlag zum Prüfen im Mock, `news_step`):**
+**Der Zeitungskrieg im Einzelnen (ein Vorschlag zum Prüfen im Mock; bis auf die Nacht in `cam14` ist die Reihenfolge frei):**
 
 | # | Wo | Was |
 |---|---|---|
-| 1 | `kessel_14`, Zettel | Juno will wissen, wer es ist. Halcyons Kamera in der Ecke sieht alles, aber den eigenen Block glasst man nicht. |
+| 1 | `kessel_14`, Zettel | Wer klaut die Zeitung? Halcyons Kamera in der Ecke sieht alles, aber den eigenen Block glasst man nicht. |
 | 2 | `kessel_14`, Kamera | Die Wahl: „Nur dieses eine Mal.“ oder „Nein.“ Ihr alter Zugang geht auch hier: `cam14`. |
 | 3 | `cam14`, 02:30 (Mi und Do) | Frau Haldane im Morgenmantel, die Augen zu, holt die Zeitungen. Der Zettel `WER KLAUT MEINE ZEITUNG` ist ihr eigener: **Sie klaut ihre eigene Zeitung und weiß es nicht.** |
 | 4 | `kessel_14`, ihre Tür | Hinter dem Sessel der Stapel. Um jedes Gesicht vier kleine Ecken, wie Junos Klammern. „So markier ich.“ Niemand erklärt es. Eine Notiz im CACHE; auf dem Zettel steht danach, von Juno: `ES IST NIEMAND. 14B.` |
+
+**Die Frau, die sich erinnert, im Einzelnen (`imai_step`):**
+
+| # | Wo | Was |
+|---|---|---|
+| 1 | CHAT | **Frau Imai** (R. IMAI, Status: schläft): „Ich habe einen Mord gesehen. In einer Straße, in der ich nie war.“ |
+| 2 | `lucky_static` | Eine Treppe, ein Schild mit einem Fisch, Regen von links, ein Mann, der fällt. „Ich hab von oben draufgeschaut. Als würde ich an einer Laterne hängen.“ Juno erkennt sie aus der Schlange: Sie ist der `UNKNOWN LINK`. |
+| 3 | `cam18`, Archiv | Der 29. Oktober, 03:12. Es ist wirklich geschehen, genau von dieser Kamera aus gesehen. Sie schlief von drei bis sieben. |
+| 4 | `lucky_static` | **Die Wahl:** „Sie sind nicht verrückt.“ (die Wahrheit, sie traut sich nicht mehr zu schlafen) oder „Das war ein Traum.“ (die Lüge, die sie schlafen lässt; beide im Kassenbuch). Kapitel 2 nimmt das auf. |
+
+**Die weißen Träger im Einzelnen (`traeger`):** Donnerstag, 23:30. Juno hört von überall her den Wagen, „der nicht hupt“. Auf der Kowalski-Straße: ein weißer Wagen ohne Schild, zwei freundliche Leute in Weiß, ein Mädchen in der Tür, die Rollos gehen runter. Die Wahl: **zusehen, filmen** (ein Clip im CACHE, für Vesper) oder **zu dem Mädchen gehen** (mehr als bleiben kann Juno nicht). Der Beitrag „Mein Vater wacht nicht auf“ im NETZ ist später ihrer.
+
+**In der Tasche** (entschieden): Was Juno wirklich in der Hand hält, ist ein Gegenstand: der Ausweis, der Haken, Ines' Stick (dazu später der Abzweiger und der Reis). Clips und Notizen bleiben im CACHE. **EVI** sitzt immer in der Tasche, fest: Ein Klick lässt sie reden, benutzen kann man sie nicht.
 
 **Drei merkwürdige Leute:** die **Regenleserin** auf dem Dach (kostet das Tropfwasser und sagt, von welchem Ring es kommt: „Der Vierte. Die gießen ihre Orchideen.“; ihre Wettervorhersagen sind eigentlich Klatsch), der **Prediger** der Wachen Kirche auf dem Drain-Markt (seit neun Tagen wach, zittert vor Kaffee und schenkt Juno einen ein) und **die halbe Reparatur** auf dem Gerüst am Werbebildschirm (wohnt dort und repariert nur die linke Hälfte, die rechte gehört zu einem anderen Vertrag).
 

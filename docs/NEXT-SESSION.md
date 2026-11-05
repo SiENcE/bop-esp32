@@ -24,10 +24,9 @@ Where we are (everything is committed; the engine copy is at Cutaway.js 5f165f8)
   passed; play.mjs --intro plays the intro through as well. They take a few minutes together: give them a long timeout.
 
 **Next: Chapter 1** (docs/kapitel1-design.md, PLAN H4), as a playable mock first; I check everything by playing it. All open points are decided for now (story §10b).
-Order, agreed: 1. the frame without art (done: game/kapitel1.js, ?act=kapitel1) 2. job C with block cameras (done: art/mock/ch1_blocks.px.js) 3. the city (kapitel1-design "Die Stadt": alley, roof, three stories, three people)
-4. the end in cam31 5. job A 6. job B 7. life around it, then the prologue goes on into the act (`{ act: "next" }` instead of its end card, Teo and the rest) 8. the painting, blocks first.
-The solver: `node tools/solve-act.mjs kapitel1 --full --set off_roof,off_zeitung`; job C on blocks has 16314 states in 12 s, after detours over 177000 (CLAUDE.md, checks, says how to keep it small). What the mock simplifies: kapitel1-design §2.
-In the city so far: the way on to the roof, the Rain Reader, the newspaper war (game/stadt.js); next the woman who remembers, the white carriers, the preacher, the half repair.
+Order, agreed: 1. the frame without art (done: game/kapitel1.js, ?act=kapitel1) 2. job C with block cameras (done: art/mock/ch1_blocks.px.js) 3. the city (done, kapitel1-design "Die Stadt") 4. the end in cam31 5. job A 6. job B 7. life around it, then the prologue goes on into the act (`{ act: "next" }` instead of its end card, Teo and the rest) 8. the painting, blocks first.
+The solver: `node tools/solve-act.mjs kapitel1 --full --set off_roof,off_zeitung,off_imai,off_traeger`; job C on blocks has over 40000 states (CLAUDE.md, checks, says how to keep it small; each side story is solved alone). What the mock simplifies: kapitel1-design §2.
+The city stands on blocks (game/stadt.js): the way on to the roof, the Rain Reader, the newspaper war, Frau Imai, the white carriers, the preacher, the half repair. All the checks: sh tools/check.sh. Rule from the user: what the player finds can be taken at once, nothing waits for an earlier click (CLAUDE.md, conventions).
 Each side story is a thread of its own: solve-act --set off_<thread> shuts the others (CLAUDE.md, checks).
 
 Decided, keep to it (story §10a, §10b, kapitel0-design §5, style guide §4, §6):

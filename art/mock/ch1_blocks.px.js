@@ -169,6 +169,53 @@ scene("dach_blick_b_bg", { w: W, h: H, bg: "k" }, (c) => {
   for (const [x, w, top] of [[6, 22, 112], [40, 16, 118], [70, 30, 104], [116, 14, 116], [150, 26, 110], [190, 14, 120], [250, 24, 108], [290, 26, 116]]) { c.rect(x, top, w, 150 - top, "a"); for (let n = 0; n < 5; n++) c.px(x + 3 + n * 5 % w, top + 4 + n * 7, "y") }
   c.rect(0, 150, W, 30, "k"); c.hline(0, 150, W, "d")
 })
+// the street Frau Imai saw from above: the stairs to the old fish market, the sign, a tilted camera
+scene("cam18_bg", { w: W, h: H, bg: "0" }, (c) => {
+  ROOM(c, "4", "5", 60)
+  for (let i = 0; i < 7; i++) c.rect(100 + i * 2, 70 + i * 13, 120 - i * 4, 13, String(8 - i))
+  c.rect(176, 22, 56, 26, "2"); c.rect(186, 28, 28, 8, "8"); c.rect(214, 26, 8, 12, "8")
+  TXT.draw(c, 204, 39, "FISH", "9", { font: "hud", align: "center" })
+})
+// LUCKY STATIC from inside: the bar, the karaoke machine, a table
+scene("lucky_static_bg", { w: W, h: H, bg: "k" }, (c) => {
+  c.rect(0, 0, W, 112, "b"); c.rect(0, 112, W, 68, "a"); c.hline(0, 112, W, "e")
+  c.rect(150, 70, 160, 40, "f"); c.hline(150, 70, 160, "h"); c.rect(160, 30, 60, 30, "d")
+  c.rect(40, 56, 34, 56, "d"); c.rect(46, 62, 22, 16, "m")
+  SIGN(c, 28, 40, 58, "OUT OF ORDER", "b", "y")
+  c.rect(0, 60, 14, 116, "e"); c.rect(84, 116, 60, 18, "e")
+  SIGN(c, 110, 6, 100, "LUCKY STATIC", "m", "M")
+})
+// the Drain Market: a drained flood canal, the stalls along its wall, a box for the preacher
+scene("drain_market_bg", { w: W, h: H, bg: "k" }, (c) => {
+  c.rect(0, 0, W, 112, "b"); c.rect(0, 112, W, 68, "a"); c.hline(0, 112, W, "y")
+  c.rect(30, 66, 66, 42, "d"); SIGN(c, 30, 54, 66, "KIDNEYS ONLY", "m", "M")
+  c.rect(106, 66, 58, 42, "d"); for (let i = 0; i < 5; i++) c.rect(112 + i * 10, 78, 6, 12, "g")
+  c.rect(170, 66, 30, 42, "e"); c.rect(0, 50, 18, 120, "e"); for (let y = 56; y < 170; y += 9) c.hline(2, y, 14, "g")
+  c.rect(214, 136, 24, 10, "e")
+})
+// a close-up: the white van, two in white carrying a stretcher, a girl in a door
+scene("look_traeger", { w: 170, h: 112, bg: "a" }, (c) => {
+  c.rect(0, 0, 170, 112, "a"); c.rect(0, 86, 170, 26, "b")
+  c.rect(8, 34, 74, 52, "h"); c.rect(8, 34, 22, 20, "d"); c.rect(14, 84, 12, 8, "k"); c.rect(62, 84, 12, 8, "k")
+  for (const x of [92, 124]) { c.rect(x, 44, 8, 8, "h"); c.rect(x - 2, 52, 12, 26, "h"); c.rect(x, 78, 8, 12, "g") }
+  c.rect(92, 62, 40, 5, "g"); c.rect(100, 56, 14, 6, "f")
+  c.rect(146, 20, 22, 70, "m"); c.rect(152, 54, 8, 8, "f"); c.rect(150, 62, 12, 22, "g")
+})
+// people not painted yet: the preacher, the fitter on his scaffold
+anim("mock_prediger", { w: 19, h: 50, frames: 1, fps: 1, outline: "k", pivot: "bottom" }, (c) => {
+  c.rect(6, 0, 7, 8, "h"); c.rect(5, 8, 9, 26, "d"); c.rect(1, 12, 3, 10, "g"); c.rect(15, 12, 3, 10, "g"); c.rect(6, 34, 3, 16, "e"); c.rect(10, 34, 3, 16, "e")
+})
+anim("mock_monteur", { w: 21, h: 50, frames: 1, fps: 1, outline: "k", pivot: "bottom" }, (c) => {
+  c.rect(7, 0, 7, 8, "h"); c.rect(5, 8, 11, 24, "y"); c.rect(7, 32, 3, 18, "e"); c.rect(11, 32, 3, 18, "e"); c.rect(16, 12, 4, 2, "h")
+})
+// a person not painted yet: Frau Imai, at the table with her cold tea
+anim("mock_imai", { w: 19, h: 44, frames: 1, fps: 1, outline: "k", pivot: "bottom" }, (c) => {
+  c.rect(6, 0, 7, 8, "h"); c.rect(14, 4, 1, 1, "g"); c.rect(3, 8, 13, 22, "f"); c.rect(5, 30, 9, 14, "d")
+})
+// what is in the bag, not painted yet
+anim("inv_ausweis", { w: 18, h: 13, frames: 1, fps: 1, outline: "k" }, (c) => { c.rect(0, 0, 18, 13, "h"); c.rect(2, 2, 6, 7, "f"); c.rect(10, 3, 6, 1, "f"); c.rect(10, 6, 6, 1, "f"); c.rect(0, 11, 18, 2, "M") })
+anim("inv_haken", { w: 18, h: 13, frames: 1, fps: 1, outline: "k" }, (c) => { c.rect(0, 10, 15, 2, "g"); c.rect(14, 3, 2, 8, "g"); c.rect(10, 2, 5, 2, "h"); c.rect(10, 4, 2, 2, "h") })
+anim("inv_stick", { w: 18, h: 13, frames: 1, fps: 1, outline: "k" }, (c) => { c.rect(2, 3, 12, 7, "f"); c.rect(14, 5, 3, 3, "h"); c.rect(4, 5, 4, 3, "v") })
 // a person not painted yet: the Rain Reader on her bucket
 anim("mock_regen", { w: 19, h: 40, frames: 1, fps: 1, outline: "k", pivot: "bottom" }, (c) => {
   c.rect(6, 0, 7, 8, "h"); c.rect(3, 8, 13, 20, "g"); c.rect(5, 28, 9, 12, "d"); c.rect(2, 12, 2, 8, "g")

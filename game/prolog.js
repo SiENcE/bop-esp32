@@ -221,7 +221,7 @@ Cutaway.room("flat", {
 Cutaway.act("prolog", {
   title: "Prolog", name: "Nachtschicht", room: "flat", actor: "juno",
   start: [
-    { time: "21:30", day: 1 }, { set: "chits", value: 0 },
+    { time: "21:30", day: 1 }, { set: "chits", value: 0 }, { give: "evi_bag", to: "juno" },
     { place: "juno", room: "flat", at: AF.start, face: "ne" },
     { set: "code_cam03" }, { set: "link_cam03" }, { cache: "note_kessler_photo" },
   ],
