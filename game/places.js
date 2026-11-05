@@ -68,9 +68,9 @@ Halcyon.at = {
     windowRect: [28, 62, 44, 62], ladderRect: [250, 0, 26, 92], belowRect: [0, 156, 320, 24],
   },
   dach: {
-    walk: [[24, 112, 296, 112, 316, 174, 4, 174]], hatch: [282, 150], edge: [120, 124], tank: [66, 124], reader: [206, 128],
-    hatchRect: [268, 120, 40, 56], ringsRect: [0, 0, 320, 66], tankRect: [34, 56, 62, 56], placeRect: [110, 78, 60, 34],
-    drips: [[150, 66, 110], [232, 60, 118], [84, 62, 100], [196, 64, 96]],
+    // the old photo's camera (art/ui/deck_wallpaper.px.js): the parapet across the picture, the tar in front of it
+    walk: [[6, 156, 314, 156, 318, 176, 2, 176]], hatch: [22, 166], edge: [222, 162], reader: [92, 164],
+    hatchRect: [4, 114, 28, 40], ringsRect: [0, 0, 320, 22], placeRect: [192, 100, 58, 50], screenRect: [110, 33, 50, 31], noodlesRect: [96, 49, 9, 57], droneRect: [284, 98, 26, 18],
   },
   laundromat: {
     walk: [[12, 108, 308, 108, 316, 176, 4, 176]], arrive: [18, 130], door: [10, 130], dryer6: [168, 110], counter: [270, 128],

@@ -89,6 +89,8 @@ mock() {
     for f in art/mock/*.px.js; do
         $PXL build "$f" --out build/art/mock --no-preview | tail -n 1
     done
+    # the roof of today comes from the old photo's code
+    $PXL build art/ui/deck_wallpaper.px.js --only dach_bg,dach_heute --out build/art/mock --no-preview | tail -n 1
     $ATLAS build/art/mock assets/mock.js --only "cam*,gasse_*,laundromat_*,sims_*,dach_*,mock_*"
 }
 

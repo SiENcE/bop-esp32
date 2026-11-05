@@ -48,18 +48,27 @@ Cutaway.actor("regenleserin", { name: "Regenleserin", color: "#a8c8e8", room: "d
   ] });
 Cutaway.room("dach", { name: "Das Dach", background: "dach_bg", walk: AD.walk,
   ambience: ["city_far", { sfx: "feed_rain", gain: 0.5 }], music: { theme: "juno", intensity: 0.2 },
-  fx: AD.drips.map((/** @type {number[]} */ [x, y, to], /** @type {number} */ i) => ({ kind: "drip", at: [x, y], to, every: 1100 + i * 370, color: "#a8b8d0" })),
+  fx: [{ kind: "rain", rect: [0, 22, 320, 158], count: 60, color: "#617aa0", speed: 170, slant: 0.25, length: 3 }],
   hotspots: {
     hatch: { name: "Leiter nach unten", rect: AD.hatchRect, walkTo: AD.hatch, face: "sw", look: "Die Leiter. Runter ist schlimmer als rauf.", use: [{ goto: "sims", at: AS.ladder, face: "sw" }] },
     rings: { name: "Die Ringe", rect: AD.ringsRect, walkTo: AD.edge, face: "ne", look: "Da oben ist nicht der Himmel. Da oben ist der Boden von jemand anderem.", use: [{ goto: "dach_blick" }] },
-    tank: { name: "Wassertank", rect: AD.tankRect, walkTo: AD.tank, face: "ne", look: "Der Tank vom Block. Er ist voll von dem, was oben keiner mehr wollte." },
-    place: { name: "Unser Platz", rect: AD.placeRect, walkTo: AD.edge, face: "se", look: ["Hier haben wir gesessen. Teo ganz vorn an der Kante, mit baumelnden Beinen.", "Ich hab ihn am Gürtel festgehalten. Er hat es nie gemerkt."] },
+    screen: { name: "Der große Schirm", rect: AD.screenRect, walkTo: AD.edge, face: "ne", look: ["HALCYON. SLEEP BETTER.", "Früher stand da RISE ABOVE. Das hier ist wenigstens ehrlicher."] },
+    noodles: { name: "NOODLES", rect: AD.noodlesRect, walkTo: AD.edge, face: "ne", look: "N, D, L, E, S. Zwei Buchstaben haben's nicht geschafft." },
+    drone: { name: "Drohne", rect: AD.droneRect, walkTo: AD.edge, face: "ne", look: "Eine Kameradrohne. Die hingen damals schon hier oben rum. Uns hat das nie gestört." },
+    place: { name: "Unser Platz", rect: AD.placeRect, walkTo: AD.edge, face: "ne", look: "Da haben wir gesessen. Ich vierzehn, Teo sechs. Eine Schale Nudeln für zwei.", use: [{ goto: "dach_sitzen" }] },
   } });
 
+// sitting where they sat, the old photo's picture twenty years on
+Cutaway.room("dach_sitzen", { name: "Unser Platz", background: "dach_heute", observe: true, lines: "bottom", buttons: false,
+  ambience: ["city_far", { sfx: "feed_rain", gain: 0.5 }], music: { theme: "memory", fade: 2 },
+  fx: [{ kind: "rain", rect: [0, 22, 320, 158], count: 60, color: "#617aa0", speed: 170, slant: 0.25, length: 3 }],
+  hotspots: { back: { name: "Aufstehen", rect: [0, 0, 320, 180], exit: { to: "dach", at: AD.edge, face: "sw" } } },
+  enter: ["Er ist hier eingeschlafen. An meiner Schulter.", "Ich hab mich eine Stunde nicht bewegt. Vor Angst, und damit er weiterschläft.", "Heute schläft er besser. Sagt er."] });
+
 // the big look upwards (a shot of its own: the block for what will be painted as large as the intro's)
-Cutaway.room("dach_blick", { name: "Die Ringe", background: "dach_blick_bg", observe: true, lines: "bottom", buttons: false,
+Cutaway.room("dach_blick", { name: "Die Ringe", background: "dach_blick_b_bg", observe: true, lines: "bottom", buttons: false,
   ambience: ["city_far", { sfx: "feed_rain", gain: 0.5 }], music: { theme: "juno", intensity: 0.2 },
   fx: [{ kind: "rain", rect: [0, 0, 320, 180], count: 30, color: "#a8b8d0", speed: 90, slant: 0, length: 3 }],
   hotspots: { back: { name: "Zurück", rect: [0, 0, 320, 180], exit: { to: "dach", at: AD.edge, face: "sw" } } },
-  enter: ["Acht Ringe über mir. Sehen kann ich nur den nächsten.", "Alles, was hier tropft, war schon mal bei jemandem im Glas."] });
+  enter: ["Acht Ringe über mir. Der helle Punkt da oben ist die Krone.", "Alles, was hier tropft, war schon mal bei jemandem im Glas."] });
 })();

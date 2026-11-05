@@ -1,8 +1,8 @@
 // The deck's desktop wallpaper (docs/kapitel0-design.md §2.1, style guide §8 "The deck"): an old photo,
-// Juno (about 10, already in the yellow slicker, hood up) and her little brother Teo (about 6) from behind
+// Juno (14, already in the yellow slicker, hood up) and her little brother Teo (6), in 2074, from behind
 // and a little above, sitting on the parapet of a flat roof in the Lower Ninth at night, in the rain,
 // looking out over Halcyon. Over them the underside of the ring above (the Ninth never sees the sky), its
-// rim lamps and the drip that is the Ninth's rain; ahead the towers, the big HALCYON screen of 2070
+// rim lamps and the drip that is the Ninth's rain; ahead the towers, the big HALCYON screen of 2074
 // ("RISE ABOVE", the sun the Ninth never sees), amber windows, a magenta NOODLES sign, the flooded streets'
 // glow coming up through the smog. Teo leans his head on her shoulder, her arm round him; on the ledge
 // beside him the noodle cup they shared, still steaming. A camera drone hovers by, watching them (its red eye).
@@ -56,7 +56,8 @@ pal({
   // answers in the palette of whichever file includes this one, so the mockup's copy came out different.)
   // Its grid() draws a hand grid with an ink outline round it, as a stamped sprite with outline: "k" does.
   const GLYPHS = { H: "101101111101101", A: "010101111101101", L: "100100100100111", C: "011100100100011", Y: "101101010010010",
-    O: "111101101101111", N: "110101101101101", D: "110101101101110", E: "111100110100111", S: "011100010001110" }
+    O: "111101101101111", N: "110101101101101", D: "110101101101110", E: "111100110100111", S: "011100010001110",
+    B: "110101110101110", T: "111010010010010", R: "110101110101101", P: "110101110100100" }
   const pen = () => {
     const buf = Array.from({ length: H }, () => new Array(W).fill("1"))
     const p = {
@@ -188,7 +189,9 @@ pal({
   const FAR3 = blocks(3, 62, 76, 6, 13)
   const farTop = (x) => (FAR3.find(([a, b]) => x >= a && x < b) ?? [0, 0, 999])[2]
 
-  function paint(c, f) {
+  // today: the same roof twenty years on (kapitel1-design, "Die Stadt"): the screen says something else, the sign has lost two
+  // letters, the city has more screens in it, and who sits on the ledge is `sitting` (false: nobody)
+  function paint(c, f, today = false, sitting = false) {
     const lit = { k: "1", 1: "2", 2: "3", 3: "4", 4: "5", 5: "6", A: "B", B: "D", D: "G", G: "4", e: "f", f: "z", z: "Z", Z: "X", c: "C", C: "v", v: "V", n: "M", M: "m", m: "N", O: "P", P: "Q", Q: "R" }
     const air = (x, y) => tone(SMOG, smog(x, y) * 4, x, y)
 
@@ -216,7 +219,7 @@ pal({
     { const r = f % 12; if (r < 3) c.px(181, 30, "q"); else if (r === 3) c.px(181, 30, "r") }
     { const k = during(f, 14, 20) ? "v" : f === 13 || f === 20 ? "C" : null; if (k) c.px(192, 50, k) }
 
-    // the HALCYON tower and its screen: the sun rising over the water, the city's promise in 2070
+    // the HALCYON tower and its screen: the sun rising over the water, the city's promise in 2074
     c.rect(104, 28, 64, HZ + 10 - 28, "2"); c.rect(164, 28, 4, HZ + 10 - 28, "1"); c.rect(104, 28, 60, 1, "3")
     for (let y = 68; y < HZ + 10; y += 3) for (let x = 106; x < 163; x += 3) if (hash(x, y * 3) < 0.08) c.px(x, y, hash(y, x) < 0.7 ? "P" : "c")
     if (during(f, 6, 17)) c.px(118, 71, "P"); if (during(f, 15, 3)) c.px(148, 74, "P")
@@ -226,8 +229,9 @@ pal({
     for (let y = 35; y < 62; y++) for (let x = 112; x < 158; x++) c.px(x, y, y < 50 ? ((x + y) % 4 ? "c" : "C") : (y & 1 ? "c" : "C"))
     { const rb = 35 + Math.floor(f * 27 / FRAMES); for (let x = 112; x < 158; x++) { c.px(x, rb, "C"); if (rb > 35 && x % 2) c.px(x, rb - 1, "C") } }
     c.text(122, 37, "HALCYON", "V")
+    if (today) { c.text(125, 44, "SLEEP", "V"); c.text(123, 50, "BETTER", "V") }
     const glow = 0.5 + 0.5 * wave(f, FRAMES)
-    for (let y = 43; y < 55; y++) for (let x = 123; x < 148; x++) {
+    if (!today) for (let y = 43; y < 55; y++) for (let x = 123; x < 148; x++) {
       const d = (x - 135) ** 2 + (y - 55) ** 2
       if (d <= 81) c.px(x, y, d <= 33 + glow * 8 ? "V" : "v")
       else if (d <= 90 + glow * 30 && bay(x, y) < 0.3 + glow * 0.4) c.px(x, y, "C")
@@ -302,7 +306,7 @@ pal({
       if (d > 0 && d < 6 && "12k".includes(c.key(x, y)) && bay(x, y) < (0.75 - d * 0.13) * breath) c.px(x, y, "n")
     }
     c.rect(96, 49, 9, 57, "n"); c.rect(96, 49, 9, 1, "M"); c.rect(96, 105, 9, 1, "M"); c.rect(104, 49, 1, 57, "k")
-    "NOODLES".split("").forEach((ch, i) => c.text(99, 52 + i * 7, ch, i === 3 && stutter ? "M" : "m"))
+    "NOODLES".split("").forEach((ch, i) => c.text(99, 52 + i * 7, ch, today && (i === 1 || i === 2) ? "n" : i === 3 && stutter ? "M" : "m"))
     // the near tower on the right: homes, their warm windows
     c.rect(298, 0, 22, SEAT, "1"); c.rect(298, 0, 1, SEAT, "2")
     for (const [x, y] of [[303, 52], [311, 66], [303, 94], [313, 108]]) { c.rect(x, y, 3, 3, "P"); c.px(x, y, "Q"); c.px(x + 1, y, "Q") }
@@ -342,11 +346,24 @@ pal({
 
     // the two of them on the ledge (still), the cup beside Teo, its steam rising and curling (half a px a
     // frame, 12 px a loop, fading as it goes), the camera drone hovering by the tower, its eye blinking
+    if (today) {
+      // more screens than there were, selling sleep (pale blue and magenta, as on the ride down)
+      for (const [x, y, w, h, k, l] of [[8, 88, 14, 8, "c", "v"], [44, 96, 10, 6, "M", "m"], [266, 88, 14, 9, "c", "v"], [238, 104, 12, 7, "M", "m"], [28, 112, 12, 7, "c", "C"]]) { c.rect(x, y, w, h, k); c.rect(x + 1, y + 1, w - 2, 1, l); c.rect(x + 2, y + 3, w - 5, 1, l) }
+      // the ladder's top over the parapet, the way Juno came up
+      c.rect(10, 116, 2, 36, "5"); c.rect(24, 116, 2, 36, "5"); for (let y = 120; y < 150; y += 6) c.rect(10, y, 16, 1, "4")
+      // Juno, grown up, alone where the two of them sat (blocks: to be painted when the look is approved)
+      if (sitting) {
+        c.rect(198, 112, 26, 25, "k"); c.rect(199, 113, 24, 24, "y"); c.rect(199, 113, 3, 24, "Y"); c.rect(219, 113, 4, 24, "j")
+        c.rect(204, 99, 14, 15, "k"); c.rect(205, 100, 12, 14, "y"); c.rect(205, 100, 12, 2, "Y"); c.rect(214, 102, 3, 12, "j")
+        for (let n = 0; n < 16; n++) c.px(201 + n, 114 + Math.round(n * 0.9), "3")
+      }
+    } else {
     c.grid(JUNO, 197, 105)
     c.grid(TEO, 213, 110)
     c.grid(ARM, 214, 122)
     c.grid(CUP, 236, 127)
-    for (let j = 0; j < 6; j++) {
+    }
+    if (!today) for (let j = 0; j < 6; j++) {
       const h = (f * 0.5 + j * 2) % 12, y = Math.round(127 - h), x = 240 + Math.round(Math.sin(h * 0.6 + 1) * 1.2 + h * 0.08)
       if (h < 10) { c.px(x, y, h < 6 ? "5" : "4"); if (h < 7) c.px(x, y - 1, "4") }
     }
@@ -362,6 +379,10 @@ pal({
         c.px(x, y, Math.abs(y - cy) === ry || (y + drift) % 3 === 0 ? "f" : below[k] ?? "z")
       }
   }
+  // the roof today (art/mock: they go into assets/mock.js with the blocks until they are painted)
+  const today = (c, sitting) => { const p = pen(); paint(p, 0, true, sitting); for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) c.px(x, y, p.buf[y][x]) }
+  anim("dach_bg", { w: W, h: H, frames: 1, fps: 1 }, (c) => today(c, false))
+  anim("dach_heute", { w: W, h: H, frames: 1, fps: 1 }, (c) => today(c, true))
   const PHOTOS = []
   const photo = (f) => (PHOTOS[f] ??= (() => { const p = pen(); paint(p, f); return p.buf })())
   anim("deck_photo", { w: W, h: H, frames: FRAMES, fps: 10 }, (c) => { const P = photo(c.frame); for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) c.px(x, y, P[y][x]) })
