@@ -29,6 +29,22 @@ scene("cam21_bg", { w: W, h: H, bg: "0" }, (c) => {
   c.rect(232, 128, 72, 40, "3"); c.rect(238, 134, 28, 28, "7"); c.rect(242, 139, 20, 2, "2"); c.rect(242, 144, 20, 2, "2"); c.rect(242, 149, 14, 2, "2")
   SIGN(c, 232, 116, 72, "PHO PUMP")
 })
+// the 14th floor from Halcyon's camera in the corner: the doors of 14C and 14A, a mat with the paper, the lift
+scene("cam14_bg", { w: W, h: H, bg: "0" }, (c) => {
+  ROOM(c, "5", "7", 88)
+  c.rect(78, 34, 38, 54, "2"); c.rect(196, 34, 38, 54, "3"); c.rect(262, 34, 40, 54, "3")
+  TXT.draw(c, 97, 50, "14C", "8", { font: "hud", align: "center" }); TXT.draw(c, 215, 50, "14A", "8", { font: "hud", align: "center" })
+  c.rect(198, 94, 32, 16, "4"); c.rect(208, 98, 12, 8, "9")
+})
+// a close-up: one page of the stack, every face in it marked with four corners
+scene("look_zeitung", { w: 170, h: 112, bg: "h" }, (c) => {
+  c.rect(0, 0, 170, 112, "h"); c.rect(0, 0, 170, 16, "g")
+  TXT.draw(c, 85, 5, "NINTH HERALD", "k", { font: "hud", align: "center" })
+  for (const [x, y] of [[10, 24], [62, 24], [114, 24], [10, 68], [62, 68], [114, 68]]) {
+    c.rect(x, y, 40, 34, "f"); c.rect(x + 13, y + 6, 14, 14, "d"); c.rect(x + 8, y + 20, 24, 14, "e")
+    for (const [cx, cy, dx, dy] of [[x + 9, y + 3, 1, 1], [x + 30, y + 3, -1, 1], [x + 9, y + 23, 1, -1], [x + 30, y + 23, -1, -1]]) { c.hline(dx > 0 ? cx : cx - 3, cy, 4, "k"); for (let n = 0; n < 4; n++) c.px(cx, cy + n * dy, "k") }
+  }
+})
 // the bar: the counter across the room, seen from over it
 scene("cam22_bg", { w: W, h: H, bg: "0" }, (c) => {
   ROOM(c, "2", "5", 62)

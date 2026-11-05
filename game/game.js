@@ -3,6 +3,7 @@
 
 (function () {
   Halcyon.buildDeck();                                   // the deck room, once the chapters have filled it
+  Halcyon.buildCamStrip();                               // every camera's strip of the others
   Halcyon.declareTexts();                                // the game's own lists, for validate and the Texts tab
   Cutaway.inventory.setCorner("bottom");                 // style guide §8: the bag in the bottom right
   Cutaway.start({

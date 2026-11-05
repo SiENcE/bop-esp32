@@ -1,6 +1,7 @@
 // Solve one act alone, from its start (the whole game would multiply every act by what the ones before leave):
-//   node tools/solve-act.mjs kapitel1 [--full] [--max N] [--set flag] [--workers N] [--json path.json]
-// --set: a flag kept from the act before; --workers: threads that search, default one less than the cores, at most 12.
+//   node tools/solve-act.mjs kapitel1 [--full] [--max N] [--set flag,flag] [--workers N] [--json path.json]
+// --set: flags for its start: one kept from the act before, or off_<thread> to shut a side story (CLAUDE.md, checks);
+// --workers: threads that search, default one less than the cores, at most 12.
 import { writeFileSync } from "node:fs";
 import { availableParallelism } from "node:os";
 import { makeSolver, loadFor, describe } from "../lib/cutaway/tools/lib/solver.mjs";
@@ -12,7 +13,7 @@ if (!act) { console.error("usage: node tools/solve-act.mjs <act> [--full] [--max
 const kept = opt("--set");
 
 // alone: going on to the next act ends the search there, as a demo ends after its last act
-const setup = { page: "index.html", options: { act, demo: { acts: [act] } }, start: kept ? [{ set: kept }] : [] };
+const setup = { page: "index.html", options: { act, demo: { acts: [act] } }, start: kept ? kept.split(",").map((f) => ({ set: f })) : [] };
 const solver = await makeSolver(loadFor(setup), { workers: Number(opt("--workers", String(Math.min(12, availableParallelism() - 1)))), setup });
 const t0 = Date.now();
 let shown = 0;

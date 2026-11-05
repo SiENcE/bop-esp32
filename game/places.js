@@ -52,6 +52,7 @@ Halcyon.at = {
   },
   // Chapter 1's blocks (art/mock/ch1_blocks.px.js)
   cam21: { door: [152, 80], walkOff: [300, 110], queue: [[70, 96], [86, 100], [102, 104], [118, 108]], menu: [238, 134, 28, 28], clinic: [130, 26, 44, 50], mic: [152, 90] },
+  cam14: { door: [97, 112], mat: [190, 116], mic: [150, 100], doorsRect: [70, 30, 170, 58] },
   cam22: { seat: [120, 112], door: [20, 100], mic: [120, 100], bar: [24, 118, 272, 20] },
   cam23: { door: [300, 150], dryer6: [168, 76], counter: [262, 150], mic: [168, 100], dryers: [16, 28, 236, 40], tickets: [268, 80, 44, 60] },
   cam24: { door: [160, 96], off: [40, 150], mic: [160, 110], entrance: [124, 24, 72, 66] },

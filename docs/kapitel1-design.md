@@ -198,6 +198,15 @@ Die Abende sollen nach Leben in der Stadt schmecken, nicht nach Warten aufs Bett
 | **Die Frau, die sich erinnert** (story §9) | Sie ist sicher, einen Mord gesehen zu haben, in einer Straße, in der sie nie war. Juno trifft sie im LUCKY STATIC und findet die Straße. | Sie ist die Person mit `UNKNOWN LINK` aus `cam21`. In Kapitel 2 schreibt sie: „Ich hab wieder was gesehen. Eine Frau auf einem Bahnsteig.“ |
 | **Die weißen Träger** | Donnerstagnacht auf der Kowalski: Ein Halcyon-Wagen holt einen Sinker aus dem Haus, zwei freundliche Leute in Weiß. Die Nachbarn sehen weg. Juno kann zusehen, filmen und an Vesper verkaufen, oder die Tochter trösten. | Zeigt, was mit Sinkern geschieht, lange bevor Teo einer wird. Im NETZ ist es der Beitrag „Mein Vater wacht nicht auf“. |
 
+**Der Zeitungskrieg im Einzelnen (ein Vorschlag zum Prüfen im Mock, `news_step`):**
+
+| # | Wo | Was |
+|---|---|---|
+| 1 | `kessel_14`, Zettel | Juno will wissen, wer es ist. Halcyons Kamera in der Ecke sieht alles, aber den eigenen Block glasst man nicht. |
+| 2 | `kessel_14`, Kamera | Die Wahl: „Nur dieses eine Mal.“ oder „Nein.“ Ihr alter Zugang geht auch hier: `cam14`. |
+| 3 | `cam14`, 02:30 (Mi und Do) | Frau Haldane im Morgenmantel, die Augen zu, holt die Zeitungen. Der Zettel `WER KLAUT MEINE ZEITUNG` ist ihr eigener: **Sie klaut ihre eigene Zeitung und weiß es nicht.** |
+| 4 | `kessel_14`, ihre Tür | Hinter dem Sessel der Stapel. Um jedes Gesicht vier kleine Ecken, wie Junos Klammern. „So markier ich.“ Niemand erklärt es. Eine Notiz im CACHE; auf dem Zettel steht danach, von Juno: `ES IST NIEMAND. 14B.` |
+
 **Drei merkwürdige Leute:** die **Regenleserin** auf dem Dach (kostet das Tropfwasser und sagt, von welchem Ring es kommt: „Der Vierte. Die gießen ihre Orchideen.“; ihre Wettervorhersagen sind eigentlich Klatsch), der **Prediger** der Wachen Kirche auf dem Drain-Markt (seit neun Tagen wach, zittert vor Kaffee und schenkt Juno einen ein) und **die halbe Reparatur** auf dem Gerüst am Werbebildschirm (wohnt dort und repariert nur die linke Hälfte, die rechte gehört zu einem anderen Vertrag).
 
 **Die Abende:** Mittwoch ist Ankommen (Teo, die Aufträge, die Gasse, der erste Gang zum Drain-Markt). Donnerstag ist die Stadt (das Dach, der Zeitungskrieg, die weißen Träger; nebenbei Ines' Stick). Freitag wird alles still: dieselben Orte, aber der Bildschirm zeigt das Auge, Bao redet weniger, die Regenleserin sagt: „Heute schmeckt's nach gar nichts.“

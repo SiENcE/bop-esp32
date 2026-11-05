@@ -226,8 +226,8 @@ Cutaway.act("kapitel1", {
     { set: "code_cam21" }, { set: "link_cam21" }, { set: "code_cam12" }, { set: "link_cam12" }, { set: "code_cam30" }, { set: "link_cam30" },   // Juno's old access
     { set: "know_ines" }, { set: "saw_varga" }, { set: "read_kessler" },
     { set: "fridge_empty" }, { set: "rent_notice" }, { set: "moth_met" }, { set: "ate_bao" },
-    { been_to: ["flat", "deck", "kessel_14", "kessel_lobby", "kowalski", "gasse", "laundromat", "sims", "dach", "dach_blick", "dach_sitzen", "cam03", "cam12", "cam21", "cam22", "cam23", "cam24", "cam30", "cam31"] },
-    { ledger: "wren_advance", value: "paid" }, { set: "roof_step", value: 0 },
+    { been_to: ["flat", "deck", "kessel_14", "kessel_lobby", "kowalski", "gasse", "laundromat", "sims", "dach", "dach_blick", "dach_sitzen", "cam03", "cam14", "cam12", "cam21", "cam22", "cam23", "cam24", "cam30", "cam31"] },
+    { ledger: "wren_advance", value: "paid" }, { set: "roof_step", value: 0 }, { set: "news_step", value: 0 }, { solo: true },
   ],
 });
 })();

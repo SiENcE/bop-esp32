@@ -44,15 +44,22 @@ Halcyon.camRoom = function (id, o) {
     ...o.hotspots,
   };
   if (hotspots.rewind) hotspots.rewind.rect = O.rewind;
-  Object.keys(Halcyon.cams).forEach((c, i) => {
-    if (c === id) return;
-    hotspots[`thumb_${c}`] = { name: `CAM ${Halcyon.cams[c].id}`, rect: O.thumb(i), z: 5, if: [`link_${c}`, ...(Halcyon.cams[c].if ? [Halcyon.cams[c].if] : [])], use: [{ goto: c }] };
-  });
   Cutaway.room(id, { name: `CAM ${Halcyon.cams[id].id}`, background: `${id}_bg`, observe: true, feed: id,
     post: Halcyon.FEED_POST, lines: "bottom", label: true, ambience: ["feed_hiss", "feed_rain", "city_far"],
     music: { theme: "glass", intensity: 0.2 }, ...o, hotspots,
     // REC belongs to the camera it was pressed on: leaving it stops the recording (kapitel0-design §3)
     enter: [{ unset: "rec_on" }, ...(o.enter ?? [])] });
+};
+
+/** The strip of linked cameras, in every camera's room: once all of them are known (game.js), so a chapter's cameras are in the prologue's rooms too. */
+Halcyon.buildCamStrip = function () {
+  const ids = Object.keys(Halcyon.cams);
+  for (const id of ids) {
+    const room = Cutaway.room.get(id);
+    ids.forEach((c, i) => {
+      if (c !== id) room.hotspots[`thumb_${c}`] = { name: `CAM ${Halcyon.cams[c].id}`, rect: Halcyon.osd.thumb(i), z: 5, if: [`link_${c}`, ...(Halcyon.cams[c].if ? [Halcyon.cams[c].if] : [])], use: [{ goto: c }] };
+    });
+  }
 };
 
 const A3 = Halcyon.at.cam03, A4 = Halcyon.at.cam04;
