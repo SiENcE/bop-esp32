@@ -106,7 +106,7 @@ schläft ein, `zzz`).
   Ansicht ändert, was man klicken kann, nie, was ein Klick tut. Die Wohnung schließt das Fenster
   (ihr `enter`).
 - Der **Chat** zeigt die Kontakte (Status, Punkt für Neues), den Verlauf von unten nach oben (Fotos und
-  Clips als Karten, Junos Nachrichten rechts in Gelb), Pfeile zum Zurückblättern, Junos Antworten
+  Clips als Karten, Junos Nachrichten rechts in Gelb), Pfeile zum Zurückblättern (Kontakte und Nachrichten scrollen pixelweise, auch per Mausrad und mit dem Finger), Junos Antworten
   nummeriert unten. Die Inhalte (Kontakte, Verläufe, Antworten) kommen aus dem Kapitel
   (`Halcyon.contacts`, `threads`, `replies` in `game/prolog.js`).
 - **EVI** ist eine Stimme mit eigenem Platz für ihre Zeilen (rechtsbündig neben ihrer Ecke und der

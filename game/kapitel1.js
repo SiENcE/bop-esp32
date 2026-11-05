@@ -50,14 +50,14 @@ AT("rent_due", 4, "22:15", "22:30", [{
 }]);
 AT("friday_stop", 4, "22:30", "22:45", []);
 
-Halcyon.cams.cam21 = { id: "21", place: "LULL-KLINIK 9-OST", owner: "HALCYON", map: [24, 60], if: "day>1" };
-Halcyon.cams.cam22 = { id: "22", place: "PHO PUMP", owner: "PRIVAT", map: [76, 60], if: ["day>1", "day<4", "!off_main"] };
-Halcyon.cams.cam23 = { id: "23", place: "SUDS & SPIN", owner: "PRIVAT", map: [130, 60], if: ["day>1", "day<4", "!off_main"],
+Halcyon.cams.cam21 = { id: "21", place: "LULL-KLINIK 9-OST", owner: "HALCYON", map: [8, 38], if: "day>1" };
+Halcyon.cams.cam22 = { id: "22", place: "PHO PUMP", owner: "PRIVAT", map: [64, 38], if: ["day>1", "day<4", "!off_main"] };
+Halcyon.cams.cam23 = { id: "23", place: "SUDS & SPIN", owner: "PRIVAT", map: [120, 38], if: ["day>1", "day<4", "!off_main"],
   tryIt: ["Eine billige Kamera. Der Werkscode: 0000.", { set: "code_cam23" }, { set: "link_cam23" }, { sfx: "link" }, "Natürlich."] };
-Halcyon.cams.cam24 = { id: "24", place: "WOHNBLOCK LERCHE", owner: "PRIVAT", map: [130, 24], if: "day=4" };      // (the code will come from Sable or Motte's second lesson, kapitel1-design C4)
-Halcyon.cams.cam12 = { id: "12", place: "DRAIN-MARKT, EINGANG", owner: "HALCYON", map: [180, 60], if: "tag_lantern" };
-Halcyon.cams.cam30 = { id: "30", place: "SUMPF-ABGANG", owner: "HALCYON", map: [180, 88], if: { or: ["tag_lantern", "day=4"] } };
-Halcyon.cams.cam31 = { id: "31", place: "ALTE METRO, LINIE 31", owner: "UNBEKANNT", map: [120, 96], if: "know_meeting",
+Halcyon.cams.cam24 = { id: "24", place: "WOHNBLOCK LERCHE", owner: "PRIVAT", map: [176, 14], if: "day=4" };      // (the code will come from Sable or Motte's second lesson, kapitel1-design C4)
+Halcyon.cams.cam12 = { id: "12", place: "DRAIN-MARKT, EINGANG", owner: "HALCYON", map: [176, 38], if: "tag_lantern" };
+Halcyon.cams.cam30 = { id: "30", place: "SUMPF-ABGANG", owner: "HALCYON", map: [176, 62], if: { or: ["tag_lantern", "day=4"] } };
+Halcyon.cams.cam31 = { id: "31", place: "ALTE METRO, LINIE 31", owner: "UNBEKANNT", map: [120, 86], if: "know_meeting",
   // the old protocol is in Juno's head, and it wants a beat: the eye in the noise when she has it (kapitel1-design C7)
   tryIt: ["Kein Code findet die. Das Ding ist älter als Halcyon.", "Aber sie wartet auf was. Das alte Protokoll will einen Takt.", { dialog: "cam31_takt" }] };
 // The old protocol's handshake, the same beat behind every sleeper's ear: long, short, short, long (story §10b). Each choice goes on to

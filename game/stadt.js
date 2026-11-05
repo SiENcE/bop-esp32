@@ -80,7 +80,7 @@ Cutaway.dialog("zeitung_cam", { main: { choices: [
   { text: "Nur dieses eine Mal.", goto: "end", then: [{ set: "code_cam14" }, { set: "link_cam14" }, { sfx: "link" }, "Das sagen alle. CAM 14 ist auf dem Deck."] },
   { text: "Nein.", goto: "end", then: ["Nein. Soll die Zeitung halt weg sein."] },
 ] } });
-Halcyon.cams.cam14 = { id: "14", place: "KESSEL-BLOCK, 14. STOCK", owner: "HALCYON", map: [30, 24], if: "link_cam14" };
+Halcyon.cams.cam14 = { id: "14", place: "KESSEL-BLOCK, 14. STOCK", owner: "HALCYON", map: [8, 14], if: "link_cam14" };
 Cutaway.actor("haldane_feed", { name: "Jemand im Morgenmantel", color: "#ffa8d8",
   costume: { idle: "commuter_d_feed", walk: "commuter_d_feed_walk", talk: "commuter_d_feed" }, speed: [6, 3],
   look: "Jemand im Morgenmantel. Sehr langsam, und ohne die Hände zu benutzen, um nach etwas zu greifen.",
@@ -131,7 +131,7 @@ Cutaway.dialog("imai_wahl", { main: { choices: [
   { text: "„Das war ein Traum.“", goto: "end", then: [{ set: "imai_step", value: 3 }, { set: "imai_told", value: "dream" }, { ledger: "imai", value: "dream" }, "Keine Treppe, kein Fisch. Ich hab nachgesehen. Das war ein Traum.",
     { say: "imai", text: "Gott sei Dank. Ich dachte schon ..." }, "Schlafen Sie gut, Frau Imai.", { evi: "verwirrt" }, { say: "evi", text: "Die Treppe gibt es aber. Ich hab sie gesehen." }, "Ich weiß."] },
 ] } });
-Halcyon.cams.cam18 = { id: "18", place: "ALTER FISCHMARKT", owner: "HALCYON", map: [80, 24], if: "imai_step>=1" };
+Halcyon.cams.cam18 = { id: "18", place: "ALTER FISCHMARKT", owner: "HALCYON", map: [120, 14], if: "imai_step>=1" };
 Halcyon.cache.note_imai_street = { kind: "note", name: "FRAU IMAIS TREPPE", about: "CAM 18, 29.10., 03:12. Es ist passiert. Sie schlief. Sie hat es von hier oben gesehen." };
 Halcyon.camRoom("cam18", { background: "cam18_bg", mic: { at: A18.mic, clear: 40, lost: 150 }, hotspots: {
   sign: { name: "Schild", rect: A18.sign, look: "Ein Fisch. FISH steht drunter, für den Fall, dass jemand fragt." },

@@ -4,9 +4,9 @@
 "use strict";
 
 (function () {
-Halcyon.cams.cam03 = { id: "03", place: "OSTBRÜCKE", owner: "PUMPENVERWALTUNG OST", map: [54, 30] };
+Halcyon.cams.cam03 = { id: "03", place: "OSTBRÜCKE", owner: "PUMPENVERWALTUNG OST", map: [64, 14] };
 // cam04 is on Juno's map only once she knows Kessler is going to Yuen's (`if`)
-Halcyon.cams.cam04 = { id: "04", place: "IMBISS YUEN", owner: "YUEN'S, PRIVAT", map: [156, 76], if: "heard_yuens",
+Halcyon.cams.cam04 = { id: "04", place: "IMBISS YUEN", owner: "YUEN'S, PRIVAT", map: [120, 62], if: "heard_yuens",
   linked: [{ evi: "froh" }, { say: "evi", text: "Verbunden! Hallo, Kamera vier." }] };          // what happens when it is linked (step 6)
 
 /** The phosphor duotone (docs/style-guide.md §9), the same ten values as the art. */

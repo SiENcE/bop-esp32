@@ -559,8 +559,10 @@ const KOW = (() => {
       pen.at(u0 + du, v0 + 0.18, 0.13, "u"); pen.faceU(u0 + du - 0.03, v0 + 0.05, v0 + 0.31, 0, 0.27, (a, e) => wheel(a, e))
       // on the counter: the stockpot, the bowls stacked, the chopsticks in their cup
       const top = (u, v, h) => { pen.at(u, v, h, "up"); return pen.P(u, v, h) }
-      { const [x, y] = top(u0 + 0.75, v0 + 0.3, H); pen.ellipse(x, y, 7, 3, "3"); pen.rect(x - 7, y - 8, 15, 8, "4"); pen.vline(x - 7, y - 8, 8, "5"); pen.vline(x + 7, y - 8, 8, "3")
-        pen.ellipse(x, y - 8, 7, 3, "5"); pen.ellipse(x, y - 8, 6, 2, "3"); pen.hline(x - 3, y - 9, 6, "R"); pen.px(x + 2, y - 8, "W") }
+      // (copper, its own light: steel went under in the counter's cyan glow), standing in its own dark ring on the counter
+      { const [x, y] = top(u0 + 0.75, v0 + 0.3, H); pen.ellipse(x, y + 1, 9, 4, "k"); pen.ellipse(x, y, 7, 3, "!O"); pen.rect(x - 7, y - 8, 15, 8, "!P"); pen.rect(x - 7, y - 8, 3, 8, "!Q"); pen.rect(x + 4, y - 8, 4, 8, "!O")
+        pen.vline(x - 8, y - 8, 8, "k"); pen.vline(x + 8, y - 8, 8, "k")
+        pen.ellipse(x, y - 8, 7, 3, "!R"); pen.ellipse(x, y - 8, 6, 2, "!O"); pen.hline(x - 3, y - 8, 6, "!P"); pen.px(x + 2, y - 9, "!W") }
       { const [x, y] = top(u0 + 0.25, v0 + 0.42, H + 0.02); pen.ellipse(x, y, 3, 1, "H"); pen.hline(x - 2, y, 5, "h"); pen.ellipse(x, y - 2, 3, 1, "H"); pen.hline(x - 2, y - 2, 5, "h") }
       { const [x, y] = top(u0 + 0.12, v0 + 0.15, H); pen.rect(x - 1, y - 4, 3, 4, "O"); pen.line(x - 1, y - 9, x, y - 4, "P"); pen.line(x + 1, y - 9, x + 1, y - 4, "R") }
     },
@@ -575,8 +577,9 @@ const KOW = (() => {
       const cart = MAP.props.find((q) => q.id === p.over), [u0, v0] = cart.at, H = cart.h
       // the umbrella: its pole, eight panels round the apex, those facing the upper left a tone lighter, one torn
       const cu = u0 + 0.3, cv = v0 + 0.15, CH = p.h
-      { const [ax, ay] = pen.P(cu, cv, H), [tx, ty] = pen.P(cu, cv, CH); pen.at(cu, cv, 1.5, "v"); pen.vline(ax, ty, ay - ty, "4"); pen.vline(ax + 1, ty, ay - ty, "2") }
       const [cx, cy] = pen.P(cu, cv, CH), RX = 32, RY = 16, AP = 6
+      // (it shows only below the canopy's front rim: above that it is behind the cloth)
+      { const [ax, ay] = pen.P(cu, cv, H), under = cy + RY; pen.at(cu, cv, 1.5, "v"); pen.vline(ax, under, ay - under, "4"); pen.vline(ax + 1, under, ay - under, "2") }
       for (let y = cy - RY - AP; y <= cy + RY + 1; y++) for (let x = cx - RX - 1; x <= cx + RX + 1; x++) {
         const dx = (x - cx) / RX, dy = (y - cy) / RY, rr = dx * dx + dy * dy
         if (rr > 1) continue

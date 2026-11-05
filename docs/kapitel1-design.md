@@ -240,6 +240,8 @@ Die Abende sollen nach Leben in der Stadt schmecken, nicht nach Warten aufs Bett
 | Baos Küche mit Fenster zum Strand, sein bestes Rezept liegt noch unten | Baos Vergangenheit (§9) |
 | Aus der Krone kommt kein Tropfen | die Krone, der Ruhekern (Kap. 5, 6) |
 
+**Offen (Entscheidung des Nutzers):** Bleibt Motte „er“, wie bisher in allen Dokumenten? Sagt Motte den Takt im Klartext, oder nur, dass es komisch blinkt?
+
 **Was Motte sagt** (`game/motte.js`; Vorschlag): Sobald sie sich kennen, kann Juno ihn bei jedem Vorbeigehen ansprechen, ohne Flags. Er **spielt** auf dem Handheld, er übt nicht das Glassen (entschieden 2026-11-05): ein breites Gerät mit zwei farbigen Griffen, ein „Tideboy“, das Spiel heißt „Sump Runner“, und er hält es mit beiden Händen vor der Brust.
 
 | Was er sagt | Was es später heißt |
