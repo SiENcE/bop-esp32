@@ -138,7 +138,7 @@ Cyan nur für Technik.
 | **Dr. Ines Calder** | Schlaftechnikerin in einer Lull-Klinik, die Schlafprotokolle hinausschmuggelt | weißer Klinikkittel, dunkler Zopf | `#f0a0c0` |
 | **„Lantern"** (Oskar Lind) | ein Piratensender, der Werbebildschirme für zehn Sekunden Wahrheit kapert; Ines' Kontakt; paranoid. Sitzt seit einem Pumpenunfall im Rollstuhl, den er für die Sümpfe umgebaut hat: Schwimmer, ein Bootsmotor, Schubdüsen für kurze Sätze über Treppen und Leitern, der Sender eingebaut. | geflickter Poncho; der Rollstuhl mit Schwimmern, Düsen und einem Bündel Antennen | `#b0f0a0` |
 | **Lt. Agnes Morrow** | Revier 9; nimmt Geld von Halcyon und hasst sich dafür; ihre Tochter ist eine Lull-Sinkerin | grauer Trenchcoat, Polizeimarke am Band | `#a8b8d0` |
-| **Corvin Ashe** | ein Agent der **Quiet**, Halcyons inoffizieller Sicherheitseinheit; höflich, geduldig, der Mörder | weißer Regenmantel, im Feed ohne Gesicht (eine Maske, die die Kamera überstrahlt) | `#ff7a6a` |
+| **Corvin Ashe** | ein Agent der **Quiet**, Halcyons inoffizieller Sicherheitseinheit; früher selbst Beobachter in Junos Halle; höflich, geduldig, der Mörder | weißer Regenmantel, im Feed ohne Gesicht (eine Maske, die die Kamera überstrahlt) | `#ff7a6a` |
 | **Direktorin Selene Aubrecht** | Leiterin von Civic Rest, dem Lull-Programm; glaubt, den Neunten gerettet zu haben, und die Zahlen geben ihr recht | weißer Anzug, silbernes Haar | `#e8f0ff` |
 | **Der Zeuge** | das Auge in den Bildschirmen (§6) | eine Störung, ein Auge, viele Stimmen zugleich | `#ffc0f2` (Magenta-Weiß) |
 
@@ -564,11 +564,14 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
 - **Das Beobachter-Handbuch** liegt ab Kapitel 1, Abend 1 im CACHE und nennt das Protokoll `OBS-4`, das Juno in `cam31` braucht.
 - **Der unbekannte Link** steht in der Schlange vor der Lull-Klinik (`cam21`) als `UNKNOWN LINK` über jemandem, pulsiert, wenn er aktiv ist, und verschwindet nicht; `???` gehört Ashe.
 - **Der Mörder heißt Corvin Ashe** (bisher Rask, zu nah an Ratz). Ashe passt zum weißen Mantel und zu dem, was er zurücklässt.
+- **Warum Ashe Ines tötet, statt sie zu verhaften:** Ein Prozess würde ihre Protokolle öffentlich machen. Ein Mord lässt sich Lantern anhängen, das geschieht in Kapitel 2 mit dem gefälschten Clip.
+- **Den Befehl gibt Aubrecht**, ohne es so zu nennen: Sie liest nur eine Zeile, „Das Problem Calder ist gelöst“.
+- **Ashe war früher Beobachter in Junos Halle.** Deshalb winkt er in die Kamera: `cam31` versteht nur das alte Protokoll, also weiß er, was für ein Mensch gerade zusieht. Auch nach einer Weigerung bleibt der Quiet nur eine kurze Liste.
 - **Kapitel 1, vorläufig bis zum Durchspielen im Mock** (`kapitel1-design`): Am Freitag gibt es kein Schlafen, nach 22:00 gilt „nicht gesendet“, um 22:30 bucht das Konto die Miete ab und
   Teo schreibt, wenn sie nicht reicht, und die Uhr hält um 22:45, bis Juno auf `cam31` zusieht. Wer den Donnerstag verschläft, findet den Ort am Freitag über Ines' Weg am Sumpf-Abgang.
   `cam12` und `cam30` gehen über Junos alten Zugang, `cam24` über Sable oder Mottes zweite Lektion; das „Kassenbuch-Rätsel“ ist gestrichen. Ines ist von Anfang an nicht
   erreichbar. Morrow sagt: „Freitag fährt keiner die Kowalski.“ Das Richtmikro kommt erst in Kapitel 2. Frau Kessler und Bao nehmen den Prolog wieder auf.
-- **Die Abende von Kapitel 1 spielen auch draußen** (`kapitel1-design`, „Die Stadt“): die Gasse und das Dach des Kessel-Blocks, von dem man die Ringe sieht; der Zeitungskrieg, die Frau, die sich erinnert, die weißen Träger; die Regenleserin, der Prediger, die halbe Reparatur. Das Bett geht erst ab 01:00 auf.
+- **Die Abende von Kapitel 1 spielen auch draußen** (`kapitel1-design`, „Die Stadt“): die Gasse und das Dach des Kessel-Blocks, von dem man die Ringe sieht; der Zeitungskrieg, die Frau, die sich erinnert, die weißen Träger; die Regenleserin, der Prediger, die halbe Reparatur. Das Bett geht erst ab 01:00 auf. **Aufs Dach führt keine Treppe:** Juno klettert aus dem Fenster auf den Sims und die Außenleiter hoch; der Blick auf die Ringe wird eine eigene große Einstellung.
 - **Das Ende von Kapitel 2 steht:** Lantern öffnet die Wallet und sendet sie, niemand glaubt ihm, nur Juno kann sie neben ihre Kameras legen.
 - **Das Implantat** durfte Juno behalten, weil das Herausnehmen mehr gekostet hätte (wie sie es im Prolog sagt). Illegal ist es nicht.
 - **Ines' Kameras:** vier am Mittwoch und Donnerstag (`cam21` bis `cam24`), am Freitag dazu `cam30` und `cam31`, zusammen sechs.

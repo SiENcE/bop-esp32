@@ -267,6 +267,7 @@ Reference: the UI in `mock_c_iso`.
   | Frau Kessler | `#eea040` (amber: home, warmth; decided 2026-11-04 with mockup F) |
   | Sable | `#ff4fd3` (magenta: commerce, the black market) |
   | Teo | `#ffa040` (the orange of his vest) |
+  | the Rain Reader | `#a8c8e8` (pale water) |
 
   Every other character gets a fixed colour when first drawn; add it here. Avoid red and cyan for
   anyone harmless (the meanings in §5). EVI is the exception, because she is technology.

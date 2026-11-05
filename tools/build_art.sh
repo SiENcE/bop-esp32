@@ -89,7 +89,7 @@ mock() {
     for f in art/mock/*.px.js; do
         $PXL build "$f" --out build/art/mock --no-preview | tail -n 1
     done
-    $ATLAS build/art/mock assets/mock.js --only "cam*,gasse_*,laundromat_*"
+    $ATLAS build/art/mock assets/mock.js --only "cam*,gasse_*,laundromat_*,sims_*,dach_*,mock_*"
 }
 
 room() {

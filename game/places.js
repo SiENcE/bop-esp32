@@ -62,6 +62,16 @@ Halcyon.at = {
     walk: [[10, 112, 310, 112, 318, 176, 2, 176]], arrive: [24, 150], kowalski: [14, 150], laundromat: [260, 116], market: [150, 132], niche: [52, 116],
     kowalskiRect: [0, 110, 26, 70], laundromatRect: [232, 40, 56, 64], marketRect: [112, 122, 76, 30], nicheRect: [30, 44, 44, 60], cablesRect: [0, 10, 320, 28],
   },
+  // outside the flat's window: the ledge (kapitel1-design, "Die Stadt")
+  sims: {
+    walk: [[20, 128, 300, 128, 300, 152, 20, 152]], window: [50, 140], ladder: [262, 140],
+    windowRect: [28, 62, 44, 62], ladderRect: [250, 0, 26, 92], belowRect: [0, 156, 320, 24],
+  },
+  dach: {
+    walk: [[24, 112, 296, 112, 316, 174, 4, 174]], hatch: [282, 150], edge: [120, 124], tank: [66, 124], reader: [206, 128],
+    hatchRect: [268, 120, 40, 56], ringsRect: [0, 0, 320, 66], tankRect: [34, 56, 62, 56], placeRect: [110, 78, 60, 34],
+    drips: [[150, 66, 110], [232, 60, 118], [84, 62, 100], [196, 64, 96]],
+  },
   laundromat: {
     walk: [[12, 108, 308, 108, 316, 176, 4, 176]], arrive: [18, 130], door: [10, 130], dryer6: [168, 110], counter: [270, 128],
     doorRect: [0, 40, 14, 100], dryer6Rect: [152, 50, 25, 46], dryersRect: [12, 50, 224, 46], counterRect: [252, 90, 58, 34],

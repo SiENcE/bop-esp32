@@ -178,7 +178,17 @@ Kap. 2: Nach dem Senden weiß die Quiet sofort, wer Juno ist; nach der Weigerung
 
 Die Abende sollen nach Leben in der Stadt schmecken, nicht nach Warten aufs Bett. Das **Bett** geht erst ab 01:00 auf („Schlafen? Ich schlaf nicht vor eins. Nie.“).
 
-**Zwei neue Orte:** die **Gasse** hinter dem Gitter in der Kowalski-Straße (Kabelbündel, Dampf, Nischen, in denen Leute wohnen; von hier geht es zum Waschsalon und zum Drain-Markt) und das **Dach des Kessel-Blocks**, von dem aus man **die Ringe** zum ersten Mal von unten sieht: Unterseiten so groß wie ein Himmel und das tropfende Wasser, das hier als Regen gilt. Ob das Dach eine eigene große Einstellung wird wie die Bilder im Vorspann, ist offen; im Mock ist es ein Block.
+**Zwei neue Orte:** die **Gasse** hinter dem Gitter in der Kowalski-Straße (Kabelbündel, Dampf, Nischen, in denen Leute wohnen; von hier geht es zum Waschsalon und zum Drain-Markt) und das **Dach des Kessel-Blocks**, von dem aus man **die Ringe** zum ersten Mal von unten sieht: Unterseiten so groß wie ein Himmel und das tropfende Wasser, das hier als Regen gilt. Der Blick nach oben wird eine eigene große Einstellung wie die Bilder im Vorspann (entschieden); im Mock ist er ein Block.
+
+**Der Weg aufs Dach:** Keine Treppe führt hoch. Juno klettert aus dem Fenster auf den Sims und die Außenleiter hoch, und sie hat Höhenangst (das Foto am Deck: „Er hatte nie Angst vor der Höhe. Ich schon.“). Ein kleines Rätsel, ein Vorschlag zum Prüfen im Mock (`roof_step`):
+
+| # | Wo | Was | 
+|---|---|---|
+| 1 | `flat`, Fenster | Es klemmt: „Der Riegel sitzt im Rahmen. Da kommt man nur mit was Flachem ran.“ |
+| 2 | `flat`, Karton | Der alte Halcyon-Ausweis, `UNGÜLTIG`. Am Fenster: „Das erste Mal, dass das Ding was aufmacht.“ |
+| 3 | `sims` | Die Leiter hängt zwei Meter zu hoch. „Teo kam da früher mit irgendwas Langem ran.“ |
+| 4 | `kessel_14`, Aufzug | Über der Tür hängt der Notschlüssel, ein langer Haken: „Stecken bleiben müsste er erst mal fahren.“ |
+| 5 | `sims`, Leiter | Haken, die Leiter kommt runter, hoch aufs Dach. |
 
 **Drei kleine Geschichten:**
 
