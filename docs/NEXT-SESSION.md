@@ -27,7 +27,10 @@ Where we are (everything is committed; the engine copy is at Cutaway.js 6eeb017)
     he was an observer in Juno's hall himself, which is why he waves (story §10b).
   - The bag: what Juno holds is an item (ID, hook, Ines's stick; later the tap and the rice), clips and notes stay in the CACHE. EVI sits fixed in the bag and only talks.
 
-**Next: the end in cam31**, the real scene as in kapitel1-design §8, on blocks; game/kapitel1.js has a placeholder moment `ines_meeting`. The agreed order after it:
+  - **The end in cam31 is built on blocks** (game/kapitel1_ende.js, kapitel1-design §8): Ines, Lantern, Ashe; the four tries that all fail, in real time with the VOR button as the way the tools take; black bars or shown (settings, page "Inhalt"); SIGNAL LOST; her flat, where only Juno can be clicked; EVI; the end card. I have only seen stills of it; how long the threat should last and every line not in §8 are mine to judge by playing.
+  - **The roof and dach_sitzen are animated** with the same 24 frame loop as the deck's wallpaper; their rain is baked in, so they have no rain fx.
+
+**Next, in the agreed order:**
 job A (Varga, Kessler), job B (Tide, Okonkwo), life around it (Teo's visit on Wednesday, Mei, Vesper, the NETZ, Motte's lessons, Bao's line, Frau Kessler's messages are in), then the prologue goes on into
 the act (`{ act: "next" }` instead of its end card; the act has `fresh` and `keep`), and only then the painting, blocks first. (The way the beat of Lull is drawn in the painted art, the steps' sound on the stairs and how the mock feels overall are for me to judge by playing: I have only seen stills and not heard the steps.)
 Also to come: the reading version docs/story-lesefassung.md doesn't know the city yet and still has WREN's money coming back on Wednesday (in the mock the replies are on Friday).

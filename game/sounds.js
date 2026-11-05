@@ -45,6 +45,9 @@
   S("jack_out", { tone: { wave: "sine", from: 1300, to: 55, ms: 300, gain: 0.11 },
     noise: { filter: "lowpass", from: 6000, to: 250, ms: 260, gain: 0.1 } });
   S("static", { noise: [{ filter: "bandpass", from: 3000, q: 0.7, ms: 260, gain: 0.16 }, { filter: "highpass", from: 5000, ms: 120, gain: 0.08, at: 120 }] });
+  // the end in cam31: a body on wet concrete, through an old microphone; Lantern's motor starting up and going
+  S("body_fall", { noise: { filter: "lowpass", from: 260, ms: 140, gain: 0.3 }, tone: { wave: "sine", from: 80, to: 44, ms: 170, gain: 0.3 } });
+  S("motor", { tone: { wave: "sawtooth", from: 55, to: 130, ms: 1400, gain: 0.05 }, noise: { filter: "bandpass", from: 400, q: 1.5, ms: 1500, gain: 0.05 } });
   S("glitch", { noise: [{ filter: "bandpass", from: 1800, q: 3, ms: 30, gain: 0.16 }, { filter: "bandpass", from: 600, q: 3, ms: 40, gain: 0.16, at: 60 },
     { filter: "bandpass", from: 2600, q: 4, ms: 25, gain: 0.12, at: 170 }], tone: { wave: "square", from: 3200, to: 200, ms: 50, gain: 0.03, at: 110 } });
 

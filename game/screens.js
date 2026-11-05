@@ -51,10 +51,11 @@
     for (const link of Halcyon.links ?? []) {
       const b = Cutaway.scene.boxes().find((x) => x.actor === link.actor);
       if (!b || !S().test(link.if)) continue;
-      const on = Halcyon.lullBeat(Cutaway.clock.time);
-      brackets(ctx, b.box, on ? C.implant : C.phosphorDim);
-      small(ctx, t("UNKNOWN LINK"), b.box[0] + b.box[2] + 3, b.box[1] - 2, on ? C.implant : C.phosphorDim);
+      const color = link.color ? /** @type {any} */ (C)[link.color] : Halcyon.lullBeat(Cutaway.clock.time) ? C.implant : C.phosphorDim;
+      brackets(ctx, b.box, color);
+      small(ctx, t(link.label ?? "UNKNOWN LINK"), b.box[0] + b.box[2] + 3, b.box[1] - 2, color);
     }
+    if (Cutaway.scene.room?.lost) text(ctx, t("SIGNAL LOST"), W / 2, 84, C.phosphorBright, "center");
     // the camera's display: who, where, whose (phosphor), the link (implant cyan)
     if (cam) {
       small(ctx, t("CAM {id} // {place}", { id: cam.id, place: t(cam.place) }), 4, 4, C.phosphorBright);
@@ -65,8 +66,8 @@
     if (S().flag("rec_on") && blink()) { ctx.fillStyle = C.red; ctx.fillRect(W - 80, 4, 3, 3); }
     // the cameras Juno has linked: a column on the left, under the display's lines (a click switches:
     // hotspots `thumb_<cam>`; the rects are Halcyon.osd's)
-    const O = Halcyon.osd;
-    Object.keys(Halcyon.cams).forEach((c, i) => {
+    const O = Halcyon.osd, strip = Cutaway.scene.room?.strip;
+    if (!strip || S().test(strip)) Object.keys(Halcyon.cams).forEach((c, i) => {
       if (!S().flag(`link_${c}`) || !S().test(Halcyon.cams[c].if)) return;     // (linked, and known of: as on the map)
       const [x, y, w, h] = O.thumb(i), live = c === id;
       ctx.fillStyle = live ? C.phosphorDim : C.ink; ctx.fillRect(x, y, w, h);
@@ -78,6 +79,14 @@
     for (const [label, [x, y, w, h], on] of buttons) {
       ctx.fillStyle = on ? C.red : C.ink; ctx.fillRect(x, y, w, h);
       small(ctx, t(label), x + w / 2, y + 3, on ? C.phosphorBright : C.implant, "center");
+    }
+    // a room's own buttons: its hotspots with `osd`, the label; once tried, what came back (Halcyon.feedFails)
+    for (const h of Cutaway.scene.hotspots()) {
+      const label = /** @type {any} */ (h.def).osd;
+      if (!label) continue;
+      const [x, y, w, bh] = /** @type {any} */ (h.def).rect, failed = Halcyon.feedFails?.[h.id];
+      ctx.fillStyle = C.ink; ctx.fillRect(x, y, w, bh);
+      small(ctx, t(failed ?? label), x + w / 2, y + 3, failed ? C.steelText : C.implant, "center");
     }
     const n = Object.keys(Halcyon.cache).filter((k) => S().flag(`cache_${k}`)).length;
     small(ctx, t("CACHE {n}/8", { n }), 4, 28, C.implant);
@@ -120,7 +129,8 @@
   Cutaway.ui.addLayer({
     z: 60, modal: true,
     click(/** @type {{x: number, y: number, button: number}} */ p) {
-      if (!Cutaway.scene.room?.feed || !Cutaway.script.busy || p.button !== 0) return false;
+      const room = Cutaway.scene.room;
+      if (!room?.feed || !Cutaway.script.busy || p.button !== 0 || (room.rec && !S().test(room.rec))) return false;
       const [x, y, w, h] = Halcyon.osd.rec;
       if (p.x < x || p.x >= x + w || p.y < y || p.y >= y + h) return false;
       if (S().flag("rec_on")) S().unset("rec_on"); else S().set("rec_on");
@@ -135,7 +145,7 @@
   Cutaway.events.on("frame.screen", (/** @type {CanvasRenderingContext2D} */ ctx) => {
     const r = Cutaway.scene.room;
     if (!r || Cutaway.scene.backdrop) return;
-    if (r.feed) feed(ctx, r.feed);
+    if (r.feed) { ctx.save(); ctx.translate(Halcyon.feedJitter?.() ?? 0, 0); feed(ctx, r.feed); ctx.restore(); }
     zoom(ctx);
     if (mark) brackets(ctx, [mark[0] - Cutaway.scene.camera.x, mark[1] - Cutaway.scene.camera.y, mark[2], mark[3]], C.implant, 10);
   });

@@ -89,12 +89,29 @@ scene("cam30_bg", { w: W, h: H, bg: "0" }, (c) => {
 })
 // the old station: the water up to the platform, one emergency light
 scene("cam31_bg", { w: W, h: H, bg: "0" }, (c) => {
-  ROOM(c, "1", "4", 44)
+  ROOM(c, "2", "5", 44)
+  for (let y = 96; y < 130; y++) { const r = (y - 96) * 2.6; c.rect(166 - r, y, r * 2, 1, "6") }     // the emergency light's pool on the platform
   c.rect(0, 130, W, 50, "2")
   for (let x = 6; x < W; x += 34) c.hline(x, 150 + (x % 3) * 8, 14, "4")
   c.rect(40, 20, 44, 54, "2"); for (let i = 0; i < 5; i++) c.hline(44 + i * 3, 64 - i * 8, 36, "4")   // the stairs
-  c.rect(250, 44, 40, 86, "0")                                                                       // the tunnel
-  c.rect(170, 10, 10, 4, "9")
+  c.rect(250, 44, 40, 96, "0")                                                                       // the tunnel
+  c.rect(161, 40, 10, 4, "9")                                                                        // the light
+})
+// the people of the end, in the feed's scale (a grown person about 24 px): Ashe's coat brighter than anything but his mask, which
+// burns a white smear into the picture; Lantern on his floats, poncho and antennas; Ines where she fell
+anim("mock_ashe", { w: 15, h: 27, frames: 1, fps: 1, outline: "1", pivot: "bottom" }, (c) => {
+  c.rect(4, 8, 7, 12, "8"); c.rect(4, 20, 3, 7, "7"); c.rect(8, 20, 3, 7, "7"); c.rect(5, 2, 5, 6, "9"); c.rect(0, 4, 15, 1, "9")
+})
+anim("mock_ashe_wave", { w: 15, h: 32, frames: 2, fps: 3, outline: "1", pivot: "bottom" }, (c) => {
+  c.rect(4, 13, 7, 12, "8"); c.rect(4, 25, 3, 7, "7"); c.rect(8, 25, 3, 7, "7"); c.rect(5, 7, 5, 6, "9"); c.rect(0, 9, 15, 1, "9")
+  c.rect(c.frame ? 12 : 11, 1, 2, 12, "8")
+})
+anim("mock_lantern", { w: 22, h: 28, frames: 1, fps: 1, outline: "1", pivot: "bottom" }, (c) => {
+  c.rect(1, 22, 20, 5, "6"); c.rect(5, 18, 12, 4, "2"); c.rect(5, 8, 12, 11, "5"); c.rect(8, 3, 6, 6, "6")
+  for (const [x, y] of [[9, 0], [12, 1], [15, 3]]) c.rect(x, y, 1, 4, "7")
+})
+anim("mock_ines_down", { w: 26, h: 7, frames: 1, fps: 1, outline: "1", pivot: "bottom" }, (c) => {
+  c.rect(5, 2, 18, 5, "9"); c.rect(0, 3, 5, 4, "6"); c.rect(0, 2, 4, 2, "2")
 })
 // the alley behind the gate: cable bundles, doors, the way on to the laundromat and down to the market
 scene("gasse_bg", { w: W, h: H, bg: "k" }, (c) => {

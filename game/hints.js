@@ -7,6 +7,10 @@
 // Chapter 1 comes first: on its days one of these always holds, so the prologue's below don't speak there
 const HOME = ["door", "door_juno", "stairs", "kessel_door", "deck", "back"];       // the way back to the deck
 Cutaway.hints([
+  { if: "end_beat=threat",
+    text: ["Ich hab nichts. Keine Tür, kein Licht, keine Nummer.", "Ich such weiter. Ich find nichts, was geht.", "Du kannst nichts tun, Juno. Ich auch nicht."] },
+  { if: "end_beat=after", about: "self",
+    text: ["Juno?", "Du sitzt nur da.", "Sag was. Bitte."] },
   { if: ["day=3", "saw_drop", "!know_meeting", "time<03:00"], about: ["counter", "laundromat", "alley", "cam_cam31", ...HOME],
     text: ["Ines hat etwas im Waschsalon gelassen.", "Geh selbst hin, oder sieh um drei zu, wer es holt.", "Durch die Gasse zum Waschsalon: Trockner 6 und die Theke."] },
   { if: ["day=3", "tag_lantern", "!know_meeting"], about: ["cam_cam30", "cam_cam31", ...HOME],

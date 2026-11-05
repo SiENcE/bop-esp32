@@ -121,7 +121,10 @@ Cutaway.script.action("notify", (s) => {
   Cutaway.ui.addLayer({
     z: 44, modal: true,
     render(/** @type {CanvasRenderingContext2D} */ ctx) {
-      if (Cutaway.ui.line?.actor !== "evi" || Cutaway.scene.room?.buttons === false || !Cutaway.script.busy) return;
+      if (Cutaway.ui.line?.actor !== "evi" || !Cutaway.script.busy) return;
+      // a room without the satchel can still have her in its corner, small, with the face she has now
+      if (Cutaway.scene.room?.eviCorner) { Cutaway.assets.draw(ctx, `evi_${Halcyon.evi.face ?? "froh"}`, 290, 150, { anchor: [0, 0], t: Cutaway.clock.time }); return; }
+      if (Cutaway.scene.room?.buttons === false) return;
       const bag = Cutaway.inventory.bagCentre(), y = Cutaway.inventory.corner === "bottom" ? Cutaway.display.height - 16 : 5;
       const bob = Math.floor(Cutaway.clock.time / 180) % 2;
       Cutaway.assets.draw(ctx, "ui_satchel", bag.x - 8, bag.y - 7, { anchor: [0, 0], t: Cutaway.clock.time });

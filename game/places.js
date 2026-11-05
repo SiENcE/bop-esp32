@@ -59,7 +59,7 @@ Halcyon.at = {
   cam24: { door: [160, 96], off: [40, 150], mic: [160, 110], entrance: [124, 24, 72, 66] },
   cam12: { top: [160, 66], bottom: [160, 148], mic: [160, 100], ladder: [140, 60, 40, 90] },
   cam30: { top: [160, 84], water: [160, 146], mic: [160, 100], sign: [88, 30, 144, 11] },
-  cam31: { stairs: [70, 92], edge: [150, 124], tunnel: [270, 124], mic: [150, 110] },
+  cam31: { stairs: [62, 80], edge: [150, 124], behind: [136, 122], tunnel: [270, 136], lantern: [176, 136], mic: [150, 110], tries: [244, 26, 72] },
   gasse: {
     walk: [[10, 112, 310, 112, 318, 176, 2, 176]], arrive: [24, 150], kowalski: [14, 150], laundromat: [260, 116], market: [150, 132], niche: [52, 116],
     kowalskiRect: [0, 110, 26, 70], laundromatRect: [232, 40, 56, 64], marketRect: [112, 122, 76, 30], nicheRect: [30, 44, 44, 60], cablesRect: [0, 10, 320, 28],

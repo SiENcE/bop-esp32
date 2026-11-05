@@ -57,7 +57,7 @@ Halcyon.buildCamStrip = function () {
   for (const id of ids) {
     const room = Cutaway.room.get(id);
     ids.forEach((c, i) => {
-      if (c !== id) room.hotspots[`thumb_${c}`] = { name: `CAM ${Halcyon.cams[c].id}`, rect: Halcyon.osd.thumb(i), z: 5, if: [`link_${c}`, ...(Halcyon.cams[c].if ? [Halcyon.cams[c].if] : [])], use: [{ goto: c }] };
+      if (c !== id) room.hotspots[`thumb_${c}`] = { name: `CAM ${Halcyon.cams[c].id}`, rect: Halcyon.osd.thumb(i), z: 5, if: [`link_${c}`, ...(Halcyon.cams[c].if ? [Halcyon.cams[c].if] : []), ...(room.strip ? [room.strip] : [])], use: [{ goto: c }] };
     });
   }
 };

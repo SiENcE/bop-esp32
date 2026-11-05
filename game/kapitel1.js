@@ -1,6 +1,6 @@
 // Halcyon: Chapter 1 "Glass" (docs/kapitel1-design.md), a playable mock on flat blocks (art/mock/). Three evenings on
 // game days 2 to 4 (Wednesday to Friday), sleeping, job C (following Ines to the meeting), WREN's money, the rent. The end
-// is still a placeholder.
+// in cam31: game/kapitel1_ende.js.
 //   e1                    Entscheidung 1: sold | refused
 //   rent                  paid | teo (Teo paid it)
 //   tag_ines, tag_lantern the people Juno follows
@@ -30,6 +30,7 @@ Halcyon.nights = {
 const [NOT_YET, WATCH_IT] = Cutaway.i18n.declare("waiting", ["Erst muss ich da reinkommen.", "Es ist so weit. Ich muss auf CAM 31 sein."]);
 Cutaway.time.hold((/** @type {number} */ to) => {
   if (Cutaway.time.now.day !== 4) return null;
+  if (Cutaway.state.test("moment:ines_meeting")) return Cutaway.state.flag("end_beat") === "after" ? WATCH_IT : null;     // the scene moves the clock itself
   return to > Cutaway.time.parse("22:45") ? (Cutaway.state.flag("link_cam31") ? WATCH_IT : NOT_YET) : null;
 });
 
@@ -49,7 +50,6 @@ AT("rent_due", 4, "22:15", "22:30", [{
 }]);
 AT("friday_stop", 4, "22:30", "22:45", []);
 
-// ---- the end, a placeholder for the scene (kapitel1-design §8)
 Halcyon.cams.cam21 = { id: "21", place: "LULL-KLINIK 9-OST", owner: "HALCYON", map: [24, 60], if: "day>1" };
 Halcyon.cams.cam22 = { id: "22", place: "PHO PUMP", owner: "PRIVAT", map: [76, 60], if: ["day>1", "day<4", "!off_main"] };
 Halcyon.cams.cam23 = { id: "23", place: "SUDS & SPIN", owner: "PRIVAT", map: [130, 60], if: ["day>1", "day<4", "!off_main"],
@@ -79,13 +79,14 @@ const A21 = Halcyon.at.cam21, A22 = Halcyon.at.cam22, A23 = Halcyon.at.cam23, A2
 Halcyon.people.ines = { name: "INES CALDER", known: "know_ines", label: "Frau im Kittel", speaker: "Ines" };
 Cutaway.actor("ines", { name: "Frau im Kittel", color: "#f0a0c0",
   costume: { idle: "commuter_d_feed", walk: "commuter_d_feed_walk", talk: "commuter_d_feed" }, speed: [14, 10], voice: { pitch: 66, wave: "triangle", syllable: 70 },
+  poses: [{ if: "ines_down", idle: "mock_ines_down", walk: "mock_ines_down", talk: "mock_ines_down" }],
   // what she does shows when Juno looks at her: a moment "seen or not" would double every state after it
-  look: [{ if: "at:ines=cam22", then: [{ if: "day=2", then: ["Sie schreibt was auf eine Serviette. Und legt die Hand drüber."], else: ["Dieselbe Suppe. Aber sie schaut dauernd zur Tür."] }],
+  look: [{ if: "at:ines=cam31", then: ["Sie wartet. Sie sieht nur zum Tunnel."] }, { if: "at:ines=cam22", then: [{ if: "day=2", then: ["Sie schreibt was auf eine Serviette. Und legt die Hand drüber."], else: ["Dieselbe Suppe. Aber sie schaut dauernd zur Tür."] }],
     else: ["Ein Kittel, heller als alles. Dunkler Zopf."] }],
-  talk: [{ if: { or: ["tag_ines", "day=4", "off_main"] }, then: ["Die kenn ich."], else: [{ tag: "ines" }, "Dr. Ines Calder. Das ist sie, vom Foto."] }] });
+  talk: [{ if: "end_beat", then: ["Ines. Dreh dich um."], else: [{ if: { or: ["tag_ines", "day=4", "off_main"] }, then: ["Die kenn ich."], else: [{ tag: "ines" }, "Dr. Ines Calder. Das ist sie, vom Foto."] }] }] });
 Halcyon.people.lantern = { name: "ROLLSTUHL", known: "tag_lantern", label: "Jemand im Rollstuhl", speaker: "Jemand im Rollstuhl" };
 Cutaway.actor("lantern", { name: "Jemand im Rollstuhl", color: "#b0f0a0",
-  costume: { idle: "commuter_b_feed", walk: "commuter_b_feed_walk", talk: "commuter_b_feed" }, speed: [14, 10], voice: { pitch: 46, wave: "square", syllable: 85 },
+  costume: { idle: "mock_lantern", walk: "mock_lantern", talk: "mock_lantern" }, speed: [14, 10], voice: { pitch: 46, wave: "square", syllable: 85 },
   look: ["Drei Uhr früh. Wer wäscht um drei? Geflickter Poncho, Schwimmer am Rollstuhl, ein Bündel Antennen.", { if: "stick_ines", then: ["Der Trockner ist leer. Das Ticket nimmt er trotzdem."], else: ["Er holt, was sie dagelassen hat."] }],
   talk: [{ if: { or: ["tag_lantern", "off_main"] }, then: ["Den hab ich."], else: [{ tag: "lantern" }, "Dich merk ich mir. Wo willst du hin?"] }] });
 Cutaway.routine("ines", [
@@ -96,12 +97,13 @@ Cutaway.routine("ines", [
   { day: [2, 3], from: "20:30", to: "21:00", room: "cam24", at: A24.off, path: [A24.off, A24.door] },
   { day: 4, from: "22:15", to: "22:30", room: "cam24", at: A24.door, path: [A24.door, A24.off] },
   { day: 4, from: "22:30", to: "22:45", room: "cam30", at: A30.top, path: [A30.top, A30.water] },
-  { day: 4, from: "22:45", to: "23:30", room: "cam31", at: A31.edge },
+  { day: 4, from: "22:55", to: "23:30", room: "cam31", at: A31.stairs, face: "se" },
 ]);
 Cutaway.routine("lantern", [
   { day: 3, from: "03:00", to: "03:15", room: "cam23", at: A23.dryer6, path: [A23.door, A23.dryer6, A23.counter] },
   { day: 3, from: "03:15", to: "03:30", room: "cam12", at: A12.top, path: [A12.top, A12.bottom] },
   { day: 3, from: "03:30", to: "03:45", room: "cam30", at: A30.top, path: [A30.top, A30.water] },
+  { day: 4, from: "23:00", to: "23:04", room: "cam31", at: A31.tunnel, face: "sw" },
 ]);
 // the queue at the clinic, before Ines comes out; one of them is on the protocol without knowing it
 ["commuter_a", "commuter_b", "commuter_c", "commuter_d"].forEach((id, i) => {
@@ -117,15 +119,6 @@ Cutaway.moment("lantern_sign", { room: "cam30", day: 3, from: "03:30", to: "03:4
   play: ["Er schwimmt die Treppe runter. Auf ein Schild zu.", ...SIGN_READ] });
 Cutaway.moment("ines_sign", { room: "cam30", day: 4, from: "22:30", to: "22:45", if: "!know_meeting",
   play: ["Da ist sie. Mit einer Tasche. Sie geht die Treppe runter, ins Wasser.", ...SIGN_READ] });
-Cutaway.moment("ines_meeting", {
-  room: "cam31", day: 4, from: "22:45", to: "23:30",
-  play: [
-    "[MOCK] 23:00. Hier spielt die Szene aus dem Design: Ines, Lantern, Ashe.",
-    { if: "e1=sold", then: [{ ledger: "wren_live", value: "paid" }, "Zahlung erfolgt. Danke für die Live-Übertragung."] },
-    { fade: "out", ms: 900 },
-    { end: "Hier endet Kapitel 1. Kapitel 2 kommt später." },
-  ],
-});
 
 // ---- WREN and the rest of the chat
 // the handbook (story §10a): in the cache from the first evening; it has the word C7 needs
@@ -192,7 +185,6 @@ Halcyon.camRoom("cam30", { background: "cam30_bg", mic: { at: A30.mic, ...MIC },
   rewind: { name: "Puffer", z: 5, if: { or: [["day=3", "moment:lantern_sign", "tag_lantern", "!know_meeting"], ["day=4", "moment:ines_sign", "!know_meeting"]] },
     use: ["Puffer. Da, die Treppe runter.", ...SIGN_READ] },
 } });
-Halcyon.camRoom("cam31", { background: "cam31_bg", mic: { at: A31.mic, ...MIC }, hotspots: {} });
 
 // ---- the alley and the laundromat, in street mode
 const AG = Halcyon.at.gasse, AW = Halcyon.at.laundromat;
@@ -239,7 +231,7 @@ Cutaway.act("kapitel1", {
     { set: "code_cam21" }, { set: "link_cam21" }, { set: "code_cam12" }, { set: "link_cam12" }, { set: "code_cam30" }, { set: "link_cam30" }, { set: "code_cam18" }, { set: "link_cam18" },   // Juno's old access
     { set: "know_ines" }, { set: "saw_varga" }, { set: "read_kessler" },
     { set: "fridge_empty" }, { set: "rent_notice" }, { set: "moth_met" }, { set: "ate_bao" },
-    { been_to: ["flat", "deck", "kessel_14", "kessel_lobby", "kowalski", "gasse", "laundromat", "sims", "dach", "dach_blick", "dach_sitzen", "lucky_static", "drain_market", "cam03", "cam14", "cam18", "cam12", "cam21", "cam22", "cam23", "cam24", "cam30", "cam31"] },
+    { been_to: ["flat", "deck", "kessel_14", "kessel_lobby", "kowalski", "gasse", "laundromat", "sims", "dach", "dach_blick", "dach_sitzen", "lucky_static", "drain_market", "signal_lost", "flat_danach", "cam03", "cam14", "cam18", "cam12", "cam21", "cam22", "cam23", "cam24", "cam30", "cam31"] },
     { ledger: "wren_advance", value: "paid" }, { set: "imai_step", value: 0 }, { solo: true },
   ],
 });
