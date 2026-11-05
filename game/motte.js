@@ -21,7 +21,7 @@ Halcyon.talkTree("motte_mehr", [
       ]],
     ]],
     ["„Müsstest du nicht im Bett sein?“", [M("Drinnen ist's mir zu leise. Meine Mutter schläft, vier Stunden, dann Schicht.")], [
-      ["„Und da hältst du's nicht aus?“", [M("Das Licht hinter ihrem Ohr blinkt die ganze Zeit. Lang, kurz, kurz, lang. Ich zähl das manchmal mit."), M("Dann geh ich raus.")]],
+      ["„Und da hältst du's nicht aus?“", [M("Das Licht hinter ihrem Ohr blinkt die ganze Zeit. Komisch. Immer gleich. Ich zähl das manchmal mit."), M("Dann geh ich raus.")]],
     ]],
     ["„Warum die Mütze?“", [M("Die ist zu groß, ich weiß. Meine Mutter sagt, damit man mich im Glass findet. Wenn mal was ist.")], [
       ["„Den eigenen Block glasst man nicht.“", [M("Auch nicht, wenn mal was ist?"), "...", "Dann schon."]],

@@ -252,7 +252,7 @@ Reference: the UI in `mock_c_iso`.
   her flat, the deck itself opens it.
 - **Hint button:** EVI's head peeking out of the satchel (16 px), not a light bulb. EVI is the AI on
   Juno's deck (`docs/kapitel0-design.md` §2.2).
-- **A window's list that runs over** scrolls a pixel at a time, with its arrows and a thin bar between them at its right edge; both show only when there is more. GLASS's map is a grid (`kapitel1` positions in the `Halcyon.cams` entries): one camera to a place, its label never reaches the next.
+- **A window's list that runs over** (chat, CACHE, BUCH, NETZ) scrolls a pixel at a time, with its arrows and a thin bar between them at its right edge; both show only when there is more. GLASS's map is a grid (`kapitel1` positions in the `Halcyon.cams` entries): one camera to a place, its label never reaches the next.
 - **The deck** is a computer desktop, not a panel: icons (24x24, hand-drawn, ink outline, 3x5 label),
   one app window at a time, a 10 px header, notification cards sliding in at the top right (also over
   the feed and the street). Colours: steel `1`–`6` and cyan `cCvV`; EVI is the only rounded, soft

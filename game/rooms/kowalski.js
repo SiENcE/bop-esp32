@@ -31,7 +31,7 @@
   // Bao is glad and writes it down all the same. Then she eats under his umbrella (ate_bao), and step 17 follows.
   const EAT = [
     { say: "bao", text: "Kommt sofort." }, { wait: 600 },
-    { say: "bao", text: "Mein Alter sagt, ich salz zu viel. Er isst seit vierzig Jahren hier." },
+    { say: "bao", text: "Mein Alter sagt, ich salz zu viel. Lou isst seit vierzig Jahren hier." },
     "Und hat er recht?",
     { say: "bao", text: "Er hat nie recht. Darum ist er mein Alter." },
     "Heiß. Salzig. Genau richtig.", { set: "ate_bao" },

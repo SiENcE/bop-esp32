@@ -254,32 +254,56 @@
   // The chat's two lists scroll a pixel at a time, by their arrows, the wheel and a finger; only the screen's, not saved. y where it is, to where
   // it is going (the arrows and the wheel ease there), max how far it goes (the drawing says), up and down the arrows' rects when they show.
   // The thread counts back from its newest message, so it starts at its end and stays there when one comes in; the contacts count from the top.
-  const list = () => ({ y: 0, to: 0, max: 0, /** @type {number[] | null} */ up: null, /** @type {number[] | null} */ down: null });
-  const scroll = { contacts: list(), thread: list(), with: "" };
+  const list = () => ({ y: 0, to: 0, max: 0, /** @type {number[] | null} */ up: null, /** @type {number[] | null} */ down: null, /** @type {Record<string, number>} */ side: {} });
+  const scroll = { contacts: list(), thread: list(), cache: list(), buch: list(), netz: list(), with: "" };
   const STEP = 22;
   const by = (/** @type {ReturnType<typeof list>} */ l, /** @type {number} */ d, snap = false) => { l.to = Math.max(0, Math.min(l.max, l.to + d)); if (snap) l.y = l.to; };
-  const chatOpen = () => !!Cutaway.scene.room?.deck && String(S().flag("deck_app") ?? "").startsWith("chat") && !Cutaway.menu.isOpen;
-  /** the list under a point, with the direction a positive move goes in it (down the screen: older messages, later contacts) */
-  const listAt = (/** @type {number} */ x) => (x <= D.contacts.x + D.contacts.w + 1 ? { l: scroll.contacts, dir: 1 } : { l: scroll.thread, dir: -1 });
+  /** the open window's lists: each with the way a move down the screen goes in it, and how far right it reaches */
+  const openLists = () => {
+    const v = String(S().flag("deck_app") ?? "");
+    if (!Cutaway.scene.room?.deck || Cutaway.menu.isOpen) return [];
+    if (v.startsWith("chat")) return [{ l: scroll.contacts, dir: 1, x1: D.contacts.x + D.contacts.w + 1 }, { l: scroll.thread, dir: -1, x1: 999 }];
+    return v === "cache" || v === "buch" || v === "netz" ? [{ l: scroll[v], dir: 1, x1: 999 }] : [];
+  };
+  const listAt = (/** @type {number} */ x) => openLists().find((o) => x <= o.x1);
+  /** a row of a list: its hotspot is what shows of it, none if it is scrolled away (then `side` says which way it lies) */
+  function placeRow(/** @type {ReturnType<typeof list>} */ l, /** @type {string} */ hs, /** @type {number} */ x, /** @type {number} */ w, /** @type {number} */ y, /** @type {number} */ h, /** @type {number} */ top, /** @type {number} */ bottom) {
+    const y0 = Math.max(y, top), y1 = Math.min(y + h, bottom), r = y1 > y0 ? [x, y0, w, y1 - y0] : [0, 0, 0, 0], spot = Cutaway.room.get("deck")?.hotspots[hs];
+    l.side[hs] = y1 > y0 ? 0 : y < top ? -1 : 1;
+    if (spot) spot.rect = r;
+    return r;
+  }
+  const [UP, DOWN] = Cutaway.i18n.declare("deck", ["Nach oben", "Nach unten"]);
   Cutaway.ui.addLayer({
     z: 20,
     click(/** @type {{x: number, y: number}} */ p) {
-      if (!chatOpen()) return false;
-      for (const [l, dir] of /** @type {[ReturnType<typeof list>, number][]} */ ([[scroll.contacts, 1], [scroll.thread, -1]])) {
+      for (const { l, dir } of openLists()) {
         for (const [r, d] of /** @type {[number[] | null, number][]} */ ([[l.up, -1], [l.down, 1]])) {
           if (r && inRect(p.x, p.y, r)) { by(l, d * dir * STEP); Cutaway.events.emit("sfx", { sfx: "type" }); return true; }
         }
       }
       return false;
     },
-    update() { for (const l of [scroll.contacts, scroll.thread]) { l.y += (l.to - l.y) * 0.25; if (Math.abs(l.to - l.y) < 0.5) l.y = l.to; } },
+    hover(/** @type {number} */ x, /** @type {number} */ y) {
+      for (const { l } of openLists()) { if (l.up && inRect(x, y, l.up)) return Cutaway.i18n.t(UP); if (l.down && inRect(x, y, l.down)) return Cutaway.i18n.t(DOWN); }
+      return null;
+    },
+    // the arrows for the marks and a controller's pointer (engine: layer targets)
+    targets() {
+      return openLists().flatMap(({ l }) => /** @type {[number[] | null, string][]} */ ([[l.up, UP], [l.down, DOWN]]).flatMap(([r, name]) => (r ? [{ x: r[0], y: r[1], w: r[2], h: r[3], name: Cutaway.i18n.t(name) }] : [])));
+    },
+    // a row scrolled away: the arrow towards it (the tools click it, as a player would)
+    reveal(/** @type {string} */ id) {
+      for (const { l } of openLists()) { const r = l.side[id] < 0 ? l.up : l.side[id] > 0 ? l.down : null; if (r) return { x: r[0] + 5, y: r[1] + 4 }; }
+      return null;
+    },
+    update() { for (const l of [scroll.contacts, scroll.thread, scroll.cache, scroll.buch, scroll.netz]) { l.y += (l.to - l.y) * 0.25; if (Math.abs(l.to - l.y) < 0.5) l.y = l.to; } },
   });
-  Cutaway.events.on("pointer.wheel", (/** @type {{x: number, dy: number}} */ e) => { if (chatOpen()) { const { l, dir } = listAt(e.x); by(l, dir * e.dy / 4); } });
+  Cutaway.events.on("pointer.wheel", (/** @type {{x: number, dy: number}} */ e) => { const o = listAt(e.x); if (o) by(o.l, o.dir * e.dy / 4); });
   // a finger pulls the list with it (only where there is something to pull: else a shaky tap should stay a tap)
   Cutaway.events.on("pointer.drag", (/** @type {{from: {x: number}, dy: number, claim: () => void}} */ e) => {
-    if (!chatOpen()) return;
-    const { l, dir } = listAt(e.from.x);
-    if (l.max > 0) { e.claim(); by(l, -dir * e.dy, true); }
+    const o = listAt(e.from.x);
+    if (o && o.l.max > 0) { e.claim(); by(o.l, -o.dir * e.dy, true); }
   });
   /** a list's arrows and the bar between them */
   function scrollBar(/** @type {CanvasRenderingContext2D} */ ctx, /** @type {ReturnType<typeof list>} */ l, /** @type {number} */ x, /** @type {number} */ top, /** @type {number} */ bottom, /** @type {boolean} */ fromEnd, /** @type {{x: number, y: number}} */ p) {
@@ -298,6 +322,7 @@
     }
   }
 
+  const NETZ_H = 95;      // how tall NETZ's page is
   const APP_DRAW = {
     /** GLASS: the map of the quarter, every known camera a point; linked ones lit */
     glas(/** @type {CanvasRenderingContext2D} */ ctx) {
@@ -326,8 +351,7 @@
       ctx.save(); ctx.beginPath(); ctx.rect(K.x, listTop, K.w, listBottom - listTop); ctx.clip();
       known.forEach(([id, c], i) => {
         const y = K.y + i * K.row - Math.round(C1.y), on = id === with_, y0 = Math.max(y - 3, listTop), y1 = Math.min(y - 3 + K.row - 1, listBottom);
-        // its hotspot is what shows of its row (the room holds the hotspots, this draws them where they are now; none if it is scrolled away)
-        Cutaway.room.get("deck").hotspots[`contact_${id}`].rect = y1 > y0 ? [K.x, y0, K.w, y1 - y0] : [0, 0, 0, 0];
+        placeRow(C1, `contact_${id}`, K.x, K.w, y - 3, K.row - 1, listTop, listBottom);
         const hot = y1 > y0 && inRect(p.x, p.y, [K.x, y0, K.w, y1 - y0]);
         if (on || hot) { rect(ctx, on ? C.cyanDeep : "rgba(18, 60, 78, 0.5)", K.x, y - 3, K.w, K.row - 1); rect(ctx, C.cyan, K.x, y - 3, 1, K.row - 1); }
         rect(ctx, C.steel2, K.x + 3, y, 10, 10); rect(ctx, c.color, K.x + 4, y + 1, 8, 8); rect(ctx, C.steel1, K.x + 6, y + 2, 4, 3); rect(ctx, C.steel1, K.x + 5, y + 7, 6, 2);
@@ -395,33 +419,41 @@
       ctx.restore();
       scrollBar(ctx, T1, tx + tw - 9, top, bottom, true, p);
     },
-    /** CACHE: clips and notes, with what they are */
+    /** CACHE: clips and notes, with what they are; those she has, close together, scrolling when they run over */
     cache(/** @type {CanvasRenderingContext2D} */ ctx) {
-      const [X, , WW] = D.win, p = pointer();
-      const own = Object.entries(Halcyon.cache);
-      if (!own.some(([id]) => S().flag(`cache_${id}`))) text(ctx, t("Noch nichts."), X + 8, D.cache.y, C.steel6);
+      const [X, Y, WW, HH] = D.win, p = pointer(), top = D.cache.y - 3, bottom = Y + HH - 4, R = D.cache.row, L = scroll.cache;
+      const own = Object.entries(Halcyon.cache).filter(([id]) => S().flag(`cache_${id}`));
+      if (!own.length) text(ctx, t("Noch nichts."), X + 8, D.cache.y, C.steel6);
+      L.max = Math.max(0, own.length * R - 1 - (bottom - top)); L.to = Math.min(L.to, L.max);
+      const rw = WW - 22;
+      ctx.save(); ctx.beginPath(); ctx.rect(X + 4, top, rw, bottom - top); ctx.clip();
       own.forEach(([id, c], i) => {
-        if (!S().flag(`cache_${id}`)) return;
-        const y = D.cache.y + i * D.cache.row, hot = inRect(p.x, p.y, [X + 4, y - 3, WW - 8, D.cache.row - 1]);
-        if (hot) { rect(ctx, C.cyanDeep, X + 4, y - 3, WW - 8, D.cache.row - 1); rect(ctx, C.cyan, X + 4, y - 3, 1, D.cache.row - 1); }
+        const y = D.cache.y + i * R - Math.round(L.y), r = placeRow(L, `cache_${id}`, X + 4, rw, y - 3, R - 1, top, bottom), hot = r[2] > 0 && inRect(p.x, p.y, r);
+        if (hot) { rect(ctx, C.cyanDeep, X + 4, y - 3, rw, R - 1); rect(ctx, C.cyan, X + 4, y - 3, 1, R - 1); }
         if (c.kind === "clip") { rect(ctx, C.steel1, X + 8, y, 14, 12); rect(ctx, "#266252", X + 10, y + 2, 10, 8); ctx.fillStyle = C.steel4; for (let q = 0; q < 14; q += 3) { ctx.fillRect(X + 8 + q, y, 1, 1); ctx.fillRect(X + 8 + q, y + 11, 1, 1); } }
         else { rect(ctx, C.steel6, X + 9, y, 12, 12); rect(ctx, C.cyanPale, X + 9, y, 12, 1); rect(ctx, C.steel4, X + 11, y + 4, 8, 1); rect(ctx, C.steel4, X + 11, y + 7, 6, 1); }
         small(ctx, t(c.kind === "clip" ? "CLIP" : "NOTIZ"), X + 26, y, c.kind === "clip" ? C.cyan : C.steel6);
-        small(ctx, fit(t(c.name), WW - 60, hud()), X + 50, y, C.cyanPale);
-        text(ctx, fit(t(c.about), WW - 36), X + 26, y + 8, C.steel6);
+        small(ctx, fit(t(c.name), WW - 74, hud()), X + 50, y, C.cyanPale);
+        text(ctx, fit(t(c.about), WW - 50), X + 26, y + 8, C.steel6);
       });
+      ctx.restore();
+      scrollBar(ctx, L, X + WW - 15, top, bottom, false, p);
     },
     /** BUCH: the Kassenbuch, every delivery and what it paid */
     buch(/** @type {CanvasRenderingContext2D} */ ctx) {
-      const [X, , WW] = D.win;
+      const [X, Y, WW, HH] = D.win, top = D.buch.y, bottom = Y + HH - 4, R = D.buch.row, L = scroll.buch;
       small(ctx, t("KASSENBUCH"), X + 8, D.buch.y - 8, C.steel6);
       const done = Object.entries(Halcyon.ledger).filter(([k]) => S().flag(`ledger_${k}`));
       if (!done.length) text(ctx, t("Noch nichts."), X + 8, D.buch.y + 2, C.steel6);
+      L.max = Math.max(0, done.length * R + 2 - (bottom - top)); L.to = Math.min(L.to, L.max);
+      ctx.save(); ctx.beginPath(); ctx.rect(X + 4, top, WW - 20, bottom - top); ctx.clip();
       done.forEach(([k, e], i) => {
-        const v = String(S().flag(`ledger_${k}`)), pay = e.chits?.[v] ?? 0, y = D.buch.y + 2 + i * D.buch.row;
-        text(ctx, fit(t("{to}: {what}", { to: t(e.to), what: t(e.what[v] ?? v) }), WW - 60), X + 8, y, C.amber);
-        if (pay) small(ctx, t("+{chits}", { chits: pay }), X + WW - 10, y + 1, C.amber, "right");
+        const v = String(S().flag(`ledger_${k}`)), pay = e.chits?.[v] ?? 0, y = D.buch.y + 2 + i * R - Math.round(L.y);
+        text(ctx, fit(t("{to}: {what}", { to: t(e.to), what: t(e.what[v] ?? v) }), WW - 70), X + 8, y, C.amber);
+        if (pay) small(ctx, t("+{chits}", { chits: pay }), X + WW - 20, y + 1, C.amber, "right");
       });
+      ctx.restore();
+      scrollBar(ctx, L, X + WW - 15, top, bottom, false, pointer());
     },
     /** KONTO: chits, the rent with the hull levy, Bao */
     konto(/** @type {CanvasRenderingContext2D} */ ctx) {
@@ -438,12 +470,16 @@
     },
     /** NETZ: HalcyonNet's front page (in the prologue only that) */
     netz(/** @type {CanvasRenderingContext2D} */ ctx) {
-      const [X, Y, WW] = D.win;
-      rect(ctx, C.cyanDeep, X + 6, Y + 8, WW - 12, 12); small(ctx, "HALCYON.NET", X + 10, Y + 12, C.cyanPale);
-      wrap(t("Kriminalität im Neunten auf Rekordtief."), WW - 20).forEach((l, i) => text(ctx, l, X + 8, Y + 26 + i * 10, C.cyanPale));
-      rect(ctx, C.magentaDark, X + 6, Y + 52, WW - 12, 30); small(ctx, "LULL // SLEEP BETTER", X + 10, Y + 56, C.magenta);
+      const [X, Y0, WW, HH] = D.win, top = Y0 + 5, bottom = Y0 + HH - 4, L = scroll.netz, Y = Y0 - Math.round(L.y);
+      L.max = Math.max(0, NETZ_H - (bottom - top)); L.to = Math.min(L.to, L.max);        // (it all fits so far: the chapters' evenings will fill it)
+      ctx.save(); ctx.beginPath(); ctx.rect(X + 4, top, WW - 8, bottom - top); ctx.clip();
+      rect(ctx, C.cyanDeep, X + 6, Y + 8, WW - 22, 12); small(ctx, "HALCYON.NET", X + 10, Y + 12, C.cyanPale);
+      wrap(t("Kriminalität im Neunten auf Rekordtief."), WW - 30).forEach((l, i) => text(ctx, l, X + 8, Y + 26 + i * 10, C.cyanPale));
+      rect(ctx, C.magentaDark, X + 6, Y + 52, WW - 22, 30); small(ctx, "LULL // SLEEP BETTER", X + 10, Y + 56, C.magenta);
       text(ctx, t("Vier Stunden wie zehn. Zwei Wochen gratis."), X + 10, Y + 66, "#ffc0f2");
       small(ctx, "NINTH LIVE // TONIGHT", X + 8, Y + 92, C.amber);
+      ctx.restore();
+      scrollBar(ctx, L, X + WW - 15, top, bottom, false, pointer());
     },
     /** RADIO: the stations (the game's music; Lantern's pirate station comes in Chapter 2) */
     radio(/** @type {CanvasRenderingContext2D} */ ctx) {

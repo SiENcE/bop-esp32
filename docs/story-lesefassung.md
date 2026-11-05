@@ -115,7 +115,7 @@ Vierzehn Stockwerke zu Fuß, denn der Aufzug fährt nie, angeblich nur dienstags
 Chits, davon Hüllenabgabe 310. „Dreihundertzehn für die Ringe über meinem Kopf. Die ich nie bestellt hab.“
 
 **JUNO.** Draußen die Kowalski-Straße, Magenta und Bernstein, Regen. Vor dem LUCKY STATIC steht Baos Garküche, Bao ist über
-siebzig und schreibt an. „Mein Alter sagt, ich salz zu viel. Er isst seit vierzig Jahren hier.“ – „Und hat er recht?“ – „Er hat
+siebzig und schreibt an. „Mein Alter sagt, ich salz zu viel. Lou isst seit vierzig Jahren hier.“ – „Und hat er recht?“ – „Er hat
 nie recht. Darum ist er mein Alter.“ Juno isst unter seinem Schirm. Heiß, salzig, genau richtig.
 
 Dann stottert über der Straße der kaputte Werbebildschirm. Das ist nichts Neues. Aber im Rauschen dreht sich ein Auge zu ihr,

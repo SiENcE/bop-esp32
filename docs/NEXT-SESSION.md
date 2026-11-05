@@ -8,7 +8,7 @@ We're continuing work on "Glass Sister", our cyberpunk point-and-click adventure
 (engine: Cutaway.js in B:\Github_my\cutaway\). Read CLAUDE.md first; it lists the docs, the commands and
 the checks. Talk to me in German (the docs are German, code comments English).
 
-Where we are (everything is committed; the engine copy is at Cutaway.js 27f45b5):
+Where we are (everything is committed; the engine copy is at Cutaway.js be4941d):
 - **The intro "Die letzte Schicht" is done and approved** (docs/kapitel0-design.md §5), about 1:45. The sequence "intro" in game/intro.js; it ends
   on the ride down in the lift, then the title screen.
 - **The prologue plays from the flat to its end card**, on Tuesday 2091-11-06 (game day 1). It does not go on into Chapter 1 yet.
@@ -29,11 +29,11 @@ Where we are (everything is committed; the engine copy is at Cutaway.js 27f45b5)
 
   - **The end in cam31 is built on blocks** (game/kapitel1_ende.js, kapitel1-design §8): Ines, Lantern, Ashe; the four tries that all fail, in real time with the VOR button as the way the tools take; black bars or shown (settings, page "Inhalt"); SIGNAL LOST; her flat, where only Juno can be clicked; EVI; the end card. I have only seen stills of it; how long the threat should last and every line not in §8 are mine to judge by playing.
   - **The roof and dach_sitzen are animated** with the same 24 frame loop as the deck's wallpaper; their rain is baked in, so they have no rain fx. It ends at the parapet's top: the parapet and the tar stay dry, no rain, no puddles, and the ladder ends there too. The photo keeps its rain and puddles.
-  - **Motte plays** on a wide handheld with two coloured grips, held in both hands, and can be talked to whenever Juno passes (game/motte.js, what it plants in kapitel1-design §7). Whether Motte stays "er" is mine to say; all the docs say "er" so far.
-  - **The Rain Reader talks** (game/regenleserin.js): nested topics, no flags, everything can be asked again. Her lines explain the world and plant things for later; what pays off where is in kapitel1-design §7. The texts are proposals for me to judge; the warm drop of the machine is the weak one (the Crown gives no water back, and the Ruhekern's servers are there).
+  - **Motte plays** on a wide handheld with two coloured grips, held in both hands, and can be talked to whenever Juno passes (game/motte.js, what it plants in kapitel1-design §7): a Tideboy, the game Sump Runner, his mother on Lull. Motte stays a boy and "er". He only says the light behind her ear blinks oddly; the beat outright is EVI's, as the last step of her hint.
+  - **The Rain Reader talks** (game/regenleserin.js): nested topics, no flags, everything can be asked again. Her lines explain the world and plant things for later; what pays off where is in kapitel1-design §7. Her age and past stand (story §10b); the lines are to be judged by playing.
 
-  - **The deck's chat scrolls smoothly:** the contacts and the messages, by their arrows, the wheel and a finger (engine: `pointer.wheel`, `pointer.drag` with `claim()`). What is scrolled is only the screen's. **GLASS's map is a grid,** so no two cameras' labels meet: x 8, 64, 120, 176, y 14, 38, 62, 86, one camera to a place (free now: 8/62, 64/62, 8/86, 64/86, 176/86; the planned cam07, cam07v and cam15 need three of them).
-  - **Bao's cart:** the pot is copper in its own dark ring, and the umbrella's pole no longer shows through the cloth.
+  - **The deck's lists scroll smoothly:** contacts, messages, CACHE, BUCH and NETZ (NETZ all fits so far: when the evenings fill it, raise NETZ_H in game/deck.js), by their arrows, the wheel and a finger (engine: `pointer.wheel`, `pointer.drag` with `claim()`). What is scrolled is only the screen's. The ways click the arrows when a row is out of view (a layer's `reveal`), and the arrows are in `Cutaway.ui.targets()` for a controller (PLAN C14). **GLASS's map is a grid,** so no two cameras' labels meet: x 8, 64, 120, 176, y 14, 38, 62, 86, one camera to a place (free now: 8/62, 64/62, 8/86, 64/86, 176/86; the planned cam07, cam07v and cam15 need three of them).
+  - **Bao:** he has one arm, the one with the ladle, the other sleeve pinned up at the shoulder (why is still open: docs/characters/bao_one_arm_x8.png), and he names Lou once ("Lou isst seit vierzig Jahren hier."). On his cart the pot is copper in its own dark ring, and the umbrella's pole no longer shows through the cloth.
 
 **Next, in the agreed order:**
 job A (Varga, Kessler), job B (Tide, Okonkwo), life around it (Teo's visit on Wednesday, Mei, Vesper, the NETZ, Motte's lessons, Bao's line, Frau Kessler's messages are in), then the prologue goes on into
@@ -91,9 +91,9 @@ Handy, found the hard way:
 - Long heredocs with apostrophes break in the Bash tool here: write an edit script to build/ with the Write tool and run
   it, or use Edit. Read a file's line endings first: many are CRLF.
 
-**Waiting for my answer:** should Bao name Lou once in passing? "Mein Alter" is his husband (story §4), but nothing in the game says so yet, and it can be read as his father. Does Motte stay "er" (all the docs say so; Claude advises yes, since Sable's lack of pronouns is stronger as the exception), or is Motte a girl, or open? Should Motte say the beat outright ("Lang, kurz, kurz, lang", game/motte.js), or only that it blinks oddly, which leaves the puzzle in cam31 harder? And the proposals in the new talks: the names Sump Runner and Tideboy, Motte's mother on Lull, the Rain Reader's age and past; the machine's warm drop is the weak one.
+**Still open for me:** why Bao has one arm. The Rain Reader's warm drop of the machine (the Crown gives no water back, and the Ruhekern's servers are there, so it proves nothing). Everything else in the talks stands (story §10b), to be judged by playing.
 
-Open points: the CACHE, BUCH and NETZ windows don't scroll yet, and their rows will run over as they fill (the chat's scroller in game/deck.js is the way to do it); play.mjs can't scroll, so a contact scrolled out of view can't be clicked by a way (all six fit so far, a seventh will need it); in the mock, the chat's replies keep gaps in their numbers ([1], then [4]) where one is hidden; the REC button shows in all of Chapter 1 and only does something in the scene in cam31; the fitter stands on the street, without his scaffold; street scenes can't move the clock, so going out and waiting
+Open points: in the mock, the chat's replies keep gaps in their numbers ([1], then [4]) where one is hidden; the REC button shows in all of Chapter 1 and only does something in the scene in cam31; the fitter stands on the street, without his scaffold; street scenes can't move the clock, so going out and waiting
 mean going back to the deck (proposal: the city's scenes move it themselves). Small things I may still want in the hall (the hands hardly show at 1x, the coat is a little stiff, the room's edge and the black
 beyond it in the corner of the last picture, the chair back's top is rather straight in shot 2); the flat's empty front floor; the steam fx in the street
 was replaced by baked plumes (check the engine's steam fx is visible somewhere or drop it); the iso tile editor (E-e) to be

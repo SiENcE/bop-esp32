@@ -373,7 +373,7 @@ vorkommen: Dort bleiben Figuren in ihrer gezeichneten Größe, ein Erwachsener v
 | Gus Varga | 53 px | breit, grauer Mantel, Hut; im Feed sehr dunkel bis auf die Uhr am Handgelenk | `#a0a0b8` | nur Feed (Kap. 1 auch Iso) |
 | Motte | 43 px stehend (1,45 m); sitzt auf einer Bank vor dem Treppengeländer in `kessel_14` | übergroße weiße Strickmütze mit Bommel (entschieden 2026-11-04: Mütze A, zwei Petrolstreifen in der Krempe, rosa Bommel; `docs/characters/motte_blocks_x4.png`), knallrosa Jacke, zu groß, mit Reflexstreifen, Kuriertasche in Petrol, ein altes Handheld zum Spielen, breit, mit zwei farbigen Griffen, in beiden Händen vor der Brust (entschieden 2026-11-05) | `#f0f0a0` | Iso (stehend SE/NE, sitzend) |
 | Frau Haldane | im Sessel, von hinten | rosa Morgenmantel, Lull-Licht | `#ffa8d8` | im Kit gemalt (`armchair` in `art/kit/kessel_14.kit.px.js`), schlafend |
-| Bao | 47 px (1,62 m, leicht gebeugt) | Schirm, weiße Schürze | `#e8c890` | Iso |
+| Bao | 47 px (1,62 m, leicht gebeugt) | Schirm, weiße Schürze, nur ein Arm, der andere Ärmel an der Schulter hochgesteckt (entschieden 2026-11-05) | `#e8c890` | Iso |
 | Juno im Vorspann | 50 px | Halcyon-Grau, Ausweis | — | Iso, eine Pose |
 | EVI | 24 px (Desktop), 16 px (Tasche) | rundes Pixelwesen, große Augen, Antennen-Ohren | `#8ef5d8` | Deck-Grafik: 6 Gesichter, Idle (blinzeln, Ohren), Laufen über den Desktop, Schlafen; der Kopf in der Tasche für den Hinweis-Knopf |
 

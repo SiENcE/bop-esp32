@@ -2,7 +2,8 @@
 // 2026-11-04 with head A: art/test/bao_blocks.px.js, docs/characters/bao_blocks_x4.png). 1.62 m and a little
 // stooped, so 47 px; a cream cardigan in his colour (#e8c890) with the sleeves pushed up, a white apron to
 // the knees, its strings round his waist, dark trousers, worn shoes; short white hair round a bald crown, a
-// white moustache, round glasses; the hearing aid at his ear, plain and grey (a light behind the ear means Lull).
+// white moustache, round glasses; the hearing aid at his ear, plain and grey (a light behind the ear means Lull). He has
+// one arm, the one with the ladle (decided 2026-11-05): the other sleeve of the cardigan is folded up at the shoulder and pinned.
 //
 // Street mode (iso 2:1), drawn facing SE (front three-quarter); the game uses it flipped (SW), for every
 // facing: behind his cart he faces Juno across it, whichever way the engine turns him.
@@ -54,24 +55,13 @@ sprite("_b_mouth", `
   ......mk...`)
 
 // ---------------------------------------------------------------- the arms
-// the far arm (the screen's left, in the cardigan's light): hanging, the sleeve pushed up to the elbow
-sprite("_b_arm_far", `
-  eE.
-  eE.
-  eE.
-  eE.
-  eE.
-  eED
-  eED
-  eED
-  eED
-  DDD
-  Ss.
-  Ss.
-  Ss.
-  Ss.
-  SSs
-  .ss`)
+// where the far arm would be (the screen's left, in the cardigan's light): the sleeve folded up at the shoulder, a pin through it
+sprite("_b_sleeve", `
+  .eE
+  eeE
+  eeE
+  eGE
+  DDD`)
 // the near arm (the screen's right): the upper arm down his side, the forearm forward to the ladle
 sprite("_b_arm_near", `
   EE..
@@ -108,7 +98,7 @@ const bao = (c, o = {}) => {
   for (let y = 26; y <= 40; y++) c.px(12 + (y > 34 ? 1 : 0), y, "a")
   c.rect(14, 27, 4, 1, "a"); c.vline(14, 27, 3, "a"); c.vline(17, 27, 3, "a")
   // the arms; the ladle in his near hand, over the pot in front of him
-  c.stamp("_b_arm_far", 4, 13)
+  c.stamp("_b_sleeve", 5, 13)
   c.stamp("_b_arm_near", 19, 13)
   c.stamp("_b_forearm", 21 + hx, 20 + hy)
   c.rect(25 + hx, 19 + hy, 2, 3, "S"); c.px(26 + hx, 21 + hy, "s")             // his fist round the handle
