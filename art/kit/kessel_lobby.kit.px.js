@@ -7,12 +7,12 @@
 //            m  the doormat
 //   walls    lobby_steel  riveted steel panels to the dado, painted plaster above, the conduit under the
 //            ceiling, rust run down from a rivet
-//   openings stair_arch (the stairwell, dark: only its lowest step in the lobby's light), lift_doors (brushed
-//            steel, a dent, a taped sign, the dead floor display, the call button's amber), poster_listens
-//            (Halcyon's ad: a sleeping face, SLEPT WELL? HALCYON LISTENS.), mailboxes (Juno's with the
+//   openings poster_listens (Halcyon's ad: a sleeping face, SLEPT WELL? HALCYON LISTENS.), mailboxes (Juno's with the
 //            rent notice), notice_board (flyers, a lost cat), street_door (glass, the street's magenta and
 //            the rain beyond it, the push bar)
-//   props    wet_sign (a yellow A-frame, a slipping figure), flyers (heaped under the mailboxes)
+//   props    stairs_up (the flight up to the first floor along the right wall), wet_sign (a yellow A-frame, a
+//            slipping figure), flyers (heaped under the mailboxes)
+// The lift's doors are the whole block's: art/kit/kessel_lift.kit.px.js.
 // The city's text is English art (style guide §8a); Juno says what it means in German.
 include("../lib/text.js")
 
@@ -35,7 +35,7 @@ const KLOBBY = (() => {
     if (k === "1" || k === "e") return k
     if (Math.hypot((u - 0.9) / 0.7, (v - 3.4) / 0.45) < 1) return "e"            // the puddle
     for (let s = 0; s < 6; s++) {                                               // footprints, door to stairs
-      const fu = 0.5 + s * 0.22, fv = 3.3 - s * 0.38 + (s % 2) * 0.12
+      const fu = 0.7 + s * 0.45, fv = 3.3 - s * 0.32 + (s % 2) * 0.12
       if (Math.hypot((u - fu) / 0.06, (v - fv) / 0.1) < 1) return "1"
     }
     return k === "3" ? "z" : "f"
@@ -62,64 +62,6 @@ const KLOBBY = (() => {
     return "3"
   })
 
-  // ---------------------------------------------------------------- the stairwell's arch: the steps up
-  ISOKIT.opening("stair_arch", {
-    pad: [0.08, 0, 0.08, 0.08],
-    paint(s, h, o) {
-      const { a, e, aw, ah } = o
-      if (a < 0 || a >= aw || e >= ah) {
-        if (a < -2 || a > aw + 1 || e > ah + 1) return null
-        return a === -2 || a === aw + 1 || e === ah + 1 ? "4" : "5"
-      }
-      o.memo.arch ??= ISOKIT.raster(aw, ah, (c) => {
-        // the stairwell is dark: only the lowest step catches the lobby's light, the rail's foot by it
-        c.rect(0, 0, aw, ah, "k")
-        c.rect(2, ah - 3, aw - 4, 3, "2"); c.hline(2, ah - 3, aw - 4, "4")
-        c.rect(5, ah - 7, aw - 7, 3, "1"); c.hline(5, ah - 7, aw - 7, "2")
-        c.rect(aw - 5, ah - 16, 2, 13, "2")
-      }, 0, 0)
-      return o.memo.arch(a, e)
-    },
-  })
-
-  // ---------------------------------------------------------------- the lift: out of order
-  ISOKIT.opening("lift_doors", {
-    pad: [0.08, 0, 0.16, 0.42],
-    halo: [{ color: "#eea040", reach: 0.35, power: 1.1, rect: [0.42, 2.2, 0.78, 2.38] }],
-    paint(s, h, o) {
-      const { a, e, aw, ah, f } = o, mid = fl(aw / 2)
-      // over the doors: the floor display, dead but for its dashes, and the lamp blinking amber
-      if (e >= ah + 3) {
-        if (e >= ah + 4 && e <= ah + 9 && a >= mid - 6 && a <= mid + 5) {
-          if (e === ah + 4 || e === ah + 9 || a === mid - 6 || a === mid + 5) return "5"
-          return e === ah + 6 && a >= mid - 4 && a <= mid + 3 && a % 2 === 0 ? (f % 6 < 3 ? "!Q" : "!O") : "k"
-        }
-        return null
-      }
-      // the call button on the right of the frame, its light amber
-      if (a >= aw + 2) {
-        if (a >= aw + 2 && a <= aw + 4 && e >= 32 && e <= 38) return a === aw + 3 && e === 35 ? (f % 6 < 3 ? "!Q" : "!R") : "6"
-        return null
-      }
-      if (a < 0 || a >= aw || e >= ah) {
-        if (a < -2 || a > aw + 1 || e > ah + 1) return null
-        return a === -2 || a === aw + 1 || e === ah + 1 ? "4" : "5"
-      }
-      o.memo.lift ??= ISOKIT.raster(aw, ah, (c) => {
-        c.rect(0, 0, aw, ah, "5")
-        for (let x = 1; x < aw; x += 3) c.vline(x, 2, ah - 4, x % 2 ? "6" : "4")   // brushed
-        c.vline(mid, 0, ah, "2"); c.vline(mid - 1, 0, ah, "4")                       // the seam
-        c.rect(mid + 5, 38, 3, 2, "4"); c.px(mid + 6, 40, "3")                         // a dent, kicked
-        // the sign taped across the seam: OUT OF ORDER (the city's text, English)
-        const sx = mid - 12, sy = 14
-        c.rect(sx, sy, 25, 13, "H"); c.hline(sx, sy + 12, 25, "h")
-        c.rect(sx - 1, sy - 1, 4, 2, "G"); c.rect(sx + 22, sy - 1, 4, 2, "G")
-        TXT.draw(c, sx + 2, sy + 1, "OUT OF", "1", { font: "hud" }); TXT.draw(c, sx + 2, sy + 7, "ORDER", "1", { font: "hud" })
-      }, 0, 0)
-      return o.memo.lift(a, e)
-    },
-  })
-
   // ---------------------------------------------------------------- Halcyon's poster
   ISOKIT.opening("poster_listens", {
     pad: 0.03,
@@ -137,7 +79,7 @@ const KLOBBY = (() => {
         c.ellipse(W - 8, 7, 2, 2, "V"); c.ellipse(W - 8, 7, 1, 1, "C")               // the ring
         TXT.draw(c, 2, 22, "SLEPT WELL?", "V", { font: "hud" })
         TXT.draw(c, 2, 30, "HALCYON", "V", { font: "hud" })
-        TXT.draw(c, 2, 37, "LISTENS.", "v", { font: "hud" })
+        TXT.draw(c, W - 34, 37, "LISTENS.", "v", { font: "hud" })   // to the right: the flight hides its lower left corner
         c.rect(W - 6, H - 5, 4, 4, "c")                                              // a corner torn off
       }, -1, -1)
       return o.memo.poster(o.a, o.e)
@@ -214,6 +156,27 @@ const KLOBBY = (() => {
   })
 
   // ---------------------------------------------------------------- props
+  // the flight up: it rises along the right wall towards the back and ends where the landing's stairs begin on every floor
+  // above (u 2.5, art/rooms/kessel_14.map.js). Concrete steps with a steel nosing and a worn stripe, a plain side, a rail
+  // on the open side; drawn from the top down, each step in front of the one above it
+  ISOKIT.prop("stairs_up", {
+    footprint: (p) => [[p.at[0], p.at[1], p.foot[0], p.foot[1]]],
+    draw(pen, p) {
+      const [u0, v0] = p.at, L = p.foot[0], W = p.foot[1], H = p.h, n = p.steps, tread = L / n, rise = H / n
+      for (let i = 0; i < n; i++) {
+        const u = u0 + i * tread, h = H - i * rise
+        pen.box(u, v0, 0, tread, W, h,
+          (lu, lv) => (lu > tread - 0.05 ? "5" : near(lv, W * 0.62, 0.06) ? "2" : "3"),                 // the nosing, the worn path
+          (a, e, o) => (e >= o.ah - 2 ? "4" : "2"),                                                      // the riser
+          (a, e, o) => (e >= o.ah - 1 ? "4" : near((h - e / 30) % 0.8, 0, 1 / 40) ? "1" : "2"))          // the side, its panel seams
+        // the rail on the open side: a post every third step, the handrail stepping with them
+        // (near the top the floor above takes over: the rail must not stand out over the wall)
+        if (h + 0.82 > 2.75) continue
+        if (i % 3 === 0) pen.box(u + tread * 0.4, v0 + W - 0.03, h, 0.04, 0.04, 0.82, () => "6", () => "4", () => "5")
+        pen.box(u, v0 + W - 0.04, h + 0.82, tread, 0.06, 0.05, () => "G", () => "5", () => "6")
+      }
+    },
+  })
   // the wet-floor sign: a yellow A-frame, a figure slipping on it (no words)
   const SLIP = ["..k..", ".kk..", "..kkk", ".k.k.", "k...k", "kkkkk"]
   ISOKIT.prop("wet_sign", {

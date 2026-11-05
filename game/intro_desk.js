@@ -1,6 +1,6 @@
 // Halcyon: the intro's shot 2 (docs/kapitel0-design.md §5; game/intro.js plays it): Juno at her desk, close. The
 // picture is art/intro/desk.px.js; what moves is drawn here, driven by the shot's progress: people walking through
-// the feed, a man who walks in and stops; then her yellow brackets close on him, the implant's point behind her ear
+// the feed, a man who walks in and stops; then her brackets close on him (the implant's cyan, as always), the implant's point behind her ear
 // lights, her hand presses. Everything in the feed is clipped to the monitor's picture. Shot 4's end is here too: the
 // hall dark round her, her monitor the last one on (intro_desk_last), then out with a CRT's collapse (intro_desk_dark),
 // her face in the dead glass.
@@ -10,7 +10,7 @@
   const { px } = Halcyon.intro;
   const SX = 35, SY = 35, SW = 174, SH = 86;
   const PH = { walker: "#8acfae", dark: "#12332d", man: "#d4f7e2" };
-  const YELLOW = "#ffd83a", CYAN = "#3ff2ff", SKIN = "#d79676", SKIN_LIT = "#a9c29c";
+  const CYAN = "#3ff2ff", SKIN = "#d79676", SKIN_LIT = "#a9c29c";
   // the passers-by: [x at t = 0, px a second (their sign is their way), the row of their feet on the pavement]
   const PEOPLE = [[20, 9, 54], [150, -11, 49], [90, 7, 46], [40, -8, 57], [130, 13, 52]];
   const STOP = 0.42, LOCK = 0.62;                                     // when the man stops, when she has him
@@ -32,8 +32,8 @@
   function brackets(/** @type {CanvasRenderingContext2D} */ ctx, /** @type {number} */ l, /** @type {number} */ t, /** @type {number} */ r, /** @type {number} */ b) {
     const n = 3, X0 = SX + l, Y0 = SY + t, X1 = SX + r, Y1 = SY + b;
     for (const [x, y, dx, dy] of [[X0, Y0, 1, 1], [X1, Y0, -1, 1], [X0, Y1, 1, -1], [X1, Y1, -1, -1]]) {
-      px(ctx, YELLOW, dx > 0 ? x : x - n + 1, y, n, 1);
-      px(ctx, YELLOW, x, dy > 0 ? y : y - n + 1, 1, n);
+      px(ctx, CYAN, dx > 0 ? x : x - n + 1, y, n, 1);
+      px(ctx, CYAN, x, dy > 0 ? y : y - n + 1, 1, n);
     }
   }
 

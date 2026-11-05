@@ -27,8 +27,9 @@ Cutaway.time.configure({
 // ---- routines (where everyone is when)
 const A3 = Halcyon.at.cam03, A4 = Halcyon.at.cam04;
 Cutaway.routine("kessler", [
-  // out of the door, then under the canopy's far end with his phone (far from the camera's mic)
-  { day: 1, from: "22:00", to: "22:15", room: "cam03", at: A3.door, path: [A3.door, A3.awningFar] },
+  // out of the door, past the noodle machine as every evening, then under the canopy's far end with his phone (far from the
+  // camera's mic)
+  { day: 1, from: "22:00", to: "22:15", room: "cam03", at: A3.door, path: [A3.door, A3.vendingSpot, A3.awningFar] },
   { day: 1, from: "22:30", to: "04:00", room: "cam04", at: A4.seatKessler, face: "left" },     // facing Varga
 ]);
 Cutaway.routine("varga", [{ day: 1, from: "22:30", to: "22:50", room: "cam04", at: A4.seatVarga }]);

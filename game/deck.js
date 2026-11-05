@@ -25,7 +25,7 @@
 
   // ---------------------------------------------------------------- the layout (mockup F)
   const APPS = ["glas", "chat", "cache", "buch", "konto", "netz", "radio", "muell"];
-  const LABEL = { glas: "GLAS", chat: "CHAT", cache: "CACHE", buch: "BUCH", konto: "KONTO", netz: "NETZ", radio: "RADIO", muell: "MÜLL" };
+  const LABEL = { glas: "GLASS", chat: "CHAT", cache: "CACHE", buch: "BUCH", konto: "KONTO", netz: "NETZ", radio: "RADIO", muell: "MÜLL" };
   const D = Halcyon.deckUI = {
     header: 11,
     /** the app icons: two columns of four @param {number} i */
@@ -40,7 +40,7 @@
     cache: { y: 30, row: 22 },
     buch: { y: 30, row: 12 },
     clip: { pic: [82, 23, 96, 56], meta: 185, line: [84, 90, 224], tools: 137 },   // the clip editor: picture, who/where, timeline, tools
-    map: [82, 22, 228, 124],                                  // GLAS's map inside the window
+    map: [82, 22, 228, 124],                                  // GLASS's map inside the window
   };
   Cutaway.i18n.declare("deck", [...Object.values(LABEL), "DECK // J.REYES", "{time}  {date}", "{chits} CHITS", "WARTEN", "ZURÜCK",
     "KONTAKTE", "KEIN ZUGANG", "CODE BEKANNT", "VERBUNDEN", "NETZKARTE // LOWER NINTH", "CLIP", "NOTIZ", "FOTO", "GELESEN", "online",
@@ -85,7 +85,7 @@
     hs.wait = { name: "Warten", rect: D.buttons.wait, z: 6, use: [{ forward: true }] };
     hs.close = { name: "Zurück", rect: D.buttons.back, z: 6, exit: { to: "flat", at: Halcyon.at.flat.deck, face: "ne" } };
     const anyChat = { or: ["deck_app=chat", ...Object.keys(Halcyon.contacts).map((id) => `deck_app=chat_${id}`)] };
-    // GLAS: the cameras on the map
+    // GLASS: the cameras on the map
     for (const [id, cam] of Object.entries(Halcyon.cams)) {
       const [mx, my] = cam.map, x = D.map[0] + mx, y = D.map[1] + my;
       hs[`cam_${id}`] = {
@@ -263,7 +263,7 @@
   });
 
   const APP_DRAW = {
-    /** GLAS: the map of the quarter, every known camera a point; linked ones lit */
+    /** GLASS: the map of the quarter, every known camera a point; linked ones lit */
     glas(/** @type {CanvasRenderingContext2D} */ ctx) {
       const [mx, my, mw, mh] = D.map;
       rect(ctx, C.steel1, mx, my, mw, mh);

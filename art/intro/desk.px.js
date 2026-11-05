@@ -4,7 +4,7 @@
 // monitor with a camera's street in the phosphor; behind it the hall's wall of screens, out of focus. In 2.39:1
 // bars, so what matters lies between y 23 and y 157.
 //   intro_desk_bg   320x180, a still: all of that. What moves is the game's (game/intro_desk.js): the people in
-//                   the feed, the man who stops, her yellow brackets, the implant's point lighting, her hand.
+//                   the feed, the man who stops, her brackets, the implant's point lighting, her hand.
 //   intro_desk_last the same when the hall has gone dark round her: the wall behind out, her monitor the last one on
 //   intro_desk_dark her monitor out too, the room almost black, her face from the title in the dead glass, turned
 //                   to her (art/intro/juno_face.data.js)

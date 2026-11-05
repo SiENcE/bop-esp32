@@ -11,6 +11,7 @@ include("../lib/isomap.js")
 include("../rooms/kessel_lobby.map.js")
 include("../lib/isokit.js")
 include("../kit/kessel_lobby.kit.px.js", { palette: true })
+include("../kit/kessel_lift.kit.px.js")
 
 const KESSEL_LOBBY = ISOKIT.bake(ISO_MAPS.kessel_lobby, {
   id: "kessel_lobby", frames: 12, fps: 10,

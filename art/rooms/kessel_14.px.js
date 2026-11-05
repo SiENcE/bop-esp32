@@ -12,6 +12,7 @@ include("../lib/isomap.js")
 include("../rooms/kessel_14.map.js")
 include("../lib/isokit.js")
 include("../kit/kessel_14.kit.px.js", { palette: true })
+include("../kit/kessel_lift.kit.px.js")
 
 const KESSEL_14 = ISOKIT.bake(ISO_MAPS.kessel_14, {
   id: "kessel_14", frames: 12, fps: 10,
