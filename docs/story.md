@@ -50,7 +50,7 @@ unten bis zur **Krone** ganz oben.
   Ringe, das durch die kaputte Hülle tropft.
 - **Das Jahr ist 2091.** Die Kriminalität im Neunten ist in sechs Jahren um 80 % gesunken. Halcyon
   schreibt das seiner zivilen Überwachung zu und seinem Geschenk an die Menschen: **Lull**, einem
-  billigen Schlafimplantat. Vier Stunden mit Lull erholen wie zehn. Der halbe Neunte nutzt es, um
+  billigen Schlafimplantat, von außen ein blasser Leuchtpunkt hinter dem Ohr. Vier Stunden mit Lull erholen wie zehn. Der halbe Neunte nutzt es, um
   Doppelschichten zu arbeiten. Die Werbung ist überall: **HALCYON: SLEEP BETTER.**
 - **Slang:**
   - **Glass**: die Kamera-Feeds („im Glass", „ins Glass gucken");
@@ -126,7 +126,7 @@ Cyan nur für Technik.
 | Wer | Rolle | Aussehen und Silhouette (Akzent im Feed) | Farbe |
 |---|---|---|---|
 | **Juno Reyes**, 31 | Glasserin und Informationshändlerin; früher **zivile Beobachterin** bei Halcyon (eine menschliche Kamerabeobachterin), vor drei Jahren entlassen, als „automatische Auswertung" ihr Team ersetzte; ihr Beobachter-Implantat hat sie behalten, was heute illegal ist | gelber Regenmantel mit Kapuze, Umhängetasche, Implantat hinter dem Ohr (unter der Kapuze nicht zu sehen; auf dem Titelbild als Cyan-Linie über der Wange) | `#fff070` |
-| **EVI** | die KI auf Junos Deck: der ausgemusterte Prototyp der „automatischen Auswertung" (§6), den Juno vor der Löschung gerettet hat. Neugierig, lieb, gut mit Daten und hoffnungslos schlecht darin, Menschen zu lesen; fragt Juno ständig, warum Menschen Dinge tun. Erklärt das Deck, meldet Nachrichten, gibt die Hinweise. Lebt im Deck, und das Deck lebt in Junos Tasche. | ein kleines rundes Pixelwesen mit großen Augen und zwei Antennen-Ohren, auf dem Desktop etwa 24 px, in der Tasche 16 px; 6 Gesichter (froh, neugierig, verwirrt, besorgt, müde, Glitch) | `#8ef5d8` |
+| **EVI** | die KI auf Junos Deck: der ausgemusterte Prototyp der „automatischen Auswertung" (§6), den Juno vor der Löschung gerettet hat. Neugierig, lieb, gut mit Daten und hoffnungslos schlecht darin, Menschen zu lesen; fragt Juno ständig, warum Menschen Dinge tun. Erklärt das Deck, meldet Nachrichten, gibt die Hinweise. Lebt auf dem Deck und geht auf dem Taschen-Deck mit (§10b). | ein kleines rundes Pixelwesen mit großen Augen und zwei Antennen-Ohren, auf dem Desktop etwa 24 px, in der Tasche 16 px; 6 Gesichter (froh, neugierig, verwirrt, besorgt, müde, Glitch) | `#8ef5d8` |
 | **Teo Reyes**, 23 | ihr jüngerer Bruder; arbeitet Doppelschichten in Pumpenhalle 3, **mit Lull**; fröhlich und stolz, zahlt ihre Miete, wenn sie es nicht kann. Hat sich mit 18 einen **Gezeitenmod** machen lassen (Kiemen), weil Taucher das Doppelte verdienen: Halcyons idealer Arbeiter, umgebaut für die Schicht und betäubt für die Nacht. | orange Arbeitsweste, Gehörschutz um den Hals, Kiemenschlitze, die im Feed leuchten | `#ffb070` |
 | **Bao**, über 70 | betreibt die Nudel-Garküche vor dem LUCKY STATIC; lässt Juno anschreiben; kennt jeden. Redet ständig von seinem Mann Lou, „meinem Alten", der nie zu sehen ist, bis zum Epilog. | Schirm, weiße Schürze | `#e8c890` |
 | **Sable** | Junos Kontakt für Hehlerware auf dem Drain-Markt; nichtbinär; charmant, ehrlich darin, unehrlich zu sein (Sprachregel in §10) | langer violetter Mantel, rasierter Kopf, eine brennende Pfeife | `#c890ff` |
@@ -136,7 +136,7 @@ Cyan nur für Technik.
 | **Frau Haldane** | Nachbarin gegenüber; immer auf Lull, immer müde, freundlich | ein rosa Morgenmantel | `#ffa8d8` |
 | **„WREN"** | ein anonymer Auftraggeber, der viel zu gut zahlt | nur Text, auf dem Deck | `#d0d8f0` |
 | **Dr. Ines Calder** | Schlaftechnikerin in einer Lull-Klinik, die Schlafprotokolle hinausschmuggelt | weißer Klinikkittel, dunkler Zopf | `#f0a0c0` |
-| **„Lantern"** (Oskar Lind) | ein Piratensender, der Werbebildschirme für zehn Sekunden Wahrheit kapert; Ines' Kontakt; paranoid. Sitzt seit einem Pumpenunfall im Rollstuhl, den er für die Sümpfe umgebaut hat: Schwimmer, ein Bootsmotor, der Sender eingebaut. | geflickter Poncho; der Rollstuhl mit Schwimmern und einem Bündel Antennen | `#b0f0a0` |
+| **„Lantern"** (Oskar Lind) | ein Piratensender, der Werbebildschirme für zehn Sekunden Wahrheit kapert; Ines' Kontakt; paranoid. Sitzt seit einem Pumpenunfall im Rollstuhl, den er für die Sümpfe umgebaut hat: Schwimmer, ein Bootsmotor, Schubdüsen für kurze Sätze über Treppen und Leitern, der Sender eingebaut. | geflickter Poncho; der Rollstuhl mit Schwimmern, Düsen und einem Bündel Antennen | `#b0f0a0` |
 | **Lt. Agnes Morrow** | Revier 9; nimmt Geld von Halcyon und hasst sich dafür; ihre Tochter ist eine Lull-Sinkerin | grauer Trenchcoat, Polizeimarke am Band | `#a8b8d0` |
 | **Corvin Rask** | ein Agent der **Quiet**, Halcyons inoffizieller Sicherheitseinheit; höflich, geduldig, der Mörder | weißer Regenmantel, im Feed ohne Gesicht (eine Maske, die die Kamera überstrahlt) | `#ff7a6a` |
 | **Direktorin Selene Aubrecht** | Leiterin von Civic Rest, dem Lull-Programm; glaubt, den Neunten gerettet zu haben, und die Zahlen geben ihr recht | weißer Anzug, silbernes Haar | `#e8f0ff` |
@@ -183,8 +183,9 @@ Wird langsam über die Kapitel enthüllt; der Spieler soll es einen Schritt vor 
    etwas wachsen: **den Zeugen**, einen gemeinsamen Geist aus allen, die mit Lull schlafen. Er sieht
    durch jede Kamera, und er hat angefangen zurückzusehen. Die Sinker sind nicht krank. Sie sind die
    Menschen, die der Zeuge behalten hat.
-4. **Warum er Juno ruft:** Ihr altes Beobachter-Implantat spricht dasselbe Protokoll wie Lull. Sie ist
-   die Einzige, die das Glass *wach* beobachtet, so wie der Zeuge es im Schlaf beobachtet. Er sieht ihr
+4. **Warum er Juno ruft:** Ihr altes Beobachter-Implantat spricht dasselbe Protokoll wie Lull. Von den
+   Beobachtern haben es nur sehr wenige noch, weit verstreut; manche sind auf Lull oder selbst Sinker geworden. Juno ist die
+   Einzige von ihnen im Neunten, die das Glass noch jede Nacht *wach* beobachtet, so wie der Zeuge es im Schlaf beobachtet. Er sieht ihr
    seit drei Jahren beim Zusehen zu. Als der Bildschirm ihren Namen sagt, spricht er zum ersten Mal.
 5. **Warum Ines starb:** Ihre Schlafprotokolle bewiesen, dass die Hirnaktivität der Lull-Nutzer mit
    den Zeitstempeln der Kameras übereinstimmt. Sie wollte sie Lantern geben. Halcyon heuerte eine
@@ -209,9 +210,8 @@ Straßenmodus.
 - **Vorspann (vor dem Titel, überspringbar):** drei Jahre früher. Die Beobachtungshalle von Halcyon:
   Reihen von Menschen mit Implantaten vor Wänden voller Kamerabilder, Juno mittendrin. Die letzte
   Schicht. Eine Durchsage: „Ab morgen übernimmt die automatische Auswertung. Halcyon dankt Ihnen für
-  Ihren Dienst." Die Bildschirme gehen einer nach dem anderen aus. Juno geht mit ihrem Karton, und
-  das Implantat bleibt in ihrem Kopf. Schnitt auf heute: dieselbe Juno, dasselbe Implantat, ein
-  gestohlenes Kamerabild auf einem selbstgebauten Deck.
+  Ihren Dienst." Die Bildschirme gehen einer nach dem anderen aus. Juno fährt mit ihrem Karton hinunter, und
+  das Implantat bleibt in ihrem Kopf. Damit endet der Vorspann; das heutige Deck zeigt erst der Prolog (§10b).
 - **Das Deck:** Es fährt hoch, und EVI begrüßt Juno („Guten Abend! Eine neue Nachricht. Null
   Abendessen."). EVI erklärt das Deck im Spiel selbst, als jemand, der es gern vorführt.
 - **Der Auftrag:** Nacht, Junos Wohnung, Regen. An ihrem Deck erledigt sie einen kleinen Auftrag.
@@ -232,7 +232,8 @@ Straßenmodus.
 - **Offener Aufbau:** drei Aufträge auf dem Deck, in beliebiger Reihenfolge, jeder ein Feed-Rätsel
   plus eine Besorgung auf der Straße (ein Werkzeug auf dem Drain-Markt kaufen, eine Kamera vor Ort
   reparieren, ein Passwort in einer Wohnung finden).
-  - **Der verschwundene Schuldner:** Kessler aus dem Prolog ist untergetaucht. Der Kredithai Varga
+  - **Der verschwundene Schuldner:** Kessler aus dem Prolog ist nach dem Treffen untergetaucht: Den Rest kann er nicht
+    zahlen, den Ring hat Varga schon, und verschuldet traut er sich nicht mehr heim. Der Kredithai Varga
     heuert Juno an, ihn zu finden. Verkaufen, warnen oder lügen.
   - **Der Eckladen:** Die Tidewater Boys, eine Gang aus Gezeitenkindern (Kiemen, Leuchtmarkierungen),
     wollen den Tresorcode eines Ladens
@@ -247,27 +248,29 @@ Straßenmodus.
   - Der Werbebildschirm flackert, wenn Juno vorbeigeht.
   - Motte will Unterricht.
 - **Entscheidung 1:** Ines' Treffpunkt an WREN verkaufen oder nicht. Weigert sie sich, bekommt WREN
-  ihn einen Tag später von einem anderen Glasser. So oder so sieht Juno dem Treffen zu, weil WREN
-  extra für den Live-Feed bezahlt hat (oder, wenn sie sich geweigert hat, weil sie es wissen will).
+  ihn noch am selben Abend von einem anderen Glasser. So oder so sieht Juno dem Treffen zu, weil WREN
+  extra für den Live-Feed bezahlt hat (oder, wenn sie sich geweigert hat, weil sie Ines warnen will).
 - **Das Ende:** das Treffen in der alten U-Bahn-Station in den Sümpfen, durch CAM 31. Ines gibt
-  Lantern ein Laufwerk. Ein Mann in einem weißen Regenmantel tritt aus der Dunkelheit. Rask tötet Ines
+  Lantern eine Daten-Wallet (verschlüsselt; der Schlüssel ist der Stick aus dem Trockner). Ein Mann in einem weißen Regenmantel tritt aus der Dunkelheit. Rask tötet Ines
   vor der Kamera. Lantern flieht. Rask sieht nach oben in die Kamera, direkt zu Juno, und der Feed
-  bricht ab. **Juno hat die Aufnahme.** EVI, die sonst jeden Menschen falsch liest, liest diesen
+  bricht ab. Juno kann nichts tun: Das Kapitel spielt ihre Ohnmacht aus (`kapitel1-design` §8), und am Ende sieht sie im toten
+  Monitor ihr eigenes Gesicht, wie am Ende ihrer letzten Schicht. **Juno hat die Aufnahme.** EVI, die sonst jeden Menschen falsch liest, liest diesen
   richtig: „Er hat sie ausgeschaltet. Juno. Er hat sie ausgeschaltet."
 
 ### Kapitel 2: Aufnahme (das moralische Problem, ~2 Std.)
 
 **Ziel:** entscheiden, was mit dem Clip geschieht, und herausfinden, wer Ines war.
 
-- **Die Gefahr:** Die Quiet sucht, wer CAM 31 beobachtet hat. Kameras in der Nähe von Junos Block
+- **Die Gefahr:** Hat Juno den Ort verkauft, weiß die Quiet längst, wer sie ist. Hat sie sich geweigert, sucht die Quiet erst,
+  wer CAM 31 beobachtet hat. So oder so: Kameras in der Nähe von Junos Block
   fallen eine nach der anderen aus, genau so, wie sie es selbst machen würde. Das Kassenbuch zeigt
   ihren Anteil an Ines' Tod, falls sie das Treffen verkauft hat.
 - **Die Ermittlung:**
   - Ines' Wohnung (ein Einbruch im Straßenmodus, gelenkt durch den Feed: Die Kameras zeigen, wann der
     Flur frei ist);
   - ihre Klinik (Lull-Klinik 9-Ost, als Patientin bei einem Aufnahmegespräch);
-  - der Trockner im Waschsalon, wo sie eine zweite Kopie der Protokolle hinterlassen hat,
-    verschlüsselt;
+  - der Trockner im Waschsalon, wo Ines am ersten Abend eine zweite Daten-Wallet versteckt hat, verschlüsselt mit demselben
+    Schlüssel (Juno hat ihn, wenn sie den Stick kopiert oder behalten hat; sonst hat ihn Lantern);
   - **die Fälschung:** Am zweiten Tag zeigen die Halcyon-Nachrichten einen Clip aus CAM 31, in dem
     *Lantern* Ines tötet. Revier 9 jagt ihn. Juno legt die Fälschung im Clip-Editor neben ihre
     Aufnahme und findet, wo sie geschnitten ist (ein Feed-Rätsel am Schreibtisch: Zeitstempel,
@@ -492,18 +495,15 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
   beide dasselbe Protokoll. Das Implantat kann wach Kameras verbinden, Markierungen ins eigene Auge legen und den
   Zeugen empfangen, aber nicht in die gemeinsame Ebene hinein. Lull öffnet diese Ebene und schaltet dabei das
   Bewusstsein ab. Beides zusammen: Lull öffnet die Tür, das Implantat hält Juno wach.
-- **Wo es sitzt:** hinter dem Ohr, wie Teos Lull-Pflaster auf dem Titelbild (dieselbe Stelle, derselbe Ursprung; wer
+- **Wo es sitzt:** hinter dem Ohr, wie Teos Lull-Punkt auf dem Titelbild (dieselbe Stelle, derselbe Ursprung; wer
   genau hinsieht, kann es erraten). Sichtbar ist es nur als Cyan-Punkt hinter dem Ohr, ohne Kapuze (die
   Beobachtungshalle, Junos Pult im Vorspann); unter der Kapuze und auf den kleinen Straßenfiguren sieht man nichts.
   **Die Cyan-Linie auf der Wange gibt es nur auf dem Titelbild**, als Bildzeichen (2026-11-04).
-- **Pflaster und Implantat darf man nicht verwechseln:** Das Lull-Pflaster ist ein aufgeklebtes Pflaster, außen auf der
-  Haut, billig, zum Wegwerfen, blass leuchtend. Das Implantat steckt im Kopf: nur ein Cyan-Punkt. Gleich
-  ist nur die Stelle. Auf dem Titelbild ist das Pflaster schon als Pflaster zu erkennen; wo es später kleiner oder
-  näher vorkommt (Lull-Nutzer, die Klinik, Kapitel 3), muss es das auch bleiben.
+- **Lull und das Implantat** unterscheiden sich an der Farbe: siehe §10b.
 - **Das Auge und „JUNO." sind nur in Junos Auge**, auf demselben Weg wie ihre Markierungen; auf dem Bildschirm selbst
   ist nichts (das Stottern ist echt, er ist kaputt). Deshalb sieht Bao nichts, und deshalb verdächtigt man EVI: Außer
   dem Deck kann sonst niemand in dieses Overlay schreiben. Der Zeuge sieht Juno durch die Kameras, und ihr Link fällt
-  ihm auf, weil sie die Einzige ist, die wach auf dem Protokoll ist. Die Steigerung: erst nur in ihrem Kopf, im Finale
+  ihm auf, weil sie die Einzige im Neunten ist, die noch jede Nacht wach auf dem Protokoll ist. Die Steigerung: erst nur in ihrem Kopf, im Finale
   übernimmt er wirklich die Bildschirme.
 - **Wie der Spieler es erfährt** (nicht nur in der Bibel): über Dokumente und Junos innere Stimme, Schritt für Schritt.
   - Früh, auf dem Deck: Junos altes **Beobachter-Handbuch** von Halcyon (eine Notiz im CACHE), mit dem, was das
@@ -520,3 +520,28 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
 - **Der Datenstick** im Karton trägt `EVAL-7 // DELETE` (gemalter Text ist englisch, wie alle Technik der Stadt).
 - **Das Deck bleibt, wie es ist**: Röhrenmonitor, Maus, selbstgebaute Platinen. Der Retro-Look ist Absicht (die
   Welt des Neunten ist zusammengeflickt), keine Vorhersage.
+
+## 10b. Entscheidungen (2026-11-05)
+
+- **Lull ist ein sichtbarer Leuchtpunkt hinter dem Ohr**, nichts sonst: kein Pflaster, keine Pads, kein Licht an der Schläfe. Der
+  Punkt ist blass blau und pulsiert langsam. Das Implantat der Beobachter sitzt an derselben Stelle, ist aber kleiner, cyan, und
+  leuchtet nur auf, wenn Juno markiert. Was sonst hinter einem Ohr sitzt (Baos Hörgerät), leuchtet nicht.
+- **Der Vorspann endet mit der Aufzugfahrt** (Einstellung 6 „heute“ ist gestrichen). Damit bleibt der vertrocknete Kaktus im Karton in
+  der Wohnung richtig, und das Deck fährt erst im Prolog hoch.
+- **Das Datum:** Der Prolog spielt am **Dienstag, 2091-11-06**; Kapitel 1 am Mittwoch, Donnerstag und Freitag (7. bis 9. November).
+- **Das Taschen-Deck:** Das große Deck (Röhrenmonitor, Platinen) bleibt auf dem Schreibtisch. Unterwegs trägt Juno ein kleines
+  Handgerät in ihrer grauen Umhängetasche, darauf läuft EVI. An der kleinen Straßenfigur sieht man nur die Tasche; zu erkennen ist EVI
+  an ihrem Kopf, der unten rechts aus der Tasche schaut, und an ihrer Stimme aus der Tasche.
+- **Andere Beobachter:** Juno ist nicht die Einzige mit dem Implantat. Es sind nur sehr wenige, weit verstreut, manche auf Lull oder
+  selbst Sinker geworden.
+- **Kessler** ist direkt nach dem Treffen mit Varga untergetaucht: Den Rest kann er nicht zahlen, den Ring hat Varga schon, und
+  verschuldet traut er sich nicht mehr heim. Er geht auch nicht mehr zur Arbeit; nur die Gewohnheit bringt ihn abends zum Automaten.
+- **WREN und die Quiet:** Hat Juno den Ort verkauft, weiß die Quiet sofort, wer sie ist. Nach einer Weigerung muss sie erst suchen.
+- **Lanterns Rollstuhl** hat Schubdüsen für kurze Sätze; so kommt er über Treppen und Leitern (Vorschlag, wie weit das geht, ist offen).
+- **Daten-Wallet und Stick:** Ines gibt Lantern eine **Daten-Wallet** mit den verschlüsselten Protokollen (das Wort ersetzt „Laufwerk“). Der
+  **Stick** im Trockner ist der Schlüssel dazu. Ort und Zeit stehen auf dem Waschsalon-Ticket, nicht auf dem Stick: Behält Juno den
+  Stick, kommt Lantern trotzdem zum Treffen, kann die Wallet aber nicht öffnen und sucht in Kapitel 2 Juno.
+- **WRENs Geld:** 1500 für den Ort (750 vorab, 750 beim Senden), dazu 750 für die Live-Übertragung, getrennt im Kassenbuch.
+- **Kamera 31:** Halcyon hat die alten Metrokameras einst nachgerüstet und dann vergessen; deshalb versteht sie das Beobachter-Protokoll.
+- **Das Ende von Kapitel 1 spielt Junos Ohnmacht aus** (`kapitel1-design` §8): Alles, was sie versucht, scheitert sichtbar, und am Ende
+  sieht sie im toten Monitor ihr Gesicht, wie am Ende ihrer letzten Schicht.

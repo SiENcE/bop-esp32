@@ -21,8 +21,8 @@ englisch, wie in der Engine.
 
 ## 2. Das Deck
 
-Junos selbstgebauter Rechner. Zu Hause steht er auf dem Schreibtisch in `flat`, unterwegs steckt er
-in ihrer Tasche (Style Guide §6). Das Deck ist ein **echter Computer der Zukunft**, so wie man ihn
+Junos selbstgebauter Rechner. Er steht auf dem Schreibtisch in `flat`; unterwegs trägt Juno das **Taschen-Deck** in ihrer
+Umhängetasche, ein kleines Handgerät, auf dem EVI mitkommt (story §10b). Das Deck ist ein **echter Computer der Zukunft**, so wie man ihn
 erwarten würde: ein Desktop mit Symbolen, Fenster, ein Messenger, Benachrichtigungen, Dateien mit
 Persönlichkeit. Und darauf lebt **EVI** (§2.2).
 
@@ -33,7 +33,7 @@ alles. Vor dem Bau kommt ein Mockup (`docs/mockups/mock_f_deck`), das Lesbarkeit
 
 ```
 ┌────────────────────────────────────────────────────────────────┐
-│ DECK // J.REYES                   ✉2   21:30  2091-11-03   0 CH │  Kopfleiste, 10 px
+│ DECK // J.REYES                   ✉2   21:30  2091-11-06   0 CH │  Kopfleiste, 10 px
 ├──────────┬─────────────────────────────────────────────────────┤
 │ [GLAS]   │ ┌ CHAT ─────────────────────────────────────── x ┐ │
 │ [CHAT]●  │ │ Kontakte      │ M. KESSLER                     │ │
@@ -229,7 +229,7 @@ alten Beobachter-Protokoll (nur bestimmte alte Kameras, Kap. 1).
 - **Abläufe** (die Routinen der Figuren) sind Tabellen: für jeden Takt, wo jemand ist und was er tut.
   Die Engine braucht dafür eine neue Fähigkeit (Style Guide §11, Punkt 4).
 
-## 5. Vorspann: Die letzte Schicht (vor dem Titel, 1:46 Min. nach den Zeiten in `game/intro.js`)
+## 5. Vorspann: Die letzte Schicht (vor dem Titel, etwa 1:45 Min. nach den Zeiten in `game/intro.js`)
 
 Eine Sequenz (wie das Intro der Loonies), überspringbar. **Sie läuft nur beim ersten Start** von selbst und ist im
 Titelmenü jederzeit wieder abspielbar. Wo der Browser Ton erst nach einem Klick erlaubt, fragt nur dieser erste Start auf Schwarz danach (`gate: { introOnly }`). Sie endet auf dem **Titelbildschirm mit dem Glass-Sister-Logo** (die
@@ -249,12 +249,11 @@ Geräusche, nur Musik** (2026-11-04). Statt flammender Schlote stehen Kameramast
 | A1 | **Über dem Lichtermeer**: Die Kamera schwebt tief und langsam vorwärts über das Meer über der ertrunkenen Stadt, voller Lichter bis zum Horizont (Pfahlhütten, Flöße, Bojen), einen dunklen Kanal entlang (in der Mitte keine Lichter); die **Kameramasten** der Stadt stehen im Wasser, Kameraköpfe mit glimmenden Linsen und blinkenden roten Augen (das Glass ist überall); der Dunst glimmt. In Perspektive gezeichnet (`game/intro.js`), die Kamera bewegt sich wirklich. | Nur Musik (`opening`). Unten: `HALCYON, 2088` |
 | A2 | **Halcyon voraus** im Dunst, am Ende des Kanals: die neun Ringe übereinander, der Turm hindurch, sein Ringlogo; die Stadt **kommt näher** (sie wächst um etwa ein Viertel); Patrouillendrohnen leuchten das Wasser ab; Masten ziehen links und rechts vorbei, Transitkapseln. | Nur Musik |
 | C | **Der Turm von nah**: Reihen dunkler Fenster, ein paar erleuchtet, ein Stockwerk glimmt phosphorgrün und wirft sein Licht auf die Fassade; die Kamera fliegt in gerader Linie auf ein Fenster zu (`game/intro_tower.js`), dahinter die Halle in der Tiefe: die Wand aus Bildschirmen, zwei Reihen Pulte, die Beobachter von hinten; am Ende füllt die Halle das Bild. | Musik, dann Brummen |
-| 1 | **Die Beobachtungshalle**, Halcyon Tower, drei Jahre früher: Iso-Ansicht in Spielgröße (30 px pro Meter), die Halle ist größer als der Bildschirm und die Kamera fährt von der Ecke der Bildschirmwände hinunter über die Reihen bis zu Junos Pult in der vordersten Reihe. Vier Reihen zu fünf Pulten, jedes mit einem Menschen vor drei Monitoren; beide Rückwände sind Phosphor-Bildschirme, unter der Decke Kuppelkameras, die die Beobachter beobachten. Sie sitzen in runden Schalensesseln. **Keine Kabel** (2026-11-04): Das Implantat legt die Markierungen über das, was das Auge auf den Monitoren sieht, dafür braucht es keins; nur der kleine Cyan-Punkt hinter dem Ohr (dort, wo Teo sein Lull-Pflaster trägt: story §10a). Auf Junos Pult der Kaktus und die Tasse, über ihrem Sessel der gelbe Mantel. | Brummen, leises Tippen. Datum unten: `2088-04-30 05:45` |
-| 2 | Juno an ihrem Pult, nah, von hinten: Die hohe Sessellehne verdeckt den Körper bis zum Kragen, zu sehen sind Kopf, Kragen, ein Streifen vom Arm und die Hand (Halcyon-Grau). Sie sitzt rechts im Bild und blickt nach links wie auf dem Titelbild, denn die Implantatlinie liegt auf ihrer linken Wange. Ihr Bildschirm: die Kowalski-Straße (`CAM 2217`), Passanten, ein Mann bleibt stehen. Sie markiert ihn, gelb; dabei leuchtet der Punkt hinter ihrem Ohr auf. | Kein Text (2026-11-04): das Markieren reicht. Nur der Ton der Markierung |
+| 1 | **Die Beobachtungshalle**, Halcyon Tower, drei Jahre früher: Iso-Ansicht in Spielgröße (30 px pro Meter), die Halle ist größer als der Bildschirm und die Kamera fährt von der Ecke der Bildschirmwände hinunter über die Reihen bis zu Junos Pult in der vordersten Reihe. Vier Reihen zu fünf Pulten, jedes mit einem Menschen vor drei Monitoren; beide Rückwände sind Phosphor-Bildschirme, unter der Decke Kuppelkameras, die die Beobachter beobachten. Sie sitzen in runden Schalensesseln. **Keine Kabel** (2026-11-04): Das Implantat legt die Markierungen über das, was das Auge auf den Monitoren sieht, dafür braucht es keins; nur der kleine Cyan-Punkt hinter dem Ohr (dort, wo Teo seinen Lull-Punkt trägt: story §10b). Auf Junos Pult der Kaktus und die Tasse, über ihrem Sessel der gelbe Mantel. | Brummen, leises Tippen. Datum unten: `2088-04-30 05:45` |
+| 2 | Juno an ihrem Pult, nah, von hinten: Die hohe Sessellehne verdeckt den Körper bis zum Kragen, zu sehen sind Kopf, Kragen, ein Streifen vom Arm und die Hand (Halcyon-Grau). Sie sitzt rechts im Bild und blickt nach links wie auf dem Titelbild. Ihr Bildschirm: die Kowalski-Straße (`CAM 2217`), Passanten, ein Mann bleibt stehen. Sie markiert ihn, gelb; dabei leuchtet der Punkt hinter ihrem Ohr auf. | Kein Text (2026-11-04): das Markieren reicht. Nur der Ton der Markierung |
 | 3 | Eine Durchsage, Text über die ganze Breite | „Ab morgen übernimmt die automatische Auswertung. Halcyon dankt Ihnen für Ihren Dienst." |
 | 4 | Die Bildschirme der Halle gehen aus, von hinten nach vorn: erst die Wände, von der Ecke aus, dann die Pulte Reihe für Reihe; wessen Bildschirm aus ist, hört auf zu tippen. Die Halle wird dunkel, die Kamera geht mit bis zu Juno, ihr Bildschirm brennt noch. Dann nah wie in Einstellung 2: Erst hier geht ihr Bildschirm aus, wie eine Röhre. In ihm spiegelt sich ihr Gesicht, das Gesicht vom Titelbild ohne Kapuze und ohne Linie, ihr zugewandt, nur als Raster, das nach hinten dunkler wird und sich auflöst. | Stille (die Musik blendet aus, das Brummen ist weg) |
-| D | **Die Transitachse**, abwärts, die erste Seitenansicht: zuerst nah am Karton (ein Kaktus, eine Tasse und ein Datenstick mit dem Aufkleber `EVAL-7 // DELETE`, gemalt und englisch wie alle Technik der Stadt; eine Sekunde lesbar, nicht kommentiert), dann Juno mit dem Karton im gläsernen Aufzug, die Ringe rasen vorbei. **Juno ist die Figur von heute** (2026-11-04): Den gelben Mantel, der in der Halle über ihrem Sessel hing, trägt sie jetzt, die Kapuze unten; ihre Straßenfigur mit Atmen und Blinzeln, dazu der Karton (`art/intro/ride.px.js`). ~10 s. | Kein Text. Eine langsame, melancholische Melodie |
-| 6 | Schnitt: heute, auf dem letzten Ton der Melodie. Ein Phosphor-Feed auf dem Röhrenmonitor, das selbstgebaute Deck, Junos Hand auf der Maus. Gelber Ärmel. Alles aus dem Karton ist da, unkommentiert: der Kaktus, die Tasse, und der Stick steckt in ihrem Deck (`EVAL-7`). | `2091-11-03 21:30`; die Melodie klingt aus, die Lüfter des Decks |
+| D | **Die Transitachse**, abwärts, die erste Seitenansicht: zuerst nah am Karton (ein Kaktus, eine Tasse und ein Datenstick mit dem Aufkleber `EVAL-7 // DELETE`, gemalt und englisch wie alle Technik der Stadt; eine Sekunde lesbar, nicht kommentiert), dann Juno mit dem Karton im gläsernen Aufzug, die Decks der Ringe rasen vorbei, Hochhäuser dazwischen, Lichtkegel und Schatten unter den Decks; nach unten hin mehr Neon und mehr Lull-Werbung (2026-11-05). **Juno ist die Figur von heute** (2026-11-04): Den gelben Mantel, der in der Halle über ihrem Sessel hing, trägt sie jetzt, die Kapuze unten; ihre Straßenfigur mit Atmen und Blinzeln, dazu der Karton (`art/intro/ride.px.js`). Etwa 14 s, **damit endet der Vorspann** (2026-11-05: Einstellung 6 „heute“ ist gestrichen, das heutige Deck zeigt erst der Prolog); das Bild blendet aus. | Kein Text. Die Melodie `descent`, sie klingt mit dem Bild aus |
 | 7 | **Der Titelbildschirm** mit dem Glass-Sister-Logo (wie bei jedem Start), dann das Menü | Junos Thema |
 
 ## 6. Der Prolog Schritt für Schritt
@@ -299,8 +298,8 @@ kein Zuhause." (Die Nudeln sind der Schlüssel für Kap. 1, Auftrag A.) Anhang: 
 | 9 | Deck | Der Clip öffnet sich im Clip-Editor (§2.4) und lässt sich schneiden: (a) ganz, (b) nur der Ring, der vom Finger geht (sieht aus wie ein Mann, der seinen Ehering für eine andere ablegt). Schneidet Juno, fragt EVI: „Wenn man das Ende weglässt, ist es eine andere Geschichte. Ist das erlaubt?" (Antworten: „Ist es." / „Nein." / Schweigen; jede rückt `evi_trust`.) Eine Notiz entsteht: `note_kessler_debt` („Kessler schuldet einem Kredithai Geld"). | `+note_kessler_debt` |
 | 10 | Deck | **Entscheidung P1:** Frau Kessler im Chat antworten, mit dem Clip als Anhang (siehe 6.3). Danach EVI, je nach Wahl: „Sie schreibt nicht zurück. Ist sie jetzt froh?" / „Sie hat ‚Ich wusste es' geschrieben. Sie hat es nicht gewusst, oder?" / „Wir haben nichts geschickt. Ist das nett oder feige? Ich weiß das nie." | `p1_full` / `p1_cut` / `p1_nothing` |
 | 11 | Deck | Optional: eine Benachrichtigung von Sable fährt herein, ein Sticker (eine Pfeife) und: „Ruhige Nacht? Ich kaufe alles, was atmet." `note_kessler_debt` an Sable senden: 120 Chits. EVI erklärt das Kassenbuch („Ich schreib alles auf. Du hast gesagt, ich soll."). | `sold_kessler_sable` |
-| 12 | `flat` | Juno klappt das Deck zu und steckt es in die Tasche. EVI: „Bringst du mir was mit?" Juno: „Du isst nicht." EVI: „Ich weiß. Bringst du mir was mit?" Juno steht auf, Magen knurrt. Der Kühlschrank: „Licht. Sonst nichts." Der alte Karton unter dem Bett (ansehen): der Halcyon-Ausweis `CIVIC MONITOR · J. REYES · UNGÜLTIG`, der Kaktus, vertrocknet. | `fridge_empty` |
-| 13 | `kessel_14` | Der Flur. Frau Haldanes Tür steht offen, sie schläft im Sessel, ein blaues Lull-Licht an der Schläfe. Ansehen: „Doppelschicht. Sie schläft, wie andere Leute blinzeln." Ihr Fernseher: Halcyon-Werbung. | — |
+| 12 | `flat` | Juno steckt das Taschen-Deck ein. EVI: „Bringst du mir was mit?" Juno: „Du isst nicht." EVI: „Ich weiß. Bringst du mir was mit?" Juno steht auf, Magen knurrt. Der Kühlschrank: „Licht. Sonst nichts." Der alte Karton unter dem Bett (ansehen): der Halcyon-Ausweis `CIVIC MONITOR · J. REYES · UNGÜLTIG`, der Kaktus, vertrocknet. | `fridge_empty` |
+| 13 | `kessel_14` | Der Flur. Frau Haldanes Tür steht offen, sie schläft im Sessel, ein blauer Lull-Punkt hinter dem Ohr. Ansehen: „Doppelschicht. Sie schläft, wie andere Leute blinzeln." Ihr Fernseher: Halcyon-Werbung. | — |
 | 14 | `kessel_14` | Motte sitzt auf der Treppe, die weiße Mütze zu groß. „Was machst du eigentlich? Den ganzen Tag?" Antworten: freundlich und ehrlich („Ich schau Leuten zu. Und verkauf, was ich sehe."), ausweichend („Reparaturen."), abweisend („Geh schlafen, Motte."). Erster Wert für Motte. | `moth_kind` / `moth_brushed` |
 | 15 | `kessel_lobby` | Der Aufzug: „AUSSER BETRIEB · DI WIEDER". Die Briefkästen: eine Mietmahnung, „Fällig in 3 Tagen: 900 Chits (davon Hüllenabgabe 310)". Juno: „Dreihundertzehn für die Ringe über meinem Kopf. Die ich nie bestellt hab." Das ist das Ziel von Kapitel 1. | `rent_notice` |
 | 16 | `kowalski` | Die Straße aus dem Mockup. Bao an seiner Garküche: „Wie immer? Ich schreib's an." (Hat Juno Geld, kann sie bar zahlen; Bao freut sich, sagt aber dasselbe.) Juno isst unter seinem Schirm. | `ate_bao` |
@@ -311,12 +310,13 @@ kein Zuhause." (Die Nudeln sind der Schlüssel für Kap. 1, Auftrag A.) Anhang: 
 
 | Wahl | Juno schickt | Frau Kessler | Folge (Kap. 1) | Kassenbuch |
 |---|---|---|---|---|
-| **Die Wahrheit** | den ganzen Clip | zahlt 200 Chits, schreibt: „Schulden. Er hat mir nie was gesagt." | Kessler gesteht seiner Frau alles, schämt sich, verschwindet | „Frau Kessler: die Wahrheit über ihren Mann. 200." |
-| **Was sie bestellt hat** | nur den Ring | zahlt 200 + 100 Bonus: „Ich wusste es." | sie wirft ihn hinaus; er verschwindet | „Frau Kessler: einen Ehebruch, den es nicht gab. 300." |
-| **Nichts** | „Nichts gefunden." | zahlt nichts | Kessler bleibt zu Hause, bis Varga kommt; er verschwindet trotzdem | „Nichts geliefert." |
+| **Die Wahrheit** | den ganzen Clip | zahlt 200 Chits, schreibt: „Schulden. Er hat mir nie was gesagt." | Sie weiß, warum er nicht heimkommt, und er weiß nicht, dass sie es weiß | „Frau Kessler: die Wahrheit über ihren Mann. 200." |
+| **Was sie bestellt hat** | nur den Ring | zahlt 200 + 100 Bonus: „Ich wusste es." | Sie hält ihn für einen Ehebrecher; dass er nicht heimkommt, nimmt sie als Beweis | „Frau Kessler: einen Ehebruch, den es nicht gab. 300." |
+| **Nichts** | „Nichts gefunden." | zahlt nichts | Sie wartet auf einen Mann, der nicht kommt, und weiß nicht, warum | „Nichts geliefert." |
 
-In jedem Fall verschwindet Kessler bis Kapitel 1, wo Varga Juno anheuert, ihn zu finden. Die Wahl
-ändert, warum, wie Kessler über Juno denkt und die Zeilen in Kap. 1.
+Kessler ist in jedem Fall schon weg: Nach dem Treffen bei Yuen's taucht er unter, weil er den Rest nicht zahlen kann und sich
+verschuldet nicht mehr heimtraut (story §10b). In Kapitel 1 heuert Varga Juno an, ihn zu finden. Die Wahl ändert, was Frau Kessler
+glaubt, und die Zeilen in Kap. 1.
 
 ### 6.4 Ohne Sackgassen
 

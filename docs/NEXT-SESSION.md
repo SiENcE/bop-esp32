@@ -9,28 +9,15 @@ We're continuing work on "Glass Sister", our cyberpunk point-and-click adventure
 the checks. Talk to me in German (the docs are German, code comments English).
 
 Where we are (everything is committed; the engine copy is at Cutaway.js 5f165f8):
-- The prologue plays from the flat to its end card. Juno's first tag (Kessler in cam03) now explains the implant: "Die
-  Klammern macht nicht das Deck, die macht mein Implantat. Das durften wir behalten, damals. Sie sagten, das Herausnehmen
-  kostet mehr." (game/cast.js).
-- **The intro "Die letzte Schicht" plays whole** (docs/kapitel0-design.md §5), 1:46 by its timings. It is the sequence
-  "intro" in game/intro.js; its shot marks: a1, a2, c, hall, desk, announce, out, d, today; then the title screen.
-  - A1/A2 the float (game/intro_sea.js, art/intro/float.px.js); C the tower (game/intro_tower.js); 1 the hall
-    (art/rooms/hall.map.js, game/intro_hall.js); 2 Juno close (art/intro/desk.px.js, game/intro_desk.js); 3 the
-    announcement; 4 the screens going out; D the ride, the box close, a cut, then the lift (game/intro_ride.js,
-    art/intro/ride.px.js, the melody "descent" in game/music.js); 6 today at the deck (game/intro_today.js,
-    art/intro/today.px.js). The sentence about the implant is not in the intro any more.
-  - **Juno in D is today's Juno**: her street sprite with its breath and blink, the hood down, in the yellow coat that
-    hung over her chair in the hall (intro_d_juno), with a box seen flatter than 2:1 and her arm bent to hold it.
-  - The look: docs/rooms/intro_float_a1_x3.png, intro_float_a2_x3.png, intro_tower_c2_x3.png, hall_juno_x3.png,
-    intro_desk_x3.png, intro_announce_x3.png, intro_out_rows_x3.png, intro_out_face_x3.png, intro_d_close_x3.png,
-    intro_d_lift_mid_x3.png, intro_d_lift_low_x3.png, intro_today_x3.png.
-- Sound on the first start: the gate shows on black only when the intro will play (gate: { introOnly }, engine 79d6952).
+- The prologue plays from the flat to its end card, on Tuesday 2091-11-06. Juno's first tag (Kessler in cam03) explains the implant.
+- **The intro "Die letzte Schicht" is done** (docs/kapitel0-design.md §5), about 1:45. It is the sequence "intro" in game/intro.js; its
+  shot marks: a1, a2, c, hall, desk, announce, out, d; it ends on the ride down in the lift (game/intro_ride.js, art/intro/ride.px.js,
+  the melody "descent"), then the title screen. "Intro ansehen" comes back to the menu. Sound: gate: { introOnly }.
+- **The story up to Chapter 1 to read, with what is still open:** docs/story-lesefassung.md. The decisions of 2026-11-05 are in story §10b.
 - Checks now: validate 0 errors (3 known warnings), solve --full no soft-locks, every state has a hint, play.mjs all
   passed; play.mjs --intro plays the intro through as well. They take a few minutes together: give them a long timeout.
 
-**Next:** my look at the whole intro in real time (you only see stills): its length and pace, the ride's speed, and what
-"Intro ansehen" should end on (it comes back to the menu without the splash, acts.js watchIntro). After the intro: Chapter 1
-(docs/kapitel1-design.md, PLAN H4).
+**Next:** the open points at the end of docs/story-lesefassung.md, then Chapter 1 (docs/kapitel1-design.md, PLAN H4).
 
 Decided in the last session, keep to it (story §10a, kapitel0-design §5, style guide §6):
 - No sounds in the float and the lift, only music. The hall has its hum; shot 4 is silent.

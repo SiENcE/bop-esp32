@@ -191,12 +191,12 @@ A location takes one key hue from this set and plays it against the night blues.
 - **Juno Reyes** (placeholder name), freelance hacker and info broker:
   - **clothes:** a yellow hooded rain slicker (hood up outside, down indoors), black cargo trousers,
     heavy boots, a grey satchel on a strap (her deck lives in it);
-  - **face and hair:** short black hair. The implant sits behind her ear, where Teo wears his Lull patch (decided
+  - **face and hair:** short black hair. The implant sits behind her ear, where Teo wears his Lull point (decided
     2026-11-04, story §10a): with the hood down, a cyan point there; under the hood nothing shows. The thin cyan line
     along her left cheekbone is the title's alone, a sign on that picture; nowhere else (decided 2026-11-04).
-    **Never confuse it with a Lull patch:** the patch is a plaster stuck on the skin, flat with a visible edge, cheap and
-    disposable, pale blue; the implant is inside the head, only a cyan point. Only the place is the same.
-    The title's patch already reads as one; keep that wherever patches appear (Lull users, the clinic, Chapter 3).
+    **Lull is a point of light behind the ear too, and the two must not be confused** (decided 2026-11-05, story §10b): Lull is pale
+    blue, the larger of the two, and pulses slowly; the implant is a smaller cyan point that lights only when she tags. Nothing else
+    behind an ear glows (Bao's hearing aid is plain grey). The title's Teo already shows it.
   - **face at 50 px** (decided 2026-11-04, variant B of `docs/characters/juno50_faces_x3.png`): eyes two
     pixels tall, a small mouth, the fringe showing under the hood; cute, but not a cartoon. The street
     sprites leave the implant out (decided 2026-11-04): the engine mirrors them for SW and NW, so a
@@ -353,7 +353,7 @@ All OSD elements are in phosphor values, in 3x5 capitals; only the implant parts
 | Where | What |
 |---|---|
 | top left | camera ID and place (`CAM 07 // LOWER NINTH / KOWALSKI ST`), the owner (`HALCYON CIVIC SURVEILLANCE`), the link (`LINK: J.REYES IMPLANT OVERRIDE`, cyan) |
-| top right | the timestamp (`2091-11-03 23:51:07`), a blinking `● REC`, the lens state (`F2.0 WIDE`, `IR OFF`) |
+| top right | the timestamp (`2091-11-06 23:51:07`), a blinking `● REC`, the lens state (`F2.0 WIDE`, `IR OFF`) |
 | bottom left | thumbnails of the linked cameras (`CAM 06`, `CAM 07` marked `LIVE`, `CAM 08`). A click switches cameras; switching is changing rooms. |
 | bottom middle | the audio bar: what the camera's mic hears, as `NAME> line` (the speaker's name in their colour, or `???`) |
 | bottom right | `CACHE n/8`: Juno's recorded clips, stills and data, the inventory of feed mode |
