@@ -3,6 +3,7 @@
 Stand: Entwurf (2026-11-03). Engine-Seite: `docs/PLAN.md` C12 (Dialog v2) und C13 (Knoten-Editor).
 Story: `docs/story.md`. Was hier steht, ist unser eigenes System: Wir nehmen von Disco Elysium die
 **Tiefe und die Idee der inneren Stimmen**, nicht seine Fertigkeiten, Namen oder Texte.
+Dieses Dokument regelt, wie Gespräche gebaut sind; wie sie klingen, steht in `docs/dialog-style-guide.md`.
 
 ## 1. Was wir von Disco Elysium lernen
 

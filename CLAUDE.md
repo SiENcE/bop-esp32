@@ -33,6 +33,7 @@ code comments English.
 | `docs/kapitel0-design.md` | the prologue "Nachtschicht", plus the rules every chapter uses: the deck as a computer and EVI (§2), feed mode (§3), game time and routines (§4), the steps 0–12 (§6) |
 | `docs/kapitel1-design.md` | Chapter 1 "Glass": three jobs over three evenings, the WREN thread, the murder in cam31 |
 | `docs/dialog-design.md` | dialogue (role model Disco Elysium): Juno's six inner voices, deterministic checks, a log panel; engine work C12/C13 |
+| `docs/dialog-style-guide.md` | **how all text sounds** (German): the tone, the techniques, the kinds of text, hard rules (du/Sie, Lull vs. implant, length), a voice card for every character and inner voice, a checklist; read it before writing any line |
 | `docs/style-guide.md` | **all art and UI** (decided). §8a "Everything is cyberpunk" lists every part of the screen and its state |
 | `docs/PLAN.md` | the build plan: engine work C1–C13, phases H0–H10 with "done when"; status at the top |
 | `docs/mockups/` | the decided looks: street mode `mock_c_iso_x3.png`, feed mode `mock_e_cctv_x3.png`; new mockups go here (`mock_f_deck` next) |

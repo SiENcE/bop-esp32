@@ -12,6 +12,7 @@ Where we are (everything is committed; the engine copy is at Cutaway.js be4941d)
 - **The intro "Die letzte Schicht" is done and approved** (docs/kapitel0-design.md §5), about 1:45. The sequence "intro" in game/intro.js; it ends
   on the ride down in the lift, then the title screen.
 - **The prologue plays from the flat to its end card**, on Tuesday 2091-11-06 (game day 1). It does not go on into Chapter 1 yet.
+- **How all text sounds is written down:** docs/dialog-style-guide.md, with a voice card for every character. Read it before writing any line.
 - **Chapter 1 "Glass" is a playable mock on flat blocks:** `index.html?act=kapitel1`, game days 2 to 4 (Wednesday to Friday). I check everything by
   playing it, and I decide what gets painted afterwards. Design: docs/kapitel1-design.md (the mock's simplifications at the end of §2, "Die Stadt" in §7);
   decisions: story §10b, marked provisional until the mock has been played.

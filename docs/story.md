@@ -580,5 +580,7 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
 - **Den Takt im Klartext sagt nur EVI,** als letzte Stufe ihres Hinweises zu `cam31`. Motte sagt nur, dass das Licht seiner Mutter komisch blinkt, immer gleich.
 - **Die Tasche:** Dinge, die Juno in der Hand hält, sind Gegenstände; Clips und Notizen liegen im CACHE. EVI sitzt immer fest in der Tasche.
 - **Das Ende von Kapitel 2 steht:** Lantern öffnet die Wallet und sendet sie, niemand glaubt ihm, nur Juno kann sie neben ihre Kameras legen.
+- **Wie die Texte klingen, regelt `docs/dialog-style-guide.md`.** EVI bleibt, wie sie ist: niedlich und trotzdem ein echtes Gegenüber, und sie mischt sich nicht in Gespräche mit anderen ein.
+- **Der Anfang von Kapitel 2:** Juno kommt zum ersten Mal nach dem Mord wieder nach Hause. EVI begrüßt sie und fragt, ob sie den Monitor heller machen soll. Mehr geschieht nicht (`dialog-style-guide` §8).
 - **Das Implantat** durfte Juno behalten, weil das Herausnehmen mehr gekostet hätte (wie sie es im Prolog sagt). Illegal ist es nicht.
 - **Ines' Kameras:** vier am Mittwoch und Donnerstag (`cam21` bis `cam24`), am Freitag dazu `cam30` und `cam31`, zusammen sechs.
