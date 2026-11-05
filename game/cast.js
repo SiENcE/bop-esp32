@@ -88,7 +88,8 @@ for (const [id, [look, wrong]] of Object.entries(COMMUTERS)) {
   Cutaway.actor(id, {
     name: "Pendler", color: "#8acfae",
     costume: { idle: `${id}_feed`, walk: `${id}_feed_walk`, talk: `${id}_feed` },
-    look, talk: wrong,
+    // (in Chapter 1 the same figures wait in the clinic's queue)
+    look: [{ if: "day=1", then: [look], else: ["Müde. Wie alle hier."] }], talk: [{ if: "day=1", then: [wrong], else: ["Nicht sie."] }],
   });
 }
 

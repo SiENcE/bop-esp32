@@ -47,6 +47,14 @@
       // beside the head; near the top (under the display's lines) beside the feet instead
       small(ctx, name, b.box[0] + b.box[2] + 3, b.box[1] < 34 ? b.box[1] + b.box[3] - 6 : b.box[1] - 2, C.implant);
     }
+    // someone else on the protocol: a link Juno didn't make, pale, pulsing while it is active (kapitel1-design §7)
+    for (const link of Halcyon.links ?? []) {
+      const b = Cutaway.scene.boxes().find((x) => x.actor === link.actor);
+      if (!b || !S().test(link.if)) continue;
+      const on = Math.sin(Cutaway.clock.time / 420) > 0;
+      brackets(ctx, b.box, on ? C.implant : C.phosphorDim);
+      small(ctx, t("UNKNOWN LINK"), b.box[0] + b.box[2] + 3, b.box[1] - 2, on ? C.implant : C.phosphorDim);
+    }
     // the camera's display: who, where, whose (phosphor), the link (implant cyan)
     if (cam) {
       small(ctx, t("CAM {id} // {place}", { id: cam.id, place: t(cam.place) }), 4, 4, C.phosphorBright);
@@ -59,7 +67,7 @@
     // hotspots `thumb_<cam>`; the rects are Halcyon.osd's)
     const O = Halcyon.osd;
     Object.keys(Halcyon.cams).forEach((c, i) => {
-      if (!S().flag(`link_${c}`)) return;
+      if (!S().flag(`link_${c}`) || !S().test(Halcyon.cams[c].if)) return;     // (linked, and known of: as on the map)
       const [x, y, w, h] = O.thumb(i), live = c === id;
       ctx.fillStyle = live ? C.phosphorDim : C.ink; ctx.fillRect(x, y, w, h);
       small(ctx, t("CAM {id}", { id: Halcyon.cams[c].id }), x + w / 2, y + 3, live ? C.phosphorBright : C.phosphor, "center");

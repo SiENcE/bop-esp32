@@ -565,9 +565,10 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
 - **Der unbekannte Link** steht in der Schlange vor der Lull-Klinik (`cam21`) als `UNKNOWN LINK` über jemandem, pulsiert, wenn er aktiv ist, und verschwindet nicht; `???` gehört Ashe.
 - **Der Mörder heißt Corvin Ashe** (bisher Rask, zu nah an Ratz). Ashe passt zum weißen Mantel und zu dem, was er zurücklässt.
 - **Kapitel 1, vorläufig bis zum Durchspielen im Mock** (`kapitel1-design`): Am Freitag gibt es kein Schlafen, nach 22:00 gilt „nicht gesendet“, um 22:30 bucht das Konto die Miete ab und
-  Teo schreibt, wenn sie nicht reicht, und die Uhr hält um 22:45, bis `cam31` verbunden ist. Wer den Donnerstag verschläft, findet den Ort am Freitag über Ines' Weg am Sumpf-Abgang.
+  Teo schreibt, wenn sie nicht reicht, und die Uhr hält um 22:45, bis Juno auf `cam31` zusieht. Wer den Donnerstag verschläft, findet den Ort am Freitag über Ines' Weg am Sumpf-Abgang.
   `cam12` und `cam30` gehen über Junos alten Zugang, `cam24` über Sable oder Mottes zweite Lektion; das „Kassenbuch-Rätsel“ ist gestrichen. Ines ist von Anfang an nicht
   erreichbar. Morrow sagt: „Freitag fährt keiner die Kowalski.“ Das Richtmikro kommt erst in Kapitel 2. Frau Kessler und Bao nehmen den Prolog wieder auf.
+- **Die Abende von Kapitel 1 spielen auch draußen** (`kapitel1-design`, „Die Stadt“): die Gasse und das Dach des Kessel-Blocks, von dem man die Ringe sieht; der Zeitungskrieg, die Frau, die sich erinnert, die weißen Träger; die Regenleserin, der Prediger, die halbe Reparatur. Das Bett geht erst ab 01:00 auf.
 - **Das Ende von Kapitel 2 steht:** Lantern öffnet die Wallet und sendet sie, niemand glaubt ihm, nur Juno kann sie neben ihre Kameras legen.
 - **Das Implantat** durfte Juno behalten, weil das Herausnehmen mehr gekostet hätte (wie sie es im Prolog sagt). Illegal ist es nicht.
 - **Ines' Kameras:** vier am Mittwoch und Donnerstag (`cam21` bis `cam24`), am Freitag dazu `cam30` und `cam31`, zusammen sechs.

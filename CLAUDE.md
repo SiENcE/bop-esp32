@@ -72,7 +72,7 @@ code comments English.
 | `game/screens.js` | the UI layer that draws the deck's screen, the feeds' OSD, the implant overlay and zoom windows (rooms hold the hotspots so the solver sees every click; this layer only draws) |
 | `game/glyphs.js` | the letters of both fonts as plain data, shared by `game/font.js` and the art (`art/lib/text.js` writes with them in pxl, so mockups and interface art read as in the game) |
 | `game/skin.js`, `font.js`, `transitions.js`, `sounds.js`, `music.js`, `title.js`, `hints.js` | the look (frames, cards, labels, choices), the fonts, room transitions, synthesised sounds and music, title and menu screens, hints |
-| `art/**/*.px.js` | pxl sources: `lib/` (shared `iso.js`, `feed.js`), `characters/`, `rooms/`, `cams/`, `ui/`, `intro/`, `mockups/`, `test/`; `*_review.px.js` are review sheets, never built into the game |
+| `art/**/*.px.js` | pxl sources: `lib/` (shared `iso.js`, `feed.js`), `characters/`, `rooms/`, `cams/`, `mock/` (flat blocks of what isn't painted yet), `ui/`, `intro/`, `mockups/`, `test/`; `*_review.px.js` are review sheets, never built into the game |
 | `assets/*.js` | built atlases (checked in, so the game runs without Node) |
 | `tools/` | `build_art.sh`, `sync-engine.sh`, `render-sounds.mjs`, `solve-act.mjs` (one act alone) |
 | `studio.json` | the editor's studio: writable folders, layer files, tasks |
@@ -110,7 +110,7 @@ Planned (PLAN.md §3): `feed.js`, `ledger.js`, `money.js`, `routines/<chapter>.j
   prologue (dev), `?manual` freezes the clock, `?nointro`, `?edit` / F10 the editor, F9 the debug overlay.
 - The editor with the studio: `node lib/cutaway/tools/studio.mjs` (guide: the engine's `docs/editor.md`, F1).
 - Engine copy: `sh tools/sync-engine.sh`.
-- Art: `sh tools/build_art.sh [test | characters | ui | title | intro | cams | room <id> | rooms]` (no argument:
+- Art: `sh tools/build_art.sh [test | characters | ui | title | intro | cams | mock | room <id> | rooms]` (no argument:
   everything).
 - Sounds: `node tools/render-sounds.mjs` (every sound of `game/sounds.js` into `build/sounds/`, `all.wav`
   in turn).
@@ -125,10 +125,14 @@ node lib/cutaway/tools/validate.mjs index.html        # 0 errors (warnings are k
 node lib/cutaway/tools/solve.mjs index.html --full    # "no soft-locks", every state has a hint (a few seconds)
 node lib/cutaway/tools/play.mjs index.html            # headless playthrough with real clicks: "all passed"
 node tools/solve-act.mjs kapitel1 --full               # Chapter 1 alone: "no soft-locks", every state has a hint
+node lib/cutaway/tools/play.mjs index.html --act kapitel1 --path tools/paths/kapitel1_main.json   # its main way with real clicks: "all passed"
 ```
 
 Keep Chapter 1's state small: a flag nobody asks about doubles every state. What only shows (a dot for unread) is a view flag; what
-the prologue leaves open is closed with `day=1`; a chapter marks the rooms Juno knows with `{ been_to: [...] }`.
+the prologue leaves open is closed with `day=1`; a chapter marks the rooms Juno knows with `{ been_to: [...] }`; flavour is a look, not a
+moment (seen or not doubles what follows); what no longer matters is forgotten overnight (`Halcyon.nights[day].passes`). Every time is on the
+15-minute ticks and only waiting moves the clock: one time off the grid multiplied the states by ten. Independent threads (jobs A and B) will
+have to be solved one by one.
 
 ## Art
 

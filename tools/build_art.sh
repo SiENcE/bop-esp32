@@ -12,6 +12,7 @@
 #                                         art/ui/deck_wallpaper.px.js -> assets/deck.js)
 #        sh tools/build_art.sh intro    (the intro "Die letzte Schicht": art/intro/*.px.js -> assets/intro.js)
 #        sh tools/build_art.sh cams     (the feed cameras: art/cams/*.px.js -> assets/cams.js; review_* stay out)
+#        sh tools/build_art.sh mock     (the blocks of what is not painted yet: art/mock/*.px.js -> assets/mock.js)
 #        sh tools/build_art.sh room flat (a street-mode room: art/rooms/flat.px.js -> assets/room_flat.js, its
 #                                         flat_* assets only; art/rooms/flat_review.px.js is not built; a room
 #                                         baked from a map, art/rooms/flat.map.js, prints its measured layout,
@@ -83,6 +84,14 @@ cams() {
     $ATLAS build/art/cams assets/cams.js --only "cam*"
 }
 
+mock() {
+    rm -rf build/art/mock
+    for f in art/mock/*.px.js; do
+        $PXL build "$f" --out build/art/mock --no-preview | tail -n 1
+    done
+    $ATLAS build/art/mock assets/mock.js --only "cam*,gasse_*,laundromat_*"
+}
+
 room() {
     id="$1"
     if [ -z "$id" ] || [ ! -f "art/rooms/$id.px.js" ]; then echo "usage: sh tools/build_art.sh room <id> (art/rooms/<id>.px.js)"; exit 2; fi
@@ -106,12 +115,13 @@ case "${1:-all}" in
     test) test_art ;;
     characters) characters ;;
     cams) cams ;;
+    mock) mock ;;
     intro) intro ;;
     ui) ui ;;
     deck) deck ;;
     title) title ;;
     room) room "$2" ;;
     rooms) rooms ;;
-    all) test_art; characters; cams; ui; deck; title; intro; rooms ;;
+    all) test_art; characters; cams; mock; ui; deck; title; intro; rooms ;;
     *) echo "unknown group: $1"; exit 2 ;;
 esac

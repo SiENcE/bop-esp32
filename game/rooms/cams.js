@@ -36,7 +36,8 @@ Halcyon.camRoom = function (id, o) {
   const O = Halcyon.osd;
   /** @type {Record<string, any>} */
   const hotspots = {
-    rec: { name: "REC", rect: O.rec, z: 5,
+    // (only where something can be recorded, `rec`: else every state in a camera would come twice, REC on and off)
+    rec: { name: "REC", rect: O.rec, z: 5, if: o.rec ?? "day=1",
       use: [{ sfx: "rec" }, { if: "rec_on", then: [{ unset: "rec_on" }, "Aufnahme aus."], else: [{ set: "rec_on" }, "Aufnahme läuft."] }] },
     wait: { name: "Vorspulen", rect: O.wait, z: 5, use: [{ forward: true }] },
     back: { name: "Deck", rect: O.back, z: 5, exit: { to: "deck" } },
@@ -45,7 +46,7 @@ Halcyon.camRoom = function (id, o) {
   if (hotspots.rewind) hotspots.rewind.rect = O.rewind;
   Object.keys(Halcyon.cams).forEach((c, i) => {
     if (c === id) return;
-    hotspots[`thumb_${c}`] = { name: `CAM ${Halcyon.cams[c].id}`, rect: O.thumb(i), z: 5, if: `link_${c}`, use: [{ goto: c }] };
+    hotspots[`thumb_${c}`] = { name: `CAM ${Halcyon.cams[c].id}`, rect: O.thumb(i), z: 5, if: [`link_${c}`, ...(Halcyon.cams[c].if ? [Halcyon.cams[c].if] : [])], use: [{ goto: c }] };
   });
   Cutaway.room(id, { name: `CAM ${Halcyon.cams[id].id}`, background: `${id}_bg`, observe: true, feed: id,
     post: Halcyon.FEED_POST, lines: "bottom", label: true, ambience: ["feed_hiss", "feed_rain", "city_far"],
@@ -59,7 +60,7 @@ const A3 = Halcyon.at.cam03, A4 = Halcyon.at.cam04;
 Halcyon.camRoom("cam03", {
   mic: { at: A3.mic, clear: 40, lost: 150 },
   hotspots: {
-    mast: { name: "Kamera am Mast", rect: A3.mast,
+    mast: { name: "Kamera am Mast", rect: A3.mast, if: "day=1",
       look: "Gegenüber, am Mast: noch eine Kamera. Zeigt auf die Ecke bei Yuen's.",
       use: [{ zoom: "zoom_sticker_cam04" }, "HCS-04. K7-731.", "Der Wartungscode, auf das Gehäuse geklebt. Halcyon spart an allem.", { zoom: false }, { set: "code_cam04" }] },
     vending: { name: "Nudelautomat", rect: A3.vending,

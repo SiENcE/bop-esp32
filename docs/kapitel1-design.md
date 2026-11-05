@@ -26,13 +26,20 @@ zum nächsten Abend. Jeder Abend beginnt mit neuen Nachrichten auf dem Deck.
 |---|---|---|
 | **1 (Mi, 7.11.)** | drei Auftragsangebote: Varga (A), die Tidewater Boys (B), WREN (C) | Teo kommt vorbei (§7). Ines' erster beobachtbarer Abend. Der Drain-Markt ist offen. Okonkwo öffnet den Tresor (01:00). |
 | **2 (Do, 8.11.)** | eine Mahnung vom Vermieter, die Werbung „Lull: 2 Wochen gratis" | Ines legt den Stick in den Trockner (20:00); Lantern holt ihn (03:00). Okonkwo öffnet den Tresor (01:00), zum letzten Mal. |
-| **3 (Fr, 9.11.)** | Varga drängt („Freitag ist heute."), WREN will „bis 22 Uhr" den Ort | Kein Schlafen. 22:00 WRENs Frist, 22:30 bucht das Konto die Miete ab (§5). Die Uhr hält um 22:45, bis `cam31` verbunden ist. 23:00 das Treffen in der Metro, `cam31`. Kapitelende. |
+| **3 (Fr, 9.11.)** | Varga drängt („Freitag ist heute."), WREN will „bis 22 Uhr" den Ort | Kein Schlafen. 22:00 WRENs Frist, 22:30 bucht das Konto die Miete ab (§5). Die Uhr hält um 22:45, bis Juno auf `cam31` zusieht. 23:00 das Treffen in der Metro. Kapitelende. |
 
 Was nicht an einen Abend gebunden ist, geht an jedem (die Aufträge A und B lassen sich am Abend 1, 2
 oder 3 abschließen, sofern ihr Moment noch kommt; ihre Momente wiederholen sich jede Nacht, außer wo
 angegeben). WREN führt durch die drei Abende und erzwingt am dritten das Ende.
 Mit dem Treffen endet das Kapitel: Die Nacht nach Abend 3 gibt es nicht. Was nach 23:00 liegt (Okonkwo um 01:00, Morrow um 00:30), kommt
 also nur in den Nächten von Abend 1 und 2. Auftrag B muss bis dahin gelöst sein, verkaufen geht noch am Freitag.
+
+### Im Mock vereinfacht (Stand Auftrag C, beim Durchspielen prüfen)
+
+- Die Wege kosten keine Zeit, die Uhr läuft nur beim Warten (§9).
+- WRENs Antworten (zurückschicken, senden, nicht senden) gibt es erst am Freitag; vorher würde jede den ganzen Rest verdoppeln.
+- `cam22` wird mit der Speisekarte gleich verbunden. Am Freitag sind `cam22` und `cam23` weg (Ines geht nicht mehr hin), `cam24` ist dafür offen, bis Sable und Motte den Code geben.
+- Im Bild stehen die Figuren des Prologs für Ines und Lantern; REC geht in Kapitel 1 noch nirgends.
 
 ## 3. Auftrag A: „Der verschwundene Schuldner" (Varga)
 
@@ -117,9 +124,9 @@ zahlt." Die Kette ist dieselbe; nur die Entscheidung am Ende (C9) ändert sich.
 | Zeit | Abend 1 | Abend 2 | Abend 3 |
 |---|---|---|---|
 | 19:00 | verlässt die Klinik (`cam21`) | dito | dito |
-| 19:20 | Nudelbar „Pho Pump" (`cam22`), allein, schreibt etwas auf eine Serviette, steckt sie ein | dito, aber sie schaut oft zur Tür | geht nicht in die Nudelbar |
+| 19:15 | Nudelbar „Pho Pump" (`cam22`), allein, schreibt etwas auf eine Serviette, steckt sie ein | dito, aber sie schaut oft zur Tür | geht nicht in die Nudelbar |
 | 20:00 | Waschsalon SUDS & SPIN (`cam23`), wäscht, sonst nichts | Waschsalon, legt einen **Datenstick** in Trockner 6 und geht ohne Wäsche | — |
-| 20:30 | nach Hause, Wohnblock Lerche (`cam24`) | dito | 22:20 verlässt das Haus mit einer Tasche, Richtung Sümpfe (`cam30`) |
+| 20:30 | nach Hause, Wohnblock Lerche (`cam24`) | dito | 22:15 verlässt das Haus mit einer Tasche, 22:30 am Sumpf-Abgang (`cam30`) |
 | 03:00 | — | **jemand im Rollstuhl, geflickter Poncho, Antennen,** holt den Stick aus Trockner 6 und das Ticket (`cam23`) | — |
 | 23:00 | — | — | das Treffen (`cam31`) |
 
@@ -134,7 +141,7 @@ zahlt." Die Kette ist dieselbe; nur die Entscheidung am Ende (C9) ändert sich.
 | C5 | `cam23` | Abend 2, 20:00: der Stick in Trockner 6, der **Schlüssel** zu Ines' Daten-Wallet: Ohne ihn lässt sie sich nicht lesen (story §10b). Dazu legt sie ein Ticket auf die Theke. **Moment** `ines_drop`. | `saw_drop` |
 | C6a | `laundromat` | Juno geht selbst hin (Straßenmodus, zwischen 20:05 und 03:00), öffnet Trockner 6 und liest den Stick: ein Schlüssel, sonst nichts; wozu, weiß sie noch nicht. Auf der Theke liegt das Ticket: „Ticket 31 – Fr 23:00". Juno: „Einunddreißig. Die alte Metrolinie 31? Freitag, elf Uhr." Sie legt den Stick zurück (oder nimmt ihn: Lantern findet nur das Ticket, kommt trotzdem zum Treffen, kann die Wallet aber nicht öffnen, und in Kap. 2 sucht er den Stick bei Juno). | `know_meeting`, ggf. `+stick_ines` |
 | C6b | `cam23` | Oder: um 03:00 den Rollstuhl mit den Antennen markieren, wenn er den Stick und das Ticket holt, und ihm folgen: `cam12` (Drain-Markt-Eingang: Die Düsen tragen ihn über die Leiter hinunter, ein kurzer Satz im Feed) → `cam30` (der Sumpf-Abgang, er schwimmt die Treppe hinab, auf ein Schild „LINE 31 – CLOSED" zu). Juno zählt zusammen. | `know_meeting`, `tag_lantern` |
-| C6c | `cam30` | Abend 3, wer den Treffpunkt noch nicht kennt: Um 22:20 verlässt Ines das Haus, kurz darauf kommt sie am Sumpf-Abgang vorbei, am Schild `LINE 31 – CLOSED`. So geht das Kapitel auch, wenn Juno den Donnerstag verschlafen hat. | `know_meeting` |
+| C6c | `cam30` | Abend 3, wer den Treffpunkt noch nicht kennt: Um 22:15 verlässt Ines das Haus, um 22:30 kommt sie am Sumpf-Abgang vorbei, am Schild `LINE 31 – CLOSED`. So geht das Kapitel auch, wenn Juno den Donnerstag verschlafen hat. | `know_meeting` |
 | C7 | Deck | `cam31` verbinden: eine **alte Metro-Kamera**, aus der Zeit vor Halcyon, die Halcyon einst nachgerüstet und dann vergessen hat. Kein Code findet sie. Erst das alte Beobachter-Protokoll aus Junos Implantat (Netzkarte: Rechtsklick auf `cam31`, Juno: „Das alte Protokoll. Das kann nur noch mein Kopf.") verbindet sie. Ein Moment des Schauders: Im Rauschen vor dem Bild sieht man für einen Takt das Auge. | `link_cam31` |
 | C8 | Deck | WREN drängt am Abend 3: „Bis 22 Uhr. Wo und wann." | — |
 | C9 | Deck | **Entscheidung 1**: WREN den Ort senden oder nicht (unten). | `e1_sold` / `e1_refused` |
@@ -167,6 +174,26 @@ Kap. 2: Nach dem Senden weiß die Quiet sofort, wer Juno ist; nach der Weigerung
 | Abend 1 | Deck | **Frau Kessler** schreibt, je nach P1. Die Wahrheit: „Er ist nicht heimgekommen. Schulden, haben Sie geschrieben. Wo ist er?“ Der Schnitt: „Er ist nicht heimgekommen. Zu ihr, nehme ich an.“ Nichts: „Er ist nicht heimgekommen. Sie haben wirklich nichts gefunden?“ |
 | ab Abend 1 | `kowalski` | **Bao** erinnert sich an den Dienstag. Bar bezahlt: „Bar! Mein Alter glaubt es immer noch nicht.“ Sonst: „Steht noch an, von Dienstag. Eilt nicht.“ |
 
+### Die Stadt: rausgehen (entschieden 2026-11-05)
+
+Die Abende sollen nach Leben in der Stadt schmecken, nicht nach Warten aufs Bett. Das **Bett** geht erst ab 01:00 auf („Schlafen? Ich schlaf nicht vor eins. Nie.“).
+
+**Zwei neue Orte:** die **Gasse** hinter dem Gitter in der Kowalski-Straße (Kabelbündel, Dampf, Nischen, in denen Leute wohnen; von hier geht es zum Waschsalon und zum Drain-Markt) und das **Dach des Kessel-Blocks**, von dem aus man **die Ringe** zum ersten Mal von unten sieht: Unterseiten so groß wie ein Himmel und das tropfende Wasser, das hier als Regen gilt. Ob das Dach eine eigene große Einstellung wird wie die Bilder im Vorspann, ist offen; im Mock ist es ein Block.
+
+**Drei kleine Geschichten:**
+
+| Geschichte | Was passiert | Verbindung zur Hauptstory |
+|---|---|---|
+| **Der Zeitungskrieg** | Der Zettelstreit im 14. Stock wird zum Fall: Wer klaut die Zeitung? Dafür müsste Juno den eigenen Block glassen, was sie Motte gerade verbietet. Die Diebin ist Frau Haldane, im Schlaf. In ihrer Wohnung liegt der Stapel, auf jeder Seite sind Gesichter eingekreist wie Junos Klammern. | Schlafende markieren, was falsch aussieht (story §6). Niemand erklärt es. |
+| **Die Frau, die sich erinnert** (story §9) | Sie ist sicher, einen Mord gesehen zu haben, in einer Straße, in der sie nie war. Juno trifft sie im LUCKY STATIC und findet die Straße. | Sie ist die Person mit `UNKNOWN LINK` aus `cam21`. In Kapitel 2 schreibt sie: „Ich hab wieder was gesehen. Eine Frau auf einem Bahnsteig.“ |
+| **Die weißen Träger** | Donnerstagnacht auf der Kowalski: Ein Halcyon-Wagen holt einen Sinker aus dem Haus, zwei freundliche Leute in Weiß. Die Nachbarn sehen weg. Juno kann zusehen, filmen und an Vesper verkaufen, oder die Tochter trösten. | Zeigt, was mit Sinkern geschieht, lange bevor Teo einer wird. Im NETZ ist es der Beitrag „Mein Vater wacht nicht auf“. |
+
+**Drei merkwürdige Leute:** die **Regenleserin** auf dem Dach (kostet das Tropfwasser und sagt, von welchem Ring es kommt: „Der Vierte. Die gießen ihre Orchideen.“; ihre Wettervorhersagen sind eigentlich Klatsch), der **Prediger** der Wachen Kirche auf dem Drain-Markt (seit neun Tagen wach, zittert vor Kaffee und schenkt Juno einen ein) und **die halbe Reparatur** auf dem Gerüst am Werbebildschirm (wohnt dort und repariert nur die linke Hälfte, die rechte gehört zu einem anderen Vertrag).
+
+**Die Abende:** Mittwoch ist Ankommen (Teo, die Aufträge, die Gasse, der erste Gang zum Drain-Markt). Donnerstag ist die Stadt (das Dach, der Zeitungskrieg, die weißen Träger; nebenbei Ines' Stick). Freitag wird alles still: dieselben Orte, aber der Bildschirm zeigt das Auge, Bao redet weniger, die Regenleserin sagt: „Heute schmeckt's nach gar nichts.“
+
+**Reihenfolge im Mock:** nach Auftrag C und dem Ende, vor den Aufträgen A und B.
+
 ## 8. Das Ende: CAM 31
 
 Feed-Modus, `cam31`. Eine alte Metro-Station unter Wasser bis zum Bahnsteig; eine einzelne Notbeleuchtung; Tropfen. Die Kamera ist alt,
@@ -195,7 +222,7 @@ Live-Übertragung.“ 750 Chits, die zweite Zeile im Kassenbuch. Es schreibt sic
 | `okonkwo_shop` | 320x180 | warmes Glühlampenlicht, Regale | Tür → `kowalski` | Theke, Tresor (dahinter), Reissäcke, Batterien, Okonkwo | ein Foto von Okonkwos Familie vor der Flut, am Strand der alten Stadt |
 | `drain_market` | 480x180 (scrollt) | Bernstein, Rauch, Magenta-Neon | Leiter hinauf → `kowalski` (über die Gasse), Vorhang → `sable_booth`, Treppe hinab (Kap. 2) | Stände: Ratz' Elektroschrott, ein Garküchenstand, ein Organ-Tausch-Schild (`KIDNEYS ONLY`), gebrauchte Implantate in Gläsern | ein Prediger der „Wachen Kirche", der gegen Lull predigt; niemand hört zu |
 | `sable_booth` | 320x180 | Violett und Bernstein, Rauch | Vorhang → `drain_market` | Sable hinter einem Tisch voller Bildschirme, ein Käfig mit einem Vogel aus Draht | Sables Preisliste an der Wand: `NAMES 50. ADDRESSES 80. SECRETS: ASK.` |
-| `laundromat` | 320x180 | Grünstich, Neonröhren, Dampf | Tür → Straße (Bezirkswechsel, kostet 1 Takt) | 8 Maschinen, Trockner 6, die Ticket-Theke, ein schlafender Mann | ein Schild `NO SNEAKERS IN THE DRYER` mit drei Paar Turnschuhen darunter |
+| `laundromat` | 320x180 | Grünstich, Neonröhren, Dampf | Tür → `gasse` | 8 Maschinen, Trockner 6, die Ticket-Theke, ein schlafender Mann | ein Schild `NO SNEAKERS IN THE DRYER` mit drei Paar Turnschuhen darunter |
 
 ### Kameras
 
@@ -216,11 +243,10 @@ Live-Übertragung.“ 750 Chits, die zweite Zeile im Kassenbuch. Es schreibt sic
 
 | Was | Kostet |
 |---|---|
-| Kessel-Block und Kowalski-Straße, das Deck, der Chat, Kaufen | nichts |
-| zum Drain-Markt und zurück | je 1 Takt |
-| zum Waschsalon und zurück | je 1 Takt |
-| Essen, den Automaten anzapfen | je 1 Takt |
-| im Feed | nur Vorspulen |
+| alle Wege, das Deck, der Chat, Kaufen | nichts |
+| Warten: am Deck und in jedem Feed | bis zum nächsten Ereignis |
+
+Die Uhr läuft nur beim Warten (entschieden im Mock, 2026-11-05): So kann man nichts durch einen Weg verpassen, und alle Zeiten liegen auf den 15-Minuten-Takten. Jede andere Uhrzeit würde jeden Zustand vervielfachen. Beim Durchspielen prüfen, ob sich das richtig anfühlt.
 
 ## 10. Figuren (neu in Kapitel 1)
 
