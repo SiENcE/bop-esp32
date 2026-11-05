@@ -585,3 +585,15 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
 - **Der Anfang von Kapitel 2:** Juno kommt zum ersten Mal nach dem Mord wieder nach Hause. EVI begrüßt sie und fragt, ob sie den Monitor heller machen soll. Mehr geschieht nicht (`dialog-style-guide` §8).
 - **Das Implantat** durfte Juno behalten, weil das Herausnehmen mehr gekostet hätte (wie sie es im Prolog sagt). Illegal ist es nicht.
 - **Ines' Kameras:** vier am Mittwoch und Donnerstag (`cam21` bis `cam24`), am Freitag dazu `cam30` und `cam31`, zusammen sechs.
+
+## 10c. Entscheidungen (2026-11-06)
+
+Die Blockskizzen für den Mord und die Figuren der Stadt sind freigegeben (`docs/cams/cam31_blocks_x3.png`, `docs/characters/feed_ch1_blocks_x4.png`, `docs/characters/stadt_people_blocks_x4.png`, `stadt_people_blocks_room_x3.png`):
+
+- **Ashes Mantel** ist im Feed eine Stufe dunkler als Ines' Kittel (Wert 8 und 9), sonst wirkt er graugrün statt weiß. Die Maske brennt ohne dunklen Rand über den Kopf hinaus.
+- **`cam31` ist gröber, weil das Bild in halber Auflösung gebacken ist**, nicht nur wegen des Korns; die Figuren bleiben 1x.
+- **Die Daten-Wallet hat ein kleines Licht,** das bei der Übergabe zu sehen ist: Ines' Technik.
+- **Das Gerüst des Monteurs steht immer da,** auch im Prolog und auf dem Menübild (`„Der Kollege kommt seit 2087“`).
+- **Frau Imai sitzt an einem kleinen Tisch** im LUCKY STATIC.
+- **Die Regenleserin hat ihre eigene Regenrinne** auf einer Stange vor der Brüstung. Das ändert das Dach von heute, nicht das alte Foto am Deck.
+- **Die Technik der anderen:** die Regenleserin ein Tropfenzähler am Eimer, der Prediger ein Zähler um den Hals mit seinen wachen Tagen (9, 10, 11), der Monteur eine Stirnlampe und `9-A` auf dem Rücken.

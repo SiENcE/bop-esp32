@@ -78,7 +78,7 @@ code comments English.
 | `game/skin.js`, `font.js`, `transitions.js`, `sounds.js`, `music.js`, `title.js`, `hints.js` | the look (frames, cards, labels, choices), the fonts, room transitions, synthesised sounds and music, title and menu screens, hints |
 | `art/**/*.px.js` | pxl sources: `lib/` (shared `iso.js`, `feed.js`), `characters/`, `rooms/`, `cams/`, `mock/` (flat blocks of what isn't painted yet), `ui/`, `intro/`, `mockups/`, `test/`; `*_review.px.js` are review sheets, never built into the game |
 | `assets/*.js` | built atlases (checked in, so the game runs without Node) |
-| `tools/` | `build_art.sh`, `sync-engine.sh`, `render-sounds.mjs`, `solve-act.mjs` (one act alone), `check.sh` (all the checks), `paths/` (Chapter 1's ways to click through) |
+| `tools/` | `build_art.sh`, `sync-engine.sh`, `render-sounds.mjs`, `solve-act.mjs` (one act alone), `check.sh` (all the checks), `check-hover.mjs` (the pointer turns hot), `paths/` (Chapter 1's ways to click through) |
 | `studio.json` | the editor's studio: writable folders, layer files, tasks |
 | `build/`, `out/` | scratch (raw pxl output, screenshots, renders), not checked in |
 | `.claude/skills/claude-pxl/` | the pxl skill, its own repo (gitignored) |

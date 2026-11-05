@@ -286,7 +286,7 @@
     },
     hover(/** @type {number} */ x, /** @type {number} */ y) {
       for (const { l } of openLists()) { if (l.up && inRect(x, y, l.up)) return Cutaway.i18n.t(UP); if (l.down && inRect(x, y, l.down)) return Cutaway.i18n.t(DOWN); }
-      return null;
+      return undefined;     // only the arrows are this layer's: null would say "over the layer" everywhere, and nothing under it would ever be hot
     },
     // the arrows for the marks and a controller's pointer (engine: layer targets)
     targets() {

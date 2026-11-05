@@ -23,4 +23,5 @@ for p in tools/paths/kapitel1_*.json; do
 done
 out=$(node lib/cutaway/tools/play.mjs index.html --touch 2>&1 | tail -1); line "prologue taps" "$out"; need "prologue taps" "$out" "all passed"
 out=$(node lib/cutaway/tools/play.mjs index.html --act kapitel1 --touch --path tools/paths/kapitel1_main.json 2>&1 | tail -1); line "taps: kapitel1_main" "$out"; need "taps: kapitel1_main" "$out" "all passed"
+out=$(node tools/check-hover.mjs 2>&1 | tail -1); line "the pointer turns hot" "$out"; need "the pointer turns hot" "$out" "all passed"
 [ "$failed" = 0 ] && echo "ALL PASSED" || { echo "FAILED"; exit 1; }
