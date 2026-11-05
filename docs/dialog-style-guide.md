@@ -76,7 +76,7 @@ verkauft, das Kassenbuch rechnet. So darf auch eine schöne Zeile fallen, ohne d
 
 - **Zu viel Slang.** Glass, Shine, Sinker und Chits wirken, wenn sie selbstverständlich und sparsam fallen.
 - **Zu viel Poesie.** Die Stadt darf poetisch aussehen, ihre Leute reden nicht ständig so.
-- **Zu viele Einzeiler.** Niemand ist eine Sprüchemaschine. Ernste Gespräche brauchen auch unspektakuläre Sätze.
+- **Zu viele Einzeiler.** Niemand ist eine Sprüchemaschine. Ernste Gespräche brauchen auch unspektakuläre Sätze. Die Blicke, die schon im Spiel stehen, bleiben, wie sie sind (entschieden 2026-11-06).
 - **Zu viel Erklärung.** Niemand erzählt seine Biografie oder Halcyons Geschichte, nur weil ein Gespräch begonnen hat.
 - **Künstliche Coolness.** Juno ist keine unfehlbare Heldin. Sie sieht zu viel, isst zu wenig und weiß nicht immer, was sie tun soll.
 - **Melodram.** Wer ständig von Verrat, Schicksal, Dunkelheit und der Wahrheit redet, verliert das Menschliche.
