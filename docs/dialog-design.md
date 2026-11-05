@@ -58,6 +58,7 @@ Verkauf, jede Warnung stärkt eine Stimme. Wer Juno ist, hört man.
 
 ## 4. Wie ein Gespräch gebaut ist
 
+- **Nie mehr als vier Optionen auf einmal** (entschieden 2026-11-05), den Weg zurück oder hinaus mitgezählt. Längere Gespräche sind verschachtelt: Ein Thema anschneiden bringt seine eigenen Optionen. `Halcyon.talkTree` (`game/talk.js`) baut so ein Gespräch und lässt mehr gar nicht zu.
 - **Nabe und Speichen:** Jedes größere Gespräch hat eine Nabe (die Fragen, die offen sind) und
   Speichen (Themen), die zur Nabe zurückführen. Abgehakte Themen verschwinden oder ändern sich.
 - **Haltungen statt Ja/Nein:** Wahlen unterscheiden sich im Ton (kalt, warm, spöttisch, ehrlich), und

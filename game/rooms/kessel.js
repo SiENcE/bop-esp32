@@ -107,7 +107,7 @@
         { text: "„Reparaturen.“", goto: "end", then: [{ set: "moth_met" },
           { say: "motte", text: "Reparaturen. Klar. Darum hast du drei Schlösser." }] },
         { text: "„Geh schlafen, Motte.“", goto: "end", then: [{ set: "moth_met" }, { set: "moth_brushed" },
-          { say: "motte", text: "Ich bin nicht müde." }, "Er schaut wieder auf sein Handheld. Aber er tippt nicht."] },
+          { say: "motte", text: "Ich bin nicht müde." }, "Er schaut wieder auf sein Handheld. Aber die kleine Figur darauf bleibt stehen."] },
       ],
     },
   });

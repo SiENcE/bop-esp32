@@ -62,7 +62,8 @@ code comments English.
 | `game/game.js` | start-up (`Cutaway.start`: 320x180, `de`, title screen), loaded last |
 | `game/halcyon.js` | the global `Halcyon`: the game's own actions and helpers, the registries (`cache`, `ledger`, `cams`, names); its header lists the flag conventions (`chits`, `tag_<who>`, `code_<cam>`, `link_<cam>`, `cache_<id>`, `ledger_<id>`, `rec_on`) |
 | `game/places.js` | `Halcyon.at`: every position, walk area and prop placement; rooms built from a map take theirs from `game/rooms/<id>.layout.js` (generated: never edit) |
-| `game/cast.js` | the actors (Juno in iso, the feed people) |
+| `game/cast.js`, `game/motte.js` | the actors (Juno in iso, the feed people); what Juno can say to Motte in passing |
+| `game/talk.js` | `Halcyon.talkTree`: a talk as a tree, where a topic opens its own options, never more than four at once |
 | `game/deck.js` | the deck as a computer (mockup F): its room (`buttons: false`, one flag `deck_app` for the open window, `chat_<contact>` for a thread) and its screen: the desktop with the wallpaper, the apps' windows (GLASS, CHAT, CACHE, BUCH, KONTO, NETZ, RADIO, MÜLL), EVI in her corner as the hint button; the chapters fill `Halcyon.contacts`, `threads`, `replies` |
 | `game/evi.js` | EVI: her voice (lines in their own place beside her corner, `lineBox`), she says the hints (`hints.configure({ by: "evi" })`); actions `{ evi: face }`, `{ evi_point: app }`, `{ deck_boot }`, `{ notify: contact }` (the message card over every mode) |
 | `game/rooms/<id>.js` | rooms: `cams.js` (cam03, cam04: watched rooms with the phosphor post-effects), `<id>.layout.js` (generated) |
@@ -97,6 +98,7 @@ Planned (PLAN.md §3): `feed.js`, `ledger.js`, `money.js`, `routines/<chapter>.j
   `solve --full` stays exhaustive. Every chapter must solve without soft-locks, and every state on the way
   needs a hint.
 - **What the player finds can be taken and used at once.** Nothing waits for an earlier click without a reason in the world: each thing has its own flag and the test is what the world allows (the item is there, the door is open). A gate needs a reason in the world: a time, knowledge the player really lacks (a date, a code), or a decision of the user's (the bed from 01:00). The prologue's tutorial steps are the exception.
+- **A dialogue never shows more than four options,** the way back included. Longer talks nest: a topic opens its own options (`Halcyon.talkTree`, `docs/dialog-design.md` §4).
 - **Looking only tells more; nothing the game needs may hang on it.** Looking is a right click with the mouse (the user's decision, it stays) and a long press on touch; a controller is planned (`docs/PLAN.md`, C14). All input stays pointer clicks on hotspots or choices, so it reaches every device: nothing may be built that a controller couldn't do later (no hover-only information, no dragging, no gestures, no aiming or timing as the only way).
 - Positions live in `game/places.js`, not scattered in room files. A street-mode room is a map
   (`art/rooms/<id>.map.js`, format in `art/lib/isomap.js`) baked with the kit and its light

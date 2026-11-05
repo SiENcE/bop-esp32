@@ -224,7 +224,7 @@ Die Abende sollen nach Leben in der Stadt schmecken, nicht nach Warten aufs Bett
 
 **Drei merkwürdige Leute:** die **Regenleserin** auf dem Dach (kostet das Tropfwasser und sagt, von welchem Ring es kommt: „Der Vierte. Die gießen ihre Orchideen.“; ihre Wettervorhersagen sind eigentlich Klatsch), der **Prediger** der Wachen Kirche auf dem Drain-Markt (seit neun Tagen wach, zittert vor Kaffee und schenkt Juno einen ein) und **die halbe Reparatur** auf dem Gerüst am Werbebildschirm (wohnt dort und repariert nur die linke Hälfte, die rechte gehört zu einem anderen Vertrag).
 
-**Was die Regenleserin sagt** (`game/regenleserin.js`; Vorschlag, Texte zum Prüfen im Mock): Über sie erklärt sich die Welt, und nebenbei fallen Dinge, an die man sich später erinnert. Kein Flag, alles darf man wieder fragen, Juno kommentiert nichts davon.
+**Was die Regenleserin sagt** (`game/regenleserin.js`; Vorschlag, Texte zum Prüfen im Mock): Über sie erklärt sich die Welt, und nebenbei fallen Dinge, an die man sich später erinnert. Kein Flag, alles darf man wieder fragen. Verschachtelt, nie mehr als vier Optionen (`dialog-design` §4).
 
 | Was sie sagt | Was es später heißt |
 |---|---|
@@ -239,6 +239,20 @@ Die Abende sollen nach Leben in der Stadt schmecken, nicht nach Warten aufs Bett
 | Tinte „zählt mit“, wer fehlt | die Knoten im Kabel (Kap. 3) |
 | Baos Küche mit Fenster zum Strand, sein bestes Rezept liegt noch unten | Baos Vergangenheit (§9) |
 | Aus der Krone kommt kein Tropfen | die Krone, der Ruhekern (Kap. 5, 6) |
+
+**Was Motte sagt** (`game/motte.js`; Vorschlag): Sobald sie sich kennen, kann Juno ihn bei jedem Vorbeigehen ansprechen, ohne Flags. Er **spielt** auf dem Handheld, er übt nicht das Glassen (entschieden 2026-11-05): ein breites Gerät mit zwei farbigen Griffen, ein „Tideboy“, das Spiel heißt „Sump Runner“, und er hält es mit beiden Händen vor der Brust.
+
+| Was er sagt | Was es später heißt |
+|---|---|
+| Der Spielstand ist weg: „Man macht immer ein Backup.“ „Wovon?“ „Von allem, was du nicht verlieren willst.“ | Motte rettet EVI (Kap. 4, „Du hast gesagt, man macht immer ein Backup.“) |
+| „Bis in den Fünften war ich schon“, „Die sehen eine Mütze.“ | Motte als Verbündeter im Tower (Kap. 5) |
+| Die Mütze, „damit man mich im Glass findet“; „Auch nicht, wenn mal was ist?“ „Dann schon.“ | die Razzia (Kap. 3) |
+| Das Licht hinterm Ohr seiner Mutter: „Lang, kurz, kurz, lang. Ich zähl das manchmal mit.“ | der Takt für `cam31` (C7), für wen auch immer zuhört |
+| Sump Runner, das Rohr hört unter der Krone auf | Ratz' Kolonie, die Rohre (Kap. 4) |
+| Frau Haldane sagt nachts nicht hallo (Mittwoch) | der Zeitungskrieg |
+| Am Donnerstag die Rollos gegenüber, am Freitag keine Streife auf der Kowalski | die weißen Träger; „Freitag fährt keiner die Kowalski“ |
+
+Neu in der Welt, zum Prüfen: Mottes Mutter nimmt Lull, und die beiden Namen.
 
 **Die Abende:** Mittwoch ist Ankommen (Teo, die Aufträge, die Gasse, der erste Gang zum Drain-Markt). Donnerstag ist die Stadt (das Dach, der Zeitungskrieg, die weißen Träger; nebenbei Ines' Stick). Freitag wird alles still: dieselben Orte, aber der Bildschirm zeigt das Auge, Bao redet weniger, die Regenleserin sagt: „Heute schmeckt's nach gar nichts.“
 

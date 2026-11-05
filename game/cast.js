@@ -36,7 +36,7 @@ Cutaway.actor("motte", {
   talk: [{ face: "se" }, { if: "!moth_met", then: [{ dialog: "motte" }],
     else: [{ if: "moth_kind", then: [{ say: "motte", text: "Morgen zeigst du's mir. Versprochen ist versprochen." }],
       else: [{ if: "moth_brushed", then: [{ say: "motte", text: "Ich bin nicht müde." }],
-        else: [{ say: "motte", text: "Reparaturen. Klar." }] }] }] }],
+        else: [{ say: "motte", text: "Reparaturen. Klar." }] }] }, { dialog: "motte_mehr" }] }],     // game/motte.js
 });
 
 // Bao, over 70, behind his noodle cart on Kowalski Street (art/characters/bao.px.js: drawn facing SE, flipped
