@@ -18,6 +18,8 @@
 //                    print), a vignette from the lens, the fold the print has from years in a box; nothing
 //                    brighter than steel 5 #41547a but the dimmed hood, a few amber windows, the sign.
 //                    The mockup (art/mockups/mock_f_deck.px.js) stamps it into stills: frame 0.
+//   dach_bg, dach_heute   the same roof twenty years on, the same loop (built into assets/mock.js for now): the
+//                    rooms dach and dach_sitzen, whose rain is this one, so they carry no rain fx of their own.
 //
 // Palette keys: the world palette (style guide §5: k, steel 1-6, wet e f z Z X, magenta n M m N, warm
 // O P Q R W, cyan c C v V, red r q, Juno's j y Y, skin s S) plus the smog lit from below (A B D G);
@@ -336,6 +338,14 @@ pal({
       if (a === 0 && c.key(x, y) === "e") c.px(x, y, "f"); if (a === 1 && c.key(x - 1, y) === "e") { c.px(x - 1, y, "f"); c.px(x + 1, y, "f") }
     }
 
+    // today: more screens than there were, selling sleep (pale blue and magenta, as on the ride down), a
+    // brighter line rolling down each once a loop, each in its own place in the loop
+    if (today) for (const [x, y, w, h, k, l, phase] of [[8, 88, 14, 8, "c", "v", 0], [44, 96, 10, 6, "M", "m", 9], [266, 88, 14, 9, "c", "v", 15], [238, 104, 12, 7, "M", "m", 4], [28, 112, 12, 7, "c", "C", 20]]) {
+      c.rect(x, y, w, h, k); c.rect(x + 1, y + 1, w - 2, 1, l); c.rect(x + 2, y + 3, w - 5, 1, l)
+      const line = (f + phase) % FRAMES * h / FRAMES | 0
+      for (let i = 0; i < w; i++) c.px(x + i, y + line, lit[c.key(x + i, y + line)])
+    }
+
     // rain over everything below the ring's rim but the two of them: thin streaks slanting down to the
     // right, a step lighter than what they fall in front of (so brightest before the lights), 7.5 px a
     // frame: each drop falls the picture's height once a loop
@@ -347,8 +357,6 @@ pal({
     // the two of them on the ledge (still), the cup beside Teo, its steam rising and curling (half a px a
     // frame, 12 px a loop, fading as it goes), the camera drone hovering by the tower, its eye blinking
     if (today) {
-      // more screens than there were, selling sleep (pale blue and magenta, as on the ride down)
-      for (const [x, y, w, h, k, l] of [[8, 88, 14, 8, "c", "v"], [44, 96, 10, 6, "M", "m"], [266, 88, 14, 9, "c", "v"], [238, 104, 12, 7, "M", "m"], [28, 112, 12, 7, "c", "C"]]) { c.rect(x, y, w, h, k); c.rect(x + 1, y + 1, w - 2, 1, l); c.rect(x + 2, y + 3, w - 5, 1, l) }
       // the ladder's top over the parapet, the way Juno came up
       c.rect(10, 116, 2, 36, "5"); c.rect(24, 116, 2, 36, "5"); for (let y = 120; y < 150; y += 6) c.rect(10, y, 16, 1, "4")
       // Juno, grown up, alone where the two of them sat (blocks: to be painted when the look is approved)
@@ -380,9 +388,9 @@ pal({
       }
   }
   // the roof today (art/mock: they go into assets/mock.js with the blocks until they are painted)
-  const today = (c, sitting) => { const p = pen(); paint(p, 0, true, sitting); for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) c.px(x, y, p.buf[y][x]) }
-  anim("dach_bg", { w: W, h: H, frames: 1, fps: 1 }, (c) => today(c, false))
-  anim("dach_heute", { w: W, h: H, frames: 1, fps: 1 }, (c) => today(c, true))
+  const today = (c, sitting) => { const p = pen(); paint(p, c.frame, true, sitting); for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) c.px(x, y, p.buf[y][x]) }
+  anim("dach_bg", { w: W, h: H, frames: FRAMES, fps: 10 }, (c) => today(c, false))
+  anim("dach_heute", { w: W, h: H, frames: FRAMES, fps: 10 }, (c) => today(c, true))
   const PHOTOS = []
   const photo = (f) => (PHOTOS[f] ??= (() => { const p = pen(); paint(p, f); return p.buf })())
   anim("deck_photo", { w: W, h: H, frames: FRAMES, fps: 10 }, (c) => { const P = photo(c.frame); for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) c.px(x, y, P[y][x]) })

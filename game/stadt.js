@@ -56,7 +56,6 @@ Cutaway.actor("regenleserin", { name: "Regenleserin", color: "#a8c8e8", room: "d
   ] });
 Cutaway.room("dach", { name: "Das Dach", background: "dach_bg", walk: AD.walk,
   ambience: ["city_far", { sfx: "feed_rain", gain: 0.5 }], music: { theme: "juno", intensity: 0.2 },
-  fx: [{ kind: "rain", rect: [0, 22, 320, 158], count: 60, color: "#617aa0", speed: 170, slant: 0.25, length: 3 }],
   hotspots: {
     hatch: { name: "Leiter nach unten", rect: AD.hatchRect, walkTo: AD.hatch, face: "sw", look: "Die Leiter. Runter ist schlimmer als rauf.", use: [{ goto: "sims", at: AS.ladder, face: "sw" }] },
     rings: { name: "Die Ringe", rect: AD.ringsRect, walkTo: AD.edge, face: "ne", look: "Da oben ist nicht der Himmel. Da oben ist der Boden von jemand anderem.", use: [{ goto: "dach_blick" }] },
@@ -69,7 +68,6 @@ Cutaway.room("dach", { name: "Das Dach", background: "dach_bg", walk: AD.walk,
 // sitting where they sat, the old photo's picture twenty years on
 Cutaway.room("dach_sitzen", { name: "Unser Platz", background: "dach_heute", observe: true, lines: "bottom", buttons: false,
   ambience: ["city_far", { sfx: "feed_rain", gain: 0.5 }], music: { theme: "memory", fade: 2 },
-  fx: [{ kind: "rain", rect: [0, 22, 320, 158], count: 60, color: "#617aa0", speed: 170, slant: 0.25, length: 3 }],
   hotspots: { back: { name: "Aufstehen", rect: [0, 0, 320, 180], exit: { to: "dach", at: AD.edge, face: "sw" } } },
   enter: ["Er ist hier eingeschlafen. An meiner Schulter.", "Ich hab mich eine Stunde nicht bewegt. Vor Angst, und damit er weiterschläft.", "Heute schläft er besser. Sagt er."] });
 
