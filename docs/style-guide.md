@@ -174,7 +174,7 @@ A location takes one key hue from this set and plays it against the night blues.
   |---|---|---|
   | Juno | ~50 px (1.68 m at 30 px/m, §4) | about 20 px |
   | adults | 48–56 px | |
-  | children | 30–40 px | |
+  | children | 30–45 px (Motte, 12, 1.45 m: 43 px) | |
 
   (Until H1c everything was drawn at 32 px; the old sprites are replaced as they are redrawn.)
 
@@ -187,7 +187,7 @@ A location takes one key hue from this set and plays it against the night blues.
   - The anchor is bottom-centre, at the feet.
 - **Animation:** walk 8 frames x 100 ms per view; idle 2–6 frames; talk 2 frames x 200 ms; one-shot
   actions (reach, type, hand over, crouch) as needed.
-- **Silhouette first:** each person has a readable shape at 32 px and a **signature accent** that
+- **Silhouette first:** each person has a readable shape at their street size and a **signature accent** that
   survives in the feed's duotone as a value (a white cap, a long coat, a bright bag). Juno's hood is
   the model.
 - **Juno Reyes** (placeholder name), freelance hacker and info broker:

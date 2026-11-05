@@ -127,9 +127,9 @@ Cyan nur für Technik.
 |---|---|---|---|
 | **Juno Reyes**, 31 | Glasserin und Informationshändlerin; früher **zivile Beobachterin** bei Halcyon (eine menschliche Kamerabeobachterin), vor drei Jahren entlassen, als „automatische Auswertung" ihr Team ersetzte; ihr Beobachter-Implantat hat sie behalten, was heute illegal ist | gelber Regenmantel mit Kapuze, Umhängetasche, Implantat hinter dem Ohr (unter der Kapuze nicht zu sehen; auf dem Titelbild als Cyan-Linie über der Wange) | `#fff070` |
 | **EVI** | die KI auf Junos Deck: der ausgemusterte Prototyp der „automatischen Auswertung" (§6), den Juno vor der Löschung gerettet hat. Neugierig, lieb, gut mit Daten und hoffnungslos schlecht darin, Menschen zu lesen; fragt Juno ständig, warum Menschen Dinge tun. Erklärt das Deck, meldet Nachrichten, gibt die Hinweise. Lebt auf dem Deck und geht auf dem Taschen-Deck mit (§10b). | ein kleines rundes Pixelwesen mit großen Augen und zwei Antennen-Ohren, auf dem Desktop etwa 24 px, in der Tasche 16 px; 6 Gesichter (froh, neugierig, verwirrt, besorgt, müde, Glitch) | `#8ef5d8` |
-| **Teo Reyes**, 23 | ihr jüngerer Bruder; arbeitet Doppelschichten in Pumpenhalle 3, **mit Lull**; fröhlich und stolz, zahlt ihre Miete, wenn sie es nicht kann. Hat sich mit 18 einen **Gezeitenmod** machen lassen (Kiemen), weil Taucher das Doppelte verdienen: Halcyons idealer Arbeiter, umgebaut für die Schicht und betäubt für die Nacht. | orange Arbeitsweste, Gehörschutz um den Hals, Kiemenschlitze, die im Feed leuchten | `#ffb070` |
+| **Teo Reyes**, 23 | ihr jüngerer Bruder; arbeitet Doppelschichten in Pumpenhalle 3, **mit Lull**; fröhlich und stolz, zahlt ihre Miete, wenn sie es nicht kann. Hat sich mit 18 einen **Gezeitenmod** machen lassen (Kiemen), weil Taucher das Doppelte verdienen: Halcyons idealer Arbeiter, umgebaut für die Schicht und betäubt für die Nacht. | orange Arbeitsweste, Gehörschutz um den Hals, Kiemenschlitze, die im Feed leuchten | `#ffa040` |
 | **Bao**, über 70 | betreibt die Nudel-Garküche vor dem LUCKY STATIC; lässt Juno anschreiben; kennt jeden. Redet ständig von seinem Mann Lou, „meinem Alten", der nie zu sehen ist, bis zum Epilog. | Schirm, weiße Schürze | `#e8c890` |
-| **Sable** | Junos Kontakt für Hehlerware auf dem Drain-Markt; nichtbinär; charmant, ehrlich darin, unehrlich zu sein (Sprachregel in §10) | langer violetter Mantel, rasierter Kopf, eine brennende Pfeife | `#c890ff` |
+| **Sable** | Junos Kontakt für Hehlerware auf dem Drain-Markt; nichtbinär; charmant, ehrlich darin, unehrlich zu sein (Sprachregel in §10) | langer violetter Mantel, rasierter Kopf, eine brennende Pfeife | `#ff4fd3` |
 | **Ratz** | eine **Kabelratte** aus dem alten Flutprogramm, so groß wie ein kleiner Hund, die auf dem Drain-Markt Elektroschrott verkauft; schnell, gierig, abergläubisch, kennt jedes Rohr unter dem Neunten. Spricht durch einen geflickten Sprechkragen, der manchmal Wörter vertauscht. | Kopfhörer, ein viel zu großer Parka, der Schwanz schaut raus; der Kragen glimmt | `#90d0a0` |
 | **Tinte** | eine **Pumpenkrake** aus dem Flutprogramm, sehr alt, im Filterbecken von Pumpenhalle 3; Teos Kollegin und beste Freundin bei der Arbeit. Langsam, weise, trocken witzig; acht Arme, die jeder etwas anderes tun. Weiß mehr über die Sinker der Pumpenhalle als Halcyon glaubt. | ein großer Schatten im Becken, ein Sprechkragen, Saugnäpfe am Glas | `#b0b8ff` |
 | **Motte**, 12 | ein Kurierkind im Kessel-Block, das Juno vergöttert und Glassen lernen will | übergroße weiße Mütze | `#f0f0a0` |
@@ -240,9 +240,9 @@ Straßenmodus.
     in der Kowalski-Straße. Verkauft Juno ihn, wird der Laden in Kapitel 2 ausgeraubt, und Bao wird
     dabei verletzt.
   - **WRENs Auftrag:** Ein anonymer Auftraggeber zahlt das Fünffache ihres Satzes. „Finde heraus, wen
-    Dr. Ines Calder trifft, und wo." Juno folgt Ines zwei Tage lang über sechs Kameras (Tagesablauf:
-    Wohnung, Klinik, eine Nudelbar, ein Waschsalon, wo sie einen Datenstick in einem Trockner
-    zurücklässt).
+    Dr. Ines Calder trifft, und wo." Juno folgt Ines zwei Abende lang über vier Kameras (Tagesablauf:
+    Klinik, eine Nudelbar, ein Waschsalon, wo sie einen Datenstick in einem Trockner
+    zurücklässt, Wohnung). Am dritten Abend kommen zwei dazu, der Sumpf-Abgang und die alte Metro.
 - **Das Leben drumherum:**
   - Teo kommt vorbei, erschöpft, auf Lull, und lacht es weg.
   - Der Werbebildschirm flackert, wenn Juno vorbeigeht.
@@ -431,7 +431,7 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
 - **Ratz:** Er sucht seine Kolonie, die beim Ende des Kabelprogramms in die Rohre unter der Krone
   gezogen ist. Juno findet sie über alte Wartungskameras. Lohn: Ratz zeigt ihr in Kap. 4 die Rohre.
 - **Tinte:** Halcyon will die Filterbecken auf Maschinen umstellen, und Tinte soll „ins Meer
-  entlassen" werden, mit 90 Jahren und ohne Kiemen fürs offene Wasser. Juno kann es verhindern,
+  entlassen" werden, mit fast 40 Jahren, uralt für eine Krake, und ohne Kiemen fürs offene Wasser. Juno kann es verhindern,
   verzögern oder den Abschied filmen (und verkaufen).
 - **Baos Vergangenheit:** Er war Koch in der alten Stadt vor der Flut; ein Rezept und ein Foto in den
   Sümpfen.
@@ -555,3 +555,7 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
 - **Ein Haus, ein Grundriss:** Aufzug und Treppe stehen auf jedem Stockwerk an derselben Stelle (`kessel_14`, `kessel_lobby`).
 - **Schilder in Grafik sind englisch**, auch geplante: `GLASSER LIES`, `SUDS & SPIN` (der Waschsalon), `NO SNEAKERS IN THE DRYER`, `OUT OF ORDER`,
   `KIDNEYS ONLY`, Sables Preisliste `NAMES 50. ADDRESSES 80. SECRETS: ASK.`
+- **Sprecherfarben:** Es gelten die Werte des Style Guides und des Spiels: Sable `#ff4fd3`, Teo `#ffa040`. Die Stimmen DIE HÄNDLERIN
+  (`#c890ff`) und DIE SCHWESTER (`#ffb070`) behalten ihre eigenen Farben (`dialog-design` §2): Sie sind Teile von Juno, nicht Sable und Teo.
+- **Tinte** ist fast 40 Jahre alt, also aus den Anfängen des Flutprogramms der 2050er, und damit uralt für eine Krake.
+- **Ines' Kameras:** vier am Mittwoch und Donnerstag (`cam21` bis `cam24`), am Freitag dazu `cam30` und `cam31`, zusammen sechs.

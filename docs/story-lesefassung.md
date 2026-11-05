@@ -314,12 +314,8 @@ Die Nummern beziehen sich auf die Stellen oben. Geklärtes steht in `story.md` �
 
 Dazu, ohne Stelle im Text:
 
-- **Sprecherfarben:** Sable ist im Spiel Magenta `#ff4fd3`, in der Bibel Violett `#c890ff` (die Farbe der Stimme DIE HÄNDLERIN). Teo ist im Spiel
-  `#ffa040`, in der Bibel `#ffb070`.
-- **Tinte** ist „90 Jahre“ alt, wäre also älter als das Flutprogramm der 2050er.
 - **Noch nicht vorgesehen:** Das Beobachter-Handbuch und der Lull-Nutzer als unbekannter Link (story §10a) stehen weder im Spiel noch im
   Kapitel-1-Design. Dort fehlen auch das Richtmikro (kapitel0 §3) und das „Kassenbuch-Rätsel“ (kapitel1 C4, nirgends beschrieben).
-- **Bibel-Umriss und Design** weichen ab: sechs Kameras gegen vier auf Ines' Wegen; Kamera reparieren und Passwort in einer Wohnung fehlen im
+- **Bibel-Umriss und Design** weichen ab: Kamera reparieren und Passwort in einer Wohnung fehlen im
   Design; „Niemand sonst hat es gehört“ gegen ein Wort ohne Stimme.
-- **Veraltete Maße:** Figurengrößen in kapitel0 §8 und kapitel1 §10 (Juno 32 px statt 50), Kowalski 320 statt 416 breit, und die gebaute
-  Straße hat noch keinen Eckladen und keinen Automaten mit Kamera davor.
+- **Noch nicht gebaut:** Die Straße hat noch keinen Eckladen und keinen Automaten mit Kamera davor.

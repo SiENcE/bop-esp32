@@ -351,7 +351,7 @@ Klarheit zu verlieren.
 | `flat` | 320x180 | Bildschirm-Cyan, gedämpft; eine Bernstein-Lampe; Magenta vom Schild draußen | Tür (linke Wand) → `kessel_14` | `deck` (Schreibtisch, drei Bildschirme, Kabelsalat), `fridge`, `bed`, `box_old` (unter dem Bett), `window` (Blick auf den Werbebildschirm, Regen), `pinboard` (Fotos von Zielen mit Fäden), Wäscheberg, Nudelbecher-Turm | Deck (Cyan, flackert), Stehlampe (Bernstein), Fenster (Magenta-Neon, blinkt) | die Datei `ESSEN!!.TXT` auf dem Desktop des Decks (das Post-it am Monitor ist gestrichen, 2026-11-05) |
 | `kessel_14` | 320x180, Iso-Treppenabsatz 5 x 4,5 m (entschieden 2026-11-04 gegen eine Seitenansicht; Karte `art/rooms/kessel_14.map.js`, Block-Skizze `art/test/kessel14_blocks.px.js`) | Beton-Stahl, grünstichiges Neonröhrenlicht | `flat` (Tür 14B in der linken Wand), in der rechten Wand von der Ecke aus der Aufzug (außer Betrieb, an derselben Stelle wie in der Lobby; die Müllsäcke davor, oben in der Ecke Halcyons Kamera), in der linken Wand vorn Haldane (Tür 14C, offen: ihr Sessel gleich dahinter im Fernsehlicht), Treppe (an der rechten Wand, nach unten) → `kessel_lobby` | `haldane_door` (sie im Sessel, ein Fernseher), `stairs`, Motte auf seiner Bank, Müllsäcke vor dem Aufzug, Halcyons Kamera in der Ecke | Neonröhre (flackert), Haldanes Fernseher (blau) | ein Zettel „WER KLAUT MEINE ZEITUNG?? – 14C" mit der Antwort „NIEMAND LIEST ZEITUNG – 14A" |
 | `kessel_lobby` | 320x180, Iso 5 x 4,5 m, Decke 2,8 m (gebaut 2026-11-04: `art/rooms/kessel_lobby.map.js`, `docs/rooms/kessel_lobby_x3.png`) | Stahlblau, nasser Boden (Regenwasser kommt durch die Tür) | Treppe (an der rechten Wand, unter dem Treppenloch des Stockwerks darüber) → `kessel_14`, Haustür → `kowalski`, Aufzug (zu, an derselben Stelle wie oben) | `mailboxes`, `lift` (Schild), `notice_board` | Deckenlampe (kalt), Licht von draußen (Magenta) | das Halcyon-Plakat „SLEPT WELL? HALCYON LISTENS." (Stadtschrift, bleibt englisch; Junos Kommentar beim Ansehen ist Deutsch) |
-| `kowalski` | 320x180 | Magenta, Bernstein-Essenslicht | Kessel-Block (links hinten), Gasse zum Drain-Markt (Kap. 1, rechts, im Prolog zu: „Nicht heute Nacht.") | wie Mockup C: LUCKY STATIC (Kap. 1 betretbar), Baos Wagen, Automat, Werbebildschirm, Drohne, Gitter, Okonkwos Eckladen (Kap. 1) | wie Mockup C | wie Mockup C |
+| `kowalski` | 416x180 (scrollt) | Magenta, Bernstein-Essenslicht | Kessel-Block (links hinten), Gasse zum Drain-Markt (Kap. 1, rechts, im Prolog zu: „Nicht heute Nacht.") | wie Mockup C: LUCKY STATIC (Kap. 1 betretbar), Baos Wagen, Automat, Werbebildschirm, Drohne, Gitter, Okonkwos Eckladen (Kap. 1) | wie Mockup C | wie Mockup C |
 
 ### 7.2 Kameras (Feed-Modus, Style Guide §9)
 
@@ -362,15 +362,18 @@ Klarheit zu verlieren.
 
 ## 8. Figuren im Prolog
 
+Größen im Maßstab der Straße: 30 px pro Meter Höhe (Style Guide §4, §6). Das gilt auch als Vergleich für Figuren, die nur im Feed
+vorkommen: Dort bleiben Figuren in ihrer gezeichneten Größe, ein Erwachsener von 1,75 m misst etwa 24 px.
+
 | Wer | Größe | Silhouette und Akzent im Feed | Farbe | Neu zu zeichnen |
 |---|---|---|---|---|
-| Juno | 32 px | Kapuze, Tasche | `#fff070` | Iso 4 Richtungen (SE, NE, gespiegelt) + Feed-Figur |
-| Herr Kessler | 31 px | kleiner Mann, Mantel, **heller Schal** | `#b8c890` | nur Feed |
-| Gus Varga | 34 px | breit, grauer Mantel, Hut; im Feed sehr dunkel bis auf die Uhr am Handgelenk | `#a0a0b8` | nur Feed (Kap. 1 auch Iso) |
+| Juno | 50 px | Kapuze, Tasche | `#fff070` | Iso 4 Richtungen (SE, NE, gespiegelt) + Feed-Figur |
+| Herr Kessler | 48 px | kleiner Mann, Mantel, **heller Schal** | `#b8c890` | nur Feed |
+| Gus Varga | 53 px | breit, grauer Mantel, Hut; im Feed sehr dunkel bis auf die Uhr am Handgelenk | `#a0a0b8` | nur Feed (Kap. 1 auch Iso) |
 | Motte | 43 px stehend (1,45 m); sitzt auf einer Bank vor dem Treppengeländer in `kessel_14` | übergroße weiße Strickmütze mit Bommel (entschieden 2026-11-04: Mütze A, zwei Petrolstreifen in der Krempe, rosa Bommel; `docs/characters/motte_blocks_x4.png`), knallrosa Jacke, zu groß, mit Reflexstreifen, Kuriertasche in Petrol, ein altes Handheld | `#f0f0a0` | Iso (stehend SE/NE, sitzend) |
-| Frau Haldane | 28 px (sitzend) | rosa Morgenmantel, Lull-Licht | `#ffa8d8` | Iso (sitzend, schlafend) |
-| Bao | 30 px | Schirm, weiße Schürze | `#e8c890` | Iso |
-| Juno im Vorspann | 32 px | Halcyon-Grau, Ausweis | — | Iso, eine Pose |
+| Frau Haldane | im Sessel, von hinten | rosa Morgenmantel, Lull-Licht | `#ffa8d8` | im Kit gemalt (`armchair` in `art/kit/kessel_14.kit.px.js`), schlafend |
+| Bao | 47 px (1,62 m, leicht gebeugt) | Schirm, weiße Schürze | `#e8c890` | Iso |
+| Juno im Vorspann | 50 px | Halcyon-Grau, Ausweis | — | Iso, eine Pose |
 | EVI | 24 px (Desktop), 16 px (Tasche) | rundes Pixelwesen, große Augen, Antennen-Ohren | `#8ef5d8` | Deck-Grafik: 6 Gesichter, Idle (blinzeln, Ohren), Laufen über den Desktop, Schlafen; der Kopf in der Tasche für den Hinweis-Knopf |
 
 ## 9. Musik und Klang

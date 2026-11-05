@@ -207,18 +207,20 @@ Live-Übertragung.“ 750 Chits, die zweite Zeile im Kassenbuch. Es schreibt sic
 
 ## 10. Figuren (neu in Kapitel 1)
 
+Größen wie in `kapitel0-design` §8: 30 px pro Meter Höhe; im Feed misst ein Erwachsener von 1,75 m etwa 24 px.
+
 | Wer | Größe | Silhouette und Akzent im Feed | Farbe | Ansichten |
 |---|---|---|---|---|
-| Teo | 33 px | orange Weste, Gehörschutz, Kiemenschlitze (Gezeitenmod) | `#ffb070` | Iso |
-| Sable | 34 px | langer Mantel, Glatze, Pfeifenglut | `#c890ff` | Iso (sitzend) |
+| Teo | 52 px | orange Weste, Gehörschutz, Kiemenschlitze (Gezeitenmod) | `#ffa040` | Iso |
+| Sable | 53 px | langer Mantel, Glatze, Pfeifenglut | `#ff4fd3` | Iso (sitzend) |
 | Ratz | 26 px (aufrecht) | Kabelratte: Kopfhörer, zu großer Parka, Schwanz, glimmender Sprechkragen | `#90d0a0` | Iso |
-| Herr Okonkwo | 31 px | Strickjacke, Lesebrille | `#d8b890` | Iso + Feed |
-| Mei | 30 px | Schürze, hochgesteckte Haare | `#ff9a7a` | Iso |
-| Dr. Ines Calder | 30 px | Kittel (heller als alles), Zopf | `#f0a0c0` | Feed (4 Kameras) |
-| Lantern | 32 px (sitzend) | Poncho, Rollstuhl mit Schwimmern und Düsen, Antennen über dem Kopf | `#b0f0a0` | Feed |
-| Rask | 35 px | weißer Mantel, Maske (überstrahlt) | `#ff7a6a` | Feed |
-| Lt. Morrow | 32 px | Trenchcoat | `#a8b8d0` | Feed |
-| Tidewater-Junge | 28 px | Gezeitenkind: Kiemen, leuchtende Markierung am Hals, Kapuze | `#7ab0c0` | Feed |
+| Herr Okonkwo | 48 px | Strickjacke, Lesebrille | `#d8b890` | Iso + Feed |
+| Mei | 47 px | Schürze, hochgesteckte Haare | `#ff9a7a` | Iso |
+| Dr. Ines Calder | 47 px | Kittel (heller als alles), Zopf | `#f0a0c0` | Feed (6 Kameras: `cam21`–`cam24`, `cam30`, `cam31`) |
+| Lantern | 50 px (sitzend, mit Antennen) | Poncho, Rollstuhl mit Schwimmern und Düsen, Antennen über dem Kopf | `#b0f0a0` | Feed |
+| Rask | 55 px | weißer Mantel, Maske (überstrahlt) | `#ff7a6a` | Feed |
+| Lt. Morrow | 50 px | Trenchcoat | `#a8b8d0` | Feed |
+| Tidewater-Junge | 44 px | Gezeitenkind: Kiemen, leuchtende Markierung am Hals, Kapuze | `#7ab0c0` | Feed |
 
 ## 11. Rätselkette als Überblick
 
