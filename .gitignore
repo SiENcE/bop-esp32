@@ -9,3 +9,5 @@ node_modules/
 # kept out of the history so the repository can go public later without them
 docs/screenshots/
 docs/dreamweb.txt
+# walkthroughs of other games, also third-party and internal reference only
+docs/walkthroughs/
