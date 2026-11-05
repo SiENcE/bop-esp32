@@ -151,15 +151,26 @@ viel, später was daraus wurde. Es urteilt nie.
 
 **Du und Sie**
 
-| Zu Juno | Wer |
-|---|---|
-| du | Teo (und „Ju“), Bao, Motte, EVI, Sable, Ratz, Tinte, Varga, Mei, Regenleserin (und „Kind“), Prediger, die halbe Reparatur |
-| Sie | Frau Imai, WREN, Vesper, Morrow, Aubrecht, Ashe, alles von Halcyon |
-| Juno am Feed | sagt du zu denen, die sie beobachtet und die sie nicht hören können („Ines. Geh nach Hause.“) |
+Die Anrede sagt etwas über Nähe und Abstand, nichts über Geschlecht, Herkunft oder Alter, und für alle gilt dieselbe Regel:
 
-Noch offen, beim Schreiben der ersten Zeile entscheiden: Frau Haldane und Lantern. Wo es noch keine Zeile an Juno gibt (Sable, Ratz, Tinte,
-Mei, Morrow, Aubrecht, Ashe), ist die Tabelle ein Vorschlag. Bei Ashe trägt das Sie die Bedrohung, auch wenn er und Juno einmal in derselben
-Halle saßen.
+- **Du ist im Neunten normal.** Wer sich kennt oder auf derselben Straße lebt, duzt sich.
+- **Sie schafft Abstand.** Es gilt gegenüber Fremden, Ämtern, Halcyon und allen, die dafür bezahlen, dass man sie nicht kennt: Frau Imai,
+  WREN, Vesper, Morrow, Aubrecht.
+- **Der Wechsel vom Sie zum Du ist ein kleines Ereignis** in der Beziehung. Die Handlung hängt nie daran, weil es den Unterschied im
+  Englischen nicht gibt (H10).
+- Einmal festgelegt, bleibt die Anrede eines Paars gleich, bis so ein Wechsel geschieht. Für eine neue Figur wird sie bei der ersten Zeile
+  entschieden.
+- Anreden wie „Frau“, „Herr“ oder „Junge Frau“ fallen nur, wo sie zur Figur passen, bei Sable nie.
+
+**Die Ausnahmen und Besonderheiten:**
+
+| Wer | Was |
+|---|---|
+| Lantern | siezt Juno zuerst, aus Misstrauen; wird Lantern in Kapitel 2 zum Verbündeten, wechseln die beiden zum Du |
+| Ashe | bleibt beim Sie, obwohl er und Juno einmal in derselben Halle saßen: Das Sie trägt die Bedrohung |
+| Juno am Feed | sagt du zu denen, die sie beobachtet und die sie nicht hören können („Ines. Geh nach Hause.“) |
+| Teo, die Regenleserin | duzen wie alle; Teo sagt „Ju“, die Regenleserin „Kind“ |
+| Frau Haldane | sie und Juno duzen sich, „Frau Haldane“ bleibt nur als Name |
 
 ## 6. Die Stimmen
 
