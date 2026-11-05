@@ -8,7 +8,7 @@ We're continuing work on "Glass Sister", our cyberpunk point-and-click adventure
 (engine: Cutaway.js in B:\Github_my\cutaway\). Read CLAUDE.md first; it lists the docs, the commands and
 the checks. Talk to me in German (the docs are German, code comments English).
 
-Where we are (everything is committed; the engine copy is at Cutaway.js e6eba2c):
+Where we are (everything is committed; the engine copy is at Cutaway.js 6eeb017):
 - **The intro "Die letzte Schicht" is done and approved** (docs/kapitel0-design.md §5), about 1:45. The sequence "intro" in game/intro.js; it ends
   on the ride down in the lift, then the title screen.
 - **The prologue plays from the flat to its end card**, on Tuesday 2091-11-06 (game day 1). It does not go on into Chapter 1 yet.
@@ -29,16 +29,19 @@ Where we are (everything is committed; the engine copy is at Cutaway.js e6eba2c)
 
 **Next: the end in cam31**, the real scene as in kapitel1-design §8, on blocks; game/kapitel1.js has a placeholder moment `ines_meeting`. The agreed order after it:
 job A (Varga, Kessler), job B (Tide, Okonkwo), life around it (Teo's visit on Wednesday, Mei, Vesper, the NETZ, Motte's lessons, Bao's line, Frau Kessler's messages are in), then the prologue goes on into
-the act (`{ act: "next" }` instead of its end card; the act has `fresh` and `keep`), and only then the painting, blocks first.
+the act (`{ act: "next" }` instead of its end card; the act has `fresh` and `keep`), and only then the painting, blocks first. (The way the beat of Lull is drawn in the painted art, the steps' sound on the stairs and how the mock feels overall are for me to judge by playing: I have only seen stills and not heard the steps.)
 Also to come: the reading version docs/story-lesefassung.md doesn't know the city yet and still has WREN's money coming back on Wednesday (in the mock the replies are on Friday).
 
 **Rules of mine: what the player finds can be taken at once.** Nothing waits for an earlier click without a reason in the world (CLAUDE.md, conventions): each thing has its own flag;
-a gate needs a time, knowledge the player really lacks, or a decision of mine. **And nothing the game needs hangs on looking:** a right click with the mouse stays, a long press on touch, a controller button later (PLAN C14); looking only tells more. Chapter 1 hasn't been played with `play.mjs --touch` yet.
+a gate needs a time, knowledge the player really lacks, or a decision of mine. **And nothing the game needs hangs on looking:** a right click with the mouse stays, a long press on touch, a controller button later (PLAN C14); looking only tells more. 
+**Touch works** and is tested: tap acts, a long press looks, a finger on a thing shows its name, an eye button shows what can be clicked. EVI tells people about the long press after their third tap, and again after 40 and 120 as long as they have never done it; only on real touches, remembered on the device (game/evi.js, localStorage). All the ways are tapped through with `play.mjs --touch`; legibility on a real phone I still have to judge.
+**A controller comes later (PLAN C14), and nothing may be built that a controller couldn't do:** no hover-only information, no dragging, no gestures, no aiming or timing as the only way. Everything stays a pointer click on a hotspot or a choice.
+**You can test in a real Chrome now:** the `mcp__chrome__*` tools (open `index.html` by its file URL; `emulate` for a phone). `play.mjs` and `shot.mjs` stay the checks.
 
 **The solver is the risk of this chapter** (CLAUDE.md, checks). Every flag nobody asks about doubles all states. All times are on the 15-minute ticks and only waiting moves the clock (walking costs nothing,
 provisional: check by playing whether it feels right). Flavour is a look, not a moment; what no longer matters is forgotten overnight (`Halcyon.nights[day].passes`). Each side story is a thread of its own, solved alone
 with `--set off_main,know_meeting,off_<the others>`; a new one needs its name in `{ solo }` (game/halcyon.js) and in THREADS in tools/check.sh, and no flag shared with another. What threads do to each other only playing finds.
-- All the checks: `sh tools/check.sh` (about 5 to 10 minutes: run it in the background and change nothing while it runs). Now: validate 0 errors (10 known warnings), prologue 53556 states, Chapter 1's main thread 44696, the side stories 5000 to 13000 each, no soft-locks, every state has a hint, all ways clicked.
+- All the checks: `sh tools/check.sh` (about 10 minutes, with touch: run it in the background and change nothing while it runs). Now: validate 0 errors (10 known warnings), prologue 53556 states, Chapter 1's main thread 44696, the side stories 5000 to 13000 each, no soft-locks, every state has a hint, all ways clicked.
 - The ways it clicks are tools/paths/kapitel1_*.json (plain lists of moves; their generators were scratch files in build/). A new stop of the clock changes how many `wait`s a way needs: when a way fails with "nothing to click", count them first. Actors are `@id`.
 - The tools: `node tools/solve-act.mjs kapitel1 --full --set a,b [--json path.json]`, `node lib/cutaway/tools/play.mjs index.html --act kapitel1 --path p.json [--shots dir]`.
 - A prologue flag or camera that opens in Chapter 1 needs `day=1`; a chapter's camera needs `day>1` in its `if`, or it is on the prologue's map (the solver shows it: the prologue's states jump).

@@ -21,4 +21,6 @@ done
 for p in tools/paths/kapitel1_*.json; do
   n=$(basename "$p" .json); out=$(node lib/cutaway/tools/play.mjs index.html --act kapitel1 --path "$p" 2>&1 | tail -1); line "clicks: $n" "$out"; need "clicks: $n" "$out" "all passed"
 done
+out=$(node lib/cutaway/tools/play.mjs index.html --touch 2>&1 | tail -1); line "prologue taps" "$out"; need "prologue taps" "$out" "all passed"
+out=$(node lib/cutaway/tools/play.mjs index.html --act kapitel1 --touch --path tools/paths/kapitel1_main.json 2>&1 | tail -1); line "taps: kapitel1_main" "$out"; need "taps: kapitel1_main" "$out" "all passed"
 [ "$failed" = 0 ] && echo "ALL PASSED" || { echo "FAILED"; exit 1; }

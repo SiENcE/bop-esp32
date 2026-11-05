@@ -26,6 +26,25 @@
   });
   Cutaway.hints.configure({ by: "evi" });
 
+  // On touch, looking is a long press, and nobody finds that by themselves: EVI says so after the first taps, and again now and then
+  // for as long as nobody has done it. On this device, not in the save: it is about the fingers, not the story.
+  const [HOLD_FIRST, HOLD_AGAIN] = Cutaway.i18n.declare("evi", ["Psst. Finger drauf und halten: Dann schaut Juno genauer hin.", "Du hältst nie den Finger drauf. Dabei hat Juno zu allem was zu sagen. Leider."]);
+  const HOLD_KEY = "halcyon.heldOnce";
+  let held = false, taps = 0, /** @type {string | null} */ due = null;
+  try { held = localStorage.getItem(HOLD_KEY) === "1"; } catch { /* private mode: she may say it again */ }
+  const playing = () => !!Cutaway.scene?.room && !Cutaway.scene.backdrop && !!Cutaway.scene.active && !Cutaway.acts?.titleOpen;
+  Cutaway.events.on("pointer.click", (/** @type {any} */ p) => {
+    if (!p.touch || held || !playing()) return;
+    if (p.button === 2) { held = true; due = null; try { localStorage.setItem(HOLD_KEY, "1"); } catch { /* as above */ } return; }
+    taps++;
+    if (taps === 3) due = HOLD_FIRST; else if (taps === 40 || taps === 120) due = HOLD_AGAIN;
+  });
+  Cutaway.clock.onUpdate(() => {
+    if (!due || !playing() || Cutaway.script.busy || Cutaway.ui.line || Cutaway.dialogs?.choices || Cutaway.menu?.card || Cutaway.menu?.rows || Cutaway.sequence?.playing?.()) return;
+    const text = due; due = null;
+    Cutaway.script.run([{ say: "evi", text }], { path: "evi.hold" });
+  });
+
   Cutaway.script.action("evi", (s) => { Halcyon.evi.face = s.evi ? String(s.evi) : null; });
   Cutaway.script.action("evi_point", (s) => { Halcyon.evi.point = s.evi_point ? String(s.evi_point) : null; });
   Cutaway.script.action("deck_boot", async (s, ctx) => {
