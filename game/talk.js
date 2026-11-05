@@ -4,6 +4,10 @@
 // Three topics at most on a level: the fourth choice is the way back or away. Nothing here is a flag, so a talk may be walked again and again.
 "use strict";
 
+// A choice is written with its quotes („Wie immer.“): they say that Juno says it. Her subtitle is the line itself, like every other line.
+const sayLine = Cutaway.ui.say;
+Cutaway.ui.say = (actor, text, o) => sayLine(actor, String(text).replace(/^[„"]([^„"]*)[“"]$/, "$1"), o);
+
 /**
  * @param {string} id @param {any[]} topics @param {string} [bye] the top level's way out
  */

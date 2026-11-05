@@ -577,7 +577,7 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
 - **Die Regenleserin** geht tiefer: Im Gespräch erklärt sich die Welt, und nebenbei fallen Dinge, die erst später etwas bedeuten (die Liste in `kapitel1-design` §7). Sie ist 82, ging in der alten Stadt zur Schule und kennt Juno und Teo von früher; Lanterns Kaperung des großen Schirms liegt zwei Jahre zurück; das Salzwasser der Schlafstation kommt aus dem Fünften Ring.
 - **Motte bleibt ein Junge,** alles an ihm bleibt, wie es ist. Er **spielt** auf seinem Handheld, einem **Tideboy**, das Spiel heißt **Sump Runner**. Seine Mutter nimmt Lull.
 - **Bao nennt Lou beim Namen** („Lou isst seit vierzig Jahren hier.“), sonst ließe sich „mein Alter“ als sein Vater lesen. **Bao hat nur einen Arm,** der andere Ärmel ist an der Schulter hochgesteckt; warum, ist noch offen.
-- **Den Takt im Klartext sagt nur EVI,** als letzte Stufe ihres Hinweises zu `cam31`. Motte sagt nur, dass das Licht seiner Mutter komisch blinkt, immer gleich.
+- **Den Takt im Klartext sagt nur EVI,** als letzte Stufe ihres Hinweises zu `cam31`. Motte sagt nur, dass das Licht seiner Mutter komisch blinkt, immer gleich, und Juno sagt bei Frau Haldane nur „Immer gleich.“ (2026-11-05). Den Takt selbst muss man an den Punkten sehen.
 - **Die Tasche:** Dinge, die Juno in der Hand hält, sind Gegenstände; Clips und Notizen liegen im CACHE. EVI sitzt immer fest in der Tasche.
 - **Das Ende von Kapitel 2 steht:** Lantern öffnet die Wallet und sendet sie, niemand glaubt ihm, nur Juno kann sie neben ihre Kameras legen.
 - **Wie die Texte klingen, regelt `docs/dialog-style-guide.md`.** EVI bleibt, wie sie ist: niedlich und trotzdem ein echtes Gegenüber, und sie mischt sich nicht in Gespräche mit anderen ein.

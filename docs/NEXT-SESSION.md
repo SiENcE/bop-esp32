@@ -93,6 +93,8 @@ Handy, found the hard way:
 - Long heredocs with apostrophes break in the Bash tool here: write an edit script to build/ with the Write tool and run
   it, or use Edit. Read a file's line endings first: many are CRLF.
 
+**Texts are checked against docs/dialog-style-guide.md** (2026-11-05): Juno no longer says the beat, only "Immer gleich."; until the painted Lull points pulse long, short, short, long (they still pulse evenly) the beat can only be had from EVI's last hint. Actions in a dialogue are `silent`; a choice in quotes is said without them (game/talk.js).
+
 **Still open for me:** why Bao has one arm. The Rain Reader's warm drop of the machine (the Crown gives no water back, and the Ruhekern's servers are there, so it proves nothing). Everything else in the talks stands (story §10b), to be judged by playing.
 
 Open points: in the mock, the chat's replies keep gaps in their numbers ([1], then [4]) where one is hidden; the REC button shows in all of Chapter 1 and only does something in the scene in cam31; the fitter stands on the street, without his scaffold; street scenes can't move the clock, so going out and waiting

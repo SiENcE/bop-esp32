@@ -67,10 +67,10 @@ const OPEN = ["Das kann nur noch mein Kopf.", { sfx: "static" }, { stinger: "wit
 const SHUT = ["Rauschen. Das war's nicht."];
 const beat = (/** @type {number} */ n, /** @type {boolean} */ right) => [0, 1].map((c) => {
   const good = right && c === BEAT[n], text = c ? "Kurz." : "Lang.";
-  return n === 3 ? { text, goto: "end", then: good ? OPEN : SHUT } : { text, goto: `${STEPS[n + 1]}_${good ? "ok" : "no"}`, then: [{ sfx: "tag" }] };
+  return n === 3 ? { text, silent: true, goto: "end", then: good ? OPEN : SHUT } : { text, silent: true, goto: `${STEPS[n + 1]}_${good ? "ok" : "no"}`, then: [{ sfx: "tag" }] };
 });
 /** @type {Record<string, any>} */
-const takt = { main: [...beat(0, true), { text: "Noch nicht.", goto: "end", then: ["Noch nicht."] }] };
+const takt = { main: [...beat(0, true), { text: "Noch nicht.", silent: true, goto: "end", then: ["Noch nicht."] }] };
 for (let n = 1; n < 4; n++) { takt[`${STEPS[n]}_ok`] = beat(n, true); takt[`${STEPS[n]}_no`] = beat(n, false); }
 Cutaway.dialog("cam31_takt", takt);
 
@@ -87,7 +87,7 @@ Cutaway.actor("ines", { name: "Frau im Kittel", color: "#f0a0c0",
 Halcyon.people.lantern = { name: "ROLLSTUHL", known: "tag_lantern", label: "Jemand im Rollstuhl", speaker: "Jemand im Rollstuhl" };
 Cutaway.actor("lantern", { name: "Jemand im Rollstuhl", color: "#b0f0a0",
   costume: { idle: "mock_lantern", walk: "mock_lantern", talk: "mock_lantern" }, speed: [14, 10], voice: { pitch: 46, wave: "square", syllable: 85 },
-  look: ["Drei Uhr früh. Wer wäscht um drei? Geflickter Poncho, Schwimmer am Rollstuhl, ein Bündel Antennen.", { if: "stick_ines", then: ["Der Trockner ist leer. Das Ticket nimmt er trotzdem."], else: ["Er holt, was sie dagelassen hat."] }],
+  look: ["Drei Uhr früh. Wer wäscht um drei?", "Geflickter Poncho, Schwimmer am Rollstuhl, ein Bündel Antennen.", { if: "stick_ines", then: ["Der Trockner ist leer. Das Ticket nimmt er trotzdem."], else: ["Er holt, was sie dagelassen hat."] }],
   talk: [{ if: { or: ["tag_lantern", "off_main"] }, then: ["Den hab ich."], else: [{ tag: "lantern" }, "Dich merk ich mir. Wo willst du hin?"] }] });
 Cutaway.routine("ines", [
   { day: [2, 3, 4], from: "19:00", to: "19:15", room: "cam21", at: A21.door, path: [A21.door, A21.walkOff] },
@@ -213,8 +213,8 @@ Cutaway.room("laundromat", { name: "SUDS & SPIN", background: "laundromat_bg", w
   } });
 Cutaway.item("stick", { name: "Ines' Stick", icon: "inv_stick", look: "Ein Datenstick. Ein Schlüssel drauf, sonst nichts. Wozu, weiß ich nicht." });
 Cutaway.dialog("stick", { main: { choices: [
-  { text: "Zurücklegen.", goto: "end", then: ["Soll sie ihren Plan haben. Ich schau nur zu."] },
-  { text: "Behalten.", goto: "end", then: [{ set: "stick_ines" }, { give: "stick" }, "Wer weiß, wofür der gut ist. Jemand wird ihn vermissen."] },
+  { text: "Zurücklegen.", silent: true, goto: "end", then: ["Soll sie ihren Plan haben. Ich schau nur zu."] },
+  { text: "Behalten.", silent: true, goto: "end", then: [{ set: "stick_ines" }, { give: "stick" }, "Wer weiß, wofür der gut ist. Jemand wird ihn vermissen."] },
 ] } });
 
 // ---- the act. It begins from a clean state, whichever way: what the prologue leaves comes along in `keep`,

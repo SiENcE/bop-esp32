@@ -23,11 +23,11 @@ flat.window.use = [{ if: "day=1", then: ["Das Fenster klemmt. Schon immer."],
     else: ["Klemmt. Der Riegel sitzt im Rahmen. Da kommt man nur mit was Flachem ran."] }] }];
 flat.window.with = { ausweis: [{ if: "!window_open", then: ["Der Ausweis in den Spalt. Hoch. Noch mal.", "Klick.", "Das erste Mal, dass das Ding was aufmacht.", { set: "window_open" }, { goto: "sims", at: AS.window, face: "se" }],
   else: ["Das Fenster ist offen."] }] };
-flat.window.look = [{ if: "day=1", then: [flat.window.look], else: [flat.window.look, "Rechts draußen geht die Leiter aufs Dach. Da oben war ich zuletzt mit Teo."] }];
+flat.window.look = [{ if: "day=1", then: flat.window.look, else: [...flat.window.look, "Rechts draußen geht die Leiter aufs Dach. Da oben war ich zuletzt mit Teo."] }];
 
 // ---- the lift never runs; its emergency key hangs over the door all the same
 const liftLook = floor14.lift.look, liftUse = floor14.lift.use;
-floor14.lift.look = [{ if: "day=1", then: [liftLook], else: [liftLook, "Über der Tür hängt der Notschlüssel. Ein langer Haken, für den Fall, dass er stecken bleibt."] }];
+floor14.lift.look = [{ if: "day=1", then: [liftLook], else: [liftLook, "Über der Tür hängt der Notschlüssel. Ein langer Haken."] }];
 floor14.lift.use = [{ if: ["day>1", "!got_haken", "!off_roof"], then: ["Der Notschlüssel. Lang genug für alles.", "Stecken bleiben müsste er erst mal fahren. Den nehm ich mit.", { give: "haken" }, { set: "got_haken" }], else: [liftUse] }];
 
 // ---- the ledge outside the window: Juno is afraid of heights (the old photo on the deck)
@@ -42,7 +42,7 @@ Cutaway.room("sims", { name: "Der Sims", background: "sims_bg", walk: AS.walk,
       look: [{ if: "ladder_down", then: ["Die Leiter. Sie hängt jetzt da, wo sie hingehört."], else: ["Die Leiter aufs Dach. Sie hängt zwei Meter zu hoch.", "Teo kam da früher mit irgendwas Langem ran."] }],
       use: [{ if: "!ladder_down", then: ["Zwei Meter zu hoch. Teo kam da mit irgendwas Langem ran. Ich nicht.", "Nicht heute. Nicht ohne was mit Haken."],
         else: ["Nicht runterschauen.", { goto: "dach", at: AD.hatch, face: "ne" }] }],
-      with: { haken: ["Der Haken greift. Ziehen.", "Sie kommt runter wie ein Tier, das geweckt wurde.", { remove: "haken" }, { set: "ladder_down" }, "Nicht runterschauen.", { goto: "dach", at: AD.hatch, face: "ne" }] } },
+      with: { haken: ["Der Haken greift. Ziehen.", "Sie kommt runter, mit allem Rost der letzten zwanzig Jahre.", { remove: "haken" }, { set: "ladder_down" }, "Nicht runterschauen.", { goto: "dach", at: AD.hatch, face: "ne" }] } },
   } });
 
 // ---- the roof. Above it, where other people have a sky, the underside of the next Ring
@@ -73,26 +73,26 @@ Cutaway.room("dach_sitzen", { name: "Unser Platz", background: "dach_heute", obs
 const AC = Halcyon.at.cam14;
 const notesLook = floor14.notes.look;
 floor14.notes.look = [{ if: ["news_who", "news_stack"], then: [...notesLook, "Und drunter, von mir: ES IST NIEMAND. 14B."], else: notesLook }];
-floor14.notes.use = [{ if: "day>1", then: ["Seit Wochen geht das so. Wer klaut die? Über mir hängt Halcyons Kamera, ich müsste nur reinschauen."], else: ["Krieg auf dem vierzehnten."] }];
-floor14.corner_cam.use = [{ if: ["day>1", "!link_cam14", "!off_zeitung"], then: ["Mein alter Zugang geht auch hier. Den eigenen Block glasst man nicht. Das sag ich Motte auch.", { dialog: "zeitung_cam" }],
+floor14.notes.use = [{ if: "day>1", then: ["Wer klaut die? Seit Wochen geht das so.", "Über mir hängt Halcyons Kamera. Ich müsste nur reinschauen."], else: ["Krieg auf dem vierzehnten."] }];
+floor14.corner_cam.use = [{ if: ["day>1", "!link_cam14", "!off_zeitung"], then: ["Mein alter Zugang geht auch hier.", "Den eigenen Block glasst man nicht. Das sag ich Motte auch.", { dialog: "zeitung_cam" }],
   else: [{ if: "link_cam14", then: ["Bin schon drauf. Schöner wird's nicht."], else: ["Den eigenen Block glasst man nicht."] }] }];
 Cutaway.dialog("zeitung_cam", { main: { choices: [
-  { text: "Nur dieses eine Mal.", goto: "end", then: [{ set: "code_cam14" }, { set: "link_cam14" }, { sfx: "link" }, "Das sagen alle. CAM 14 ist auf dem Deck."] },
-  { text: "Nein.", goto: "end", then: ["Nein. Soll die Zeitung halt weg sein."] },
+  { text: "„Nur dieses eine Mal.“", goto: "end", then: [{ set: "code_cam14" }, { set: "link_cam14" }, { sfx: "link" }, "Das sagen alle. CAM 14 ist auf dem Deck."] },
+  { text: "„Nein.“", goto: "end", then: ["Soll die Zeitung halt weg sein."] },
 ] } });
 Halcyon.cams.cam14 = { id: "14", place: "KESSEL-BLOCK, 14. STOCK", owner: "HALCYON", map: [8, 14], if: "link_cam14" };
 Cutaway.actor("haldane_feed", { name: "Jemand im Morgenmantel", color: "#ffa8d8",
   costume: { idle: "commuter_d_feed", walk: "commuter_d_feed_walk", talk: "commuter_d_feed" }, speed: [6, 3],
-  look: "Jemand im Morgenmantel. Sehr langsam, und ohne die Hände zu benutzen, um nach etwas zu greifen.",
+  look: ["Jemand im Morgenmantel. Sehr langsam.", "Die Hände hängen einfach runter."],
   talk: [{ if: "!news_who", then: ["Halb drei. Morgenmantel. Die geht langsam, die Augen ...", "Die Augen sind zu.", "Frau Haldane. Aus 14C. Sie holt sich die Zeitung, ihre eigene und die von 14A.", "Ihr eigener Zettel. WER KLAUT MEINE ZEITUNG.", { set: "news_who" }, { evi: "verwirrt" }, { say: "evi", text: "Sie schläft. Darf man das?" }],
     else: ["Frau Haldane. Sie schläft und holt die Zeitung. Die markier ich nicht."] }] });
 Cutaway.routine("haldane_feed", [{ day: [2, 3], from: "02:30", to: "02:45", room: "cam14", at: AC.door, path: [AC.door, AC.mat, AC.door] }]);
 Halcyon.camRoom("cam14", { background: "cam14_bg", mic: { at: AC.mic, clear: 40, lost: 150 }, hotspots: {
-  doors: { name: "Türen", rect: AC.doorsRect, look: "Der Flur von oben. Genau wie ich's in Erinnerung hab. Ich hab den ja mal beobachtet, von Berufs wegen." },
+  doors: { name: "Türen", rect: AC.doorsRect, look: ["Der Flur von oben. Genau wie ich's in Erinnerung hab.", "Den hab ich ja mal beobachtet, von Berufs wegen."] },
 } });
 const haldaneUse = floor14.haldane.use;
 // the point behind a sleeper's ear: the beat cam31 waits for (and nobody says why)
-const PUNKT = ["Der Punkt hinter ihrem Ohr. Lang, kurz, kurz, lang. Immer gleich.", "Woher kenn ich das?"];
+const PUNKT = ["Der Punkt hinter ihrem Ohr. Immer gleich.", "Woher kenn ich das?"];
 floor14.haldane.use = [{ if: ["day>1", "!news_stack", "!off_zeitung"], then: ["Die Tür steht offen. Sie schläft wirklich.", "Hinter dem Sessel. Ein Stapel Zeitungen, so hoch wie Motte.", { zoom: "look_zeitung" }, "Jede Seite. Gesichter, angestrichen.", "Nicht angestrichen. Vier Ecken. Um jedes Gesicht vier kleine Ecken.", "So markier ich.", { zoom: false }, { set: "news_stack" }, { cache: "note_haldane_marks" }, ...PUNKT,
     { evi: "besorgt" }, { say: "evi", text: "Warum macht sie das?" }, "Weiß ich nicht. Sie auch nicht."],
   else: [{ if: "day>1", then: PUNKT, else: [haldaneUse] }] }];
@@ -112,14 +112,14 @@ Halcyon.threads.imai = [
 Halcyon.ledger.imai = { to: "R. IMAI", what: { truth: "die Wahrheit", dream: "ein Traum" } };
 Cutaway.actor("imai", { name: "Frau Imai", color: "#c8d8b0", room: "lucky_static", at: AI.imai, facing: "sw",
   costume: { idle: "mock_imai", walk: "mock_imai", talk: "mock_imai" }, voice: { pitch: 60, range: 4, wave: "triangle", syllable: 85, speed: 0.9 },
-  look: ["Eine Frau vor einem Tee, der kalt ist. Hinter dem Ohr der blasse Punkt: lang, kurz, kurz, lang.", "Die kenn ich. Aus der Schlange vor der Klinik."],
+  look: ["Eine Frau vor einem Tee, der kalt ist. Hinter dem Ohr der blasse Punkt.", "Die kenn ich. Aus der Schlange vor der Klinik."],
   talk: [
     { if: ["imai_step=0", "!off_imai"], then: [
-      "Die kenn ich. Aus der Schlange vor der Klinik. Hinter dem Ohr der blasse Punkt: lang, kurz, kurz, lang.", { say: "imai", text: "Sie sind die Glasserin. Danke. Keiner glaubt mir, nicht mal ich." },
-      { say: "imai", text: "Eine Treppe. Über der Treppe ein Schild mit einem Fisch. Regen von links. Ein Mann fällt, und einer geht weg." },
+      "Die kenn ich. Aus der Schlange vor der Klinik.", "Hinter dem Ohr der blasse Punkt.", { say: "imai", text: "Sie sind die Glasserin. Danke. Keiner glaubt mir, nicht mal ich." },
+      { say: "imai", text: "Eine Treppe. Über der Treppe ein Schild mit einem Fisch. Regen von links." }, { say: "imai", text: "Ein Mann fällt, und einer geht weg." },
       { say: "imai", text: "Das Komische: Ich hab von oben draufgeschaut. Als würde ich an einer Laterne hängen." },
       "Und das war wann?", { say: "imai", text: "Vor einer Woche, im Schlaf. Ich schlafe von drei bis sieben. Vier Stunden Lull, wie alle." },
-      { set: "imai_step", value: 1 }, "Ein Fisch über einer Treppe. CAM 18 am alten Fischmarkt, das könnte sie sein. Da hab ich noch Zugang."] },
+      { set: "imai_step", value: 1 }, "Ein Fisch über einer Treppe. CAM 18, am alten Fischmarkt.", "Das könnte sie sein. Da hab ich noch Zugang."] },
     { if: "imai_step=1", then: [{ say: "imai", text: "Eine Treppe. Ein Schild mit einem Fisch. Regen von links. Haben Sie sie gefunden?" }] },
     { if: "imai_step=2", then: [{ say: "imai", text: "Und? Bin ich verrückt?" }, { dialog: "imai_wahl" }] },
     { if: "imai_told=truth", then: [{ say: "imai", text: "Ich hab heute nicht geschlafen. Ich trau mich nicht." }] },
@@ -128,7 +128,7 @@ Cutaway.actor("imai", { name: "Frau Imai", color: "#c8d8b0", room: "lucky_static
 Cutaway.dialog("imai_wahl", { main: { choices: [
   { text: "„Sie sind nicht verrückt.“", goto: "end", then: [{ set: "imai_step", value: 3 }, { set: "imai_told", value: "truth" }, { ledger: "imai", value: "truth" }, "Die Treppe gibt's. Den Mann auch. Neunundzwanzigster Oktober, drei Uhr zwölf.",
     { say: "imai", text: "Da hab ich geschlafen." }, "Ich weiß.", { say: "imai", text: "Und wie soll ich das gesehen haben?" }, "Weiß ich nicht.", { say: "imai", text: "Dann will ich heute Nacht nicht schlafen." }] },
-  { text: "„Das war ein Traum.“", goto: "end", then: [{ set: "imai_step", value: 3 }, { set: "imai_told", value: "dream" }, { ledger: "imai", value: "dream" }, "Keine Treppe, kein Fisch. Ich hab nachgesehen. Das war ein Traum.",
+  { text: "„Das war ein Traum.“", goto: "end", then: [{ set: "imai_step", value: 3 }, { set: "imai_told", value: "dream" }, { ledger: "imai", value: "dream" }, "Keine Treppe, kein Fisch. Ich hab nachgesehen.",
     { say: "imai", text: "Gott sei Dank. Ich dachte schon ..." }, "Schlafen Sie gut, Frau Imai.", { evi: "verwirrt" }, { say: "evi", text: "Die Treppe gibt es aber. Ich hab sie gesehen." }, "Ich weiß."] },
 ] } });
 Halcyon.cams.cam18 = { id: "18", place: "ALTER FISCHMARKT", owner: "HALCYON", map: [120, 14], if: "imai_step>=1" };
@@ -154,14 +154,16 @@ Cutaway.room.get("kowalski").hotspots.lucky_door.use = [{ if: "day=1", then: ["N
 // Juno waits: at 23:30 she hears it from wherever she is, and it waits for her in the street.
 Cutaway.moment("traeger_ruf", { room: "deck", day: 3, from: "23:15", to: "23:30", if: "~never",
   unseen: [{ if: "!off_traeger", then: ["Von unten: ein Wagen, der nicht hupt. So was gibt's im Neunten nicht."] }] });
+for (const [id, name, pitch] of /** @type {[string, string, number][]} */ ([["traeger_weiss", "Jemand in Weiß", 56], ["traeger_kind", "Das Mädchen", 74]]))
+  Cutaway.actor(id, { name, color: "#a8b8d0", costume: { idle: "mock_imai", walk: "mock_imai", talk: "mock_imai" }, voice: { pitch, range: 4, wave: "triangle", syllable: 80 } });
 Cutaway.moment("traeger", { room: "kowalski", day: 3, from: "23:30", to: "00:45", if: "!off_traeger",
   play: ["Ein Wagen vor dem Haus gegenüber. Weiß, ohne Schild.", { zoom: "look_traeger" }, "Zwei in Weiß. Freundlich. Sie tragen jemanden raus, und der schläft.",
-    "„Ruhe-Erschöpfung“, sagt der eine, zu einem Mädchen in der Tür. „Er hat es jetzt gut.“", "Oben gehen die Rollos runter. Einer nach dem anderen.", { zoom: false }, { dialog: "traeger_wahl" }] });
+    { say: "traeger_weiss", text: "Ruhe-Erschöpfung." }, { say: "traeger_weiss", text: "Er hat es jetzt gut." }, "Oben gehen die Rollos runter. Einer nach dem anderen.", { zoom: false }, { dialog: "traeger_wahl" }] });
 Halcyon.cache.clip_traeger = { kind: "clip", name: "DIE WEISSEN TRÄGER", about: "Kowalski-Straße, Do 23:30. Ein Sinker, zwei in Weiß, ein Mädchen in der Tür." };
 Cutaway.dialog("traeger_wahl", { main: { choices: [
-  { text: "Zusehen.", goto: "end", then: [{ set: "traeger", value: "watched" }, "Ich schau zu. Das kann ich.", "Die Türen gehen zu. Der Wagen fährt, und er hupt immer noch nicht."] },
-  { text: "Filmen.", goto: "end", then: [{ set: "traeger", value: "filmed" }, { cache: "clip_traeger" }, "Das Taschen-Deck reicht dafür. Es gibt Leute, die zahlen für so was.", { evi: "besorgt" }, { say: "evi", text: "Das Mädchen ist mit im Bild." }, "Ich weiß."] },
-  { text: "Zu dem Mädchen gehen.", goto: "end", then: [{ set: "traeger", value: "girl" }, "Ich geh rüber. Was sagt man da?", "„Geht es ihm gut?“, fragt sie. „Die sagen, es geht ihm gut.“", "Ich weiß es nicht.", "„Er wacht einfach nicht auf.“", "Ich bleib, bis der Wagen weg ist. Mehr hab ich nicht."] },
+  { text: "Zusehen.", silent: true, goto: "end", then: [{ set: "traeger", value: "watched" }, "Ich schau zu. Das kann ich.", "Die Türen gehen zu. Der Wagen fährt, und er hupt immer noch nicht."] },
+  { text: "Filmen.", silent: true, goto: "end", then: [{ set: "traeger", value: "filmed" }, { cache: "clip_traeger" }, "Das Taschen-Deck reicht dafür. Es gibt Leute, die zahlen für so was.", { evi: "besorgt" }, { say: "evi", text: "Das Mädchen ist mit im Bild." }, "Ich weiß."] },
+  { text: "Zu dem Mädchen gehen.", silent: true, goto: "end", then: [{ set: "traeger", value: "girl" }, "Ich geh rüber. Was sagt man da?", { say: "traeger_kind", text: "Geht es ihm gut? Die sagen, es geht ihm gut." }, "Ich weiß es nicht.", { say: "traeger_kind", text: "Er wacht einfach nicht auf." }, "Ich bleib, bis der Wagen weg ist. Mehr hab ich nicht."] },
 ] } });
 
 // ---- the half repair: he lives on the scaffold at the big screen and repairs its left half; the right half is another contract
@@ -179,7 +181,7 @@ Cutaway.routine("reparatur", [{ day: [2, 3, 4], from: "18:00", to: "04:00", room
 const AM = Halcyon.at.drain_market;
 Cutaway.actor("prediger", { name: "Der Prediger", color: "#d8c8a0", room: "drain_market", at: AM.preacher, facing: "sw",
   costume: { idle: "mock_prediger", walk: "mock_prediger", talk: "mock_prediger" }, voice: { pitch: 54, range: 8, wave: "sawtooth", syllable: 60, speed: 1.3 },
-  look: ["Ein dürrer Mann auf einer Kiste, eine Thermoskanne in jeder Hand. Die Wache Kirche.", "Die Augen stehen ihm offen wie zwei Türen im Sommer."],
+  look: ["Ein dürrer Mann auf einer Kiste, eine Thermoskanne in jeder Hand. Die Wache Kirche.", "Er blinzelt nicht. Ich hab gezählt."],
   talk: [
     { if: "day=2", then: [{ say: "prediger", text: "Neun Tage! Neun Tage wach, und ich sehe klarer als ihr alle! Kaffee?" }, "Was ist da drin?", { say: "prediger", text: "Alles, was nicht schläft." }] },
     { if: "day=3", then: [{ say: "prediger", text: "Zehn Tage. Sie sagen, wer schläft, sieht nichts. Falsch! Wer schläft, sieht was anderes!" }, "Woher willst du das wissen?", { say: "prediger", text: "Ich weiß es nicht. Ich glaube es. Das ist billiger. Kaffee?" }] },

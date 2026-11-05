@@ -44,7 +44,7 @@ const exits = [A3.exitRight, A3.exitFar, A3.exitRight, A3.exitFar];
 // 22:00 on cam03: the shift ends, the crowd comes out; Juno says what to look for (once)
 Cutaway.moment("shift_end", {
   room: "cam03", day: 1, from: "22:00", to: "22:15",
-  play: ["Schichtende. Da kommen sie.", "Einer davon ist Kessler. Frau Kesslers Foto: ein heller Schal.", "Den markier ich. Linksklick."],
+  play: ["Schichtende. Da kommen sie.", "Einer davon ist Kessler. Frau Kesslers Foto: ein heller Schal.", "Den markier ich. Einmal draufzeigen reicht."],
 });
 Cutaway.moment("kessler_call", {
   room: "cam03", day: 1, from: "22:00", to: "22:15", if: "tag_kessler",
@@ -195,7 +195,7 @@ Cutaway.room("flat", {
       look: "Mein Deck. Drei Bildschirme, die nicht zusammenpassen, und ein Feed, der nie schläft.",
       use: [{ goto: "deck" }] },
     window: { name: "Fenster", rect: AF.windowRect, walkTo: AF.window, face: "ne",
-      look: "Regen. Gegenüber das Hotel, und dahinter der große Bildschirm. HALCYON: SLEEP BETTER. Ich schlafe schlecht, danke." },
+      look: ["Regen. Gegenüber das Hotel, und dahinter der große Bildschirm.", "HALCYON: SLEEP BETTER. Ich schlafe schlecht, danke."] },
     door: { name: "Tür", rect: AF.doorRect, walkTo: AF.door, face: "nw",
       look: "Die Tür zum Flur.",
       use: [{ if: "!p1", then: ["Erst der Auftrag. Dann Essen."],

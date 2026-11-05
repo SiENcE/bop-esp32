@@ -39,18 +39,18 @@ streetVending.look = [...streetVending.look, { if: "day>1", then: ["Da war die N
 // ---- cam15, the Morpheus. Its own net: no sticker, no factory code. Whoever sells access has it.
 Halcyon.cams.cam15 = { id: "15", place: "KAPSELHOTEL MORPHEUS", owner: "MORPHEUS, PRIVAT", map: [8, 62], if: "varga_step",
   tryIt: ["Das Morpheus hat ein eigenes Netz. Kein Aufkleber, kein Werkscode.", "Zugänge verkauft Sable."],
-  linked: ["Sables Code. Geht. Ärgerlich, wie gut der Laden läuft."] };
+  linked: ["Sables Code. Geht."] };
 Halcyon.cache.note_kessler_hideout = { kind: "note", name: "KESSLER, KAPSEL 23", about: "Kapselhotel Morpheus, Kapsel 23. Er kommt um halb elf, ohne Schal." };
 Halcyon.camRoom("cam15", { background: "cam15_bg", mic: { at: A15.mic, clear: 40, lost: 150 }, hotspots: {
-  capsules: { name: "Kapseln", rect: A15.capsules, look: "Zwei Reihen Kapseln. Hier schlafen die, die nicht gefunden werden wollen. Und die, die sich nichts anderes leisten können." },
+  capsules: { name: "Kapseln", rect: A15.capsules, look: ["Zwei Reihen Kapseln. Hier schläft, wer nicht gefunden werden will.", "Oder wer sich nichts anderes leisten kann."] },
   kapsel23: { name: "Kapsel 23", rect: A15.c23, if: "cache_note_kessler_hideout",
-    look: [{ if: "kessler_gone", then: [{ if: "k1a=sold", then: ["Kapsel 23 steht offen. Auf dem Boden liegt eine zerbrochene Brille."], else: ["Kapsel 23 ist leer. Auf dem Bildschirm steht noch meine Zeile."] }], else: ["Kapsel 23. Jede Kapsel hat einen Bildschirm, und das Hotel schreibt drauf, wann man raus muss."] }],
-    use: [{ if: "!k1a", then: ["Das Hotelnetz kann auf jeden Bildschirm schreiben. Ich jetzt auch.", { dialog: "k1a_warn" }], else: ["Da hab ich getan, was ich getan hab."] }] },
+    look: [{ if: "kessler_gone", then: [{ if: "k1a=sold", then: ["Kapsel 23 steht offen. Auf dem Boden liegt eine zerbrochene Brille."], else: ["Kapsel 23 ist leer. Auf dem Bildschirm steht noch meine Zeile."] }], else: ["Kapsel 23.", "Jede Kapsel hat einen Bildschirm, und das Hotel schreibt drauf, wann man raus muss."] }],
+    use: [{ if: "!k1a", then: ["Das Hotelnetz kann auf jeden Bildschirm schreiben. Ich jetzt auch.", { dialog: "k1a_warn" }], else: ["Das ist erledigt."] }] },
   rewind: { name: "Puffer", z: 5, if: ["time>=22:45", "!cache_note_kessler_hideout", "!kessler_gone"], use: ["Puffer. Zurück auf 22:30.", ...CAPSULE] },
 } });
 Cutaway.dialog("k1a_warn", { main: { choices: [
   { text: "„Varga sucht dich. Geh.“ schreiben.", silent: true, goto: "end", then: [{ set: "k1a", value: "warned" }, { ledger: "kessler_warn", value: "warned" }, { set: "kessler_gone" },
-    "Eine Zeile, zwanzig Zentimeter über seinem Gesicht.", { evi: "verwirrt" }, { say: "evi", text: "Das bringt kein Geld. Warum ist das gut?" }, "Weiß ich nicht."] },
+    "Eine Zeile, zwanzig Zentimeter über seinem Gesicht.", { evi: "verwirrt" }, { say: "evi", text: "Er kennt seine Kapsel doch. Warum schreibst du ihm?" }, "Weiß ich nicht."] },
   { text: "Noch nicht.", silent: true, goto: "end" },
 ] } });
 
@@ -68,7 +68,7 @@ Cutaway.dialog("sable", {
     { text: "Bis dann.", silent: true, goto: "end" },
   ],
   code: [
-    { text: "„Achtzig. Hier.“", if: "chits>=80", goto: "end", then: [{ inc: "chits", by: -80 }, { set: "code_cam15" }, S("Nett. Das Morpheus ändert ihn nie. Die Gäste wollen ja nicht gefunden werden."), "CAM 15 steht jetzt auf dem Deck."] },
+    { text: "„Achtzig. Hier.“", if: "chits>=80", goto: "end", then: [{ inc: "chits", by: -80 }, { set: "code_cam15" }, S("Nett. Das Morpheus ändert ihn nie."), "CAM 15 steht jetzt auf dem Deck."] },
     { text: "„Kesslers Schulden. Gegen den Code.“", if: ["cache_note_kessler_debt", "!ledger_sable_kessler"], goto: "end", then: [{ ledger: "sable_kessler", value: "swap" }, { set: "code_cam15" }, S("Nett."), "Das landet auch im Kassenbuch. Alles."] },
     { text: "„Zu teuer.“", goto: "main", then: [S("Heute. Morgen auch.")] },
   ],
@@ -81,7 +81,7 @@ Cutaway.room("sable_booth", { name: "Sables Bude", background: "sable_booth_bg",
   hotspots: {
     curtain: { name: "Vorhang", rect: AB.curtainRect, walkTo: AB.door, face: "sw", use: [{ goto: "drain_market", at: AM.curtain, face: "sw" }] },
     prices: { name: "Preisliste", rect: AB.pricesRect, walkTo: AB.front, face: "ne", look: ["NAMES 50. ADDRESSES 80. SECRETS: ASK.", "Ich hab schon teurer gekauft. Und schon billiger verkauft."] },
-    screens: { name: "Bildschirme", rect: AB.screensRect, walkTo: AB.front, face: "ne", look: "Sables Bildschirme. Auf einem davon bin ich. Nein. Das ist nur jemand mit einem gelben Mantel." },
+    screens: { name: "Bildschirme", rect: AB.screensRect, walkTo: AB.front, face: "ne", look: "Sables Bildschirme. Ich schau nicht genauer hin. Das kostet bestimmt auch." },
     bird: { name: "Vogel", rect: AB.birdRect, walkTo: AB.front, face: "ne", look: "Ein Vogel aus Draht, im Käfig. Er singt nicht. Sable sagt, das ist der Preis." },
   } });
 

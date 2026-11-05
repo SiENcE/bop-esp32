@@ -39,7 +39,8 @@ Eine gute Zeile tut drei Dinge zugleich, ohne dass man es merkt:
 eigene Schicht, die eigene Mutter. Der Spieler setzt das Bild selbst zusammen. Auch ein Kind aus dem Neunten weiß, was im Neunten
 alle wissen: Eine Frage, die nur der Spieler stellen würde, stellt niemand.
 
-> Regenleserin: Als das Wasser kam, haben sie nicht abgepumpt. Sie haben draufgebaut. Und uns die Rechnung geschickt.
+> Regenleserin: Als das Wasser kam, haben sie nicht abgepumpt. Sie haben draufgebaut.\
+> Regenleserin: Und uns die Rechnung geschickt.
 
 Die Regenleserin ist die Stelle, an der die Welt am meisten zur Sprache kommt, und auch sie hält keinen Vortrag: Sie sagt, wie es
 schmeckt.
@@ -98,7 +99,7 @@ keine neuen. Vorbild ist Mottes „Was gibt's Neues im Haus?“ (`game/motte.js`
 
 **D. EVI aus der Tasche.** Sie redet nicht ständig und kommentiert nicht jede Handlung. Sie spricht zu Juno, nie in ein Gespräch mit
 anderen hinein (`dialog-design` §2), und im Feed nur, wenn Juno sie fragt, nie mitten in einem Moment (`kapitel0-design` §2.2). Danach
-darf sie etwas sagen, und dann trifft es oft am härtesten:
+darf sie etwas sagen, und dann trifft es oft am härtesten. (Die einzige Ausnahme sind ihre Touch-Tipps, `game/evi.js`: Die sprechen den Spieler an.)
 
 > Juno: Schlafen Sie gut, Frau Imai.\
 > EVI: Die Treppe gibt es aber. Ich hab sie gesehen.\
@@ -106,7 +107,7 @@ darf sie etwas sagen, und dann trifft es oft am härtesten:
 
 **E. Entscheidungen.** Die Optionen unterscheiden sich in der Haltung, und die Haltung ist vor dem Klick zu erkennen. Was der Spieler
 wählt, sagt Juno wörtlich: Die Option ist der Satz selbst, die Reaktion passt zu genau diesem Satz, und nichts Überraschendes steckt
-dahinter. Gesagtes steht in „…“, eine Handlung ohne Anführungszeichen. Große Entscheidungen fallen nie aus Versehen (Bibel §5).
+dahinter. Gesagtes steht in „…“. Eine Handlung steht ohne Anführungszeichen und ist immer `silent`, sonst sagt Juno sie laut. Große Entscheidungen fallen nie aus Versehen (Bibel §5).
 
 > „Sie sind nicht verrückt.“\
 > „Das war ein Traum.“
@@ -131,6 +132,8 @@ viel, später was daraus wurde. Es urteilt nie.
   nach heraus (Bibel §10a).
 - **Sinker** sagen die Leute, **Ruhe-Erschöpfung** sagt Halcyon. Wer das zweite sagt, zitiert es meist.
 - **Sable** bekommt im Deutschen keine Pronomen und keine gegenderten Rollenwörter (Bibel §10). Die Sätze werden darum herum gebaut.
+- **Keine Spielwörter in Junos Mund:** kein „Linksklick“ oder „Rechtsklick“, denn der Text muss auch für den Finger und später den Controller stimmen.
+- **Den Takt** „lang, kurz, kurz, lang“ sagt nur EVI im Klartext, als letzte Stufe ihres Hinweises (Bibel §10b).
 - Pausen und Abbrüche schreiben wir `...`, Anführungszeichen `„…“`.
 - Eine Pointe, die nur auf Deutsch funktioniert, braucht schon beim Schreiben eine Idee für die englische Fassung (H10).
 

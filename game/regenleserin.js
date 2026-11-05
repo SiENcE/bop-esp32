@@ -19,25 +19,25 @@ Halcyon.talkTree("regenleserin", [
       ["„Der Fünfte?“", [R("Da fahren die Aufzüge durch. Schmieröl, Kaffee, Leute, die ihren Passierschein suchen."), R("Und seit ein paar Jahren Kochsalz. Jede Nacht, eimerweise. Wie im Krankenhaus.")], [
         ["„Dann ist da eben eine Klinik.“", [R("Für eine Klinik ist es zu viel. Ich frag mich, wer da oben jede Nacht so viele wäscht.")]],
       ]],
-      ["„Und die Krone?“", [R("Aus der Krone kommt nichts. Kein Tropfen, seit ich hier sitze. Die trinken ihr Wasser zweimal."), R("Wer nichts abgibt, hat was zu verbergen. Oder er ist sehr reich.")], [
+      ["„Und die Krone?“", [R("Aus der Krone kommt nichts. Kein Tropfen, seit ich hier sitze."), R("Die trinken ihr Wasser zweimal."), R("Wer nichts abgibt, hat was zu verbergen. Oder er ist sehr reich.")], [
         ["„Das ist dasselbe.“", [R("Jetzt hast du's.")]],
       ]],
     ]],
     ["„Und unter uns?“", [R("Unter uns ist da, wo ich zur Schule gegangen bin.")], [
-      ["„Die alte Stadt?“", [R("Als das Wasser kam, haben sie nicht abgepumpt. Sie haben draufgebaut. Und uns die Rechnung geschickt.")], [
+      ["„Die alte Stadt?“", [R("Als das Wasser kam, haben sie nicht abgepumpt. Sie haben draufgebaut."), R("Und uns die Rechnung geschickt.")], [
         ["„Die Hüllenabgabe. Dreihundertzehn, mit jeder Miete.“", [R("Damit die Hülle dicht bleibt. Hier, koste mal, wie dicht sie ist."), "Nein, danke."]],
         ["„Wer erinnert sich da noch dran?“", [R("Frag Bao. Der hatte da unten eine Küche, mit Fenster zum Strand."), R("Sein bestes Rezept liegt noch da, sagt er. Unter drei Stockwerken Wasser."), "Davon hat er mir nie was erzählt.", R("Du hast ja auch nie was gefragt. Du guckst nur.")]],
       ]],
       ["„Wo läuft das alles hin?“", [R("Durch die Filter von der Krake in der Pumpenhalle. Die ist älter als dein Mantel.")], [
-        ["„Tinte. Teo nennt sie seine Kollegin.“", [R("Ich schmeck's von oben, sie von unten. Wenn du mal wissen willst, wer fehlt, frag die. Die zählt mit.")]],
+        ["„Tinte. Teo nennt sie seine Kollegin.“", [R("Ich schmeck's von oben, sie von unten."), R("Wenn du mal wissen willst, wer fehlt, frag die. Die zählt mit.")]],
       ]],
       ["„Wohnt da unten noch wer?“", [R("Nachts ist manchmal Licht im Wasser. Da sitzt einer und hört mit.")], [
-        ["„Wer soll das sein?“", [R("Vor zwei Jahren stand auf dem großen Schirm zehn Sekunden lang was anderes. Die Wahrheit, sagen sie.")], [
+        ["„Wer soll das sein?“", [R("Vor zwei Jahren stand auf dem großen Schirm zehn Sekunden lang was anderes."), R("Die Wahrheit, sagen sie.")], [
           ["„Was stand da?“", [R("Weiß ich nicht. Ich hab gerade gekostet.")]],
         ]],
       ]],
     ]],
-    ["„Schmeckst du auch die Maschine?“", ["Die automatische Auswertung. Sie sieht sich jetzt alle Kameras an. Die hat meinen Job.", R("Die Maschine, ja. Weißt du, was so eine Maschine macht? Heiß wird sie."), R("Heißes Wasser läuft ab. Und alles, was abläuft, kommt hier an."), R("Ich warte seit drei Jahren auf den ersten warmen Tropfen.")], [
+    ["„Schmeckst du auch die Maschine?“", ["Die automatische Auswertung. Die hat meinen Job.", R("Die Maschine, ja. Weißt du, was so eine Maschine macht? Heiß wird sie."), R("Heißes Wasser läuft ab. Und alles, was abläuft, kommt hier an."), R("Ich warte seit drei Jahren auf den ersten warmen Tropfen.")], [
       ["„Vielleicht ist sie gut isoliert.“", [R("Vielleicht.")]],
     ]],
   ]],

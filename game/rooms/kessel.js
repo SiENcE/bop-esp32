@@ -38,7 +38,7 @@
         look: "Meine Tür. Drei Schlösser, zwei davon von mir. Und die Kamera drüber auch.",
         use: [{ goto: "flat", at: AF.arrive, face: "se" }] },
       haldane: { name: "Frau Haldane", rect: AK.door_haldaneRect, walkTo: AK.haldane, face: "nw",
-        look: ["Frau Haldane. Doppelschicht. Sie schläft, wie andere Leute blinzeln.", "Der blaue Punkt hinter ihrem Ohr ist ein Lull. Halcyon verkauft es gegen schlechte Träume."],
+        look: ["Frau Haldane. Doppelschicht. Sie schläft, wie andere Leute blinzeln.", "Hinter ihrem Ohr der blaue Punkt. Lull. Vier Stunden wie zehn, sagt die Werbung."],
         use: "Ich lass sie schlafen.", talk: "Sie schläft. Und ihr Fernseher redet für zwei." },
       notes: { name: "Zettel", rect: AK.notesRect, walkTo: AK.notes, face: "nw",
         look: ["Ein Zettel: WER KLAUT MEINE ZEITUNG?? Unterschrieben: 14C.", "Darunter, mit Pfeil: NIEMAND LIEST ZEITUNG. 14A.", "Krieg auf dem vierzehnten. Seit Wochen."] },
@@ -54,7 +54,7 @@
       corner_cam: { name: "Kamera", poly: AK.corner_camPoly, walkTo: AK.lift, face: "ne",
         look: "Halcyons Kamera, oben in der Ecke. Ich weiß genau, wie der Flur von da oben aussieht." },
       bench: { name: "Bank", poly: AK.benchPoly, walkTo: AK.motte, face: "ne", z: -1,
-        look: "Eine Bank, die irgendwer hochgetragen und hier vergessen hat. Motte sitzt fast jeden Abend drauf." },
+        look: ["Eine Bank, die irgendwer hochgetragen und hier vergessen hat.", "Motte sitzt fast jeden Abend drauf."] },
       stairs: { name: "Treppe", poly: AK.railPoly, walkTo: AK.stairs, face: "se",
         look: "Vierzehn Stockwerke runter, zu Fuß.",
         // the first time down Motte calls her back: his question (kapitel0-design §6.2 step 14)
