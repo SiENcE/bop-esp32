@@ -21,7 +21,7 @@
         look: "Meine Tür. Drei Schlösser, zwei davon von mir. Und die Kamera drüber auch.",
         use: [{ goto: "flat", at: AF.arrive, face: "se" }] },
       haldane: { name: "Frau Haldane", rect: AK.door_haldaneRect, walkTo: AK.haldane, face: "ne",
-        look: ["Frau Haldane. Doppelschicht. Sie schläft, wie andere Leute blinzeln.", "Das blaue Licht an ihrer Schläfe ist ein Lull. Halcyon verkauft es gegen schlechte Träume."],
+        look: ["Frau Haldane. Doppelschicht. Sie schläft, wie andere Leute blinzeln.", "Der blaue Punkt hinter ihrem Ohr ist ein Lull. Halcyon verkauft es gegen schlechte Träume."],
         use: "Ich lass sie schlafen.", talk: "Sie schläft. Und ihr Fernseher redet für zwei." },
       notes: { name: "Zettel", rect: AK.notesRect, walkTo: AK.notes, face: "nw",
         look: ["Ein Zettel: WER KLAUT MEINE ZEITUNG?? Unterschrieben: 14C.", "Darunter, mit Pfeil: NIEMAND LIEST ZEITUNG. 14A.", "Krieg auf dem vierzehnten. Seit Wochen."] },
@@ -73,7 +73,7 @@
       sign: { name: "Warnschild", poly: AL.signPoly, walkTo: AL.sign, face: "nw",
         look: "Vorsicht, nass. Das Schild steht seit Wochen hier. Der Boden ist seitdem nass." },
       flyers: { name: "Werbezettel", poly: AL.flyersPoly, walkTo: AL.mailboxes, face: "nw",
-        look: "Werbung. Lull-Pads zum halben Preis. Schlaf besser, schlaf Halcyon. Hundertmal, auf dem Boden." },
+        look: "Werbung. Lull zum halben Preis. Schlaf besser, schlaf Halcyon. Hundertmal, auf dem Boden." },
     },
     enter: [{ once: ["Unten. Es riecht nach Regen und nach dem Müll von vierzehn Stockwerken."] }],
   });

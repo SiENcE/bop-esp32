@@ -13,13 +13,14 @@
 //            (open: the frame, the plate beside it), note_war (two notes, no words: a scrawl and "??",
 //            the answer with its arrow), neon_tube (its left end dying), sign_14 (stencilled)
 //   stairs   stairs_concrete (treads with a steel nosing and a worn amber stripe; the dado follows the flight)
-//   props    bin_bags, bikes, stair_rail, armchair (Frau Haldane asleep in it, the Lull light at her temple)
+//   props    bin_bags, bikes, stair_rail, armchair (Frau Haldane asleep in it, the Lull point behind her ear)
 // Keys "!k" are never lit. Small organic things are hand grids; the rest boxes and lines.
 include("../lib/text.js")
 
 pal({
   b: "#16201f", B: "#1e2d29", d: "#2a3f37", D: "#3d5849", E: "#5f7f68", F: "#d4f7dc",   // concrete and paint in the tube's light
   p: "#b0588a", o: "#6e3060",                                                         // Frau Haldane's robe
+  "~": "#cfe6ff", "^": "#6ab4ff",                                                     // Lull's point, bright and dim
 })
 ramps("bBdDEF", "op")
 
@@ -338,7 +339,7 @@ const K14 = (() => {
   })
   // Frau Haldane asleep in front of her TV (deeper in the room, out of sight: only its light), seen from
   // behind: the armchair's back toward the door, over it her grey hair in curlers, fallen a little to one
-  // side, the Lull light's blue at her temple; her arm hanging over the armrest, a slipper fallen off
+  // side, the Lull point's blue behind her ear; her arm hanging over the armrest, a slipper fallen off
   ISOKIT.prop("armchair", {
     frames: 12,
     draw(pen, p, f) {
@@ -361,7 +362,7 @@ const K14 = (() => {
       const [sx, sy] = pen.P(u0 + du + 0.18, v0 + dv * 0.3, 0)
       pen.at(u0 + du + 0.18, v0 + dv * 0.3, 0.03, "up")
       pen.grid(sx - 2, sy - 1, ["NNM", ".MM"])
-      pen.px(hx + 3, hy + 1, f % 6 < 3 ? "!C" : "!c")                                                // the Lull light
+      pen.px(hx + 2, hy + 1, f % 6 < 3 ? "!~" : "!^"); pen.px(hx + 2, hy, f % 6 < 3 ? "!^" : "!g")                                                // the Lull point
     },
   })
   return {}

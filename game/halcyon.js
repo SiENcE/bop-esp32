@@ -20,7 +20,7 @@ const Halcyon = (/** @type {any} */ (window)).Halcyon = {
    * then their hover label and subtitles say `label` (a stranger), after it `speaker`. */
   people: /** @type {Record<string, {name: string, known?: string, label?: string, speaker?: string}>} */ ({}),
   /** The date of game day 1. */
-  day1: [2091, 11, 3],
+  day1: [2091, 11, 6],
 };
 
 // ---- texts. Every text on screen goes through i18n (Cutaway.i18n.t): the data's texts by the engine,
@@ -50,7 +50,7 @@ Halcyon.declareTexts = function () {
   d("people", Object.values(Halcyon.people).flatMap((p) => [p.name, p.label, p.speaker].filter((t) => typeof t === "string")));
 };
 
-/** The date and time as the camera's display shows it: "2091-11-03 22:15". */
+/** The date and time as the camera's display shows it: "2091-11-06 22:15". */
 Halcyon.stamp = function () {
   const n = Cutaway.time.now, [y, m, d] = Halcyon.day1, date = new Date(Date.UTC(y, m - 1, d + n.day - 1 + (n.minutes >= 1440 ? 1 : 0)));
   return `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, "0")}-${String(date.getUTCDate()).padStart(2, "0")} ${n.text}`;

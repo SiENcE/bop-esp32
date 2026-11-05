@@ -9,6 +9,9 @@
 //                  transparent above the box, where the game draws the decks going by; _lit is the same in the light of a
 //                  deck's windows, which the game lays over it in moving bands (the things hold still)
 //   intro_d_lift   320x180, transparent: the glass lift, its frame, floor and ceiling lamp, in the middle of the shaft
+//   intro_d_ad_*   what hangs in the air between the decks: the screens selling sleep (in English, the city's own), each
+//                  with its light on the haze round it; intro_d_blade_* the signs on the buildings; intro_d_shadow what a
+//                  deck throws under it; intro_d_cone_* a lamp's light under a deck (all dithered: light falling off)
 // The stick's label and the box's print are the city's own, in English. Colours as hex here: the palette's keys are
 // shared with her sprite, which is included.
 include("../lib/text.js")
@@ -169,4 +172,76 @@ sprite("intro_d_lift", { w: W, h: H }, (c) => {
   c.line(L + 16, T0 + 8, L + 28, F - 34, "#41547a"); c.line(L + 32, F - 26, L + 38, F - 10, "#41547a"); c.line(L + 21, T0 + 8, L + 30, F - 42, "#2f3e5a")
   c.line(R - 30, T0 + 8, R - 22, F - 40, "#41547a")
 })
+
+// ---------------------------------------------------------------- the air between the decks
+const bay4 = (x, y) => ([0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5][(y & 3) * 4 + (x & 3)] + 0.5) / 16
+// a screen with the light it throws: the halo dithered round the frame, falling off
+function adScreen(name, hazeDark, haze, paint) {
+  const SW = 72, SH = 40, M = 16
+  sprite(name, { w: SW + 2 * M, h: SH + 2 * M }, (c) => {
+    for (let y = 0; y < SH + 2 * M; y++) for (let x = 0; x < SW + 2 * M; x++) {
+      const dx = Math.max(M - x, x - (M + SW - 1), 0), dy = Math.max(M - y, y - (M + SH - 1), 0), d = Math.hypot(dx, dy) / M
+      if (d <= 0 || d >= 1) continue
+      if (bay4(x, y) < (1 - d) * 0.55) c.px(x, y, d < 0.45 ? haze : hazeDark)
+    }
+    c.rect(M - 2, M - 2, SW + 4, SH + 4, "#0c0e1a"); c.rect(M - 1, M - 1, SW + 2, SH + 2, "#2f3e5a")
+    c.rect(M, M, SW, SH, "#0c0e1a")
+    paint(c, M, M, SW, SH)
+    for (let y = M + 1; y < M + SH; y += 2) for (let x = M; x < M + SW; x++) if (bay4(x, y) < 0.18) c.px(x, y, "#0c0e1a")   // its scanlines
+  })
+}
+// someone asleep and smiling, in profile, the point of light behind the ear: what the ads are selling
+function sleeper(c, x, y, skin, shade, hair, point) {
+  c.rect(x, y + 25, 34, 8, shade); c.rect(x, y + 25, 34, 1, skin)                                          // the pillow
+  c.ellipse(x + 15, y + 13, 11, 11, hair)                                                                  // her hair, behind and over the head
+  c.ellipse(x + 11, y + 15, 7, 8, skin); c.rect(x + 2, y + 15, 3, 2, skin)                                 // the face, the nose
+  c.hline(x + 5, y + 13, 4, shade); c.hline(x + 5, y + 19, 3, shade); c.px(x + 8, y + 18, shade)           // the shut eye, the smile
+  c.rect(x + 17, y + 13, 3, 3, skin); c.rect(x + 22, y + 13, 2, 2, point)                                  // the ear, the point behind it
+}
+adScreen("intro_d_ad_sleep", "#123c4e", "#1f88a4", (c, x, y, w, h) => {
+  c.rect(x, y, w, h, "#123c4e"); c.rect(x, y + h - 6, w, 6, "#1f88a4")
+  TXT.draw(c, x + w / 2, y + 7, "HALCYON", "#dafcff", { align: "center" })
+  TXT.draw(c, x + w / 2, y + 21, "SLEEP BETTER", "#62def0", { font: "hud", align: "center" })
+})
+adScreen("intro_d_ad_hours", "#2c2026", "#4a3026", (c, x, y, w, h) => {
+  c.rect(x, y, w, h, "#232f47"); c.rect(x, y, w, 3, "#eea040")
+  TXT.draw(c, x + w / 2, y + 8, "4 HOURS.", "#fff4d8", { align: "center" })
+  TXT.draw(c, x + w / 2, y + 22, "FEELS LIKE 10.", "#ffd58a", { font: "hud", align: "center" })
+})
+adScreen("intro_d_ad_free", "#3e1240", "#a8238a", (c, x, y, w, h) => {
+  c.rect(x, y, w, h, "#3e1240"); c.rect(x + 3, y + 3, w - 6, h - 6, "#a8238a"); c.rect(x + 4, y + 4, w - 8, h - 8, "#3e1240")
+  TXT.draw(c, x + w / 2, y + 9, "LULL", "#ffc0f2", { align: "center" })
+  TXT.draw(c, x + w / 2, y + 23, "TWO WEEKS FREE", "#ff4fd3", { font: "hud", align: "center" })
+})
+adScreen("intro_d_ad_face", "#3e1240", "#a8238a", (c, x, y, w, h) => {
+  c.rect(x, y, w, h, "#2a1636")
+  sleeper(c, x + 2, y + 4, "#ffc0f2", "#a8238a", "#7a2b8a", "#dafcff")
+  TXT.draw(c, x + 54, y + 11, "LULL", "#ffc0f2", { align: "center" })
+  TXT.draw(c, x + 54, y + 24, "REST", "#ff4fd3", { font: "hud", align: "center" })
+})
+// the signs standing out from the buildings, their letters one under the other
+function blade(name, word, tube, core, dark) {
+  const h = word.length * 8 + 6
+  sprite(name, { w: 13, h }, (c) => {
+    c.rect(0, 0, 13, h, "#0c0e1a"); c.rect(1, 1, 11, h - 2, dark); c.rect(1, 1, 11, 1, tube); c.rect(1, h - 2, 11, 1, tube)
+    ;[...word].forEach((l, i) => TXT.draw(c, 4, 3 + i * 8, l, core, { font: "hud" }))
+  })
+}
+blade("intro_d_blade_hotel", "HOTEL", "#a8238a", "#ffc0f2", "#3e1240")
+blade("intro_d_blade_rest", "REST", "#1f88a4", "#dafcff", "#123c4e")
+blade("intro_d_blade_noodles", "NOODLES", "#eea040", "#fff4d8", "#552b1c")
+blade("intro_d_blade_bar", "BAR", "#a8238a", "#ffc0f2", "#3e1240")
+// the deck's shadow on what is under it, thinning out
+sprite("intro_d_shadow", { w: W, h: 22 }, (c) => {
+  for (let y = 0; y < 22; y++) for (let x = 0; x < W; x++) if (bay4(x, y) < 1 - y / 22) c.px(x, y, "#06080f")
+})
+// a lamp's light under a deck, widening as it falls
+for (const [name, near, far] of [["c", "#1f88a4", "#123c4e"], ["a", "#b0602a", "#552b1c"], ["m", "#a8238a", "#3e1240"]]) {
+  sprite("intro_d_cone_" + name, { w: 44, h: 48 }, (c) => {
+    for (let y = 0; y < 48; y++) { const half = 4 + y * 0.38, a = 1 - y / 48; for (let x = 0; x < 44; x++) {
+      const d = Math.abs(x - 21.5) / half
+      if (d < 1 && bay4(x, y) < a * (1 - d * 0.6) * 0.5) c.px(x, y, y < 18 ? near : far)
+    } }
+  })
+}
 })()

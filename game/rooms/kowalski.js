@@ -84,7 +84,7 @@
       bins: { name: "Mülltonne", poly: AW.binsPoly, walkTo: AW.bins, face: "ne",
         look: "Die Tonne ist so voll, dass der Deckel auf einem Sack steht." },
       bao: { name: "Bao", rect: AW.baoRect, walkTo: AW.eat, face: "ne", z: 2,
-        look: ["Bao. Über siebzig, und sein Topf ist älter als ich.", "Das Licht hinter seinem Ohr ist sein Hörgerät. Er hört trotzdem nur, was er will."],
+        look: ["Bao. Über siebzig, und sein Topf ist älter als ich.", "Das Ding am Ohr ist sein Hörgerät. Er hört trotzdem nur, was er will."],
         talk: BAO },
       cart: { name: "Baos Garküche", poly: AW.cartPoly, walkTo: AW.eat, face: "ne",
         look: ["Baos Garküche. Der Topf dampft, seit ich denken kann.", "BAO steht drauf. Für den Fall, dass jemand fragt."],

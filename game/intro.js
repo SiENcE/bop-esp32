@@ -2,7 +2,7 @@
 // The sequence and what its shots share. The shots the game draws itself (the camera really moves through them)
 // are rooms with `float: "<shot>"`: their files register a drawer in Halcyon.intro.shots (game/intro_sea.js: the
 // float over the sea, A1 and A2; game/intro_tower.js: the tower and in through its window, C; game/intro_desk.js:
-// what moves in shot 2; game/intro_ride.js: the ride D; game/intro_today.js: shot 6), drawn over the
+// what moves in shot 2; game/intro_ride.js: the ride D), drawn over the
 // room each frame; the action { float: [from, to], ms, ease } moves the camera through the shot (its progress
 // Halcyon.intro.p, 0..1). The opening has no sounds, the music alone.
 "use strict";
@@ -40,7 +40,7 @@
   });
 
   // The sequence: before the title on the first start, then from the title menu (game/game.js). So far the
-  // shots up to D; the opening has its own music (game/music.js: "opening"), the ride too ("descent"). After it the title screen, as on every start.
+  // shots up to D; the opening has its own music (game/music.js: "opening"), the ride too ("descent"). It ends on the ride; after it the title screen, as on every start.
   Cutaway.sequence("intro", {
     steps: [
       { shot: "a1" },
@@ -94,22 +94,18 @@
       { wait: 3500 },
       { fade: "out", ms: 1500 },
       { music: { stop: true, fade: 1.5 } },
-      // D: the ride down, no words and no sounds, the music alone: the box close, then a cut to the whole lift. The cut
-      // to what comes next falls on the melody's last note (the third bar's middle, 10.7 s in)
+      // D: the ride down, no words and no sounds, the music alone: the box close, then a cut to the whole lift
       { shot: "d" },
       { goto: "intro_d_close", transition: false },
       { music: { theme: "descent", fade: 0.3 } },
       { fade: 0, ms: 600, wait: false },
       { float: [0, 1], ms: 3200 },
       { goto: "intro_d", transition: false },
-      { float: [0, 1], ms: 7500 },
-      // 6: today, cut in on that note; the melody rings out over her deck, whose fans are the first sound since the hall
-      { shot: "today" },
-      { goto: "intro_today", transition: false },
-      { caption: "2091-11-03  21:30", at: "bl", ms: 4500, wait: false },
-      { wait: 5500 },
-      { music: { stop: true, fade: 1.5 } },
-      { fade: "out", ms: 1500 },
+      // the melody's last note falls in the middle of the lift; it rings out as the picture goes, and the title follows
+      { float: [0, 1], ms: 11000, wait: false },
+      { wait: 9000 },
+      { music: { stop: true, fade: 3 } },
+      { fade: "out", ms: 2000 },
     ],
   });
 })();

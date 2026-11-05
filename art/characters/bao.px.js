@@ -2,7 +2,7 @@
 // 2026-11-04 with head A: art/test/bao_blocks.px.js, docs/characters/bao_blocks_x4.png). 1.62 m and a little
 // stooped, so 47 px; a cream cardigan in his colour (#e8c890) with the sleeves pushed up, a white apron to
 // the knees, its strings round his waist, dark trousers, worn shoes; short white hair round a bald crown, a
-// white moustache, round glasses; his one glowing thing the hearing aid behind his ear (a small cyan light).
+// white moustache, round glasses; the hearing aid at his ear, plain and grey (a light behind the ear means Lull).
 //
 // Street mode (iso 2:1), drawn facing SE (front three-quarter); the game uses it flipped (SW), for every
 // facing: behind his cart he faces Juno across it, whichever way the engine turns him.
@@ -20,14 +20,14 @@ pal({
   W: "#f0f0e0", w: "#b8b8a8", a: "#8a8a80",                            // the apron: white, its shade, its folds
   L: "#e8b494", S: "#c9906c", s: "#93583f", m: "#6e3430",              // skin: the crown's light, lit, shade, the mouth
   H: "#e8e8e0", h: "#a8a8a0",                                          // white hair, the moustache, their shade
-  V: "#dafcff", v: "#62def0",                                          // the lenses' glint, the hearing aid
+  V: "#dafcff", v: "#8e96a8",                                          // the lenses' glint, the hearing aid
   g: "#565e70", G: "#8e96a8",                                          // the ladle
 })
 
 const IW = 29, IH = 48
 
 // ---------------------------------------------------------------- the head (10x11), facing SE: the bald
-// crown catching the light, white hair round the side and the back, the ear with the hearing aid's light,
+// crown catching the light, white hair round the side and the back, the ear with the hearing aid,
 // round glasses (the near lens bigger), the white moustache over the mouth
 sprite("_b_head", `
   ...LLLSS...
