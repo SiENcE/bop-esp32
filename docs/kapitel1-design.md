@@ -142,7 +142,7 @@ zahlt." Die Kette ist dieselbe; nur die Entscheidung am Ende (C9) ändert sich.
 | C6a | `laundromat` | Juno geht selbst hin (Straßenmodus, zwischen 20:05 und 03:00), öffnet Trockner 6 und liest den Stick: ein Schlüssel, sonst nichts; wozu, weiß sie noch nicht. Auf der Theke liegt das Ticket: „Ticket 31 – Fr 23:00". Juno: „Einunddreißig. Die alte Metrolinie 31? Freitag, elf Uhr." Sie legt den Stick zurück (oder nimmt ihn: Lantern findet nur das Ticket, kommt trotzdem zum Treffen, kann die Wallet aber nicht öffnen, und in Kap. 2 sucht er den Stick bei Juno). | `know_meeting`, ggf. `+stick_ines` |
 | C6b | `cam23` | Oder: um 03:00 den Rollstuhl mit den Antennen markieren, wenn er den Stick und das Ticket holt, und ihm folgen: `cam12` (Drain-Markt-Eingang: Die Düsen tragen ihn über die Leiter hinunter, ein kurzer Satz im Feed) → `cam30` (der Sumpf-Abgang, er schwimmt die Treppe hinab, auf ein Schild „LINE 31 – CLOSED" zu). Juno zählt zusammen. | `know_meeting`, `tag_lantern` |
 | C6c | `cam30` | Abend 3, wer den Treffpunkt noch nicht kennt: Um 22:15 verlässt Ines das Haus, um 22:30 kommt sie am Sumpf-Abgang vorbei, am Schild `LINE 31 – CLOSED`. So geht das Kapitel auch, wenn Juno den Donnerstag verschlafen hat. | `know_meeting` |
-| C7 | Deck | `cam31` verbinden: eine **alte Metro-Kamera**, aus der Zeit vor Halcyon, die Halcyon einst nachgerüstet und dann vergessen hat. Kein Code findet sie. Erst das alte Beobachter-Protokoll aus Junos Implantat (Netzkarte: Rechtsklick auf `cam31`, Juno: „Das alte Protokoll. Das kann nur noch mein Kopf.") verbindet sie. Ein Moment des Schauders: Im Rauschen vor dem Bild sieht man für einen Takt das Auge. | `link_cam31` |
+| C7 | Deck | `cam31` verbinden: eine **alte Metro-Kamera**, aus der Zeit vor Halcyon, die Halcyon einst nachgerüstet und dann vergessen hat. Kein Code findet sie. Erst das alte Beobachter-Protokoll aus Junos Implantat verbindet sie: Ein Klick auf `cam31` in der Karte, Juno: „Kein Code findet die.“, und man wählt selbst: „Das alte Protokoll.“ („Das kann nur noch mein Kopf.“) oder „Noch nicht.“. Ein Moment des Schauders: Im Rauschen vor dem Bild sieht man für einen Takt das Auge. | `link_cam31` |
 | C8 | Deck | WREN drängt am Abend 3: „Bis 22 Uhr. Wo und wann." | — |
 | C9 | Deck | **Entscheidung 1**: WREN den Ort senden oder nicht (unten). | `e1_sold` / `e1_refused` |
 | C10 | `cam31` | 23:00. Siehe §8. | Kapitelende |
@@ -329,7 +329,7 @@ Die Hinweise spricht EVI (Prolog-Design §2.2, §6.5). Die Tabelle nennt die sch
 | B5 | „Zum Anzapfen brauchst du ein Gerät." | „Auf dem Drain-Markt gibt es Elektroschrott. Oder frag Motte." | „Kauf bei Ratz einen Abzweiger." |
 | B6 | „Die Drohne passt auf." | „Ihr Licht wandert. Warte." | „Benutze den Abzweiger, wenn der Lichtkegel weg ist." |
 | C6 | „Ines hat etwas im Waschsalon gelassen." | „Geh selbst hin, oder sieh nachts zu, wer es holt." | „Öffne Trockner 6 und lies, was auf der Theke liegt." |
-| C7 | „cam31 ist älter als Halcyon." | „Keine Codes, kein Netz. Nur ein altes Protokoll. Steht in deinem Handbuch." | „Rechtsklick auf cam31 in der Netzkarte: Junos Implantat." |
+| C7 | „cam31 ist älter als Halcyon." | „Keine Codes, kein Netz. Nur ein altes Protokoll. Steht in deinem Handbuch." | „In GLASS: CAM 31 anklicken. Das macht dein Implantat." |
 | Miete | „900 Chits bis Freitag." | „Jeder Auftrag bringt Geld. Oder jemand hilft dir." | „Du musst nichts verkaufen. Teo zahlt, wenn es nicht reicht." |
 
 ## 13. Was die Engine zusätzlich braucht (gegenüber dem Prolog)

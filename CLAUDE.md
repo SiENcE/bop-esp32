@@ -97,6 +97,7 @@ Planned (PLAN.md §3): `feed.js`, `ledger.js`, `money.js`, `routines/<chapter>.j
   `solve --full` stays exhaustive. Every chapter must solve without soft-locks, and every state on the way
   needs a hint.
 - **What the player finds can be taken and used at once.** Nothing waits for an earlier click without a reason in the world: each thing has its own flag and the test is what the world allows (the item is there, the door is open). A gate needs a reason in the world: a time, knowledge the player really lacks (a date, a code), or a decision of the user's (the bed from 01:00). The prologue's tutorial steps are the exception.
+- **Nothing the game needs hangs on a right click:** touch has only a long press for it. A left click does all that moves the story; looking (right click, long press) only tells more.
 - Positions live in `game/places.js`, not scattered in room files. A street-mode room is a map
   (`art/rooms/<id>.map.js`, format in `art/lib/isomap.js`) baked with the kit and its light
   (`art/lib/isokit.js`, `art/kit/`); `sh tools/build_art.sh room <id>` builds the art and writes the measured

@@ -15,6 +15,11 @@
   /** @param {string} name @param {any} def */
   const S = (name, def) => { Halcyon.sounds.push(name); Cutaway.sfx.define(name, def); };
 
+  // ---------------------------------------------------------------- the stairs of the Kessel Block
+  // two feet on a steel flight: a dull step and the landing's ring
+  S("steps_metal", { tone: [{ wave: "sine", from: 120, to: 70, ms: 45, gain: 0.3 }, { wave: "sine", from: 105, to: 62, ms: 45, gain: 0.24, at: 110 }, { wave: "triangle", from: 880, ms: 40, gain: 0.015, at: 8 }],
+    noise: { filter: "lowpass", from: 500, ms: 30, gain: 0.08 } });
+
   // ---------------------------------------------------------------- the implant and the feeds
   // the overlay locks on: two quick high pips and a tick of static
   S("tag", { tone: [{ wave: "sine", from: 1760, ms: 40, gain: 0.16 }, { wave: "sine", from: 2349, ms: 70, gain: 0.14, at: 55 }],

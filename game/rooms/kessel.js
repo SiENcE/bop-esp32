@@ -8,6 +8,21 @@
 (function () {
   const AK = Halcyon.at.kessel_14, AF = Halcyon.at.flat, AL = Halcyon.at.kessel_lobby;
 
+  // Fourteen floors, the lift never runs. The first time each way: black, steps on steel and the floors counting by; then only the steps
+  // (view flags: how it looks, no state for the solver)
+  Cutaway.state.view("stairs_down", "stairs_up");
+  const floor = (/** @type {number} */ n, /** @type {number} */ ms) => [{ sfx: "steps_metal" }, { caption: String(n), at: "c", ms }];
+  const count = (/** @type {number[]} */ list, /** @type {number} */ ms) => list.flatMap((n) => floor(n, ms));
+  const STAIRS_DOWN = [{ if: "!stairs_down",
+    then: [{ set: "stairs_down" }, { fade: "out", ms: 400 }, ...count([13, 12, 11, 10, 9], 300),
+      { if: "day=1", then: [{ caption: "Der Aufzug fährt angeblich dienstags.", at: "c", color: "#fff070", ms: 2000 }] },
+      ...count([8, 7, 6, 5, 4, 3, 2, 1], 220), { goto: "kessel_lobby", at: AL.arrive, face: "sw" }, { fade: "in", ms: 400 }],
+    else: [{ sfx: "steps_metal" }, { goto: "kessel_lobby", at: AL.arrive, face: "sw" }] }];
+  const STAIRS_UP = [{ if: "!stairs_up",
+    then: [{ set: "stairs_up" }, { fade: "out", ms: 400 }, ...count([2, 3, 4, 5, 6], 260), ...count([7, 8, 9, 10], 340), { caption: "Ich zähl sie jedes Mal. Damit ich weiß, wie weit es noch ist.", at: "c", color: "#fff070", ms: 2400 },
+      ...count([11, 12, 13], 460), ...floor(14, 600), { goto: "kessel_14", at: AK.stairs, face: "sw" }, { fade: "in", ms: 400 }],
+    else: [{ sfx: "steps_metal" }, { goto: "kessel_14", at: AK.stairs, face: "sw" }] }];
+
   Cutaway.room("kessel_14", {
     name: "Vierzehnter Stock", background: "kessel_14_bg",
     ambience: ["neon_buzz", "city_far"], music: { theme: "juno", intensity: 0.3 },
@@ -44,7 +59,7 @@
           "Ganz unten das Schild in der Lobby. Gelb, winzig. Der Aufzug geht nie.", { zoom: false }],
         // the first time down Motte calls her back: his question (kapitel0-design §6.2 step 14)
         use: [{ if: "!moth_met", then: [{ say: "motte", text: "Juno! Warte mal." }, { face: "sw" }, { dialog: "motte" }] },
-          { goto: "kessel_lobby", at: AL.arrive, face: "sw" }] },
+          ...STAIRS_DOWN] },
     },
     enter: [{ if: "day=1", then: [{ once: ["Der Flur. Grün wie ein Aquarium, nur ohne Fische."] }] }],
   });
@@ -57,7 +72,7 @@
     hotspots: {
       stairs: { name: "Treppe", poly: AL.stairsPoly, walkTo: AL.stairs, face: "nw",
         look: "Vierzehn Stockwerke rauf. Ich zähl sie jedes Mal, damit ich weiß, wie weit es noch ist.",
-        use: [{ goto: "kessel_14", at: AK.stairs, face: "sw" }] },
+        use: STAIRS_UP },
       lift: { name: "Aufzug", rect: AL.liftRect, walkTo: AL.lift, face: "ne",
         look: ["OUT OF ORDER. Seit ich denken kann.", "Angeblich fährt er dienstags. Ich hab's nie erlebt."],
         use: "Ich drück trotzdem. Das Licht blinkt. Sonst nichts." },

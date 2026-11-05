@@ -90,7 +90,7 @@
       const [mx, my] = cam.map, x = D.map[0] + mx, y = D.map[1] + my;
       hs[`cam_${id}`] = {
         name: `CAM ${cam.id}`, rect: [x - 4, y - 4, 48, 18], if: [app("glas"), ...(cam.if ? [cam.if] : [])], z: 4,
-        look: /** @type {any} */ (cam).protocol ?? `CAM ${cam.id}, ${cam.place}.`,          // (a look that does something: cam31's old protocol)
+        look: `CAM ${cam.id}, ${cam.place}.`,
         use: [{ if: `link_${id}`, then: [{ goto: id }],
           else: [{ if: `code_${id}`, then: [{ set: `link_${id}` }, { sfx: "link" }, ...(/** @type {any} */ (cam).linked ?? ["Wartungscode rein. Verbunden."])],
             else: /** @type {any} */ (cam).tryIt ?? ["Kein Zugang. Ich brauch den Wartungscode der Kamera."] }] }],

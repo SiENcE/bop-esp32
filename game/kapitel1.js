@@ -58,9 +58,12 @@ Halcyon.cams.cam24 = { id: "24", place: "WOHNBLOCK LERCHE", owner: "PRIVAT", map
 Halcyon.cams.cam12 = { id: "12", place: "DRAIN-MARKT, EINGANG", owner: "HALCYON", map: [180, 60], if: "tag_lantern" };
 Halcyon.cams.cam30 = { id: "30", place: "SUMPF-ABGANG", owner: "HALCYON", map: [180, 88], if: { or: ["tag_lantern", "day=4"] } };
 Halcyon.cams.cam31 = { id: "31", place: "ALTE METRO, LINIE 31", owner: "UNBEKANNT", map: [120, 96], if: "know_meeting",
-  tryIt: ["Kein Code findet die. Das Ding ist älter als Halcyon."],
-  // the old protocol is in Juno's head: a right click, and the eye in the noise for a beat (kapitel1-design C7)
-  protocol: [{ if: "link_cam31", then: ["CAM 31. Das alte Protokoll hält."], else: ["Das alte Protokoll. Das kann nur noch mein Kopf.", { sfx: "static" }, { stinger: "witness" }, { set: "code_cam31" }, { set: "link_cam31" }, "...", "Verbunden."] }] };
+  // the old protocol is in Juno's head, and she chooses to use it: the eye in the noise for a beat (kapitel1-design C7)
+  tryIt: ["Kein Code findet die. Das Ding ist älter als Halcyon.", { dialog: "cam31_protokoll" }] };
+Cutaway.dialog("cam31_protokoll", { main: { choices: [
+  { text: "Das alte Protokoll.", goto: "end", then: ["Das kann nur noch mein Kopf.", { sfx: "static" }, { stinger: "witness" }, { set: "code_cam31" }, { set: "link_cam31" }, "...", "Verbunden."] },
+  { text: "Noch nicht.", goto: "end", then: ["Noch nicht."] },
+] } });
 
 // ---- the people of job C (the blocks use the prologue's figures: nothing of them is painted yet)
 const A21 = Halcyon.at.cam21, A22 = Halcyon.at.cam22, A23 = Halcyon.at.cam23, A24 = Halcyon.at.cam24, A12 = Halcyon.at.cam12, A30 = Halcyon.at.cam30, A31 = Halcyon.at.cam31;
