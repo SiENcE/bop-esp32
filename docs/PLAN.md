@@ -30,7 +30,7 @@ What was added on 2026-11-04 (in order):
 - H1c: the height test (`docs/rooms/iso_height_test_x2.png`, 30 px per meter), rooms as maps baked with
   their light (`art/lib/isomap.js`, `art/lib/isokit.js`, `art/kit/`, `docs/ideas/iso-tiles.md`), Juno at
   50 px with face B (`art/characters/juno.px.js`), the old art in `art/old/`;
-- H2b: the deck (`game/deck.js`: desktop, GLAS, CHAT, CACHE with the clip editor, BUCH, KONTO, NETZ, RADIO,
+- H2b: the deck (`game/deck.js`: desktop, GLASS, CHAT, CACHE with the clip editor, BUCH, KONTO, NETZ, RADIO,
   MÜLL, the photo), EVI (`game/evi.js`: her voice in its own place, the hints, faces, pointing, the boot,
   message cards); engine: `buttons: false`, `{ hint: true }`, `lineBox`, `hints.configure({ by })`, view
   flags for the solver (`state.view`).
@@ -174,7 +174,7 @@ Each item gets tests (`node tests/run.mjs`, "all passed"), `npm run check`, a se
 
 | File | What |
 |---|---|
-| `deck.js` | the deck as a computer (`docs/kapitel0-design.md` §2): a full-screen UI layer with a desktop, icons and one app window (GLAS, CHAT, CACHE, BUCH, KONTO, NETZ, RADIO, MÜLL); the messenger (threads, status, choice replies, attachments, messages timed by the clock); notification cards over every mode; the clip editor (cut, later anonymise, check, splice); actions `{ deck: "chat" }`, `{ mail: id }` |
+| `deck.js` | the deck as a computer (`docs/kapitel0-design.md` §2): a full-screen UI layer with a desktop, icons and one app window (GLASS, CHAT, CACHE, BUCH, KONTO, NETZ, RADIO, MÜLL); the messenger (threads, status, choice replies, attachments, messages timed by the clock); notification cards over every mode; the clip editor (cut, later anonymise, check, splice); actions `{ deck: "chat" }`, `{ mail: id }` |
 | `evi.js` | EVI, the AI on the deck: her figure on the desktop (6 faces, idle, walk, sleep), her lines, the hint button as her head in the satchel |
 | `feed.js` | feed mode on top of C6–C9: tag (max 3), follow (the camera strip), zoom (a zoom window with its own art per target), REC and the 30-minute buffer, steer (camera positions, screens, doors), link (codes), the implant overlay (brackets, tags, labels), the OSD (camera ID, time, REC, thumbnails, the audio bar, the cache) |
 | `ledger.js` | the Kassenbuch: entries with later outcomes (`{ ledger: "kessler_varga", text, chits }`, `{ ledger: ..., outcome: ... }`) |

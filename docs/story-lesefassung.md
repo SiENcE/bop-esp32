@@ -40,8 +40,8 @@ Boden bis zur Decke, davor sitzen vier Reihen zu fünf Pulten, Menschen in Halcy
 Kuppelkameras, die die Beobachter beobachten. In der vordersten Reihe sitzt Juno Reyes. Auf ihrem Pult stehen ein Kaktus und
 eine Tasse, über ihrem Sessel hängt ein gelber Mantel, das einzige Gelb im Raum.
 
-Auf ihrem Monitor läuft die Kowalski-Straße. Passanten gehen durch das Bild, ein Mann bleibt stehen. Junos Hand drückt, gelbe
-Klammern schließen sich um ihn [1], und hinter ihrem Ohr leuchtet ein winziger Cyan-Punkt auf. Sie sagt nichts. Sie macht ihre
+Auf ihrem Monitor läuft die Kowalski-Straße. Passanten gehen durch das Bild, ein Mann bleibt stehen. Junos Hand drückt, cyanfarbene
+Klammern schließen sich um ihn, und hinter ihrem Ohr leuchtet ein winziger Cyan-Punkt auf. Sie sagt nichts. Sie macht ihre
 Arbeit.
 
 Dann läuft eine Durchsage über die ganze Breite: „Ab morgen übernimmt die automatische Auswertung. Halcyon dankt Ihnen für
@@ -68,11 +68,11 @@ EVI ist die KI auf ihrem Deck, neugierig und lieb, gut mit Daten und hoffnungslo
 erklärt alles und fragt ständig, warum Menschen Dinge tun. Woher sie stammt, sagt das Spiel hier noch nicht.
 
 Die Nachricht ist von Frau Kessler: „Mein Mann kommt seit Wochen spät. Er sagt, Überstunden. Ich will Beweise.
-Pumpenverwaltung Ost, er geht um 22 Uhr.“ Dazu ein Foto von ihm mit einem hellen Schal [2], den sie ihm gestrickt hat, und der
+Pumpenverwaltung Ost, er geht um 22 Uhr.“ Dazu ein Foto von ihm mit einem hellen Schal, den sie ihm gestrickt hat, und der
 Nachsatz, er esse nur noch Automatennudeln, Nummer 7, als hätte er kein Zuhause. Juno: „Überstunden. Klar.“
 
 **Im Glass.** Um zehn ist Schichtende. Durch CAM 03 sieht Juno die Leute aus dem Bürohaus strömen, und im Phosphor ist ein
-heller Schal das Hellste an einem kleinen Mann in großem Mantel. Sie markiert ihn. „Heller Schal. Hab dich, Herr Kessler.“
+heller Schal das Hellste an einem kleinen Mann in großem Mantel, der wie jeden Abend am Nudelautomaten vorbeigeht. Sie markiert ihn. „Heller Schal. Hab dich, Herr Kessler.“
 Cyan-Klammern legen sich um ihn, und zum ersten Mal sagt sie, was der Spieler im Vorspann gesehen hat: „Die Klammern macht
 nicht das Deck, die macht mein Implantat. Das durften wir behalten, damals. Sie sagten, das Herausnehmen kostet mehr.“ Es gibt
 nur noch wenige wie sie, weit verstreut, und manche sind inzwischen selbst auf Lull oder Sinker geworden.
@@ -94,7 +94,8 @@ Frau Kessler bekommt, entscheidet der Spieler:
 - **Nur den Ring:** 300 Chits und „Ich wusste es.“ EVI: „Sie hat ‚Ich wusste es‘ geschrieben. Sie hat es nicht gewusst, oder?“
 - **„Nichts gefunden.“:** Kein Geld. EVI: „Wir haben nichts geschickt. Ist das nett oder feige? Ich weiß das nie.“
 
-Kessler kommt in keinem Fall nach Hause. Noch an diesem Abend taucht er unter: Den Rest kann er nicht zahlen, den Ring hat Varga
+Bis heute ist Kessler jeden Abend zur Arbeit gegangen. Nach diesem Treffen kommt er in keinem Fall mehr nach Hause: Er taucht unter,
+denn den Rest kann er nicht zahlen, den Ring hat Varga
 schon, und verschuldet traut er sich nicht mehr heim. Die Wahl entscheidet nur, was seine Frau glaubt.
 
 Danach meldet sich Sable mit einem Sticker, einer Pfeife: „Ruhige Nacht? Ich kaufe alles, was atmet.“ Für 120 Chits geht auch
@@ -103,14 +104,14 @@ den Leuten wurde. EVI führt es. „Ich schreib alles auf. Du hast gesagt, ich s
 
 **Rausgehen.** Der Magen knurrt, der Kühlschrank enthält Licht und sonst nichts. Das große Deck bleibt stehen, Juno steckt das
 Taschen-Deck ein, und EVI kommt darauf mit. „Bringst du mir was mit?“, fragt EVI. „Du isst nicht.“ – „Ich weiß. Bringst du mir was
-mit?“ [3] In einem alten Karton liegen Junos Ausweis, CIVIC MONITOR, J. REYES, UNGÜLTIG, und der Kaktus von ihrem Pult, vertrocknet.
+mit?“ In einem alten Karton liegen Junos Ausweis, CIVIC MONITOR, J. REYES, UNGÜLTIG, und der Kaktus von ihrem Pult, vertrocknet.
 
-Der Flur ist grün wie ein Aquarium, nur ohne Fische. Frau Haldanes Tür steht offen, sie schläft im Sessel, ein blauer Punkt
-pulsiert hinter ihrem Ohr. „Sie schläft, wie andere Leute blinzeln.“ Auf der Bank [4] sitzt Motte, zwölf Jahre alt, Kurierkind, in
+Der Flur ist grün wie ein Aquarium, nur ohne Fische. In der Wand der Aufzug, darauf ein Zettel: OUT OF ORDER. Frau Haldanes Tür steht offen, sie schläft im Sessel, ein blauer Punkt
+pulsiert hinter ihrem Ohr. „Sie schläft, wie andere Leute blinzeln.“ Auf der Bank sitzt Motte, zwölf Jahre alt, Kurierkind, in
 einer viel zu großen weißen Mütze. „Was machst du eigentlich? Den ganzen Tag?“ Was Juno antwortet, freundlich, ausweichend oder
 abweisend, merkt er sich.
 
-Vierzehn Stockwerke zu Fuß, denn der Aufzug fährt nicht [5]. Im Briefkasten liegt eine Mietmahnung: fällig in drei Tagen, 900
+Vierzehn Stockwerke zu Fuß, denn der Aufzug fährt nie, angeblich nur dienstags. Im Briefkasten liegt eine Mietmahnung: fällig in drei Tagen, 900
 Chits, davon Hüllenabgabe 310. „Dreihundertzehn für die Ringe über meinem Kopf. Die ich nie bestellt hab.“
 
 **JUNO.** Draußen die Kowalski-Straße, Magenta und Bernstein, Regen. Vor dem LUCKY STATIC steht Baos Garküche, Bao ist über
@@ -158,15 +159,15 @@ Die App NETZ ist neu, HalcyonNet mit Nachrichten und dem Glasser-Brett. EVI lies
 
 ### Der verschwundene Schuldner
 
-Kessler war seit dem Abend bei Yuen's nicht mehr zu Hause und nicht mehr im Büro. Aber Gewohnheiten versteckt man schlecht. Wenn sich
-um Viertel nach zehn die Menge vor der Pumpenverwaltung verlaufen hat, kommt in CAM 03 jemand ohne Schal und mit Kapuze zum
-Nudelautomaten und zieht Nummer 7, Huhn scharf. An seiner Hand ist ein heller Streifen, wo der Ring war. Juno folgt ihm zum
+Kessler war seit dem Abend bei Yuen's nicht mehr zu Hause und nicht mehr im Büro. Aber Gewohnheiten versteckt man schlecht, und Nummer 7
+gibt es im Viertel nur noch an einem Automaten. Wenn sich um Viertel nach zehn die Menge vor der Pumpenverwaltung verlaufen hat, kommt
+in CAM 03 jemand ohne Schal und mit Kapuze und zieht Nummer 7, Huhn scharf. An seiner Hand ist ein heller Streifen, wo der Ring war. Juno folgt ihm zum
 Kapselhotel Morpheus, dessen Kamera ein eigenes Netz hat. Den Zugang verkauft Sable auf dem Drain-Markt für 80 Chits oder gegen Shine.
 
 Der Drain-Markt ist der Schwarzmarkt in einem trockengelegten Flutkanal: Rauch, Bernstein, gebrauchte Implantate in Gläsern,
-ein Stand mit dem Schild „nur Nieren“, und ein Prediger der Wachen Kirche, der gegen Lull predigt, und niemand hört zu. Sable
+ein Stand mit dem Schild KIDNEYS ONLY, und ein Prediger der Wachen Kirche, der gegen Lull predigt, und niemand hört zu. Sable
 sitzt hinter einem Tisch voller Bildschirme, langer violetter Mantel, rasierter Kopf, eine brennende Pfeife. An der Wand hängt
-die Preisliste: Namen 50, Adressen 80, Geheimnisse Verhandlungssache.
+die Preisliste: NAMES 50. ADDRESSES 80. SECRETS: ASK.
 
 Im Gang des Hotels kriecht Kessler in Kapsel 23. Was nun?
 
@@ -190,12 +191,12 @@ Ratten in den Rohren unter der Krone gesehen hat. Oder Motte baut ihn, wenn sie 
 der Lichtkegel der Drohne weitergewandert ist. Dann steht der Code im Fischauge auf Hüfthöhe: 4-1-7-0-9.
 
 Am zweiten oder dritten Abend, um halb eins, hält vor dem Laden ein Polizeiwagen. Lieutenant Morrow nimmt von einem Jungen mit
-leuchtendem Hals einen Umschlag. „Das ist für die ruhige Woche. Und haltet euch von der Kowalski fern.“ [6] Wer das aufzeichnet,
+leuchtendem Hals einen Umschlag. „Das ist für die ruhige Woche. Und haltet euch von der Kowalski fern.“ [1] Wer das aufzeichnet,
 hat etwas gegen sie in der Hand.
 
 - **Den echten Code verkaufen:** 500 Chits. In Kapitel 2 wird der Laden ausgeraubt, und Bao, der helfen will, wird
   niedergeschlagen. Seine Garküche bleibt eine Woche zu.
-- **Einen falschen Code verkaufen:** 250 im Voraus. Die Boys scheitern, und an Junos Tür steht bald eine Drohung [7]. Sie sind
+- **Einen falschen Code verkaufen:** 250 im Voraus. Die Boys scheitern, und an Junos Tür steht bald eine Drohung: GLASSER LIES. Sie sind
   von da an Feinde.
 - **Okonkwo warnen:** Kein Geld. Er ändert den Code und gibt ihr eine Stange Reis und Batterien. „Ich vergesse das nicht.“ In
   Kapitel 4 hat sie bei ihm ein Versteck. Die Boys suchen einen Verräter.
@@ -203,7 +204,7 @@ hat etwas gegen sie in der Hand.
 ### Das Leben drumherum
 
 Der Werbebildschirm stottert jetzt jedes Mal, wenn Juno vorbeigeht. Am zweiten Abend zeigt er ihr eine Sekunde lang Kessler unterm
-Vordach [8]. Am dritten nur noch das Auge.
+Vordach [2]. Am dritten nur noch das Auge.
 
 Motte wartet im Flur. War Juno im Prolog freundlich, fragt er: „Zeigst du mir was?“ Es gibt drei Lektionen, eine pro Abend: was
 eine Kamera ist, wie man einen Code findet, warum man nie den eigenen Block glasst. Wer alle drei gibt, hat einen Schüler, und
@@ -224,12 +225,12 @@ dazu: wie viele zugesehen haben.
 Das ist der Faden, der durch alle drei Abende läuft. CAM 21 vor der Klinik ist eine Halcyon-Kamera, und Junos alter Zugang geht
 noch. „Sie haben die Codes nie geändert.“ Um sieben kommt Ines aus der weißen Klinik, vorbei an der Schlange müder Menschen. Sie
 isst allein in der Nudelbar Pho Pump, schreibt etwas auf eine Serviette und hält die Hand darüber. Dann geht sie in den Waschsalon
-Schaum & Schleuder, dessen Kamera den Code 0000 hat („Natürlich.“), und nach Hause in den Wohnblock Lerche.
+SUDS & SPIN, dessen Kamera den Code 0000 hat („Natürlich.“), und nach Hause in den Wohnblock Lerche.
 
 Am Donnerstag ist es fast dasselbe, nur schaut sie in der Nudelbar oft zur Tür. Um acht legt sie im Waschsalon einen Datenstick in
 Trockner 6 und ein Ticket auf die Theke und geht ohne Wäsche. Von da an führen zwei Wege weiter:
 
-- Juno geht selbst hin. Auf dem Stick liegt nur ein Schlüssel, sie kann ihn kopieren. Auf dem Ticket steht: „Ticket 31 – Fr 23:00“. Die
+- Juno geht selbst hin. Auf dem Stick liegt nur ein Schlüssel; wozu, weiß sie noch nicht. Auf dem Ticket steht: „Ticket 31 – Fr 23:00“. Die
   alte Metrolinie 31, Freitag, elf Uhr. Sie legt den Stick zurück, oder sie behält ihn.
 - Oder sie sieht um drei Uhr nachts zu, wie jemand im geflickten Poncho, in einem Rollstuhl mit Schwimmern und einem Bündel Antennen,
   Stick und Ticket holt. Sie folgt ihm zum Eingang des Drain-Markts, wo ihn Düsen in einem kurzen Satz über die Leiter tragen, und
@@ -268,7 +269,7 @@ sonst Werbebildschirme für zehn Sekunden Wahrheit kapert.
 
 „Es stimmt. Sie schlafen nicht. Sie *arbeiten*.“
 
-Sie gibt ihm eine Daten-Wallet. Hat Juno den Stick behalten, sagt Lantern jetzt: „Der Schlüssel war nicht da.“ Und Ines erstarrt.
+Sie gibt ihm eine Daten-Wallet mit den verschlüsselten Protokollen. Ohne den Stick lässt sie sich nicht lesen. Hat Juno ihn behalten, sagt Lantern jetzt: „Der Schlüssel war nicht da.“ Und Ines erstarrt.
 
 Dann tritt ein Mann im weißen Regenmantel aus dem Schatten der Treppe. Im Feed hat er kein Gesicht, seine Maske überstrahlt die
 Kamera zu einem weißen Fleck. Das Overlay versucht ihn zu markieren, zeigt `???`, dann rot `BEDROHUNG`.
@@ -286,10 +287,9 @@ Der Mann tötet sie. Das alte Bild flackert und reißt dabei. In der Voreinstell
 hört es nur; wer es in den Einstellungen wählt, sieht es im Phosphor, ohne Nahaufnahme. Beide Fassungen erzählen dasselbe. Die Klicks
 hören auf zu antworten. Juno sagt nichts mehr.
 
-Dann hebt der Mann den Kopf, sieht direkt in die Kamera und winkt. Das Overlay zuckt. `SIGNAL LOST`.
+Dann hebt der Mann den Kopf, sieht direkt in die Kamera und winkt. Eine Störung läuft durchs Bild, das Overlay zuckt. `SIGNAL LOST`.
 
-Der Monitor fällt zu einer hellen Linie zusammen und ist dunkel, und im toten Glas bleibt Junos Gesicht. Es ist dasselbe Bild wie am Ende
-ihrer letzten Schicht, drei Jahre früher, nur dass sie diesmal etwas gesehen hat. Keine Musik, nur die Lüfter. Lange nichts.
+Keine Musik, nur die Lüfter. Lange nichts.
 
 Hat sie den Ort verkauft, kommt fünf Minuten später darüber eine letzte Nachricht: „Zahlung erfolgt. Danke für die Live-Übertragung.“ Das
 Kassenbuch schreibt sich selbst eine Zeile dazu: „Ines Calder: tot.“
@@ -309,18 +309,11 @@ Die Nummern beziehen sich auf die Stellen oben. Geklärtes steht in `story.md` �
 
 | # | Widerspruch | Quellen | So steht es oben |
 |---|---|---|---|
-| 1 | 2088 markiert Juno gelb, heute cyan. Die Bibel spricht auch von „Junos gelben Klammern“ im Training, der Style Guide nennt Cyan als Farbe der Markierungen | kapitel0 §3, §5; story §6; Style Guide §5 | wie gebaut |
-| 2 | Kesslers Schal ist in den Dokumenten grün, im Spiel hell | kapitel0 §6.1, Schritt 0; `prolog.js`, `cast.js` | hell |
-| 3 | „Bringst du mir was mit?“ passt nicht mehr, wenn EVI auf dem Taschen-Deck mitkommt und später aus der Tasche spricht | `prolog.js`; story §10b | wie gebaut |
-| 4 | Motte sitzt laut Bibel und Kapitel-1-Design auf der Treppe, im Spiel auf einer Bank | story §7; kapitel0 Schritt 14; kapitel1 §7; `kessel.js` | Bank |
-| 5 | Der Aufzug: „spricht nur dienstags“, „funktioniert nur dienstags“, „AUSSER BETRIEB · DI WIEDER“, „fährt nicht, seit ich hier wohne“, „OUT OF ORDER. Seit dem Frühjahr.“, „Der Aufzug geht nie.“ Der Prolog spielt jetzt an einem Dienstag | story §3, §9; kapitel0 Schritt 15; `kessel.js` | „fährt nicht“ |
-| 6 | Dieselben Boys, die Morrow von der Kowalski fernhält, wollen den Tresor in der Kowalski. Das kann gewollt sein. Die Bibel nennt nur Halcyons Geld | kapitel1 B8; story §4 | wie im Design |
-| 7 | Graffiti „GLASERIN LÜGT“: falsch geschrieben und deutsch in Grafik. Ebenso geplant: „KEINE TURNSCHUHE IM TROCKNER“, „DEFEKT“, „nur Nieren“, Sables Preisliste, „Schaum & Schleuder“ | kapitel1 §4, §9; CLAUDE.md | Wortlaut vermieden, wo es ging |
-| 8 | Der Schirm zeigt Kessler am Abend 2 „eine Nacht alt“, der Prolog liegt aber zwei Abende zurück | kapitel1 §7 | „unterm Vordach“ |
+| 1 | Dieselben Boys, die Morrow von der Kowalski fernhält, wollen den Tresor in der Kowalski. Das kann gewollt sein. Die Bibel nennt nur Halcyons Geld | kapitel1 B8; story §4 | wie im Design |
+| 2 | Der Schirm zeigt Kessler am Abend 2 „eine Nacht alt“, der Prolog liegt aber zwei Abende zurück | kapitel1 §7 | „unterm Vordach“ |
 
 Dazu, ohne Stelle im Text:
 
-- **Die Deck-App heißt GLAS**, obwohl story §10 genau diese Schreibweise ausschließt („nicht Glas, das wäre ein Trinkgefäß“).
 - **Sprecherfarben:** Sable ist im Spiel Magenta `#ff4fd3`, in der Bibel Violett `#c890ff` (die Farbe der Stimme DIE HÄNDLERIN). Teo ist im Spiel
   `#ffa040`, in der Bibel `#ffb070`.
 - **Tinte** ist „90 Jahre“ alt, wäre also älter als das Flutprogramm der 2050er.
@@ -330,3 +323,4 @@ Dazu, ohne Stelle im Text:
   Design; „Niemand sonst hat es gehört“ gegen ein Wort ohne Stimme.
 - **Veraltete Maße:** Figurengrößen in kapitel0 §8 und kapitel1 §10 (Juno 32 px statt 50), Kowalski 320 statt 416 breit, und die gebaute
   Straße hat noch keinen Eckladen und keinen Automaten mit Kamera davor.
+- **Deutsch in vorhandener Grafik:** das Post-it `ESSEN!!` in der Wohnung.

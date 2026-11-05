@@ -88,6 +88,8 @@ These points from the premise shape the art (the story isn't written yet):
   in the interface's frame over the room, the lines in the bottom bar while they show; its depth is
   drawn compressed, as through a long lens, so the floors below stay apart as rings.
 
+- **One building, one plan** (decided 2026-11-05): a lift only goes up and down and stairs stack, so rooms on different floors of a building
+  are laid over each other, the lift and the stairs at the same place on every floor (`kessel_14`, `kessel_lobby`).
 - **Rooms are cutaways:**
   - Two walls stand at the back (left and right), meeting in a corner.
   - Walls nearer the camera are removed, or cut to a low stub (3–6 px) along the room's front

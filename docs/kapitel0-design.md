@@ -35,7 +35,7 @@ alles. Vor dem Bau kommt ein Mockup (`docs/mockups/mock_f_deck`), das Lesbarkeit
 ┌────────────────────────────────────────────────────────────────┐
 │ DECK // J.REYES                   ✉2   21:30  2091-11-06   0 CH │  Kopfleiste, 10 px
 ├──────────┬─────────────────────────────────────────────────────┤
-│ [GLAS]   │ ┌ CHAT ─────────────────────────────────────── x ┐ │
+│ [GLASS]   │ ┌ CHAT ─────────────────────────────────────── x ┐ │
 │ [CHAT]●  │ │ Kontakte      │ M. KESSLER                     │ │
 │ [CACHE]  │ │ ▸ M. KESSLER● │ > Mein Mann kommt seit Wochen  │ │  ein App-Fenster
 │ [BUCH]   │ │   SABLE       │   spät ...  [FOTO]             │ │  (eins zur Zeit,
@@ -62,7 +62,7 @@ alles. Vor dem Bau kommt ein Mockup (`docs/mockups/mock_f_deck`), das Lesbarkeit
 
 | App | Was sie zeigt | ab |
 |---|---|---|
-| **GLAS** | die Netzkarte: der Stadtplan des Viertels als Linien, jede bekannte Kamera ein Punkt. Verbundene Kameras leuchten; ein Klick öffnet den Feed-Modus. Unverbundene sind grau und zeigen, was zum Verbinden fehlt. | Prolog |
+| **GLASS** | die Netzkarte: der Stadtplan des Viertels als Linien, jede bekannte Kamera ein Punkt. Verbundene Kameras leuchten; ein Klick öffnet den Feed-Modus. Unverbundene sind grau und zeigen, was zum Verbinden fehlt. | Prolog |
 | **CHAT** | der Messenger (§2.3) | Prolog |
 | **CACHE** | Junos Dateien: Clips (Filmstreifen), Standbilder, Notizen (Karteikarten), mit Metadaten (wer, wo, wann). Das Inventar des Feed-Modus (8 Plätze). Ein Clip öffnet sich im **Clip-Editor** (§2.4). | Prolog |
 | **BUCH** | das Kassenbuch: jede Lieferung, was, an wen, für wie viel, und später, was daraus wurde (Story §5). | Prolog |
@@ -83,7 +83,7 @@ schläft ein, `zzz`).
 - **Gestaltung:** die Straßenmodus-Farben (Stahl `1`–`6`, Cyan `cCvV`), die Schrift 5x7 für Text, die
   3x5 für Beschriftungen, Rahmen aus 1-px-Linien, Symbole als Pixelgrafik mit Umriss. Kleine
   Bildschirmstörungen beim Öffnen. In Kap. 3 wird das Deck zerstört; das zweite Deck in Kap. 4 ist
-  zusammengeflickt, Bernstein statt Cyan, und hat anfangs nur GLAS, CHAT und CACHE.
+  zusammengeflickt, Bernstein statt Cyan, und hat anfangs nur GLASS, CHAT und CACHE.
 
 **Entschieden mit Mockup F** (2026-11-04, `docs/mockups/mock_f_deck_*`):
 - Die acht Symbole stehen in zwei Spalten zu je vier (24x24 passen nicht in eine Spalte); das App-Fenster
@@ -250,7 +250,7 @@ Geräusche, nur Musik** (2026-11-04). Statt flammender Schlote stehen Kameramast
 | A2 | **Halcyon voraus** im Dunst, am Ende des Kanals: die neun Ringe übereinander, der Turm hindurch, sein Ringlogo; die Stadt **kommt näher** (sie wächst um etwa ein Viertel); Patrouillendrohnen leuchten das Wasser ab; Masten ziehen links und rechts vorbei, Transitkapseln. | Nur Musik |
 | C | **Der Turm von nah**: Reihen dunkler Fenster, ein paar erleuchtet, ein Stockwerk glimmt phosphorgrün und wirft sein Licht auf die Fassade; die Kamera fliegt in gerader Linie auf ein Fenster zu (`game/intro_tower.js`), dahinter die Halle in der Tiefe: die Wand aus Bildschirmen, zwei Reihen Pulte, die Beobachter von hinten; am Ende füllt die Halle das Bild. | Musik, dann Brummen |
 | 1 | **Die Beobachtungshalle**, Halcyon Tower, drei Jahre früher: Iso-Ansicht in Spielgröße (30 px pro Meter), die Halle ist größer als der Bildschirm und die Kamera fährt von der Ecke der Bildschirmwände hinunter über die Reihen bis zu Junos Pult in der vordersten Reihe. Vier Reihen zu fünf Pulten, jedes mit einem Menschen vor drei Monitoren; beide Rückwände sind Phosphor-Bildschirme, unter der Decke Kuppelkameras, die die Beobachter beobachten. Sie sitzen in runden Schalensesseln. **Keine Kabel** (2026-11-04): Das Implantat legt die Markierungen über das, was das Auge auf den Monitoren sieht, dafür braucht es keins; nur der kleine Cyan-Punkt hinter dem Ohr (dort, wo Teo seinen Lull-Punkt trägt: story §10b). Auf Junos Pult der Kaktus und die Tasse, über ihrem Sessel der gelbe Mantel. | Brummen, leises Tippen. Datum unten: `2088-04-30 05:45` |
-| 2 | Juno an ihrem Pult, nah, von hinten: Die hohe Sessellehne verdeckt den Körper bis zum Kragen, zu sehen sind Kopf, Kragen, ein Streifen vom Arm und die Hand (Halcyon-Grau). Sie sitzt rechts im Bild und blickt nach links wie auf dem Titelbild. Ihr Bildschirm: die Kowalski-Straße (`CAM 2217`), Passanten, ein Mann bleibt stehen. Sie markiert ihn, gelb; dabei leuchtet der Punkt hinter ihrem Ohr auf. | Kein Text (2026-11-04): das Markieren reicht. Nur der Ton der Markierung |
+| 2 | Juno an ihrem Pult, nah, von hinten: Die hohe Sessellehne verdeckt den Körper bis zum Kragen, zu sehen sind Kopf, Kragen, ein Streifen vom Arm und die Hand (Halcyon-Grau). Sie sitzt rechts im Bild und blickt nach links wie auf dem Titelbild. Ihr Bildschirm: die Kowalski-Straße (`CAM 2217`), Passanten, ein Mann bleibt stehen. Sie markiert ihn, die Klammern cyan wie immer (2026-11-05); dabei leuchtet der Punkt hinter ihrem Ohr auf. | Kein Text (2026-11-04): das Markieren reicht. Nur der Ton der Markierung |
 | 3 | Eine Durchsage, Text über die ganze Breite | „Ab morgen übernimmt die automatische Auswertung. Halcyon dankt Ihnen für Ihren Dienst." |
 | 4 | Die Bildschirme der Halle gehen aus, von hinten nach vorn: erst die Wände, von der Ecke aus, dann die Pulte Reihe für Reihe; wessen Bildschirm aus ist, hört auf zu tippen. Die Halle wird dunkel, die Kamera geht mit bis zu Juno, ihr Bildschirm brennt noch. Dann nah wie in Einstellung 2: Erst hier geht ihr Bildschirm aus, wie eine Röhre. In ihm spiegelt sich ihr Gesicht, das Gesicht vom Titelbild ohne Kapuze und ohne Linie, ihr zugewandt, nur als Raster, das nach hinten dunkler wird und sich auflöst. | Stille (die Musik blendet aus, das Brummen ist weg) |
 | D | **Die Transitachse**, abwärts, die erste Seitenansicht: zuerst nah am Karton (ein Kaktus, eine Tasse und ein Datenstick mit dem Aufkleber `EVAL-7 // DELETE`, gemalt und englisch wie alle Technik der Stadt; eine Sekunde lesbar, nicht kommentiert), dann Juno mit dem Karton im gläsernen Aufzug, die Decks der Ringe rasen vorbei, Hochhäuser dazwischen, Lichtkegel und Schatten unter den Decks; nach unten hin mehr Neon und mehr Lull-Werbung (2026-11-05). **Juno ist die Figur von heute** (2026-11-04): Den gelben Mantel, der in der Halle über ihrem Sessel hing, trägt sie jetzt, die Kapuze unten; ihre Straßenfigur mit Atmen und Blinzeln, dazu der Karton (`art/intro/ride.px.js`). Etwa 14 s, **damit endet der Vorspann** (2026-11-05: Einstellung 6 „heute“ ist gestrichen, das heutige Deck zeigt erst der Prolog); das Bild blendet aus. | Kein Text. Die Melodie `descent`, sie klingt mit dem Bild aus |
@@ -263,7 +263,7 @@ Geräusche, nur Musik** (2026-11-04). Statt flammender Schlote stehen Kameramast
 ```
  flat: Juno am Deck, Auftrag von Frau Kessler
    │
- [A] cam03: Kessler unter den Leuten finden, die aus dem Bürohaus kommen ─ Foto im Cache: grüner Schal
+ [A] cam03: Kessler unter den Leuten finden, die aus dem Bürohaus kommen ─ Foto im Cache: heller Schal
    │     markieren ─ zuhören: Telefonat ─ „Yuen's" (erst bruchstückhaft, dann klar unter dem Vordach)
    ▼
  [B] cam04 ist nicht verbunden ─ in cam03 die Kamera gegenüber zoomen: Aufkleber HCS-04 / Code
@@ -286,13 +286,13 @@ Geräusche, nur Musik** (2026-11-04). Statt flammender Schlote stehen Kameramast
 |---|---|---|---|
 | 0a | Deck | Das Deck fährt hoch. EVI wacht auf: „Guten Abend, Juno! Eine neue Nachricht. Null Abendessen." Juno: „Danke, EVI." EVI zeigt auf das Symbol CHAT, das blinkt. | `met_evi` |
 | 0 | Deck | Im Chat ist eine Nachricht von Frau Kessler: „Mein Mann kommt seit Wochen spät. Er sagt, Überstunden. Ich will Beweise. Pumpenverwaltung Ost, er geht um 22 Uhr. Und er isst nur noch Automatennudeln, Nummer 7, als hätte er
-kein Zuhause." (Die Nudeln sind der Schlüssel für Kap. 1, Auftrag A.) Anhang: ein Foto (Kessler mit grünem Schal, „den hab ich ihm gestrickt"). Juno: „Überstunden. Klar." | `+note_kessler_photo` (Cache) |
-| 1 | Deck | EVI: „Pumpenverwaltung Ost! Da hab ich eine Kamera für dich." Die App GLAS zeigt eine verbundene Kamera, `cam03` (Ostbrücke, gegenüber der Pumpenverwaltung). Klick öffnet den Feed. | — |
+kein Zuhause." (Die Nudeln sind der Schlüssel für Kap. 1, Auftrag A.) Anhang: ein Foto (Kessler mit hellem Schal, „den hab ich ihm gestrickt"). Juno: „Überstunden. Klar." | `+note_kessler_photo` (Cache) |
+| 1 | Deck | EVI: „Pumpenverwaltung Ost! Da hab ich eine Kamera für dich." Die App GLASS zeigt eine verbundene Kamera, `cam03` (Ostbrücke, gegenüber der Pumpenverwaltung). Klick öffnet den Feed. | — |
 | 2 | `cam03` | 22:00: Leute strömen aus dem Bürohaus, unter Schirmen. Fünf Männer in Mänteln. Der Spieler zoomt oder sieht genau hin: einer trägt einen Schal, der im Phosphor heller ist als alles andere an ihm. Markieren. Falsche Person markiert: Juno: „Kein Schal. Nicht er." Die erste Markierung erklärt das Implantat (auch über den Puffer): „Die Klammern macht nicht das Deck, die macht mein Implantat. Das durften wir behalten, damals. Sie sagten, das Herausnehmen kostet mehr." | `tag_kessler` |
 | 3 | `cam03` | Kessler wartet unter dem Vordach (Regen) und telefoniert. Zuerst steht er weit weg: „... ja ... bring's ... Yuen's ..." Er tritt näher unters Vordach, unter die Kamera: „Ja, ich bring's mit. Alles. Halb elf, bei Yuen's." | `heard_yuens` |
 | 4 | `cam03` | Er geht los, Richtung Imbiss. Die Kamera-Leiste zeigt `cam04`, grau: nicht verbunden. Juno: „Yuen's hat 'ne Kamera. Hab ich bloß nicht." | — |
 | 5 | `cam03` | Im Bild, auf der anderen Straßenseite, hängt eine Kamera an einem Mast. Zoomen: ein Aufkleber `HCS-04 · K7-731`. Juno: „Wartungscode auf dem Gehäuse. Halcyon spart an allem." | `code_cam04` |
-| 6 | Deck | GLAS: `cam04` mit dem Code verbinden (Linksklick auf den grauen Punkt, sobald der Code bekannt ist). EVI, begeistert: „Verbunden! Hallo, Kamera vier." | `linked_cam04` |
+| 6 | Deck | GLASS: `cam04` mit dem Code verbinden (Linksklick auf den grauen Punkt, sobald der Code bekannt ist). EVI, begeistert: „Verbunden! Hallo, Kamera vier." | `linked_cam04` |
 | 7 | `cam04` | Imbiss Yuen, 22:30. Kessler setzt sich zu einem Mann im grauen Mantel (Gus Varga). Zuhören: Varga ist nah an der Kamera, klar; Kessler gedämpft. Varga: „Das ist nicht alles, Kessler." Kessler zieht den Ehering ab. | — |
 | 8 | `cam04` | Wenn REC läuft, während er den Ring übergibt: Clip `clip_kessler_ring`. Wenn nicht: Juno: „Mist. Puffer." Zurückspulen im Puffer (Tutorial dafür), dort aufzeichnen. Varga zum Schluss: „Bis Freitag, Kessler. Sonst holen wir uns mehr als einen Ring." | `+clip_kessler_ring`, `saw_varga` |
 | 9 | Deck | Der Clip öffnet sich im Clip-Editor (§2.4) und lässt sich schneiden: (a) ganz, (b) nur der Ring, der vom Finger geht (sieht aus wie ein Mann, der seinen Ehering für eine andere ablegt). Schneidet Juno, fragt EVI: „Wenn man das Ende weglässt, ist es eine andere Geschichte. Ist das erlaubt?" (Antworten: „Ist es." / „Nein." / Schweigen; jede rückt `evi_trust`.) Eine Notiz entsteht: `note_kessler_debt` („Kessler schuldet einem Kredithai Geld"). | `+note_kessler_debt` |
@@ -300,8 +300,8 @@ kein Zuhause." (Die Nudeln sind der Schlüssel für Kap. 1, Auftrag A.) Anhang: 
 | 11 | Deck | Optional: eine Benachrichtigung von Sable fährt herein, ein Sticker (eine Pfeife) und: „Ruhige Nacht? Ich kaufe alles, was atmet." `note_kessler_debt` an Sable senden: 120 Chits. EVI erklärt das Kassenbuch („Ich schreib alles auf. Du hast gesagt, ich soll."). | `sold_kessler_sable` |
 | 12 | `flat` | Juno steckt das Taschen-Deck ein. EVI: „Bringst du mir was mit?" Juno: „Du isst nicht." EVI: „Ich weiß. Bringst du mir was mit?" Juno steht auf, Magen knurrt. Der Kühlschrank: „Licht. Sonst nichts." Der alte Karton unter dem Bett (ansehen): der Halcyon-Ausweis `CIVIC MONITOR · J. REYES · UNGÜLTIG`, der Kaktus, vertrocknet. | `fridge_empty` |
 | 13 | `kessel_14` | Der Flur. Frau Haldanes Tür steht offen, sie schläft im Sessel, ein blauer Lull-Punkt hinter dem Ohr. Ansehen: „Doppelschicht. Sie schläft, wie andere Leute blinzeln." Ihr Fernseher: Halcyon-Werbung. | — |
-| 14 | `kessel_14` | Motte sitzt auf der Treppe, die weiße Mütze zu groß. „Was machst du eigentlich? Den ganzen Tag?" Antworten: freundlich und ehrlich („Ich schau Leuten zu. Und verkauf, was ich sehe."), ausweichend („Reparaturen."), abweisend („Geh schlafen, Motte."). Erster Wert für Motte. | `moth_kind` / `moth_brushed` |
-| 15 | `kessel_lobby` | Der Aufzug: „AUSSER BETRIEB · DI WIEDER". Die Briefkästen: eine Mietmahnung, „Fällig in 3 Tagen: 900 Chits (davon Hüllenabgabe 310)". Juno: „Dreihundertzehn für die Ringe über meinem Kopf. Die ich nie bestellt hab." Das ist das Ziel von Kapitel 1. | `rent_notice` |
+| 14 | `kessel_14` | Motte sitzt auf seiner Bank vor dem Treppengeländer, die weiße Mütze zu groß. „Was machst du eigentlich? Den ganzen Tag?" Antworten: freundlich und ehrlich („Ich schau Leuten zu. Und verkauf, was ich sehe."), ausweichend („Reparaturen."), abweisend („Geh schlafen, Motte."). Erster Wert für Motte. | `moth_kind` / `moth_brushed` |
+| 15 | `kessel_lobby` | Der Aufzug: `OUT OF ORDER`; angeblich fährt er dienstags, er fährt nie. Die Briefkästen: eine Mietmahnung, „Fällig in 3 Tagen: 900 Chits (davon Hüllenabgabe 310)". Juno: „Dreihundertzehn für die Ringe über meinem Kopf. Die ich nie bestellt hab." Das ist das Ziel von Kapitel 1. | `rent_notice` |
 | 16 | `kowalski` | Die Straße aus dem Mockup. Bao an seiner Garküche: „Wie immer? Ich schreib's an." (Hat Juno Geld, kann sie bar zahlen; Bao freut sich, sagt aber dasselbe.) Juno isst unter seinem Schirm. | `ate_bao` |
 | 17 | `kowalski` | Nach dem Essen: der kaputte Werbebildschirm über der Straße stottert. Halbes Werbegesicht, halbes Rauschen. Wenn Juno ihn ansieht (oder nach ein paar Sekunden von selbst): das Auge im Rauschen dreht sich zu ihr. Schrift über den ganzen Bildschirm: **JUNO.** Dann wieder Werbung. Das Stottern ist echt (der Bildschirm ist kaputt), das Auge und JUNO. sind nur in Junos Overlay (story §10a); deshalb hat Bao nichts gesehen. Für diesen Moment liegen die Eckklammern des Implantats um den Bildschirm. Juno: „Hast du ... nichts. Schon gut." Dann leise: „Das war nicht auf dem Schirm. Das war in meinem Auge." Aus der Tasche, ganz leise, EVI: „Das war nicht ich. Ehrlich." | Ende |
 | 18 | — | Abblende. Titelkarte „Kapitel 1: Glass". | `act: next` |
@@ -314,7 +314,7 @@ kein Zuhause." (Die Nudeln sind der Schlüssel für Kap. 1, Auftrag A.) Anhang: 
 | **Was sie bestellt hat** | nur den Ring | zahlt 200 + 100 Bonus: „Ich wusste es." | Sie hält ihn für einen Ehebrecher; dass er nicht heimkommt, nimmt sie als Beweis | „Frau Kessler: einen Ehebruch, den es nicht gab. 300." |
 | **Nichts** | „Nichts gefunden." | zahlt nichts | Sie wartet auf einen Mann, der nicht kommt, und weiß nicht, warum | „Nichts geliefert." |
 
-Kessler ist in jedem Fall schon weg: Nach dem Treffen bei Yuen's taucht er unter, weil er den Rest nicht zahlen kann und sich
+Kessler arbeitet bis zu diesem Abend wie immer. Nach dem Treffen bei Yuen's taucht er in jedem Fall unter, weil er den Rest nicht zahlen kann und sich
 verschuldet nicht mehr heimtraut (story §10b). In Kapitel 1 heuert Varga Juno an, ihn zu finden. Die Wahl ändert, was Frau Kessler
 glaubt, und die Zeilen in Kap. 1.
 
@@ -349,15 +349,15 @@ Klarheit zu verlieren.
 | Raum | Größe | Hauptfarbe | Ausgänge | Requisiten | Lampen | Detail mit Geschichte |
 |---|---|---|---|---|---|---|
 | `flat` | 320x180 | Bildschirm-Cyan, gedämpft; eine Bernstein-Lampe; Magenta vom Schild draußen | Tür (linke Wand) → `kessel_14` | `deck` (Schreibtisch, drei Bildschirme, Kabelsalat), `fridge`, `bed`, `box_old` (unter dem Bett), `window` (Blick auf den Werbebildschirm, Regen), `pinboard` (Fotos von Zielen mit Fäden), Wäscheberg, Nudelbecher-Turm | Deck (Cyan, flackert), Stehlampe (Bernstein), Fenster (Magenta-Neon, blinkt) | ein Post-it am Monitor: „ESSEN!!" mit drei Unterstreichungen |
-| `kessel_14` | 320x180, Iso-Treppenabsatz 5 x 4,5 m (entschieden 2026-11-04 gegen eine Seitenansicht; Karte `art/rooms/kessel_14.map.js`, Block-Skizze `art/test/kessel14_blocks.px.js`) | Beton-Stahl, grünstichiges Neonröhrenlicht | `flat` (Tür 14B in der linken Wand), Haldane (Tür 14C in der rechten Wand, offen: ihr Sessel gleich dahinter im Fernsehlicht), Treppe (an der rechten Wand, nach unten) → `kessel_lobby` | `haldane_door` (sie im Sessel, ein Fernseher), `stairs`, Motte auf der Treppe, Fahrräder, Müllsäcke | Neonröhre (flackert), Haldanes Fernseher (blau) | ein Zettel „WER KLAUT MEINE ZEITUNG?? – 14C" mit der Antwort „NIEMAND LIEST ZEITUNG – 14A" |
-| `kessel_lobby` | 320x180, Iso 5 x 4,5 m, Decke 2,8 m (gebaut 2026-11-04: `art/rooms/kessel_lobby.map.js`, `docs/rooms/kessel_lobby_x3.png`) | Stahlblau, nasser Boden (Regenwasser kommt durch die Tür) | Treppe → `kessel_14`, Haustür → `kowalski`, Aufzug (zu) | `mailboxes`, `lift` (Schild), `notice_board` | Deckenlampe (kalt), Licht von draußen (Magenta) | das Halcyon-Plakat „SLEPT WELL? HALCYON LISTENS." (Stadtschrift, bleibt englisch; Junos Kommentar beim Ansehen ist Deutsch) |
+| `kessel_14` | 320x180, Iso-Treppenabsatz 5 x 4,5 m (entschieden 2026-11-04 gegen eine Seitenansicht; Karte `art/rooms/kessel_14.map.js`, Block-Skizze `art/test/kessel14_blocks.px.js`) | Beton-Stahl, grünstichiges Neonröhrenlicht | `flat` (Tür 14B in der linken Wand), in der rechten Wand von der Ecke aus der Aufzug (außer Betrieb, an derselben Stelle wie in der Lobby), Haldane (Tür 14C, offen: ihr Sessel gleich dahinter im Fernsehlicht), Treppe (an der rechten Wand, nach unten) → `kessel_lobby` | `haldane_door` (sie im Sessel, ein Fernseher), `stairs`, Motte auf der Treppe, Fahrräder, Müllsäcke | Neonröhre (flackert), Haldanes Fernseher (blau) | ein Zettel „WER KLAUT MEINE ZEITUNG?? – 14C" mit der Antwort „NIEMAND LIEST ZEITUNG – 14A" |
+| `kessel_lobby` | 320x180, Iso 5 x 4,5 m, Decke 2,8 m (gebaut 2026-11-04: `art/rooms/kessel_lobby.map.js`, `docs/rooms/kessel_lobby_x3.png`) | Stahlblau, nasser Boden (Regenwasser kommt durch die Tür) | Treppe (an der rechten Wand, unter dem Treppenloch des Stockwerks darüber) → `kessel_14`, Haustür → `kowalski`, Aufzug (zu, an derselben Stelle wie oben) | `mailboxes`, `lift` (Schild), `notice_board` | Deckenlampe (kalt), Licht von draußen (Magenta) | das Halcyon-Plakat „SLEPT WELL? HALCYON LISTENS." (Stadtschrift, bleibt englisch; Junos Kommentar beim Ansehen ist Deutsch) |
 | `kowalski` | 320x180 | Magenta, Bernstein-Essenslicht | Kessel-Block (links hinten), Gasse zum Drain-Markt (Kap. 1, rechts, im Prolog zu: „Nicht heute Nacht.") | wie Mockup C: LUCKY STATIC (Kap. 1 betretbar), Baos Wagen, Automat, Werbebildschirm, Drohne, Gitter, Okonkwos Eckladen (Kap. 1) | wie Mockup C | wie Mockup C |
 
 ### 7.2 Kameras (Feed-Modus, Style Guide §9)
 
 | Kamera | Ort | Blick | Was dort ist | Ablauf im Prolog |
 |---|---|---|---|---|
-| `cam03` | Ostbrücke, gegenüber der Pumpenverwaltung Ost | von einer Laterne, 45°, eine Fußgängerbrücke mit Vordach, der Eingang des Bürohauses, eine Kamera am Mast gegenüber | Pendler unter Schirmen, ein Nudelautomat, Pfützen | 22:00 Schichtende: 9 Leute kommen heraus, 5 Männer in Mänteln; Kessler (3.) bleibt unterm Vordach, telefoniert bis 22:15, geht nach rechts |
+| `cam03` | Ostbrücke, gegenüber der Pumpenverwaltung Ost | von einer Laterne, 45°, eine Fußgängerbrücke mit Vordach, der Eingang des Bürohauses, eine Kamera am Mast gegenüber | Pendler unter Schirmen, ein Nudelautomat, Pfützen | 22:00 Schichtende: 9 Leute kommen heraus, 5 Männer in Mänteln; Kessler (3.) geht wie jeden Abend am Nudelautomaten vorbei, bleibt unterm Vordach, telefoniert bis 22:15, geht nach rechts |
 | `cam04` | Imbiss Yuen | von der Decke im Imbiss, 55°, Theke, vier Tische, ein Fenster zur Straße | ein Koch, zwei Nachtgäste, ein Fernseher mit Halcyon-Werbung | 22:30 Kessler setzt sich zu Varga; 22:35 der Ring; 22:45 Varga geht; Kessler bleibt sitzen, Kopf in den Händen |
 
 ## 8. Figuren im Prolog

@@ -85,7 +85,7 @@ Maschinen für die Arbeit am Wasser umgebaut.
   in beide Richtungen. Halcyon beendete die Programme und ließ die Tiere, wo sie waren. Nur wenige
   sprechen, und das Spiel hat **genau zwei** von ihnen: **Ratz** und **Tinte** (§4). Sie sind
   Nebenfiguren mit eigenen Geschichten, keine Maskottchen.
-- **Maschinen mit Eigenheiten.** Die Nudelautomaten haben Launen, ein Aufzug spricht nur dienstags,
+- **Maschinen mit Eigenheiten.** Die Nudelautomaten haben Launen, ein Aufzug fährt angeblich dienstags,
   und Junos Deck hat **EVI** (§4, §6). Das sind keine Bürger mit Rechten; es sind Dinge, mit denen man
   zu leben gelernt hat.
 - **Die Wache Kirche.** Eine kleine Sekte, die Lull verweigert und sich mit Kaffee wach hält. Sie
@@ -167,7 +167,7 @@ Wird langsam über die Kapitel enthüllt; der Spieler soll es einen Schritt vor 
    Maschine sieht sich die Kameras des Neunten an. Halcyon hat es nie geschafft, dass eine Maschine
    Menschen so gut liest wie Menschen.
    - **Der Beweis lebt auf Junos Deck.** Das Projekt AUTO-EVAL wurde mit den Markierungen der
-     menschlichen Beobachter trainiert, auch mit Junos gelben Klammern. Es scheiterte: Das Modell hielt
+     menschlichen Beobachter trainiert, auch mit Junos Klammern. Es scheiterte: Das Modell hielt
      Tränen für Regen und Umarmungen für Ringkämpfe. Halcyon stellte es **ein halbes Jahr vor der
      Entlassung der Beobachter** ein und verkündete trotzdem, die automatische Auswertung übernehme. In
      ihrer letzten Woche fand Juno den Prototyp EVAL-7 auf einem Server, der gelöscht werden sollte,
@@ -219,7 +219,7 @@ Straßenmodus.
   CAM 03 und CAM 04 an zwei Orten, markiert ihn, hört mit und zeichnet auf, wie er sich mit jemandem
   trifft. (Die Wendung: Es ist ein Kredithai, keine Geliebte. Der Spieler entscheidet, was er schickt.)
 - **Verkaufen:** Sie verkauft den Clip über Sable. Das ist der erste Eintrag im Kassenbuch.
-- **Rausgehen:** Der Kühlschrank ist leer. Raus durch den Kessel-Block (Motte auf der Treppe, die Tür
+- **Rausgehen:** Der Kühlschrank ist leer. Raus durch den Kessel-Block (Motte auf seiner Bank, die Tür
   von Frau Haldane) auf die Kowalski-Straße zu Baos Garküche.
 - **Das Ende:** Der kaputte Werbebildschirm über der Straße flackert und sagt **„JUNO."** (der Moment
   aus dem Mockup). Niemand sonst hat es gehört. Aus der Tasche, ganz leise, EVI: „Das war nicht ich.
@@ -252,9 +252,8 @@ Straßenmodus.
   extra für den Live-Feed bezahlt hat (oder, wenn sie sich geweigert hat, weil sie Ines warnen will).
 - **Das Ende:** das Treffen in der alten U-Bahn-Station in den Sümpfen, durch CAM 31. Ines gibt
   Lantern eine Daten-Wallet (verschlüsselt; der Schlüssel ist der Stick aus dem Trockner). Ein Mann in einem weißen Regenmantel tritt aus der Dunkelheit. Rask tötet Ines
-  vor der Kamera. Lantern flieht. Rask sieht nach oben in die Kamera, direkt zu Juno, und der Feed
-  bricht ab. Juno kann nichts tun: Das Kapitel spielt ihre Ohnmacht aus (`kapitel1-design` §8), und am Ende sieht sie im toten
-  Monitor ihr eigenes Gesicht, wie am Ende ihrer letzten Schicht. **Juno hat die Aufnahme.** EVI, die sonst jeden Menschen falsch liest, liest diesen
+  vor der Kamera. Lantern flieht. Rask sieht nach oben in die Kamera, direkt zu Juno, eine Störung läuft durchs Bild, und der Feed
+  bricht ab. Juno kann nichts tun: Das Kapitel spielt ihre Ohnmacht aus (`kapitel1-design` §8). **Juno hat die Aufnahme.** EVI, die sonst jeden Menschen falsch liest, liest diesen
   richtig: „Er hat sie ausgeschaltet. Juno. Er hat sie ausgeschaltet."
 
 ### Kapitel 2: Aufnahme (das moralische Problem, ~2 Std.)
@@ -269,8 +268,6 @@ Straßenmodus.
   - Ines' Wohnung (ein Einbruch im Straßenmodus, gelenkt durch den Feed: Die Kameras zeigen, wann der
     Flur frei ist);
   - ihre Klinik (Lull-Klinik 9-Ost, als Patientin bei einem Aufnahmegespräch);
-  - der Trockner im Waschsalon, wo Ines am ersten Abend eine zweite Daten-Wallet versteckt hat, verschlüsselt mit demselben
-    Schlüssel (Juno hat ihn, wenn sie den Stick kopiert oder behalten hat; sonst hat ihn Lantern);
   - **die Fälschung:** Am zweiten Tag zeigen die Halcyon-Nachrichten einen Clip aus CAM 31, in dem
     *Lantern* Ines tötet. Revier 9 jagt ihn. Juno legt die Fälschung im Clip-Editor neben ihre
     Aufnahme und findet, wo sie geschnitten ist (ein Feed-Rätsel am Schreibtisch: Zeitstempel,
@@ -290,7 +287,9 @@ Straßenmodus.
   | **Lantern finden und ihm den Clip geben** | eine gefährliche Suche in den Sümpfen; Lantern wird ein Verbündeter; seine Sendung kommt zu früh, und er wird gejagt |
   | **Ihn behalten** | jetzt die sicherste Wahl; niemand weiß davon; Juno ist allein, und das Kassenbuch vergisst nicht |
 
-- **Das Ende:** Ines' Protokolle werden entschlüsselt. Die REM-Spitzen der Lull-Nutzer stimmen mit den
+- **Das Ende:** Ines' Protokolle kommen ans Licht: Die einzige Daten-Wallet hat Lantern. Er öffnet sie mit dem Stick (behält Juno
+  den Stick, muss er zu ihr) und sendet sie über seinen Piratensender, aber dem gejagten „Mörder“ glaubt niemand (Vorschlag). Juno
+  legt sie neben ihre Kameras: Die REM-Spitzen der Lull-Nutzer stimmen mit den
   Zeitstempeln der Kameras überein, auf die Sekunde. In dieser Nacht wacht Teo nicht auf. **Teo ist ein
   Sinker.** Die Nachricht kommt nicht von Halcyon, sondern von Tinte, über das Netz der Pumpenhalle:
   „Dein Bruder schläft im Becken-Raum. Er hört nicht. Komm."
@@ -411,7 +410,7 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
 
 - **Kessel-Block:** die Doppelschichten von Frau Haldane und die Briefe ihres Sohnes; Mottes
   Unterricht (ihn unterrichten oder abweisen, was entscheidet, ob er Juno in Kap. 3 warnen kann); der
-  Aufzug, der nur dienstags funktioniert.
+  Aufzug, der angeblich dienstags fährt (er fährt nie).
 - **Glass-Aufträge:** kleine Aufträge auf dem Deck in Kap. 1, 2 und 4 (ein vermisster Hund, ein
   Versicherungsbetrüger, ein Gewerkschafter, der verfolgt wird). Jeder ist ein abgeschlossenes
   Feed-Rätsel mit einem Eintrag im Kassenbuch. Die besten sind **kleine Leben in einem Auftrag**:
@@ -534,14 +533,23 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
   an ihrem Kopf, der unten rechts aus der Tasche schaut, und an ihrer Stimme aus der Tasche.
 - **Andere Beobachter:** Juno ist nicht die Einzige mit dem Implantat. Es sind nur sehr wenige, weit verstreut, manche auf Lull oder
   selbst Sinker geworden.
-- **Kessler** ist direkt nach dem Treffen mit Varga untergetaucht: Den Rest kann er nicht zahlen, den Ring hat Varga schon, und
-  verschuldet traut er sich nicht mehr heim. Er geht auch nicht mehr zur Arbeit; nur die Gewohnheit bringt ihn abends zum Automaten.
+- **Kessler** arbeitet bis zum Prolog wie immer und zieht nach der Schicht seine Nudeln am Automaten. Erst nach dem Treffen mit Varga
+  taucht er unter: Den Rest kann er nicht zahlen, den Ring hat Varga schon, und verschuldet traut er sich nicht mehr heim.
 - **WREN und die Quiet:** Hat Juno den Ort verkauft, weiß die Quiet sofort, wer sie ist. Nach einer Weigerung muss sie erst suchen.
 - **Lanterns Rollstuhl** hat Schubdüsen für kurze Sätze; so kommt er über Treppen und Leitern (Vorschlag, wie weit das geht, ist offen).
 - **Daten-Wallet und Stick:** Ines gibt Lantern eine **Daten-Wallet** mit den verschlüsselten Protokollen (das Wort ersetzt „Laufwerk“). Der
   **Stick** im Trockner ist der Schlüssel dazu. Ort und Zeit stehen auf dem Waschsalon-Ticket, nicht auf dem Stick: Behält Juno den
-  Stick, kommt Lantern trotzdem zum Treffen, kann die Wallet aber nicht öffnen und sucht in Kapitel 2 Juno.
+  Stick, kommt Lantern trotzdem zum Treffen, kann die Wallet aber nicht öffnen und sucht in Kapitel 2 Juno. Es gibt nur diese eine
+  Wallet; ohne den Stick lässt sie sich nicht lesen.
 - **WRENs Geld:** 1500 für den Ort (750 vorab, 750 beim Senden), dazu 750 für die Live-Übertragung, getrennt im Kassenbuch.
 - **Kamera 31:** Halcyon hat die alten Metrokameras einst nachgerüstet und dann vergessen; deshalb versteht sie das Beobachter-Protokoll.
-- **Das Ende von Kapitel 1 spielt Junos Ohnmacht aus** (`kapitel1-design` §8): Alles, was sie versucht, scheitert sichtbar, und am Ende
-  sieht sie im toten Monitor ihr Gesicht, wie am Ende ihrer letzten Schicht.
+- **Das Ende von Kapitel 1 spielt Junos Ohnmacht aus** (`kapitel1-design` §8): Alles, was sie versucht, scheitert sichtbar. Nachdem Rask in
+  die Kamera gesehen hat, läuft eine Störung durchs Bild, und der Feed bricht ab.
+- **Das Implantat ist immer cyan**, auch Junos Klammern 2088 in der Halle.
+- **Der Schal** ist hell, die Bank ist Mottes Platz, und die App heißt **GLASS**.
+- **EVI ist immer in der Tasche dabei:** Das erklärt, warum sie in jeder Szene da ist; unten rechts steht sie abstrakt für die Hilfe. Ihr
+  „Bringst du mir was mit?“ bleibt, wie es ist.
+- **Der Aufzug fährt nie.** „Angeblich dienstags“ bleibt als Witz.
+- **Ein Haus, ein Grundriss:** Aufzug und Treppe stehen auf jedem Stockwerk an derselben Stelle (`kessel_14`, `kessel_lobby`).
+- **Schilder in Grafik sind englisch**, auch geplante: `GLASSER LIES`, `SUDS & SPIN` (der Waschsalon), `NO SNEAKERS IN THE DRYER`, `OUT OF ORDER`,
+  `KIDNEYS ONLY`, Sables Preisliste `NAMES 50. ADDRESSES 80. SECRETS: ASK.`
