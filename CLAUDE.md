@@ -29,6 +29,7 @@ code comments English.
 | file | what |
 |---|---|
 | `docs/story.md` | the story bible (German): world, cast, the secret, 6 chapters, branches, endings; decisions in §10 |
+| `docs/story-lesefassung.md` | the story to read, up to and including Chapter 1, and the list of what still contradicts itself |
 | `docs/kapitel0-design.md` | the prologue "Nachtschicht", plus the rules every chapter uses: the deck as a computer and EVI (§2), feed mode (§3), game time and routines (§4), the steps 0–12 (§6) |
 | `docs/kapitel1-design.md` | Chapter 1 "Glass": three jobs over three evenings, the WREN thread, the murder in cam31 |
 | `docs/dialog-design.md` | dialogue (role model Disco Elysium): Juno's six inner voices, deterministic checks, a log panel; engine work C12/C13 |

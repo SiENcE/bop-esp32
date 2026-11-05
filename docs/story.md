@@ -513,6 +513,10 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
     dem Handbuch, nur fehlt die Wach-Ebene (Technik der Stadt, englisch: `OBS-4 // WAKE LAYER: REMOVED`). Die innere
     Stimme DAS IMPLANTAT erkennt sie, und Juno sagt es laut. Damit ist auch klar, warum sie Lull nehmen muss und warum
     sie dabei wach bleibt.
+- **Der Satz über das Implantat steht nicht im Vorspann** (2026-11-04): Der Vorspann erklärt das Implantat nirgends. Juno
+  sagt ihn beim ersten Markieren (Kessler in `cam03`, Prolog).
+- **Juno in der Aufzugfahrt ist die Juno von heute** (2026-11-04): Den gelben Mantel, der in der Halle über ihrem Sessel
+  hing, trägt sie jetzt, die Kapuze unten; er liegt nicht im Karton.
 - **Der Datenstick** im Karton trägt `EVAL-7 // DELETE` (gemalter Text ist englisch, wie alle Technik der Stadt).
 - **Das Deck bleibt, wie es ist**: Röhrenmonitor, Maus, selbstgebaute Platinen. Der Retro-Look ist Absicht (die
   Welt des Neunten ist zusammengeflickt), keine Vorhersage.
