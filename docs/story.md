@@ -138,7 +138,7 @@ Cyan nur für Technik.
 | **Dr. Ines Calder** | Schlaftechnikerin in einer Lull-Klinik, die Schlafprotokolle hinausschmuggelt | weißer Klinikkittel, dunkler Zopf | `#f0a0c0` |
 | **„Lantern"** (Oskar Lind) | ein Piratensender, der Werbebildschirme für zehn Sekunden Wahrheit kapert; Ines' Kontakt; paranoid. Sitzt seit einem Pumpenunfall im Rollstuhl, den er für die Sümpfe umgebaut hat: Schwimmer, ein Bootsmotor, Schubdüsen für kurze Sätze über Treppen und Leitern, der Sender eingebaut. | geflickter Poncho; der Rollstuhl mit Schwimmern, Düsen und einem Bündel Antennen | `#b0f0a0` |
 | **Lt. Agnes Morrow** | Revier 9; nimmt Geld von Halcyon und hasst sich dafür; ihre Tochter ist eine Lull-Sinkerin | grauer Trenchcoat, Polizeimarke am Band | `#a8b8d0` |
-| **Corvin Rask** | ein Agent der **Quiet**, Halcyons inoffizieller Sicherheitseinheit; höflich, geduldig, der Mörder | weißer Regenmantel, im Feed ohne Gesicht (eine Maske, die die Kamera überstrahlt) | `#ff7a6a` |
+| **Corvin Ashe** | ein Agent der **Quiet**, Halcyons inoffizieller Sicherheitseinheit; höflich, geduldig, der Mörder | weißer Regenmantel, im Feed ohne Gesicht (eine Maske, die die Kamera überstrahlt) | `#ff7a6a` |
 | **Direktorin Selene Aubrecht** | Leiterin von Civic Rest, dem Lull-Programm; glaubt, den Neunten gerettet zu haben, und die Zahlen geben ihr recht | weißer Anzug, silbernes Haar | `#e8f0ff` |
 | **Der Zeuge** | das Auge in den Bildschirmen (§6) | eine Störung, ein Auge, viele Stimmen zugleich | `#ffc0f2` (Magenta-Weiß) |
 
@@ -189,7 +189,8 @@ Wird langsam über die Kapitel enthüllt; der Spieler soll es einen Schritt vor 
    seit drei Jahren beim Zusehen zu. Als der Bildschirm ihren Namen sagt, spricht er zum ersten Mal.
 5. **Warum Ines starb:** Ihre Schlafprotokolle bewiesen, dass die Hirnaktivität der Lull-Nutzer mit
    den Zeitstempeln der Kameras übereinstimmt. Sie wollte sie Lantern geben. Halcyon heuerte eine
-   Glasserin an, um das Treffen zu finden: Juno.
+   Glasserin an, um das Treffen zu finden: Juno. Die eigenen Kameras reichten nicht, weil Ines Halcyons Netz meidet; Nudelbar und
+   Waschsalon haben private Kameras.
 6. **Was Aubrecht plant:** Der Zeuge wächst und beginnt zu handeln. Er verweigert manche Markierungen
    und versteckt Menschen. Aubrecht will ihn **beschneiden**: ein Firmware-Update, das die gemeinsame
    Ebene löscht. Das würde jeden Sinker töten oder leeren, darunter Teo. Danach will sie Lull im
@@ -251,8 +252,8 @@ Straßenmodus.
   ihn noch am selben Abend von einem anderen Glasser. So oder so sieht Juno dem Treffen zu, weil WREN
   extra für den Live-Feed bezahlt hat (oder, wenn sie sich geweigert hat, weil sie Ines warnen will).
 - **Das Ende:** das Treffen in der alten U-Bahn-Station in den Sümpfen, durch CAM 31. Ines gibt
-  Lantern eine Daten-Wallet (verschlüsselt; der Schlüssel ist der Stick aus dem Trockner). Ein Mann in einem weißen Regenmantel tritt aus der Dunkelheit. Rask tötet Ines
-  vor der Kamera. Lantern flieht. Rask sieht nach oben in die Kamera, direkt zu Juno, eine Störung läuft durchs Bild, und der Feed
+  Lantern eine Daten-Wallet (verschlüsselt; der Schlüssel ist der Stick aus dem Trockner). Ein Mann in einem weißen Regenmantel tritt aus der Dunkelheit. Ashe tötet Ines
+  vor der Kamera. Lantern flieht. Ashe sieht nach oben in die Kamera, direkt zu Juno, eine Störung läuft durchs Bild, und der Feed
   bricht ab. Juno kann nichts tun: Das Kapitel spielt ihre Ohnmacht aus (`kapitel1-design` §8). **Juno hat die Aufnahme.** EVI, die sonst jeden Menschen falsch liest, liest diesen
   richtig: „Er hat sie ausgeschaltet. Juno. Er hat sie ausgeschaltet."
 
@@ -271,7 +272,7 @@ Straßenmodus.
   - **die Fälschung:** Am zweiten Tag zeigen die Halcyon-Nachrichten einen Clip aus CAM 31, in dem
     *Lantern* Ines tötet. Revier 9 jagt ihn. Juno legt die Fälschung im Clip-Editor neben ihre
     Aufnahme und findet, wo sie geschnitten ist (ein Feed-Rätsel am Schreibtisch: Zeitstempel,
-    Regentropfen, die zweimal fallen, Rasks überstrahlte Maske, die fehlt). Der Beweis hilft bei jeder
+    Regentropfen, die zweimal fallen, Ashes überstrahlte Maske, die fehlt). Der Beweis hilft bei jeder
     Wahl in Entscheidung 2.
 - **EVI erfährt, was EVI ist.** In Ines' Wohnung liegt eine Akte aus Civic Rest: „AUTO-EVAL
   eingestellt, 2087-10. Ersatz: Programm Civic Rest." Darunter die Trainingsdaten: „Beobachterin 0412,
@@ -288,7 +289,7 @@ Straßenmodus.
   | **Ihn behalten** | jetzt die sicherste Wahl; niemand weiß davon; Juno ist allein, und das Kassenbuch vergisst nicht |
 
 - **Das Ende:** Ines' Protokolle kommen ans Licht: Die einzige Daten-Wallet hat Lantern. Er öffnet sie mit dem Stick (behält Juno
-  den Stick, muss er zu ihr) und sendet sie über seinen Piratensender, aber dem gejagten „Mörder“ glaubt niemand (Vorschlag). Juno
+  den Stick, muss er zu ihr) und sendet sie über seinen Piratensender, aber dem gejagten „Mörder“ glaubt niemand. Juno
   legt sie neben ihre Kameras: Die REM-Spitzen der Lull-Nutzer stimmen mit den
   Zeitstempeln der Kameras überein, auf die Sekunde. In dieser Nacht wacht Teo nicht auf. **Teo ist ein
   Sinker.** Die Nachricht kommt nicht von Halcyon, sondern von Tinte, über das Netz der Pumpenhalle:
@@ -368,9 +369,9 @@ Straßenmodus.
   - Das Angebot gilt bis zum Finale.
 - **Der Einbruch:** Im Feed-Modus lotst Juno einen Verbündeten (Lantern, Morrow oder Motte, je nach
   Flags) über die Kameras durch die Stockwerke des Towers. Ganz im Stil von Maniac Mansion: Der
-  Verbündete geht, Juno sieht zu, öffnet Türen und schaltet Kameras in Schleife. Rask jagt den
+  Verbündete geht, Juno sieht zu, öffnet Türen und schaltet Kameras in Schleife. Ashe jagt den
   Verbündeten durch dieselben Kameras.
-- **Rask:** eine letzte Konfrontation, im Feed-Modus und im Straßenmodus zugleich. Juno kann ihm eine
+- **Ashe:** eine letzte Konfrontation, im Feed-Modus und im Straßenmodus zugleich. Juno kann ihm eine
   Falle stellen, ihn bloßstellen oder vom Zeugen gerettet werden.
 - **Das Ende:** Die Tür des Ruhekerns öffnet sich. Drinnen schläft die Stadt.
 
@@ -449,7 +450,7 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
 - **Gewaltdarstellung:** Ines' Tod (und jede andere drastische Szene) gibt es in **zwei Fassungen**,
   wählbar in den Einstellungen (Inhalt):
   - **mit schwarzem Rahmen:** Im entscheidenden Moment schließen sich schwarze Balken über dem Feed;
-    man hört es, man sieht Rask hinterher nach oben in die Kamera schauen.
+    man hört es, man sieht Ashe hinterher nach oben in die Kamera schauen.
   - **ohne:** Der Moment wird gezeigt, in Pixelgrafik und im Phosphor des Feeds, ohne Nahaufnahme.
 
   Beide Fassungen erzählen dasselbe; nur das Bild unterscheidet sich. Voreinstellung: mit Rahmen.
@@ -541,9 +542,9 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
   **Stick** im Trockner ist der Schlüssel dazu. Ort und Zeit stehen auf dem Waschsalon-Ticket, nicht auf dem Stick: Behält Juno den
   Stick, kommt Lantern trotzdem zum Treffen, kann die Wallet aber nicht öffnen und sucht in Kapitel 2 Juno. Es gibt nur diese eine
   Wallet; ohne den Stick lässt sie sich nicht lesen.
-- **WRENs Geld:** 1500 für den Ort (750 vorab, 750 beim Senden), dazu 750 für die Live-Übertragung, getrennt im Kassenbuch.
+- **WRENs Geld:** 1500 für den Ort (250 vorab, 1250 beim Senden; wer den Vorschuss zurückschickt und doch sendet, bekommt 1500), dazu 750 für die Live-Übertragung, getrennt im Kassenbuch.
 - **Kamera 31:** Halcyon hat die alten Metrokameras einst nachgerüstet und dann vergessen; deshalb versteht sie das Beobachter-Protokoll.
-- **Das Ende von Kapitel 1 spielt Junos Ohnmacht aus** (`kapitel1-design` §8): Alles, was sie versucht, scheitert sichtbar. Nachdem Rask in
+- **Das Ende von Kapitel 1 spielt Junos Ohnmacht aus** (`kapitel1-design` §8): Alles, was sie versucht, scheitert sichtbar. Nachdem Ashe in
   die Kamera gesehen hat, läuft eine Störung durchs Bild, und der Feed bricht ab.
 - **Das Implantat ist immer cyan**, auch Junos Klammern 2088 in der Halle.
 - **Der Schal** ist hell, die Bank ist Mottes Platz, und die App heißt **GLASS**.
@@ -561,6 +562,12 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
 - **Tinte** ist fast 40 Jahre alt, also aus den Anfängen des Flutprogramms der 2050er, und damit uralt für eine Krake. Sie hat Kiemen wie jede
   Krake; fürs offene Wasser ist sie nur nicht mehr gemacht.
 - **Das Beobachter-Handbuch** liegt ab Kapitel 1, Abend 1 im CACHE und nennt das Protokoll `OBS-4`, das Juno in `cam31` braucht.
-- **Der unbekannte Link** steht in der Schlange vor der Lull-Klinik (`cam21`) als `UNKNOWN LINK` über jemandem, pulsiert, wenn er aktiv ist, und verschwindet nicht; `???` gehört Rask.
+- **Der unbekannte Link** steht in der Schlange vor der Lull-Klinik (`cam21`) als `UNKNOWN LINK` über jemandem, pulsiert, wenn er aktiv ist, und verschwindet nicht; `???` gehört Ashe.
+- **Der Mörder heißt Corvin Ashe** (bisher Rask, zu nah an Ratz). Ashe passt zum weißen Mantel und zu dem, was er zurücklässt.
+- **Kapitel 1, vorläufig bis zum Durchspielen im Mock** (`kapitel1-design`): Am Freitag gibt es kein Schlafen, nach 22:00 gilt „nicht gesendet“, um 22:30 bucht das Konto die Miete ab und
+  Teo schreibt, wenn sie nicht reicht, und die Uhr hält um 22:45, bis `cam31` verbunden ist. Wer den Donnerstag verschläft, findet den Ort am Freitag über Ines' Weg am Sumpf-Abgang.
+  `cam12` und `cam30` gehen über Junos alten Zugang, `cam24` über Sable oder Mottes zweite Lektion; das „Kassenbuch-Rätsel“ ist gestrichen. Ines ist von Anfang an nicht
+  erreichbar. Morrow sagt: „Freitag fährt keiner die Kowalski.“ Das Richtmikro kommt erst in Kapitel 2. Frau Kessler und Bao nehmen den Prolog wieder auf.
+- **Das Ende von Kapitel 2 steht:** Lantern öffnet die Wallet und sendet sie, niemand glaubt ihm, nur Juno kann sie neben ihre Kameras legen.
 - **Das Implantat** durfte Juno behalten, weil das Herausnehmen mehr gekostet hätte (wie sie es im Prolog sagt). Illegal ist es nicht.
 - **Ines' Kameras:** vier am Mittwoch und Donnerstag (`cam21` bis `cam24`), am Freitag dazu `cam30` und `cam31`, zusammen sechs.

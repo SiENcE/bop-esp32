@@ -1,6 +1,6 @@
 # Kapitel 1 „Glass": Design
 
-Stand: Entwurf (2026-11-03). Story: `docs/story.md` (§7 Kapitel 1). Regeln für Deck, Feed-Modus und
+Stand: Entwurf (2026-11-03), vorläufig entschieden am 2026-11-05 (story §10b); das Gerüst steht (`game/kapitel1.js`), geprüft wird beim Durchspielen des Mocks. Story: `docs/story.md` (§7 Kapitel 1). Regeln für Deck, Feed-Modus und
 Zeit: `docs/kapitel0-design.md` §2–4. Stil: `docs/style-guide.md`.
 
 ## 1. Überblick
@@ -15,6 +15,7 @@ Zeit: `docs/kapitel0-design.md` §2–4. Stil: `docs/style-guide.md`.
 | Kameras | `cam03`, `cam04`, `cam07` (Kowalski-Straße, das Mockup E), `cam07v` (die Automatenkamera), `cam12` (Eingang Drain-Markt), `cam15` (Kapselhotel Morpheus), `cam21`–`cam24` (Ines' Wege), `cam30` (Sumpf-Abgang), `cam31` (alte Metro) (12) |
 | Entscheidungen | K1a (Kessler), K1b (der Eckladen), **Entscheidung 1** (WREN) |
 | Ende | der Mord an Ines in `cam31` |
+| Dialoge | zuerst einfache Dialoge; die inneren Stimmen (`dialog-design`, Engine E-d) kommen vor den endgültigen Texten dazu |
 
 ## 2. Die drei Tage
 
@@ -23,13 +24,15 @@ zum nächsten Abend. Jeder Abend beginnt mit neuen Nachrichten auf dem Deck.
 
 | Abend | Was neu ist | Was an diesem Abend geschieht |
 |---|---|---|
-| **1 (Mi, 7.11.)** | drei Auftragsangebote: Varga (A), die Tidewater Boys (B), WREN (C) | Teo kommt vorbei (§7). Ines' erster beobachtbarer Abend. Der Drain-Markt ist offen. |
-| **2 (Do, 8.11.)** | eine Mahnung vom Vermieter, die Werbung „Lull: 2 Wochen gratis" | Ines legt den Stick in den Trockner (20:00); Lantern holt ihn (03:00). Okonkwo öffnet den Tresor (01:00). |
-| **3 (Fr, 9.11.)** | Varga drängt („Freitag ist heute."), WREN will „bis 22 Uhr" den Ort | die Miete ist um Mitternacht fällig (§5). 23:00 das Treffen in der Metro, `cam31`. Kapitelende. |
+| **1 (Mi, 7.11.)** | drei Auftragsangebote: Varga (A), die Tidewater Boys (B), WREN (C) | Teo kommt vorbei (§7). Ines' erster beobachtbarer Abend. Der Drain-Markt ist offen. Okonkwo öffnet den Tresor (01:00). |
+| **2 (Do, 8.11.)** | eine Mahnung vom Vermieter, die Werbung „Lull: 2 Wochen gratis" | Ines legt den Stick in den Trockner (20:00); Lantern holt ihn (03:00). Okonkwo öffnet den Tresor (01:00), zum letzten Mal. |
+| **3 (Fr, 9.11.)** | Varga drängt („Freitag ist heute."), WREN will „bis 22 Uhr" den Ort | Kein Schlafen. 22:00 WRENs Frist, 22:30 bucht das Konto die Miete ab (§5). Die Uhr hält um 22:45, bis `cam31` verbunden ist. 23:00 das Treffen in der Metro, `cam31`. Kapitelende. |
 
 Was nicht an einen Abend gebunden ist, geht an jedem (die Aufträge A und B lassen sich am Abend 1, 2
 oder 3 abschließen, sofern ihr Moment noch kommt; ihre Momente wiederholen sich jede Nacht, außer wo
 angegeben). WREN führt durch die drei Abende und erzwingt am dritten das Ende.
+Mit dem Treffen endet das Kapitel: Die Nacht nach Abend 3 gibt es nicht. Was nach 23:00 liegt (Okonkwo um 01:00, Morrow um 00:30), kommt
+also nur in den Nächten von Abend 1 und 2. Auftrag B muss bis dahin gelöst sein, verkaufen geht noch am Freitag.
 
 ## 3. Auftrag A: „Der verschwundene Schuldner" (Varga)
 
@@ -53,7 +56,7 @@ Juno Sable im Prolog Kessler verkauft hat, sagt Varga das offen: „Sable sagt, 
 
 | Wahl | Was Juno tut | Folge | Kassenbuch |
 |---|---|---|---|
-| **Verkaufen** | Varga das Versteck senden | 400 Chits. Am nächsten Abend in `cam15`: Vargas Leute holen Kessler aus der Kapsel (nicht gezeigt, nur die leere, offene Kapsel und eine zerbrochene Brille). In Kap. 2 sitzt Kessler mit Gips auf dem Drain-Markt und bettelt. | „Varga: Kessler, Kapsel 23. 400." später: „Kessler: zwei Rippen, ein Arm. Bettelt." |
+| **Verkaufen** | Varga das Versteck senden | 400 Chits. Am nächsten Abend (am Freitag verkauft: erst in Kap. 2) in `cam15`: Vargas Leute holen Kessler aus der Kapsel (nicht gezeigt, nur die leere, offene Kapsel und eine zerbrochene Brille). In Kap. 2 sitzt Kessler mit Gips auf dem Drain-Markt und bettelt. | „Varga: Kessler, Kapsel 23. 400." später: „Kessler: zwei Rippen, ein Arm. Bettelt." |
 | **Warnen** | in Person zum Kapselhotel? Nein: über das Hotelnetz eine Nachricht auf Kapsel 23s Bildschirm (Steuern im Feed) | kein Geld. Kessler flieht aus der Stadt (Transitachse, nach oben). Varga ist verärgert; in Kap. 2 hat Juno bei Sable einen schlechteren Kurs („Varga redet."). Frau Kessler bekommt eine Postkarte (Epilog). | „Kessler: gewarnt. 0." |
 | **Lügen** | Varga einen falschen Ort senden | Varga zahlt 200 im Voraus, findet nichts, will sein Geld zurück: in Kap. 2 ein Feed-Moment, wo Vargas Mann vor dem Kessel-Block wartet. | „Varga: ein falscher Ort. 200 (geliehen)." |
 
@@ -72,9 +75,9 @@ grüßt Juno jeden Abend.
 | B3 | `cam07` | 01:00 schließt Okonkwo, kniet sich hinter die Theke, öffnet den Tresor. Von oben verdeckt sein Rücken das Tastenfeld. Juno: „Falscher Winkel. Ich brauch was auf Augenhöhe." | — |
 | B4 | `kowalski` | Der Automat vor dem Laden hat eine eigene kleine Kamera (Werbung, „Lächeln für einen Gutschein!"). Ansehen: „Die Automatenkamera. Sieht genau durchs Fenster." Sie hängt nicht am Netz: Man muss sie anzapfen. | — |
 | B5 | `drain_market` | Ein Händler (Ratz, eine Kabelratte aus dem alten Flutprogramm, so groß wie ein kleiner Hund, Kopfhörer, Stand mit Elektroschrott; Story §4) verkauft einen **Abzweiger**: 60 Chits. Ratz feilscht, vertauscht über seinen geflickten Sprechkragen Wörter („Sechzig Chits, Freundschaftspreis, Feindschaftspreis wäre achtzig.") und will wissen, ob Juno Ratten in den Rohren unter der Krone gesehen hat (Nebengeschichte, Story §9). Oder Motte baut einen aus Junks, wenn Juno ihm im Prolog freundlich geantwortet hat und ihm jetzt eine Lektion gibt (§7). | `+tap` |
-| B6 | `kowalski` | Den Abzweiger am Automaten benutzen (Straßenmodus, Juno kniet sich hin). Die Drohne patrouilliert: Nur wenn ihr Lichtkegel weg ist (alle 8 Sekunden), sonst: „Nicht, solange die Drohne guckt." | `linked_cam07v` |
+| B6 | `kowalski` | Den Abzweiger am Automaten benutzen (Straßenmodus, Juno kniet sich hin). Die Drohne patrouilliert: Nur wenn ihr Lichtkegel weg ist (alle 8 Sekunden), sonst: „Nicht, solange die Drohne guckt." | `link_cam07v` |
 | B7 | `cam07v` | Ein Fischauge auf Hüfthöhe, die Ladentheke im Hintergrund. 01:00: das Tastenfeld, Zoom: der Code `4-1-7-0-9`. Aufzeichnen oder notieren. | `note_safe_code` |
-| B8 | `cam07` | **Morrow**: Abend 2 oder 3, 00:30, ein Polizeiwagen hält vor dem Laden. Lt. Morrow nimmt von einem Tidewater-Jungen einen Umschlag (Kiemenschlitze, die Leuchtmarkierung am Hals im Feed hell wie eine Lampe). Zuhören: „Das ist für die ruhige Woche. Und haltet euch von der Kowalski fern." Moment `morrow_bribe` (für Kap. 2 und 4 wichtig, wer ihn aufzeichnet, hat etwas gegen Morrow). | optional `+clip_morrow_bribe` |
+| B8 | `cam07` | **Morrow**: in den Nächten von Abend 1 und 2, 00:30, ein Polizeiwagen hält vor dem Laden. Lt. Morrow nimmt von einem Tidewater-Jungen einen Umschlag (Kiemenschlitze, die Leuchtmarkierung am Hals im Feed hell wie eine Lampe). Zuhören: „Das ist für die ruhige Woche. Freitag fährt keiner die Kowalski." Moment `morrow_bribe` (für Kap. 2 und 4 wichtig, wer ihn aufzeichnet, hat etwas gegen Morrow). | optional `+clip_morrow_bribe` |
 | B9 | **Entscheidung K1b** | siehe unten | |
 
 ### Entscheidung K1b
@@ -87,12 +90,12 @@ grüßt Juno jeden Abend.
 
 ## 5. Die Miete
 
-- 900 Chits um Mitternacht am Abend 3, davon 310 Hüllenabgabe (die Flutschuld, Story §3). Was Juno hat, zahlt sie vom Konto (Deck, Reiter Konto, oder im
-  Flur beim Hausverwalter-Terminal).
-- Reicht es nicht, schreibt Teo am Abend 3 um 21:00: „Hab gehört, die Miete. Ich hab Schichten
+- 900 Chits, davon 310 Hüllenabgabe (die Flutschuld, Story §3). Am Abend 3 um 22:30 bucht das Konto sie ab, also nach WRENs Frist um 22:00.
+- Reicht es nicht, geht alles Geld weg, und Teo schreibt gleich danach: „Hab gehört, die Miete. Ich hab Schichten
   gemacht. Schon überwiesen. Sag nichts." Der Rest ist bezahlt. Teo hat dafür noch mehr Doppelschichten
   auf Lull gemacht. Das steht nicht im Kassenbuch, aber Juno weiß es (eine Zeile, wenn sie auf ihrem
   Bett sitzt).
+- Der Prolog bringt 0 bis 420 Chits, WRENs Vorschuss 250: Die Miete reicht erst mit einem weiteren Auftrag oder mit dem Senden.
 - Möglich: 400 (A) + 500 (B) + 1500 (WREN) + 750 (Live) = viel zu viel. Der Spieler, der alles verkauft, ist reich
   und hat ein schweres Kassenbuch; der, der alle warnt, lebt von Teo.
 
@@ -101,13 +104,12 @@ grüßt Juno jeden Abend.
 ### Der Auftrag
 
 Abend 1, eine Nachricht ohne Absender außer `WREN`: „Dr. Ines Calder, Lull-Klinik 9-Ost. Wir wollen
-wissen, wen sie trifft und wo. 1500, die Hälfte jetzt. Diskretion." Ein Foto: eine Frau mit dunklem
-Zopf im Kittel. 750 Chits sind schon auf dem Konto. Juno: „Wer bezahlt im Voraus? Niemand bezahlt im
+wissen, wen sie trifft und wo. 1500, davon 250 jetzt. Diskretion." Ein Foto: eine Frau mit dunklem
+Zopf im Kittel. 250 Chits sind schon auf dem Konto. Juno: „Wer bezahlt im Voraus? Niemand bezahlt im
 Voraus."
 
-Ablehnen geht nicht sofort (das Geld ist da); Juno kann es zurückschicken, dann bleibt der Auftrag
-trotzdem in den Nachrichten, und WREN schreibt: „Behalten Sie es. Sie werden es sich anders
-überlegen." Juno sieht trotzdem hin: „Ich will wissen, warum jemand so viel für eine Schlaftechnikerin
+Juno kann die 250 zurückschicken. Das gilt: Das Geld ist weg, der Auftrag bleibt in den Nachrichten, und WREN schreibt:
+„Wie Sie wollen. Das Angebot bleibt." Wer später doch sendet, bekommt die ganzen 1500. Juno sieht trotzdem hin: „Ich will wissen, warum jemand so viel für eine Schlaftechnikerin
 zahlt." Die Kette ist dieselbe; nur die Entscheidung am Ende (C9) ändert sich.
 
 ### Ines' Ablauf
@@ -126,13 +128,14 @@ zahlt." Die Kette ist dieselbe; nur die Entscheidung am Ende (C9) ändert sich.
 | # | Wo | Was passiert | Flags / Dinge |
 |---|---|---|---|
 | C1 | Deck | `cam21` ist verbunden (eine Halcyon-Kamera der Klinik, die Juno noch kennt: ihr alter Zugang funktioniert hier, „Sie haben die Codes nie geändert."). Ines markieren. | `tag_ines` |
-| C2 | `cam21` → `cam22` | Folgen. `cam22` ist eine Bar-Kamera, verbunden über das Bar-WLAN (der Code steht auf der Speisekarte im Fenster, Zoom aus `cam21`). Die Serviette: Zoom, sie hält die Hand darüber. | `linked_cam22` |
-| C3 | `cam22` → `cam23` | Folgen. `cam23`: der Waschsalon hat eine billige Kamera, Code ist ab Werk „0000" (Juno: „Natürlich."). | `linked_cam23` |
-| C4 | `cam23` → `cam24` | Folgen nach Hause. `cam24` ist eine Haustürkamera, Code im Hausnetz; sie ist erst am Abend 2 verbunden (Sable, oder: das Kassenbuch-Rätsel, siehe Nebengeschichte Motte). Optional. | — |
+| C2 | `cam21` → `cam22` | Folgen. `cam22` ist eine Bar-Kamera, verbunden über das Bar-WLAN (der Code steht auf der Speisekarte im Fenster, Zoom aus `cam21`). Die Serviette: Zoom, sie hält die Hand darüber. | `link_cam22` |
+| C3 | `cam22` → `cam23` | Folgen. `cam23`: der Waschsalon hat eine billige Kamera, Code ist ab Werk „0000" (Juno: „Natürlich."). | `link_cam23` |
+| C4 | `cam23` → `cam24` | Folgen nach Hause. `cam24` ist eine Haustürkamera, Code im Hausnetz; den gibt es bei Sable oder in Mottes zweiter Lektion (§7), bei Motte also frühestens am Abend 2. Optional. | — |
 | C5 | `cam23` | Abend 2, 20:00: der Stick in Trockner 6, der **Schlüssel** zu Ines' Daten-Wallet: Ohne ihn lässt sie sich nicht lesen (story §10b). Dazu legt sie ein Ticket auf die Theke. **Moment** `ines_drop`. | `saw_drop` |
 | C6a | `laundromat` | Juno geht selbst hin (Straßenmodus, zwischen 20:05 und 03:00), öffnet Trockner 6 und liest den Stick: ein Schlüssel, sonst nichts; wozu, weiß sie noch nicht. Auf der Theke liegt das Ticket: „Ticket 31 – Fr 23:00". Juno: „Einunddreißig. Die alte Metrolinie 31? Freitag, elf Uhr." Sie legt den Stick zurück (oder nimmt ihn: Lantern findet nur das Ticket, kommt trotzdem zum Treffen, kann die Wallet aber nicht öffnen, und in Kap. 2 sucht er den Stick bei Juno). | `know_meeting`, ggf. `+stick_ines` |
 | C6b | `cam23` | Oder: um 03:00 den Rollstuhl mit den Antennen markieren, wenn er den Stick und das Ticket holt, und ihm folgen: `cam12` (Drain-Markt-Eingang: Die Düsen tragen ihn über die Leiter hinunter, ein kurzer Satz im Feed) → `cam30` (der Sumpf-Abgang, er schwimmt die Treppe hinab, auf ein Schild „LINE 31 – CLOSED" zu). Juno zählt zusammen. | `know_meeting`, `tag_lantern` |
-| C7 | Deck | `cam31` verbinden: eine **alte Metro-Kamera**, aus der Zeit vor Halcyon, die Halcyon einst nachgerüstet und dann vergessen hat. Kein Code findet sie. Erst das alte Beobachter-Protokoll aus Junos Implantat (Netzkarte: Rechtsklick auf `cam31`, Juno: „Das alte Protokoll. Das kann nur noch mein Kopf.") verbindet sie. Ein Moment des Schauders: Im Rauschen vor dem Bild sieht man für einen Takt das Auge. | `linked_cam31` |
+| C6c | `cam30` | Abend 3, wer den Treffpunkt noch nicht kennt: Um 22:20 verlässt Ines das Haus, kurz darauf kommt sie am Sumpf-Abgang vorbei, am Schild `LINE 31 – CLOSED`. So geht das Kapitel auch, wenn Juno den Donnerstag verschlafen hat. | `know_meeting` |
+| C7 | Deck | `cam31` verbinden: eine **alte Metro-Kamera**, aus der Zeit vor Halcyon, die Halcyon einst nachgerüstet und dann vergessen hat. Kein Code findet sie. Erst das alte Beobachter-Protokoll aus Junos Implantat (Netzkarte: Rechtsklick auf `cam31`, Juno: „Das alte Protokoll. Das kann nur noch mein Kopf.") verbindet sie. Ein Moment des Schauders: Im Rauschen vor dem Bild sieht man für einen Takt das Auge. | `link_cam31` |
 | C8 | Deck | WREN drängt am Abend 3: „Bis 22 Uhr. Wo und wann." | — |
 | C9 | Deck | **Entscheidung 1**: WREN den Ort senden oder nicht (unten). | `e1_sold` / `e1_refused` |
 | C10 | `cam31` | 23:00. Siehe §8. | Kapitelende |
@@ -141,8 +144,8 @@ zahlt." Die Kette ist dieselbe; nur die Entscheidung am Ende (C9) ändert sich.
 
 | Wahl | Was geschieht | Kassenbuch |
 |---|---|---|
-| **Senden** | 750 Chits (der Rest). WREN: „Danke. Und schauen Sie heute Nacht zu. Für die Live-Übertragung zahlen wir 750 extra." Juno sieht zu. | „WREN: Ines Calder, Metro 31, Fr 23:00. 1500." und nach dem Treffen „WREN: die Live-Übertragung. 750." |
-| **Nicht senden** | WREN: „Schade. Es gibt andere Glasser." Juno sieht trotzdem zu, um Ines zu warnen; aber um 22:45 kommt sie nicht mehr an sie heran (Ines' Komm ist aus; Juno kann ihr nur zusehen). Später im Kassenbuch: „WREN hat es von jemand anderem." | „WREN: nichts geliefert. 750 (behalten oder zurückgeschickt)." |
+| **Senden** | 1250 Chits (der Rest; nach dem Zurückschicken 1500). WREN: „Danke. Und schauen Sie heute Nacht zu. Für die Live-Übertragung zahlen wir 750 extra." Juno sieht zu. | „WREN: Ines Calder, Metro 31, Fr 23:00. 1500." und nach dem Treffen „WREN: die Live-Übertragung. 750." |
+| **Nicht senden** | WREN: „Schade. Es gibt andere Glasser." Das gilt auch, wenn um 22:00 nichts gesendet ist. Juno sieht trotzdem zu, um Ines zu warnen, aber sie kommt nicht an sie heran: Ines' Komm ist aus, jede Nachricht an sie meldet von Anfang an `NICHT ZUGESTELLT`, und hingehen will Juno nicht („Vor ihrer Tür stehen und sagen, ich hab dich beobachtet? Sie würde rennen.“). Später im Kassenbuch: „WREN hat es von jemand anderem." | „WREN: nichts geliefert. 250 (behalten oder zurückgeschickt)." |
 
 Beide Wege führen in dieselbe Szene. Der Unterschied zeigt sich im Kassenbuch, in den Zeilen und in
 Kap. 2: Nach dem Senden weiß die Quiet sofort, wer Juno ist; nach der Weigerung muss sie erst suchen (story §10b).
@@ -160,7 +163,9 @@ Kap. 2: Nach dem Senden weiß die Quiet sofort, wer Juno ist; nach der Weigerung
 | Abend 1 und 2, vor 19:00 | `cam21` | **Der unbekannte Link** (story §10a). Über jemandem in der Schlange vor der Klinik steht in Junos Overlay eine zweite Klammer, cyan, dazu `UNKNOWN LINK`. Sie pulsiert, wenn der Link aktiv ist, und bleibt, solange die Person im Bild ist. Niemand erklärt es, auch Juno und EVI nicht; Ansehen gibt dieselbe Zeile wie bei allen in der Schlange. Es gilt in jedem Takt vor 19:00, an zwei Abenden, damit nur verpasst, wer gar nicht hinsieht. Kein Moment nach kapitel0 §3: nicht aufzuzeichnen, kein Flag, kein Zustand für den Solver. |
 | Abend 1 | Deck | Die App **NETZ** ist neu (Prolog-Design §2.1): HalcyonNet mit den Nachrichten des Abends, Werbung und dem Glasser-Brett. EVI liest die Schlagzeilen vor und versteht sie falsch („Kriminalität auf Rekordtief. Heißt das, die Verbrecher schlafen?"). Jeden Abend neue Einträge; am Abend 2 ein Beitrag auf dem Brett: „Wer weiß was über Ruhe-Erschöpfung? Mein Vater wacht nicht auf." |
 | Abend 2 | Deck | **Vesper** schreibt im Chat, ein Einkäufer für NINTH LIVE (Story §3, §9): „Ich höre, Sie haben ein Auge für das Echte. Ich zahle das Doppelte von Sable. Für jeden rohen Clip." Juno kann ihm jeden Clip aus dem Cache verkaufen (Kesslers Ring, Morrows Umschlag, Okonkwo am Tresor). EVI zeigt dabei das **Anonymisieren** im Clip-Editor („Ich kann Gesichter wegmachen!"); anonymisierte Clips nimmt Vesper nicht. Jeder Verkauf an Vesper steht im Kassenbuch mit der Zahl der Zuschauer, die später dazukommt. Optional, nie nötig. |
-| Abend 3, 21:00 | Deck | Teos Nachricht wegen der Miete (§5), falls nötig. |
+| Abend 3, 22:30 | Deck | Teos Nachricht wegen der Miete (§5), falls nötig. |
+| Abend 1 | Deck | **Frau Kessler** schreibt, je nach P1. Die Wahrheit: „Er ist nicht heimgekommen. Schulden, haben Sie geschrieben. Wo ist er?“ Der Schnitt: „Er ist nicht heimgekommen. Zu ihr, nehme ich an.“ Nichts: „Er ist nicht heimgekommen. Sie haben wirklich nichts gefunden?“ |
+| ab Abend 1 | `kowalski` | **Bao** erinnert sich an den Dienstag. Bar bezahlt: „Bar! Mein Alter glaubt es immer noch nicht.“ Sonst: „Steht noch an, von Dienstag. Eilt nicht.“ |
 
 ## 8. Das Ende: CAM 31
 
@@ -173,8 +178,8 @@ ihr Bild körniger als alle anderen, und es flackert. **Juno kann nichts tun, un
 | 22:55 | Ines kommt die Treppe herunter, Tasche in der Hand. Sie wartet am Bahnsteigrand. | Juno atmet aus. Nach einer Weigerung: „Ines. Geh nach Hause.“ Ihre Nachricht an Ines' Komm: `NICHT ZUGESTELLT`. |
 | 23:00 | Lantern kommt durch das Wasser aus dem Tunnel, in seinem Rollstuhl mit Schwimmern (Poncho, Antennen; Story §4). Zuhören: Ines: „Es ist alles drauf. Die Protokolle passen auf die Sekunde.“ Lantern: „Wenn das stimmt ...“ Ines: „Es stimmt. Sie schlafen nicht. Sie *arbeiten*.“ Sie gibt ihm die Daten-Wallet. Fehlt der Stick (C6a): Lantern: „Der Schlüssel war nicht da.“ Ines erstarrt. | — |
 | 23:02 | Ein Mann im weißen Regenmantel tritt aus dem Schatten der Treppe. Im Feed hat er kein Gesicht: Seine Maske überstrahlt die Kamera zu einem weißen Fleck. Das Overlay versucht ihn zu markieren und zeigt `???`, dann rot `BEDROHUNG`. | Juno: „Dreh dich um.“ Jetzt lässt das Spiel alles anklicken, und nichts hilft: **Steuern:** Diese Kamera hat nichts zum Steuern, kein Licht, keine Tür: `KEIN ZUGRIFF`. **Chat an Ines:** `NICHT ZUGESTELLT`. **Lautsprecher:** Die Kamera hat keinen. **Revier 9** im Chat: „Ihre Meldung wird bearbeitet.“ Juno, leiser werdend: „Dreh dich um. Dreh dich um. Ines.“ |
-| 23:02 | Lantern wirft den Motor an und verschwindet im Tunnel. Ines nicht. **Rask tötet Ines** (Darstellung je nach Inhaltsoption, Story §10: schwarze Balken schließen sich, oder der Moment im Phosphor, ohne Nahaufnahme). Das alte Bild flackert und reißt dabei. Wer REC gedrückt hat, hat es: `clip_ines_death`. Wer nicht: der Puffer (Juno *muss* es haben; der Puffer hält es fest, auch wenn der Spieler zögert). | Die Klicks hören auf zu antworten. Juno sagt nichts mehr. |
-| 23:03 | Rask hebt den Kopf und sieht in die Kamera. Er hebt eine Hand und winkt. Eine Störung läuft durchs Bild, das Overlay zuckt, und der Feed bricht ab: `SIGNAL LOST`. | Der Zeiger bleibt, aber nichts reagiert. |
+| 23:02 | Lantern wirft den Motor an und verschwindet im Tunnel. Ines nicht. **Ashe tötet Ines** (Darstellung je nach Inhaltsoption, Story §10: schwarze Balken schließen sich, oder der Moment im Phosphor, ohne Nahaufnahme). Das alte Bild flackert und reißt dabei. Wer REC gedrückt hat, hat es: `clip_ines_death`. Wer nicht: der Puffer (Juno *muss* es haben; der Puffer hält es fest, auch wenn der Spieler zögert). | Die Klicks hören auf zu antworten. Juno sagt nichts mehr. |
+| 23:03 | Ashe hebt den Kopf und sieht in die Kamera. Er hebt eine Hand und winkt. Eine Störung läuft durchs Bild, das Overlay zuckt, und der Feed bricht ab: `SIGNAL LOST`. | Der Zeiger bleibt, aber nichts reagiert. |
 | danach | Das Feed-Fenster bleibt auf `SIGNAL LOST`. Keine Musik, nur die Lüfter. Lange nichts. Dann Junos Wohnung, Straßenmodus. Der Spieler kann nichts anklicken außer Juno selbst: „Ich hab's. Ich hab alles.“ Auf dem Deck, ganz klein in der Ecke, EVI mit dem besorgten Gesicht: „Er hat sie ausgeschaltet. Juno. Er hat sie ausgeschaltet.“ Zum ersten Mal hat EVI einen Menschen richtig gelesen. Abblende. „Kapitel 2: Aufnahme“. | |
 
 Wenn Juno WREN den Ort verkauft hat, kommt um 23:05 eine letzte Nachricht, noch über `SIGNAL LOST`: „Zahlung erfolgt. Danke für die
@@ -198,14 +203,24 @@ Live-Übertragung.“ 750 Chits, die zweite Zeile im Kassenbuch. Es schreibt sic
 |---|---|---|---|
 | `cam07` | Kowalski-Straße | das Mockup E | drei Stellungen (Steuern) |
 | `cam07v` | Automatenkamera | Fischauge, Hüfthöhe | erst nach dem Abzweiger; sieht ins Ladenfenster |
-| `cam12` | Drain-Markt-Eingang | von oben auf die Leiter und das Gittertor | Lantern kommt hier mit den Düsen hinunter (C6b) |
+| `cam12` | Drain-Markt-Eingang | von oben auf die Leiter und das Gittertor | Lantern kommt hier mit den Düsen hinunter (C6b); Junos alter Zugang |
 | `cam15` | Kapselhotel Morpheus | ein Gang mit Kapseln, nummeriert | Kapselbildschirme lassen sich steuern (K1a warnen) |
 | `cam21` | Lull-Klinik 9-Ost, Eingang | weiß, eine Schlange müder Menschen, Halcyon-Logo | Junos alter Zugang |
 | `cam22` | Pho Pump | Bar-Kamera über der Theke | Code auf der Speisekarte |
 | `cam23` | Waschsalon SUDS & SPIN | von der Decke, die Trockner in einer Reihe | Code „0000" |
 | `cam24` | Wohnblock Lerche | Haustürkamera, Fischauge | optional |
-| `cam30` | Sumpf-Abgang | eine Treppe ins Wasser, ein Schild „LINE 31 – CLOSED" | — |
+| `cam30` | Sumpf-Abgang | eine Treppe ins Wasser, ein Schild „LINE 31 – CLOSED" | Junos alter Zugang |
 | `cam31` | alte Metro, Linie 31 | Bahnsteig unter Wasser, Notlicht | nur über das alte Protokoll; körniger als alle anderen |
+
+### Wege und Zeit
+
+| Was | Kostet |
+|---|---|
+| Kessel-Block und Kowalski-Straße, das Deck, der Chat, Kaufen | nichts |
+| zum Drain-Markt und zurück | je 1 Takt |
+| zum Waschsalon und zurück | je 1 Takt |
+| Essen, den Automaten anzapfen | je 1 Takt |
+| im Feed | nur Vorspulen |
 
 ## 10. Figuren (neu in Kapitel 1)
 
@@ -220,7 +235,7 @@ Größen wie in `kapitel0-design` §8: 30 px pro Meter Höhe; im Feed misst ein 
 | Mei | 47 px | Schürze, hochgesteckte Haare | `#ff9a7a` | Iso |
 | Dr. Ines Calder | 47 px | Kittel (heller als alles), Zopf | `#f0a0c0` | Feed (6 Kameras: `cam21`–`cam24`, `cam30`, `cam31`) |
 | Lantern | 50 px (sitzend, mit Antennen) | Poncho, Rollstuhl mit Schwimmern und Düsen, Antennen über dem Kopf | `#b0f0a0` | Feed |
-| Rask | 55 px | weißer Mantel, Maske (überstrahlt) | `#ff7a6a` | Feed |
+| Ashe | 55 px | weißer Mantel, Maske (überstrahlt) | `#ff7a6a` | Feed |
 | Lt. Morrow | 50 px | Trenchcoat | `#a8b8d0` | Feed |
 | Tidewater-Junge | 44 px | Gezeitenkind: Kiemen, leuchtende Markierung am Hals, Kapuze | `#7ab0c0` | Feed |
 
@@ -241,12 +256,12 @@ Größen wie in `kapitel0-design` §8: 30 px pro Meter Höhe; im Feed misst ein 
 ```
 
 Regeln: Jeder Auftrag ist in sich lösbar, ohne dass ein anderer erledigt sein muss; das Ende braucht
-nur `know_meeting` und `linked_cam31`. Wer A und B nicht macht, hat weniger Geld und ein leichteres
+nur `know_meeting` und `link_cam31`. Wer A und B nicht macht, hat weniger Geld und ein leichteres
 Kassenbuch; Teo zahlt. Der Solver prüft alle Reihenfolgen über die drei Abende.
 
 ## 12. Hinweise
 
-Die Hinweise spricht EVI (Prolog-Design §2.2, §6.5).
+Die Hinweise spricht EVI (Prolog-Design §2.2, §6.5). Die Tabelle nennt die schweren Stellen; beim Bau bekommt jeder Zustand auf dem Weg einen Hinweis (`tools/solve-act.mjs kapitel1 --full` prüft das).
 
 | Für | Stufe 1 | Stufe 2 | Stufe 3 |
 |---|---|---|---|

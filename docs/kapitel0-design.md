@@ -194,8 +194,8 @@ Menschen darin sind Figuren mit Tagesabläufen (§4). Die Maus bedient das Impla
 | **Markieren** | Linksklick auf eine Person | die Person bekommt eine Cyan-Klammer und ein Etikett (`UNBEKANNT`, später Name und Notizen). Markierte Personen erscheinen auf der Netzkarte als Punkt, solange eine verbundene Kamera sie sieht. Höchstens 3 Markierungen zugleich. |
 | **Folgen** | eine markierte Person verlässt das Bild | die Kamera-Leiste unten blinkt bei der Kamera, in der sie als Nächstes auftaucht (wenn verbunden). Klick darauf wechselt. Ist dort keine verbundene Kamera, zeigt die Netzkarte einen Pfeil in die Richtung, und die Spur reißt ab. |
 | **Zoomen** | Linksklick auf ein Ding (oder Mausrad) | ein Zoomfenster zeigt den Ausschnitt dreifach vergrößert (eigene, detailliertere Grafik pro Zoom-Ziel: Gesichter, Tastenfelder, Aufkleber, Bildschirme). |
-| **Zuhören** | automatisch bei markierten Personen | was sie sagen, erscheint in der Tonleiste unten (`KESSLER> ...`). Je weiter weg von der Kamera, desto mehr Wörter fehlen (`... bring's ... alles.`). Regen, Lärm, Musik verschlechtern es. Das Richtmikro (ein Werkzeug, Kap. 1) hilft. |
-| **Aufzeichnen** | der REC-Knopf | der Feed wird aufgezeichnet, bis Juno wieder klickt oder die Szene endet. Was in dieser Zeit im Bild geschieht (ein „Moment", siehe unten), wird zum Clip im Cache. |
+| **Zuhören** | automatisch bei markierten Personen | was sie sagen, erscheint in der Tonleiste unten (`KESSLER> ...`). Je weiter weg von der Kamera, desto mehr Wörter fehlen (`... bring's ... alles.`). Regen, Lärm, Musik verschlechtern es. Das Richtmikro (ein Werkzeug, Kap. 2) hilft. |
+| **Aufzeichnen** | der REC-Knopf | der Feed wird aufgezeichnet, bis Juno wieder klickt, die Kamera verlässt oder die Szene endet. Was in dieser Zeit im Bild geschieht (ein „Moment", siehe unten), wird zum Clip im Cache. |
 | **Steuern** | Linksklick auf ein vernetztes Ding (Tür, Licht, Kamera, Automat) | nur mit Zugang: öffnen, schalten, Kamera schwenken (manche Kameras haben 2–3 Stellungen). Ab Kap. 1. |
 | **Verlassen** | Esc oder der Knopf `DECK` | zurück zum Deck |
 

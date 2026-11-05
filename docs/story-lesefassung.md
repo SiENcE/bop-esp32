@@ -149,10 +149,12 @@ Von jemandem, der sich TIDE nennt: „Okonkwo, Kowalski 9. Wir wollen den Tresor
 zwei Häuser neben dem LUCKY STATIC Reis und Batterien und grüßt Juno jeden Abend.
 
 Und von WREN, ohne jeden anderen Absender: „Dr. Ines Calder, Lull-Klinik 9-Ost. Wir wollen wissen, wen sie trifft und wo. 1500,
-die Hälfte jetzt. Diskretion.“ Dazu ein Foto, eine Frau mit dunklem Zopf im Kittel. 750 Chits sind schon auf dem Konto. Juno:
-„Wer bezahlt im Voraus? Niemand bezahlt im Voraus.“ Sie kann das Geld zurückschicken. WREN antwortet: „Behalten Sie es. Sie
-werden es sich anders überlegen.“ Juno sieht trotzdem hin: „Ich will wissen, warum jemand so viel für eine Schlaftechnikerin
+davon 250 jetzt. Diskretion.“ Dazu ein Foto, eine Frau mit dunklem Zopf im Kittel. 250 Chits sind schon auf dem Konto. Juno:
+„Wer bezahlt im Voraus? Niemand bezahlt im Voraus.“ Sie kann das Geld zurückschicken. WREN antwortet: „Wie Sie wollen. Das
+Angebot bleibt.“ Juno sieht trotzdem hin: „Ich will wissen, warum jemand so viel für eine Schlaftechnikerin
 zahlt.“
+
+Und Frau Kessler schreibt: „Er ist nicht heimgekommen.“ Was sie sonst noch schreibt, hängt davon ab, was Juno ihr geschickt hat.
 
 Die App NETZ ist neu, HalcyonNet mit Nachrichten und dem Glasser-Brett. EVI liest die Schlagzeilen vor und versteht sie falsch:
 „Kriminalität auf Rekordtief. Heißt das, die Verbrecher schlafen?“
@@ -194,8 +196,8 @@ Sprechkragen Wörter vertauscht: „Sechzig Chits, Freundschaftspreis, Feindscha
 Ratten in den Rohren unter der Krone gesehen hat. Oder Motte baut ihn, wenn sie ihn unterrichtet. Den Abzweiger setzt sie, wenn
 der Lichtkegel der Drohne weitergewandert ist. Dann steht der Code im Fischauge auf Hüfthöhe: 4-1-7-0-9.
 
-Am zweiten oder dritten Abend, um halb eins, hält vor dem Laden ein Polizeiwagen. Lieutenant Morrow nimmt von einem Jungen mit
-leuchtendem Hals einen Umschlag. „Das ist für die ruhige Woche. Und haltet euch von der Kowalski fern.“ [1] Wer das aufzeichnet,
+In der ersten oder zweiten Nacht, um halb eins, hält vor dem Laden ein Polizeiwagen. Lieutenant Morrow nimmt von einem Jungen mit
+leuchtendem Hals einen Umschlag. „Das ist für die ruhige Woche. Freitag fährt keiner die Kowalski.“ Wer das aufzeichnet,
 hat etwas gegen sie in der Hand.
 
 - **Den echten Code verkaufen:** 500 Chits. In Kapitel 2 wird der Laden ausgeraubt, und Bao, der helfen will, wird
@@ -248,16 +250,17 @@ steht für einen Takt das Auge.
 
 ### Freitag
 
-Varga schreibt: „Freitag ist heute.“ WREN will bis 22 Uhr den Ort. Reicht Junos Geld nicht, schreibt Teo um neun: „Hab gehört, die
-Miete. Ich hab Schichten gemacht. Schon überwiesen. Sag nichts.“ Das steht nicht im Kassenbuch, aber sie weiß, was es ihn gekostet
-hat.
+Varga schreibt: „Freitag ist heute.“ WREN will bis 22 Uhr den Ort.
 
 Dann die Entscheidung, die das Kapitel trägt:
 
-- **Senden:** Die zweiten 750 Chits kommen. „Danke. Und schauen Sie heute Nacht zu. Für die Live-Übertragung zahlen wir 750 extra.“ Von
+- **Senden:** Die restlichen 1250 Chits kommen. „Danke. Und schauen Sie heute Nacht zu. Für die Live-Übertragung zahlen wir 750 extra.“ Von
   jetzt an weiß die Quiet, Halcyons inoffizielle Sicherheitseinheit, genau, wer Juno ist.
 - **Nicht senden:** „Schade. Es gibt andere Glasser.“ Juno sieht trotzdem zu, um Ines zu warnen. Die Quiet muss später erst suchen, wer
   an dieser Kamera saß.
+
+Um halb elf bucht das Konto die Miete ab. Reicht das Geld nicht, schreibt Teo: „Hab gehört, die Miete. Ich hab Schichten gemacht. Schon
+überwiesen. Sag nichts.“ Das steht nicht im Kassenbuch, aber sie weiß, was es ihn gekostet hat.
 
 Beide Wege führen in dieselbe Szene.
 
@@ -311,13 +314,6 @@ Abblende. Kapitel 2: Aufnahme.
 
 ## Noch offen
 
-Die Nummern beziehen sich auf die Stellen oben. Geklärtes steht in `story.md` §10b.
+Was noch offen war, ist vorläufig entschieden (`story.md` §10b) und wird beim Durchspielen des Mocks geprüft.
 
-| # | Widerspruch | Quellen | So steht es oben |
-|---|---|---|---|
-| 1 | Dieselben Boys, die Morrow von der Kowalski fernhält, wollen den Tresor in der Kowalski. Das kann gewollt sein. Die Bibel nennt nur Halcyons Geld | kapitel1 B8; story §4 | wie im Design |
-
-Dazu, ohne Stelle im Text:
-
-- **Noch nicht vorgesehen:** Im Kapitel-1-Design fehlen das Richtmikro (kapitel0 §3) und das „Kassenbuch-Rätsel“ (kapitel1 C4, nirgends beschrieben).
 - **Noch nicht gebaut:** Die Straße hat noch keinen Eckladen und keinen Automaten mit Kamera davor.
