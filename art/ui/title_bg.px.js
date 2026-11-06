@@ -51,6 +51,6 @@ anim("title_tall", { w: 416, h: 234, frames: 12, fps: 10 }, (c) => {
     // the rain caught in the beam: short streaks, falling a frame at a time
     if ((x * 7 + Math.floor((y - (c.frame ?? 0) * 4) / 4) * 13) % 37 === 0 && (y + x) % 4 < 3) c.px(x, y, "H")
   }
-  for (const id of ["lights", "vending", "cart", "umbrella", "bins"]) { const p = TB.props[id]; if (p) c.stamp(p.name, p.at[0], p.at[1], { t }) }
+  for (const id of ["lights", "vending", "scaffold", "cart", "umbrella", "bins"]) { const p = TB.props[id]; if (p) c.stamp(p.name, p.at[0], p.at[1], { t }) }
   c.stamp("drone_hover", dx, dy + 6, { t })
 })

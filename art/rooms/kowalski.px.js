@@ -6,7 +6,7 @@
 //                     LUCKY STATIC stuttering (its magenta dips with it), rain rings in the puddles and
 //                     splashes on the street, the rain on the Kessel Block's door, steam from Bao's pot and
 //                     out of the drain
-//   kowalski_vending, kowalski_cart, kowalski_umbrella, kowalski_bins, kowalski_lights   the props, pivot
+//   kowalski_vending, kowalski_cart, kowalski_umbrella, kowalski_bins, kowalski_scaffold, kowalski_lights   the props, pivot
 //                     bottom-centre (the string lights and cables without an outline)
 //   kowalski_ad_stutter, kowalski_ad_eye, kowalski_ad_juno   the prologue's moment (step 17) on the ad screen,
 //                     each the size of the screen's rect in the layout (openings.ad), its top-left there:

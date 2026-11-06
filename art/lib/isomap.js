@@ -16,7 +16,11 @@
 //   props: [{ id, kit, at: [u, v], foot: [du, dv], h, block }]
 //                       a thing from the kit standing on its footprint; `block: false` lets people walk
 //                       through it (a rug); `seeThrough: true` goes to the game's prop (the engine draws it
-//                       see-through over a person it hides: an umbrella over a cart)
+//                       see-through over a person it hides: an umbrella over a cart); `standOn: true`: its
+//                       top at h is a floor: a person standing up there counts as in front of it (the
+//                       front line runs along the top's back edge), while its order among the props
+//                       stays that of its foot; the person's place is a spot with h, and the actor needs
+//                       a walkTo on the floor
 //   stairs: { id, kit, from: [u, v], to: [u, v], down: "+u", rise, tread }
 //                       a flight going down through a hole in the floor (its cells "."), from the top step
 //                       at from[0] along +u and on under the floor past the hole (the bake draws it; the
@@ -131,8 +135,9 @@ const ISOMAP = (function () {
     const props = {}
     for (const p of map.props ?? []) {
       const [u0, v0] = p.at, [du, dv] = p.foot, ext = 0.6         // each front edge carried on past its corner
+      const fv = p.standOn ? v0 : v0 + dv, fh = p.standOn ? p.h : 0
       props[p.id] = {
-        front: [...P(u0 - ext, v0 + dv), ...P(u0, v0 + dv), ...P(u0 + du, v0 + dv), ...P(u0 + du, v0), ...P(u0 + du, v0 - ext)],
+        front: [...P(u0 - ext, fv, fh), ...P(u0, fv, fh), ...P(u0 + du, fv, fh), ...P(u0 + du, v0, fh), ...P(u0 + du, v0 - ext, fh)],
         baseline: P(u0 + du, v0 + dv)[1],
         // the silhouette of the box it stands in (a hotspot's shape)
         poly: [P(u0, v0, p.h), P(u0 + du, v0, p.h), P(u0 + du, v0), P(u0 + du, v0 + dv), P(u0, v0 + dv), P(u0, v0 + dv, p.h)].flat(),

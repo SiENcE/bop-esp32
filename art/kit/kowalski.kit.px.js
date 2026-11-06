@@ -18,10 +18,14 @@
 //            broken: static, cracks from an impact), alley_gate (a lattice gate chained shut, DRAIN MKT, the
 //            steps down into the dark, a lamp far below)
 //   props    vending (a noodle machine with a mood: its little face), bao_cart (the cart, its counter, the
-//            pot, the umbrella, the lantern), bins (a wheelie bin, the lid held up by a bag), string_lights
+//            pot, the umbrella, the lantern), bins (a wheelie bin, the lid held up by a bag), string_lights,
+//            scaffold (the fitter's bay: boards, a ladder, a sleeping bag under the deck, his stove, his washing
+//            run across the half of the screen that is another contract)
 // The city's text is English art (style guide §8a); Juno says what it means in German. Keys "!k" are never
 // lit (screens, signs, lamps, the views through glass). Small organic things are hand grids.
 include("../lib/text.js")
+// the fitter's sleeping bag and the rag on his line: an olive nothing else in the street has; his socks
+pal({ E: "#5c5e3c", d: "#3e4030", l: "#7a6a8a" })
 
 const KOW = (() => {
   const fl = Math.floor, ih = ISO.ihash, bay = ISO.bay, near = (x, c, w = 1 / 64) => Math.abs(x - c) < w
@@ -605,6 +609,71 @@ const KOW = (() => {
       for (let i = 0; i < 5; i++) {
         const t = (f + i * 5) % 12, dx = [-28, -12, 4, 17, 29][i], ry = cy + fl(Math.sqrt(Math.max(0, 1 - (dx / RX) ** 2)) * RY)
         pen.at(cu, cv + 0.9, 1.0, "v"); pen.px(cx + dx, ry + 2 + t * 3, "6")
+      }
+    },
+  })
+  // the fitter's scaffold (art/rooms/kowalski.map.js): one bay of steel tube and old boards before the screen. He lives on
+  // it: the sleeping bag on the lower deck, dry under the upper; his stove on the upper, and his washing strung from
+  // the top of the post to the wall, across the half of the screen that is contract 9-B. Thin things, so no outline.
+  const SC = { DECK: 1.1, LOW: 0.35, TOP: 2.35, T: 0.05 }
+  const SC_PLATE = ISOKIT.raster(14, 8, (c) => { c.rect(0, 0, 14, 8, "g"); c.rect(0, 0, 14, 1, "G"); TXT.draw(c, 1, 2, "9-A", "k", { font: "hud" }) })
+  ISOKIT.prop("scaffold", {
+    frames: 12,
+    outline: false,
+    // what stops light: the two decks, so it is dark under the upper one
+    solid: (p) => [[p.at[0], p.at[1], SC.LOW - 0.04, p.foot[0], p.foot[1], 0.04], [p.at[0], p.at[1], SC.DECK - 0.05, p.foot[0], p.foot[1], 0.05]],
+    footprint: (p) => { const [u, v] = p.at, [du, dv] = p.foot; return [[u, v, 0.1, 0.1], [u + du - 0.1, v, 0.1, 0.1], [u, v + dv - 0.1, 0.1, 0.1], [u + du - 0.1, v + dv - 0.1, 0.1, 0.1]] },
+    draw(pen, p, f) {
+      const [u0, v0] = p.at, du = p.foot[0], dv = p.foot[1], u1 = u0 + du, v1 = v0 + dv, { DECK, LOW, TOP, T } = SC
+      const post = (u, v) => pen.box(u - T / 2, v - T / 2, 0, T, T, TOP, () => "6", () => "4", () => "5")
+      const bar = (a, b, k) => { const [x0, y0] = pen.P(...a), [x1, y1] = pen.P(...b); pen.at(...a, "v"); pen.line(x0, y0, x1, y1, k) }
+      // boards along u, lv across them; their joints, a replaced one, the worn front edge
+      const boards = (dark, base, lit) => (lu, lv) => {
+        if (lv > dv - 0.05) return lit
+        const row = fl(lv / 0.17)
+        if (lv % 0.17 < 0.035) return "k"
+        if ((lu + row * 0.53) % 0.9 < 0.035) return "k"
+        return ih(row, fl((lu + row * 0.53) / 0.9)) < 0.25 ? dark : base
+      }
+      const edge = (k0, k1) => (a, e, o) => (e === o.ah - 1 ? k1 : k0)
+      // behind everything: the posts by the wall, the rails along it, the brace under the deck
+      post(u0, v0); post(u1, v0)
+      bar([u0, v0, 2.1], [u1, v0, 2.1], "5"); bar([u0, v0, 1.6], [u1, v0, 1.6], "4")
+      bar([u0, v0, DECK], [u1, v0, 0.04], "4")
+      // the ladder at the left end, a little past the deck to hold on to; behind the decks, which hide what of it lies behind them
+      { const v2 = 0.3, v3 = 0.68, H = DECK + 0.35
+        for (const v of [v2, v3]) bar([u0, v, 0], [u0, v, H], "6")
+        for (let h = 0.17; h < DECK + 0.1; h += 0.23) bar([u0, v2, h], [u0, v3, h], "5") }
+      // the lower deck and on it the sleeping bag, its foot end to the ladder, the head end a dark mouth with a rolled coat
+      pen.box(u0, v0, LOW - 0.04, du, dv, 0.04, boards("1", "2", "3"), edge("2", "3"), edge("2", "3"))
+      { const b0 = 2.4, bw = 1.28, bv = 0.34, bd = 0.36, bh = 0.13
+        const quilt = (a) => (a % 9 < 1 ? "d" : "E")
+        pen.box(b0, bv, LOW, bw, bd, bh, (lu, lv) => (near(lu % 0.28, 0, 0.02) ? "d" : lv < 0.04 ? "d" : "E"), (a, e) => (a < 3 && e > 1 ? "k" : "d"), (a, e) => (e === 0 ? "d" : quilt(a)))
+        pen.box(b0 + bw + 0.02, bv + 0.05, LOW, 0.1, bd - 0.1, 0.09, () => "g", () => "g", () => "G") }
+      // the upper deck
+      pen.box(u0, v0, DECK - 0.05, du, dv, 0.05, boards("O", "O", "P"), edge("O", "P"), edge("O", "P"))
+      // right of where he stands: his stove, a pot on it, a thread of steam
+      pen.box(3.36, 0.34, DECK, 0.2, 0.18, 0.09, () => "3", () => "2", () => "4")
+      { const [sx, sy] = pen.P(3.46, 0.43, DECK + 0.09), flick = [0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 1][f % 12]
+        pen.at(3.46, 0.43, DECK + 0.1, "up")
+        pen.hline(sx - 2, sy - 1, 5, "!Q"); pen.hline(sx - 1, sy - 2, 3, flick ? "!R" : "!Q"); pen.px(sx + (flick ? 1 : 0), sy - 3, "!W")
+        pen.rect(sx - 3, sy - 9, 7, 6, "!g"); pen.rect(sx - 3, sy - 9, 2, 6, "!G"); pen.hline(sx - 3, sy - 9, 7, "!H"); pen.vline(sx + 3, sy - 9, 6, "!4")
+        pen.at(3.46, 0.43, DECK + 0.45, "v")
+        for (let i = 0; i < 4; i++) { const t = (f + i * 3) % 12; if (t < 9) pen.px(sx + Math.round(Math.sin((t + i) * 0.7)), sy - 11 - t, t < 5 ? "!H" : "!h") } }
+      // the posts on the street's side, thin, at the ends of the deck; the contract's plate hung off the deck's edge
+      post(u0, v1); post(u1, v1)
+      { const pu = u0 + 0.2; pen.faceV(v1 + 0.01, pu, pu + 14 / 32, DECK - 0.33, DECK - 0.05, (a, e) => SC_PLATE(a, e) ?? "g") }
+      // the washing, from the top of the post to the wall past the screen; what hangs on it sways a little
+      const a = [u1, v0, TOP], b = [5.72, 0.02, 2.95], [ax, ay] = pen.P(...a), [bx, by] = pen.P(...b)
+      const lineY = (x) => { const t = (x - ax) / (bx - ax); return ay + (by - ay) * t + Math.sin(t * Math.PI) * 4 }
+      const atLine = (t) => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t]
+      pen.at(...atLine(0.5), "v")
+      for (let x = ax; x <= bx; x++) pen.px(x, Math.round(lineY(x)), "h")
+      // [where along it, width, drop, cloth, its shade]
+      for (const [t, w, h, k, kd] of [[0.12, 7, 11, "!H", "!h"], [0.31, 3, 7, "!l", "!U"], [0.38, 3, 7, "!l", "!U"], [0.56, 9, 12, "!G", "!g"], [0.78, 5, 8, "!E", "!d"]]) {
+        const x0 = Math.round(ax + (bx - ax) * t), sway = [0, 0, 0, 1, 1, 1, 0, 0, 0, -1, -1, 0][(f + Math.round(t * 30)) % 12]
+        pen.at(...atLine(t), "v")
+        for (let i = 0; i < w; i++) { const top = Math.round(lineY(x0 + i)) + 1; for (let j = 0; j < h; j++) pen.px(x0 + i + (j > h / 2 ? sway : 0), top + j, i === w - 1 || j === h - 1 ? kd : k) }
       }
     },
   })

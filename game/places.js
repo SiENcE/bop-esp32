@@ -27,7 +27,7 @@ Halcyon.at = {
   hall: fromLayout(Halcyon.layouts.hall),
   // Kowalski Street (art/rooms/kowalski.map.js, game/rooms/kowalski.layout.js)
   kowalski: {
-    fromGasse: [346, 170], reparatur: [300, 134],
+    fromGasse: [346, 170],
     ...fromLayout(Halcyon.layouts.kowalski),
     // the room's effects, on the screen (from the map's projection): the light hanging in the rain out of
     // LUCKY STATIC's door and under the ad screen, glints on the puddles, drops off an AC unit, the Kessel

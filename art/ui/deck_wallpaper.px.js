@@ -21,6 +21,8 @@
 //   dach_bg, dach_heute   the same roof twenty years on, the same loop (built into assets/mock.js for now): the
 //                    rooms dach and dach_sitzen, whose rain is this one, so they carry no rain fx of their own. It
 //                    ends at the parapet's top: the parapet and the tar before it have no rain and no puddles.
+//                    The Rain Reader's own length of gutter on a pole stands before the parapet (story §10c), its
+//                    drip falling where her bucket is (her actor stands at game/places.js, dach.reader).
 //
 // Palette keys: the world palette (style guide §5: k, steel 1-6, wet e f z Z X, magenta n M m N, warm
 // O P Q R W, cyan c C v V, red r q, Juno's j y Y, skin s S) plus the smog lit from below (A B D G);
@@ -360,6 +362,25 @@ pal({
     if (today) {
       // the ladder's top over the parapet, the way Juno came up: it comes from outside the wall, so it ends at the parapet's top
       c.rect(10, 116, 2, SEAT - 116, "5"); c.rect(24, 116, 2, SEAT - 116, "5"); for (let y = 120; y < SEAT; y += 6) c.rect(10, y, 16, 1, "4")
+      // the Rain Reader's gutter: a length of old channel on a pole before the parapet, falling to a spout over her
+      // bucket (x 78, its rim at y 141), a drip off it twice a loop. Where she isn't drawn (dach_sitzen shows no one at
+      // the bucket) it falls on to the tar, the one wet spot there.
+      {
+        c.rect(66, 111, 1, 52, "5"); c.rect(67, 111, 1, 52, "3"); c.rect(64, 162, 6, 1, "4"); c.rect(64, 163, 6, 1, "k")
+        for (const y of [120, 137, 150]) c.px(66, y, "4")                                  // rust through the paint, where it was clamped
+        const gy = (x) => 105 + Math.round((x - 58) * 0.48)
+        for (let x = 58; x <= 79; x++) {
+          const y = gy(x)
+          c.px(x, y - 1, "k"); c.px(x, y, "6"); c.px(x, y + 1, x % 7 === 3 ? "O" : "4"); c.px(x, y + 2, x % 7 === 3 ? "O" : "3"); c.px(x, y + 3, "k")
+        }
+        c.rect(57, gy(58), 1, 3, "5")                                                       // the closed end
+        c.rect(64, gy(66) + 3, 5, 1, "2"); c.px(69, gy(66) + 2, "3")                         // the clamp on the pole
+        c.rect(80, gy(79) + 1, 1, 3, "4"); c.px(79, gy(79) + 4, "3"); c.px(80, gy(79) + 4, "k")  // the spout
+        const t = f % 12, y0 = gy(79) + 5, end = sitting ? 164 : 141, dy = Math.round(t * t * 0.55)
+        if (y0 + dy < end) { c.px(79, y0 + dy, "V"); if (t > 1) c.px(79, y0 + dy - 1, "v") }
+        else if (sitting && y0 + dy < end + 30) { c.px(78, 164, "C"); c.px(80, 164, "C") }
+        else if (t === 0) c.px(79, y0, "v")
+      }
       // Juno, grown up, alone where the two of them sat (blocks: to be painted when the look is approved)
       if (sitting) {
         c.rect(198, 112, 26, 25, "k"); c.rect(199, 113, 24, 24, "y"); c.rect(199, 113, 3, 24, "Y"); c.rect(219, 113, 4, 24, "j")

@@ -76,6 +76,7 @@
       vending: { name: "Nudelautomat", poly: AW.vendingPoly, walkTo: AW.vending, face: "ne",
         look: ["Der Nudelautomat. Er hat ein Gesicht. Heute ist es müde.", "Die zweite Reihe ist ausverkauft. Seit Wochen."],
         use: "Er nimmt keine Chits von mir. Wir hatten einen Streit." },
+      scaffold: { name: "Gerüst", poly: AW.scaffoldPoly, walkTo: AW.scaffold, face: "ne", look: "Gerüst, Kocher, Schlafsack. Wer da wohnt, kriegt keine Mahnung." },
       ad: { name: "Werbebildschirm", rect: AW.adRect, walkTo: AW.ad, face: "ne",
         look: ["HALCYON. SLEEP BETTER.", "Die Hälfte vom Bildschirm ist kaputt. Die bessere Hälfte."] },
       alley: { name: "Gasse", rect: AW.alleyRect, walkTo: AW.alley, face: "ne",

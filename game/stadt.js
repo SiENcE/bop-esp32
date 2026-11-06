@@ -171,7 +171,7 @@ Cutaway.dialog("traeger_wahl", { main: { choices: [
 
 // ---- the half repair: he lives on the scaffold at the big screen and repairs its left half; the right half is another contract
 // (at work he has his back to the street whichever way he is turned, so 9-A reads; to talk he turns round, se or sw, towards Juno)
-Cutaway.actor("reparatur", { name: "Der Monteur", color: "#b0c0b0", at: Halcyon.at.kowalski.reparatur, facing: "ne",
+Cutaway.actor("reparatur", { name: "Der Monteur", color: "#b0c0b0", at: Halcyon.at.kowalski.reparatur, facing: "ne", walkTo: Halcyon.at.kowalski.scaffold, face: "ne",
   costume: { idle: every("monteur_idle_ne"), walk: every("monteur_idle_ne"), talk: { se: "monteur_talk_se", sw: "monteur_talk_sw", ne: "monteur_talk_se", nw: "monteur_talk_sw" } }, voice: { pitch: 48, range: 4, wave: "square", syllable: 80 },
   look: ["Ein Mann auf einem Gerüst, mit Kocher, Wäscheleine und Schlafsack. Er wohnt da.", "Er schraubt an der linken Hälfte. Nur an der linken.", "Pfoten wie ein Maulwurf, die Augen fast zu. Die Lampe sieht für ihn."],
   talk: [
@@ -179,7 +179,8 @@ Cutaway.actor("reparatur", { name: "Der Monteur", color: "#b0c0b0", at: Halcyon.
     { if: "day=3", then: [{ say: "reparatur", text: "Der stottert nur, wenn du vorbeigehst. Ist dir das schon aufgefallen?" }, "Woran liegt das?", { say: "reparatur", text: "Weiß ich nicht. Das ist die rechte Hälfte." }] },
     { if: "day=4", then: [{ say: "reparatur", text: "Heute läuft sie gut, die Linke. Heute Abend ist was mit der Stadt." }, "Was denn?", { say: "reparatur", text: "Keine Ahnung. Ist nicht mein Vertrag." }] },
   ] });
-Cutaway.routine("reparatur", [{ day: [2, 3, 4], from: "18:00", to: "04:00", room: "kowalski", at: Halcyon.at.kowalski.reparatur, face: "ne" }]);
+// (no `at`: a routine's place must be walkable floor, and he stands up on his deck, where the actor starts)
+Cutaway.routine("reparatur", [{ day: [2, 3, 4], from: "18:00", to: "04:00", room: "kowalski", face: "ne" }]);
 
 // ---- the Drain Market, as far as it stands: the alley's way down, the preacher of the Waking Church (awake nine days on Wednesday)
 const AM = Halcyon.at.drain_market;

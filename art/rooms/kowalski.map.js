@@ -3,7 +3,8 @@
 // Two facades meet at the back corner. On the left one the Kessel Block's street door, then LUCKY STATIC
 // (its window, its door, its neon over them; enterable in Chapter 1). On the right one the vending machine,
 // the big broken ad screen (the prologue's end: JUNO.), the alley down to the Drain Market at the far end
-// (closed tonight). In front Bao's cart under its umbrella; string lights across; puddles.
+// (closed tonight). In front Bao's cart under its umbrella; string lights across; puddles. Before the screen's
+// left half the fitter's scaffold, always (story §10c): he lives on it.
 "use strict";
 
 ISO_MAPS.kowalski = {
@@ -24,7 +25,8 @@ ISO_MAPS.kowalski = {
     "ssaaaaaaaaaaaa",
   ],
   // behind the cart, where Bao stands (a notch left where his feet are, as the engine wants him on the floor)
-  nowalk: [[2.35, 1.45, 0.32, 0.5], [2.83, 1.45, 0.32, 0.5]],
+  // and the gap between the noodle machine and the scaffold, where nobody can go
+  nowalk: [[2.35, 1.45, 0.32, 0.5], [2.83, 1.45, 0.32, 0.5], [1.75, 0.2, 0.2, 0.75]],
   walls: [
     { from: [0, 0], to: [7.0, 0], h: 6.0, kit: "facade_right" },        // 0: the right facade (ad screen)
     { from: [0, 0], to: [0, 6.0], h: 6.0, kit: "facade_left" },         // 1: the left facade (LUCKY STATIC)
@@ -42,6 +44,9 @@ ISO_MAPS.kowalski = {
     { id: "vending", kit: "vending", at: [0.9, 0.05], foot: [0.7, 0.55], h: 1.85 },
     { id: "cart", kit: "bao_cart", at: [2.2, 2.0], foot: [1.1, 0.6], h: 0.95 },
     { id: "bins", kit: "bins", at: [5.3, 0.05], foot: [0.6, 0.45], h: 0.9 },
+    // one bay before the screen's left half; h: its upper deck, where the fitter stands (the kit draws the posts up to
+    // 2.35 m); no rail on the street's side, so he stands in front of all of it and needs no layer over him
+    { id: "scaffold", kit: "scaffold", at: [2.1, 0.12], foot: [1.8, 0.68], h: 1.1, standOn: true },
     // the cart's umbrella (2.4 m), standing where the cart stands (after it, so over it); see-through where it
     // hides someone behind it (at the Kessel Block's door, at the vending machine)
     { id: "umbrella", kit: "bao_umbrella", over: "cart", at: [2.2, 2.0], foot: [1.1, 0.6], h: 2.4, block: false, seeThrough: true },
@@ -52,6 +57,7 @@ ISO_MAPS.kowalski = {
     arrive: [0.6, 0.75, "se"], kessel_door: [0.4, 0.7, "nw"], vending: [1.25, 0.85, "ne"], ad: [3.8, 1.2, "ne"],
     alley: [6.0, 0.9, "ne"], lucky: [0.6, 2.8, "nw"], lucky_door: [0.5, 4.45, "nw"], bins: [5.6, 0.85, "ne"],
     bao: [2.75, 1.7, "sw"], eat: [2.75, 2.95, "ne"],
+    reparatur: [2.55, 0.42, "ne", 1.1], scaffold: [3.5, 1.12, "ne"],    // the fitter on his deck, where Juno talks up to him
     steam: [2.95, 2.3, null, 1.22],    // over Bao's pot (the steam's fx rises from it)
   },
   lights: [
@@ -62,6 +68,8 @@ ISO_MAPS.kowalski = {
     // the screen's cyan: full in the bake, gentler on people in the game (Juno stays yellow)
     { id: "ad", at: [3.9, 0.2, 2.6], r: 150, power: 0.55, color: "#62def0", flicker: 0.2, bake: { power: 1.7, reach: 5.5, floor: 1.4 } },
     { id: "vending", at: [1.25, 0.65, 1.2], r: 50, power: 0.8, color: "#dafcff", flicker: 0.05, glow: 5, bake: { reach: 2.0, power: 1.4 } },
+    // the fitter's stove: a small warm pool on his boards
+    { id: "stove", at: [3.45, 0.44, 1.3], r: 18, power: 0.4, color: "#ffb860", flicker: 0.15, bake: { reach: 0.75, power: 1.6 } },
     { id: "lantern", at: [2.47, 2.72, 1.95], r: 50, power: 0.8, color: "#ffd58a", flicker: 0.1, glow: 6, bake: { reach: 1.9, power: 1.6 } },
   ],
 };

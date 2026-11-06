@@ -592,7 +592,7 @@ Die Blockskizzen für den Mord und die Figuren der Stadt sind freigegeben (`docs
 - **Ashes Mantel** ist im Feed eine Stufe dunkler als Ines' Kittel (Wert 8 und 9), sonst wirkt er graugrün statt weiß. Die Maske brennt ohne dunklen Rand über den Kopf hinaus.
 - **`cam31` ist gröber, weil das Bild in halber Auflösung gebacken ist**, nicht nur wegen des Korns; die Figuren bleiben 1x.
 - **Die Daten-Wallet hat ein kleines Licht,** das bei der Übergabe zu sehen ist: Ines' Technik.
-- **Das Gerüst des Monteurs steht immer da,** auch im Prolog und auf dem Menübild (`„Der Kollege kommt seit 2087“`).
+- **Das Gerüst des Monteurs steht immer da,** auch im Prolog und auf dem Menübild (`„Der Kollege kommt seit 2087“`). Es bleibt vor der linken, heilen Hälfte, obwohl das erst das Gespräch mit ihm erklärt (entschieden 2026-11-06).
 - **Frau Imai sitzt an einem kleinen Tisch** im LUCKY STATIC.
 - **Die Regenleserin hat ihre eigene Regenrinne** auf einer Stange vor der Brüstung. Das ändert das Dach von heute, nicht das alte Foto am Deck.
 - **Der Ablauf in `cam31`:** Lantern fährt zuerst weg, danach will Ines zurück zur Treppe, der Mann tritt ihr plötzlich in den Weg, es gibt einen Streit, und er ermordet sie. Lantern sieht nichts und lässt sie nicht im Stich: Die lange Wange der Treppe verdeckt den Schatten daneben für ihn und für Ines; nur die Kamera sieht hinein, und so bleiben Juno die vier Versuche. Vom Streit hört man nur Ines, Ashes erste Äußerung ist sein Blick in die Kamera. *Vorschlag, noch nicht entschieden:* Ashe lässt Lantern absichtlich ziehen, denn der soll den Mord tragen; und Junos echter Clip zeigt, dass Lantern schon fort war, als Ines starb, was die Fälschung in Kapitel 2 widerlegt.
