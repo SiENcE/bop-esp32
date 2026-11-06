@@ -17,7 +17,7 @@ Cutaway.hints([
     [["code_cam15", "!link_cam15"], ["Du hast den Code vom Morpheus. Ich will die Kamera.", "In GLASS ist jetzt CAM 15.", "Öffne GLASS und klick CAM 15 an."]],
     [["link_cam15", "!cache_note_kessler_hideout"], ["Er kommt um halb elf ins Morpheus.", "Schau zu, welche Kapsel er nimmt. Sonst hat der Puffer es.", "Öffne CAM 15 um 22:30 und klick ihn an."]],
     [["cache_note_kessler_hideout", "!k1a"], ["Du weißt, wo er ist. Varga will das auch wissen.", "Varga ist im CHAT. Kapsel 23 hat einen Bildschirm.", "Antworte Varga, oder schreib auf den Bildschirm. Was davon, weiß ich nicht. Das weißt du."]],
-  ].map(([when, text]) => ({ if: ["day<4", "time>=20:30", "time<22:45", "!off_varga", ...when], text })),
+  ].map(([when, text]) => ({ if: ["day>1", "day<4", "time>=20:30", "time<22:45", "!off_varga", ...when], text })),
   { if: ["day=3", "moment:ines_tide", "!know_meeting"], about: ["cam_cam30", "rewind", "app_glas", ...HOME],
     text: ["Ines war am Sumpf-Abgang. Das Bild ist noch da.", "Die Kameras behalten den ganzen Abend. Der Puffer!", "Öffne CAM 30 und drück PUFFER."] },
   { if: ["day=3", "moment:ines_drop", "!know_meeting"], about: ["cam_cam30", "app_glas", ...HOME],
