@@ -1,0 +1,116 @@
+<!doctype html>
+<!-- Der Spielplan zum Durchspielen von Hand. Ein neues Kapitel oder ein anderer Weg: ein weiteres <section class="weg">
+     mit <ol class="schritte"> anhängen und oben im <nav> verlinken. Jeder Schritt: <b>was man tut</b>, <span>was passiert</span>.
+     Bilder sparsam, in img/ (node lib/cutaway/tools/play.mjs ... --shots build/shots/k1 macht nach jedem Zug eins). -->
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Glass Sister: Spielplan</title>
+<style>
+  :root { --grund: #0b1016; --flaeche: #141c25; --linie: #27343f; --text: #d6dfe6; --matt: #8ea0ad; --cyan: #5fd8d2; --gelb: #f0c640; --rot: #ff7a6a; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--grund); color: var(--text); font: 17px/1.5 system-ui, "Segoe UI", sans-serif; }
+  main, header { max-width: 760px; margin: 0 auto; padding: 0 20px; }
+  header { padding-top: 36px; }
+  h1 { margin: 0; font-size: 34px; color: var(--gelb); }
+  h2 { margin: 48px 0 4px; font-size: 25px; color: var(--cyan); }
+  h3 { margin: 32px 0 10px; padding-bottom: 5px; border-bottom: 1px solid var(--linie); font-size: 19px; }
+  h3 small { color: var(--matt); font-weight: 400; font-size: 15px; }
+  p { margin: 8px 0; }
+  .matt { color: var(--matt); }
+  nav a { color: var(--cyan); }
+  .kasten { margin: 18px 0; padding: 12px 16px; background: var(--flaeche); border-left: 3px solid var(--cyan); }
+  .kasten code { color: var(--gelb); }
+  ol.schritte { list-style: none; counter-reset: schritt; margin: 0; padding: 0; }
+  ol.schritte > li { counter-increment: schritt; position: relative; padding: 7px 0 7px 38px; }
+  ol.schritte > li::before { content: counter(schritt); position: absolute; left: 0; top: 9px; width: 26px; height: 26px; border-radius: 50%; background: var(--flaeche); color: var(--cyan); font-size: 14px; line-height: 26px; text-align: center; }
+  ol.schritte b { display: block; font-weight: 600; }
+  ol.schritte span { display: block; color: var(--matt); }
+  kbd { padding: 0 5px; border: 1px solid var(--linie); border-radius: 3px; background: var(--flaeche); color: var(--cyan); font: 600 14px ui-monospace, Consolas, monospace; }
+  figure { margin: 10px 0 16px 38px; }
+  figure img { display: block; width: 100%; max-width: 480px; border: 1px solid var(--linie); image-rendering: pixelated; }
+  figcaption { color: var(--matt); font-size: 14px; }
+  footer { margin: 56px 0 40px; color: var(--matt); font-size: 14px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Glass Sister: Spielplan</h1>
+  <nav><a href="#prolog">Prolog</a> · <a href="#k1">Kapitel 1</a></nav>
+  <div class="kasten">
+    <b>Warten:</b> am Deck <kbd>WARTEN</kbd>, in einer Kamera <kbd>VOR</kbd>. Es springt jeweils zum nächsten Ereignis; nur das bewegt die Uhr, Laufen nicht.<br>
+    <b>Zurück:</b> aus einer Kamera mit <kbd>DECK</kbd>, vom Deck in die Wohnung mit <kbd>ZURÜCK</kbd>.<br>
+    <b>Hängen geblieben?</b> EVI unten rechts anklicken. Jeder weitere Klick wird deutlicher.
+  </div>
+</header>
+<main>
+
+<section class="weg" id="prolog">
+  <h2>Prolog: Nachtschicht</h2>
+  <p class="matt">Ein Weg durch. Der Abend beginnt um 21:30.</p>
+  <div class="kasten"><b>Start:</b> <code>index.html</code> öffnen. <kbd>Esc</kbd> überspringt das Intro, dann „Neues Spiel“.</div>
+  <ol class="schritte">
+    <li><b>Deck anklicken, <kbd>CHAT</kbd>, M. KESSLER.</b><span>Frau Kessler glaubt ihrem Mann die Überstunden nicht und will Beweise. Das Foto zeigt ihn mit hellem Schal.</span></li>
+    <li><b><kbd>GLASS</kbd>, CAM 03, <kbd>VOR</kbd> bis 22:00.</b><span>Schichtende: Leute kommen aus dem Bürohaus.</span></li>
+    <li><b>Den Mann mit dem hellen Schal anklicken.</b><span>Juno markiert Kessler und hört ihn telefonieren: „Halb elf, bei Yuen's.“ Für die Kamera dort hat sie keinen Zugang.</span></li>
+    <li><b>Die Kamera am Mast rechts oben im Bild anklicken.</b><span>Auf dem Gehäuse steht der Wartungscode von CAM 04.</span>
+      <figure><img src="img/p_mast.png" alt="CAM 03: Kessler ist markiert, rechts oben die Kamera am Mast"><figcaption>Kessler ist markiert, der Zeiger steht auf der Kamera am Mast.</figcaption></figure></li>
+    <li><b><kbd>DECK</kbd>, auf der Karte CAM 04 anklicken, dann noch einmal, um sie zu öffnen.</b><span>Der erste Klick verbindet die Kamera. EVI freut sich.</span></li>
+    <li><b><kbd>REC</kbd> drücken, <kbd>VOR</kbd> bis 22:30.</b><span>Kessler gibt einem Mann im grauen Mantel seinen Ehering: „Bis Freitag, Kessler.“ Das ist Gus Varga, ein Kredithai. Juno hat alles aufgenommen.</span>
+      <figure><img src="img/p_ring.png" alt="CAM 04: Kessler bei Yuen's, REC läuft"><figcaption>REC läuft, oben rot.</figcaption></figure></li>
+    <li><b><kbd>DECK</kbd>, <kbd>CHAT</kbd>, M. KESSLER, „Den ganzen Clip schicken.“ wählen.</b><span>200 Chits kommen. EVI fragt, ob Frau Kessler jetzt froh ist. Sable meldet sich und will Informationen kaufen; das ist freiwillig.</span></li>
+    <li><b><kbd>ZURÜCK</kbd>, den Kühlschrank anklicken.</b><span>Er ist leer. Juno muss raus.</span></li>
+    <li><b>Tür, Treppe. Motte fragt, was Juno den ganzen Tag macht: „Ich schau Leuten zu. Und verkauf, was ich sehe.“ wählen.</b><span>Dann ist sie unten im Hausflur.</span></li>
+    <li><b>Die Briefkästen anklicken.</b><span>Eine Mahnung: 900 Chits Miete, fällig in drei Tagen.</span></li>
+    <li><b>Haustür, Bao anklicken, „Wie immer.“ wählen.</b><span>Juno isst. Dann stottert der kaputte Werbeschirm, ein Auge im Rauschen sieht sie an, und dort steht JUNO. Es folgt die Endkarte des Prologs.</span>
+      <figure><img src="img/p_bao.png" alt="Die Kowalski-Straße mit Baos Garküche"><figcaption>Die Kowalski-Straße, Baos Stand mit dem Schirm.</figcaption></figure></li>
+  </ol>
+</section>
+
+<section class="weg" id="k1">
+  <h2>Kapitel 1: Glass</h2>
+  <p class="matt">Ein Weg durch die Hauptgeschichte. Viele Orte sind noch einfarbige Blöcke.</p>
+  <div class="kasten"><b>Start:</b> <code>index.html?act=kapitel1</code> öffnen. Der Prolog geht noch nicht von selbst in Kapitel 1 über.</div>
+
+  <h3>Mittwoch <small>18:00, der erste Abend</small></h3>
+  <ol class="schritte">
+    <li><b>Deck anklicken, dann <kbd>CHAT</kbd> und WREN.</b><span>WREN zahlt dafür, dass Juno herausfindet, wen Dr. Ines Calder trifft und wo. Spur: die Lull-Klinik.</span></li>
+    <li><b><kbd>GLASS</kbd> öffnen, CAM 21 anklicken, <kbd>VOR</kbd> bis 19:00.</b><span>Ines kommt aus der Klinik.</span></li>
+    <li><b>Ines anklicken.</b><span>Juno markiert sie.</span>
+      <figure><img src="img/k1_ines.png" alt="CAM 21: Ines ist markiert, unten rechts die Speisekarte"><figcaption>Ines markiert. Unten rechts: die Speisekarte im Fenster.</figcaption></figure></li>
+    <li><b>Die Speisekarte im Fenster unten rechts anklicken.</b><span>Darauf steht das Gäste-WLAN: CAM 22 läuft.</span></li>
+    <li><b><kbd>DECK</kbd>, dann auf der Karte CAM 23 anklicken.</b><span>Der Waschsalon hat den Werkscode 0000: CAM 23 läuft.</span></li>
+    <li><b><kbd>WARTEN</kbd>, bis die Uhr 01:00 zeigt. Dann <kbd>ZURÜCK</kbd> und das Bett anklicken.</b><span>Ab 01:00 geht das Bett. Es wird Donnerstag.</span></li>
+  </ol>
+
+  <h3>Donnerstag <small>18:00, der zweite Abend</small></h3>
+  <ol class="schritte">
+    <li><b>Deck, <kbd>GLASS</kbd>, CAM 23, <kbd>VOR</kbd> bis 20:00.</b><span>Ines bringt keine Wäsche mit. Sie legt etwas in den kaputten Trockner 6 und geht, aber nicht nach Hause: Richtung Sumpf-Abgang.</span>
+      <figure><img src="img/k1_trockner_feed.png" alt="CAM 23: Ines vor dem kaputten Trockner 6"><figcaption>Der Trockner mit dem Zettel ist die Sechs.</figcaption></figure></li>
+    <li><b><kbd>DECK</kbd>, CAM 30, einmal <kbd>VOR</kbd> bis 20:15.</b><span>Ines liest die Pegeltafel und sieht auf die Uhr. Juno fragt sich, was sie hier will: Freitag, 23:00 ist Niedrigwasser, unten ist nur die alte Metro. Also trifft sie dort jemanden. Auf der Karte erscheint CAM 31.</span>
+      <figure><img src="img/k1_pegeltafel.png" alt="CAM 30: Ines an der Pegeltafel, FRI 23:00"><figcaption>Der Sumpf-Abgang mit der Pegeltafel.</figcaption></figure></li>
+    <li><b><kbd>DECK</kbd>, <kbd>ZURÜCK</kbd>, dann zu Fuß: Tür, Treppe, Haustür, Gasse, SUDS &amp; SPIN.</b><span>Die Uhr steht, solange Juno läuft.</span></li>
+    <li><b>Trockner 6 anklicken, „Zurücklegen.“ wählen.</b><span>Darin liegt ein Datenstick. Ein Schlüssel ist drauf, wozu, weiß Juno noch nicht. Sie lässt ihn liegen.</span>
+      <figure><img src="img/k1_trockner.png" alt="Juno im Waschsalon vor Trockner 6"><figcaption>Der Waschsalon, noch als Block.</figcaption></figure></li>
+    <li><b>Nach Hause: Tür, Kowalski-Straße, Haustür, Treppe, Meine Tür.</b></li>
+    <li><b>Deck anklicken, <kbd>WARTEN</kbd> bis mindestens 01:00, <kbd>ZURÜCK</kbd>, Bett.</b><span>Es wird Freitag.</span></li>
+  </ol>
+
+  <h3>Freitag <small>18:00, der letzte Abend</small></h3>
+  <ol class="schritte">
+    <li><b>Deck, <kbd>CHAT</kbd>, WREN, „Den Ort senden.“ wählen.</b><span>Juno verkauft ihre Vermutung: 1250 Chits, jetzt 1700. WREN zahlt 750 extra, wenn sie heute Nacht zusieht. EVI freut sich über das Geld.</span>
+      <figure><img src="img/k1_wren.png" alt="Der Chat mit WREN nach dem Senden"><figcaption>Der Ort ist verkauft.</figcaption></figure></li>
+    <li><b><kbd>GLASS</kbd>, CAM 31 anklicken und den Takt eingeben: Lang, Kurz, Kurz, Lang.</b><span>Kein Code findet diese Kamera, nur das alte Protokoll in Junos Kopf. Im Rauschen steht kurz das Auge, dann: „Verbunden.“</span></li>
+    <li><b><kbd>WARTEN</kbd>, bis die Uhr bei 22:45 stehen bleibt.</b><span>Um 22:30 bucht das Konto die Miete ab: 900 Chits.</span></li>
+    <li><b>CAM 31 anklicken und die Zeilen weiterklicken.</b><span>Ines kommt die Treppe herunter, um 23:00 kommt Lantern im Rollstuhl. Sie gibt ihm die Wallet und flüstert: „SUDS &amp; SPIN. Trockner sechs, der kaputte. Sonst weiß es keiner.“ Juno: „Doch. Ich.“ Lantern fährt weg. Im Schatten steht ein weißer Fleck, das Overlay zeigt <span style="display:inline;color:var(--rot)">BEDROHUNG</span>.</span></li>
+    <li><b>STEUERN, CHAT: INES, LAUTSPRECHER und REVIER 9 anklicken.</b><span>Nichts davon hilft, und das ist Absicht. Nach etwa 22 Sekunden geht es von selbst weiter, <kbd>VOR</kbd> kürzt ab.</span>
+      <figure><img src="img/k1_bedrohung.png" alt="CAM 31: Ines am Bahnsteig, links die Markierung BEDROHUNG"><figcaption>Juno kann nur zusehen.</figcaption></figure></li>
+    <li><b>Nur noch zusehen und Zeilen weiterklicken.</b><span>Ashe tötet Ines, in der Voreinstellung hinter schwarzen Balken. Er sieht in die Kamera, dann SIGNAL LOST. Danach Junos Wohnung, EVI: „Er hat sie ausgeschaltet.“ Es folgt die Endkarte „Kapitel 2: Aufnahme“.</span></li>
+  </ol>
+</section>
+
+<footer>Stand: 6. November 2026. Beide Wege sind mit echten Klicks durchgespielt; Kapitel 1 folgt <code>tools/paths/kapitel1_main.json</code>.</footer>
+</main>
+</body>
+</html>

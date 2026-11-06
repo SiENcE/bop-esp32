@@ -32,6 +32,7 @@ code comments English.
 | `docs/story-lesefassung.md` | the story to read, up to and including Chapter 1, and the list of what still contradicts itself |
 | `docs/kapitel0-design.md` | the prologue "Nachtschicht", plus the rules every chapter uses: the deck as a computer and EVI (§2), feed mode (§3), game time and routines (§4), the steps 0–12 (§6) |
 | `docs/kapitel1-design.md` | Chapter 1 "Glass": three jobs over three evenings, the WREN thread, the murder in cam31 |
+| `docs/durchspielen/index.html` | the walkthrough to play by hand (German, HTML, short text and few pictures): for now one way through the prologue and Chapter 1; continue it with each chapter, and change it when the story's way changes |
 | `docs/dialog-design.md` | dialogue (role model Disco Elysium): Juno's six inner voices, deterministic checks, a log panel; engine work C12/C13 |
 | `docs/dialog-style-guide.md` | **how all text sounds** (German): the tone, the techniques, the kinds of text, hard rules (du/Sie, Lull vs. implant, length), a voice card for every character and inner voice, a checklist; read it before writing any line |
 | `docs/style-guide.md` | **all art and UI** (decided). §8a "Everything is cyberpunk" lists every part of the screen and its state |
