@@ -38,7 +38,7 @@ code comments English.
 | `docs/PLAN.md` | the build plan: engine work C1–C13, phases H0–H10 with "done when"; status at the top |
 | `docs/mockups/` | the decided looks: street mode `mock_c_iso_x3.png`, feed mode `mock_e_cctv_x3.png`; new mockups go here (`mock_f_deck` next) |
 | `docs/rooms/`, `docs/cams/`, `docs/characters/` | review sheets of finished art; the cameras' layout notes (their positions go into `game/places.js`) |
-| `docs/portraits/` | the character index and marketing portraits (`figuren_index_x3.png`, `README.md`), from `art/portraits/portraits.px.js`; not in the game |
+| `docs/portraits/` | the character index and marketing portraits (`figuren_index_x3.png`, Teo and Juno from both sides `juno_teo_seite_front_x3.png`, `README.md`), from `art/portraits/portraits.px.js`; not in the game |
 | `docs/ideas/` | studies: `iso-tiles.md` (rooms from maps, decided), `chinesisch.md` (a CJK layout test) |
 | `docs/NEXT-SESSION.md` | the prompt to start the next session |
 
@@ -79,7 +79,7 @@ code comments English.
 | `game/skin.js`, `font.js`, `transitions.js`, `sounds.js`, `music.js`, `title.js`, `hints.js` | the look (frames, cards, labels, choices), the fonts, room transitions, synthesised sounds and music, title and menu screens, hints |
 | `art/**/*.px.js` | pxl sources: `lib/` (shared `iso.js`, `feed.js`), `characters/`, `rooms/`, `cams/`, `mock/` (flat blocks of what isn't painted yet), `ui/`, `intro/`, `mockups/`, `test/`; `*_review.px.js` are review sheets, never built into the game |
 | `assets/*.js` | built atlases (checked in, so the game runs without Node) |
-| `tools/` | `build_art.sh`, `sync-engine.sh`, `render-sounds.mjs`, `solve-act.mjs` (one act alone), `check.sh` (all the checks), `check-hover.mjs` (the pointer turns hot), `paths/` (Chapter 1's ways to click through) |
+| `tools/` | `build_art.sh`, `sync-engine.sh`, `render-sounds.mjs`, `solve-act.mjs` (one act alone), `check.sh` (all the checks), `check-hover.mjs` (the pointer turns hot), `portrait-title.py` (the profiles of Juno and Teo, cut from the title picture), `paths/` (Chapter 1's ways to click through) |
 | `studio.json` | the editor's studio: writable folders, layer files, tasks |
 | `build/`, `out/` | scratch (raw pxl output, screenshots, renders), not checked in |
 | `.claude/skills/claude-pxl/` | the pxl skill, its own repo (gitignored) |
