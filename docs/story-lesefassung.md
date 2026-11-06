@@ -280,17 +280,21 @@ sonst Werbebildschirme für zehn Sekunden Wahrheit kapert.
 
 Sie gibt ihm eine Daten-Wallet mit den verschlüsselten Protokollen. Ohne den Stick lässt sie sich nicht lesen. Hat Juno ihn behalten, sagt Lantern jetzt: „Der Schlüssel war nicht da.“ Und Ines erstarrt.
 
-Dann tritt ein Mann im weißen Regenmantel aus dem Schatten der Treppe. Im Feed hat er kein Gesicht, seine Maske überstrahlt die
+Lantern wirft den Motor an und verschwindet im Tunnel. Er sieht nichts: Die lange Wange der Treppe verdeckt den Schatten daneben, für ihn und für Ines. Nur die Kamera sieht hinein.
+
+Dort steht ein Mann im weißen Regenmantel. Im Feed hat er kein Gesicht, seine Maske überstrahlt die
 Kamera zu einem weißen Fleck. Das Overlay versucht ihn zu markieren, zeigt `???`, dann rot `BEDROHUNG`.
 
-„Dreh dich um.“
+„Sie sieht ihn nicht.“
 
 Jetzt versucht Juno alles, und der Spieler mit ihr. Die Kamera hat nichts zum Steuern, kein Licht, keine Tür: `KEIN ZUGRIFF`. Der Chat an
 Ines: `NICHT ZUGESTELLT`. Einen Lautsprecher hat diese Kamera nicht. Revier 9 antwortet: „Ihre Meldung wird bearbeitet.“
 
-„Dreh dich um. Dreh dich um. Ines.“
+Ines sieht Lantern nach. Dann dreht sie sich um und geht zur Treppe.
 
-Lantern wirft den Motor an und verschwindet im Tunnel. Ines nicht.
+„Er wartet. Nein. Nicht die Treppe. Ines.“
+
+Der Mann tritt ihr in den Weg. Sie streiten, und man hört nur sie: „Sie sind nicht von der Klinik.“ „Zu spät. Er hat alles.“ „Lassen Sie mich vorbei.“ Er antwortet nicht.
 
 Der Mann tötet sie. Das alte Bild flackert und reißt dabei. In der Voreinstellung schließen sich schwarze Balken über dem Bild, und man
 hört es nur; wer es in den Einstellungen wählt, sieht es im Phosphor, ohne Nahaufnahme. Beide Fassungen erzählen dasselbe. Die Klicks

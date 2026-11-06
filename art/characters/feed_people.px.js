@@ -547,76 +547,88 @@ sprite("_i_down", `
 anim("ines_feed_down", { w: 29, h: 7, frames: 1, outline: "1", pivot: "bottom" }, (c) => c.stamp("_i_down", 0, 0))
 
 // ---------------------------------------------------------------- Lantern, 23x23 inside (25x25)
-// A man in a wheelchair, in the water. What says wheelchair is the two big wheels beside him, a bright rim round a dark inside,
-// tall ellipses at this steep angle; the rest of what he rebuilt stays under them: slim pontoons at the waterline, thruster
-// mouths, the boat motor on the chair's back. The antennas rise from behind his shoulder, their lit tips the brightest thing on
-// him. He has no walk: the same sprites when he moves, with the waterline staying where it is while the chair bobs.
-const FL = { W: 23, H: 23, WATER: 20 }
+// A man sitting in a wheelchair, in the water, seen from three-quarters as the camera sees everyone. What says wheelchair is the
+// sitting man's L, thighs flat, shins down, feet on the plate, between a big spoked wheel near us and its twin behind him, with
+// a small caster in front: head-on, two wheels and a body made a small tank. What he rebuilt stays under that: a slim pontoon at
+// the waterline, the boat motor on the chair's back. The antennas rise from the chair's back, their tips the brightest on him.
+// He has no walk: the same sprites when he moves, the waterline staying where it is while the chair bobs.
+const FL = { W: 23, H: 23, WATER: 21 }
 sprite("_l_wheel", `
-  ..888..
-  .81718.
-  8117118
-  8117118
-  8117118
-  8177718
-  8777778
-  8177718
-  8117118
-  8117118
-  .81718.
-  ..888..`)                       // the spokes a plain cross, the hub on it: anything finer is lost in the old camera's grain
+  ..88888..
+  .88.7.88.
+  8...7...8
+  8...7...8
+  8..777..8
+  877757778
+  8..777..8
+  8...7...8
+  8...7...8
+  .88.7.88.
+  ..88888..`)                     // near us: the tyre bright, seen through between the spokes
+sprite("_l_wheel_far", `
+  ..55555..
+  .55...55.
+  5.......5
+  5.......5
+  5.......5
+  5...4...5
+  5.......5
+  5.......5
+  5.......5
+  .55...55.
+  ..55555..`)                     // beyond him, in less light
 sprite("_l_front", `
-  ....888....
-  ...88888...
-  ...85558...
-  ...85885...
-  ...78887...
-  ..8877788..
-  .877777778.
-  .777777776.
-  .755777776.
-  .755777766.
-  .777777886.
-  77777777866
-  77777777766
-  66666666666
-  ..66...66..
-  ..662226...
-  ..88888888.`)                  // rows 4-20: the hood and the face in it, hunched shoulders lit from the platform, the patches, the shins, the footplate
+  ...888..........
+  ..88888.........
+  ..88766.........
+  ..88753.........
+  ...8876.........
+  ...77777........
+  ..7777777.......
+  ..7777777.......
+  ..7557777.......
+  ..7557777.......
+  ..77777776......
+  ..77777776677777
+  ...7777666666668
+  .......666666668
+  ............6668
+  ............5668
+  ............5668
+  ............5668
+  ...........88888`)                 // the hood and the face in it, the poncho with its patch, the thighs flat, the shins down, the shoes
 sprite("_l_back", `
-  ....888....
-  ...88888...
-  ...88887...
-  ...88887...
-  ...78877...
-  ..8877788..
-  .877777778.
-  .755777776.
-  .755777886.
-  .777777776.
-  .666666666.
-  ..6555556..
-  ..6555556..
-  ..6555556..`)                  // rows 4-17: the hood from behind, the poncho to the seat, the chair's back in its frame under it
+  ...888...
+  ..88888..
+  ..88888..
+  ..88887..
+  ...8877..
+  ..777777.
+  .77777777
+  .77777776
+  .77557776
+  .77557776
+  .77777766
+  .66666666
+  .55555556
+  .55555556
+  ..555556.`)                        // the hood from behind, the poncho, the chair's back under it
 function lantern(c, o = {}) {
   const b = o.bob ?? 0, back = o.back
-  // the antennas, from behind his shoulder (before the wheels; in the back view they stand on the chair's back, nearer to us)
-  const masts = () => { for (const [x, top] of [[14, 0], [16, 2], [18, 1]]) { c.rect(x, top + b, 1, 10 - top, "7"); c.rect(x, top + b, 1, 2, "9") } c.px(15, 4 + b, "7"); c.px(17, 5 + b, "7") }
-  if (!back) masts()
-  c.stamp("_l_wheel", 16, 8 + b); c.stamp("_l_wheel", 0, 8 + b)
-  // the pontoons: their top sinks with the chair, their bottom is the waterline
-  for (const x of [0, 16]) {
-    c.rect(x + 1, FL.WATER + b, 5, 1, "6"); c.rect(x, FL.WATER + 1, 7, 1, "5"); c.rect(x + 1, FL.WATER + 2, 5, 1, "4")
-    if (back) c.rect(x + 3, FL.WATER + 1, 1, 1, "2")                         // the thruster's mouth
-  }
+  c.stamp("_l_wheel_far", 13, 7 + b)
+  const masts = () => { for (const [x, top] of [[4, 0], [6, 3], [8, 1]]) { c.rect(x, top + b, 1, 10 - top, "7"); c.rect(x, top + b, 1, 2, "9") } }
+  masts()
   if (back) {
-    c.stamp("_l_back", 6, 4 + b)
-    c.rect(6, 12 + b, 2, 1, "8"); c.rect(15, 12 + b, 2, 1, "8")             // the push handles, the chair's frame under them
-    c.rect(9, 16 + b, 5, 1, "8"); c.rect(9, 17 + b, 5, 3, "7"); c.rect(13, 17 + b, 1, 3, "6"); c.rect(10, 20, 3, 3, "5")   // the boat motor, its shaft into the water
-    masts()
+    c.stamp("_l_back", 8, 1 + b)
+    c.rect(6, 12 + b, 3, 1, "8")                                                // the push handle, sticking out behind
+    c.rect(11, 16 + b, 4, 1, "8"); c.rect(11, 17 + b, 4, 3, "7"); c.rect(12, 20, 2, 1, "5")   // the boat motor, its shaft into the water
   } else {
-    c.stamp("_l_front", 6, 4 + b)
+    c.stamp("_l_front", 7, 2 + b)
+    for (const [x, y, k] of [[15, 18, "7"], [16, 18, "7"], [17, 19, "7"], [14, 19, "7"], [15, 20, "7"], [16, 20, "7"], [15, 19, "4"], [16, 19, "4"]]) c.px(x, y + b, k)   // the caster
+    c.rect(17, FL.WATER + b, 6, 1, "7")                                         // the footplate
   }
+  c.stamp("_l_wheel", 0, 10 + b)
+  c.rect(1, FL.WATER + 1, 13, 1, "5"); c.rect(3, FL.WATER, 9, 1, "6")           // the pontoon: its bottom is the waterline
 }
 for (const [name, back] of [["lantern_feed_front", false], ["lantern_feed_back", true]]) {
   anim(name, { w: FL.W, h: FL.H, frames: 2, ms: [900, 900], outline: "1", pivot: "bottom" }, (c) => lantern(c, { back, bob: c.frame }))

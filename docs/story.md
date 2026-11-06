@@ -252,8 +252,8 @@ Straßenmodus.
   ihn noch am selben Abend von einem anderen Glasser. So oder so sieht Juno dem Treffen zu, weil WREN
   extra für den Live-Feed bezahlt hat (oder, wenn sie sich geweigert hat, weil sie Ines warnen will).
 - **Das Ende:** das Treffen in der alten U-Bahn-Station in den Sümpfen, durch CAM 31. Ines gibt
-  Lantern eine Daten-Wallet (verschlüsselt; der Schlüssel ist der Stick aus dem Trockner). Ein Mann in einem weißen Regenmantel tritt aus der Dunkelheit. Ashe tötet Ines
-  vor der Kamera. Lantern flieht. Ashe sieht nach oben in die Kamera, direkt zu Juno, eine Störung läuft durchs Bild, und der Feed
+  Lantern eine Daten-Wallet (verschlüsselt; der Schlüssel ist der Stick aus dem Trockner). Lantern fährt davon und sieht nichts. Als Ines zur Treppe zurückwill, tritt ihr ein Mann in einem weißen Regenmantel aus der Dunkelheit in den Weg. Ein Streit, und Ashe tötet Ines
+  vor der Kamera. Ashe sieht nach oben in die Kamera, direkt zu Juno, eine Störung läuft durchs Bild, und der Feed
   bricht ab. Juno kann nichts tun: Das Kapitel spielt ihre Ohnmacht aus (`kapitel1-design` §8). **Juno hat die Aufnahme.** EVI, die sonst jeden Menschen falsch liest, liest diesen
   richtig: „Er hat sie ausgeschaltet. Juno. Er hat sie ausgeschaltet."
 
@@ -596,4 +596,6 @@ Die Blockskizzen für den Mord und die Figuren der Stadt sind freigegeben (`docs
 - **Das Gerüst des Monteurs steht immer da,** auch im Prolog und auf dem Menübild (`„Der Kollege kommt seit 2087“`).
 - **Frau Imai sitzt an einem kleinen Tisch** im LUCKY STATIC.
 - **Die Regenleserin hat ihre eigene Regenrinne** auf einer Stange vor der Brüstung. Das ändert das Dach von heute, nicht das alte Foto am Deck.
+- **Der Ablauf in `cam31`:** Lantern fährt zuerst weg, danach will Ines zurück zur Treppe, der Mann tritt ihr plötzlich in den Weg, es gibt einen Streit, und er ermordet sie. Lantern sieht nichts und lässt sie nicht im Stich: Die lange Wange der Treppe verdeckt den Schatten daneben für ihn und für Ines; nur die Kamera sieht hinein, und so bleiben Juno die vier Versuche. Vom Streit hört man nur Ines, Ashes erste Äußerung bleibt das Winken. *Vorschlag, noch nicht entschieden:* Ashe lässt Lantern absichtlich ziehen, denn der soll den Mord tragen; und Junos echter Clip zeigt, dass Lantern schon fort war, als Ines starb, was die Fälschung in Kapitel 2 widerlegt.
+- **Lantern im Rollstuhl** ist von schräg vorn und schräg hinten zu sehen, nicht frontal: das große Speichenrad bei der Kamera, der Mann darin sitzend, Oberschenkel waagerecht, Füße auf der Fußstütze, vorn das kleine Lenkrad. Frontal war er ein kleiner Panzer. Vorbild: zwei Fotos von Rollstuhlfahrern, die der Nutzer geschickt hat.
 - **Die Technik der anderen:** die Regenleserin ein Tropfenzähler am Eimer, der Prediger ein Zähler um den Hals mit seinen wachen Tagen (9, 10, 11), der Monteur eine Stirnlampe und `9-A` auf dem Rücken.

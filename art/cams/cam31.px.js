@@ -3,7 +3,7 @@
 //
 // The camera is what Halcyon bolted on and forgot: a box on the old overhead gantry above the flooded tracks,
 // 6.5 m over the water, 40 degrees down, yaw 24 toward the tunnel. It looks across the water at the platform, so
-// everyone on it faces us and the player sees behind Ines what she cannot. Why this height: the feeds draw no
+// everyone on it faces us, and the player sees what stands beyond the stairs' long cheek, which Ines and Lantern cannot. Why this height: the feeds draw no
 // depth scale (game/places.js), so a person must be about the same size at the stairs and at the edge.
 //
 // Baked at half resolution (story §10c): this camera is older than the others, so its picture is coarser than
@@ -257,12 +257,12 @@ const WORLD_SPOTS = {
   stairs: [-0.7, STAIR.foot - 0.1, P0],         // the foot of the stairs
   shadow: [-3.2, 5.0, P0],                      // beside the stairs' box, away from the lamp: Ashe's way in
   edge: [1.7, 0.55, P0],                        // Ines, at the platform's edge
-  behind: [0.9, 1.3, P0],                       // Ashe's last spot, right behind her
   midway: [-1.1, 3.0, P0],                      // only for the picture: Ashe on his way
   lantern: [2.9, -0.75, 0],                     // Lantern, in the water, an arm's reach from her (she hands him the wallet)
   tunnel: [XE - 0.3, -2.2, 0],                  // Lantern, at the tunnel's mouth
 }
-const SPOTS = Object.fromEntries(Object.entries(WORLD_SPOTS).map(([k, [x, z, y]]) => [k, spotAt(CAM, [x, y, z])]))
+// where he stops her on her way to the stairs: placed in the picture, a face-off with her back to us, his coat against the darker floor
+const SPOTS = { ...Object.fromEntries(Object.entries(WORLD_SPOTS).map(([k, [x, z, y]]) => [k, spotAt(CAM, [x, y, z])])), meet: [112, 99], asheMeet: [97, 90] }
 console.log("cam31 spots", JSON.stringify(SPOTS))
 const groundSteps = () => { const img = halfBake(); return Object.fromEntries(Object.entries(SPOTS).map(([k, [x, y]]) => [k, img[y + 2][x]])) }
 
@@ -282,8 +282,8 @@ scene("review_cam31", { w: W, h: H, bg: "0" }, paintBg, signText, lampBox, (c) =
 })
 // 23:04: she lies where she stood, he has come to her and waves up at the camera; Lantern is gone
 scene("review_cam31_ende", { w: W, h: H, bg: "0" }, paintBg, signText, lampBox, (c) => {
-  put(c, "ines_feed_down", "edge")
-  put(c, "ashe_feed_wave", "behind", 400)
+  put(c, "ines_feed_down", "meet")
+  put(c, "ashe_feed_wave", "asheMeet", 400)
 })
 // the two hard cases for the values: Ashe in his shadow, only the mask there; Lantern on his way out, on the water and
 // at the tunnel's mouth
@@ -297,10 +297,10 @@ scene("review_cam31_layout", { w: W, h: H, bg: "0" }, (c) => {
   console.log("the ground's step under each spot", JSON.stringify(groundSteps()))
   const img = halfBake(); for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) c.px(x, y, PH[Math.max(0, img[y][x] - 2)])
 }, signText, (c) => {
-  for (const [a, b] of [["top", "stairs"], ["stairs", "edge"], ["shadow", "behind"], ["tunnel", "lantern"]]) c.line(SPOTS[a][0], SPOTS[a][1], SPOTS[b][0], SPOTS[b][1], "C")
+  for (const [a, b] of [["top", "stairs"], ["stairs", "edge"], ["shadow", "asheMeet"], ["edge", "meet"], ["tunnel", "lantern"]]) c.line(SPOTS[a][0], SPOTS[a][1], SPOTS[b][0], SPOTS[b][1], "C")
   put(c, "ashe_feed_dim", "shadow")
   put(c, "ines_feed_front", "stairs")
-  put(c, "ashe_feed", "behind")
+  put(c, "ashe_feed", "asheMeet")
   put(c, "ines_feed_front", "edge")
   put(c, "lantern_feed_back", "lantern")
   put(c, "lantern_feed_front", "tunnel")

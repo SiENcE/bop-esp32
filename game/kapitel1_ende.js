@@ -19,14 +19,14 @@ Halcyon.people.ashe = { name: "???" };
 Cutaway.actor("ashe", { name: "???", color: "#ff7a6a", speed: [5, 2.5], voice: { pitch: 50, wave: "sine", syllable: 90 },
   costume: { idle: "ashe_feed", walk: "ashe_feed_walk", talk: "ashe_feed" },
   poses: [{ if: "end_beat=wave", idle: "ashe_feed_wave", walk: "ashe_feed_wave", talk: "ashe_feed_wave" },
-    // in the stairs' shadow only the mask is there, until he has walked out of it (see the threat below)
+    // in the stairs' shadow only the mask is there, until he steps out of it (see the threat below)
     { if: "!ashe_lit", idle: "ashe_feed_dim", walk: "ashe_feed_dim_walk", talk: "ashe_feed_dim" }],
   look: ["Kein Gesicht. Da, wo eins sein müsste, brennt mir das Bild durch."],
   talk: ["Die Markierung rutscht ab. Da ist nichts, woran sie hängen bleibt."] });
 Cutaway.routine("ashe", [{ day: 4, from: "23:02", to: "23:30", room: "cam31", at: A.shadow, face: "se" }]);
 // only how he looks while he walks, and only a real clock walks him: no state for the solver
 Cutaway.state.view("ashe_lit");
-const SHADOW_ENDS = 74;   // where the lamp's light begins on his way (art/cams/cam31.px.js: the stairs' cheek hides it from the lamp up to here)
+const SHADOW_ENDS = 74;   // where the lamp's light begins on his way (art/cams/cam31.px.js: the stairs' long cheek hides it from the lamp up to here, and hides him from Ines and Lantern)
 
 Halcyon.cache.clip_ines_death = { kind: "clip", name: "CAM 31, 23:03", about: "Die alte Metro. Alles, bis er winkt." };
 Object.assign(Halcyon.ledger, { ines: { to: "Ines Calder", what: { dead: "tot" } } });
@@ -93,18 +93,21 @@ Cutaway.moment("ines_meeting", { room: "cam31", day: 4, from: "22:45", to: "23:3
   "Sie gibt ihm was. Eine Wallet.",
   { unset: "ines_gives" },
   { if: "stick_ines", then: [{ say: "lantern", text: "Der Schlüssel war nicht da." }, "Sie rührt sich nicht."] },
-  { time: "23:02" },
+  // he has what he came for and goes, and sees nothing: what waits stands behind the stairs' cheek. So he is never the man who left her to it
+  { sfx: "motor" }, { walk: "lantern", to: A.tunnel, free: true },
+  { cam31_fx: { tear: 0.3 }, ms: 120 }, { time: "23:02" }, { cam31_fx: { tear: 0 }, ms: 150 },
+  { wait: 1400 },
   { set: "end_beat", value: "unknown" }, { sfx: "tag" },
   "Wer ist das?",
   { wait: 900 },
   { set: "end_beat", value: "threat" }, { sfx: "glitch", gain: 0.5 }, { music: { intensity: 0.7 } },
-  "Dreh dich um.",
+  "Sie sieht ihn nicht.",
 ] });
 
 // ---- what Juno tries: all of it answers, and none of it helps
 const TRIES = /** @type {[string, string, string, string, any[]][]} */ ([
   ["try_steuern", "Steuern", "STEUERN", "KEIN ZUGRIFF", ["Kein Licht. Keine Tür. Hier gibt's nichts zu steuern."]],
-  ["try_chat", "Ines anschreiben", "CHAT: INES", "NICHT ZUGESTELLT", ["Dreh dich um. Dreh dich um."]],
+  ["try_chat", "Ines anschreiben", "CHAT: INES", "NICHT ZUGESTELLT", ["Nicht die Treppe. Nicht die Treppe."]],
   ["try_speaker", "Lautsprecher", "LAUTSPRECHER", "KEIN LAUTSPRECHER", ["Das Ding ist älter als ich. Es kann nur gucken."]],
   ["try_revier", "Revier 9", "REVIER 9", "WIRD BEARBEITET", ["Revier 9. Ein Mord, jetzt gleich, alte Metro, Linie 31.", { narrate: "Ihre Meldung wird bearbeitet." }]],
 ]);
@@ -116,7 +119,7 @@ TRIES.forEach(([id, name, osd, fail, lines], i) => {
 });
 
 const O = Halcyon.osd;
-Halcyon.camRoom("cam31", { background: "cam31_bg", mic: { at: A.mic, clear: 40, lost: 150 },
+Halcyon.camRoom("cam31", { background: "cam31_bg", mic: { at: A.mic, clear: 60, lost: 150 },
   post: [{ noise: 0.08 }, { old_tube: 0.3 }, { palette: Halcyon.PHOSPHOR, dither: 0.6 }, { scanlines: 2, amount: 0.14 }, { roll: { speed: 24, height: 9, amount: 0.14 } }, { vignette: 0.28 }, { cam31_break: true }],
   rec: ["moment:ines_meeting", "!ines_down"], strip: "!moment:ines_meeting",
   hotspots: { ...tries,
@@ -125,36 +128,48 @@ Halcyon.camRoom("cam31", { background: "cam31_bg", mic: { at: A.mic, clear: 40, 
     stay: { name: "Deck", rect: O.back, z: 5, if: "end_beat=threat", use: ["Ich bleib. Ich bleib dran."] },
   } });
 
-// ---- the threat runs by itself: he walks, slowly, and Juno gets quieter. Only a real clock: the tools have the wait above
-const LINES = Cutaway.i18n.declare("waiting", ["Dreh dich um.", "Dreh dich um.", "Ines."]);
-const LINE_AT = [9000, 16000, 22000], THREAT_MS = 25000;
+// ---- the threat runs by itself: she looks after him, then turns for the stairs, slowly, and he steps out in front of her, and Juno gets quieter.
+// Only a real clock: the tools have the wait above, and the moment after it brings them to their places either way
+const LINES = Cutaway.i18n.declare("waiting", ["Er wartet.", "Nein. Nicht die Treppe.", "Ines."]);
+const LINE_AT = [6000, 13000, 19000], THREAT_MS = 22000, INES_GOES = 12000, ASHE_STEPS = 15000;
 /** @type {number | null} */
 let since = null;
-let said = 0;
+let said = 0, moved = 0;
 Cutaway.clock.onUpdate(() => {
   if (Cutaway.tween.instant || Cutaway.scene.room?.id !== "cam31" || Cutaway.state.flag("end_beat") !== "threat") { since = null; return; }
   if (Cutaway.menu.isOpen) return;
   if (since === null) {
-    since = Cutaway.clock.time; said = 0;
-    const ashe = Cutaway.actors.get("ashe");
-    ashe.walkTo(A.behind[0], A.behind[1], false, true);
-    ashe.ambient = true;
+    since = Cutaway.clock.time; said = 0; moved = 0;
   }
-  if (!Cutaway.state.flag("ashe_lit") && Cutaway.actors.get("ashe").x >= SHADOW_ENDS) Cutaway.state.set("ashe_lit");
+  const ashe = Cutaway.actors.get("ashe"), passed = Cutaway.clock.time - since;
+  if (moved === 0 && passed >= INES_GOES) {
+    const ines = Cutaway.actors.get("ines");
+    ines.speed = [7, 3.5]; ines.walkTo(A.meet[0], A.meet[1], false, true); ines.ambient = true; moved = 1;
+  }
+  if (moved === 1 && passed >= ASHE_STEPS) {
+    ashe.speed = [12, 6]; ashe.walkTo(A.asheMeet[0], A.asheMeet[1], false, true); ashe.ambient = true; moved = 2;
+  }
+  if (!Cutaway.state.flag("ashe_lit") && ashe.x >= SHADOW_ENDS) Cutaway.state.set("ashe_lit");
   if (Cutaway.script.busy) return;
-  const t = Cutaway.clock.time - since;
+  const t = passed;
   if (t >= THREAT_MS) Cutaway.script.run([{ time: "next" }], { path: "cam31.threat" });
   else if (said < LINES.length && t >= LINE_AT[said]) Cutaway.script.run([LINES[said++]], { path: "cam31.lines" });
 });
 
-// ---- 23:03: the rest happens to her; the clicks stop answering, and Juno says nothing more
+// ---- 23:03: he stands in her way. The quarrel is hers alone: he has no line in this chapter, his first word is the wave (dialog-style-guide). The clicks
+// stop answering, and Juno says nothing more
 const BARS = [{ cam31_fx: { bars: 1 }, ms: 700 }, { sfx: "static" }, { wait: 500 }, { sfx: "body_fall" }, { set: "ines_down" }, { wait: 1600 }, { cam31_fx: { bars: 0 }, ms: 900 }];
 const SHOWN = [{ cam31_fx: { tear: 0.9 }, ms: 200 }, { sfx: "static" }, { sfx: "body_fall" }, { set: "ines_down" }, { wait: 300 }, { cam31_fx: { tear: 0 }, ms: 800 }, { wait: 900 }];
 Cutaway.moment("ines_death", { room: "cam31", day: 4, from: "23:03", to: "23:30", if: "end_beat=threat", play: [
   { set: "end_beat", value: "kill" }, { music: { stop: true, fade: 300 } },
-  { sfx: "motor" }, { walk: "lantern", to: A.tunnel, run: true, free: true, wait: false },
-  { wait: 1800 },
-  { cam31_fx: { tear: 0.7 }, ms: 150 }, { set: "ashe_lit" }, { place: "ashe", at: A.behind, face: "se" }, { cam31_fx: { tear: 0 }, ms: 400 },
+  { set: "ashe_lit" },
+  { walk: "ashe", to: A.asheMeet, face: "se", free: true, wait: false },
+  { walk: "ines", to: A.meet, face: "nw", free: true },
+  { say: "ines", text: "Sie sind nicht von der Klinik." },
+  { wait: 1200 },
+  { say: "ines", text: "Zu spät. Er hat alles." },
+  { wait: 1200 },
+  { say: "ines", text: "Lassen Sie mich vorbei." },
   { wait: 800 },
   { if: "setting:violence=shown", then: SHOWN, else: BARS },
   { set: "cache_clip_ines_death" },

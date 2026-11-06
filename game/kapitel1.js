@@ -84,7 +84,7 @@ Cutaway.actor("ines", { name: "Frau im Kittel", color: "#f0a0c0",
   // what she does shows when Juno looks at her: a moment "seen or not" would double every state after it
   look: [{ if: "at:ines=cam31", then: ["Sie wartet. Sie sieht nur zum Tunnel."] }, { if: "at:ines=cam22", then: [{ if: "day=2", then: ["Sie schreibt was auf eine Serviette. Und legt die Hand drüber."], else: ["Dieselbe Suppe. Aber sie schaut dauernd zur Tür."] }],
     else: ["Ein Kittel, heller als alles. Dunkler Zopf."] }],
-  talk: [{ if: "end_beat", then: ["Ines. Dreh dich um."], else: [{ if: { or: ["tag_ines", "day=4", "off_main"] }, then: ["Die kenn ich."], else: [{ tag: "ines" }, "Dr. Ines Calder. Das ist sie, vom Foto."] }] }] });
+  talk: [{ if: "end_beat", then: ["Ines. Nicht die Treppe."], else: [{ if: { or: ["tag_ines", "day=4", "off_main"] }, then: ["Die kenn ich."], else: [{ tag: "ines" }, "Dr. Ines Calder. Das ist sie, vom Foto."] }] }] });
 Halcyon.people.lantern = { name: "ROLLSTUHL", known: "tag_lantern", label: "Jemand im Rollstuhl", speaker: "Jemand im Rollstuhl" };
 Cutaway.actor("lantern", { name: "Jemand im Rollstuhl", color: "#b0f0a0",
   costume: { idle: { se: "lantern_feed_front", ne: "lantern_feed_back" }, walk: { se: "lantern_feed_front", ne: "lantern_feed_back" }, talk: { se: "lantern_feed_front", ne: "lantern_feed_back" } }, speed: [14, 10], voice: { pitch: 46, wave: "square", syllable: 85 },
@@ -104,7 +104,7 @@ Cutaway.routine("lantern", [
   { day: 3, from: "03:00", to: "03:15", room: "cam23", at: A23.dryer6, path: [A23.door, A23.dryer6, A23.counter] },
   { day: 3, from: "03:15", to: "03:30", room: "cam12", at: A12.top, path: [A12.top, A12.bottom] },
   { day: 3, from: "03:30", to: "03:45", room: "cam30", at: A30.top, path: [A30.top, A30.water] },
-  { day: 4, from: "23:00", to: "23:04", room: "cam31", at: A31.tunnel, face: "sw" },
+  { day: 4, from: "23:00", to: "23:02", room: "cam31", at: A31.tunnel, face: "sw" },
 ]);
 // the queue at the clinic, before Ines comes out; one of them is on the protocol without knowing it
 ["commuter_a", "commuter_b", "commuter_c", "commuter_d"].forEach((id, i) => {
