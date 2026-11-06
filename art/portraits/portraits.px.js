@@ -310,8 +310,8 @@ function fingers(p, x, y, lens, S, tip = 1) {
 function lullPatch(p, x, y, big) {
   const rows = big
     ? ["..ggg..", ".gRRRg.", "gRccRRg", "gRccRRg", "gRccRRg", "gRccRRg", ".gRRRg.", "..ggg.."]
-    : [".ggg.", "gRcRg", "gRcRg", "gRcRg", ".ggg."]
-  p.grid(x - (big ? 3 : 2), y - (big ? 4 : 2), rows, { g: "#3d6690", R: "#c8e8ff", c: "#dafcff" })
+    : [".g.", "gcg", "gRg", ".g."]
+  p.grid(x - (big ? 3 : 1), y - (big ? 4 : 2), rows, { g: "#3d6690", R: "#c8e8ff", c: "#dafcff" })
 }
 
 const PORTRAITS = []
@@ -944,10 +944,11 @@ portrait("imai", PANELS.imai, (p) => {
   const face = p.part("18,48 24,34 38,28 54,32 60,44 60,56 52,68 38,73 26,68 19,60", S.base)
   face.edge(3, 3, S.dim)
   face.tone(oval(28, 58, 5, 3), S.lit)
-  // the sloth's stripes: dark bands from the eyes back to the temples
-  face.tone("17,42! 30,44! 34,48 30,52 22,50 17,50!", H.base)
-  face.tone("46,48 50,44 62,38! 62,48! 54,52 48,52", H.base)
-  face.sep(H.base)
+  // the sloth's stripes: from the outer corner of each eye, tapering back and down
+  const MARK = "#5a4438"
+  face.tone("24,46! 28,48 25,51 21,54 18,55! 20,50", MARK)
+  face.tone("55,46! 52,48 54,51 58,54 61,55! 59,50", MARK)
+  face.sep(S.dim)
   // a heavy shawl pulled round her, the moss's colour, hiding her hands
   const shawl = p.part("-4,104! -2,88 10,78 24,76 34,84 48,80 66,86 78,96 80,104!", M.base)
   shawl.edge(4, 3, M.dark)
@@ -955,22 +956,25 @@ portrait("imai", PANELS.imai, (p) => {
   for (const l of ["14,84 22,92 26,104!", "34,84 36,94 34,104!", "50,84 54,92 60,104!", "68,90 66,96 70,104!"]) p.line(l, M.dark)
   p.outline()
   // the Lull patch, no ink
-  lullPatch(p, 18, 59, false)
-  // the eyes: heavy lids most of the way down, small dark eyes looking at nothing much
-  const E = { k: INK, s: S.dim, l: S.lit, w: "#e8e4d4", i: "#20140e" }
-  p.grid(23, 42, [
-    "..sssssss..",
-    ".lllllllll.",
-    "kkkkkkkkkkk",
-    ".wwiiiiww..",
-    "..wiiiiw...",
+  lullPatch(p, 21, 56, false)
+  // the eyes: heavy lids most of the way down, but she is in there, looking at something a long way off; a crease over each, a thin brow
+  const E = { k: INK, s: S.dim, l: S.lit, w: "#f4f0e2", i: "#2a1a12", I: "#6a4630", g: "#ffffff", b: H.base }
+  for (const [x, y] of [[26, 37], [44, 37]]) p.grid(x, y, ["..bbbbbb..", ".b......b."], E)
+  p.grid(25, 41, [
+    "..ssssss...",
+    ".kkkkkkkk..",
+    "kwwiiiiwwk.",
+    ".wwiIgiww..",
+    "..kkkkkk...",
+    "...ssss....",
   ], E)
-  p.grid(42, 42, [
-    "..sssssss..",
-    ".lllllllll.",
-    "kkkkkkkkkkk",
-    "..wwiiiiw..",
-    "...wiiiw...",
+  p.grid(43, 41, [
+    "...ssssss..",
+    "..kkkkkkkk.",
+    ".kwwiiiiwwk",
+    "..wwiIgiww.",
+    "...kkkkkk..",
+    "....ssss...",
   ], E)
   // the flat nose and the small smile
   p.grid(36, 52, ["s...s", "kk.kk"], E)
