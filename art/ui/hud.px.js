@@ -88,11 +88,11 @@ anim("ui_evi", { w: 12, h: 11, ms: [2600, 140, 420, 120] },
   grid(0, 0, `
     .kk......kk.
     .kVk....kVk.
-    ..khkkkkhk..
+    ..kkhhhhkk..
     .khhhhhhhhk.
-    .khkVhhkVhk.
-    .khkkhhkkhk.
-    .kphhkkhhpk.
+    khhkVhhkVhhk
+    khhkkhhkkhhk
+    kphhhkkhhhpk
     .kEhhhhhhEk.
     kkkkkkkkkkkk
     kGGGGGGGGGGk

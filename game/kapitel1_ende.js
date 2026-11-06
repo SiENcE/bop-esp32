@@ -184,7 +184,7 @@ Cutaway.moment("ines_death", { room: "cam31", day: 4, from: "23:03", to: "23:30"
   { if: "e1=sold", then: [{ ledger: "wren_live", value: "paid" }, { ledger: "ines", value: "dead" }, { notify: "wren" }, { wait: 4000 }] },
   { wait: 3000 },
   { fade: "out", ms: 1400 },
-  { set: "end_beat", value: "after" }, { evi: "besorgt" },
+  { set: "end_beat", value: "after" }, { evi: "besorgt" }, { letterbox: true, ms: 0 },
   { goto: "flat_danach", at: AF.deck, face: "ne", transition: false },
   { fade: "in", ms: 1400 },
   // nothing to click: it goes on by itself, after a long nothing
@@ -195,6 +195,7 @@ Cutaway.moment("ines_death", { room: "cam31", day: 4, from: "23:03", to: "23:30"
   { say: "evi", text: "Er hat sie ausgeschaltet. Juno. Er hat sie ausgeschaltet." },
   { wait: 1500 },
   { fade: "out", ms: 2000 },
+  { letterbox: false, ms: 0 },
   { end: "Kapitel 2: Aufnahme (kommt später)" },
 ] });
 
@@ -203,9 +204,18 @@ Cutaway.room("signal_lost", { name: "CAM 31", observe: true, feed: "cam31", lost
   post: [{ noise: 0.12 }, { palette: Halcyon.PHOSPHOR, dither: 0.6 }, { scanlines: 2, amount: 0.14 }],
   ambience: ["deck_fans"], music: { stop: true, fade: 200 }, hotspots: {} });
 
-// her flat, with nothing to click (a room of its own: the flat's hotspots stay as they are); EVI in her corner, worried
+// her flat, with nothing to click (a room of its own: the flat's hotspots stay as they are). So that it shows: black bars as in a film, and the lamp is
+// out, only the deck's screens still light the room and her; EVI in her corner, worried. The pointer stays: the lines go on with a click
+const MONITOR = [205, 88], GLOW_NEAR = 45, GLOW_FAR = 150, DARK = 0.3;
+Cutaway.post.add("deck_only", (/** @type {any} */ px) => {
+  const { data, w, h } = px;
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+    const d = Math.hypot(x - MONITOR[0], (y - MONITOR[1]) * 1.3), g = Math.max(0, Math.min(1, (GLOW_FAR - d) / (GLOW_FAR - GLOW_NEAR))), k = DARK + (1 - DARK) * g * g, i = (y * w + x) * 4;
+    data[i] *= k; data[i + 1] *= k; data[i + 2] *= k;
+  }
+});
 const [dx, dy] = AF.deck;
-Cutaway.room("flat_danach", { name: "Junos Wohnung", background: "flat_bg", props: AF.props, buttons: false, eviCorner: true,
+Cutaway.room("flat_danach", { name: "Junos Wohnung", background: "flat_bg", props: AF.props, buttons: false, eviCorner: true, post: [{ deck_only: true }],
   walk: [[dx - 1, dy - 1, dx + 1, dy - 1, dx + 1, dy + 1, dx - 1, dy + 1]],
   light: { ambient: 0.38, color: "#8a9cff", lamps: AF.lamps.map((/** @type {any} */ { bake, ...lamp }) => lamp) },
   ambience: ["deck_fans"], music: { stop: true }, hotspots: {} });
