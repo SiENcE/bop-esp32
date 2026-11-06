@@ -1,4 +1,4 @@
-// Halcyon: the end of Chapter 1 (docs/kapitel1-design.md §8), on blocks. Juno watches Ines die in cam31 and everything she tries
+// Halcyon: the end of Chapter 1 (docs/kapitel1-design.md §8). Juno watches Ines die in cam31 and everything she tries
 // fails where the player can see it. One straight chain, so the solver gains a handful of states:
 //   end_beat     unknown (the overlay says ???) > threat (the player's hands are free, and nothing helps) > kill > wave > after (her flat)
 //   ines_down    Ines lies on the platform
@@ -17,11 +17,16 @@ Cutaway.settings.define("violence", { page: "content", pageLabel: "Inhalt", labe
 // ---- the people. Ashe has no face in the feed: the mask outshines the camera
 Halcyon.people.ashe = { name: "???" };
 Cutaway.actor("ashe", { name: "???", color: "#ff7a6a", speed: [5, 2.5], voice: { pitch: 50, wave: "sine", syllable: 90 },
-  costume: { idle: "mock_ashe", walk: "mock_ashe", talk: "mock_ashe" },
-  poses: [{ if: "end_beat=wave", idle: "mock_ashe_wave", walk: "mock_ashe_wave", talk: "mock_ashe_wave" }],
+  costume: { idle: "ashe_feed", walk: "ashe_feed_walk", talk: "ashe_feed" },
+  poses: [{ if: "end_beat=wave", idle: "ashe_feed_wave", walk: "ashe_feed_wave", talk: "ashe_feed_wave" },
+    // in the stairs' shadow only the mask is there, until he has walked out of it (see the threat below)
+    { if: "!ashe_lit", idle: "ashe_feed_dim", walk: "ashe_feed_dim_walk", talk: "ashe_feed_dim" }],
   look: ["Kein Gesicht. Da, wo eins sein müsste, brennt mir das Bild durch."],
   talk: ["Die Markierung rutscht ab. Da ist nichts, woran sie hängen bleibt."] });
-Cutaway.routine("ashe", [{ day: 4, from: "23:02", to: "23:30", room: "cam31", at: A.stairs, face: "se" }]);
+Cutaway.routine("ashe", [{ day: 4, from: "23:02", to: "23:30", room: "cam31", at: A.shadow, face: "se" }]);
+// only how he looks while he walks, and only a real clock walks him: no state for the solver
+Cutaway.state.view("ashe_lit");
+const SHADOW_ENDS = 74;   // where the lamp's light begins on his way (art/cams/cam31.px.js: the stairs' cheek hides it from the lamp up to here)
 
 Halcyon.cache.clip_ines_death = { kind: "clip", name: "CAM 31, 23:03", about: "Die alte Metro. Alles, bis er winkt." };
 Object.assign(Halcyon.ledger, { ines: { to: "Ines Calder", what: { dead: "tot" } } });
@@ -76,14 +81,17 @@ Cutaway.i18n.declare("feed display", ["KEIN ZUGRIFF", "NICHT ZUGESTELLT", "KEIN 
 Cutaway.moment("ines_meeting", { room: "cam31", day: 4, from: "22:45", to: "23:30", play: [
   { tag: "ines" },
   { time: "22:55" },
+  { walk: "ines", to: A.stairs, free: true },
   { walk: "ines", to: A.edge, face: "se", free: true },
   { if: "e1=refused", then: ["Ines. Geh nach Hause.", { sfx: "static", gain: 0.4 }, { narrate: "NICHT ZUGESTELLT" }], else: ["Da ist sie. Pünktlich."] },
   { time: "23:00" },
-  { walk: "lantern", to: A.lantern, face: "sw", free: true },
+  { walk: "lantern", to: A.lantern, face: "nw", free: true },
   { say: "ines", text: "Es ist alles drauf. Die Protokolle passen auf die Sekunde." },
   { say: "lantern", text: "Wenn das stimmt ..." },
   { say: "ines", text: "Es stimmt. Sie schlafen nicht. Sie arbeiten." },
+  { set: "ines_gives" },
   "Sie gibt ihm was. Eine Wallet.",
+  { unset: "ines_gives" },
   { if: "stick_ines", then: [{ say: "lantern", text: "Der Schlüssel war nicht da." }, "Sie rührt sich nicht."] },
   { time: "23:02" },
   { set: "end_beat", value: "unknown" }, { sfx: "tag" },
@@ -132,6 +140,7 @@ Cutaway.clock.onUpdate(() => {
     ashe.walkTo(A.behind[0], A.behind[1], false, true);
     ashe.ambient = true;
   }
+  if (!Cutaway.state.flag("ashe_lit") && Cutaway.actors.get("ashe").x >= SHADOW_ENDS) Cutaway.state.set("ashe_lit");
   if (Cutaway.script.busy) return;
   const t = Cutaway.clock.time - since;
   if (t >= THREAT_MS) Cutaway.script.run([{ time: "next" }], { path: "cam31.threat" });
@@ -145,7 +154,7 @@ Cutaway.moment("ines_death", { room: "cam31", day: 4, from: "23:03", to: "23:30"
   { set: "end_beat", value: "kill" }, { music: { stop: true, fade: 300 } },
   { sfx: "motor" }, { walk: "lantern", to: A.tunnel, run: true, free: true, wait: false },
   { wait: 1800 },
-  { cam31_fx: { tear: 0.7 }, ms: 150 }, { place: "ashe", at: A.behind, face: "se" }, { cam31_fx: { tear: 0 }, ms: 400 },
+  { cam31_fx: { tear: 0.7 }, ms: 150 }, { set: "ashe_lit" }, { place: "ashe", at: A.behind, face: "se" }, { cam31_fx: { tear: 0 }, ms: 400 },
   { wait: 800 },
   { if: "setting:violence=shown", then: SHOWN, else: BARS },
   { set: "cache_clip_ines_death" },

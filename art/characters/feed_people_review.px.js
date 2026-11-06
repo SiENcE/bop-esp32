@@ -47,6 +47,23 @@ scene("feed_lineup", { w: RV_W, h: 300, bg: "1", frames: 1 }, (c) => {
   for (const [n, x, y, t] of crowd) c.stamp(n, x, y, { t, ...(x > 200 && n !== "varga_feed" ? { flip: "x" } : {}) })
 })
 
+// the end of Chapter 1: all views and frames on three strips of ground, the deep shadow and the water (2), the dim platform
+// (4), the emergency light's pool (6). The game's palette pass comes on top: judge the values in cam31 itself.
+scene("review_feed_ch1", { w: 430, h: 114, bg: "2" }, (c) => {
+  const STRIP = 34, GROUNDS = ["2", "4", "6"]
+  GROUNDS.forEach((k, i) => c.rect(0, 12 + i * STRIP, 430, STRIP, k))
+  const FIGS = [[10, "kessler_feed", 0], [28, "ines_feed_front", 0], [44, "ines_feed_front", 1700], [60, "ines_feed_front_walk", 0], [76, "ines_feed_front_walk", 300],
+    [92, "ines_feed_back", 0], [108, "ines_feed_back_walk", 300], [130, "ines_feed_give", 0], [160, "ines_feed_give", 450], [192, "ines_feed_down", 0],
+    [224, "lantern_feed_front", 0], [250, "lantern_feed_front", 900], [276, "lantern_feed_back", 0], [302, "lantern_feed_back", 900],
+    [324, "ashe_feed", 0], [342, "ashe_feed_walk", 200], [362, "ashe_feed_wave", 0], [382, "ashe_feed_wave", 400], [402, "ashe_feed_dim", 0], [420, "ashe_feed_dim_walk", 200]]
+  GROUNDS.forEach((k, i) => {
+    const y = 12 + i * STRIP + STRIP - 3
+    FIGS.forEach(([x, n, t]) => c.stamp(n, x, y, { t }))
+  })
+  for (const [x, s] of [[3, "1.75M"], [24, "INES"], [90, "HINTEN"], [124, "GIBT"], [180, "LIEGT"], [212, "LANTERN"], [270, "HINTEN"], [318, "ASHE"], [356, "WINKT"], [398, "DUNKEL"]]) c.text(x, 3, s, "8")
+  for (let i = 0; i < 3; i++) c.rect(1, 12 + i * STRIP + STRIP - 3 - 24, 1, 24, "7")          // 24 px, the scale's mark
+})
+
 scene("feed_zooms", { w: 5 * 98 + 2, h: 64, bg: "1", frames: 1 }, (c) => {
   for (let y = 0; y < 64; y++) for (let x = 0; x < c.w; x++) c.px(x, y, y % 2 ? "1" : "2")
   const zs = [["zoom_sticker_cam04", 0], ["zoom_vending_n7", 0], ["zoom_kessler_face", 0], ["zoom_ring", 0], ["zoom_ring_hand_pale", 0]]

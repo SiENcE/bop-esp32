@@ -60,7 +60,8 @@ Halcyon.at = {
   cam12: { top: [160, 66], bottom: [160, 148], mic: [160, 100], ladder: [140, 60, 40, 90] },
   cam15: { door: [60, 150], spot: [262, 100], mic: [160, 100], capsules: [44, 28, 272, 52], c23: [248, 28, 30, 25] },
   cam30: { top: [160, 84], water: [160, 146], mic: [160, 100], sign: [88, 30, 144, 11] },
-  cam31: { stairs: [62, 80], edge: [150, 124], behind: [136, 122], tunnel: [270, 136], lantern: [176, 136], mic: [150, 110], tries: [244, 26, 72] },
+  // measured from the camera in art/cams/cam31.px.js (it logs them when built)
+  cam31: { stairs: [96, 83], top: [92, 67], shadow: [59, 92], edge: [151, 117], behind: [133, 112], tunnel: [284, 111], lantern: [183, 131], mic: [165, 124], tries: [244, 26, 72] },
   gasse: {
     walk: [[10, 112, 310, 112, 318, 176, 2, 176]], arrive: [24, 150], kowalski: [14, 150], laundromat: [260, 116], market: [150, 132], niche: [52, 116],
     kowalskiRect: [0, 110, 26, 70], laundromatRect: [232, 40, 56, 64], marketRect: [112, 122, 76, 30], nicheRect: [30, 44, 44, 60], cablesRect: [0, 10, 320, 28],

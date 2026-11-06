@@ -19,6 +19,9 @@
 //   commuter_c      tall, a long coat, the DECOY: a scarf of Kessler's cut, but 6, not 9
 //   commuter_d      a woman with long hair, a light coat and a shoulder bag (bag 6)
 //   yuen_cook       paper cap 8, apron 7, chopping at his counter
+//   ines            the end of Chapter 1, front and back: the white coat 9, a dark plait cut into it; a wallet with a light
+//   lantern         front and back, in the water: big spoked wheels (rims 8), a poncho 7, antennas with lit tips 9
+//   ashe            front only: a raincoat 8, no face, a burn 9 with no dark rim; the same in the shadow; the wave
 //
 // Walks: 6 frames x 100 ms, the same foot table as juno_feed_walk (the feet step 2 across and 1 up).
 
@@ -63,6 +66,19 @@ const fpFeet = (H, i) => {
   const f = (j) => { const q = FP_FOOT[j % 6]; return { dx: q.dx, lift: q.lift, y: H - 2 + q.gy } }
   return { near: f(i), far: f(i + 3) }
 }
+// the walk seen from in front: the same table, the far foot higher on the screen instead of the near one
+const fpFeetFront = (H, i) => { const q = fpFeet(H, i), m = (f) => ({ ...f, y: 2 * (H - 2) - f.y }); return { near: m(q.near), far: m(q.far) } }
+// a rim of value k round what is drawn so far: for what must stay free of a rim and so comes after it (Ashe's burn)
+function fpRim(c, W, H, k) {
+  const body = new Set()
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) if (c.is(x, y, "*")) body.add(x + "," + y)
+  for (const p of body) {
+    const [x, y] = p.split(",").map(Number)
+    for (const [ax, ay] of [[x - 1, y], [x + 1, y], [x, y - 1], [x, y + 1]]) if (ax >= 0 && ay >= 0 && ax < W && ay < H && !body.has(ax + "," + ay)) c.px(ax, ay, k)
+  }
+}
+// a hand grid through a table of values: one drawing, several lights (Ashe lit and in shadow)
+const fpGrid = (c, x, y, rows, map) => rows.forEach((r, j) => { for (let i = 0; i < r.length; i++) if (r[i] !== ".") c.px(x + i, y + j, map[r[i]]) })
 
 // An umbrella seen from above at 45 degrees: a 15x10 disc of 8 panels, alternately lit (5) and in
 // shade (4), the ribs between them a step darker, the near rim curving away (3), a wet glint (6) and
@@ -423,4 +439,281 @@ anim("yuen_cook_feed", { w: YC.W, h: YC.H, frames: 4, ms: [150, 150, 150, 700], 
   // his right arm (screen left) and the cleaver: raised by his head, or down on the board
   if (up) { c.rect(1, 11, 2, 4, "5"); c.rect(2, 9, 2, 3, "5"); c.rect(2, 7, 2, 2, "6"); c.rect(1, 3, 3, 4, "8"); c.px(1, 6, "7") }
   else { c.rect(1, 11, 2, 5, "5"); c.rect(2, 16, 3, 2, "5"); c.rect(4, 18, 2, 2, "6"); c.rect(5, 19, 3, 3, "8"); c.px(7, 21, "7") }
+})
+
+// ================================================================ the end of Chapter 1 (cam31; kapitel1-design §8)
+// cam31 looks across the water at the platform, so people on it face the camera: unlike the prologue's feed people these
+// have a front three-quarter (facing down-right) as well as a back one (up-right). The game's palette pass darkens every
+// value (raw 7 comes out at 4, 8 at 5.7, 9 at 7.5): judge them through the game, not here.
+
+// ---------------------------------------------------------------- Dr. Ines Calder, 13x20 inside (15x22)
+// The coat 9, brighter than everything; the dark plait the one thing cut into it, over the shoulder in front, down the back
+// behind. The bag stays in her right hand, so it changes sides with the view: screen left from in front, which leaves the
+// other hand free for the wallet, screen right from behind.
+const FI = { W: 13, H: 20 }
+const FI_LEGS = { W: FI.W, H: FI.H, near: 7, far: 4, hip: 15, lw: 2, sw: 2, leg: "6", shoe: "4", sep: "3" }
+sprite("_i_head_front", `
+  .444.
+  43334
+  49999
+  49696
+  .9992`)                        // the hair drawn back from a three-quarter face; the plait begins at her jaw
+sprite("_i_head_back", `
+  .555.
+  56665
+  45554
+  44444
+  .333.`)                        // wet hair, gathered at the nape into the plait
+sprite("_i_coat_front", `
+  ..99792.
+  99999922
+  99999922
+  99999922
+  89998929
+  89998929
+  89998929
+  89998939
+  .9998999
+  .9998999
+  .9998998`)                     // rows 5-15, columns 2-9: the collar, the coat's opening; the plait off to the side, over the shoulder, or it reads as a tie
+sprite("_i_coat_back", `
+  ..99299..
+  999229999
+  999229999
+  999229999
+  899229998
+  899929998
+  899929998
+  899939998
+  .9998999.
+  .9998999.
+  .9998998.`)                    // rows 5-15, columns 2-10: the plait, tapering; the coat's vent
+sprite("_i_bag", `
+  666
+  444
+  444
+  443`)
+function ines(c, o = {}) {
+  const x = o.x ?? 0, b = o.bob ?? 0, sw = o.swing ?? 0, back = o.back
+  fpLegs(c, { ...FI_LEGS, W: o.w ?? FI.W, near: FI_LEGS.near + x, far: FI_LEGS.far + x }, o.feet ?? fpStand(FI.H), b)
+  if (back) {
+    c.stamp("_i_coat_back", x + 2, 5 + b)
+    c.rect(x + 2, 13 + b - sw, 1, 2, "8")                                    // the free hand
+    c.rect(x + 10, 13 + b + sw, 1, 1, "8"); c.stamp("_i_bag", x + 10, 14 + b + sw + (o.sag ?? 0))
+    c.stamp("_i_head_back", x + 4 + (o.look ?? 0), b)
+  } else {
+    c.stamp("_i_coat_front", x + 2, 5 + b)
+    c.rect(x + 2, 13 + b - sw, 1, 1, "8"); c.stamp("_i_bag", x, 14 + b - sw + (o.sag ?? 0))
+    if (!o.give) { c.rect(x + 10, 6 + b, 1, 3, "9"); c.rect(x + 10, 9 + b, 1, 4, "8"); c.rect(x + 10, 13 + b + sw, 1, 2, "8") }
+    c.stamp("_i_head_front", x + 4 + (o.look ?? 0), b)
+  }
+}
+// she glances at the tunnel; the bag is heavy, it sinks a pixel
+anim("ines_feed_front", { w: FI.W, h: FI.H, frames: 2, ms: [1700, 800], outline: "1", pivot: "bottom" }, (c) => ines(c, { look: c.frame, sag: c.frame }))
+anim("ines_feed_back", { w: FI.W, h: FI.H, frames: 2, ms: [1700, 800], outline: "1", pivot: "bottom" }, (c) => ines(c, { back: true, look: c.frame, sag: c.frame }))
+anim("ines_feed_front_walk", { w: FI.W, h: FI.H, frames: 6, fps: 10, outline: "1", pivot: "bottom" }, (c) => {
+  const i = c.frame; ines(c, { bob: FP_BOB[i], swing: FP_SWING[i], feet: fpFeetFront(FI.H, i) })
+})
+anim("ines_feed_back_walk", { w: FI.W, h: FI.H, frames: 6, fps: 10, outline: "1", pivot: "bottom" }, (c) => {
+  const i = c.frame; ines(c, { back: true, bob: FP_BOB[i], swing: FP_SWING[i], feet: fpFeet(FI.H, i) })
+})
+// The handover: her free arm down-right toward the water, the wallet in the hand, on it the one small light (story §10c).
+// 22x20 inside (24x22).
+const IG_W = 22
+sprite("_i_arm_give", `
+  99......
+  989.....
+  .989....
+  ..989...
+  ...989..
+  ....9877
+  .....877`)
+// Only as wide as her reach, with its feet at x 7: tools/build_art.sh writes the anchor, or the implant's brackets, which go by the canvas, jump.
+anim("ines_feed_give", { w: IG_W, h: FI.H, frames: 2, ms: [450, 350], outline: "1", pivot: "bottom" }, (c) => {
+  ines(c, { w: IG_W, give: true, look: 1 })
+  c.stamp("_i_arm_give", 10, 6)
+  c.rect(18, 10, 4, 4, "2"); c.rect(19, 11, 2, 2, c.frame ? "4" : "9")   // 2x2, or the scanlines and the grain eat it
+})
+// where she fell: on her side across the picture, shoulder and hip under the coat, still the brightest thing, an arm flung out
+// toward us, the plait and the bag thrown away from her. 29x7 inside (31x9); the pivot under her hip.
+sprite("_i_down", `
+  ...2222..........99999.......
+  ..22999..9999..999999999.....
+  ..2999689999999999999955.....
+  ..229988999989999999995553...
+  22222...88888888888888....666
+  .......98899999...........444
+  ..........................443`)
+anim("ines_feed_down", { w: 29, h: 7, frames: 1, outline: "1", pivot: "bottom" }, (c) => c.stamp("_i_down", 0, 0))
+
+// ---------------------------------------------------------------- Lantern, 23x23 inside (25x25)
+// A man in a wheelchair, in the water. What says wheelchair is the two big wheels beside him, a bright rim round a dark inside,
+// tall ellipses at this steep angle; the rest of what he rebuilt stays under them: slim pontoons at the waterline, thruster
+// mouths, the boat motor on the chair's back. The antennas rise from behind his shoulder, their lit tips the brightest thing on
+// him. He has no walk: the same sprites when he moves, with the waterline staying where it is while the chair bobs.
+const FL = { W: 23, H: 23, WATER: 20 }
+sprite("_l_wheel", `
+  ..888..
+  .81718.
+  8117118
+  8117118
+  8117118
+  8177718
+  8777778
+  8177718
+  8117118
+  8117118
+  .81718.
+  ..888..`)                       // the spokes a plain cross, the hub on it: anything finer is lost in the old camera's grain
+sprite("_l_front", `
+  ....888....
+  ...88888...
+  ...85558...
+  ...85885...
+  ...78887...
+  ..8877788..
+  .877777778.
+  .777777776.
+  .755777776.
+  .755777766.
+  .777777886.
+  77777777866
+  77777777766
+  66666666666
+  ..66...66..
+  ..662226...
+  ..88888888.`)                  // rows 4-20: the hood and the face in it, hunched shoulders lit from the platform, the patches, the shins, the footplate
+sprite("_l_back", `
+  ....888....
+  ...88888...
+  ...88887...
+  ...88887...
+  ...78877...
+  ..8877788..
+  .877777778.
+  .755777776.
+  .755777886.
+  .777777776.
+  .666666666.
+  ..6555556..
+  ..6555556..
+  ..6555556..`)                  // rows 4-17: the hood from behind, the poncho to the seat, the chair's back in its frame under it
+function lantern(c, o = {}) {
+  const b = o.bob ?? 0, back = o.back
+  // the antennas, from behind his shoulder (before the wheels; in the back view they stand on the chair's back, nearer to us)
+  const masts = () => { for (const [x, top] of [[14, 0], [16, 2], [18, 1]]) { c.rect(x, top + b, 1, 10 - top, "7"); c.rect(x, top + b, 1, 2, "9") } c.px(15, 4 + b, "7"); c.px(17, 5 + b, "7") }
+  if (!back) masts()
+  c.stamp("_l_wheel", 16, 8 + b); c.stamp("_l_wheel", 0, 8 + b)
+  // the pontoons: their top sinks with the chair, their bottom is the waterline
+  for (const x of [0, 16]) {
+    c.rect(x + 1, FL.WATER + b, 5, 1, "6"); c.rect(x, FL.WATER + 1, 7, 1, "5"); c.rect(x + 1, FL.WATER + 2, 5, 1, "4")
+    if (back) c.rect(x + 3, FL.WATER + 1, 1, 1, "2")                         // the thruster's mouth
+  }
+  if (back) {
+    c.stamp("_l_back", 6, 4 + b)
+    c.rect(6, 12 + b, 2, 1, "8"); c.rect(15, 12 + b, 2, 1, "8")             // the push handles, the chair's frame under them
+    c.rect(9, 16 + b, 5, 1, "8"); c.rect(9, 17 + b, 5, 3, "7"); c.rect(13, 17 + b, 1, 3, "6"); c.rect(10, 20, 3, 3, "5")   // the boat motor, its shaft into the water
+    masts()
+  } else {
+    c.stamp("_l_front", 6, 4 + b)
+  }
+}
+for (const [name, back] of [["lantern_feed_front", false], ["lantern_feed_back", true]]) {
+  anim(name, { w: FL.W, h: FL.H, frames: 2, ms: [900, 900], outline: "1", pivot: "bottom" }, (c) => lantern(c, { back, bob: c.frame }))
+}
+
+// ---------------------------------------------------------------- Corvin Ashe, 13x24 inside, 17x26 with the burn
+// Tall and narrow, a belted raincoat long to the calves, 8: a step under Ines's 9, or he reads grey-green instead of white. No
+// face: the mask is a burn, 9, and past the head's edge an 8, with no dark rim (the camera's own overflow has none), so it
+// comes after the rim. Only the burn moves when he stands: that is the camera, not him.
+const FA = { W: 17, H: 26, X: 2, Y: 1 }
+const ASHE_LIT = { L: "8", C: "8", D: "7", H: "7", leg: "4", shoe: "3" }
+const ASHE_DIM = { L: "4", C: "3", D: "2", H: "3", leg: "2", shoe: "1" }          // out of the stairs' shadow: only the burn is there
+const FA_LEGS = { W: FA.W, H: FA.H, near: 9, far: 5, hip: 21, lw: 2, sw: 3, sep: "1" }
+const FA_COAT = [
+  "..LLLLL..",
+  ".LLDCDCC.",
+  "CLLCDCCCD",
+  "CLLCCCCCD",
+  "CLLCCCCCD",
+  "CLLCCCCCD",
+  "CLLCCCCCD",
+  "CLLCCCCCD",
+  "CDDDDDDDD",
+  "CLLCCCCCD",
+  "CLLCCCCCD",
+  ".LCCCDCC.",
+  ".LCCCDCC.",
+  ".LCDCDCC.",
+  ".LCDCDCC.",
+  ".DDDDDDD.",
+]                                // rows 6-21, columns 2-10: the collar, the belt, the folds under it, the hem; a closure down the front made a cross with the belt
+function asheBody(c, v, o = {}) {
+  const ox = o.ox ?? 0, b = o.bob ?? 0, sw = o.swing ?? 0, dy = o.dy ?? 0, x = FA.X + ox, y = FA.Y + dy
+  fpLegs(c, { ...FA_LEGS, W: FA.W + 2 * ox, H: FA.H + dy, near: FA_LEGS.near + ox, far: FA_LEGS.far + ox, leg: v.leg, shoe: v.shoe }, o.feet ?? fpStand(FA.H + dy - 1), b)
+  fpGrid(c, x + 2, y + 6 + b, FA_COAT, v)
+  c.rect(x + 2, y + 17 + b - sw, 1, 2, v.H)                                      // the near hand
+  if (o.wave) { c.rect(x + 10, y + 8, 1, 6, "_") }                               // that sleeve goes up
+  else c.rect(x + 10, y + 17 + b + sw, 1, 2, v.H)
+  c.rect(x + 4, y + 1 + b, 5, 5, v.L)                                            // the head (the rim follows it, the burn covers it)
+}
+const ASHE_BURN = [
+  "..999..",
+  ".99999.",
+  "9999999",
+  "9999999",
+  "9999999",
+  ".99999.",
+  "..888..",
+]                                // over the head's 5x5 and past it: the white smear of the story; with a ring of 8 it sank to a grey head on the lit floor
+function asheBurn(c, o = {}) {
+  const x = FA.X + (o.ox ?? 0), b = o.bob ?? 0, y = FA.Y + (o.dy ?? 0) + (o.up ?? 0)
+  c.rect(x + 3, y + b, 7, 1, "_")                                                // what the rim left over the head
+  fpGrid(c, x + 3, y + b, ASHE_BURN, { 8: "8", 9: "9" })
+  if (o.flare) { c.px(x + 2, y + 2 + b, "8"); c.px(x + 2, y + 3 + b, "8"); c.px(x + 10, y + 4 + b, "8") }
+}
+const ashe = (c, v, o = {}) => { asheBody(c, v, o); fpRim(c, FA.W, FA.H, "1"); asheBurn(c, o) }
+// A patient walk: at his speed (5 px/s) the 100 ms of the others would have his feet slide; this is the pace he covers.
+const ASHE_WALK = { frames: 6, ms: [200, 200, 200, 200, 200, 200] }
+for (const [suffix, v] of [["", ASHE_LIT], ["_dim", ASHE_DIM]]) {
+  anim(`ashe_feed${suffix}`, { w: FA.W, h: FA.H, frames: 2, ms: [1300, 260], pivot: "bottom" }, (c) => ashe(c, v, { flare: c.frame }))
+  anim(`ashe_feed${suffix}_walk`, { w: FA.W, h: FA.H, ...ASHE_WALK, pivot: "bottom" }, (c) => {
+    const i = c.frame, f = fpFeetFront(FA.H - 1, i), small = (q) => ({ ...q, dx: Math.trunc(q.dx / 2) })   // short steps, the feet under the coat
+    ashe(c, v, { bob: FP_BOB[i], swing: FP_SWING[i], feet: { near: small(f.near), far: small(f.far) } })
+  })
+}
+// The wave, the last thing the player sees: 5 rows taller, the hand up beside the burn, which has lifted a pixel. Two frames, out
+// and back. The canvas is 3 wider on each side, so the feet stay where ashe_feed had them. 23x31.
+const FAW = { dy: 5, ox: 3 }
+sprite("_a_wave_0", `
+  ..8888
+  ..8888
+  ..888.
+  ..88..
+  ..88..
+  ..88..
+  ..88..
+  ..88..
+  .88...
+  .88...
+  88....
+  88....`)
+sprite("_a_wave_1", `
+  ....8888
+  ....8888
+  ...888..
+  ...88...
+  ..88....
+  ..88....
+  ..88....
+  ..88....
+  .88.....
+  .88.....
+  88......
+  88......`)
+anim("ashe_feed_wave", { w: FA.W + 2 * FAW.ox, h: FA.H + FAW.dy, frames: 2, fps: 3, pivot: "bottom" }, (c) => {
+  asheBody(c, ASHE_LIT, { ...FAW, wave: true })
+  c.stamp(c.frame ? "_a_wave_1" : "_a_wave_0", FA.X + FAW.ox + 10, 1)
+  fpRim(c, FA.W + 2 * FAW.ox, FA.H + FAW.dy, "1")
+  asheBurn(c, { ...FAW, up: -1 })
 })

@@ -74,19 +74,20 @@ const takt = { main: [...beat(0, true), { text: "Noch nicht.", silent: true, got
 for (let n = 1; n < 4; n++) { takt[`${STEPS[n]}_ok`] = beat(n, true); takt[`${STEPS[n]}_no`] = beat(n, false); }
 Cutaway.dialog("cam31_takt", takt);
 
-// ---- the people of job C (the blocks use the prologue's figures: nothing of them is painted yet)
+// ---- the people of job C (art/characters/feed_people.px.js)
 const A21 = Halcyon.at.cam21, A22 = Halcyon.at.cam22, A23 = Halcyon.at.cam23, A24 = Halcyon.at.cam24, A12 = Halcyon.at.cam12, A30 = Halcyon.at.cam30, A31 = Halcyon.at.cam31;
 Halcyon.people.ines = { name: "INES CALDER", known: "know_ines", label: "Frau im Kittel", speaker: "Ines" };
 Cutaway.actor("ines", { name: "Frau im Kittel", color: "#f0a0c0",
-  costume: { idle: "commuter_d_feed", walk: "commuter_d_feed_walk", talk: "commuter_d_feed" }, speed: [14, 10], voice: { pitch: 66, wave: "triangle", syllable: 70 },
-  poses: [{ if: "ines_down", idle: "mock_ines_down", walk: "mock_ines_down", talk: "mock_ines_down" }],
+  costume: { idle: { se: "ines_feed_front", ne: "ines_feed_back" }, walk: { se: "ines_feed_front_walk", ne: "ines_feed_back_walk" }, talk: { se: "ines_feed_front", ne: "ines_feed_back" } }, speed: [14, 10], voice: { pitch: 66, wave: "triangle", syllable: 70 },
+  poses: [{ if: "ines_down", idle: "ines_feed_down", walk: "ines_feed_down", talk: "ines_feed_down" },
+    { if: "ines_gives", idle: "ines_feed_give", talk: "ines_feed_give" }],
   // what she does shows when Juno looks at her: a moment "seen or not" would double every state after it
   look: [{ if: "at:ines=cam31", then: ["Sie wartet. Sie sieht nur zum Tunnel."] }, { if: "at:ines=cam22", then: [{ if: "day=2", then: ["Sie schreibt was auf eine Serviette. Und legt die Hand drüber."], else: ["Dieselbe Suppe. Aber sie schaut dauernd zur Tür."] }],
     else: ["Ein Kittel, heller als alles. Dunkler Zopf."] }],
   talk: [{ if: "end_beat", then: ["Ines. Dreh dich um."], else: [{ if: { or: ["tag_ines", "day=4", "off_main"] }, then: ["Die kenn ich."], else: [{ tag: "ines" }, "Dr. Ines Calder. Das ist sie, vom Foto."] }] }] });
 Halcyon.people.lantern = { name: "ROLLSTUHL", known: "tag_lantern", label: "Jemand im Rollstuhl", speaker: "Jemand im Rollstuhl" };
 Cutaway.actor("lantern", { name: "Jemand im Rollstuhl", color: "#b0f0a0",
-  costume: { idle: "mock_lantern", walk: "mock_lantern", talk: "mock_lantern" }, speed: [14, 10], voice: { pitch: 46, wave: "square", syllable: 85 },
+  costume: { idle: { se: "lantern_feed_front", ne: "lantern_feed_back" }, walk: { se: "lantern_feed_front", ne: "lantern_feed_back" }, talk: { se: "lantern_feed_front", ne: "lantern_feed_back" } }, speed: [14, 10], voice: { pitch: 46, wave: "square", syllable: 85 },
   look: ["Drei Uhr früh. Wer wäscht um drei?", "Geflickter Poncho, Schwimmer am Rollstuhl, ein Bündel Antennen.", { if: "stick_ines", then: ["Der Trockner ist leer. Das Ticket nimmt er trotzdem."], else: ["Er holt, was sie dagelassen hat."] }],
   talk: [{ if: { or: ["tag_lantern", "off_main"] }, then: ["Den hab ich."], else: [{ tag: "lantern" }, "Dich merk ich mir. Wo willst du hin?"] }] });
 Cutaway.routine("ines", [
@@ -97,7 +98,7 @@ Cutaway.routine("ines", [
   { day: [2, 3], from: "20:30", to: "21:00", room: "cam24", at: A24.off, path: [A24.off, A24.door] },
   { day: 4, from: "22:15", to: "22:30", room: "cam24", at: A24.door, path: [A24.door, A24.off] },
   { day: 4, from: "22:30", to: "22:45", room: "cam30", at: A30.top, path: [A30.top, A30.water] },
-  { day: 4, from: "22:55", to: "23:30", room: "cam31", at: A31.stairs, face: "se" },
+  { day: 4, from: "22:55", to: "23:30", room: "cam31", at: A31.top, face: "se" },
 ]);
 Cutaway.routine("lantern", [
   { day: 3, from: "03:00", to: "03:15", room: "cam23", at: A23.dryer6, path: [A23.door, A23.dryer6, A23.counter] },
