@@ -235,14 +235,14 @@ weißen Klinik, vorbei an der Schlange. Sie
 isst allein in der Nudelbar Pho Pump, schreibt etwas auf eine Serviette und hält die Hand darüber. Dann geht sie in den Waschsalon
 SUDS & SPIN, dessen Kamera den Code 0000 hat („Natürlich.“), und nach Hause in den Wohnblock Lerche.
 
-Am Donnerstag ist es fast dasselbe, nur schaut sie in der Nudelbar oft zur Tür. Um acht legt sie im Waschsalon einen Datenstick in
-Trockner 6 und ein Ticket auf die Theke und geht ohne Wäsche. Von da an führen zwei Wege weiter:
+Am Donnerstag ist es fast dasselbe, nur schaut sie in der Nudelbar oft zur Tür. Um acht legt sie im Waschsalon einen Datenstick in den
+kaputten Trockner 6 und geht ohne Wäsche. Sie geht auch nicht nach Hause, sondern zum Sumpf-Abgang, an dem ein Schild hängt: LINE 31 –
+CLOSED. Dort liest sie die Pegeltafel, sieht auf die Uhr und geht wieder. Was will eine Ärztin da? Unten ist nur die alte Metro, und zu Fuß
+kommt man nur bei Niedrigwasser hinunter: Freitag, 23:00. „Wer will da runter? Keiner will da runter. Außer man trifft da wen. Wo keiner
+hinsieht.“
 
-- Juno geht selbst hin. Auf dem Stick liegt nur ein Schlüssel; wozu, weiß sie noch nicht. Auf dem Ticket steht: „Ticket 31 – Fr 23:00“. Die
-  alte Metrolinie 31, Freitag, elf Uhr. Sie legt den Stick zurück, oder sie behält ihn.
-- Oder sie sieht um drei Uhr nachts zu, wie jemand im geflickten Poncho, in einem Rollstuhl mit Schwimmern und einem Bündel Antennen,
-  Stick und Ticket holt. Sie folgt ihm zum Eingang des Drain-Markts, wo ihn Düsen in einem kurzen Satz über die Leiter tragen, und
-  bis zu einem Abgang ins Wasser, an dem ein Schild hängt: LINE 31 – CLOSED.
+Juno kann selbst in den Waschsalon gehen. Auf dem Stick liegt nur ein Schlüssel; wozu, weiß sie noch nicht. Sie legt ihn zurück, oder sie
+behält ihn.
 
 Die Kamera in der alten Station ist älter als Halcyon. Der Konzern hat sie einst nachgerüstet und dann vergessen, und kein Code findet
 sie. Nur das alte Beobachter-Protokoll, das Juno im Kopf trägt, verbindet sie: „Das kann nur noch mein Kopf.“ Im Rauschen vor dem Bild
@@ -278,7 +278,9 @@ sonst Werbebildschirme für zehn Sekunden Wahrheit kapert.
 
 „Es stimmt. Sie schlafen nicht. Sie *arbeiten*.“
 
-Sie gibt ihm eine Daten-Wallet mit den verschlüsselten Protokollen. Ohne den Stick lässt sie sich nicht lesen. Hat Juno ihn behalten, sagt Lantern jetzt: „Der Schlüssel war nicht da.“ Und Ines erstarrt.
+Sie gibt ihm eine Daten-Wallet mit den verschlüsselten Protokollen. Ohne den Stick lässt sie sich nicht lesen. „Und der Schlüssel ...?“ Sie beugt sich zu ihm und flüstert, und nur das Mikro neben ihr hört es: „SUDS & SPIN. Trockner sechs, der kaputte. Sonst weiß es keiner.“
+
+„Doch. Ich.“ Hat Juno den Stick, liegt er in diesem Moment in ihrer Tasche, und Ines weiß es nicht.
 
 Lantern wirft den Motor an und verschwindet im Tunnel. Er sieht nichts: Die lange Wange der Treppe verdeckt den Schatten daneben, für ihn und für Ines. Nur die Kamera sieht hinein.
 

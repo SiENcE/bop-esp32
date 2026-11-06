@@ -92,7 +92,13 @@ Cutaway.moment("ines_meeting", { room: "cam31", day: 4, from: "22:45", to: "23:3
   { set: "ines_gives" },
   "Sie gibt ihm was. Eine Wallet.",
   { unset: "ines_gives" },
-  { if: "stick_ines", then: [{ say: "lantern", text: "Der Schlüssel war nicht da." }, "Sie rührt sich nicht."] },
+  // the key is never said aloud: the mic hangs beside her, the man in the shadow is too far off to hear a whisper, and WREN's live feed is picture only (story §10b)
+  { say: "lantern", text: "Und der Schlüssel ...?" },
+  "Sie beugt sich runter. Sie flüstert.",
+  { say: "ines", text: "SUDS & SPIN. Trockner sechs, der kaputte." },
+  { say: "ines", text: "Sonst weiß es keiner." },
+  "Doch. Ich.",
+  { if: "stick_ines", then: ["Und er liegt in meiner Tasche."] },
   // he has what he came for and goes, and sees nothing: what waits stands behind the stairs' cheek. So he is never the man who left her to it
   { sfx: "motor" }, { walk: "lantern", to: A.tunnel, free: true },
   { cam31_fx: { tear: 0.3 }, ms: 120 }, { time: "23:02" }, { cam31_fx: { tear: 0 }, ms: 150 },

@@ -53,12 +53,13 @@ scene("cam22_bg", { w: W, h: H, bg: "0" }, (c) => {
   for (const x of [60, 120, 180, 240]) c.rect(x, 100, 12, 14, "2")
   SIGN(c, 110, 4, 100, "PHO PUMP")
 })
-// the laundromat from its ceiling: the dryers in a row, the counter with its tickets
+// the laundromat from its ceiling: the dryers in a row, the dead one with its note, the counter
 scene("cam23_bg", { w: W, h: H, bg: "0" }, (c) => {
   ROOM(c, "3", "5", 74)
   for (let i = 0; i < 8; i++) {
     const x = 16 + i * 30
-    c.rect(x, 28, 26, 40, "4"); c.rect(x + 5, 36, 16, 16, "2"); c.rect(x + 8, 39, 10, 10, i === 5 ? "8" : "3")
+    c.rect(x, 28, 26, 40, "4"); c.rect(x + 5, 36, 16, 16, "2"); c.rect(x + 8, 39, 10, 10, i === 5 ? "1" : "3")
+    if (i === 5) c.rect(x + 8, 31, 10, 7, "8")
     TXT.draw(c, x + 13, 56, String(i + 1), i === 5 ? "9" : "7", { font: "hud", align: "center" })
   }
   c.rect(268, 80, 44, 60, "6"); c.hline(268, 80, 44, "8")
@@ -71,21 +72,19 @@ scene("cam24_bg", { w: W, h: H, bg: "0" }, (c) => {
   SIGN(c, 112, 8, 96, "LERCHE BLOCK")
   c.rect(0, 0, 40, 26, "1"); c.rect(280, 0, 40, 26, "1"); c.rect(0, 154, 40, 26, "1"); c.rect(280, 154, 40, 26, "1")
 })
-// the way down to the Drain Market: the ladder and the grating
-scene("cam12_bg", { w: W, h: H, bg: "0" }, (c) => {
-  ROOM(c, "2", "4", 60)
-  c.rect(140, 60, 40, 90, "1")
-  for (let y = 66; y < 148; y += 8) c.hline(144, y, 32, "7")
-  c.rect(0, 150, W, 30, "4")
-  SIGN(c, 104, 40, 112, "DRAIN MARKET")
-})
-// the stairs into the water, the sign
+// the stairs into the water, the sign, the tide board
 scene("cam30_bg", { w: W, h: H, bg: "0" }, (c) => {
   ROOM(c, "2", "4", 48)
   for (let i = 0; i < 6; i++) c.rect(110 + i * 2, 80 + i * 12, 100 - i * 4, 12, String(6 - i))
   c.rect(0, 150, W, 30, "1")
   c.rect(104, 148, 112, 32, "2")
   SIGN(c, 88, 30, 144, "LINE 31 - CLOSED", "7", "1")
+  // a gauge on its own post beside the stairs (the top of the wall belongs to the display)
+  c.rect(258, 88, 4, 22, "3")
+  SIGN(c, 232, 52, 56, "LOW TIDE", "7", "1")
+  c.rect(232, 63, 56, 25, "3")
+  for (const y of [66, 70, 81, 85]) c.hline(238, y, 44, "5")
+  TXT.draw(c, 260, 73, "FRI 23:00", "9", { font: "hud", align: "center" })
 })
 // the alley behind the gate: cable bundles, doors, the way on to the laundromat and down to the market
 scene("gasse_bg", { w: W, h: H, bg: "k" }, (c) => {
@@ -233,7 +232,8 @@ scene("laundromat_bg", { w: W, h: H, bg: "k" }, (c) => {
   c.rect(0, 0, W, 100, "d"); c.rect(0, 100, W, 80, "b")
   for (let i = 0; i < 8; i++) {
     const x = 12 + i * 28
-    c.rect(x, 50, 25, 46, "e"); c.rect(x + 4, 58, 17, 17, "a"); c.rect(x + 7, 61, 11, 11, i === 5 ? "g" : "d")
+    c.rect(x, 50, 25, 46, "e"); c.rect(x + 4, 58, 17, 17, "a"); c.rect(x + 7, 61, 11, 11, i === 5 ? "a" : "d")
+    if (i === 5) c.rect(x + 7, 52, 11, 8, "g")
     TXT.draw(c, x + 12, 80, String(i + 1), i === 5 ? "h" : "f", { font: "hud", align: "center" })
   }
   c.rect(252, 90, 58, 34, "f"); c.hline(252, 90, 58, "h")

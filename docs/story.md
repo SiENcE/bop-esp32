@@ -242,8 +242,8 @@ Straßenmodus.
     dabei verletzt.
   - **WRENs Auftrag:** Ein anonymer Auftraggeber zahlt das Fünffache ihres Satzes. „Finde heraus, wen
     Dr. Ines Calder trifft, und wo." Juno folgt Ines zwei Abende lang über vier Kameras (Tagesablauf:
-    Klinik, eine Nudelbar, ein Waschsalon, wo sie einen Datenstick in einem Trockner
-    zurücklässt, Wohnung). Am dritten Abend kommen zwei dazu, der Sumpf-Abgang und die alte Metro.
+    Klinik, eine Nudelbar, ein Waschsalon, wo sie einen Datenstick in einem kaputten Trockner
+    versteckt, Wohnung). Am zweiten Abend führt sie zum Sumpf-Abgang und seiner Pegeltafel, am dritten in die alte Metro.
 - **Das Leben drumherum:**
   - Teo kommt vorbei, erschöpft, auf Lull, und lacht es weg.
   - Der Werbebildschirm flackert, wenn Juno vorbeigeht.
@@ -252,7 +252,7 @@ Straßenmodus.
   ihn noch am selben Abend von einem anderen Glasser. So oder so sieht Juno dem Treffen zu, weil WREN
   extra für den Live-Feed bezahlt hat (oder, wenn sie sich geweigert hat, weil sie Ines warnen will).
 - **Das Ende:** das Treffen in der alten U-Bahn-Station in den Sümpfen, durch CAM 31. Ines gibt
-  Lantern eine Daten-Wallet (verschlüsselt; der Schlüssel ist der Stick aus dem Trockner). Lantern fährt davon und sieht nichts. Als Ines zur Treppe zurückwill, tritt ihr ein Mann in einem weißen Regenmantel aus der Dunkelheit in den Weg. Ein Streit, und Ashe tötet Ines
+  Lantern eine Daten-Wallet (verschlüsselt; der Schlüssel ist der Stick aus dem Trockner) und flüstert ihm zu, wo er liegt. Lantern fährt davon und sieht nichts. Als Ines zur Treppe zurückwill, tritt ihr ein Mann in einem weißen Regenmantel aus der Dunkelheit in den Weg. Ein Streit, und Ashe tötet Ines
   vor der Kamera. Ashe sieht nach oben in die Kamera, direkt zu Juno, eine Störung läuft durchs Bild, und der Feed
   bricht ab. Juno kann nichts tun: Das Kapitel spielt ihre Ohnmacht aus (`kapitel1-design` §8). **Juno hat die Aufnahme.** EVI, die sonst jeden Menschen falsch liest, liest diesen
   richtig: „Er hat sie ausgeschaltet. Juno. Er hat sie ausgeschaltet."
@@ -288,8 +288,8 @@ Straßenmodus.
   | **Lantern finden und ihm den Clip geben** | eine gefährliche Suche in den Sümpfen; Lantern wird ein Verbündeter; seine Sendung kommt zu früh, und er wird gejagt |
   | **Ihn behalten** | jetzt die sicherste Wahl; niemand weiß davon; Juno ist allein, und das Kassenbuch vergisst nicht |
 
-- **Das Ende:** Ines' Protokolle kommen ans Licht: Die einzige Daten-Wallet hat Lantern. Er öffnet sie mit dem Stick (behält Juno
-  den Stick, muss er zu ihr) und sendet sie über seinen Piratensender, aber dem gejagten „Mörder“ glaubt niemand. Juno
+- **Das Ende:** Ines' Protokolle kommen ans Licht: Die einzige Daten-Wallet hat Lantern. Er öffnet sie mit dem Stick (hat Juno
+  den Stick, legt sie ihn zurück oder bringt ihn ihm, §10b) und sendet sie über seinen Piratensender, aber dem gejagten „Mörder“ glaubt niemand. Juno
   legt sie neben ihre Kameras: Die REM-Spitzen der Lull-Nutzer stimmen mit den
   Zeitstempeln der Kameras überein, auf die Sekunde. In dieser Nacht wacht Teo nicht auf. **Teo ist ein
   Sinker.** Die Nachricht kommt nicht von Halcyon, sondern von Tinte, über das Netz der Pumpenhalle:
@@ -537,10 +537,11 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
   taucht er unter: Den Rest kann er nicht zahlen, den Ring hat Varga schon, und verschuldet traut er sich nicht mehr heim.
 - **WREN und die Quiet:** Hat Juno den Ort verkauft, weiß die Quiet sofort, wer sie ist. Nach einer Weigerung muss sie erst suchen.
 - **Lanterns Rollstuhl** hat Schubdüsen für kurze Sätze; so kommt er über Treppen und Leitern (Vorschlag, wie weit das geht, ist offen).
-- **Daten-Wallet und Stick:** Ines gibt Lantern eine **Daten-Wallet** mit den verschlüsselten Protokollen (das Wort ersetzt „Laufwerk“). Der
-  **Stick** im Trockner ist der Schlüssel dazu. Ort und Zeit stehen auf dem Waschsalon-Ticket, nicht auf dem Stick: Behält Juno den
-  Stick, kommt Lantern trotzdem zum Treffen, kann die Wallet aber nicht öffnen und sucht in Kapitel 2 Juno. Es gibt nur diese eine
-  Wallet; ohne den Stick lässt sie sich nicht lesen.
+- **Daten-Wallet und Stick** (entschieden 2026-11-06): Ines gibt Lantern am Freitag eine **Daten-Wallet** mit den verschlüsselten Protokollen (das Wort ersetzt „Laufwerk“). Der **Stick** ist der Schlüssel dazu. Sie versteckt ihn schon am Donnerstag im **kaputten** Trockner 6 und flüstert Lantern erst bei der Übergabe zu, wo er liegt. So trägt sie auf dem Weg zum Treffen nur die Wallet, und nur Lantern soll sie öffnen können. Es gibt nur diese eine Wallet und nur diesen einen Stick. Ihr Plan scheitert allein daran, dass der Waschsalon eine Kamera mit dem Code 0000 hat: Juno sieht zu.
+- **Lantern kommt erst beim Treffen vor** (entschieden 2026-11-06): Am Donnerstag taucht er nicht auf, und das Waschsalon-Ticket ist gestrichen. Ines und Lantern haben den Termin längst ausgemacht; wie, muss den Spieler nicht kümmern. **Lantern weiß nichts von Juno**, er kann sie also nicht suchen.
+- **Die Pegeltafel** (entschieden 2026-11-06): Die Treppe am Sumpf-Abgang ist nur bei Niedrigwasser zu Fuß begehbar. Am Donnerstag geht Ines nach dem Waschsalon dorthin, liest die Tafel und sieht auf die Uhr. Juno fragt sich, warum eine Ärztin da hinwill, liest dieselbe Tafel (Freitag, 23:00) und schließt daraus auf das Treffen. Es bleibt eine Schlussfolgerung: Wer an WREN verkauft, verkauft eine Vermutung.
+- **Das Flüstern** (entschieden 2026-11-06): Das Mikro hängt neben Ines, Ashe steht zu weit weg. Nur Juno hört, wo der Schlüssel liegt („Sonst weiß es keiner.“ „Doch. Ich.“). **Die Live-Übertragung an WREN ist nur Bild.** Hat Juno den Stick genommen, stirbt Ines in dem Glauben, Lantern habe alles.
+- **Der Stick in Kapitel 2** (entschieden 2026-11-06): Lässt Juno ihn liegen, holt Lantern ihn noch in der Nacht. Hat sie ihn, findet Lantern die Sechs leer. Juno legt ihn dann anonym zurück (Lantern sieht jede Nacht nach) oder bringt ihn Lantern selbst; dieser Weg bleibt immer offen. **Die Quiet bekommt den Stick nie.** Erfährt sie von der Sechs, weil Juno ihre Aufnahme ungeschnitten weitergibt, findet sie den Trockner leer und bleibt dort sitzen. Juno sieht das auf `cam23`, und Zurücklegen geht dann nicht mehr. Hält Lantern den Stick schon, kommt sie ohnehin zu spät.
 - **WRENs Geld:** 1500 für den Ort (250 vorab, 1250 beim Senden; wer den Vorschuss zurückschickt und doch sendet, bekommt 1500), dazu 750 für die Live-Übertragung, getrennt im Kassenbuch.
 - **Kamera 31:** Halcyon hat die alten Metrokameras einst nachgerüstet und dann vergessen; deshalb versteht sie das Beobachter-Protokoll.
 - **Das Ende von Kapitel 1 spielt Junos Ohnmacht aus** (`kapitel1-design` §8): Alles, was sie versucht, scheitert sichtbar. Nachdem Ashe in
@@ -568,7 +569,7 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
 - **Ashe war früher Beobachter in Junos Halle.** Deshalb sieht er in die Kamera (bis 2026-11-06: er winkte): `cam31` versteht nur das alte Protokoll, also weiß er, was für ein Mensch gerade zusieht. Auch nach einer Weigerung bleibt der Quiet nur eine kurze Liste.
 - **Kapitel 1, vorläufig bis zum Durchspielen im Mock** (`kapitel1-design`): Am Freitag gibt es kein Schlafen, nach 22:00 gilt „nicht gesendet“, um 22:30 bucht das Konto die Miete ab und
   Teo schreibt, wenn sie nicht reicht, und die Uhr hält um 22:45, bis Juno auf `cam31` zusieht. Wer den Donnerstag verschläft, findet den Ort am Freitag über Ines' Weg am Sumpf-Abgang.
-  `cam12` und `cam30` gehen über Junos alten Zugang, `cam24` über Sable oder Mottes zweite Lektion; das „Kassenbuch-Rätsel“ ist gestrichen. Ines ist von Anfang an nicht
+  `cam30` geht über Junos alten Zugang, `cam24` über Sable oder Mottes zweite Lektion; das „Kassenbuch-Rätsel“ ist gestrichen. Ines ist von Anfang an nicht
   erreichbar. Morrow sagt: „Freitag fährt keiner die Kowalski.“ Das Richtmikro kommt erst in Kapitel 2. Frau Kessler und Bao nehmen den Prolog wieder auf.
 - **Die Abende von Kapitel 1 spielen auch draußen** (`kapitel1-design`, „Die Stadt“): die Gasse und das Dach des Kessel-Blocks, von dem man die Ringe sieht; der Zeitungskrieg, die Frau, die sich erinnert, die weißen Träger; die Regenleserin, der Prediger, die halbe Reparatur. Das Bett geht erst ab 01:00 auf. **Aufs Dach führt keine Treppe:** Juno klettert aus dem Fenster auf den Sims und die Außenleiter hoch; der Blick auf die Ringe wird eine eigene große Einstellung.
 - **Das Foto am Deck** zeigt das Dach des Kessel-Blocks im Jahr 2074: Juno ist 14, Teo 6 (acht Jahre Abstand, wie heute mit 31 und 23). Das Dach heute ist derselbe Blick zwanzig Jahre später: Der Schirm sagt `SLEEP BETTER` statt `RISE ABOVE`, und Juno kann sich allein an die alte Stelle setzen.

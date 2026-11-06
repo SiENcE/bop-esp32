@@ -55,11 +55,10 @@ Halcyon.at = {
   cam14: { door: [97, 112], mat: [190, 116], mic: [150, 100], doorsRect: [70, 30, 170, 58] },
   cam18: { mic: [150, 100], sign: [176, 22, 56, 26], stairs: [100, 70, 120, 90] },
   cam22: { seat: [120, 112], door: [20, 100], mic: [120, 100], bar: [24, 118, 272, 20] },
-  cam23: { door: [300, 150], dryer6: [168, 76], counter: [262, 150], mic: [168, 100], dryers: [16, 28, 236, 40], tickets: [268, 80, 44, 60] },
+  cam23: { dryer6: [168, 76], counter: [262, 150], mic: [168, 100], dryers: [16, 28, 236, 40], desk: [268, 80, 44, 60] },
   cam24: { door: [160, 96], off: [40, 150], mic: [160, 110], entrance: [124, 24, 72, 66] },
-  cam12: { top: [160, 66], bottom: [160, 148], mic: [160, 100], ladder: [140, 60, 40, 90] },
   cam15: { door: [60, 150], spot: [262, 100], mic: [160, 100], capsules: [44, 28, 272, 52], c23: [248, 28, 30, 25] },
-  cam30: { top: [160, 84], water: [160, 146], mic: [160, 100], sign: [88, 30, 144, 11] },
+  cam30: { top: [160, 84], water: [160, 146], board: [222, 112], mic: [160, 100], sign: [88, 30, 144, 11], tide: [232, 52, 56, 36] },
   // measured from the camera in art/cams/cam31.px.js (it logs them when built)
   cam31: { stairs: [96, 83], top: [92, 67], shadow: [59, 92], edge: [151, 117], meet: [112, 99], asheMeet: [97, 90], tunnel: [284, 111], lantern: [183, 131], mic: [135, 108], tries: [244, 26, 72] },
   gasse: {

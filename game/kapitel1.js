@@ -3,10 +3,9 @@
 // in cam31: game/kapitel1_ende.js.
 //   e1                    Entscheidung 1: sold | refused
 //   rent                  paid | teo (Teo paid it)
-//   tag_ines, tag_lantern the people Juno follows
-//   saw_drop              she saw (or found in the buffer) Ines leave the stick in dryer 6
-//   stick_read            she has been to the dryer; stick_ines: she kept the stick
-//   know_meeting          Juno knows where and when Ines meets someone
+//   tag_ines              the person Juno follows
+//   stick_ines            she holds the stick from dryer 6, the key to Ines' wallet; she can still put it back until the meeting
+//   know_meeting          Juno knows where and when Ines meets someone (the tide board in cam30, story §10b)
 //   bed_closed            on Friday there is no sleeping
 // (the flags from the prologue the chapter carries over: `keep` of the act)
 "use strict";
@@ -19,8 +18,8 @@ Halcyon.nights = {
   // Friday: Ines goes neither to the bar nor to the laundromat, her home is open (Sable or Motte will have given the code by then),
   // and how Juno spent Thursday only counts through what she knows and has
   4: { date: "Freitag, 9. November", evening: "Abend 3", passes: [
-    ...["tag_ines", "tag_lantern", "saw_drop", "stick_read", "code_cam22", "link_cam22", "code_cam23", "link_cam23",
-      "~moment.ines_drop", "~moment.lantern_sign", "~moment.traeger"].map((f) => ({ unset: f })),
+    ...["tag_ines", "code_cam22", "link_cam22", "code_cam23", "link_cam23",
+      "~moment.ines_drop", "~moment.ines_tide", "~moment.traeger"].map((f) => ({ unset: f })),
     { set: "code_cam24" }, { set: "link_cam24" },
   ] },
 };
@@ -55,8 +54,7 @@ Halcyon.cams.cam22 = { id: "22", place: "PHO PUMP", owner: "PRIVAT", map: [64, 3
 Halcyon.cams.cam23 = { id: "23", place: "SUDS & SPIN", owner: "PRIVAT", map: [120, 38], if: ["day>1", "day<4", "!off_main"],
   tryIt: ["Eine billige Kamera. Der Werkscode: 0000.", { set: "code_cam23" }, { set: "link_cam23" }, { sfx: "link" }, "Natürlich."] };
 Halcyon.cams.cam24 = { id: "24", place: "WOHNBLOCK LERCHE", owner: "PRIVAT", map: [176, 14], if: "day=4" };      // (the code will come from Sable or Motte's second lesson, kapitel1-design C4)
-Halcyon.cams.cam12 = { id: "12", place: "DRAIN-MARKT, EINGANG", owner: "HALCYON", map: [176, 38], if: "tag_lantern" };
-Halcyon.cams.cam30 = { id: "30", place: "SUMPF-ABGANG", owner: "HALCYON", map: [176, 62], if: { or: ["tag_lantern", "day=4"] } };
+Halcyon.cams.cam30 = { id: "30", place: "SUMPF-ABGANG", owner: "HALCYON", map: [176, 62], if: { or: [["day>1", "!off_main"], "day=4"] } };
 Halcyon.cams.cam31 = { id: "31", place: "ALTE METRO, LINIE 31", owner: "UNBEKANNT", map: [120, 86], if: "know_meeting",
   // the old protocol is in Juno's head, and it wants a beat: the eye in the noise when she has it (kapitel1-design C7)
   tryIt: ["Kein Code findet die. Das Ding ist älter als Halcyon.", "Aber sie wartet auf was. Das alte Protokoll will einen Takt.", { dialog: "cam31_takt" }] };
@@ -75,7 +73,7 @@ for (let n = 1; n < 4; n++) { takt[`${STEPS[n]}_ok`] = beat(n, true); takt[`${ST
 Cutaway.dialog("cam31_takt", takt);
 
 // ---- the people of job C (art/characters/feed_people.px.js)
-const A21 = Halcyon.at.cam21, A22 = Halcyon.at.cam22, A23 = Halcyon.at.cam23, A24 = Halcyon.at.cam24, A12 = Halcyon.at.cam12, A30 = Halcyon.at.cam30, A31 = Halcyon.at.cam31;
+const A21 = Halcyon.at.cam21, A22 = Halcyon.at.cam22, A23 = Halcyon.at.cam23, A24 = Halcyon.at.cam24, A30 = Halcyon.at.cam30, A31 = Halcyon.at.cam31;
 Halcyon.people.ines = { name: "INES CALDER", known: "know_ines", label: "Frau im Kittel", speaker: "Ines" };
 Cutaway.actor("ines", { name: "Frau im Kittel", color: "#f0a0c0",
   costume: { idle: { se: "ines_feed_front", ne: "ines_feed_back" }, walk: { se: "ines_feed_front_walk", ne: "ines_feed_back_walk" }, talk: { se: "ines_feed_front", ne: "ines_feed_back" } }, speed: [14, 10], voice: { pitch: 66, wave: "triangle", syllable: 70 },
@@ -83,27 +81,25 @@ Cutaway.actor("ines", { name: "Frau im Kittel", color: "#f0a0c0",
     { if: "ines_gives", idle: "ines_feed_give", talk: "ines_feed_give" }],
   // what she does shows when Juno looks at her: a moment "seen or not" would double every state after it
   look: [{ if: "at:ines=cam31", then: ["Sie wartet. Sie sieht nur zum Tunnel."] }, { if: "at:ines=cam22", then: [{ if: "day=2", then: ["Sie schreibt was auf eine Serviette. Und legt die Hand drüber."], else: ["Dieselbe Suppe. Aber sie schaut dauernd zur Tür."] }],
-    else: ["Ein Kittel, heller als alles. Dunkler Zopf."] }],
+    else: [{ if: ["at:ines=cam30", "day=3"], then: ["Sie sieht auf die Tafel. Dann auf die Uhr."], else: ["Ein Kittel, heller als alles. Dunkler Zopf."] }] }],
   talk: [{ if: "end_beat", then: ["Ines. Nicht die Treppe."], else: [{ if: { or: ["tag_ines", "day=4", "off_main"] }, then: ["Die kenn ich."], else: [{ tag: "ines" }, "Dr. Ines Calder. Das ist sie, vom Foto."] }] }] });
-Halcyon.people.lantern = { name: "ROLLSTUHL", known: "tag_lantern", label: "Jemand im Rollstuhl", speaker: "Jemand im Rollstuhl" };
+Halcyon.people.lantern = { name: "ROLLSTUHL", label: "Jemand im Rollstuhl", speaker: "Jemand im Rollstuhl" };
 Cutaway.actor("lantern", { name: "Jemand im Rollstuhl", color: "#b0f0a0",
   costume: { idle: "lantern_feed", walk: "lantern_feed", talk: "lantern_feed" }, speed: [14, 10], voice: { pitch: 46, wave: "square", syllable: 85 },
-  look: ["Drei Uhr früh. Wer wäscht um drei?", "Geflickter Poncho, Schwimmer am Rollstuhl, ein Bündel Antennen.", { if: "stick_ines", then: ["Der Trockner ist leer. Das Ticket nimmt er trotzdem."], else: ["Er holt, was sie dagelassen hat."] }],
-  talk: [{ if: { or: ["tag_lantern", "off_main"] }, then: ["Den hab ich."], else: [{ tag: "lantern" }, "Dich merk ich mir. Wo willst du hin?"] }] });
+  look: ["Geflickter Poncho, Schwimmer am Rollstuhl, ein Bündel Antennen."],
+  talk: ["Wer bist du?"] });
 Cutaway.routine("ines", [
   { day: [2, 3, 4], from: "19:00", to: "19:15", room: "cam21", at: A21.door, path: [A21.door, A21.walkOff] },
   { day: [2, 3], from: "19:15", to: "20:00", room: "cam22", at: A22.seat },
   { day: 2, from: "20:00", to: "20:30", room: "cam23", at: A23.counter },
   { day: 3, from: "20:00", to: "20:15", room: "cam23", at: A23.dryer6 },
+  { day: 3, from: "20:15", to: "20:30", room: "cam30", at: A30.board, face: "ne", path: [A30.top, A30.board] },
   { day: [2, 3], from: "20:30", to: "21:00", room: "cam24", at: A24.off, path: [A24.off, A24.door] },
   { day: 4, from: "22:15", to: "22:30", room: "cam24", at: A24.door, path: [A24.door, A24.off] },
   { day: 4, from: "22:30", to: "22:45", room: "cam30", at: A30.top, path: [A30.top, A30.water] },
   { day: 4, from: "22:55", to: "23:30", room: "cam31", at: A31.top, face: "se" },
 ]);
 Cutaway.routine("lantern", [
-  { day: 3, from: "03:00", to: "03:15", room: "cam23", at: A23.dryer6, path: [A23.door, A23.dryer6, A23.counter] },
-  { day: 3, from: "03:15", to: "03:30", room: "cam12", at: A12.top, path: [A12.top, A12.bottom] },
-  { day: 3, from: "03:30", to: "03:45", room: "cam30", at: A30.top, path: [A30.top, A30.water] },
   { day: 4, from: "23:00", to: "23:02", room: "cam31", at: A31.tunnel, face: "sw" },
 ]);
 // the queue at the clinic, before Ines comes out; one of them is on the protocol without knowing it
@@ -116,11 +112,13 @@ Halcyon.links = [{ actor: "commuter_c", if: ["day<4", "at:commuter_c=cam21"] },
   { actor: "ines", if: ["day=4", "!tag_ines"], label: "INES CALDER", color: "implant" }];
 
 // ---- the moments of job C
-Cutaway.moment("ines_drop", { room: "cam23", day: 3, from: "20:00", to: "20:15",
-  play: ["Keine Wäsche. Was macht sie hier ohne Wäsche?", "Sie legt was in Trockner 6. Und ein Ticket auf die Theke.", "Und weg.", { set: "saw_drop" }] });
-const SIGN_READ = [{ set: "know_meeting" }, "LINE 31, CLOSED. Die alte Metro.", "Einunddreißig. Das Ticket, das Treffen: Freitag, elf Uhr."];
-Cutaway.moment("lantern_sign", { room: "cam30", day: 3, from: "03:30", to: "03:45", if: "tag_lantern",
-  play: ["Er schwimmt die Treppe runter. Auf ein Schild zu.", ...SIGN_READ] });
+const DROP = ["Keine Wäsche. Was macht sie hier ohne Wäsche?", "Sie legt was in Trockner 6. In den kaputten.", "Und weg. Aber nicht nach Hause.", "Die Richtung geht's nur noch zum Sumpf-Abgang."];
+Cutaway.moment("ines_drop", { room: "cam23", day: 3, from: "20:00", to: "20:15", play: DROP });
+// Why she goes to the stairs on Thursday: she has to know when the way down can be walked. Juno reads the same board and adds it up (story §10b)
+const TIDE_READ = ["Nicht nach Hause. Was will die hier?", "Der Abgang ist seit der Flut zu. Unten ist nur noch die alte Metro.", "Sie liest die Pegeltafel. Und sieht auf die Uhr.",
+  "Freitag, 23:00: Niedrigwasser. Dann kommt man zu Fuß runter.", "Wer will da runter? Keiner will da runter.", "Außer man trifft da wen. Wo keiner hinsieht.", { set: "know_meeting" }];
+const SIGN_READ = [{ set: "know_meeting" }, "LINE 31, CLOSED. Die alte Metro. Was will die da unten?", "Um elf ist Niedrigwasser. Da trifft sie wen."];
+Cutaway.moment("ines_tide", { room: "cam30", day: 3, from: "20:15", to: "20:30", if: "!know_meeting", play: TIDE_READ });
 Cutaway.moment("ines_sign", { room: "cam30", day: 4, from: "22:30", to: "22:45", if: "!know_meeting",
   play: ["Da ist sie. Mit einer Tasche. Sie geht die Treppe runter, ins Wasser.", ...SIGN_READ] });
 
@@ -178,16 +176,17 @@ Halcyon.camRoom("cam21", { background: "cam21_bg", mic: { at: A21.mic, ...MIC },
 } });
 Halcyon.camRoom("cam22", { background: "cam22_bg", mic: { at: A22.mic, ...MIC }, hotspots: { bar: { name: "Theke", rect: A22.bar, look: "Pho Pump. Suppe für alle, die nach Pumpe riechen." } } });
 Halcyon.camRoom("cam23", { background: "cam23_bg", mic: { at: A23.mic, ...MIC }, hotspots: {
-  dryers: { name: "Trockner", rect: A23.dryers, look: "Acht Trockner. Sechs ist der, der noch geht." },
-  tickets: { name: "Theke", rect: A23.tickets, look: "Die Ticket-Theke." },
-  rewind: { name: "Puffer", z: 5, if: ["day=3", "moment:ines_drop", "!saw_drop"], use: ["Puffer. Zurück auf 20:05.", "Keine Wäsche. Sie legt was in Trockner 6, und ein Ticket auf die Theke.", { set: "saw_drop" }] },
+  dryers: { name: "Trockner", rect: A23.dryers, look: "Acht Trockner. Die Sechs ist tot, mit Zettel. Da sieht keiner rein." },
+  desk: { name: "Theke", rect: A23.desk, look: "Die Theke. Ein Mann schläft dahinter, seit Jahren." },
+  // a look back may repeat: no flag of its own
+  rewind: { name: "Puffer", z: 5, if: ["day=3", "moment:ines_drop", "!seen:ines_drop"], use: ["Puffer. Zurück auf 20:05.", ...DROP] },
 } });
 Halcyon.camRoom("cam24", { background: "cam24_bg", mic: { at: A24.mic, ...MIC }, hotspots: { entrance: { name: "Haustür", rect: A24.entrance, look: "Wohnblock Lerche. Da wohnt sie." } } });
-Halcyon.camRoom("cam12", { background: "cam12_bg", mic: { at: A12.mic, ...MIC }, hotspots: { ladder: { name: "Leiter", rect: A12.ladder, look: "Die Leiter zum Drain-Markt. Für einen Rollstuhl eigentlich nichts." } } });
 Halcyon.camRoom("cam30", { background: "cam30_bg", mic: { at: A30.mic, ...MIC }, hotspots: {
   sign: { name: "Schild", rect: A30.sign, look: "LINE 31, CLOSED. Seit der Flut, schätze ich." },
-  rewind: { name: "Puffer", z: 5, if: { or: [["day=3", "moment:lantern_sign", "tag_lantern", "!know_meeting"], ["day=4", "moment:ines_sign", "!know_meeting"]] },
-    use: ["Puffer. Da, die Treppe runter.", ...SIGN_READ] },
+  tide: { name: "Pegeltafel", rect: A30.tide, look: "Die Pegeltafel. Freitag, 23:00: Niedrigwasser." },
+  rewind: { name: "Puffer", z: 5, if: { or: [["day=3", "moment:ines_tide", "!know_meeting"], ["day=4", "moment:ines_sign", "!know_meeting"]] },
+    use: [{ if: "day=3", then: ["Puffer. Zurück auf Viertel nach acht.", ...TIDE_READ], else: ["Puffer. Da, die Treppe runter.", ...SIGN_READ] }] },
 } });
 
 // ---- the alley and the laundromat, in street mode
@@ -202,23 +201,21 @@ Cutaway.room("gasse", { name: "Die Gasse", background: "gasse_bg", walk: AG.walk
     niche: { name: "Nische", rect: AG.nicheRect, walkTo: AG.niche, face: "ne", look: "Eine Nische mit einer Matratze und einem Topf. Hier wohnt jemand." },
     cables: { name: "Kabel", rect: AG.cablesRect, walkTo: AG.niche, face: "ne", look: "Kabel, armdick. Alle tropfen. Keiner weiß mehr, wohin sie gehen." },
   } });
-const AT_DRYER = ["day=3", "time>=20:00", "time<03:00", "!off_main"];     // it lies there from when she has left it (the clock stands while Juno walks) until he comes for it at 03:00
+const AT_DRYER = ["!off_main", { or: [["day=3", "time>=20:00"], "day=4"] }];     // it lies there from when she has left it (the clock stands while Juno walks); Lantern only hears of it at the meeting
 Cutaway.room("laundromat", { name: "SUDS & SPIN", background: "laundromat_bg", walk: AW.walk,
   ambience: ["fridge_hum", "neon_buzz"], music: { theme: "juno", intensity: 0.3 },
   hotspots: {
     door: { name: "Tür", rect: AW.doorRect, walkTo: AW.door, face: "sw", use: [{ goto: "gasse", at: AG.laundromat, face: "sw" }] },
     dryers: { name: "Trockner", rect: AW.dryersRect, walkTo: AW.dryer6, face: "ne", look: "Acht Trockner. Drei Paar Turnschuhe drin, trotz des Schilds." },
-    dryer6: { name: "Trockner 6", rect: AW.dryer6Rect, walkTo: AW.dryer6, face: "ne", z: 1, look: "Trockner 6.",
-      use: [{ if: [...AT_DRYER, "!stick_read"], then: ["Da liegt was drin. Ein Datenstick.", "Ein Schlüssel drauf. Sonst nichts. Wozu, weiß ich nicht.", { set: "stick_read" }, { dialog: "stick" }],
-        else: ["Leer. Warm, und leer."] }] },
-    counter: { name: "Theke", rect: AW.counterRect, walkTo: AW.counter, face: "ne",
-      look: [{ if: AT_DRYER, then: ["Ein Ticket liegt auf der Theke."], else: ["Die Theke. Ein Mann schläft dahinter, seit Jahren."] }],
-      use: [{ if: AT_DRYER, then: ["Ticket 31. Fr 23:00.", { if: "!know_meeting", then: [{ set: "know_meeting" }, "Einunddreißig. Die alte Metrolinie 31? Freitag, elf Uhr."] }], else: ["Nichts für mich."] }] },
+    dryer6: { name: "Trockner 6", rect: AW.dryer6Rect, walkTo: AW.dryer6, face: "ne", z: 1, look: "Trockner 6. OUT OF ORDER, und das schon länger.",
+      use: [{ if: AT_DRYER, then: [{ if: "stick_ines", then: ["Hier lag er."], else: ["Da liegt was drin. Ein Datenstick.", "Ein Schlüssel drauf. Sonst nichts. Wozu, weiß ich nicht."] }, { dialog: "stick" }],
+        else: ["Kalt und leer."] }] },
+    counter: { name: "Theke", rect: AW.counterRect, walkTo: AW.counter, face: "ne", look: "Die Theke. Ein Mann schläft dahinter, seit Jahren.", use: ["Nichts für mich."] },
   } });
 Cutaway.item("stick", { name: "Ines' Stick", icon: "inv_stick", look: "Ein Datenstick. Ein Schlüssel drauf, sonst nichts. Wozu, weiß ich nicht." });
 Cutaway.dialog("stick", { main: { choices: [
-  { text: "Zurücklegen.", silent: true, goto: "end", then: ["Soll sie ihren Plan haben. Ich schau nur zu."] },
-  { text: "Behalten.", silent: true, goto: "end", then: [{ set: "stick_ines" }, { give: "stick" }, "Wer weiß, wofür der gut ist. Jemand wird ihn vermissen."] },
+  { text: "Zurücklegen.", silent: true, goto: "end", then: [{ if: "stick_ines", then: [{ unset: "stick_ines" }, { remove: "stick" }] }, "Soll sie ihren Plan haben. Ich schau nur zu."] },
+  { text: "Behalten.", silent: true, goto: "end", then: [{ if: "!stick_ines", then: [{ set: "stick_ines" }, { give: "stick" }] }, "Wer weiß, wofür der gut ist. Jemand wird ihn vermissen."] },
 ] } });
 
 // ---- the act. It begins from a clean state, whichever way: what the prologue leaves comes along in `keep`,
@@ -232,10 +229,10 @@ Cutaway.act("kapitel1", {
     { place: "juno", room: "flat", at: AF.start, face: "ne" },
     { if: "!p1", then: [{ set: "p1", value: "full" }, { set: "chits", value: 0 }, { ledger: "kessler", value: "full" }, { cache: "clip_kessler_ring" }, { cache: "note_kessler_debt" }] },
     { set: "code_cam03" }, { set: "link_cam03" }, { cache: "note_kessler_photo" }, { cache: "note_obs_handbook" },
-    { set: "code_cam21" }, { set: "link_cam21" }, { set: "code_cam12" }, { set: "link_cam12" }, { set: "code_cam30" }, { set: "link_cam30" }, { set: "code_cam18" }, { set: "link_cam18" },   // Juno's old access
+    { set: "code_cam21" }, { set: "link_cam21" }, { set: "code_cam30" }, { set: "link_cam30" }, { set: "code_cam18" }, { set: "link_cam18" },   // Juno's old access
     { set: "know_ines" }, { set: "saw_varga" }, { set: "read_kessler" },
     { set: "fridge_empty" }, { set: "rent_notice" }, { set: "moth_met" }, { set: "ate_bao" },
-    { been_to: ["flat", "deck", "kessel_14", "kessel_lobby", "kowalski", "gasse", "laundromat", "sims", "dach", "dach_blick", "dach_sitzen", "lucky_static", "drain_market", "sable_booth", "cam15", "signal_lost", "flat_danach", "cam03", "cam14", "cam18", "cam12", "cam21", "cam22", "cam23", "cam24", "cam30", "cam31"] },
+    { been_to: ["flat", "deck", "kessel_14", "kessel_lobby", "kowalski", "gasse", "laundromat", "sims", "dach", "dach_blick", "dach_sitzen", "lucky_static", "drain_market", "sable_booth", "cam15", "signal_lost", "flat_danach", "cam03", "cam14", "cam18", "cam21", "cam22", "cam23", "cam24", "cam30", "cam31"] },
     { ledger: "wren_advance", value: "paid" }, { set: "imai_step", value: 0 }, { solo: true },
   ],
 });

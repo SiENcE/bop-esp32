@@ -12,7 +12,7 @@ Zeit: `docs/kapitel0-design.md` §2–4. Stil: `docs/style-guide.md`.
 | Aufbau | **offen**: drei Aufträge, in beliebiger Reihenfolge und parallel, über drei Abende verteilt; das Kapitel endet am dritten Abend mit dem Treffen in der alten Metro |
 | Neu im Spiel | der Drain-Markt und Sable (persönlich), Ratz, die Deck-App NETZ, Anonymisieren im Clip-Editor, Vesper (NINTH LIVE), Werkzeuge kaufen, Steuern im Feed, Kamera vor Ort anzapfen, die Tage, Teo, die Polizei (Morrow, kurz) |
 | Orte, Straßenmodus | `flat`, `kessel_14`, `kessel_lobby`, `kowalski`, `lucky_static`, `okonkwo_shop`, `drain_market`, `sable_booth`, `laundromat` (9) |
-| Kameras | `cam03`, `cam04`, `cam07` (Kowalski-Straße, das Mockup E), `cam07v` (die Automatenkamera), `cam12` (Eingang Drain-Markt), `cam15` (Kapselhotel Morpheus), `cam21`–`cam24` (Ines' Wege), `cam30` (Sumpf-Abgang), `cam31` (alte Metro) (12) |
+| Kameras | `cam03`, `cam04`, `cam07` (Kowalski-Straße, das Mockup E), `cam07v` (die Automatenkamera), `cam15` (Kapselhotel Morpheus), `cam21`–`cam24` (Ines' Wege), `cam30` (Sumpf-Abgang), `cam31` (alte Metro) (11) |
 | Entscheidungen | K1a (Kessler), K1b (der Eckladen), **Entscheidung 1** (WREN) |
 | Ende | der Mord an Ines in `cam31` |
 | Dialoge | zuerst einfache Dialoge; die inneren Stimmen (`dialog-design`, Engine E-d) kommen vor den endgültigen Texten dazu |
@@ -25,7 +25,7 @@ zum nächsten Abend. Jeder Abend beginnt mit neuen Nachrichten auf dem Deck.
 | Abend | Was neu ist | Was an diesem Abend geschieht |
 |---|---|---|
 | **1 (Mi, 7.11.)** | drei Auftragsangebote: Varga (A), die Tidewater Boys (B), WREN (C) | Teo kommt vorbei (§7). Ines' erster beobachtbarer Abend. Der Drain-Markt ist offen. Okonkwo öffnet den Tresor (01:00). |
-| **2 (Do, 8.11.)** | eine Mahnung vom Vermieter, die Werbung „Lull: 2 Wochen gratis" | Ines legt den Stick in den Trockner (20:00); Lantern holt ihn (03:00). Okonkwo öffnet den Tresor (01:00), zum letzten Mal. |
+| **2 (Do, 8.11.)** | eine Mahnung vom Vermieter, die Werbung „Lull: 2 Wochen gratis" | Ines versteckt den Stick im kaputten Trockner 6 (20:00) und liest die Pegeltafel am Sumpf-Abgang (20:15). Okonkwo öffnet den Tresor (01:00), zum letzten Mal. |
 | **3 (Fr, 9.11.)** | Varga drängt („Freitag ist heute."), WREN will „bis 22 Uhr" den Ort | Kein Schlafen. 22:00 WRENs Frist, 22:30 bucht das Konto die Miete ab (§5). Die Uhr hält um 22:45, bis Juno auf `cam31` zusieht. 23:00 das Treffen in der Metro. Kapitelende. |
 
 Was nicht an einen Abend gebunden ist, geht an jedem (die Aufträge A und B lassen sich am Abend 1, 2
@@ -38,7 +38,7 @@ also nur in den Nächten von Abend 1 und 2. Auftrag B muss bis dahin gelöst sei
 
 - Die Wege kosten keine Zeit, die Uhr läuft nur beim Warten (§9).
 - WRENs Antworten (zurückschicken, senden, nicht senden) gibt es erst am Freitag; vorher würde jede den ganzen Rest verdoppeln.
-- `cam22` wird mit der Speisekarte gleich verbunden; `cam22` und `cam23` stehen von Anfang an auf der Karte, Ines muss dafür nicht markiert sein. Im Trockner liegt der Stick auch für jemanden, der nur zufällig nachsieht. Am Freitag sind `cam22` und `cam23` weg (Ines geht nicht mehr hin), `cam24` ist dafür offen, bis Sable und Motte den Code geben.
+- `cam22` wird mit der Speisekarte gleich verbunden; `cam22` und `cam23` stehen von Anfang an auf der Karte, Ines muss dafür nicht markiert sein. Im kaputten Trockner liegt der Stick auch für jemanden, der nur zufällig nachsieht, von Donnerstag 20:00 bis zum Treffen. Am Freitag sind `cam22` und `cam23` weg (Ines geht nicht mehr hin), `cam24` ist dafür offen, bis Sable und Motte den Code geben.
 - Ines, Lantern und Ashe sind gemalt (`art/characters/feed_people.px.js`), nur `cam31` hat schon sein Bild; die anderen Kameras sind noch Blöcke. REC geht in Kapitel 1 nur während der Szene in `cam31`; zu sehen ist der Knopf überall.
 
 ## 3. Auftrag A: „Der verschwundene Schuldner" (Varga)
@@ -135,9 +135,9 @@ zahlt." Die Kette ist dieselbe; nur die Entscheidung am Ende (C9) ändert sich.
 |---|---|---|---|
 | 19:00 | verlässt die Klinik (`cam21`) | dito | dito |
 | 19:15 | Nudelbar „Pho Pump" (`cam22`), allein, schreibt etwas auf eine Serviette, steckt sie ein | dito, aber sie schaut oft zur Tür | geht nicht in die Nudelbar |
-| 20:00 | Waschsalon SUDS & SPIN (`cam23`), wäscht, sonst nichts | Waschsalon, legt einen **Datenstick** in Trockner 6 und geht ohne Wäsche | — |
+| 20:00 | Waschsalon SUDS & SPIN (`cam23`), wäscht, sonst nichts | Waschsalon, versteckt einen **Datenstick** im kaputten Trockner 6 und geht ohne Wäsche | — |
+| 20:15 | — | Sumpf-Abgang (`cam30`), liest die Pegeltafel, sieht auf die Uhr, steigt nicht hinunter | — |
 | 20:30 | nach Hause, Wohnblock Lerche (`cam24`) | dito | 22:15 verlässt das Haus mit einer Tasche, 22:30 am Sumpf-Abgang (`cam30`) |
-| 03:00 | — | **jemand im Rollstuhl, geflickter Poncho, Antennen,** holt den Stick aus Trockner 6 und das Ticket (`cam23`) | — |
 | 23:00 | — | — | das Treffen (`cam31`) |
 
 ### Kette
@@ -148,10 +148,10 @@ zahlt." Die Kette ist dieselbe; nur die Entscheidung am Ende (C9) ändert sich.
 | C2 | `cam21` → `cam22` | Folgen. `cam22` ist eine Bar-Kamera, verbunden über das Bar-WLAN (der Code steht auf der Speisekarte im Fenster, Zoom aus `cam21`). Die Serviette: Zoom, sie hält die Hand darüber. | `link_cam22` |
 | C3 | `cam22` → `cam23` | Folgen. `cam23`: der Waschsalon hat eine billige Kamera, Code ist ab Werk „0000" (Juno: „Natürlich."). | `link_cam23` |
 | C4 | `cam23` → `cam24` | Folgen nach Hause. `cam24` ist eine Haustürkamera, Code im Hausnetz; den gibt es bei Sable oder in Mottes zweiter Lektion (§7), bei Motte also frühestens am Abend 2. Optional. | — |
-| C5 | `cam23` | Abend 2, 20:00: der Stick in Trockner 6, der **Schlüssel** zu Ines' Daten-Wallet: Ohne ihn lässt sie sich nicht lesen (story §10b). Dazu legt sie ein Ticket auf die Theke. **Moment** `ines_drop`. | `saw_drop` |
-| C6a | `laundromat` | Juno geht selbst hin (Straßenmodus, zwischen 20:05 und 03:00), öffnet Trockner 6 und liest den Stick: ein Schlüssel, sonst nichts; wozu, weiß sie noch nicht. Auf der Theke liegt das Ticket: „Ticket 31 – Fr 23:00". Juno: „Einunddreißig. Die alte Metrolinie 31? Freitag, elf Uhr." Sie legt den Stick zurück (oder nimmt ihn: Lantern findet nur das Ticket, kommt trotzdem zum Treffen, kann die Wallet aber nicht öffnen, und in Kap. 2 sucht er den Stick bei Juno). | `know_meeting`, ggf. `+stick_ines` |
-| C6b | `cam23` | Oder: um 03:00 den Rollstuhl mit den Antennen markieren, wenn er den Stick und das Ticket holt, und ihm folgen: `cam12` (Drain-Markt-Eingang: Die Düsen tragen ihn über die Leiter hinunter, ein kurzer Satz im Feed) → `cam30` (der Sumpf-Abgang, er schwimmt die Treppe hinab, auf ein Schild „LINE 31 – CLOSED" zu). Juno zählt zusammen. | `know_meeting`, `tag_lantern` |
-| C6c | `cam30` | Abend 3, wer den Treffpunkt noch nicht kennt: Um 22:15 verlässt Ines das Haus, um 22:30 kommt sie am Sumpf-Abgang vorbei, am Schild `LINE 31 – CLOSED`. So geht das Kapitel auch, wenn Juno den Donnerstag verschlafen hat. | `know_meeting` |
+| C5 | `cam23` | Abend 2, 20:00: Ines versteckt den Stick im kaputten Trockner 6, der **Schlüssel** zu ihrer Daten-Wallet: Ohne ihn lässt sie sich nicht lesen (story §10b). Juno: „Und weg. Aber nicht nach Hause.“ **Moment** `ines_drop`, sonst im Puffer. | — |
+| C6a | `cam30` | Abend 2, 20:15: Ines am Sumpf-Abgang, an der **Pegeltafel**. Juno fragt sich, warum sie da hinwill, liest die Tafel (Freitag, 23:00: Niedrigwasser) und schließt: „Außer man trifft da wen. Wo keiner hinsieht.“ **Moment** `ines_tide`, sonst im Puffer. | `know_meeting` |
+| C6b | `laundromat` | Optional, von Donnerstag 20:00 bis zum Treffen: Juno geht selbst hin (Straßenmodus), öffnet den kaputten Trockner und liest den Stick: ein Schlüssel, sonst nichts; wozu, weiß sie noch nicht. Sie legt ihn zurück oder behält ihn; solange sie ihn hat, kann sie ihn dort auch wieder zurücklegen. | ggf. `stick_ines`, `+stick` |
+| C6c | `cam30` | Abend 3, wer den Treffpunkt noch nicht kennt: Um 22:15 verlässt Ines das Haus, um 22:30 geht sie am Sumpf-Abgang die Treppe hinunter, am Schild `LINE 31 – CLOSED` vorbei. So geht das Kapitel auch, wenn Juno den Donnerstag verschlafen hat; verkaufen kann sie dann nicht mehr (WRENs Frist war 22:00). | `know_meeting` |
 | C7 | Deck | `cam31` verbinden: eine **alte Metro-Kamera**, aus der Zeit vor Halcyon, die Halcyon einst nachgerüstet und dann vergessen hat. Kein Code findet sie. Erst das alte Beobachter-Protokoll aus Junos Implantat verbindet sie, und es will einen Takt, einen Handshake: **„lang, kurz, kurz, lang“** (entschieden 2026-11-05). Das Handbuch im CACHE sagt nur „Handshake: siehe Anlage C“, und die Anlage fehlt. Der Takt pulsiert hinter jedem Ohr im Neunten: bei Frau Haldane im Flur, bei Frau Imai, beim `UNKNOWN LINK` in der Schlange. Juno: „Woher kenn ich das?“ Bei `cam31` gibt man ihn Schlag für Schlag ein (Lang oder Kurz); erst am Ende zeigt sich, ob er stimmt. Dann: „Das kann nur noch mein Kopf.“ So ahnt, wer aufpasst, das Geheimnis von Kapitel 3: Lull und das Implantat sprechen dasselbe Protokoll. Ein Moment des Schauders: Im Rauschen vor dem Bild sieht man für einen Takt das Auge. | `link_cam31` |
 | C8 | Deck | WREN drängt am Abend 3: „Bis 22 Uhr. Wo und wann." | — |
 | C9 | Deck | **Entscheidung 1**: WREN den Ort senden oder nicht (unten). | `e1_sold` / `e1_refused` |
@@ -275,7 +275,7 @@ ihr Bild körniger als alle anderen, und es flackert. **Juno kann nichts tun, un
 | Zeit | Was geschieht | Was Juno versucht |
 |---|---|---|
 | 22:55 | Ines kommt die Treppe herunter, Tasche in der Hand. Sie wartet am Bahnsteigrand. | Juno atmet aus. Nach einer Weigerung: „Ines. Geh nach Hause.“ Ihre Nachricht an Ines' Komm: `NICHT ZUGESTELLT`. |
-| 23:00 | Lantern kommt durch das Wasser aus dem Tunnel, in seinem Rollstuhl mit Schwimmern (Poncho, Antennen; Story §4). Zuhören: Ines: „Es ist alles drauf. Die Protokolle passen auf die Sekunde.“ Lantern: „Wenn das stimmt ...“ Ines: „Es stimmt. Sie schlafen nicht. Sie *arbeiten*.“ Sie gibt ihm die Daten-Wallet. Fehlt der Stick (C6a): Lantern: „Der Schlüssel war nicht da.“ Ines erstarrt. | — |
+| 23:00 | Lantern kommt durch das Wasser aus dem Tunnel, in seinem Rollstuhl mit Schwimmern (Poncho, Antennen; Story §4). Zuhören: Ines: „Es ist alles drauf. Die Protokolle passen auf die Sekunde.“ Lantern: „Wenn das stimmt ...“ Ines: „Es stimmt. Sie schlafen nicht. Sie *arbeiten*.“ Sie gibt ihm die Daten-Wallet. Lantern: „Und der Schlüssel ...?“ Sie beugt sich zu ihm und flüstert (nur das Mikro neben ihr hört es, Ashe nicht, die Übertragung an WREN ist nur Bild): „SUDS & SPIN. Trockner sechs, der kaputte.“ „Sonst weiß es keiner.“ | Juno: „Doch. Ich.“ Hat sie den Stick: „Und er liegt in meiner Tasche.“ |
 | 23:02 | Lantern wirft den Motor an und verschwindet im Tunnel (entschieden 2026-11-06): Er flieht nicht und lässt sie nicht im Stich, er sieht nichts, denn die lange Wange der Treppe verdeckt den Schatten daneben für ihn und für Ines. Dort steht ein Mann im weißen Regenmantel. Im Feed hat er kein Gesicht: Seine Maske überstrahlt die Kamera zu einem weißen Fleck. Das Overlay versucht ihn zu markieren und zeigt `???`, dann rot `BEDROHUNG`. Ines sieht Lantern nach. Dann will sie zurück zur Treppe. | Juno: „Wer ist das?“ „Sie sieht ihn nicht.“ Jetzt lässt das Spiel alles anklicken, und nichts hilft: **Steuern:** Diese Kamera hat nichts zum Steuern, kein Licht, keine Tür: `KEIN ZUGRIFF`. **Chat an Ines:** `NICHT ZUGESTELLT`. **Lautsprecher:** Die Kamera hat keinen. **Revier 9** im Chat: „Ihre Meldung wird bearbeitet.“ Juno, leiser werdend: „Er wartet. Nein. Nicht die Treppe. Ines.“ |
 | 23:03 | Auf dem Weg tritt er ihr plötzlich in den Weg. Ein Streit, von dem man nur ihre Seite hört, denn er hat in diesem Kapitel keine Zeile (Vorschlag für den Wortlaut): „Sie sind nicht von der Klinik.“ „Zu spät. Er hat alles.“ „Lassen Sie mich vorbei.“ **Ashe tötet Ines** (Darstellung je nach Inhaltsoption, Story §10: schwarze Balken schließen sich, oder der Moment im Phosphor, ohne Nahaufnahme). Das alte Bild flackert und reißt dabei. Wer REC gedrückt hat, hat es: `clip_ines_death`. Wer nicht: der Puffer (Juno *muss* es haben; der Puffer hält es fest, auch wenn der Spieler zögert). | Die Klicks hören auf zu antworten. Juno sagt nichts mehr. |
 | 23:04 | Ashe hebt den Kopf und sieht in die Kamera (entschieden 2026-11-06, statt zu winken): In dem weißen Fleck erscheinen zwei dunkle Augenschlitze, mehr von ihm zeigt sich nicht. Eine Störung läuft durchs Bild, das Overlay zuckt, und der Feed bricht ab: `SIGNAL LOST`. | Der Zeiger bleibt, aber nichts reagiert. |
@@ -296,7 +296,7 @@ Live-Übertragung.“ 750 Chits, die zweite Zeile im Kassenbuch. Es schreibt sic
 | `okonkwo_shop` | 320x180 | warmes Glühlampenlicht, Regale | Tür → `kowalski` | Theke, Tresor (dahinter), Reissäcke, Batterien, Okonkwo | ein Foto von Okonkwos Familie vor der Flut, am Strand der alten Stadt |
 | `drain_market` | 480x180 (scrollt) | Bernstein, Rauch, Magenta-Neon | Leiter hinauf → `kowalski` (über die Gasse), Vorhang → `sable_booth`, Treppe hinab (Kap. 2) | Stände: Ratz' Elektroschrott, ein Garküchenstand, ein Organ-Tausch-Schild (`KIDNEYS ONLY`), gebrauchte Implantate in Gläsern | ein Prediger der „Wachen Kirche", der gegen Lull predigt; niemand hört zu |
 | `sable_booth` | 320x180 | Violett und Bernstein, Rauch | Vorhang → `drain_market` | Sable hinter einem Tisch voller Bildschirme, ein Käfig mit einem Vogel aus Draht | Sables Preisliste an der Wand: `NAMES 50. ADDRESSES 80. SECRETS: ASK.` |
-| `laundromat` | 320x180 | Grünstich, Neonröhren, Dampf | Tür → `gasse` | 8 Maschinen, Trockner 6, die Ticket-Theke, ein schlafender Mann | ein Schild `NO SNEAKERS IN THE DRYER` mit drei Paar Turnschuhen darunter |
+| `laundromat` | 320x180 | Grünstich, Neonröhren, Dampf | Tür → `gasse` | 8 Maschinen, der kaputte Trockner 6 mit einem Zettel `OUT OF ORDER`, die Theke, ein schlafender Mann | ein Schild `NO SNEAKERS IN THE DRYER` mit drei Paar Turnschuhen darunter |
 
 ### Kameras
 
@@ -304,13 +304,12 @@ Live-Übertragung.“ 750 Chits, die zweite Zeile im Kassenbuch. Es schreibt sic
 |---|---|---|---|
 | `cam07` | Kowalski-Straße | das Mockup E | drei Stellungen (Steuern) |
 | `cam07v` | Automatenkamera | Fischauge, Hüfthöhe | erst nach dem Abzweiger; sieht ins Ladenfenster |
-| `cam12` | Drain-Markt-Eingang | von oben auf die Leiter und das Gittertor | Lantern kommt hier mit den Düsen hinunter (C6b); Junos alter Zugang |
 | `cam15` | Kapselhotel Morpheus | ein Gang mit Kapseln, nummeriert | Kapselbildschirme lassen sich steuern (K1a warnen) |
 | `cam21` | Lull-Klinik 9-Ost, Eingang | weiß, eine Schlange müder Menschen, Halcyon-Logo | Junos alter Zugang |
 | `cam22` | Pho Pump | Bar-Kamera über der Theke | Code auf der Speisekarte |
 | `cam23` | Waschsalon SUDS & SPIN | von der Decke, die Trockner in einer Reihe | Code „0000" |
 | `cam24` | Wohnblock Lerche | Haustürkamera, Fischauge | optional |
-| `cam30` | Sumpf-Abgang | eine Treppe ins Wasser, ein Schild „LINE 31 – CLOSED" | Junos alter Zugang |
+| `cam30` | Sumpf-Abgang | eine Treppe ins Wasser, ein Schild „LINE 31 – CLOSED", daneben eine Pegeltafel (`LOW TIDE`, `FRI 23:00`) | Junos alter Zugang |
 | `cam31` | alte Metro, Linie 31 | Bahnsteig unter Wasser, Notlicht | nur über das alte Protokoll; körniger als alle anderen |
 
 ### Wege und Zeit
@@ -348,8 +347,8 @@ Größen wie in `kapitel0-design` §8: 30 px pro Meter Höhe; im Feed misst ein 
    ├─ B: cam07 schwenken ─ falscher Winkel ─ Abzweiger (Ratz / Motte) ─ Automat anzapfen (Drohne!) ─ cam07v ─ Code ─ K1b
    │      └─ optional: Morrows Bestechung aufzeichnen
    └─ C: cam21 ─ cam22 ─ cam23 ─ (Abend 2) Stick in Trockner 6
-           ├─ selbst hingehen: Tickets → „31, Fr 23:00"
-           └─ 03:00 Lantern folgen: cam12 ─ cam30 „LINE 31"
+           ├─ optional selbst hingehen: den Stick zurücklegen oder behalten
+           └─ 20:15 cam30: Ines an der Pegeltafel → „Fr 23:00, Linie 31"
            └─ cam31 über das alte Protokoll verbinden ─ Abend 3: Entscheidung 1
                                                                   │
  Abend 3 ─ Miete (Teo springt ein, falls nötig) ─ 23:00 cam31 ─ der Mord ─ Kapitel 2
@@ -370,7 +369,8 @@ Die Hinweise spricht EVI (Prolog-Design §2.2, §6.5). Die Tabelle nennt die sch
 | B3/B4 | „Von oben sieht man nur seinen Rücken." | „Gibt es auf der Straße etwas, das auf Augenhöhe schaut?" | „Der Automat vor dem Laden hat eine Kamera. Zapf sie an." |
 | B5 | „Zum Anzapfen brauchst du ein Gerät." | „Auf dem Drain-Markt gibt es Elektroschrott. Oder frag Motte." | „Kauf bei Ratz einen Abzweiger." |
 | B6 | „Die Drohne passt auf." | „Ihr Licht wandert. Warte." | „Benutze den Abzweiger, wenn der Lichtkegel weg ist." |
-| C6 | „Ines hat etwas im Waschsalon gelassen." | „Geh selbst hin, oder sieh nachts zu, wer es holt." | „Öffne Trockner 6 und lies, was auf der Theke liegt." |
+| C6 | „Sie ist nicht nach Hause gegangen. Da ist doch ihr Bett.“ | „Der Sumpf-Abgang hat eine Kamera. Dein alter Zugang geht da.“ | „Öffne CAM 30. Um Viertel nach acht ist sie da.“ (Verpasst: „Öffne CAM 30 und drück PUFFER.“) |
+| Der Stick (optional) | „Ines hat was in Trockner 6 gelegt. Das ist gar nicht weit.“ | „Durch die Gasse zum Waschsalon. Oder du lässt es.“ | „Warte bis eins und geh ins Bett. Dann ist der nächste Abend.“ |
 | C7 | „CAM 31 ist älter als Halcyon. Sie will einen Takt, keinen Code." | „Den Takt hat jeder, der mit Lull schläft. Hinter dem Ohr. Frau Haldane schläft im Flur." | „Lang, kurz, kurz, lang. Klick CAM 31 an und gib das ein." |
 | Die Drohung in `cam31` | „Ich hab nichts. Keine Tür, kein Licht, keine Nummer." | „Ich such weiter. Ich find nichts, was geht." | „Du kannst nichts tun, Juno. Ich auch nicht." |
 | Danach, in der Wohnung | „Juno?" | „Du sitzt nur da." | „Sag was. Bitte." |
