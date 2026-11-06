@@ -157,8 +157,8 @@ pal({
       const FRINGE = [0, 1, 2, 1, 0, 1, 2, 3, 2, 1, 0, 1, 2, 1, 0, 0]
       const hairBottom = (X) => X > TF - 14 ? 29 + FRINGE[Math.max(0, Math.round(X - TF + 14)) & 15] * 0.6 : X > TF - 22 ? 27 + (TF - 14 - X) * 2.4 : X > TF - 25 ? 48 : X > TF - 35 ? 45 : 56 + (TF - 35 - X) * 0.9
       const hair = (X, y) => hairE(X, y) && y < hairBottom(X)
-      // the ear defenders round his neck: the far cup behind his throat, the neck, the near cup on his
-      // collarbone with the band going back round his neck
+      // the ear defenders round his neck: the far cup behind his throat, the neck, the band going back round
+      // his neck, the near cup low in front of his throat with the far one's rim showing over it
       const cup = (cx, cy, near) => fill(cx - 7, cy - 8, cx + 7, cy + 8, (x, y) => {
         const dd = ((x - cx) / 5) ** 2 + ((y - cy) / 6.5) ** 2
         if (dd > 1) return null
@@ -184,7 +184,7 @@ pal({
         return side ? "p" : lit ? "o" : "O"
       })
       line(TF - 47, 87, TF - 33, 89, "g", fput); line(TF - 47, 86, TF - 33, 88, "e", fput)       // the band
-      cup(TF - 28, 96, true)
+      cup(TF - 11, 99, true)
 
       // the head (X = the column before the lean)
       const hairV = dome((x, y) => hair(x - teoShift(y), y), 70, 6, 158, 80, 6)
