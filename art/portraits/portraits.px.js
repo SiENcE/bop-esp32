@@ -673,15 +673,15 @@ portrait("bao", PANELS.bao, (p) => {
   const hand = p.part("8,62! 20,62! 20,80! 8,80!", S.base)
   hand.edge(3, 0, S.dim)
   p.line("6,78 22,78", C.deep)
-  const handle = p.part("20,14! 23,16! 17,68! 13,68!", STEEL.base)
+  const handle = p.part("10,16! 13,16! 17,68! 13,68!", STEEL.base)
   handle.edge(2, 0, STEEL.dim)
-  // the bowl, deep and round, the handle coming from its rim; broth to the brim
-  const bowl = p.part("0,15! 21,15! 21,22 17,29 11,31 5,29 0,22", STEEL.base)
+  // the bowl, deep and round, on his side of the handle, its mouth tipped toward his head
+  const bowl = p.part("10,14! 30,8! 32,16 30,24 24,30 16,30 11,24", STEEL.base)
   bowl.edge(4, 4, STEEL.dim)
   bowl.edge(2, 2, STEEL.deep)
-  bowl.tone(oval(5, 21, 2, 3), STEEL.lit)
-  const broth = p.part("0,12! 21,12! 21,16! 0,16!", "#d89c4c")
-  broth.tone("0,12! 12,12! 12,13! 0,13!", "#ffd58a")
+  bowl.tone(oval(15, 22, 2, 3), STEEL.lit)
+  const mouth = p.part("10,14! 30,8! 31,11 11,17", STEEL.deep)
+  mouth.tone("13,14! 28,10! 28,11 13,15", "#1a2337")
   // the head: a wide egg; the ears first, the hearing aid on his left
   for (const [x, y] of [[23, 44], [71, 44]]) { const e = p.part(oval(x, y, 4, 7), S.base); e.edge(2, 2, S.dim) }
   const head = p.part("24,38 28,20 38,11 52,10 62,16 68,28 70,44 66,62 56,72 40,72 28,62", S.base)
@@ -699,9 +699,6 @@ portrait("bao", PANELS.bao, (p) => {
   p.outline()
   // the fingers round the handle
   fingers(p, 7, 62, [15, 16, 15, 13], S)
-  // the steam, no ink
-  p.line("6,9 8,6 5,3 7,1", "#fff4d8")
-  p.line("14,9 16,6 13,3 15,1", "#fff4d8")
   // the glasses, huge, and behind them his eyes much too big
   const lens = (cx, cy, r) => {
     const l = head.within(oval(cx, cy, r), "#f6f0e4")
@@ -910,7 +907,6 @@ portrait("imai", PANELS.imai, (p) => {
   const S = { lit: "#ecdcc4", base: "#d8c2aa", dim: "#a68c78", deep: "#6e5a50" }
   const H = { base: "#2c2e38", lit: "#6a6e7a" }
   const M = { dark: "#34482a", base: "#55703a", lit: "#8aa852" }
-  const CLAW = { base: "#4a3c30", lit: "#8a7660" }
   // the cardigan
   const body = p.part("-2,104! 2,86 14,72 46,72 62,80 74,92 76,104!", C.base)
   body.edge(5, 3, C.dim)
@@ -943,23 +939,11 @@ portrait("imai", PANELS.imai, (p) => {
   face.tone("17,42! 30,44! 34,48 30,52 22,50 17,50!", H.base)
   face.tone("46,48 50,44 62,38! 62,48! 54,52 48,52", H.base)
   face.sep(H.base)
-  // the cup, her hand's three long fingers all the way round it, and their claws out past it
-  const cup = p.part("10,80! 34,80! 33,102! 11,102!", "#41547a")
-  cup.edge(5, 0, "#2f3e5a")
-  cup.edge(-2, 0, "#617aa0")
-  const tea = p.part("10,76! 34,76! 34,81! 10,81!", "#617aa0")
-  tea.tone("12,77! 32,77! 32,80! 12,80!", "#552b1c")
-  tea.tone("12,77! 20,77! 20,78! 12,78!", "#8a5a38")
-  p.outline()
-  const palm2 = p.part("-4,82 7,80 10,90 8,102 -4,104", S.base)
-  palm2.edge(2, 2, S.dim)
-  palm2.ink(INK)
-  for (const [y, len] of [[83, 31], [90, 33], [97, 30]]) {
-    const fi = p.part(`6,${y}! ${len},${y}! ${len + 1},${y + 1} ${len},${y + 3}! 6,${y + 3}!`, S.base)
-    fi.ink(INK)
-    const cl = p.part(`${len},${y}! ${len + 3},${y} ${len + 9},${y + 3}! ${len},${y + 3}!`, CLAW.base)
-    cl.ink(INK)
-  }
+  // a heavy shawl pulled round her, the moss's colour, hiding her hands
+  const shawl = p.part("-4,104! -2,88 10,78 24,76 34,84 48,80 66,86 78,96 80,104!", M.base)
+  shawl.edge(4, 3, M.dark)
+  shawl.tone("-2,92 8,80 20,78 12,86 2,96", M.lit)
+  for (const l of ["14,84 22,92 26,104!", "34,84 36,94 34,104!", "50,84 54,92 60,104!", "68,90 66,96 70,104!"]) p.line(l, M.dark)
   p.outline()
   // the Lull point, no ink
   p.rect(9, 44, 5, 5, "#6ab4ff"); p.rect(10, 43, 3, 7, "#6ab4ff"); p.rect(10, 45, 3, 3, "#cfe6ff")
@@ -1356,10 +1340,6 @@ portrait("koch", PANELS.koch, (p) => {
   bib.sep()
   p.line("28,86 30,74", W.dim); p.line("52,86 50,74", W.dim)
   p.line("27,86 29,74", W.base); p.line("53,86 51,74", W.base)
-  // the bare arm on the far side, down; the arm with the cleaver up on this side
-  const armR = p.part("68,84 78,88 80,104! 70,104!", S.base)
-  armR.edge(3, 0, S.dim)
-  armR.sep()
   // the ear with the order set in it, its small light; the long head
   const ear = p.part(oval(60, 42, 4, 6), S.base)
   ear.edge(2, 2, S.dim)
@@ -1382,12 +1362,9 @@ portrait("koch", PANELS.koch, (p) => {
   p.line("40,19 40,31", W.dim)
   cap.sep()
   // the cleaver, on his shoulder: a big square of steel, the blade's edge bright, a nick out of it
-  const sleeve = p.part("0,104! 3,92 8,86 18,87 17,104!", S.base)
-  sleeve.edge(3, 0, S.dim)
-  sleeve.tone("0,104! 3,93 7,87 7,93 3,104!", S.lit)
+  const sleeve = p.part("4,104! 6,92 9,86 18,87 22,104!", T.base)
+  sleeve.edge(3, 0, T.dim)
   sleeve.sep()
-  // an old tattoo, gone blue-grey: a fish
-  p.grid(7, 94, [".dd..d", "dddddd", ".dd..d"], { d: "#5a7084" })
   const handleC = p.part("13,66! 18,66! 19,88! 14,88!", "#5a3a28")
   handleC.edge(2, 0, "#341f14")
   const blade = p.part("2,28! 22,24! 23,66! 3,68!", STEEL.base)

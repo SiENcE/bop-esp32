@@ -15,7 +15,7 @@ Die ganze Reihe: `figuren_index_x3.png`. Jede Figur gibt es als `<id>_x4.png` mi
 | `bao` | Bao | die Nudelküche vor dem LUCKY STATIC, seit Jahrzehnten | |
 | `haldane` | Frau Haldane | Nachbarin aus 14C, immer müde, immer freundlich | |
 | `regenleserin` | Die Regenleserin | 82, kostet auf dem Dach den Regen | |
-| `imai` | Frau Imai | Stammgast im LUCKY STATIC, langsam und müde | |
+| `imai` | Frau Imai | Stammgast im LUCKY STATIC, langsam und müde, in ein schweres Tuch gewickelt; der blaue Punkt ist Lull | |
 | `prediger` | Der Prediger | Wache Kirche, seit Tagen wach, schenkt Kaffee aus | |
 | `monteur` | Der Monteur | wohnt auf dem Gerüst am großen Werbeschirm | |
 | `kessler` | Herr Kessler | kleiner Angestellter der Pumpenbehörde, mit Schulden | |
