@@ -523,8 +523,7 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
 
 ## 10b. Entscheidungen (2026-11-05)
 
-- **Lull ist ein sichtbarer Leuchtpunkt hinter dem Ohr**, nichts sonst: kein Pflaster, keine Pads, kein Licht an der Schläfe. Der
-  Punkt ist blass blau und pulsiert in einem festen Takt: lang, kurz, kurz, lang (entschieden 2026-11-05; es ist der Handshake des alten Protokolls, das Rätsel um `cam31`). Das Implantat der Beobachter sitzt an derselben Stelle, ist aber kleiner, cyan, und
+- **Lull ist ein Pflaster hinter dem Ohr** (geändert 2026-11-06, bis dahin: „ein Leuchtpunkt, kein Pflaster“), und es sieht **immer so aus wie bei Teo im Titelbild**: eine ovale blasse Scheibe mit dunklerem Rand und hellerem Streifen (`art/ui/splash.px.js`, im Index `docs/portraits/teo_x4.png`), nichts sonst: keine Pads, kein Licht an der Schläfe. Es ist blass blau und pulsiert in einem festen Takt: lang, kurz, kurz, lang (entschieden 2026-11-05; es ist der Handshake des alten Protokolls, das Rätsel um `cam31`). Das Implantat der Beobachter sitzt an derselben Stelle, ist aber kleiner, cyan, und
   leuchtet nur auf, wenn Juno markiert. Was sonst hinter einem Ohr sitzt (Baos Hörgerät), leuchtet nicht.
 - **Der Vorspann endet mit der Aufzugfahrt** (Einstellung 6 „heute“ ist gestrichen). Damit bleibt der vertrocknete Kaktus im Karton in
   der Wohnung richtig, und das Deck fährt erst im Prolog hoch.

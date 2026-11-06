@@ -306,6 +306,14 @@ function fingers(p, x, y, lens, S, tip = 1) {
   })
 }
 
+/** The Lull patch, always as on Teo in the title picture: an oval disc, pale, a darker rim, a brighter stripe. Round its middle at (x, y). */
+function lullPatch(p, x, y, big) {
+  const rows = big
+    ? ["..ggg..", ".gRRRg.", "gRccRRg", "gRccRRg", "gRccRRg", "gRccRRg", ".gRRRg.", "..ggg.."]
+    : [".ggg.", "gRcRg", "gRcRg", "gRcRg", ".ggg."]
+  p.grid(x - (big ? 3 : 2), y - (big ? 4 : 2), rows, { g: "#3d6690", R: "#c8e8ff", c: "#dafcff" })
+}
+
 const PORTRAITS = []
 function portrait(name, panel, draw, picture) {
   PORTRAITS.push(`portrait_${name}`)
@@ -673,15 +681,16 @@ portrait("bao", PANELS.bao, (p) => {
   const hand = p.part("8,62! 20,62! 20,80! 8,80!", S.base)
   hand.edge(3, 0, S.dim)
   p.line("6,78 22,78", C.deep)
-  const handle = p.part("10,16! 13,16! 17,68! 13,68!", STEEL.base)
+  const handle = p.part("12,70! 17,70! 13,34 12,22 15,15 22,12 22,8 13,10 8,18 8,34", STEEL.base)
   handle.edge(2, 0, STEEL.dim)
+  handle.edge(-1, -1, STEEL.lit)
   // the bowl, deep and round, on his side of the handle, its mouth tipped toward his head
-  const bowl = p.part("10,14! 30,8! 32,16 30,24 24,30 16,30 11,24", STEEL.base)
+  const bowl = p.part("14,14! 34,8! 36,16 34,24 28,30 20,30 15,24", STEEL.base)
   bowl.edge(4, 4, STEEL.dim)
   bowl.edge(2, 2, STEEL.deep)
-  bowl.tone(oval(15, 22, 2, 3), STEEL.lit)
-  const mouth = p.part("10,14! 30,8! 31,11 11,17", STEEL.deep)
-  mouth.tone("13,14! 28,10! 28,11 13,15", "#1a2337")
+  bowl.tone(oval(19, 22, 2, 3), STEEL.lit)
+  const mouth = p.part("14,14! 34,8! 35,11 15,17", STEEL.deep)
+  mouth.tone("17,14! 32,10! 32,11 17,15", "#1a2337")
   // the head: a wide egg; the ears first, the hearing aid on his left
   for (const [x, y] of [[23, 44], [71, 44]]) { const e = p.part(oval(x, y, 4, 7), S.base); e.edge(2, 2, S.dim) }
   const head = p.part("24,38 28,20 38,11 52,10 62,16 68,28 70,44 66,62 56,72 40,72 28,62", S.base)
@@ -789,7 +798,7 @@ portrait("haldane", PANELS.haldane, (p) => {
   // her hand on the paper's edge
   fingers(p, 3, 85, [8, 9, 9, 8], S)
   // the Lull point behind her ear, no ink
-  p.rect(61, 41, 5, 5, "#6ab4ff"); p.rect(62, 40, 3, 7, "#6ab4ff"); p.rect(62, 42, 3, 3, "#cfe6ff")
+  lullPatch(p, 63, 44, true)
   // her face: the lids shut and curved down, crow's feet, the brows high and thin; the mouth has fallen a little open, still friendly
   const E = { k: INK, d: S.dim, w: S.deep, m: "#7c3a44", l: S.lit, t: "#f6f0e4" }
   p.grid(18, 42, [
@@ -945,8 +954,8 @@ portrait("imai", PANELS.imai, (p) => {
   shawl.tone("-2,92 8,80 20,78 12,86 2,96", M.lit)
   for (const l of ["14,84 22,92 26,104!", "34,84 36,94 34,104!", "50,84 54,92 60,104!", "68,90 66,96 70,104!"]) p.line(l, M.dark)
   p.outline()
-  // the Lull point, no ink
-  p.rect(9, 44, 5, 5, "#6ab4ff"); p.rect(10, 43, 3, 7, "#6ab4ff"); p.rect(10, 45, 3, 3, "#cfe6ff")
+  // the Lull patch, no ink
+  lullPatch(p, 18, 59, false)
   // the eyes: heavy lids most of the way down, small dark eyes looking at nothing much
   const E = { k: INK, s: S.dim, l: S.lit, w: "#e8e4d4", i: "#20140e" }
   p.grid(23, 42, [

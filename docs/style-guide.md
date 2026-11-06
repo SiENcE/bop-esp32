@@ -196,7 +196,7 @@ A location takes one key hue from this set and plays it against the night blues.
   - **face and hair:** short black hair. The implant sits behind her ear, where Teo wears his Lull point (decided
     2026-11-04, story §10a): with the hood down, a cyan point there; under the hood nothing shows. The thin cyan line
     along her left cheekbone is the title's alone, a sign on that picture; nowhere else (decided 2026-11-04).
-    **Lull is a point of light behind the ear too, and the two must not be confused** (decided 2026-11-05, story §10b): Lull is pale
+    **Lull is a patch behind the ear, and the two must not be confused** (story §10b; changed 2026-11-06): it always looks like Teo's in the title picture, an oval pale disc with a darker rim and a brighter stripe (`art/ui/splash.px.js`, `docs/portraits/teo_x4.png`). Lull is pale
     blue, the larger of the two, and pulses in a fixed beat, long, short, short, long, then a pause (`Halcyon.lullBeat`; the puzzle of cam31 depends on it, decided 2026-11-05: every Lull point in the art has to follow it, those already painted still to be changed); the implant is a smaller cyan point that lights only when she tags. Nothing else
     behind an ear glows (Bao's hearing aid is plain grey). The title's Teo already shows it.
   - **face at 50 px** (decided 2026-11-04, variant B of `docs/characters/juno50_faces_x3.png`): eyes two

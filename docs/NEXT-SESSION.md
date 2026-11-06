@@ -75,7 +75,7 @@ with `--set off_main,know_meeting,off_<the others>`; a new one needs its name in
 
 Decided, keep to it (story §10a, §10b, kapitel0-design §5, style guide §4, §6):
 - No sounds in the float and the lift, only music. The hall has its hum; shot 4 is silent. Shot 2 has no words: the marking is enough.
-- **Lull is a pale blue point of light behind the ear that pulses**, nothing else (no patch, no pads, no light on the temple). **The implant** sits
+- **Lull is a patch behind the ear, and it always looks like Teo's in the title picture** (2026-11-06): an oval pale disc with a darker rim and a brighter stripe (art/ui/splash.px.js, `lullPatch` in art/portraits/portraits.px.js), no pads, no light on the temple. The sprites of Frau Imai and Frau Haldane in the game are still points, and whether the patch itself keeps the beat that cam31's puzzle reads is mine to confirm. **The implant** sits
   at the same place, smaller, and is always cyan: the point lights only when she tags, her brackets are cyan, in 2088 too; nothing on the small
   street figures. The cyan line on the cheek is the title's alone. Nothing else behind an ear glows. Juno was allowed to keep the implant because taking it out would have cost more; it isn't illegal.
 - **Lull is the observer implant made cheap** (the waking taken out, so one protocol). The eye and JUNO. are only in Juno's eye. Juno is not the
