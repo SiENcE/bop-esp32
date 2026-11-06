@@ -38,6 +38,7 @@ code comments English.
 | `docs/PLAN.md` | the build plan: engine work C1–C13, phases H0–H10 with "done when"; status at the top |
 | `docs/mockups/` | the decided looks: street mode `mock_c_iso_x3.png`, feed mode `mock_e_cctv_x3.png`; new mockups go here (`mock_f_deck` next) |
 | `docs/rooms/`, `docs/cams/`, `docs/characters/` | review sheets of finished art; the cameras' layout notes (their positions go into `game/places.js`) |
+| `docs/portraits/` | the character index and marketing portraits (`figuren_index_x3.png`, `README.md`), from `art/portraits/portraits.px.js`; not in the game |
 | `docs/ideas/` | studies: `iso-tiles.md` (rooms from maps, decided), `chinesisch.md` (a CJK layout test) |
 | `docs/NEXT-SESSION.md` | the prompt to start the next session |
 
