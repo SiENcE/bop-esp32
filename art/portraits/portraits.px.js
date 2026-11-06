@@ -676,44 +676,45 @@ portrait("bao", PANELS.bao, (p) => {
   fold.sep()
   p.rect(68, 83, 2, 2, "#8e96a8"); p.put(68, 83, "#dfe6ee")
   // the arm, up to the side; the ladle held by the end of its handle, its bowl by his head
-  const sleeve = p.part("-4,104! -2,84 6,76 18,76 22,84 22,104!", C.base)
+  const sleeve = p.part("-8,104! -6,94 2,86 14,86 18,94 18,104!", C.base)
   sleeve.edge(4, 0, C.dim)
-  const hand = p.part("6,62! 18,62! 18,80! 6,80!", S.base)
+  const hand = p.part("1,72! 13,72! 13,90! 1,90!", S.base)
   hand.edge(3, 0, S.dim)
-  p.line("4,78 20,78", C.deep)
+  p.line("-1,88 15,88", C.deep)
   // a real soup ladle (the user's photo): a thin straight handle running up to the low side of the rim, flaring just where it meets it
-  const handle = p.part("10,68! 13,68! 13,27 15,22! 8,22! 10,27", STEEL.base)
+  const handle = p.part("6,78! 9,78! 9,34 11,29! 4,29! 6,34", STEEL.base)
   handle.edge(1, 0, STEEL.dim)
   handle.edge(-1, 0, STEEL.lit)
   // the bowl, a half sphere tipped toward his head: its pale back above, below that the polished inside, a mirror of dark and white with a bright rim
   // its rim lies on the 2:1 slope, the one diagonal that stays a clean line at this size
   const TILT = -0.4636
-  const back = p.part(oval(16, 11.5, 12.5, 11, TILT), STEEL.lit)
-  back.tone(oval(21, 8, 8, 5, TILT), STEEL.base)
-  back.tone(oval(9, 8, 2.5, 1.5, -0.9), "#ffffff")
-  back.tone(oval(19, 11.5, 11.5, 4.5, TILT), STEEL.dim)
-  const mouth = p.part(oval(18, 15, 12.5, 5.5, TILT), STEEL.base)
-  mouth.tone(oval(17, 12, 7, 2, TILT), STEEL.deep)
-  mouth.tone(oval(21.5, 13.5, 3.5, 1.6, TILT), "#ffffff")
-  mouth.tone(oval(16, 20, 7.5, 1.5, TILT), STEEL.lit)
+  const back = p.part(oval(13.2, 19.9, 11, 9.7, TILT), STEEL.lit)
+  back.tone(oval(17.6, 16.8, 7, 4.4, TILT), STEEL.base)
+  back.tone(oval(7.1, 16.8, 2.2, 1.3, -0.9), "#ffffff")
+  back.tone(oval(15.9, 19.9, 10, 4, TILT), STEEL.dim)
+  const mouth = p.part(oval(15, 23, 11, 4.8, TILT), STEEL.base)
+  mouth.tone(oval(14.1, 20.4, 6, 1.8, TILT), STEEL.deep)
+  mouth.tone(oval(18.1, 21.7, 3, 1.4, TILT), "#ffffff")
+  mouth.tone(oval(13.2, 27.4, 6.6, 1.3, TILT), STEEL.lit)
   mouth.ink("#ffffff")
   // the head: a wide egg; the ears first, the hearing aid on his left
-  for (const [x, y] of [[23, 44], [71, 44]]) { const e = p.part(oval(x, y, 4, 7), S.base); e.edge(2, 2, S.dim) }
-  const head = p.part("24,38 28,20 38,11 52,10 62,16 68,28 70,44 66,62 56,72 40,72 28,62", S.base)
+  for (const [x, y] of [[16, 44], [64, 44]]) { const e = p.part(oval(x, y, 4, 7), S.base); e.edge(2, 2, S.dim) }
+  const head = p.part("17,38 21,20 31,11 45,10 55,16 61,28 63,44 59,62 49,72 33,72 21,62", S.base)
   head.edge(5, 5, S.dim)
-  head.tone("30,28 36,16 44,13 38,22", S.lit)
-  head.tone(oval(38, 15, 4, 2), "#ffe6d0")
+  head.sep()
+  head.tone("23,28 29,16 37,13 31,22", S.lit)
+  head.tone(oval(31, 15, 4, 2), "#ffe6d0")
   // the white beard, up round the jaw from one ear to the other, the moustache on it
-  const beard = p.part("24,50 30,56 40,58 52,58 62,56 70,50 68,66 60,76 48,81 38,80 30,74 25,62", H.base)
+  const beard = p.part("17,50 23,56 33,58 45,58 55,56 63,50 61,66 53,76 41,81 31,80 23,74 18,62", H.base)
   beard.edge(4, 4, H.dim)
   beard.sep(S.dim)
-  head.tone("24,40! 28,40! 28,52! 24,50!", H.base)
-  head.tone("66,40! 70,40! 70,52! 66,52!", H.dim)
-  const hearing = p.part("71,38 76,40 76,48 71,50", GREY.base)
+  head.tone("17,40! 21,40! 21,52! 17,50!", H.base)
+  head.tone("59,40! 63,40! 63,52! 59,52!", H.dim)
+  const hearing = p.part("64,38 69,40 69,48 64,50", GREY.base)
   hearing.edge(2, 2, GREY.dim)
   p.outline()
   // the fingers round the handle
-  fingers(p, 5, 62, [15, 16, 15, 13], S)
+  fingers(p, 0, 72, [15, 16, 15, 13], S)
   // the glasses, huge, and behind them his eyes much too big
   const lens = (cx, cy, r) => {
     const l = head.within(oval(cx, cy, r), "#f6f0e4")
@@ -721,28 +722,28 @@ portrait("bao", PANELS.bao, (p) => {
     l.ink(INK)
     return l
   }
-  lens(36, 40, 11)
-  lens(59, 40, 11)
-  p.line("46,38 49,37", INK)
+  lens(29, 40, 11)
+  lens(52, 40, 11)
+  p.line("39,38 42,37", INK)
   const E = { k: INK, i: "#34221a", g: "#ffffff", d: "#b09888", s: S.dim }
   // the left brow up, the right lid down: tasting, unsentimental
-  p.grid(31, 36, ["..kkkkkk..", ".kiiiiiik.", "kiiggiiiik", "kiiggiiiik", ".kiiiiiik.", "..kkkkkk.."], E)
-  p.grid(54, 38, ["kkkkkkkkkk", "kiiiiiiiik", "kiiggiiiik", ".kiiiiiik.", "..kkkkkk.."], E)
+  p.grid(24, 36, ["..kkkkkk..", ".kiiiiiik.", "kiiggiiiik", "kiiggiiiik", ".kiiiiiik.", "..kkkkkk.."], E)
+  p.grid(47, 38, ["kkkkkkkkkk", "kiiiiiiiik", "kiiggiiiik", ".kiiiiiik.", "..kkkkkk.."], E)
   // lens glints
-  p.line("27,37 30,34", "#ffffff"); p.line("50,37 53,34", "#ffffff")
+  p.line("20,37 23,34", "#ffffff"); p.line("43,37 46,34", "#ffffff")
   // the brows, white and untidy
-  p.grid(26, 25, ["...hhhhhhhh...", ".hhhhhhhhhhhh.", "hhhdddddddhhhh"], { h: H.base, d: H.dim })
-  p.grid(52, 29, ["hhhhhhhhhhhh..", "dhhhhhhhhhhhhh", "..dddddddddhhh"], { h: H.base, d: H.dim })
+  p.grid(19, 25, ["...hhhhhhhh...", ".hhhhhhhhhhhh.", "hhhdddddddhhhh"], { h: H.base, d: H.dim })
+  p.grid(45, 29, ["hhhhhhhhhhhh..", "dhhhhhhhhhhhhh", "..dddddddddhhh"], { h: H.base, d: H.dim })
   // the nose and the moustache; the mouth just showing
-  p.grid(44, 44, ["..sss..", ".sSSSs.", "sSSSSSs", "sSSSSSs", ".sssss."], { s: S.dim, S: S.lit })
-  p.grid(34, 51, [
+  p.grid(37, 44, ["..sss..", ".sSSSs.", "sSSSSSs", "sSSSSSs", ".sssss."], { s: S.dim, S: S.lit })
+  p.grid(27, 51, [
     "......hhhhhhhhhh......",
     "...hhhhhhhhhhhhhhhh...",
     ".hhhhhhhhhhhhhhhhhhhh.",
     "hhhdddddddddddddddhhhh",
     "dd................dddd",
   ], { h: H.lit, d: H.dim })
-  p.grid(42, 56, [".mmmmmmmm.", "..MMMMMM.."], { m: S.deep, M: "#a85a50" })
+  p.grid(35, 56, [".mmmmmmmm.", "..MMMMMM.."], { m: S.deep, M: "#a85a50" })
 })
 
 // ---------------------------------------------------------------- Frau Haldane
