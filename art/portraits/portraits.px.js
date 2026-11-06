@@ -606,8 +606,8 @@ portrait("motte", PANELS.motte, (p) => {
   gR.tone(oval(73, 85, 3), "#ffd58a")
   p.outline()
   // his fingers round the grips
-  fingers(p, 9, 84, [9, 10, 9], S)
-  fingers(p, 70, 84, [9, 10, 9], S, -1)
+  fingers(p, 9, 83, [8, 9, 9, 8], S)
+  fingers(p, 70, 83, [8, 9, 9, 8], S, -1)
   // hair out from under the band
   const H = "#2a1c18"
   p.grid(18, 40, ["hhhhhhh", "hhhhh.h", "hh.h...", "h......"], { h: H })
@@ -790,7 +790,7 @@ portrait("haldane", PANELS.haldane, (p) => {
   for (const [x, y, r] of [[22, 87, ["kkk", "k..", "k.."]], [36, 87, ["kkk", "..k", "..k"]], [22, 97, ["k..", "k..", "kkk"]], [36, 97, ["..k", "..k", "kkk"]]]) p.grid(x, y, r, { k: INK })
   p.outline()
   // her hand on the paper's edge
-  fingers(p, 3, 86, [9, 10, 9], S)
+  fingers(p, 3, 85, [8, 9, 9, 8], S)
   // the Lull point behind her ear, no ink
   p.rect(61, 41, 5, 5, "#6ab4ff"); p.rect(62, 40, 3, 7, "#6ab4ff"); p.rect(62, 42, 3, 3, "#cfe6ff")
   // her face: the lids shut and curved down, crow's feet, the brows high and thin; the mouth has fallen a little open, still friendly
@@ -911,8 +911,8 @@ portrait("imai", PANELS.imai, (p) => {
   const H = { base: "#2c2e38", lit: "#6a6e7a" }
   const M = { dark: "#34482a", base: "#55703a", lit: "#8aa852" }
   const CLAW = { base: "#4a3c30", lit: "#8a7660" }
-  // the cardigan, the sleeve going up to the hand
-  const body = p.part("-2,104! 2,86 14,72 44,72 58,84 62,104!", C.base)
+  // the cardigan
+  const body = p.part("-2,104! 2,86 14,72 46,72 62,80 74,92 76,104!", C.base)
   body.edge(5, 3, C.dim)
   body.tone("4,88 12,76 20,74 14,84 8,94", C.lit)
   p.line("30,76 28,104!", C.deep)
@@ -932,10 +932,10 @@ portrait("imai", PANELS.imai, (p) => {
   hair.tone(oval(16, 34, 3, 5), M.dark)
   hair.tone(oval(15, 33, 1, 2), M.lit)
   hair.sep()
-  // the ear with the Lull point behind it, on the side away from her hand
+  // the ear with the Lull point behind it
   const ear = p.part(oval(16, 50, 4, 6), S.base)
   ear.edge(2, 2, S.dim)
-  // the face: broad and flat, tipped over, the jaw pushed up by her hand
+  // the face: broad and flat, tipped over
   const face = p.part("18,48 24,34 38,28 54,32 60,44 60,56 52,68 38,73 26,68 19,60", S.base)
   face.edge(3, 3, S.dim)
   face.tone(oval(28, 58, 5, 3), S.lit)
@@ -943,26 +943,7 @@ portrait("imai", PANELS.imai, (p) => {
   face.tone("17,42! 30,44! 34,48 30,52 22,50 17,50!", H.base)
   face.tone("46,48 50,44 62,38! 62,48! 54,52 48,52", H.base)
   face.sep(H.base)
-  // the hand: the sleeve's cuff, the palm under her jaw, three long fingers up her cheek and past her eye
-  const sleeve = p.part("46,104! 52,84 70,78 80,84 80,104!", C.base)
-  sleeve.edge(4, 2, C.dim)
-  sleeve.sep()
-  const cuff = p.part("50,82 70,76 72,84 52,90", C.dim)
-  cuff.ink(C.deep)
-  const palm = p.part("48,68 70,58 72,76 52,82", S.base)
-  palm.edge(3, 2, S.dim)
-  palm.sep()
-  const FINGERS = [[54, 66, 55, 46, 53, 31], [60, 64, 61, 42, 60, 25], [66, 62, 67, 42, 67, 27]]
-  for (const [x0, y0, x1, y1, x2, y2] of FINGERS) {
-    const b = p.part(`${x0 - 2},${y0} ${x1 - 2},${y1} ${x2 - 1},${y2}! ${x2 + 2},${y2}! ${x1 + 2},${y1} ${x0 + 2},${y0}`, S.base)
-    b.edge(1, 0, S.dim)
-    p.line(`${x1 - 2},${y1 + 1} ${x1 + 1},${y1}`, S.dim)
-    b.sep()
-    const c = p.part(`${x2 - 1},${y2 + 1} ${x2 + 2},${y2 + 1} ${x2 + 2},${y2 - 3} ${x2 - 1},${y2 - 9}! ${x2 - 2},${y2 - 4}`, CLAW.base)
-    c.edge(-1, 0, CLAW.lit)
-    c.sep()
-  }
-  // the cup, the other hand's three long fingers all the way round it, and their claws out past it
+  // the cup, her hand's three long fingers all the way round it, and their claws out past it
   const cup = p.part("10,80! 34,80! 33,102! 11,102!", "#41547a")
   cup.edge(5, 0, "#2f3e5a")
   cup.edge(-2, 0, "#617aa0")
@@ -1146,7 +1127,7 @@ portrait("kessler", PANELS.kessler, (p) => {
   p.rect(52, 84, 10, 7, INK); p.rect(53, 85, 8, 5, "#8e96a8"); p.rect(54, 86, 2, 2, CYAN.base); p.rect(57, 87, 3, 1, "#565e70")
   p.outline()
   // his hand, holding the scarf shut at the throat
-  fingers(p, 42, 64, [11, 12, 11], { base: S.base, dim: S.dim, lit: S.lit }, -1)
+  fingers(p, 42, 63, [10, 11, 11, 10], { base: S.base, dim: S.dim, lit: S.lit }, -1)
   // the eyes: too much white, the pupils small and hard over to one side
   const E = { k: INK, w: "#ffffff", W: "#dcdce8", i: "#20242e", d: S.dim }
   p.grid(29, 27, [
