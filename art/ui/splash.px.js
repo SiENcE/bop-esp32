@@ -9,7 +9,8 @@
 //     The yellow slicker with the hood up, short black hair at the hood's edge, the cyan implant line along
 //     her left cheekbone. Her half is the city at night: dark, wet, a magenta neon rim from behind.
 //   - the crack between them: a jagged bright line with ink beside it, a few short branches; the glass's
-//     light falls on both profiles, cold sleep on one side of it and the warm wet night on the other
+//     light falls on both profiles, cold sleep on one side of it and the warm wet night on the other;
+//     neither figure touches it, the ground shows between their shoulders and the glass
 //   - under it the title block (art/ui/letters.px.js, the same on the menu screen) on a night-dark ground;
 //     the rain is the room's (fx, Juno's side only), the prompt (y 164-171) the engine's
 //
@@ -92,6 +93,9 @@ pal({
   const TEO_PLANE = [[28, -5], [34, -1], [44, 1], [56, 1], [70, 0], [80, 0], [84, -2], [87, -8]]   // the face's plane, without nose and lips
   const TEO_LIT = [[28, 9], [36, 10], [44, 12], [50, 11], [56, 15], [60, 17], [64, 15], [68, 12], [72, 13], [78, 14], [84, 11], [87, 7]]
   const teoShift = (y) => Math.max(0, Math.round((88 - y) * 0.14))
+  // Neither figure runs on to the crack. Teo's vest ends on a straight slant, flaring toward the picture's foot as
+  // Juno's coat does (y -> its last column); the ground shows between it and the glass.
+  const vestFront = (y) => 140 + Math.round((y - 96) * 0.35)
   // Juno: her face's front line (y -> distance left of JF); the slicker's outline (hood and shoulders) and
   // the hem of the hood round her face
   const JF = 176
@@ -102,6 +106,8 @@ pal({
     -14, 96, -6, 92, 1, 90, 11, 85, 17, 77, 20, 67, 21, 57, 20, 48, 15, 41, 7, 37, 1, 35].map((v, i) => (i % 2 ? v : v + JF))
   const HEM = [[34, -2], [35, 1], [37, 7], [41, 15], [48, 20], [57, 21], [67, 20], [77, 17], [85, 11], [90, 1], [92, -6], [96, -14]]
   const DRAPE = [[4, 93], [20, 95], [36, 93], [50, 89], [59, 84], [64, 80]]   // where the hood's drape lies on the shoulders (x from JF -> y)
+  // and her coat's front (y -> its first column), straight down from her shoulder and flaring toward the foot
+  const COAT_FRONT = { 89: 182, 90: 182, 91: 179, 92: 178, 93: 177, 94: 176, 95: 176, 96: 175, 97: 175, 98: 175, 99: 175, 100: 175, 101: 175, 102: 175, 103: 175, 104: 174, 105: 174, 106: 173, 107: 173, 108: 172, 109: 171, 110: 171, 111: 170, 112: 169, 113: 168, 114: 167, 115: 166 }
 
   function paint(c, o = {}) {
     const B = new Array(W * H).fill(null), FIG = new Uint8Array(W * H)
@@ -170,10 +176,10 @@ pal({
       const body = (x, y) => x <= crackX(y) - 3 && y >= bodyTop(x)
       const vest = dome(body, 30, 80, 158, PIC + 6, 12)
       fill(30, 80, 158, PIC - 1, (x, y) => {
-        if (!body(x, y)) return null
+        if (!body(x, y) || x > vestFront(y)) return null
         if (x > 90 && x < 130 && y < bodyTop(x) + 3) return y < bodyTop(x) + 1 ? "g" : "G"   // the shirt's collar
         if (Math.abs(x - 124 - (y - 98) * 0.1) < 0.6 && y > 90) return "p"                 // the vest's zip
-        const top = vest.dist(x, y) < 2.5 && y < 104, side = x < 48 + (y - 96) * 0.6, lit = x > 140 || (top && x > 70)
+        const top = vest.dist(x, y) < 2.5 && y < 104, side = x < 48 + (y - 96) * 0.6, lit = top && x > 70
         if (y >= 108 && y <= 109) return side ? "C" : lit || x > 128 ? "b" : "B"         // the reflective stripe
         return side ? "p" : lit ? "o" : "O"
       })
@@ -245,7 +251,7 @@ pal({
       const sl = dome((x, y) => coat(x, y) && !onDrape(x, y), 160, 4, 319, PIC + 8, 11)
       const out = dome(coat, 160, 4, 319, PIC + 8, 3)
       fill(160, 4, 319, PIC - 1, (x, y) => {
-        if (!coat(x, y)) return null
+        if (!coat(x, y) || x < (COAT_FRONT[y] ?? 0)) return null
         const dist = out.dist(x, y), [nx] = out.normal(x, y), l = sl.light(x, y, LJ)
         if (y > 34 && y < 92 && x - hem(y) < 2 && x - hem(y) >= 0) return "y"        // the hem round her face, lit
         if (onDrape(x, y)) return "J"                                                  // the drape's crease
