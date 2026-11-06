@@ -5,6 +5,10 @@
 //   portrait("name", PANELS.x, (p) => { ... }) gets a painter over the panel, 80x100.
 //   p.part(path, tone)        a body part: a flat shape, part of the figure, so the outline goes round it
 //   part.tone(path, tone)     a plane of colour inside the part (a shadow, a shine), cut off at its edge
+//   part.form(ramp, { r })    the part as a rounded form under the one light, in five tones (only Ashe so far: the user rejected it on the others)
+//   part.plane(path, n)       a plane turned from the light (-n) or to it (+n): n steps along the ramp, so the form still shows through
+//                             (eye sockets, under the cheekbone, under the lip, a shadow cast by a brim)
+//   part.fold(path, w)        a fold in cloth: a dark side and a lit side along the path, thinning out at its ends; no line
 //   part.edge(dx, dy, tone)   what lies within (dx, dy) of the part's edge on that side: with (+,+) the
 //                             shadow side's crescent for the one light, upper left; (-,-) the lit rim
 //   part.cast(path, dx, dy, tone)   the shadow a shape throws on the part; paint it before the shape
@@ -32,7 +36,6 @@ const SAND = { lit: "#f0e4c0", base: "#d8c8a0", dim: "#a69670", deep: "#6e6244" 
 const GECKO = { lit: "#d4c682", base: "#a89a5e", dim: "#6e6236", deep: "#3e3820" }
 const AMBER = { lit: "#ffd58a", base: "#eea040", dim: "#b0602a", deep: "#552b1c" }
 const CREST = { lit: "#e8843c", base: "#b8582c", deep: "#6c3018" }
-const TONGUE = { lit: "#ffb8cc", base: "#e888a8", dim: "#a84e6c" }
 const STEEL = { lit: "#dfe6ee", base: "#a8b4c4", dim: "#6c7888", deep: "#3a4454" }
 const WHITE = { lit: "#ffffff", base: "#e4e6e4", dim: "#a8aeb8", deep: "#5e6478" }
 const RED = { deep: "#7e1420", base: "#c01e2a", lit: "#ff3a3a" }
@@ -68,6 +71,18 @@ const oval = (cx, cy, rx, ry = rx, turn = 0) => {
   }
   return pts.join(" ")
 }
+const mix = (a, b, t) => {
+  const c = (s, i) => parseInt(s.slice(1 + i * 2, 3 + i * 2), 16)
+  return "#" + [0, 1, 2].map((i) => Math.round(c(a, i) * (1 - t) + c(b, i) * t).toString(16).padStart(2, "0")).join("")
+}
+/** A material's five tones, dark to light. `half` is the light side's last step, close to base: the big step, across the terminator, is from it to dim. */
+const ramp5 = (S) => {
+  const dim = S.dim ?? mix(S.base, S.deep, 0.5), deep = S.deep ?? mix(dim, INK, 0.5)
+  return [deep, dim, mix(S.base, dim, 0.45), S.base, S.lit ?? mix(S.base, "#ffffff", 0.3)]
+}
+// The one light, upper left and a little in front. What a form's surface gets from it decides its tone; the same thresholds for everyone.
+const LIGHT = { x: -0.56, y: -0.66, z: 0.5 }
+const FORM_AT = [-0.12, 0.26, 0.44, 0.83]
 const parsePath = (s) => s.trim().split(/\s+/).map((t) => {
   const sharp = t.endsWith("!"), [x, y] = t.replace("!", "").split(",").map(Number)
   return { x, y, sharp }
@@ -105,9 +120,90 @@ function painter() {
     }
     return M
   }
-  const region = (M) => ({
+  /** Steps a tone along a ramp; a colour that isn't on the ramp (a seam, a stain) stays what it is. */
+  const stepped = (R, t, n) => { const i = R ? R.indexOf(t) : -1; return i < 0 ? t : R[Math.max(0, Math.min(R.length - 1, i + n))] }
+  const region = (M, R0 = null) => ({
     M,
+    R: R0,
     has: (x, y) => inside(x, y) && M[at(x, y)] === 1,
+    /**
+     * The part as a rounded form under the one light: its edge falls away over `r` px, the upper left catches the light, the lower right turns from it.
+     * `tilt` turns the whole form towards the light (+) or from it (-). `pick(x, y, i)` gives a tone from the 0-4 of the ramp, for what changes on the way (bands).
+     */
+    form(S, { r = 12, tilt = 0, pick = null } = {}) {
+      const R = ramp5(S); this.R = R
+      const D = new Float32Array(PW * PH).fill(1e6)
+      const out = (x, y) => inside(x, y) && !M[at(x, y)]          // the canvas' edge doesn't end a form: parts run on past it
+      for (let y = 0; y < PH; y++) for (let x = 0; x < PW; x++) if (M[at(x, y)]) {
+        let d = D[at(x, y)]
+        if (out(x - 1, y) || out(x, y - 1) || out(x + 1, y) || out(x, y + 1)) d = 1
+        if (x > 0) d = Math.min(d, D[at(x - 1, y)] + 1)
+        if (y > 0) d = Math.min(d, D[at(x, y - 1)] + 1)
+        if (x > 0 && y > 0) d = Math.min(d, D[at(x - 1, y - 1)] + 1.41)
+        if (x + 1 < PW && y > 0) d = Math.min(d, D[at(x + 1, y - 1)] + 1.41)
+        D[at(x, y)] = d
+      }
+      for (let y = PH - 1; y >= 0; y--) for (let x = PW - 1; x >= 0; x--) if (M[at(x, y)]) {
+        let d = D[at(x, y)]
+        if (x + 1 < PW) d = Math.min(d, D[at(x + 1, y)] + 1)
+        if (y + 1 < PH) d = Math.min(d, D[at(x, y + 1)] + 1)
+        if (x + 1 < PW && y + 1 < PH) d = Math.min(d, D[at(x + 1, y + 1)] + 1.41)
+        if (x > 0 && y + 1 < PH) d = Math.min(d, D[at(x - 1, y + 1)] + 1.41)
+        D[at(x, y)] = d
+      }
+      // the height of a dome over that distance, smoothed so that the middle line of a shape doesn't show as a crease
+      let H = new Float32Array(PW * PH)
+      for (let i = 0; i < H.length; i++) if (M[i]) { const t = Math.min(1, (D[i] - 0.5) / r), u = 1 - t; H[i] = r * Math.sqrt(Math.max(0, 1 - u * u)) }
+      const hAt = (A, x, y, cx, cy) => (inside(x, y) ? (M[at(x, y)] ? A[at(x, y)] : 0) : A[at(cx, cy)])
+      for (let pass = 0; pass < 3; pass++) {
+        const N = new Float32Array(PW * PH)
+        for (let y = 0; y < PH; y++) for (let x = 0; x < PW; x++) if (M[at(x, y)]) {
+          let s = 0
+          for (let j = -1; j <= 1; j++) for (let i = -1; i <= 1; i++) s += hAt(H, x + i, y + j, x, y)
+          N[at(x, y)] = s / 9
+        }
+        H = N
+      }
+      const I = new Int8Array(PW * PH).fill(-1)
+      for (let y = 0; y < PH; y++) for (let x = 0; x < PW; x++) if (M[at(x, y)]) {
+        const nx = -(hAt(H, x + 1, y, x, y) - hAt(H, x - 1, y, x, y)) / 2, ny = -(hAt(H, x, y + 1, x, y) - hAt(H, x, y - 1, x, y)) / 2, l = Math.hypot(nx, ny, 1)
+        const v = (nx * LIGHT.x + ny * LIGHT.y + LIGHT.z) / l + tilt
+        I[at(x, y)] = FORM_AT.filter((a) => v > a).length
+      }
+      // no 1 px islands: a tone alone among others takes the commonest round it
+      for (let pass = 0; pass < 2; pass++) for (let y = 0; y < PH; y++) for (let x = 0; x < PW; x++) if (I[at(x, y)] >= 0) {
+        const n = [[1, 0], [-1, 0], [0, 1], [0, -1]].filter(([a, b]) => inside(x + a, y + b) && I[at(x + a, y + b)] >= 0).map(([a, b]) => I[at(x + a, y + b)])
+        if (n.length && !n.includes(I[at(x, y)])) I[at(x, y)] = n.sort((a, b) => n.filter((v) => v === b).length - n.filter((v) => v === a).length)[0]
+      }
+      for (let y = 0; y < PH; y++) for (let x = 0; x < PW; x++) if (I[at(x, y)] >= 0) B[at(x, y)] = pick ? pick(x, y, I[at(x, y)]) : R[I[at(x, y)]]
+      return this
+    },
+    /** A plane turned from the light (-) or to it (+): the tones under `path` go that many steps along the ramp, so the form still shows through. */
+    plane(path, n) {
+      const N = raster(path)
+      for (let i = 0; i < N.length; i++) if (N[i] && M[i]) B[i] = stepped(this.R, B[i], n)
+      return this
+    },
+    /**
+     * A fold where cloth bends: a ridge along `path`, up to `w` px to each side, thinning out at its ends. The side towards the light takes `up` steps, the other `down`.
+     * No line goes with it: the two tones are the fold.
+     */
+    fold(path, w = 2, { down = 2, up = 1 } = {}) {
+      const Q = rounded(parsePath(path), false)
+      const len = []; let total = 0
+      for (let i = 0; i < Q.length; i++) { if (i) total += Math.hypot(Q[i].x - Q[i - 1].x, Q[i].y - Q[i - 1].y); len.push(total) }
+      for (let y = 0; y < PH; y++) for (let x = 0; x < PW; x++) if (M[at(x, y)]) {
+        let best = 1e9, bi = 0
+        for (let i = 0; i < Q.length; i++) { const d = (Q[i].x - x - 0.5) ** 2 + (Q[i].y - y - 0.5) ** 2; if (d < best) { best = d; bi = i } }
+        const a = Q[Math.max(0, bi - 1)], b = Q[Math.min(Q.length - 1, bi + 1)], tx = b.x - a.x, ty = b.y - a.y, tl = Math.hypot(tx, ty) || 1
+        const nx = -ty / tl, ny = tx / tl, side = (x + 0.5 - Q[bi].x) * nx + (y + 0.5 - Q[bi].y) * ny
+        const t = total ? len[bi] / total : 0, width = w * Math.pow(Math.sin(Math.PI * t), 0.6)
+        if (Math.abs(side) > width || Math.sqrt(best) > width + 0.8) continue
+        const towards = side * (nx * LIGHT.x + ny * LIGHT.y) > 0
+        B[at(x, y)] = stepped(this.R, B[at(x, y)], towards ? up : -down)
+      }
+      return this
+    },
     /** A plane inside this part. */
     tone(path, t) { const N = raster(path); for (let i = 0; i < N.length; i++) if (N[i] && M[i]) B[i] = t; return this },
     /** The shadow a shape throws on this part; paint it before the shape. */
@@ -117,7 +213,7 @@ function painter() {
       return this
     },
     /** A part lying on this one and cut off by it, with its own planes. */
-    within(path, t) { const N = raster(path); for (let i = 0; i < N.length; i++) { N[i] = N[i] && M[i] ? 1 : 0; if (N[i] && t) B[i] = t } return region(N) },
+    within(path, t) { const N = raster(path); for (let i = 0; i < N.length; i++) { N[i] = N[i] && M[i] ? 1 : 0; if (N[i] && t) B[i] = t } return region(N, this.R) },
     /** The side of the part towards (dx, dy): the terminator follows the form and thins out where the form turns. */
     edge(dx, dy, t) {
       const hit = []
@@ -302,10 +398,7 @@ portrait("prediger", PANELS.prediger, (p) => {
   const mouth = p.part("28,53! 40,57 54,57 70,50! 64,60 50,64 38,63", "#3a1420")
   mouth.ink(INK)
   for (let x = 33; x < 64; x += 3) { const y = x < 40 ? 56 : x < 56 ? 58 : 56 - Math.round((x - 56) / 4); p.put(x, y, "#fff4d8"); p.put(x, y + 1, "#fff4d8") }
-  // the tongue out of the corner of the mouth, up and on to the big eye
   p.grid(44, 50, ["kk..kk", ".k...k"], { k: G.deep })                       // the nostrils, between the eyes
-  const tongue = p.part("62,57 67,59 72,55 74,48 73,41 69,37 65,38 65,41 68,42 70,47 68,52 64,54", TONGUE.base)
-  tongue.edge(1, 1, TONGUE.dim)
   // the arm up, in its wide sleeve; thin fingers with pads round the flask
   const arm = p.part("0,104! 1,88 5,72 19,72 23,88 23,104!", S.base)
   arm.edge(4, 0, S.dim)
@@ -347,12 +440,16 @@ portrait("prediger", PANELS.prediger, (p) => {
 // Dead square on, nothing moves. The one figure with no face.
 portrait("ashe", PANELS.ashe, (p) => {
   const C = WHITE, RIM = "#e8707a"
-  // broad, square shoulders, a coat somebody irons
+  // broad, square shoulders, a coat somebody irons: the folds it has are the ones it can't help, off the shoulders and across the elbows
   const coat = p.part("-4,104! -4,86 2,76 14,70 28,66 52,66 66,70 78,76 84,86 84,104!", C.base)
-  coat.edge(7, 5, C.dim)
-  coat.tone("58,70 84,84 84,104! 68,104! 64,86", C.dim)
-  coat.tone("72,104! 74,92 84,92 84,104!", C.deep)
-  coat.tone("-4,88 2,77 14,71 20,72 8,80 1,92", C.lit)
+  coat.form(C, { r: 17 })
+  coat.plane("58,70 84,84 84,104! 68,104! 64,86", -1)
+  coat.fold("11,78 15,90 12,104", 2.4)
+  coat.fold("69,78 65,90 68,104", 2.4)
+  coat.fold("0,92 6,96 10,104", 2)
+  coat.fold("80,92 74,96 70,104", 2)
+  coat.fold("26,78 30,88 28,100", 1.6)
+  coat.fold("54,78 50,88 52,100", 1.6)
   // the shoulder straps and the raglan seams
   p.line("6,78 22,70", C.deep)
   p.line("7,82 22,73", C.deep)
@@ -370,12 +467,12 @@ portrait("ashe", PANELS.ashe, (p) => {
   back.tone("24,40 56,40 58,62 50,82 30,82 22,62", "#141622")
   // the collar's two flaps, stiff, turned up beside the jaw, opening away from the throat
   const left = p.part("6,76! 12,44! 24,52 30,66 40,84! 22,86!", C.lit)
-  left.edge(4, 3, C.base)
-  left.edge(2, -2, C.dim)
+  left.form(C, { r: 9, tilt: 0.06 })
+  left.fold("14,54 18,68 22,80", 1.6, { down: 1 })
   left.ink(INK)
   const right = p.part("74,76! 68,44! 56,52 50,66 40,84! 58,86!", C.base)
-  right.edge(4, 3, C.dim)
-  right.edge(-2, -2, C.lit)
+  right.form(C, { r: 9, tilt: -0.12 })
+  right.fold("66,54 62,68 58,80", 1.6, { down: 1 })
   right.ink(INK)
   // a small red light on the lapel, the only thing about him that blinks
   p.rect(17, 69, 4, 4, C.deep)
@@ -484,12 +581,14 @@ portrait("motte", PANELS.motte, (p) => {
   // the cap, far too big, ringed in stripes, with a ribbed band; it has slid down to his brows
   const cap = p.part("7,40! 5,27 11,15 25,9 44,7 60,9 71,16 76,28 74,40!", W.base)
   cap.edge(5, 2, W.dim)
-  const ring = (y) => `2,${y + 3} 20,${y} 40,${y - 1}! 60,${y} 78,${y + 3}! 78,${y + 7}! 60,${y + 4} 40,${y + 3}! 20,${y + 4} 2,${y + 7}!`
-  cap.tone(ring(12), T.base)
-  cap.tone(ring(21), T.base)
+  for (let y = 0; y < 31; y++) for (let x = 0; x < 80; x++) {
+    if (!cap.has(x, y)) continue
+    const dx = (x - 40) / 37, row = y - 8 * dx * dx
+    if ((row >= 18 && row < 23) || (row >= 10 && row < 13)) p.put(x, y, Math.abs(dx) > 0.8 || dx > 0.55 ? T.deep : T.base)
+  }
   cap.edge(1, 1, W.deep)
-  for (let x = 4; x < 77; x++) for (let y = 31; y < 41; y++) if (cap.has(x, y)) p.put(x, y, x % 4 < 2 ? W.base : x % 4 === 2 ? T.base : W.dim)
-  p.line("6,30 40,31 75,30", T.deep)
+  for (let x = 4; x < 77; x++) for (let y = 31; y < 41; y++) if (cap.has(x, y)) { const r = x + Math.round((x - 40) * (y - 31) * 0.012); p.put(x, y, r % 4 < 2 ? W.base : r % 4 === 2 ? T.base : W.dim) }
+  p.line("6,34 20,31 40,30 60,31 75,34", T.deep)
   // the pompom
   const pom = p.part(oval(32, 8, 7), J.base)
   pom.edge(2, 2, J.dim)
@@ -986,6 +1085,9 @@ portrait("monteur", PANELS.monteur, (p) => {
   fingers(p, 7, 74, [9, 10, 9], paw)
   for (const [x, y] of [[17, 75], [18, 78], [17, 81]]) p.grid(x, y, ["kkk", "wwk", "kk."], { k: INK, w: "#e8e0c8" })
   p.rect(9, 84, 7, 1, C.deep)
+  p.rect(72, 89, 4, 8, K.base); p.rect(72, 95, 4, 2, K.dim); p.rect(72, 88, 4, 1, INK); p.rect(72, 97, 4, 1, INK)     // the wrist
+  p.rect(75, 84, 4, 15, C.base); p.rect(75, 94, 4, 5, C.dim); p.rect(75, 84, 4, 1, INK); p.rect(75, 84, 1, 15, INK)  // the sleeve it comes out of
+  p.line("68,76 76,83", C.deep)
   fingers(p, 72, 88, [6, 7, 6], paw, -1)
   for (const [x, y] of [[64, 89], [63, 92], [64, 95]]) p.grid(x, y, [".kk", "kww"], { k: INK, w: "#e8e0c8" })
 })
@@ -1124,16 +1226,17 @@ portrait("varga", PANELS.varga, (p) => {
   const band = p.part("26,82! 37,81! 38,100! 27,101!", STEEL.dim)
   band.edge(2, 0, STEEL.deep)
   band.sep()
-  const dial = p.part(oval(32, 91, 9), "#ffffff")
-  dial.tone(oval(31, 90, 7), STEEL.lit)
+  const dial = p.part(oval(32, 85, 9, 4), "#ffffff")
+  dial.tone(oval(31, 84.5, 7, 2.8), STEEL.lit)
   dial.ink(STEEL.deep)
   dial.sep()
-  dial.within(oval(32, 91, 5), "#0c2a3a")
-  p.line("32,91 32,87", CYAN.lit)
-  p.line("32,91 35,92", CYAN.base)
+  dial.within(oval(32, 85, 6, 2.4), "#0c2a3a")
+  p.line("32,85 36,85", CYAN.lit)
+  p.line("32,85 30,84", CYAN.base)
+  p.rect(25, 89, 15, 1, STEEL.deep)                                        // the case's near side
   p.outline()
   // its one bright glint, no ink
-  p.rect(24, 83, 1, 5, "#ffffff"); p.rect(22, 85, 5, 1, "#ffffff")
+  p.rect(26, 81, 1, 4, "#ffffff"); p.rect(24, 82, 5, 1, "#ffffff")
   // the eyes: small, even, half closed, whites showing only just; heavy brows that don't move
   const E = { k: "#1c0e10", w: "#f0e8dc", i: "#1a0e0a", d: S.deep, g: "#ffffff" }
   p.grid(22, 40, [
@@ -1298,12 +1401,12 @@ portrait("koch", PANELS.koch, (p) => {
   p.line("40,19 40,31", W.dim)
   cap.sep()
   // the cleaver, on his shoulder: a big square of steel, the blade's edge bright, a nick out of it
-  const sleeve = p.part("-4,104! -2,90 8,82 20,84 20,104!", S.base)
+  const sleeve = p.part("0,104! 3,92 8,86 18,87 17,104!", S.base)
   sleeve.edge(3, 0, S.dim)
-  sleeve.tone("-4,104! -2,92 6,84 6,92 2,104!", S.lit)
+  sleeve.tone("0,104! 3,93 7,87 7,93 3,104!", S.lit)
   sleeve.sep()
   // an old tattoo, gone blue-grey: a fish
-  p.grid(6, 92, [".dd..d", "dddddd", ".dd..d"], { d: "#5a7084" })
+  p.grid(7, 94, [".dd..d", "dddddd", ".dd..d"], { d: "#5a7084" })
   const handleC = p.part("13,66! 18,66! 19,88! 14,88!", "#5a3a28")
   handleC.edge(2, 0, "#341f14")
   const blade = p.part("2,28! 22,24! 23,66! 3,68!", STEEL.base)
@@ -1313,7 +1416,8 @@ portrait("koch", PANELS.koch, (p) => {
   p.rect(16, 30, 3, 3, INK); p.put(16, 30, STEEL.deep)
   p.grid(0, 28, ["kkk", "kk.", "k.."], { k: PANELS.koch.top })
   p.outline()
-  fingers(p, 9, 76, [11, 12, 11], S)
+  fingers(p, 11, 73, [8, 9, 9, 8], S)
+  p.grid(9, 73, [".kk.", "kddk", "kddk", "kddk", "kddk", "kddk", "kddk", "kddk", "kddk", "kddk", "kddk", "kddk", ".kk."], { k: INK, d: S.dim })   // the heel of the hand, the thumb behind
   // the eyes: dead level, half shut, looking at a point about a metre behind you; the bags
   const E = { k: INK, w: "#ece4d4", i: "#2a1c14", d: S.dim, D: S.deep, l: S.lit }
   p.grid(26, 40, [
@@ -1400,7 +1504,12 @@ portrait("ines", PANELS.ines, (p) => {
   p.rect(58, 83, 11, 4, "#07202c")
   p.rect(59, 84, 6, 1, CYAN.base); p.rect(59, 85, 3, 1, CYAN.dim)
   p.rect(66, 88, 3, 3, CYAN.base); p.put(66, 88, CYAN.lit)
-  fingers(p, 49, 90, [12, 13, 12], S)
+  // four fingers from below over its lower edge, running up it; the light stays free above them
+  for (let i = 0; i < 4; i++) {
+    const x = 56 + i * 3, top = 92 + (i === 0 || i === 3 ? 1 : 0)
+    p.rect(x, top - 1, 4, 1, INK); p.rect(x, top, 1, 100 - top, INK); p.rect(x + 3, top, 1, 100 - top, INK)
+    p.rect(x + 1, top, 2, 100 - top, S.base); p.rect(x + 2, top + 1, 1, 100 - top, S.dim); p.put(x + 1, top, S.lit ?? S.base)
+  }
   // the eyes: large, almond, at ease, looking right at you; lashes on the upper lid
   const E = { k: INK, w: "#f6f0e8", i: "#3a2214", I: "#6a4028", g: "#ffffff", d: S.dim, l: S.lit }
   p.grid(24, 37, [
@@ -1454,44 +1563,44 @@ portrait("lantern", PANELS.lantern, (p) => {
   patch("24,86! 34,86! 34,100! 22,100!", "#4e6a76", "#2f4450")
   patch("58,64! 70,70! 66,78! 54,72!", "#8c7c3c", "#5a4e24")
   for (let x = 7; x < 22; x += 3) p.put(x, 82 - Math.round((x - 6) / 4), P.lit)                 // stitches
-  // the hood: deep, a stiff edge, the head far inside it
-  const hood = p.part("14,70 12,44 18,20 32,8 50,8 64,20 70,44 66,70 40,76", P.dim)
-  hood.edge(5, 2, P.deep)
-  hood.tone("14,56 16,34 26,16 34,12 24,28 20,46", P.base)
-  const inner = hood.within(oval(39, 42, 21, 26), P.deep)            // the hood's depth, the face cut off by it
-  // the face, thin, looking back over the left shoulder: its nose to our left
-  const face = inner.within("20,38 26,26 38,20 52,24 58,38 56,54 48,66 36,70 26,64 20,52", S.base)
+  // the hood thrown back: soft cloth, slumped in a heap round his neck, behind his head
+  const hood = p.part("10,74 8,60 14,48 26,42 54,42 66,48 72,60 70,74 40,80", P.dim)
+  hood.edge(4, 3, P.deep)
+  hood.tone("10,64 15,51 26,45 19,56", P.base)
+  for (const l of ["13,60 22,70 34,74", "67,58 60,68 48,74", "20,50 18,60 26,70"]) p.line(l, P.deep)
+  // the head, thin, looking back over his left shoulder: the nose to our left; short rough hair, going grey
+  const face = p.part("20,38 20,24 28,12 40,8 52,12 60,24 59,38 57,54 48,66 36,70 26,64 20,52", S.base)
   face.edge(5, 2, S.dim)
   face.tone("24,50 26,36 32,28 28,40", S.lit)
   face.tone("44,48 54,40 52,54 44,62", S.dim)                  // the hollow of the cheek
   face.tone("18,56 26,60 32,52 44,52 50,58 60,46 60,62 50,70 36,74 24,68", "#6e6058")
   for (const [x, y] of [[25, 62], [29, 66], [34, 63], [38, 69], [44, 65], [49, 62], [53, 55], [46, 69], [31, 60]]) p.put(x, y, R)
-  // the hood's shadow on the brow
-  face.tone("16,18! 60,18! 58,32 42,27 28,28 18,36", S.deep)
+  // his hair, cropped and rough, and the grey in it
+  const HAIR2 = "#2a2622"
+  face.tone("16,4! 64,4! 64,28 57,23 50,20 40,21 31,22 25,26 20,36 16,34", HAIR2)
+  face.tone("30,9 42,8 52,13 44,12 34,12", "#4a4640")                  // the light on it, and the grey
   // the headset's arm and its mic, a green light on it
   p.line("58,44 52,60 42,63", INK)
   p.rect(39, 61, 4, 3, INK); p.rect(40, 62, 2, 1, TIP)
-  // the wheel: a thick tyre, big, coming up into the picture on the right; its rim; the hand on it
-  const tyre = p.part(oval(64, 106, 38), "#1e222c")
-  tyre.tone(oval(61, 103, 37), "#343a48")
-  tyre.tone(oval(64, 106, 35), "#1e222c")
+  // the wheel beside him, only its top in the panel's corner: a thick tyre, its rim, two spokes
+  const tyre = p.part(oval(76, 110, 36), "#1e222c")
+  tyre.tone(oval(74, 108, 35), "#343a48")
+  tyre.tone(oval(76, 110, 33), "#1e222c")
   tyre.sep()
-  const rim = tyre.within(oval(64, 106, 31), STEEL.dim)
+  const rim = tyre.within(oval(76, 110, 29), STEEL.dim)
   rim.edge(-2, -2, STEEL.lit)
   rim.ink(INK)
-  rim.within(oval(64, 106, 27), P.deep)
-  for (const [x, y] of [[64, 80], [50, 84], [76, 83]]) p.line(`${x},${y} 64,106`, STEEL.deep)
-  const forearm = p.part("10,104! 16,88 36,78 42,88 24,104!", P.dim)
-  forearm.edge(3, 3, P.deep)
-  forearm.sep()
-  const wrist = p.part("28,82 40,76 44,88 34,92", S.base)
-  wrist.edge(2, 2, S.dim)
-  wrist.sep()
+  rim.within(oval(76, 110, 26), P.deep)
+  for (const [x, y] of [[58, 88], [72, 84], [84, 86]]) p.line(`${x},${y} 76,110`, STEEL.lit)
+  // his arm comes down from under the poncho to the rim
+  const cuff = p.part("30,82 42,78 46,88 36,94", P.dim)
+  cuff.edge(2, 2, P.deep)
+  cuff.sep()
   p.outline()
   // the antennas' lights, no ink
   for (const [, , x, y] of AER) { p.rect(x - 1, y - 1, 4, 4, "#5a9a50"); p.rect(x, y, 2, 2, TIP); p.put(x, y, "#ffffff") }
-  // the hand on the rim, knuckles up; the poncho's end pushed back
-  fingers(p, 38, 76, [13, 14, 13, 11], S)
+  // the hand on the rim, from the side
+  fingers(p, 42, 78, [8, 9, 9, 7], S)
   // the eyes: looking back at us to the corner; the near one narrowed down to a line, the far one still deciding
   const E = { k: INK, w: "#f0ece0", i: "#20242c", d: S.deep, g: "#ffffff", s: S.dim }
   p.grid(24, 37, [

@@ -1,6 +1,6 @@
 # Figuren-Index
 
-Porträts für Marketing und zum Auseinanderhalten der Figuren, nicht fürs Spiel. Quelle: `art/portraits/portraits.px.js`; Juno und Teo sind aus dem Titelbild geschnitten (`tools/portrait-title.py`).
+Porträts für Marketing und zum Auseinanderhalten der Figuren, nicht fürs Spiel. Die Schattierung ist flach, nur Ashe hat eine feinere (Mantel): So hat es der Nutzer entschieden, auf den anderen gefiel sie ihm nicht. Quelle: `art/portraits/portraits.px.js`; Juno und Teo sind aus dem Titelbild geschnitten (`tools/portrait-title.py`).
 
 Die ganze Reihe: `figuren_index_x3.png`. Jede Figur gibt es als `<id>_x4.png` mit Namen und als `<id>_ohne_name_x4.png` ohne.
 
