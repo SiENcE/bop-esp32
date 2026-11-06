@@ -300,7 +300,7 @@ Der Mann tötet sie. Das alte Bild flackert und reißt dabei. In der Voreinstell
 hört es nur; wer es in den Einstellungen wählt, sieht es im Phosphor, ohne Nahaufnahme. Beide Fassungen erzählen dasselbe. Die Klicks
 hören auf zu antworten. Juno sagt nichts mehr.
 
-Dann hebt der Mann den Kopf, sieht direkt in die Kamera und winkt. Eine Störung läuft durchs Bild, das Overlay zuckt. `SIGNAL LOST`.
+Dann hebt der Mann den Kopf, und sieht direkt in die Kamera: zwei dunkle Schlitze in dem weißen Fleck. Eine Störung läuft durchs Bild, das Overlay zuckt. `SIGNAL LOST`.
 
 Keine Musik, nur die Lüfter. Lange nichts.
 

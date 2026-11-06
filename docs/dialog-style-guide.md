@@ -304,7 +304,7 @@ nennt sie nie so.
 
 Höflich, geduldig, kontrolliert. Je höflicher, desto bedrohlicher. Nie wie ein Mörder aus dem Actionfilm: Er erklärt nicht, was er vorhat,
 und macht nur deutlich, dass er mehr weiß, als Juno lieb ist. Er war Beobachter in ihrer Halle und redet mit ihr wie mit einer Kollegin, die
-denselben Beruf hat. Seine erste Äußerung im Spiel ist ein Winken in die Kamera. Noch keine Zeile.
+denselben Beruf hat. Seine erste Äußerung im Spiel ist ein Blick in die Kamera. Noch keine Zeile.
 
 ### Der Zeuge
 

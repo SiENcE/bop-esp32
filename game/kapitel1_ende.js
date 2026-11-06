@@ -1,6 +1,6 @@
 // Halcyon: the end of Chapter 1 (docs/kapitel1-design.md §8). Juno watches Ines die in cam31 and everything she tries
 // fails where the player can see it. One straight chain, so the solver gains a handful of states:
-//   end_beat     unknown (the overlay says ???) > threat (the player's hands are free, and nothing helps) > kill > wave > after (her flat)
+//   end_beat     unknown (the overlay says ???) > threat (the player's hands are free, and nothing helps) > kill > look > after (her flat)
 //   ines_down    Ines lies on the platform
 //   cache_clip_ines_death   Juno has it, whether she pressed REC or not: the buffer holds it
 // The clock leaves its 15-minute ticks here, which is safe only because nothing branches on these times (kapitel1.js: the hold).
@@ -18,7 +18,7 @@ Cutaway.settings.define("violence", { page: "content", pageLabel: "Inhalt", labe
 Halcyon.people.ashe = { name: "???" };
 Cutaway.actor("ashe", { name: "???", color: "#ff7a6a", speed: [5, 2.5], voice: { pitch: 50, wave: "sine", syllable: 90 },
   costume: { idle: "ashe_feed", walk: "ashe_feed_walk", talk: "ashe_feed" },
-  poses: [{ if: "end_beat=wave", idle: "ashe_feed_wave", walk: "ashe_feed_wave", talk: "ashe_feed_wave" },
+  poses: [{ if: "end_beat=look", idle: "ashe_feed_look", walk: "ashe_feed_look", talk: "ashe_feed_look" },
     // in the stairs' shadow only the mask is there, until he steps out of it (see the threat below)
     { if: "!ashe_lit", idle: "ashe_feed_dim", walk: "ashe_feed_dim_walk", talk: "ashe_feed_dim" }],
   look: ["Kein Gesicht. Da, wo eins sein müsste, brennt mir das Bild durch."],
@@ -28,7 +28,7 @@ Cutaway.routine("ashe", [{ day: 4, from: "23:02", to: "23:30", room: "cam31", at
 Cutaway.state.view("ashe_lit");
 const SHADOW_ENDS = 74;   // where the lamp's light begins on his way (art/cams/cam31.px.js: the stairs' long cheek hides it from the lamp up to here, and hides him from Ines and Lantern)
 
-Halcyon.cache.clip_ines_death = { kind: "clip", name: "CAM 31, 23:03", about: "Die alte Metro. Alles, bis er winkt." };
+Halcyon.cache.clip_ines_death = { kind: "clip", name: "CAM 31, 23:03", about: "Die alte Metro. Alles, bis er hochsieht." };
 Object.assign(Halcyon.ledger, { ines: { to: "Ines Calder", what: { dead: "tot" } } });
 Halcyon.threads.wren.push({ from: "wren", if: "ledger_wren_live", at: "23:05", text: "Zahlung erfolgt. Danke für die Live-Übertragung." });
 
@@ -156,7 +156,7 @@ Cutaway.clock.onUpdate(() => {
   else if (said < LINES.length && t >= LINE_AT[said]) Cutaway.script.run([LINES[said++]], { path: "cam31.lines" });
 });
 
-// ---- 23:03: he stands in her way. The quarrel is hers alone: he has no line in this chapter, his first word is the wave (dialog-style-guide). The clicks
+// ---- 23:03: he stands in her way. The quarrel is hers alone: he has no line in this chapter, all he says here is the look into the camera (dialog-style-guide). The clicks
 // stop answering, and Juno says nothing more
 const BARS = [{ cam31_fx: { bars: 1 }, ms: 700 }, { sfx: "static" }, { wait: 500 }, { sfx: "body_fall" }, { set: "ines_down" }, { wait: 1600 }, { cam31_fx: { bars: 0 }, ms: 900 }];
 const SHOWN = [{ cam31_fx: { tear: 0.9 }, ms: 200 }, { sfx: "static" }, { sfx: "body_fall" }, { set: "ines_down" }, { wait: 300 }, { cam31_fx: { tear: 0 }, ms: 800 }, { wait: 900 }];
@@ -175,7 +175,7 @@ Cutaway.moment("ines_death", { room: "cam31", day: 4, from: "23:03", to: "23:30"
   { set: "cache_clip_ines_death" },
   { time: "23:04" },
   { wait: 1500 },
-  { set: "end_beat", value: "wave" },
+  { set: "end_beat", value: "look" },
   { wait: 3600 },
   { sfx: "glitch" }, { cam31_fx: { tear: 1 }, ms: 900 },
   { goto: "signal_lost", transition: false },

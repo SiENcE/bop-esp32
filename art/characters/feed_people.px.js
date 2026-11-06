@@ -21,7 +21,7 @@
 //   yuen_cook       paper cap 8, apron 7, chopping at his counter
 //   ines            the end of Chapter 1, front and back: the white coat 9, a dark plait cut into it; a wallet with a light
 //   lantern         one profile, in the water, like the wheelchair sign: a thick wheel 8, a poncho 7, antennas with lit tips 9
-//   ashe            front only: a raincoat 8, no face, a burn 9 with no dark rim; the same in the shadow; the wave
+//   ashe            front only: a raincoat 8, no face, a burn 9 with no dark rim; the same in the shadow; the look into the camera
 //
 // Walks: 6 frames x 100 ms, the same foot table as juno_feed_walk (the feet step 2 across and 1 up).
 
@@ -601,8 +601,7 @@ function asheBody(c, v, o = {}) {
   fpLegs(c, { ...FA_LEGS, W: FA.W + 2 * ox, H: FA.H + dy, near: FA_LEGS.near + ox, far: FA_LEGS.far + ox, leg: v.leg, shoe: v.shoe }, o.feet ?? fpStand(FA.H + dy - 1), b)
   fpGrid(c, x + 2, y + 6 + b, FA_COAT, v)
   c.rect(x + 2, y + 17 + b - sw, 1, 2, v.H)                                      // the near hand
-  if (o.wave) { c.rect(x + 10, y + 8, 1, 6, "_") }                               // that sleeve goes up
-  else c.rect(x + 10, y + 17 + b + sw, 1, 2, v.H)
+  c.rect(x + 10, y + 17 + b + sw, 1, 2, v.H)
   c.rect(x + 4, y + 1 + b, 5, 5, v.L)                                            // the head (the rim follows it, the burn covers it)
 }
 const ASHE_BURN = [
@@ -618,6 +617,7 @@ function asheBurn(c, o = {}) {
   const x = FA.X + (o.ox ?? 0), b = o.bob ?? 0, y = FA.Y + (o.dy ?? 0) + (o.up ?? 0)
   c.rect(x + 3, y + b, 7, 1, "_")                                                // what the rim left over the head
   fpGrid(c, x + 3, y + b, ASHE_BURN, { 8: "8", 9: "9" })
+  if (o.eyes) { c.rect(x + 4, y + 3 + b, 2, 1, "2"); c.rect(x + 7, y + 3 + b, 2, 1, "2") }
   if (o.flare) { c.px(x + 2, y + 2 + b, "8"); c.px(x + 2, y + 3 + b, "8"); c.px(x + 10, y + 4 + b, "8") }
 }
 const ashe = (c, v, o = {}) => { asheBody(c, v, o); fpRim(c, FA.W, FA.H, "1"); asheBurn(c, o) }
@@ -630,38 +630,8 @@ for (const [suffix, v] of [["", ASHE_LIT], ["_dim", ASHE_DIM]]) {
     ashe(c, v, { bob: FP_BOB[i], swing: FP_SWING[i], feet: { near: small(f.near), far: small(f.far) } })
   })
 }
-// The wave, the last thing the player sees: 5 rows taller, the hand up beside the burn, which has lifted a pixel. Two frames, out
-// and back. The canvas is 3 wider on each side, so the feet stay where ashe_feed had them. 23x31.
-const FAW = { dy: 5, ox: 3 }
-sprite("_a_wave_0", `
-  ..8888
-  ..8888
-  ..888.
-  ..88..
-  ..88..
-  ..88..
-  ..88..
-  ..88..
-  .88...
-  .88...
-  88....
-  88....`)
-sprite("_a_wave_1", `
-  ....8888
-  ....8888
-  ...888..
-  ...88...
-  ..88....
-  ..88....
-  ..88....
-  ..88....
-  .88.....
-  .88.....
-  88......
-  88......`)
-anim("ashe_feed_wave", { w: FA.W + 2 * FAW.ox, h: FA.H + FAW.dy, frames: 2, fps: 3, pivot: "bottom" }, (c) => {
-  asheBody(c, ASHE_LIT, { ...FAW, wave: true })
-  c.stamp(c.frame ? "_a_wave_1" : "_a_wave_0", FA.X + FAW.ox + 10, 1)
-  fpRim(c, FA.W + 2 * FAW.ox, FA.H + FAW.dy, "1")
-  asheBurn(c, { ...FAW, up: -1 })
+// The look, the last thing the player sees: the head comes up a pixel, and in the burn two dark slits look into the camera. Still no
+// face (story §4; Chapter 2's forged clip needs the mask): eyes are all he shows. The same canvas as ashe_feed, so nothing jumps.
+anim("ashe_feed_look", { w: FA.W, h: FA.H, frames: 2, ms: [1300, 260], pivot: "bottom" }, (c) => {
+  asheBody(c, ASHE_LIT); fpRim(c, FA.W, FA.H, "1"); asheBurn(c, { flare: c.frame, up: -1, eyes: true })
 })

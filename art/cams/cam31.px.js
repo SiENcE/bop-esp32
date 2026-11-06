@@ -280,10 +280,10 @@ scene("review_cam31", { w: W, h: H, bg: "0" }, paintBg, signText, lampBox, (c) =
   put(c, "ines_feed_front", "edge")
   put(c, "lantern_feed", "lantern")
 })
-// 23:04: she lies where she stood, he has come to her and waves up at the camera; Lantern is gone
+// 23:04: she lies where she stood, he stands over her and looks up into the camera; Lantern is gone
 scene("review_cam31_ende", { w: W, h: H, bg: "0" }, paintBg, signText, lampBox, (c) => {
   put(c, "ines_feed_down", "meet")
-  put(c, "ashe_feed_wave", "asheMeet", 400)
+  put(c, "ashe_feed_look", "asheMeet", 0)
 })
 // the two hard cases for the values: Ashe in his shadow, only the mask there; Lantern on his way out, on the water and
 // at the tunnel's mouth
