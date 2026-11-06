@@ -72,7 +72,8 @@ Halcyon.at = {
   },
   dach: {
     // the old photo's camera (art/ui/deck_wallpaper.px.js): the parapet across the picture, the tar in front of it
-    walk: [[6, 156, 314, 156, 318, 176, 2, 176]], hatch: [22, 166], edge: [222, 162], reader: [92, 164],
+    // the notch: the Rain Reader's gutter stands on its pole in the picture (foot at y 163), so Juno passes in front of it, never behind
+    walk: [[6, 156, 52, 156, 52, 167, 80, 167, 80, 156, 314, 156, 318, 176, 2, 176]], hatch: [22, 166], edge: [222, 162], reader: [92, 164],
     hatchRect: [4, 114, 28, 40], ringsRect: [0, 0, 320, 22], placeRect: [192, 100, 58, 50], screenRect: [110, 33, 50, 31], noodlesRect: [96, 49, 9, 57], droneRect: [284, 98, 26, 18],
   },
   drain_market: {
