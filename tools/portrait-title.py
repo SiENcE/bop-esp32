@@ -86,6 +86,14 @@ for y in range(84):                                                        # abo
 for y in range(84, H):
     for x in range(CUTX + 1, W):
         o[x, y] = (0, 0, 0, 0)
-    if o[CUTX, y][3]:
-        o[CUTX + 1, y] = INK + (255,)
+o[CUTX + 1, 92] = INK + (255,)
+# the vest doesn't end in a straight cut: its front falls away in a curve to the picture's lower edge, a darker tone along its ink
+FRONT = {93: 56, 94: 58, 95: 60, 96: 62, 97: 63, 98: 64, 99: 65}           # the last column of the vest, row by row
+for y, last in FRONT.items():
+    for x in range(CUTX + 1, last + 1):
+        o[x, y] = o[CUTX, y]
+        if not o[x, y - 1][3]:
+            o[x, y - 1] = INK + (255,)
+    o[last, y] = (0x8e, 0x56, 0x28, 255)
+    o[last + 1, y] = INK + (255,)
 save(teo, "teo")
