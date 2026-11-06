@@ -525,7 +525,280 @@ portrait("ashe", PANELS.ashe, (p) => {
 // The title picture's Teo, asleep against the glass, a mirror of Juno's portrait: he looks right, so he sits on the left. Cut out by
 // tools/portrait-title.py, from the frame where his Lull patch is brightest.
 sprite("_teo_title", { png: "teo_title.png" })
-portrait("teo", PANELS.teo, () => {}, "_teo_title")
+portrait("teo_profil", PANELS.teo, () => {}, "_teo_title")
+
+// ---------------------------------------------------------------- Teo, from the front: his portrait in the index, the user's decision
+// Taken from the user's model: the contour of the face and ears at its exact points, hair, brows and eyes sampled from it pixel for pixel into our tones (the grids below).
+// His Lull patch sits behind the ear, so from the front it can't be seen.
+const VEST = { lit: "#ffc070", base: "#ee9438", dim: "#b0602a", deep: "#6a3418" }
+portrait("teo", PANELS.teo, (p) => {
+  const S = SKIN, H = HAIR, D = { lit: "#41547a", base: "#2f3e5a", dim: "#1a2337" }
+  // the vest, its quilting
+  const vest = p.part("-8,113! -8,91 5,88 11,86 25,87 55,87 69,86 75,88 88,91 88,113!", VEST.base)
+  vest.edge(6, 3, VEST.dim)
+  vest.tone("-8,94 5,90 13,89 5,96 -4,100", VEST.lit)
+  for (const l of ["0,91 11,106", "11,91 1,102", "80,91 69,106", "69,91 79,102"]) p.line(l, VEST.deep)
+  // the neck: wide and short; the shadow under the chin; the gills, three lit slits on each side
+  const neck = p.part("24,62! 56,62! 56,78! 60,86 51,92 29,92 20,86 24,78!", S.base)
+  neck.edge(4, 0, S.dim)
+  neck.tone("24,66 56,66 56,78 46,82 34,82 24,78", S.dim)
+  neck.tone("50,68 56,68 56,78 50,81", S.deep)
+  for (const l of ["31,80 36,90", "49,80 44,90"]) p.line(l, S.dim)
+  for (const y of [71, 75, 79]) { p.line(`25,${y} 28,${y + 1}`, CYAN.base); p.line(`55,${y} 52,${y + 1}`, CYAN.base) }
+  // the collar, open at the throat, the dark shirt in the gap, the two straps with their buckles
+  const shirt = p.part("27,89! 53,89! 53,96! 27,96!", D.dim)
+  shirt.sep()
+  const collarL = p.part("11,90 12,83 17,79 25,78 27,84 33,91 30,96 20,96", D.base)
+  collarL.edge(3, 3, D.dim)
+  collarL.edge(-1, -1, D.lit)
+  collarL.sep()
+  const collarR = p.part("69,90 68,83 63,79 55,78 53,84 47,91 50,96 60,96", D.base)
+  collarR.edge(3, 3, D.dim)
+  collarR.edge(-1, -1, D.lit)
+  collarR.sep()
+  for (const x of [25, 55]) {
+    const strap = p.part(`${x - 5},88! ${x + 5},88! ${x + 5},104! ${x - 5},104!`, D.base)
+    strap.edge(2, 0, D.dim)
+    strap.sep()
+    const buckle = p.part(`${x - 4},91! ${x + 4},91! ${x + 4},99! ${x - 4},99!`, D.dim)
+    buckle.ink(INK)
+    p.rect(x - 2, 93, 4, 1, D.lit); p.rect(x - 2, 96, 4, 1, D.lit)
+  }
+  // the ears; the head
+  for (const path of ["13,40! 16,41! 18,46! 18,52! 16,56! 13,55! 12,48! 12,43!", "62,41! 65,41! 66,46! 66,52! 64,55! 61,54! 60,48! 60,43!"]) { const e = p.part(path, S.base); e.edge(2, 2, S.dim) }
+  p.line("15,44 16,50", S.dim); p.line("63,44 62,50", S.dim)
+  const head = p.part("20,38! 21,30! 25,22! 33,16! 47,16! 55,22! 58,30! 60,38! 60,54! 59,58! 58,62! 56,65! 53,68! 49,72! 45,76! 36,76! 31,73! 28,70! 24,65! 22,61! 21,56! 20,54!", S.base)
+  head.edge(4, 3, S.dim)
+  head.tone("24,50 25,42 29,36 26,46", S.lit)
+  head.sep()
+  p.outline()
+  // the hair and the brows, from the model
+  p.grid(2, 1, [
+    "..............................kkkkkkkkkkkk................................",
+    "........................kkkkkkllbbbbbbbbbbk....kkk........................",
+    "......................kkllllbbbbbbbbbbbbbbbkkkkllbkk......................",
+    ".....................kbbbbllllllbbbbbbbbbbbbbbllbbbbk.....................",
+    "..................kkkkkkkbbbllllllllbbbbbbbbbbbbbbbbkk....................",
+    "..............kkkkbllbllbbbbbbbbbbblbbbbbbkbbbllllbbkkk...................",
+    "..............kkkbbbbbbllbbkkbllbbbbbbbbbbkbbllbbbbbbllkkkk...............",
+    "...............kkkbllllllllbbbbbllbbbbbbkbkbbbbblllbllllbbbkk.............",
+    "................kllllllllbbbbbkkkbllbbbbkbkbbbllllbbbbbbbbbbkk............",
+    "..............kkllbbbllbbbbbbbbbbbblbbbbbbbbblllllllllbkkbbbbkk...........",
+    ".............klbbbbblllkkllllllbbbbbbbbbbbkbbbblllbbbbllbkkkkbkk..........",
+    "............kbbbbblllkkkllllbbbbkkkkkbbbbkkbbllkkbbbbbbbbbkkkbbk..........",
+    "...........kbbkkklllbklllllbbbkkbbbbkkbbkkkbbbk..klllbbbbbbkbbbbk.........",
+    "...........kkkkbbbbbbblllbbkkbllllbbbbkkkkbbbbbkkbbbbbbbbbbbbbbbk.........",
+    "..........kbbbblbbbbblllbbbbllbbbbbbbbbkkkkbbblkklllbbbbbbbbbbbkkk........",
+    "........kklbbbllbbkklllbkkbllbbbllbbbbbbkkkbblk..klllbbbbbbbbbbkkk........",
+    ".......klbbbbbbbbbklllbbkkllkklllkkkkbbbbkbblllkklllllbbbbbbbbbkkk........",
+    ".......kkkkkbbbbbbbllbbbblllklllkkkkkkbbbbbllkkkkkkllllbbbbbkkbbkkk.......",
+    ".......kkkbbbbbbbbblbbbbbllkkllbkkkkbbkbbbbbkkkkkkkklllbbbbbbkkbbbk.......",
+    "......kbbbbbbbbbbbllbbbbblbkklbbkkkkkbkbbbbkkkkkkbbkklbbbbbbbbbbbbk....k..",
+    ".....klllbbbbbbbbblbbbbbblbkllbkkkkkkbbkbbkkkkkkkkbbklbbbkbbkbbkkkbkkkkk..",
+    ".....kllkkllbbbbblllbbbblbbkblbkbbkkkkbkkkkkkkkk.kkkkbbbbkbbkkbbbbkkllk...",
+    ".....klbkbbbbbblbblllbbblbkkbbkk.....kkkk..k......kkkbbbbbkbbkkbbbbbbk....",
+    "....klbbbbkkbbblbblllbbkbbk.bbk.....................kkbkkbkbbbkkbbbbbk....",
+    "....kkkkkkkbbbllbblblbbkbk..kbk......................kbkkbbkbbbbbbbbbk....",
+    "...klkkkkbbbbbbkbblbbbbkbk..kbk......................kbkbbbkbbkbbkkbbbk..k",
+    "...kkbbkklbbbbbkbblbkbbkbk...bb......................bkkbbbbkkkkbbkkbbbkkk",
+    "....kkkkllbbbbbbbklbkbbkkk...bb......................bkkbbbbbkkbbbkkkkkkk.",
+    ".....kllbbbbbbbbbkbbkbbk.kk....k.....................b.kbbbbbbkbbbkkkk....",
+    "kk..kllbbbbkkbbbbbbbkbbk..k....k....................k..kkbbbbbbbbbbbbk....",
+    "kbkklllbbkkkbbbbbbkkk.bk................................kbbbbbbbbbbbbk....",
+    ".kbbbbbkkkbbbbbbbbbkk...k.........................k.....kbbbbbbbbbbbbk....",
+    "..kbbkkkkbbbbbbbkkbkkk..kk.............................kkbbbbbbbbbbbblk...",
+    "...kkkkbbbbkkbbbbkkk....................................kbbbbbbbkkbbblkk..",
+    ".....kbbbbbbbkkkkbkk....................................kkbbbbbbkbkkbbbbkk",
+    "....kbbbbbbbkkkbbbkk.....................................kbbbbbbbbbkkkbbkk",
+    "....kbbbbbkkkbbbbkk...............................bbb....kbbbkbbkbbkkkkkk.",
+    "....kkkbbbkkkkbbbb....kkkkkkbbbb............bbbbkkkkkkk...kbbkkkkbbkbkk...",
+    "...kkkkkbbkkkkbbbk...k...kkkkbbbbb........bbbbbkkk.....b..kbkkkkkkbkbk....",
+    "...kkbkkbbk.kkkbbk............kkkkk.......kkkkb...........kbkkkkbbblk.....",
+    ".....kbbbkk....bbk.........................................b....kbbkk.....",
+    ".....kbbkk.....bbk.........................................b....kbk.......",
+    ".....kbbkk......bk.........................................b....kkkk......",
+    ".....kklbk......bk.........................................b.....kk.......",
+    ".......kbk.......k.........................................b.....kk.......",
+    ".......kkk.......k.........................................b.....k........",
+    ".......kkk.......k.........................................b.....k........",
+    ".........k.......k.........................................k..............",
+    ".........k.......b.........................................k..............",
+    ".........k.......b.........................................k..............",
+    ".................b.........................................k..............",
+    "..........k......k.........................................k..............",
+    "..........k.....kk.........................................k..............",
+    ".................k.........................................k..............",
+    "...............k..........................................................",
+    ".............k....k.........................................k.............",
+    ".............kbkkkk.......................................kkkk............",
+    ".............kkkkkk.......................................kkkk............",
+    "..............kkbkk.......................................kkk.............",
+    "...............kbbk......................................kkkk.............",
+    "................kbkk.....................................kkk..............",
+    "................kkbk.....................................bbk..............",
+    ".................kbkk...................................kkk...............",
+    "..................kkk...................................k.................",
+    "...................kkk.................................kk.................",
+    "....................kkk...............................kk..................",
+  ], { k: INK, b: H.base, l: H.lit })
+  // the eyes: the model's, pixel for pixel, read off under a grid
+  const E = { k: INK, w: "#f6f0e8", v: "#b8b4c0", i: "#34221a", I: "#7a4a2c", g: "#ffffff", d: S.dim }
+  p.grid(22, 41, [
+    ".....ddddddd.....",
+    "...ddkkkkkkkk....",
+    ".k.kvvggkkvvkk...",
+    "...kwwkkkIwwkk...",
+    "....dwwIIiwd.....",
+    "......ddddd......",
+  ], E)
+  p.grid(42, 41, [
+    ".....ddddddd.....",
+    "....ddkkkkkkk....",
+    "....kvvggkkvvkk..",
+    "...kkwwIkkkwwk...",
+    ".....dwIIiwwd....",
+    "......dddddd.....",
+  ], E)
+  // the nose from its shadow side, its wings; the mouth level, the lower lip a shade, the dip under it
+  p.grid(36, 49, [".....d...", ".....d...", ".....d...", ".....d...", ".....dd..", "..l..dd..", "d......d.", "dSSddSSd."], { d: S.dim, S: S.deep, l: S.lit })
+  p.grid(33, 61, [
+    "...ddddddddd...",
+    "kkkkkkkkkkkkkkk",
+    "...mmmmmmmmm...",
+    "...............",
+    "....ddddddd....",
+  ], { k: S.deep, d: S.dim, m: "#b87050" })
+})
+
+// ---------------------------------------------------------------- Juno, from the front (a trial; the index still shows the profile)
+// Taken from the user's model: the contour of the face at its exact points, hair, brows and eyes sampled from it pixel for pixel into our tones. The hood fills the
+// picture from top to bottom and runs off both sides.
+portrait("juno_front", PANELS.juno, (p) => {
+  const S = SKIN, H = { base: "#1c1620", lit: "#4e3c50" }, Y = YELLOW
+  // the coat's shoulders under the hood
+  const coat = p.part("-4,104! -4,80 84,80 84,104!", Y.base)
+  coat.edge(6, 3, Y.dim)
+  // the hood: seams running up to its crown
+  const hood = p.part("-4,67 -3,54 2,39 6,26 13,14 23,4 31,0 49,0 57,4 67,14 74,26 78,39 83,54 84,67 84,76 73,84 51,88 29,88 7,84 -4,76", Y.base)
+  hood.edge(5, 3, Y.dim)
+  hood.tone("2,50 6,33 14,17 24,8 16,22 9,37", Y.lit)
+  hood.tone("30,2 40,2 37,11 33,20 28,15", Y.lit)
+  hood.tone("32,3 38,3 35,11 31,9", Y.shine)
+  for (const l of ["42,0 42,13", "20,9 14,24", "60,9 66,24"]) p.line(l, Y.dim)
+  // its thick rolled edge, all the way round the opening
+  const rim = hood.within("1,67 3,50 8,35 16,26 29,18 40,16 51,18 64,26 72,35 77,50 79,67 79,76 71,82 51,86 29,86 9,82 1,76", Y.base)
+  rim.edge(-2, -2, Y.lit)
+  rim.edge(3, 3, Y.dim)
+  // the lining: dark at the top where no light gets in, the ochre showing low at the sides
+  const lining = rim.within("6,74 7,59 12,46 17,35 27,27 40,24 53,27 63,35 68,46 73,59 74,74 66,79 53,85 40,87 27,85 14,79", Y.dim)
+  lining.tone("7,61 12,46 17,35 27,27 40,24 53,27 63,35 68,46 73,61 60,54 40,50 20,54", Y.deep)
+  lining.ink(INK)
+  // the neck, the shadow under the chin
+  const neck = lining.within("30,70 50,70 50,90 30,90", S.base)
+  neck.edge(3, 0, S.dim)
+  neck.tone("30,70 50,70 50,82 40,84 30,82", S.dim)
+  lining.ink(INK)
+  // the face, a soft chin
+  const head = lining.within("20,44! 22,38! 26,30! 34,26! 46,26! 54,30! 58,38! 60,44! 61,50! 60,60! 58,64! 57,67! 53,70! 49,74! 44,78! 37,78! 32,74! 28,71! 25,68! 23,64! 21,60!", S.base)
+  head.edge(3, 3, S.dim)
+  head.tone("24,52 25,44 29,38 26,46", S.lit)
+  for (let y = 0; y < PH; y++) for (let x = 0; x < PW; x++) if (!head.has(x, y) && (head.has(x, y + 1) || head.has(x - 1, y) || head.has(x + 1, y)) && y > 44) p.put(x, y, INK)   // the jaw's line on the neck and hair
+  // the collar: folds running in to the placket under her chin
+  for (const l of ["-4,87 9,89 27,91 35,89", "84,87 71,89 53,91 45,89", "-4,99 12,97 33,96", "84,99 68,97 47,96"]) p.line(l, Y.deep)
+  p.line("36,89 36,113!", Y.deep)
+  p.line("45,89 45,113!", Y.deep)
+  p.outline()
+  // the hair and the brows, from the model
+  p.grid(8, 25, [
+    ".............................kkkkkkkk............................",
+    "..........................kkkkkkkkkkkkkk.........................",
+    ".......................kkkkkkkkkkkkkkkkkkkk......................",
+    ".....................kkkkkkkkkkkkkkkkkkkkkkkk....................",
+    "...................kkkkkkkkkkkkkbbkkkkkkbbkkkkk..................",
+    ".................kkkkbkkkkbbbkkblbbbbkbbbbkkkkkk.................",
+    "...............kkkkkbbbkbbllbkkblllbbkkbblkkkkkkkk...............",
+    "..............kkkkkbbbbk.blbkkbblblbkkkbbllbkbbkkkk..............",
+    ".............kkkbkkbbbk..bbbkk.blbbkkk.bbbbbkbbkkkkk.............",
+    "............kkkkbkkbbkk..bbbk..kbbbkkk..bbbbkkbbkkkkk............",
+    "...........kkkkkkkkbbkk..bbbk..kkbbbk....kbbkkbbkkkkkk...........",
+    "..........kkkbkbbbbbbk....kkk...kbbkk....kkkkk.kkkkkkkk..........",
+    ".........kkkbbkbk..kkk.....kk....bbkk......kkk..kkkbbkkk.........",
+    "........kkkbbbkkk.kkkkk.....kk....kkk.....kkkkkk.k.kkbkkk........",
+    ".......kkkkkbkkbkkkkkkkkkk....b.....k..bbkkkkkkkkk.kkbkkkk.......",
+    ".......kkkbbkk.bb.....kkkkkk..........kkkkk.......k.kbkkkk.......",
+    "......kkkkkbb.......................................kkkkkkk......",
+    "......kkbbkkk.......................................kkbbkkk......",
+    ".....kkkbbbk.........................................kbbkkkk.....",
+    ".....kkbbbbk.........................................kkbbbkk.....",
+    "....kkkbbkbk..........................................bbbkkkk....",
+    "....kkbbbkkk..........................................bbbkkkk....",
+    "....kkkkbkkk..........................................kbbkkkk....",
+    "...kkkbkk.kk..........................................kbbkkkkk...",
+    "...kkkbkk.kk..........................................kbbbkkkk...",
+    "..kkkkbk..kk..........................................kbbkkkkkk..",
+    "..kkkbbk...k..........................................kbbbkkkkk..",
+    "..kbkbbk...k..........................................kbbkkbbkk..",
+    ".kbbkbkk...k..........................................kbbkkbbkkk.",
+    ".kkbkbbk...k..........................................kklkkbbbkk.",
+    ".kkbbbbkk..k.........................................k.llkkbbbkk.",
+    "kkbbbbbkk...b........................................k.lkkbbbbkkk",
+    ".bbbbbkkkk...........................................k.kkbbkkkkk.",
+    ".kbbbbbkkkk.k........................................k.kkbbkkkkk.",
+    ".klbbbbkkkkkk........................................kkkbbbbbbk..",
+    ".klbbbbbkkkkk........................................kkbbbkbkbk..",
+    ".kkkkkbbbkkkk.......................................kkkbbbkkkkk..",
+    "..kkkbbbbbkkkk......................................kkbbkkkbbk...",
+    "....kbbbbbkkkk.....................................kkkbbkkkk.k...",
+    ".....bbbbbkkkkk....................................kkkbkkkkkk....",
+    ".....bbbbbbkkkk....................................kkkkkkkk......",
+    "......bbbbbkkkkk..................................kkkbbbkk.......",
+    ".......kbbbbkkkk..................................kkkkbbkk.......",
+    ".......kbbbbkkkkk................................kkkkbbkk........",
+    "........kbbbkkkkkk.............................kkkkkbbbkk........",
+    "........kbbkkkkkkkk...........................kkkkkkbbkk.........",
+    ".........kbkkkkkkkkk.........................kkkkkkkbkk..........",
+    ".........kbbkkkkkkkkk.......................kkkkkkkkbkk..........",
+    "..........bbkkkkkkkkkk.....................kkkkkkkkkbk...........",
+    "...........bk.kkkkkkkk.....................kkkkkkk.kkk...........",
+    "...........kk...kkkkkk......................kkkk...kk............",
+    "............k......kkk......................kkk.....k............",
+  ], { k: INK, b: H.base, l: H.lit })
+  const button = { k: INK, b: Y.dim, l: Y.lit, s: Y.shine, d: Y.deep }
+  p.grid(36, 87, ["...kkkk...", ".kkllllkk.", ".kllssbbk.", "kllsbbbbdk", "klsbbbbbdk", "klbbbbbbdk", ".klbbbddk.", ".kkbbddkk.", "...kkkk..."], button)
+  // the eyes: the model's, read off under a grid, their lower half tidied so that the iris reads
+  const E = { k: INK, w: "#f6f0e8", v: "#b8b4c0", i: "#34221a", I: "#7a4a2c", g: "#ffffff", d: S.dim }
+  p.grid(21, 43, [
+    "....ddkdddddd....",
+    "....kdkkkkkkkk...",
+    ".kkdkkkkkkkkkkk..",
+    "..kkkkvkgkkkkkk..",
+    "...kkwwkggkkvk...",
+    "....dwwwiIIiwwk..",
+    ".....dwwiIIiwwd..",
+    ".......ddddddd...",
+  ], E)
+  p.grid(44, 43, [
+    ".....dddddkd.....",
+    "....ddkkkkkkk....",
+    "...k.kkkkkkkkkkk.",
+    "...dkkgkkkvvkkk..",
+    "...kvkggkkwwk....",
+    "..kdwwiIIiwwk....",
+    "...dwwiIIiwwd....",
+    "....dddddddd.....",
+  ], E)
+  // the cheek's cyan line, as in the title picture: on her left cheek, so on our right
+  p.grid(53, 51, ["......cc", "....cc..", "..cc....", "cc......"], { c: CYAN.base })
+  // the nose; the mouth: the upper lip and its line are the model's, the lower lip small and close to the skin
+  p.grid(36, 52, [".....d...", ".....d...", ".....d...", "..l..dd..", "d......d.", "dSSddSSd."], { d: S.dim, S: S.deep, l: S.lit })
+  p.grid(33, 64, [
+    "k...rrr.rrrr..k",
+    ".kkkkkkrrkkkkkk",
+    "....RRkkkRR....",
+    ".....RRRRR.....",
+    "......ddd......",
+  ], { k: INK, r: "#c05a3c", R: "#d08468", d: S.dim })
+})
 
 // ---------------------------------------------------------------- EVI
 // The only soft round shape in the series: her deck sprite (art/ui/deck.px.js) at three times the size. Worried and curious at once, one ear drooping.
