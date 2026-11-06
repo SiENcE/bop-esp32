@@ -28,7 +28,7 @@ pal({
   // Teo: skin in cold light (lit, lit mid | shadow, deep), hair, vest, shirt, ear defenders
   I: "#c99a8c", i: "#93665c", A: "#583841", a: "#2c1d29",
   h: "#0e121c", H: "#1c2434", w: "#33445e",
-  o: "#ffb070", O: "#c07838", p: "#5e3018",
+  o: "#ffb070", O: "#c07838", P: "#8e5628", p: "#5e3018",
   g: "#141a28", G: "#252e42", e: "#2f3e5a", E: "#4f6584",
   // Juno's side: the city at night, magenta neon
   5: "#0a0e18", 6: "#10172a", 8: "#24122e", z: "#3e1240", M: "#a8238a",
@@ -95,7 +95,9 @@ pal({
   const teoShift = (y) => Math.max(0, Math.round((88 - y) * 0.14))
   // Neither figure runs on to the crack. Teo's vest ends on a straight slant, flaring toward the picture's foot as
   // Juno's coat does (y -> its last column); the ground shows between it and the glass.
-  const vestFront = (y) => 140 + Math.round((y - 96) * 0.35)
+  // Its top corner is rounded off.
+  const VEST_CORNER = { 96: 137, 97: 139, 98: 140 }
+  const vestFront = (y) => VEST_CORNER[y] ?? 140 + Math.round((y - 96) * 0.35)
   // Juno: her face's front line (y -> distance left of JF); the slicker's outline (hood and shoulders) and
   // the hem of the hood round her face
   const JF = 176
@@ -179,6 +181,7 @@ pal({
         if (!body(x, y) || x > vestFront(y)) return null
         if (x > 90 && x < 130 && y < bodyTop(x) + 3) return y < bodyTop(x) + 1 ? "g" : "G"   // the shirt's collar
         if (Math.abs(x - 124 - (y - 98) * 0.1) < 0.6 && y > 90) return "p"                 // the vest's zip
+        if (Math.abs(x - 139 + (y - 99) * 0.4) < 0.6 && y >= 99 && y <= 107) return "P"    // a crease, as on Juno's coat
         const top = vest.dist(x, y) < 2.5 && y < 104, side = x < 48 + (y - 96) * 0.6, lit = top && x > 70
         if (y >= 108 && y <= 109) return side ? "C" : lit || x > 128 ? "b" : "B"         // the reflective stripe
         return side ? "p" : lit ? "o" : "O"
