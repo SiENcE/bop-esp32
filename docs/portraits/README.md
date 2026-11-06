@@ -8,11 +8,11 @@ Die ganze Reihe: `figuren_index_x3.png`. Jede Figur gibt es als `<id>_x4.png` mi
 
 | Datei (`<id>`) | Name | Wer | |
 |---|---|---|---|
-| `juno` | Juno Reyes | Glasserin im Lower Ninth, gelber Regenmantel | |
 | `teo` | Teo Reyes | Junos jüngerer Bruder, Tideboy in der Pumpenhalle | |
+| `juno` | Juno Reyes | Glasserin im Lower Ninth, gelber Regenmantel | |
 | `evi` | EVI | die neugierige KI auf Junos Deck | |
 | `motte` | Motte | Kurierkind, zwölf, zählt alles mit | |
-| `bao` | Bao | die Nudelküche vor dem LUCKY STATIC, seit Jahrzehnten | |
+| `bao` | Bao | die Nudelküche vor dem LUCKY STATIC, seit Jahrzehnten; die Kelle ist eine echte Schöpfkelle: langer gerader Stiel, halbkugeliger Kopf, die Öffnung zu ihm hin | |
 | `haldane` | Frau Haldane | Nachbarin aus 14C, immer müde, immer freundlich | |
 | `regenleserin` | Die Regenleserin | 82, kostet auf dem Dach den Regen | |
 | `imai` | Frau Imai | Stammgast im LUCKY STATIC, langsam und müde, in ein schweres Tuch gewickelt; der blaue Punkt ist Lull | |

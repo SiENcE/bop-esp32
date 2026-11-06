@@ -678,19 +678,25 @@ portrait("bao", PANELS.bao, (p) => {
   // the arm, up to the side; the ladle held by the end of its handle, its bowl by his head
   const sleeve = p.part("-4,104! -2,84 6,76 18,76 22,84 22,104!", C.base)
   sleeve.edge(4, 0, C.dim)
-  const hand = p.part("8,62! 20,62! 20,80! 8,80!", S.base)
+  const hand = p.part("6,62! 18,62! 18,80! 6,80!", S.base)
   hand.edge(3, 0, S.dim)
-  p.line("6,78 22,78", C.deep)
-  const handle = p.part("12,70! 17,70! 13,34 12,22 15,15 22,12 22,8 13,10 8,18 8,34", STEEL.base)
-  handle.edge(2, 0, STEEL.dim)
-  handle.edge(-1, -1, STEEL.lit)
-  // the bowl, deep and round, on his side of the handle, its mouth tipped toward his head
-  const bowl = p.part("14,14! 34,8! 36,16 34,24 28,30 20,30 15,24", STEEL.base)
-  bowl.edge(4, 4, STEEL.dim)
-  bowl.edge(2, 2, STEEL.deep)
-  bowl.tone(oval(19, 22, 2, 3), STEEL.lit)
-  const mouth = p.part("14,14! 34,8! 35,11 15,17", STEEL.deep)
-  mouth.tone("17,14! 32,10! 32,11 17,15", "#1a2337")
+  p.line("4,78 20,78", C.deep)
+  // a real soup ladle (the user's photo): a thin straight handle running up to the low side of the rim, flaring just where it meets it
+  const handle = p.part("10,68! 13,68! 13,27 15,22! 8,22! 10,27", STEEL.base)
+  handle.edge(1, 0, STEEL.dim)
+  handle.edge(-1, 0, STEEL.lit)
+  // the bowl, a half sphere tipped toward his head: its pale back above, below that the polished inside, a mirror of dark and white with a bright rim
+  // its rim lies on the 2:1 slope, the one diagonal that stays a clean line at this size
+  const TILT = -0.4636
+  const back = p.part(oval(16, 11.5, 12.5, 11, TILT), STEEL.lit)
+  back.tone(oval(21, 8, 8, 5, TILT), STEEL.base)
+  back.tone(oval(9, 8, 2.5, 1.5, -0.9), "#ffffff")
+  back.tone(oval(19, 11.5, 11.5, 4.5, TILT), STEEL.dim)
+  const mouth = p.part(oval(18, 15, 12.5, 5.5, TILT), STEEL.base)
+  mouth.tone(oval(17, 12, 7, 2, TILT), STEEL.deep)
+  mouth.tone(oval(21.5, 13.5, 3.5, 1.6, TILT), "#ffffff")
+  mouth.tone(oval(16, 20, 7.5, 1.5, TILT), STEEL.lit)
+  mouth.ink("#ffffff")
   // the head: a wide egg; the ears first, the hearing aid on his left
   for (const [x, y] of [[23, 44], [71, 44]]) { const e = p.part(oval(x, y, 4, 7), S.base); e.edge(2, 2, S.dim) }
   const head = p.part("24,38 28,20 38,11 52,10 62,16 68,28 70,44 66,62 56,72 40,72 28,62", S.base)
@@ -707,7 +713,7 @@ portrait("bao", PANELS.bao, (p) => {
   hearing.edge(2, 2, GREY.dim)
   p.outline()
   // the fingers round the handle
-  fingers(p, 7, 62, [15, 16, 15, 13], S)
+  fingers(p, 5, 62, [15, 16, 15, 13], S)
   // the glasses, huge, and behind them his eyes much too big
   const lens = (cx, cy, r) => {
     const l = head.within(oval(cx, cy, r), "#f6f0e4")
@@ -1123,8 +1129,6 @@ portrait("kessler", PANELS.kessler, (p) => {
   // a badge of the pump authority, its small light
   p.rect(52, 84, 10, 7, INK); p.rect(53, 85, 8, 5, "#8e96a8"); p.rect(54, 86, 2, 2, CYAN.base); p.rect(57, 87, 3, 1, "#565e70")
   p.outline()
-  // his hand, holding the scarf shut at the throat
-  fingers(p, 42, 63, [10, 11, 11, 10], { base: S.base, dim: S.dim, lit: S.lit }, -1)
   // the eyes: too much white, the pupils small and hard over to one side
   const E = { k: INK, w: "#ffffff", W: "#dcdce8", i: "#20242e", d: S.dim }
   p.grid(29, 27, [
@@ -1443,6 +1447,10 @@ portrait("ines", PANELS.ines, (p) => {
   // the hair behind, drawn back, a soft mass round the head
   const hair = p.part(oval(41, 36, 25, 28, 0.05), H.base)
   hair.edge(-2, -2, H.lit)
+  // where the plait comes out from behind the neck: the jaw lies over it, the first link in front of it joins it to the shoulder
+  const root = p.part(oval(27, 66, 5, 6, 0.3), H.base)
+  root.edge(-2, -2, H.lit)
+  root.sep(H.deep)
   // the small ear with its stud; the face
   const ear = p.part(oval(62, 42, 3, 5), S.base)
   ear.edge(1, 2, S.dim)
@@ -1629,7 +1637,7 @@ const named = (c, id, x, y) => {
 for (const id of Object.keys(NAMES)) scene(`named_${id}`, { w: PW, h: PH + nameH(nameLines(id)), bg: INK }, (c) => named(c, id, 0, 0))
 
 // The index: everyone, in rows; the ones held back from marketing stand at the end (docs/portraits/README.md).
-const INDEX = ["juno", "teo", "evi", "motte", "bao", "haldane", "regenleserin", "imai", "prediger", "monteur", "kessler", "varga", "sable", "koch", "ines", "lantern", "ashe"]
+const INDEX = ["teo", "juno", "evi", "motte", "bao", "haldane", "regenleserin", "imai", "prediger", "monteur", "kessler", "varga", "sable", "koch", "ines", "lantern", "ashe"]
 const COLS = 6, GAP = 4
 scene("review_figuren_index", { w: COLS * PW + (COLS - 1) * GAP + 2 * GAP, h: Math.ceil(INDEX.length / COLS) * (PH + nameH(2) + GAP) + GAP, bg: INK },
   (c) => INDEX.forEach((id, i) => named(c, id, GAP + (i % COLS) * (PW + GAP), GAP + Math.floor(i / COLS) * (PH + nameH(2) + GAP))))
