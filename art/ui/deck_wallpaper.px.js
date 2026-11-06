@@ -8,7 +8,7 @@
 // beside him the noodle cup they shared, still steaming. A camera drone hovers by, watching them (its red eye).
 //
 // Exports two 320x180 anims, 24 frames at 100 ms (a 2.4 s seamless loop; frame 0 is the approved still).
-// The kids stay still; around them: rain falling over everything, the cup's steam rising and curling,
+// The kids stay still; around them: rain falling over everything down to the parapet, the cup's steam rising and curling,
 // rings where the rain hits the canal, its reflections breaking up, the taxi's light trembling, the hood's
 // reflection trembling in the puddle, the drone drifting and blinking, the NOODLES sign humming (its glow
 // breathing, the D stuttering), the HALCYON screen's band rolling down and the sun's glow breathing, the
@@ -388,11 +388,6 @@ pal({
     for (let x = 3; x < c.w; x += 5) if (hash(x, 5) < 0.4) c.rect(x, SEAT + 4, 1, 2 + Math.floor(hash(x, 6) * 5), "1")
     for (let y = SEAT + 13; y < H; y++) for (let x = 0; x < c.w; x++) c.px(x, y, y < SEAT + 15 ? "k" : "e")
     c.rect(0, SEAT + 15, c.w, 1, "1")                         // the cable along the parapet's foot
-    // splashes on the tar: each once a loop, for two frames (the photo only: today the rain ends at the parapet, the roof stays dry)
-    if (!today) for (let i = 0; i < 30; i++) {
-      const x = Math.floor(hash(i, 21) * W), y = 152 + Math.floor(hash(i, 22) * 26), a = (f - Math.floor(hash(i, 23) * FRAMES) + FRAMES) % FRAMES
-      if (a === 0 && c.key(x, y) === "e") c.px(x, y, "f"); if (a === 1 && c.key(x - 1, y) === "e") { c.px(x - 1, y, "f"); c.px(x + 1, y, "f") }
-    }
 
     // today: more screens than there were, selling sleep (pale blue and magenta, as on the ride down), a
     // brighter line rolling down each once a loop, each in its own place in the loop
@@ -402,12 +397,12 @@ pal({
       for (let i = 0; i < w; i++) c.px(x + i, y + line, lit[c.key(x + i, y + line)])
     }
 
-    // rain over everything below the ring's rim but the two of them: thin streaks slanting down to the
+    // rain over everything from the ring's rim down to the parapet's top, but the two of them: thin streaks slanting down to the
     // right, a step lighter than what they fall in front of (so brightest before the lights), 7.5 px a
     // frame: each drop falls the picture's height once a loop
     for (let i = 0, drops = sitting ? 197 : 150; i < drops; i++) {
       const y0 = (Math.floor(hash(i, 12) * H) + Math.floor(7.5 * f)) % H, x0 = Math.floor(hash(i, 11) * (c.w + 45)) - 45
-      for (let d = 0; d < 3; d++) { const y = y0 + d, x = x0 + Math.floor(y / 4); if (y > rim(x) + 1 && y < (today ? SEAT : H)) { const k = c.key(x, y); if (lit[k]) c.px(x, y, lit[k]) } }
+      for (let d = 0; d < 3; d++) { const y = y0 + d, x = x0 + Math.floor(y / 4); if (y > rim(x) + 1 && y < SEAT) { const k = c.key(x, y); if (lit[k]) c.px(x, y, lit[k]) } }
     }
 
     // the two of them on the ledge (still), the cup beside Teo, its steam rising and curling (half a px a
