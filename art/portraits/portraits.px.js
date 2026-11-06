@@ -789,15 +789,16 @@ portrait("juno_front", PANELS.juno, (p) => {
   ], E)
   // the cheek's cyan line, as in the title picture: on her left cheek, so on our right
   p.grid(53, 51, ["......cc", "....cc..", "..cc....", "cc......"], { c: CYAN.base })
-  // the nose; the mouth: the upper lip and its line are the model's, the lower lip small and close to the skin
+  // the nose; the mouth, small and full, a mark at each corner
   p.grid(36, 52, [".....d...", ".....d...", ".....d...", "..l..dd..", "d......d.", "dSSddSSd."], { d: S.dim, S: S.deep, l: S.lit })
-  p.grid(33, 64, [
-    "k...rrr.rrrr..k",
-    ".kkkkkkrrkkkkkk",
-    "....RRkkkRR....",
-    ".....RRRRR.....",
-    "......ddd......",
-  ], { k: INK, r: "#c05a3c", R: "#d08468", d: S.dim })
+  p.grid(33, 63, [
+    ".....rrrrr.....",
+    "k...rrrrrrr...k",
+    ".kkkkkkkkkkkkk.",
+    "...RRRRRRRRR...",
+    "....RRRRRRR....",
+    ".....ddddd.....",
+  ], { k: "#6e3430", r: "#c8665c", R: "#e0907c", d: S.dim })
 })
 
 // ---------------------------------------------------------------- EVI
