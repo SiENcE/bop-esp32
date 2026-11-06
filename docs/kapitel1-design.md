@@ -334,7 +334,7 @@ Größen wie in `kapitel0-design` §8: 30 px pro Meter Höhe; im Feed misst ein 
 | Herr Okonkwo | 48 px | Strickjacke, Lesebrille | `#d8b890` | Iso + Feed |
 | Mei | 47 px | Schürze, hochgesteckte Haare | `#ff9a7a` | Iso |
 | Dr. Ines Calder | 47 px | Kittel (heller als alles), Zopf | `#f0a0c0` | Feed (6 Kameras: `cam21`–`cam24`, `cam30`, `cam31`) |
-| Lantern | im Feed 32 px (Silhouette wie das Rollstuhl-Piktogramm) | bunter Flicken-Poncho, Rollstuhl mit Schwimmer, Antennen; sein Gesicht: grüner Iro, Okular, kleine Laterne am Hals (Story §10c, `docs/portraits/lantern_x4.png`; die Feed-Figur folgt vielleicht noch) | `#b0f0a0` | Feed |
+| Lantern | im Feed 32 px (Silhouette wie das Rollstuhl-Piktogramm) | bunter Flicken-Poncho, Rollstuhl mit Schwimmer, Antennen; sein Gesicht: grüner Iro, Okular, kleine Laterne am Hals (Story §10c, `docs/portraits/lantern_x4.png`; die Feed-Figur bleibt mit Kapuze) | `#b0f0a0` | Feed |
 | Ashe | 55 px | weißer Mantel, Maske (überstrahlt) | `#ff7a6a` | Feed |
 | Lt. Morrow | 50 px | Trenchcoat | `#a8b8d0` | Feed |
 | Tidewater-Junge | 44 px | Gezeitenkind: Kiemen, leuchtende Markierung am Hals, Kapuze | `#7ab0c0` | Feed |
