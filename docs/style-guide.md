@@ -284,6 +284,7 @@ Reference: the UI in `mock_c_iso`.
   from the engine's language files, never painted into art. The city's own signs and ads (`HALCYON:
   SLEEP BETTER`, `LUCKY STATIC`, `OUT OF ORDER`) are English in both versions and may be painted in.
   The fonts need the German letters (Ä Ö Ü ä ö ü ß).
+  **One exception (decided 2026-11-06): Jade Row.** Its tall neon signs carry Chinese glyphs, as art in every language; the shops' names there stay English (`OKONKWO`, `HOT SOUP`). Nothing the player needs may hang on reading a glyph.
 - **Fonts** (`game/font.js`, §8a): `halcyon`, our 5x7 terminal face, for speech, names, menus and
   titles; `hud`, 3x5 capitals, for labels, the OSD and small print. The mockups' art still writes with
   pxl's `lib/ui/font5x7.px.js`; game art that paints letters (signs are English and may be painted)

@@ -28,6 +28,7 @@ Halcyon.at = {
   // Kowalski Street (art/rooms/kowalski.map.js, game/rooms/kowalski.layout.js)
   kowalski: {
     fromGasse: [346, 170],
+    west: [16, 164], westRect: [0, 92, 30, 56],   // the way on to the left, into the lane (a block for now: mock_row_way)
     ...fromLayout(Halcyon.layouts.kowalski),
     // the room's effects, on the screen (from the map's projection): the light hanging in the rain out of
     // LUCKY STATIC's door and under the ad screen, glints on the puddles, drops off an AC unit, the Kessel
@@ -64,6 +65,13 @@ Halcyon.at = {
   gasse: {
     walk: [[10, 112, 310, 112, 318, 176, 2, 176]], arrive: [24, 150], kowalski: [14, 150], laundromat: [260, 116], market: [150, 132], niche: [52, 116],
     kowalskiRect: [0, 110, 26, 70], laundromatRect: [232, 40, 56, 64], marketRect: [112, 122, 76, 30], nicheRect: [30, 44, 44, 60], cablesRect: [0, 10, 320, 28],
+  },
+  // the lane left of Kowalski Street, down its length (art/mock/jade_row.px.js: blocks, z = 1 where Juno walks, 30 px to the metre there). She keeps to the near band: her
+  // sprite has one size, right for that depth, so the shop's door and the machine are reached from in front of them
+  jade_row: {
+    walk: [[67, 142, 253, 142, 306, 176, 14, 176]], arrive: [292, 172], back: [292, 172], mid: [186, 158], shop: [78, 146], machine: [232, 146], soup: [214, 144], far: [160, 143], parlour: [112, 143], pharmacy: [196, 143],
+    backRect: [296, 112, 24, 38], windowRect: [55, 88, 31, 48], doorRect: [88, 84, 11, 44], signRect: [53, 60, 38, 26], machineRect: [232, 84, 28, 58], soupRect: [212, 82, 20, 50],
+    parlourRect: [106, 86, 18, 30], pharmacyRect: [195, 88, 13, 24], gateRect: [136, 50, 48, 46], screenRect: [136, 4, 48, 44], signsRect: [195, 56, 22, 32],
   },
   // outside the flat's window: the ledge (kapitel1-design, "Die Stadt")
   sims: {

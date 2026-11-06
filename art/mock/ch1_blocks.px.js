@@ -240,3 +240,13 @@ scene("laundromat_bg", { w: W, h: H, bg: "k" }, (c) => {
   c.rect(0, 40, 14, 60, "a")
   SIGN(c, 96, 22, 128, "NO SNEAKERS IN THE DRYER", "b", "g")
 })
+
+// the way from Kowalski Street's left end into the lane: a gap in the facade with the lane's light in it, a blade sign (bottom-centre at the foot of its middle)
+anim("mock_row_way", { w: 30, h: 76, frames: 1, fps: 1, pivot: "bottom" }, (c) => {
+  for (let x = 0; x < 30; x++) {
+    const foot = 75 - Math.floor(x / 2)
+    for (let y = foot - 58; y <= foot; y++) { const t = (foot - y) / 58; c.px(x, y, x < 2 || x >= 28 ? "k" : t < 0.25 ? "n" : t < 0.55 ? "p" : "k") }
+    if (x >= 2 && x < 28) { c.px(x, foot - 44, "y"); c.px(x, foot - 50, "M") }
+  }
+  c.rect(20, 2, 7, 30, "k"); c.rect(21, 3, 5, 28, "M"); for (let y = 5; y < 29; y += 6) { c.rect(22, y, 3, 1, "y"); c.rect(23, y + 1, 1, 3, "y") }
+})

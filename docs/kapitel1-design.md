@@ -11,7 +11,7 @@ Zeit: `docs/kapitel0-design.md` §2–4. Stil: `docs/style-guide.md`.
 | Ziel | die Miete (900 Chits) in drei Tagen |
 | Aufbau | **offen**: drei Aufträge, in beliebiger Reihenfolge und parallel, über drei Abende verteilt; das Kapitel endet am dritten Abend mit dem Treffen in der alten Metro |
 | Neu im Spiel | der Drain-Markt und Sable (persönlich), Ratz, die Deck-App NETZ, Anonymisieren im Clip-Editor, Vesper (NINTH LIVE), Werkzeuge kaufen, Steuern im Feed, Kamera vor Ort anzapfen, die Tage, Teo, die Polizei (Morrow, kurz) |
-| Orte, Straßenmodus | `flat`, `kessel_14`, `kessel_lobby`, `kowalski`, `lucky_static`, `okonkwo_shop`, `drain_market`, `sable_booth`, `laundromat` (9) |
+| Orte, Straßenmodus | `flat`, `kessel_14`, `kessel_lobby`, `kowalski`, `jade_row`, `lucky_static`, `okonkwo_shop`, `drain_market`, `sable_booth`, `laundromat` (10) |
 | Kameras | `cam03`, `cam04`, `cam07` (Kowalski-Straße, das Mockup E), `cam07v` (die Automatenkamera), `cam15` (Kapselhotel Morpheus), `cam21`–`cam24` (Ines' Wege), `cam30` (Sumpf-Abgang), `cam31` (alte Metro) (11) |
 | Entscheidungen | K1a (Kessler), K1b (der Eckladen), **Entscheidung 1** (WREN) |
 | Ende | der Mord an Ines in `cam31` |
@@ -80,7 +80,7 @@ Juno Sable im Prolog Kessler verkauft hat, sagt Varga das offen: „Sable sagt, 
 ## 4. Auftrag B: „Der Eckladen" (die Tidewater Boys)
 
 Eine Nachricht von „TIDE": „Okonkwo, Kowalski 9. Wir wollen den Tresorcode. 500. Keine Fragen." Der
-Laden ist zwei Häuser neben LUCKY STATIC. Herr Okonkwo verkauft Reis, Batterien und Raucherwaren und
+Laden steht in der **Jade Row**, der Gasse links von der Kowalski-Straße (entschieden 2026-11-06, story §10c), Durchgang am linken Ende der Straße, gleich hinter LUCKY STATIC. Herr Okonkwo verkauft Reis, Batterien und Raucherwaren und
 grüßt Juno jeden Abend.
 
 ### Kette
@@ -297,7 +297,8 @@ Live-Übertragung.“ 750 Chits, die zweite Zeile im Kassenbuch. Es schreibt sic
 | Raum | Größe | Hauptfarbe | Ausgänge | Requisiten | Detail mit Geschichte |
 |---|---|---|---|---|---|
 | `lucky_static` | 320x180 | Magenta und Bernstein, Dampf | Tür → `kowalski` | Theke, Hocker, Nudelküche, Fernseher, Mei, drei Stammgäste | ein Karaoke-Automat mit einem `OUT OF ORDER`-Schild, auf dem trotzdem jeden Abend jemand singt |
-| `okonkwo_shop` | 320x180 | warmes Glühlampenlicht, Regale | Tür → `kowalski` | Theke, Tresor (dahinter), Reissäcke, Batterien, Okonkwo | ein Foto von Okonkwos Familie vor der Flut, am Strand der alten Stadt |
+| `jade_row` | 320x180, ein Blick die Gasse hinunter, kein Iso (Blöcke: `art/mock/jade_row.px.js`) | Neon, Bernstein-Laternen, Lull-Cyan am Ende | rechts unten → `kowalski`, Tür → `okonkwo_shop` | Okonkwos Laden links, gegenüber der Automat, HOT SOUP, MAHJONG, Apotheke, Tor, Lull-Schirm | Schilder mit Zeichen, die kaum noch einer lesen kann |
+| `okonkwo_shop` | 320x180 | warmes Glühlampenlicht, Regale | Tür → `jade_row` | Theke, Tresor (dahinter), Reissäcke, Batterien, Okonkwo | ein Foto von Okonkwos Familie vor der Flut, am Strand der alten Stadt |
 | `drain_market` | 480x180 (scrollt) | Bernstein, Rauch, Magenta-Neon | Leiter hinauf → `kowalski` (über die Gasse), Vorhang → `sable_booth`, Treppe hinab (Kap. 2) | Stände: Ratz' Elektroschrott, ein Garküchenstand, ein Organ-Tausch-Schild (`KIDNEYS ONLY`), gebrauchte Implantate in Gläsern | ein Prediger der „Wachen Kirche", der gegen Lull predigt; niemand hört zu |
 | `sable_booth` | 320x180 | Violett und Bernstein, Rauch | Vorhang → `drain_market` | Sable hinter einem Tisch voller Bildschirme, ein Käfig mit einem Vogel aus Draht | Sables Preisliste an der Wand: `NAMES 50. ADDRESSES 80. SECRETS: ASK.` |
 | `laundromat` | 320x180 | Grünstich, Neonröhren, Dampf | Tür → `gasse` | 8 Maschinen, der kaputte Trockner 6 mit einem Zettel `OUT OF ORDER`, die Theke, ein schlafender Mann | ein Schild `NO SNEAKERS IN THE DRYER` mit drei Paar Turnschuhen darunter |
