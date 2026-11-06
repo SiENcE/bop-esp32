@@ -87,7 +87,7 @@ Cutaway.actor("ines", { name: "Frau im Kittel", color: "#f0a0c0",
   talk: [{ if: "end_beat", then: ["Ines. Nicht die Treppe."], else: [{ if: { or: ["tag_ines", "day=4", "off_main"] }, then: ["Die kenn ich."], else: [{ tag: "ines" }, "Dr. Ines Calder. Das ist sie, vom Foto."] }] }] });
 Halcyon.people.lantern = { name: "ROLLSTUHL", known: "tag_lantern", label: "Jemand im Rollstuhl", speaker: "Jemand im Rollstuhl" };
 Cutaway.actor("lantern", { name: "Jemand im Rollstuhl", color: "#b0f0a0",
-  costume: { idle: { se: "lantern_feed_front", ne: "lantern_feed_back" }, walk: { se: "lantern_feed_front", ne: "lantern_feed_back" }, talk: { se: "lantern_feed_front", ne: "lantern_feed_back" } }, speed: [14, 10], voice: { pitch: 46, wave: "square", syllable: 85 },
+  costume: { idle: "lantern_feed", walk: "lantern_feed", talk: "lantern_feed" }, speed: [14, 10], voice: { pitch: 46, wave: "square", syllable: 85 },
   look: ["Drei Uhr früh. Wer wäscht um drei?", "Geflickter Poncho, Schwimmer am Rollstuhl, ein Bündel Antennen.", { if: "stick_ines", then: ["Der Trockner ist leer. Das Ticket nimmt er trotzdem."], else: ["Er holt, was sie dagelassen hat."] }],
   talk: [{ if: { or: ["tag_lantern", "off_main"] }, then: ["Den hab ich."], else: [{ tag: "lantern" }, "Dich merk ich mir. Wo willst du hin?"] }] });
 Cutaway.routine("ines", [
@@ -110,7 +110,10 @@ Cutaway.routine("lantern", [
 ["commuter_a", "commuter_b", "commuter_c", "commuter_d"].forEach((id, i) => {
   Cutaway.time.routines.get(id).push({ day: [2, 3, 4], from: "18:00", to: "19:00", room: "cam21", at: A21.queue[i], face: "ne" });
 });
-Halcyon.links = [{ actor: "commuter_c", if: ["day<4", "at:commuter_c=cam21"] }];
+// On Friday Juno knows her whatever she did: `tag_ines` is forgotten overnight to keep the states few, so the implant's mark is only the look (no state)
+Cutaway.i18n.declare("feed display", ["INES CALDER"]);
+Halcyon.links = [{ actor: "commuter_c", if: ["day<4", "at:commuter_c=cam21"] },
+  { actor: "ines", if: ["day=4", "!tag_ines"], label: "INES CALDER", color: "implant" }];
 
 // ---- the moments of job C
 Cutaway.moment("ines_drop", { room: "cam23", day: 3, from: "20:00", to: "20:15",

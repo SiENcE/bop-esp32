@@ -20,7 +20,7 @@
 //   commuter_d      a woman with long hair, a light coat and a shoulder bag (bag 6)
 //   yuen_cook       paper cap 8, apron 7, chopping at his counter
 //   ines            the end of Chapter 1, front and back: the white coat 9, a dark plait cut into it; a wallet with a light
-//   lantern         front and back, in the water: big spoked wheels (rims 8), a poncho 7, antennas with lit tips 9
+//   lantern         one profile, in the water, like the wheelchair sign: a thick wheel 8, a poncho 7, antennas with lit tips 9
 //   ashe            front only: a raincoat 8, no face, a burn 9 with no dark rim; the same in the shadow; the wave
 //
 // Walks: 6 frames x 100 ms, the same foot table as juno_feed_walk (the feet step 2 across and 1 up).
@@ -546,93 +546,29 @@ sprite("_i_down", `
   ..........................443`)
 anim("ines_feed_down", { w: 29, h: 7, frames: 1, outline: "1", pivot: "bottom" }, (c) => c.stamp("_i_down", 0, 0))
 
-// ---------------------------------------------------------------- Lantern, 23x23 inside (25x25)
-// A man sitting in a wheelchair, in the water, seen from three-quarters as the camera sees everyone. What says wheelchair is the
-// sitting man's L, thighs flat, shins down, feet on the plate, between a big spoked wheel near us and its twin behind him, with
-// a small caster in front: head-on, two wheels and a body made a small tank. What he rebuilt stays under that: a slim pontoon at
-// the waterline, the boat motor on the chair's back. The antennas rise from the chair's back, their tips the brightest on him.
-// He has no walk: the same sprites when he moves, the waterline staying where it is while the chair bobs.
-const FL = { W: 23, H: 23, WATER: 21 }
-sprite("_l_wheel", `
-  ..88888..
-  .88.7.88.
-  8...7...8
-  8...7...8
-  8..777..8
-  877757778
-  8..777..8
-  8...7...8
-  8...7...8
-  .88.7.88.
-  ..88888..`)                     // near us: the tyre bright, seen through between the spokes
-sprite("_l_wheel_far", `
-  ..55555..
-  .55...55.
-  5.......5
-  5.......5
-  5.......5
-  5...4...5
-  5.......5
-  5.......5
-  5.......5
-  .55...55.
-  ..55555..`)                     // beyond him, in less light
-sprite("_l_front", `
-  ...888..........
-  ..88888.........
-  ..88766.........
-  ..88753.........
-  ...8876.........
-  ...77777........
-  ..7777777.......
-  ..7777777.......
-  ..7557777.......
-  ..7557777.......
-  ..77777776......
-  ..77777776677777
-  ...7777666666668
-  .......666666668
-  ............6668
-  ............5668
-  ............5668
-  ............5668
-  ...........88888`)                 // the hood and the face in it, the poncho with its patch, the thighs flat, the shins down, the shoes
-sprite("_l_back", `
-  ...888...
-  ..88888..
-  ..88888..
-  ..88887..
-  ...8877..
-  ..777777.
-  .77777777
-  .77777776
-  .77557776
-  .77557776
-  .77777766
-  .66666666
-  .55555556
-  .55555556
-  ..555556.`)                        // the hood from behind, the poncho, the chair's back under it
-function lantern(c, o = {}) {
-  const b = o.bob ?? 0, back = o.back
-  c.stamp("_l_wheel_far", 13, 7 + b)
-  const masts = () => { for (const [x, top] of [[4, 0], [6, 3], [8, 1]]) { c.rect(x, top + b, 1, 10 - top, "7"); c.rect(x, top + b, 1, 2, "9") } }
-  masts()
-  if (back) {
-    c.stamp("_l_back", 8, 1 + b)
-    c.rect(6, 12 + b, 3, 1, "8")                                                // the push handle, sticking out behind
-    c.rect(11, 16 + b, 4, 1, "8"); c.rect(11, 17 + b, 4, 3, "7"); c.rect(12, 20, 2, 1, "5")   // the boat motor, its shaft into the water
-  } else {
-    c.stamp("_l_front", 7, 2 + b)
-    for (const [x, y, k] of [[15, 18, "7"], [16, 18, "7"], [17, 19, "7"], [14, 19, "7"], [15, 20, "7"], [16, 20, "7"], [15, 19, "4"], [16, 19, "4"]]) c.px(x, y + b, k)   // the caster
-    c.rect(17, FL.WATER + b, 6, 1, "7")                                         // the footplate
-  }
-  c.stamp("_l_wheel", 0, 10 + b)
-  c.rect(1, FL.WATER + 1, 13, 1, "5"); c.rect(3, FL.WATER, 9, 1, "6")           // the pontoon: its bottom is the waterline
+// ---------------------------------------------------------------- Lantern, 29x30 inside (31x32)
+// A wheelchair is thin lines, and thin lines don't survive the rim, the grain and the scanlines: every drawing of its parts turned
+// to clutter at this size. So this is the sign for a wheelchair instead, a pure profile of flat shapes: the man an L, thighs flat,
+// shins down, a thick wheel over his hip, a caster, two antennas behind. Facing right; the engine mirrors him. One view is enough,
+// since he travels across the picture. He stands larger than the scale, decided by the user: at 24 px the wheel didn't read.
+// No walk: the same sprite when he moves, the pontoon at the waterline staying while the chair bobs.
+const FL = { W: 29, H: 30 }
+const flRing = (c, cx, cy, r0, r1, k) => {
+  for (let y = 0; y < FL.H; y++) for (let x = 0; x < FL.W; x++) { const d = Math.hypot(x - cx, y - cy); if (d >= r0 && d <= r1) c.px(x, y, k) }
 }
-for (const [name, back] of [["lantern_feed_front", false], ["lantern_feed_back", true]]) {
-  anim(name, { w: FL.W, h: FL.H, frames: 2, ms: [900, 900], outline: "1", pivot: "bottom" }, (c) => lantern(c, { back, bob: c.frame }))
-}
+anim("lantern_feed", { w: FL.W, h: FL.H, frames: 2, ms: [900, 900], pivot: "bottom" }, (c) => {
+  const b = c.frame
+  for (const [x, top] of [[6, 1], [4, 4]]) { c.rect(x, top + b, 1, 16 - top, "7"); c.rect(x, top + b, 1, 2, "9") }   // the antennas, their tips the brightest on him
+  c.rect(5, 15 + b, 5, 1, "7"); c.rect(7, 15 + b, 1, 6, "7")                 // the push handle, the chair's back
+  c.rect(12, 2 + b, 5, 4, "8"); c.rect(13, 1 + b, 3, 6, "8"); c.rect(15, 3 + b, 2, 3, "6")   // the hood, the face in it
+  c.rect(13, 7 + b, 3, 1, "7"); c.rect(10, 8 + b, 8, 12, "7")                // the poncho
+  c.rect(16, 10 + b, 6, 2, "7"); c.rect(20, 12 + b, 2, 3, "8")               // the arm, the hand on his knee
+  c.rect(13, 16 + b, 13, 4, "6"); c.rect(24, 20 + b, 3, 6, "6"); c.rect(23, 25 + b, 6, 2, "8")   // the thigh, the shin, the shoe
+  flRing(c, 11, 21 + b, 5.8, 8.1, "8"); c.rect(10, 20 + b, 3, 3, "8")        // the wheel over his hip, its tyre and hub
+  flRing(c, 21, 27 + b, 0.9, 1.7, "7")                                       // the caster
+  c.rect(5, 29, 16, 1, "5")                                                  // the pontoon: its bottom is the waterline
+  fpRim(c, FL.W, FL.H, "1")
+})
 
 // ---------------------------------------------------------------- Corvin Ashe, 13x24 inside, 17x26 with the burn
 // Tall and narrow, a belted raincoat long to the calves, 8: a step under Ines's 9, or he reads grey-green instead of white. No

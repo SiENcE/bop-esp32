@@ -54,13 +54,13 @@ scene("review_feed_ch1", { w: 430, h: 114, bg: "2" }, (c) => {
   GROUNDS.forEach((k, i) => c.rect(0, 12 + i * STRIP, 430, STRIP, k))
   const FIGS = [[10, "kessler_feed", 0], [28, "ines_feed_front", 0], [44, "ines_feed_front", 1700], [60, "ines_feed_front_walk", 0], [76, "ines_feed_front_walk", 300],
     [92, "ines_feed_back", 0], [108, "ines_feed_back_walk", 300], [130, "ines_feed_give", 0], [160, "ines_feed_give", 450], [192, "ines_feed_down", 0],
-    [224, "lantern_feed_front", 0], [250, "lantern_feed_front", 900], [276, "lantern_feed_back", 0], [302, "lantern_feed_back", 900],
+    [224, "lantern_feed", 0], [262, "lantern_feed", 900],
     [324, "ashe_feed", 0], [342, "ashe_feed_walk", 200], [362, "ashe_feed_wave", 0], [382, "ashe_feed_wave", 400], [402, "ashe_feed_dim", 0], [420, "ashe_feed_dim_walk", 200]]
   GROUNDS.forEach((k, i) => {
     const y = 12 + i * STRIP + STRIP - 3
     FIGS.forEach(([x, n, t]) => c.stamp(n, x, y, { t }))
   })
-  for (const [x, s] of [[3, "1.75M"], [24, "INES"], [90, "HINTEN"], [124, "GIBT"], [180, "LIEGT"], [212, "LANTERN"], [270, "HINTEN"], [318, "ASHE"], [356, "WINKT"], [398, "DUNKEL"]]) c.text(x, 3, s, "8")
+  for (const [x, s] of [[3, "1.75M"], [24, "INES"], [90, "HINTEN"], [124, "GIBT"], [180, "LIEGT"], [212, "LANTERN"], [318, "ASHE"], [356, "WINKT"], [398, "DUNKEL"]]) c.text(x, 3, s, "8")
   for (let i = 0; i < 3; i++) c.rect(1, 12 + i * STRIP + STRIP - 3 - 24, 1, 24, "7")          // 24 px, the scale's mark
 })
 
