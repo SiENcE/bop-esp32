@@ -1,7 +1,7 @@
 # The portraits of Juno and Teo are the title picture's two figures (art/ui/splash.px.js), cut out and set each to the far side of a panel: Juno to the
 # right, since she looks left; Teo to the left, a mirror of hers, since he looks right. Run after `sh tools/build_art.sh title`; writes
 # art/portraits/{juno,teo}_title.png. A figure's outline is what closes it off from the background, so a flood from outside stops at the ink. The title's
-# crack cuts each figure's shoulder: only the shoulder's rows run on to the panel's edge, from a colour of the clothes (never skin, or the chin grows a bar).
+# crack cuts each figure's shoulder. Teo's rows run on to the panel's edge, from a colour of the clothes (never skin, or the chin grows a bar); Juno's stop there, the panel shows beside them (the user's decision).
 import json
 from collections import deque
 from PIL import Image
@@ -61,16 +61,16 @@ juno = cut(X0, Y0, 0, (X0 - 10, 0, min(320, X0 + W + 40), Y0 + H), (X0 + 60, 40)
            lambda ax0, ay0, ax1, ay1: [(x, ay0) for x in range(ax0, ax1)] + [(ax1 - 1, y) for y in range(ay0, ay1)])
 o = juno.load()
 SLICKER = lambda c: c[3] and c[1] > 100 and c[2] < 70                    # the slicker's yellow, which her skin never is
-for y in range(84, H):
-    first = next((x for x in range(W) if SLICKER(o[x, y])), None)
+for y in range(84, H):                                                   # her shoulder ends where the crack cuts it: the panel behind it, her ink along it
+    first = next((x for x in range(18, W) if SLICKER(o[x, y])), None)     # from x=18: left of that are only the crack's slivers
     if first is None or first > 30:
         continue
     for x in range(first):
-        o[x, y] = o[first, y]
-for x in range(30):                                                      # the top of what was run on keeps her ink
-    y = next((y for y in range(84, H) if o[x, y][3]), None)
-    if y is not None and not o[x, y - 1][3]:
-        o[x, y - 1] = INK + (255,)
+        o[x, y] = (0, 0, 0, 0)
+    o[first - 1, y] = INK + (255,)
+    for x in range(first, 40):                                           # and a spark of the crack, on the coat
+        if o[x, y][3] and o[x, y][2] > 150:
+            o[x, y] = o[x - 1, y]
 save(juno, "juno")
 
 # ---- Teo, on the left. Frame 2: the Lull patch and the gills at their brightest. The search goes far to the left, as his back runs on under the cut; the
