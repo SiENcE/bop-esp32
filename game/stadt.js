@@ -51,7 +51,7 @@ Cutaway.room("sims", { name: "Der Sims", background: "sims_bg", walk: AS.walk,
   } });
 
 // ---- the roof. Above it, where other people have a sky, the underside of the next Ring
-Cutaway.actor("regenleserin", { name: "Regenleserin", color: "#a8c8e8", room: "dach", at: AD.reader, facing: "sw",
+Cutaway.actor("regenleserin", { name: "Regenleserin", color: "#a8c8e8", room: "dach", at: AD.reader, facing: "sw", walkTo: AD.readerTalk, face: "sw",
   // the same view for every facing, as Bao: she stays on her bucket
   costume: { idle: every("regen_idle_sw"), walk: every("regen_idle_sw"), talk: every("regen_talk_sw") }, voice: { pitch: 58, range: 4, wave: "triangle", syllable: 90, speed: 0.8 },
   look: ["Eine alte Frau auf einem Eimer. Sie hält einen zweiten Eimer unter das Tropfen und kostet.", "So sicher, wie andere die Zeitung lesen.", "Nicht mit der Zunge. Mit den Barteln. Billiger Umbau, noch aus der Flut."],
