@@ -1918,3 +1918,13 @@ const INDEX = ["teo", "juno", "evi", "motte", "bao", "haldane", "regenleserin", 
 const COLS = 6, GAP = 4
 scene("review_figuren_index", { w: COLS * PW + (COLS - 1) * GAP + 2 * GAP, h: Math.ceil(INDEX.length / COLS) * (PH + nameH(2) + GAP) + GAP, bg: INK },
   (c) => INDEX.forEach((id, i) => named(c, id, GAP + (i % COLS) * (PW + GAP), GAP + Math.floor(i / COLS) * (PH + nameH(2) + GAP))))
+
+// The siblings from both sides, Teo's two beside Juno's two: the profiles in the middle, since they look at each other there.
+const SIBLINGS = [["teo", "portrait_teo", "portrait_teo_profil"], ["juno", "portrait_juno_profil", "portrait_juno"]]
+const PAIR_GAP = 12
+scene("review_juno_teo", { w: 4 * PW + 2 * GAP + PAIR_GAP + 2 * GAP, h: PH + nameH(1) + 2 * GAP, bg: INK }, (c) => SIBLINGS.forEach(([id, a, b], i) => {
+  const x = GAP + i * (2 * PW + GAP + PAIR_GAP)
+  c.stamp(a, x, GAP)
+  c.stamp(b, x + PW + GAP, GAP)
+  TXT.draw(c, x + PW + Math.floor(GAP / 2), GAP + PH + 3, NAMES[id], "#dce4ee", { font: "halcyon", align: "center" })
+}))

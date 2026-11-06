@@ -2,7 +2,7 @@
 
 Porträts für Marketing und zum Auseinanderhalten der Figuren, nicht fürs Spiel. Die Schattierung ist flach, nur Ashe hat eine feinere (Mantel): So hat es der Nutzer entschieden, auf den anderen gefiel sie ihm nicht. Quelle: `art/portraits/portraits.px.js`; Juno und Teo sind frontal gezeichnet, nach einer Vorlage des Nutzers: Haare, Brauen und Augen sind aus ihr übernommen (Junos Augen unten aufgeräumt, damit die Iris klar bleibt), Nase und Mund nicht. Ihre Profile aus dem Titelbild (`tools/portrait-title.py`) bleiben in der Quelle als `portrait_juno_profil` und `portrait_teo_profil`. Juno trägt einen schmalen Wangenstreifen wie auf dem Titelbild. Von vorn sieht man Teos Lull-Pflaster nicht, es sitzt hinter dem Ohr.
 
-Die ganze Reihe: `figuren_index_x3.png`. Jede Figur gibt es als `<id>_x4.png` mit Namen und als `<id>_ohne_name_x4.png` ohne.
+Die ganze Reihe: `figuren_index_x3.png`. Die Geschwister von vorn und von der Seite: `juno_teo_seite_front_x3.png`. Jede Figur gibt es als `<id>_x4.png` mit Namen und als `<id>_ohne_name_x4.png` ohne.
 
 **Spoiler:** Ashe, Ines und Lantern gehören ans Ende von Kapitel 1. Sie sollten im Marketing besser zurückgehalten werden.
 
