@@ -1,7 +1,7 @@
 # The portraits of Juno and Teo are the title picture's two figures (art/ui/splash.px.js), cut out and set each to the far side of a panel: Juno to the
 # right, since she looks left; Teo to the left, a mirror of hers, since he looks right. Run after `sh tools/build_art.sh title`; writes
 # art/portraits/{juno,teo}_title.png. A figure's outline is what closes it off from the background, so a flood from outside stops at the ink. The title's
-# crack cuts each figure's shoulder. Teo's rows run on to the panel's edge, from a colour of the clothes (never skin, or the chin grows a bar); Juno's stop there, the panel shows beside them (the user's decision).
+# crack cuts each figure's shoulder: it stops there, with the figure's ink along it, and the panel shows beside it (the user's decision).
 import json
 from collections import deque
 from PIL import Image
@@ -73,18 +73,19 @@ for y in range(84, H):                                                   # her s
             o[x, y] = o[x - 1, y]
 save(juno, "juno")
 
-# ---- Teo, on the left. Frame 2: the Lull patch and the gills at their brightest. The search goes far to the left, as his back runs on under the cut; the
-# shoulder's rows run on to the right edge from a column left of the crack and its slivers, so nothing of the crack comes with them.
+# ---- Teo, on the left. Frame 2: the Lull patch and the gills at their brightest. The search goes far to the left, as his back runs on under the cut; his
+# shoulder stops at a column left of the crack and its slivers, with his ink along it, and the panel shows beside it.
 X0, Y0 = 85, 3
 teo = cut(X0, Y0, 2, (20, 0, X0 + W, Y0 + H), (110, 40),
           lambda ax0, ay0, ax1, ay1: [(x, ay0) for x in range(ax0, ax1)] + [(ax0, y) for y in range(ay0, ay1)])
 o = teo.load()
-CUTX = 62                                                                  # panel column of the clean vest, left of the crack's shard
+CUTX = 55                                                                  # the last panel column of the vest's own orange, left of the crack's bright shard
 for y in range(84):                                                        # above the shoulder, the crack has no business in the panel
     for x in range(70, W):
         o[x, y] = (0, 0, 0, 0)
 for y in range(84, H):
-    c = o[CUTX, y]
     for x in range(CUTX + 1, W):
-        o[x, y] = c if c[3] else (0, 0, 0, 0)
+        o[x, y] = (0, 0, 0, 0)
+    if o[CUTX, y][3]:
+        o[CUTX + 1, y] = INK + (255,)
 save(teo, "teo")

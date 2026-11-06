@@ -572,7 +572,7 @@ portrait("teo", PANELS.teo, (p) => {
   head.sep()
   p.outline()
   // the hair and the brows, from the model
-  p.grid(0, 9, [
+  p.grid(0, 7, [
     ".........................kkkkkkllbbbbbbbbbbbkk....kk...........................",
     ".......................kkllllbbbbbbllbllbbbbbk..kkllkkk........................",
     ".....................kkbbbllllbllbbblllbbbbbbbkklllbbbkk.......................",
@@ -580,10 +580,12 @@ portrait("teo", PANELS.teo, (p) => {
     "..............kkkbbbbkkbbbbkkbbllbbbbbbbbbbbkbbbllllbbkkkkkkkk.................",
     "...............kkkblllllllllbbbbbbllbbbbbbbbbbbbbblllbbblllbbbbkk..............",
     "..............klllllbbllllbbbbbbkkkbllbbbbbkbbbllllllbbbbbbbbbbbkk.............",
+    "..............klllbbbllllkkbbbbbbbbbllbbbbbkbbbllbblllllllbkkbbbbkk............",
     ".............klbbbbbllllkkllllllbbbbbbbbbbbbkbbbblllllbbbllbbbbkkbkk...........",
     "............kbbbbbbllbbllllllbbbbbkkkkkbbbbkkkbllbkkbbbbbbbbbbbbkbbk...........",
     "..........kkkkkbbbbbbbllllbbbkkklk..klbbkkkkbbbbbbkkkllbbbbbbbbbbbkkkk.........",
     ".........kbbbbbbbbbbbllllbbbbllllbkkbbbbbkkkbbbbbbkkllbbbbbbbbbbbbbkkk.........",
+    "........kllbbbllbbbkblllbbbblllbbllllbbbbbkkkbbblk..klllbbbbbbbbbbbkkbk........",
     ".......kllbbbblbbbkklllbbkblllkblllbbbbbbkkkbbblllkklllllbbbbbbbbbbkkbk........",
     "......klbbkbbbbbbbklllbbbkblllkllllkkkkkbbkbbblllkkkllllllbbbbbbbbbbkkk........",
     "......kkbbbbbbbbbbblbbbbkblbbkllbkkbbkbbkbbbbbkkkkkkbkklllbbbbbbbkkbbbbk.......",
