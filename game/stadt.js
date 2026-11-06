@@ -115,7 +115,7 @@ Halcyon.threads.imai = [
 Halcyon.ledger.imai = { to: "R. IMAI", what: { truth: "die Wahrheit", dream: "ein Traum" } };
 Cutaway.actor("imai", { name: "Frau Imai", color: "#c8d8b0", room: "lucky_static", at: AI.imai, facing: "sw",
   costume: { idle: every("imai_idle_sw"), walk: every("imai_idle_sw"), talk: every("imai_talk_sw") }, voice: { pitch: 60, range: 4, wave: "triangle", syllable: 85, speed: 0.9 },
-  look: ["Eine Frau vor einem Tee, der kalt ist. Ein Ohr wie ein Elefant, darauf der blasse Punkt.", "Die kenn ich. Aus der Schlange vor der Klinik."],
+  look: ["Eine Frau vor einem Tee, der kalt ist. Hinter dem Ohr der blasse Punkt.", "Drei Finger an jeder Hand, viel zu lang. Sie hat es mit nichts eilig.", "Die kenn ich. Aus der Schlange vor der Klinik."],
   talk: [
     { if: ["imai_step=0", "!off_imai"], then: [
       "Die kenn ich. Aus der Schlange vor der Klinik.", "Hinter dem Ohr der blasse Punkt.", { say: "imai", text: "Sie sind die Glasserin. Danke. Keiner glaubt mir, nicht mal ich." },

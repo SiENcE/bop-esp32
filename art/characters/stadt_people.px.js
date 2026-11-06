@@ -5,7 +5,7 @@
 // Street mode (iso 2:1), drawn facing SE. They stay where they are when the engine turns them, so game/stadt.js gives every facing the
 // same view (as Bao and Motte); the _sw sets are the flipped ones, painted so that what is written on them still reads.
 //   regen_idle_*, regen_talk_*                       the Rain Reader, a catfish: 38 px on her bucket; a drop falls on the counter, a barbel twitches
-//   imai_idle_*, imai_talk_*                         Frau Imai, an elephant's ear: 41 px at her table; the Lull point keeps Halcyon.lullBeat
+//   imai_idle_*, imai_talk_*                         Frau Imai, a sloth: 41 px at her table; the Lull point keeps Halcyon.lullBeat
 //   prediger_idle_<day>_*, prediger_talk_<day>_*     the Preacher, a gecko: 54 px on a 12 px crate, 67 with the thermos; 9, 10, 11 on his counter; he licks his eye
 //   monteur_idle_ne, monteur_talk_*                  the Fitter, a mole: 52 px, 58 with the arm raised; from behind at work, his arm going; turned round to talk
 // Every frame of a figure has one canvas, odd in width, pivot bottom-centre under the feet: nothing jumps.
@@ -17,9 +17,9 @@ pal({
   // the Rain Reader (#a8c8e8): the cape's light, lit, shade, deep; her bucket; catfish skin, its blotches, its belly; orange barbels
   a: "#d4e6f6", B: "#a8c8e8", b: "#7492b8", n: "#4c6488", G: "#8e96a8", g: "#565e70",
   y: "#64808c", Y: "#3e5564", u: "#8ea4aa", J: "#ec9a58", j: "#a85c30",
-  // Frau Imai (#c8d8b0): the cardigan, its shade and deep; her hair, its grey; her skin; the hide, lit, grey, shade, fold; Lull bright and dim; cold tea
+  // Frau Imai (#c8d8b0): the cardigan, its shade and deep; her hair, its grey; her skin; moss in the hair, dark, lit, bright; Lull bright and dim; cold tea
   C: "#c8d8b0", e: "#92a47e", d: "#667858", h: "#2c2e38", A: "#6a6e7a", o: "#d8c2aa", O: "#a68c78",
-  l: "#c2c0b8", E: "#8a8a8e", F: "#6c6c74", f: "#47474f", "~": "#cfe6ff", "^": "#6ab4ff", t: "#552b1c",
+  "%": "#34482a", "&": "#55703a", "+": "#8aa852", "~": "#cfe6ff", "^": "#6ab4ff", t: "#552b1c",
   // the Preacher (#d8c8a0): the coat, its shade, its seam; the thermoses; amber caps and eyes, their light and dark; gecko skin, its scales; a rust crest; the tongue
   D: "#d8c8a0", i: "#a69670", x: "#6e6244", T: "#a8b4c4", X: "#6c7888", Q: "#eea040", P: "#b0602a", R: "#ffd58a",
   s: "#a89a5e", S: "#5c5430", q: "#b8682c", Z: "#7c4220", p: "#e888a8", r: "#a84e6c",
@@ -122,7 +122,15 @@ const imai = (c, o = {}) => {
   c.ellipse(37, im(23), 11, 3, "5"); c.hline(30, im(25), 14, "6"); c.hline(27, im(22), 21, "4"); c.hline(30, im(21), 15, "3")
   c.hline(37, im(25), 8, "w"); c.rect(38, im(28), 6, 3, "W"); c.vline(43, im(28), 3, "w"); c.hline(38, im(26), 6, "w"); c.hline(39, im(28), 4, "t"); c.px(44, im(27), "W"); c.px(45, im(27), "w")
   // the near arm to the cup: she hasn't drunk
-  sleeve(c, 24, im(23), 35, im(25), 3, "C", "C", "e"); g(c, 35, im(27), ["oo", "oO", "OO"])
+  sleeve(c, 24, im(23), 34, im(25), 3, "C", "C", "e")
+  // three fingers, far too long, round the cup and past it: a claw at the end of each
+  g(c, 34, im(29), [
+    "ooooooooooo=",
+    "OO..........",
+    "oooooooooooo=",
+    "OO..........",
+    "ooooooooooo=",
+  ])
   // the far arm: the elbow on the table, the forearm straight up to the hand under her cheek, all of it in the shade of her head
   c.rect(24, im(29), 5, 5, "d")
   g(c, 27, im(28), [
@@ -131,54 +139,38 @@ const imai = (c, o = {}) => {
     ".dCCe.",
     "..deee",
   ])
-  // the neck; the head (she looks past whoever talks to her); the bun
+  // the neck; the head (she looks past whoever talks to her), heavy-lidded, with a sloth's dark stripe back from the eye; moss has got into the hair and the bun
   c.rect(22, im(31), 4, 3, "O")
   g(c, 20, im(39), [
-    "..hAAAhh..",
-    ".hAAhhhhh.",
-    "hhhooooohh",
-    "hhooooooo.",
-    "hooOOoOOo.",
-    "hoohkoohko",
-    "hhoooooOoo",
-    "hhoooooooo",
-    ".hOooooooo",
+    "..%&&%%%..",
+    ".%%+%%&%%.",
+    "%%&ooooo%%",
+    "%%ooooooo.",
+    "%&oOOOoOO.",
+    "%hhhhkohko",
+    "%%oooooOoo",
+    "%%oooooooo",
+    ".%Oooooooo",
     "..OOOOOOO.",
   ])
-  g(c, 15, im(40), [".hAAh", "hAhhh", "hhhhh", ".hhh."])
+  g(c, 15, im(40), [".%&&%", "%&+%%", "%%&%%", ".%%%."])
   if (o.talk) { c.px(26, im(32), "t"); c.px(27, im(32), "t") } else { c.hline(26, im(32), 2, "O") }
-  // the hand she leans on, pressed up against the cheek
-  g(c, 26, im(32), [
-    ".oOo.",
-    "oooOo",
-    "OoooO",
-    ".OOO.",
+  // the hand she leans on: three long fingers up her cheek, past her eye, each with its claw
+  g(c, 26, im(38), [
+    ".=.=.=",
+    ".o.o.o",
+    ".oOoOo",
+    ".oOoOo",
+    ".oOoOo",
+    "oooooo",
+    "oOoooO",
+    ".OOOO.",
   ])
-  // the ear: one, the side the shop did. Heavy and folded, hanging off the back of her head, down to her shoulder; a dark gap between it and the head
-  g(c, 4, im(38), [
-    "..........llll..",
-    ".......lllEEEEl.",
-    ".....lllEEEEEEEf",
-    "...lllfffffEEEEf",
-    "..llEffEEEEffEff",
-    ".lEEfFEEEEEEEfff",
-    ".lEEfEEEEEEEEEff",
-    "lEEEEEEEEEEEEEff",
-    "lEEEEEfEEEEEEEff",
-    "lEEEEEfEEEEEEEFf",
-    ".FEEEEEfEEEEEEFf",
-    ".lFEEEEEEEEEEFf.",
-    "..lFEEEEEEEfFFf.",
-    "...lFFEEEEEFFf..",
-    "....fFFFEEFFFf..",
-    "......lFFFFFFf..",
-    "......fFFFFFf...",
-    ".......fFFFf....",
-    "........ff......",
-  ])
-  // Lull, large, near the ear's root: bright on the beat, a dim coal in its pauses
-  if (o.lull) g(c, 13, im(33), [".^.", "^~^", "~~~", "^~^", ".^."])
-  else g(c, 13, im(33), ["...", ".^.", "^^^", ".^.", "..."])
+  // the ear, small and plain, where the point sits behind it
+  c.rect(21, im(34), 2, 3, "O")
+  // Lull, behind the ear as on everyone: bright on the beat, a dim coal in its pauses
+  if (o.lull) g(c, 17, im(35), [".^.", "^~^", "~~~", "^~^", ".^."])
+  else g(c, 17, im(35), ["...", ".^.", "^^^", ".^.", "..."])
 }
 // talk: the mouth at 2 x 200 ms, but cut at the beat's edges too, so the point goes on keeping time while she speaks
 const beatAt = (t) => { let at = 0; for (let i = 0; i < LULL.length; i++) { at += LULL[i]; if (t < at) return i % 2 === 0 } return false }
