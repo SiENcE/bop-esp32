@@ -184,9 +184,18 @@ Cutaway.moment("ines_death", { room: "cam31", day: 4, from: "23:03", to: "23:30"
   { if: "e1=sold", then: [{ ledger: "wren_live", value: "paid" }, { ledger: "ines", value: "dead" }, { notify: "wren" }, { wait: 4000 }] },
   { wait: 3000 },
   { fade: "out", ms: 1400 },
-  { set: "end_beat", value: "after" },
+  { set: "end_beat", value: "after" }, { evi: "besorgt" },
   { goto: "flat_danach", at: AF.deck, face: "ne", transition: false },
   { fade: "in", ms: 1400 },
+  // nothing to click: it goes on by itself, after a long nothing
+  { wait: 3000 },
+  { if: "!rec_on", then: ["Ich hab nicht mal REC gedrückt. Der Puffer hält alles."] },
+  "Ich hab's. Ich hab alles.",
+  { wait: 1200 },
+  { say: "evi", text: "Er hat sie ausgeschaltet. Juno. Er hat sie ausgeschaltet." },
+  { wait: 1500 },
+  { fade: "out", ms: 2000 },
+  { end: "Kapitel 2: Aufnahme (kommt später)" },
 ] });
 
 // no music, only the fans; the pointer stays and nothing answers
@@ -194,19 +203,10 @@ Cutaway.room("signal_lost", { name: "CAM 31", observe: true, feed: "cam31", lost
   post: [{ noise: 0.12 }, { palette: Halcyon.PHOSPHOR, dither: 0.6 }, { scanlines: 2, amount: 0.14 }],
   ambience: ["deck_fans"], music: { stop: true, fade: 200 }, hotspots: {} });
 
-// her flat, where only she herself can be clicked (a room of its own: the flat's hotspots stay as they are)
+// her flat, with nothing to click (a room of its own: the flat's hotspots stay as they are); EVI in her corner, worried
 const [dx, dy] = AF.deck;
 Cutaway.room("flat_danach", { name: "Junos Wohnung", background: "flat_bg", props: AF.props, buttons: false, eviCorner: true,
   walk: [[dx - 1, dy - 1, dx + 1, dy - 1, dx + 1, dy + 1, dx - 1, dy + 1]],
   light: { ambient: 0.38, color: "#8a9cff", lamps: AF.lamps.map((/** @type {any} */ { bake, ...lamp }) => lamp) },
-  ambience: ["deck_fans"], music: { stop: true },
-  hotspots: { self: { name: "Juno", rect: [dx - 12, dy - 56, 24, 58], use: [
-    { if: "!rec_on", then: ["Ich hab nicht mal REC gedrückt. Der Puffer hält alles."] },
-    "Ich hab's. Ich hab alles.",
-    { wait: 1200 },
-    { evi: "besorgt" }, { say: "evi", text: "Er hat sie ausgeschaltet. Juno. Er hat sie ausgeschaltet." },
-    { wait: 1500 },
-    { fade: "out", ms: 2000 },
-    { end: "Kapitel 2: Aufnahme (kommt später)" },
-  ] } } });
+  ambience: ["deck_fans"], music: { stop: true }, hotspots: {} });
 })();

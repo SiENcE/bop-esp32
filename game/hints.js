@@ -9,8 +9,6 @@ const HOME = ["door", "door_juno", "stairs", "kessel_door", "deck", "back"];    
 Cutaway.hints([
   { if: "end_beat=threat",
     text: ["Ich hab nichts. Keine Tür, kein Licht, keine Nummer.", "Ich such weiter. Ich find nichts, was geht.", "Du kannst nichts tun, Juno. Ich auch nicht."] },
-  { if: "end_beat=after", about: "self",
-    text: ["Juno?", "Du sitzt nur da.", "Sag was. Bitte."] },
   // job A speaks only when Ines has gone home and before Kessler has gone to bed: nothing of it is needed, so they have no `about`, and
   // the rest of the evening belongs to WREN's hints
   ...[
