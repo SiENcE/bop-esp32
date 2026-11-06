@@ -541,10 +541,10 @@ portrait("teo", PANELS.teo, (p) => {
   // the neck: wide and short; the shadow under the chin; the gills, three lit slits on each side
   const neck = p.part("23,67! 57,67! 57,83! 62,91 52,97 28,97 18,91 23,83!", S.base)
   neck.edge(4, 0, S.dim)
-  neck.tone("23,71 57,71 57,83 47,87 33,87 23,83", S.dim)
-  neck.tone("51,73 57,73 57,83 51,86", S.deep)
-  for (const l of ["30,85 36,95", "50,85 44,95"]) p.line(l, S.dim)
-  for (const y of [75, 79, 83]) { p.line(`23,${y} 26,${y + 1}`, CYAN.base); p.line(`57,${y} 54,${y + 1}`, CYAN.base) }
+  neck.tone("23,74 57,74 57,86 47,90 33,90 23,86", S.dim)
+  neck.tone("51,76 57,76 57,86 51,89", S.deep)
+  for (const l of ["30,88 36,96", "50,88 44,96"]) p.line(l, S.dim)
+  for (const y of [77, 80, 83]) { p.line(`23,${y} 26,${y + 1}`, CYAN.base); p.line(`57,${y} 54,${y + 1}`, CYAN.base) }
   // the collar, open at the throat, the dark shirt in the gap, the two straps with their buckles
   const shirt = p.part("26,94! 54,94! 54,101! 26,101!", D.dim)
   shirt.sep()
@@ -565,36 +565,29 @@ portrait("teo", PANELS.teo, (p) => {
     p.rect(x - 2, 97, 4, 1, D.lit)
   }
   // the ears; the head
-  for (const path of ["11,41! 14,43! 16,48! 16,55! 14,59! 11,58! 10,50! 10,45!", "64,43! 67,43! 68,48! 68,55! 66,58! 63,57! 62,50! 62,45!"]) { const e = p.part(path, S.base); e.edge(2, 2, S.dim) }
-  p.line("13,46 14,52", S.dim); p.line("65,46 64,52", S.dim)
-  const head = p.part("18,39! 19,31! 24,22! 32,15! 48,15! 56,22! 60,31! 62,39! 62,57! 61,61! 60,65! 57,69! 54,72! 50,76! 45,81! 36,81! 30,77! 27,74! 23,69! 20,64! 19,59! 18,57!", S.base)
+  for (const path of ["11,44! 14,46! 16,51! 16,58! 14,62! 11,61! 10,53! 10,48!", "64,46! 67,46! 68,51! 68,58! 66,61! 63,60! 62,53! 62,48!"]) { const e = p.part(path, S.base); e.edge(2, 2, S.dim) }
+  p.line("13,49 14,55", S.dim); p.line("65,49 64,55", S.dim)
+  const head = p.part("18,42! 19,34! 24,25! 32,18! 48,18! 56,25! 60,34! 62,42! 62,60! 61,64! 60,68! 57,72! 54,75! 50,79! 45,84! 36,84! 30,80! 27,77! 23,72! 20,67! 19,62! 18,60!", S.base)
   head.edge(4, 3, S.dim)
   head.sep()
   p.outline()
   // the hair and the brows, from the model
-  p.grid(0, -1, [
+  p.grid(0, 9, [
     ".........................kkkkkkllbbbbbbbbbbbkk....kk...........................",
     ".......................kkllllbbbbbbllbllbbbbbk..kkllkkk........................",
     ".....................kkbbbllllbllbbblllbbbbbbbkklllbbbkk.......................",
-    "...................kkkkkkkbbbllllllblbbbbbbbbbbblbbkkbbkk......................",
     ".................kkllllllbkkbbbbbbllllbbbbbbkbbbbllllbbbk......................",
     "..............kkkbbbbkkbbbbkkbbllbbbbbbbbbbbkbbbllllbbkkkkkkkk.................",
-    "...............kkbbbbbblllbbbkklllbbbbbbbbbbkbbbbbbbbblllllbbkkk...............",
     "...............kkkblllllllllbbbbbbllbbbbbbbbbbbbbblllbbblllbbbbkk..............",
     "..............klllllbbllllbbbbbbkkkbllbbbbbkbbbllllllbbbbbbbbbbbkk.............",
-    "..............klllbbbllllkkbbbbbbbbbllbbbbbkbbbllbblllllllbkkbbbbkk............",
     ".............klbbbbbllllkkllllllbbbbbbbbbbbbkbbbblllllbbbllbbbbkkbkk...........",
     "............kbbbbbbllbbllllllbbbbbkkkkkbbbbkkkbllbkkbbbbbbbbbbbbkbbk...........",
-    "..........kkbbkkkbllbkklllllbbbkkkkkkkkkbbkkkbbbbk..kllllbbbbbbbbbbbk..........",
     "..........kkkkkbbbbbbbllllbbbkkklk..klbbkkkkbbbbbbkkkllbbbbbbbbbbbkkkk.........",
     ".........kbbbbbbbbbbbllllbbbbllllbkkbbbbbkkkbbbbbbkkllbbbbbbbbbbbbbkkk.........",
-    "........kllbbbllbbbkblllbbbblllbbllllbbbbbkkkbbblk..klllbbbbbbbbbbbkkbk........",
     ".......kllbbbblbbbkklllbbkblllkblllbbbbbbkkkbbblllkklllllbbbbbbbbbbkkbk........",
     "......klbbkbbbbbbbklllbbbkblllkllllkkkkkbbkbbblllkkkllllllbbbbbbbbbbkkk........",
-    ".......kkkkbbbbbbbbllbbbkbllbkllllkkkbbkkbkbbbbkkkkkkkllllbbbbbbkkkbbbk........",
     "......kkbbbbbbbbbbblbbbbkblbbkllbkkbbkbbkbbbbbkkkkkkbkklllbbbbbbbkkbbbbk.......",
     ".....kllbbkbbbbbbbllbbbbbllbkblbbkkkbkkbkkbbbbbkkkkkbbkkllbbbbbbbbbkbbbk....k..",
-    "....kllllbkbbbbbbblllbbkblbbkblbkkkkkkkbbkkbkbkkkkkkkkkkblbbbkbbkbbkkkklk..kk..",
     "....klllkkbbbbbbblllllbkblbkkblbkk..kkkkbkkkkkkkkkk.kkkkbbbkbkbbkkbbbbbkkkkk...",
     "....klllbbbbbbblbbllllbkblbkkbbkk......kkkk..k........kkkbbkbbkbbkkbbbbbbk.....",
     "...klbbbbbbbllblbblllbbkbbbk.bbk.......................kkbbkbbkbbbkkkbbbllk....",
@@ -648,7 +641,7 @@ portrait("teo", PANELS.teo, (p) => {
   ], { k: INK, b: H.base, l: H.lit })
   // the eyes: the model's, pixel for pixel, read off under a grid
   const E = { k: INK, w: "#f6f0e8", v: "#b8b4c0", i: "#34221a", I: "#7a4a2c", g: "#ffffff", d: S.dim }
-  p.grid(21, 43, [
+  p.grid(21, 46, [
     ".....ddddddd.....",
     "...ddkkkkkkkk....",
     ".k.kvvggkkvvkk...",
@@ -656,7 +649,7 @@ portrait("teo", PANELS.teo, (p) => {
     "....dwwIIiwd.....",
     "......ddddd......",
   ], E)
-  p.grid(43, 43, [
+  p.grid(43, 46, [
     ".....ddddddd.....",
     "....ddkkkkkkk....",
     "....kvvggkkvvkk..",
@@ -665,8 +658,8 @@ portrait("teo", PANELS.teo, (p) => {
     "......dddddd.....",
   ], E)
   // the nose from its shadow side, its wings; the mouth level, the lower lip a shade, the dip under it
-  p.grid(36, 53, [".....d...", ".....d...", ".....d...", ".....d...", ".....dd..", ".....dd..", "d......d.", "dSSddSSd."], { d: S.dim, S: S.deep })
-  p.grid(33, 66, [
+  p.grid(36, 56, [".....d...", ".....d...", ".....d...", ".....d...", ".....dd..", ".....dd..", "d......d.", "dSSddSSd."], { d: S.dim, S: S.deep })
+  p.grid(33, 69, [
     "...ddddddddd...",
     "kkkkkkkkkkkkkkk",
     "...mmmmmmmmm...",
@@ -677,26 +670,26 @@ portrait("teo", PANELS.teo, (p) => {
 
 // ---------------------------------------------------------------- Juno, from the front: her portrait in the index, the user's decision
 // Taken from the user's model: the contour of the face at its exact points, hair and brows sampled from it pixel for pixel into our tones, the eyes read off under a grid
-// and their lower half tidied. The hood fills the picture from top to bottom and runs off both sides.
+// and their lower half tidied. The hood is as big as in her profile: the panel shows above it and beside it, and it cuts off what of the hair doesn't fit.
 portrait("juno", PANELS.juno, (p) => {
   const S = SKIN, H = { base: "#1c1620", lit: "#4e3c50" }, Y = YELLOW
   // the coat's shoulders under the hood
-  const coat = p.part("-4,104! -4,85 84,85 84,104!", Y.base)
+  const coat = p.part("-4,104! -4,93 6,88 20,85 60,85 74,88 84,93 84,104!", Y.base)
   coat.edge(6, 3, Y.dim)
   // the hood: seams running up to its crown
-  const hood = p.part("-7,71 -6,57 -2,41 3,26 10,13 21,3 31,-2 49,-2 59,3 70,13 77,26 82,41 86,57 87,71 87,81 76,89 52,94 28,94 4,89 -7,81", Y.base)
+  const hood = p.part("3,80 2,62 5,42 11,25 21,12 32,6 48,6 59,12 69,25 75,42 78,62 77,80 66,90 52,94 28,94 14,90", Y.base)
   hood.edge(5, 3, Y.dim)
-  hood.tone("-2,52 3,33 12,17 22,6 14,22 7,38", Y.lit)
-  hood.tone("29,0 40,0 36,10 33,19 27,14", Y.lit)
-  hood.tone("32,1 38,1 34,10 31,7", Y.shine)
-  for (const l of ["42,-2 42,12", "19,7 12,24", "61,7 68,24"]) p.line(l, Y.dim)
+  hood.tone("6,52 9,36 14,24 24,12 18,24 12,38", Y.lit)
+  hood.tone("30,8 40,8 37,14 34,20 28,18", Y.lit)
+  hood.tone("33,9 38,9 35,14 31,13", Y.shine)
+  for (const l of ["42,6 42,14", "24,13 19,24", "56,13 61,24"]) p.line(l, Y.dim)
   // its thick rolled edge, all the way round the opening
-  const rim = hood.within("-3,71 0,52 6,36 14,26 28,18 40,16 52,18 66,26 74,36 80,52 83,71 83,81 73,87 52,92 28,92 7,87 -3,81", Y.base)
+  const rim = hood.within("7,78 6,62 9,44 15,30 26,19 40,14 54,19 65,30 71,44 74,62 73,78 64,86 52,91 28,91 16,86", Y.base)
   rim.edge(-2, -2, Y.lit)
   rim.edge(3, 3, Y.dim)
   // the lining: dark at the top where no light gets in, the ochre showing low at the sides
-  const lining = rim.within("3,79 4,62 9,48 15,36 26,27 40,24 54,27 65,36 71,48 76,62 77,79 68,84 54,90 40,93 26,90 12,84", Y.dim)
-  lining.tone("4,64 9,48 15,36 26,27 40,24 54,27 65,36 71,48 76,64 61,57 40,52 19,57", Y.deep)
+  const lining = rim.within("11,74 10,62 13,47 19,34 28,25 40,21 52,25 61,34 67,47 70,62 69,74 62,81 52,87 40,90 28,87 18,81", Y.dim)
+  lining.tone("10,64 13,47 19,34 28,25 40,21 52,25 61,34 67,47 70,64 58,58 40,54 22,58", Y.deep)
   lining.ink(INK)
   // the neck, the shadow under the chin
   const neck = lining.within("29,74 51,74 51,96 29,96", S.base)
@@ -714,7 +707,7 @@ portrait("juno", PANELS.juno, (p) => {
   p.line("46,94 46,118!", Y.deep)
   p.outline()
   // the hair and the brows, from the model
-  p.grid(5, 25, [
+  const hairRows = [
     "............................kkkkkkkkkkkkkkkk...........................",
     "..........................kkkkkkkkkkkkkkkkkkkk.........................",
     "........................kkkkkkkkkkkkkkkkkkkkkkkk.......................",
@@ -771,7 +764,10 @@ portrait("juno", PANELS.juno, (p) => {
     "............kk...kkkkkk.........................kkkkkk..kk.............",
     "............kk....kkkkk.........................kkkk....kk.............",
     ".............kk......kk.........................kkk......k.............",
-  ], { k: INK, b: H.base, l: H.lit })
+  ]
+  const hairTone = { k: INK, b: H.base, l: H.lit }
+  const open = (x, y) => lining.has(x, y) && lining.has(x - 1, y) && lining.has(x + 1, y) && lining.has(x, y - 1) && lining.has(x, y + 1)    // the lining's ink stays
+  hairRows.forEach((r, j) => { for (let i = 0; i < r.length; i++) if (r[i] !== "." && open(5 + i, 25 + j)) p.put(5 + i, 25 + j, hairTone[r[i]]) })
   const button = { k: INK, b: Y.dim, l: Y.lit, s: Y.shine, d: Y.deep }
   p.grid(35, 92, ["...kkkk...", ".kkllllkk.", ".kllssbbk.", "kllsbbbbdk", "klsbbbbbdk", "klbbbbbbdk", ".klbbbddk.", ".kkbbddkk.", "...kkkk..."], button)
   // the eyes: the model's, read off under a grid, their lower half tidied so that the iris reads
