@@ -1,6 +1,6 @@
 # Figuren-Index
 
-Porträts für Marketing und zum Auseinanderhalten der Figuren, nicht fürs Spiel. Die Schattierung ist flach, nur Ashe hat eine feinere (Mantel): So hat es der Nutzer entschieden, auf den anderen gefiel sie ihm nicht. Quelle: `art/portraits/portraits.px.js`; Juno ist aus dem Titelbild geschnitten (`tools/portrait-title.py`). Teo ist frontal gezeichnet, nach einer Vorlage des Nutzers: Haare, Brauen und Augen sind Pixel für Pixel aus ihr übernommen; sein Profil aus dem Titelbild bleibt in der Quelle als `portrait_teo_profil`. Von vorn sieht man sein Lull-Pflaster nicht, es sitzt hinter dem Ohr. Juno gibt es dort auch schon frontal (`portrait_juno_front`), noch nicht im Index.
+Porträts für Marketing und zum Auseinanderhalten der Figuren, nicht fürs Spiel. Die Schattierung ist flach, nur Ashe hat eine feinere (Mantel): So hat es der Nutzer entschieden, auf den anderen gefiel sie ihm nicht. Quelle: `art/portraits/portraits.px.js`; Juno und Teo sind frontal gezeichnet, nach einer Vorlage des Nutzers: Haare, Brauen und Augen sind aus ihr übernommen (Junos Augen unten aufgeräumt, damit die Iris klar bleibt), Nase und Mund nicht. Ihre Profile aus dem Titelbild (`tools/portrait-title.py`) bleiben in der Quelle als `portrait_juno_profil` und `portrait_teo_profil`. Juno trägt einen schmalen Wangenstreifen wie auf dem Titelbild. Von vorn sieht man Teos Lull-Pflaster nicht, es sitzt hinter dem Ohr.
 
 Die ganze Reihe: `figuren_index_x3.png`. Jede Figur gibt es als `<id>_x4.png` mit Namen und als `<id>_ohne_name_x4.png` ohne.
 

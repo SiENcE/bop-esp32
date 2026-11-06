@@ -331,7 +331,7 @@ function portrait(name, panel, draw, picture) {
 // The title picture's Juno, in profile: we don't need to see her from the front, it keeps her closed. Set to the right of the panel, since she
 // looks left. The cheek's cyan line is that picture's own (style guide §6). Cut out by tools/portrait-title.py.
 sprite("_juno_title", { png: "juno_title.png" })
-portrait("juno", PANELS.juno, () => {}, "_juno_title")
+portrait("juno_profil", PANELS.juno, () => {}, "_juno_title")
 
 // ---------------------------------------------------------------- The Preacher
 // Square on, his head a little too big for the neck, the flask up beside it.
@@ -670,10 +670,10 @@ portrait("teo", PANELS.teo, (p) => {
   ], { k: S.deep, d: S.dim, m: "#b87050" })
 })
 
-// ---------------------------------------------------------------- Juno, from the front (a trial; the index still shows the profile)
+// ---------------------------------------------------------------- Juno, from the front: her portrait in the index, the user's decision
 // Taken from the user's model: the contour of the face at its exact points, hair, brows and eyes sampled from it pixel for pixel into our tones. The hood fills the
 // picture from top to bottom and runs off both sides.
-portrait("juno_front", PANELS.juno, (p) => {
+portrait("juno", PANELS.juno, (p) => {
   const S = SKIN, H = { base: "#1c1620", lit: "#4e3c50" }, Y = YELLOW
   // the coat's shoulders under the hood
   const coat = p.part("-4,104! -4,80 84,80 84,104!", Y.base)
