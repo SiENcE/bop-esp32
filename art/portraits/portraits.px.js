@@ -681,27 +681,10 @@ portrait("bao", PANELS.bao, (p) => {
   const hand = p.part("1,72! 13,72! 13,90! 1,90!", S.base)
   hand.edge(3, 0, S.dim)
   p.line("-1,88 15,88", C.deep)
-  // a real soup ladle (the user's photo): a thin straight handle running up to the low side of the rim, flaring just where it meets it
-  const handle = p.part("6,78! 9,78! 9,34 11,29! 4,29! 6,34", STEEL.base)
-  handle.edge(1, 0, STEEL.dim)
-  handle.edge(-1, 0, STEEL.lit)
-  // the bowl, a half sphere tipped toward his head: its pale back above, below that the polished inside, a mirror of dark and white with a bright rim
-  // its rim lies on the 2:1 slope, the one diagonal that stays a clean line at this size
-  const TILT = -0.4636
-  const back = p.part(oval(13.2, 19.9, 11, 9.7, TILT), STEEL.lit)
-  back.tone(oval(17.6, 16.8, 7, 4.4, TILT), STEEL.base)
-  back.tone(oval(7.1, 16.8, 2.2, 1.3, -0.9), "#ffffff")
-  back.tone(oval(15.9, 19.9, 10, 4, TILT), STEEL.dim)
-  const mouth = p.part(oval(15, 23, 11, 4.8, TILT), STEEL.base)
-  mouth.tone(oval(14.1, 20.4, 6, 1.8, TILT), STEEL.deep)
-  mouth.tone(oval(18.1, 21.7, 3, 1.4, TILT), "#ffffff")
-  mouth.tone(oval(13.2, 27.4, 6.6, 1.3, TILT), STEEL.lit)
-  mouth.ink("#ffffff")
   // the head: a wide egg; the ears first, the hearing aid on his left
   for (const [x, y] of [[16, 44], [64, 44]]) { const e = p.part(oval(x, y, 4, 7), S.base); e.edge(2, 2, S.dim) }
   const head = p.part("17,38 21,20 31,11 45,10 55,16 61,28 63,44 59,62 49,72 33,72 21,62", S.base)
   head.edge(5, 5, S.dim)
-  head.sep()
   head.tone("23,28 29,16 37,13 31,22", S.lit)
   head.tone(oval(31, 15, 4, 2), "#ffe6d0")
   // the white beard, up round the jaw from one ear to the other, the moustache on it
@@ -712,6 +695,25 @@ portrait("bao", PANELS.bao, (p) => {
   head.tone("59,40! 63,40! 63,52! 59,52!", H.dim)
   const hearing = p.part("64,38 69,40 69,48 64,50", GREY.base)
   hearing.edge(2, 2, GREY.dim)
+  // the ladle comes last, in front of him: the tip of its bowl lies on his forehead
+  // a real soup ladle (the user's photo): a thin straight handle running up to the low side of the rim, flaring just where it meets it
+  const handle = p.part("6,78! 9,78! 9,34 11,29! 4,29! 6,34", STEEL.base)
+  handle.edge(1, 0, STEEL.dim)
+  handle.edge(-1, 0, STEEL.lit)
+  // the bowl, a half sphere tipped toward his head: its pale back above, below that the polished inside, a mirror of dark and white with a bright rim
+  // its rim lies on the 2:1 slope, the one diagonal that stays a clean line at this size
+  const TILT = -0.4636
+  const back = p.part(oval(13.2, 19.9, 11, 9.7, TILT), STEEL.lit)
+  back.tone(oval(17.6, 16.8, 7, 4.4, TILT), STEEL.base)
+  back.sep()
+  back.tone(oval(7.1, 16.8, 2.2, 1.3, -0.9), "#ffffff")
+  back.tone(oval(15.9, 19.9, 10, 4, TILT), STEEL.dim)
+  const mouth = p.part(oval(15, 23, 11, 4.8, TILT), STEEL.base)
+  mouth.sep()
+  mouth.tone(oval(14.1, 20.4, 6, 1.8, TILT), STEEL.deep)
+  mouth.tone(oval(18.1, 21.7, 3, 1.4, TILT), "#ffffff")
+  mouth.tone(oval(13.2, 27.4, 6.6, 1.3, TILT), STEEL.lit)
+  mouth.ink("#ffffff")
   p.outline()
   // the fingers round the handle
   fingers(p, 0, 72, [15, 16, 15, 13], S)
