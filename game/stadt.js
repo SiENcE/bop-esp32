@@ -11,6 +11,8 @@
 
 (function () {
 const AF = Halcyon.at.flat, AK = Halcyon.at.kessel_14, AS = Halcyon.at.sims, AD = Halcyon.at.dach;
+/** A costume entry for someone who stays put: one animation whichever way the engine turns them. @param {string} anim */
+const every = (anim) => ({ se: anim, sw: anim, ne: anim, nw: anim });
 const flat = Cutaway.room.get("flat").hotspots, floor14 = Cutaway.room.get("kessel_14").hotspots;
 
 // ---- the window of the flat: it sticks, and only something flat gets at the latch
@@ -47,8 +49,9 @@ Cutaway.room("sims", { name: "Der Sims", background: "sims_bg", walk: AS.walk,
 
 // ---- the roof. Above it, where other people have a sky, the underside of the next Ring
 Cutaway.actor("regenleserin", { name: "Regenleserin", color: "#a8c8e8", room: "dach", at: AD.reader, facing: "sw",
-  costume: { idle: "mock_regen", walk: "mock_regen", talk: "mock_regen" }, voice: { pitch: 58, range: 4, wave: "triangle", syllable: 90, speed: 0.8 },
-  look: ["Eine alte Frau auf einem Eimer. Sie hält einen zweiten Eimer unter das Tropfen und kostet.", "So sicher, wie andere die Zeitung lesen."],
+  // the same view for every facing, as Bao: she stays on her bucket
+  costume: { idle: every("regen_idle_sw"), walk: every("regen_idle_sw"), talk: every("regen_talk_sw") }, voice: { pitch: 58, range: 4, wave: "triangle", syllable: 90, speed: 0.8 },
+  look: ["Eine alte Frau auf einem Eimer. Sie hält einen zweiten Eimer unter das Tropfen und kostet.", "So sicher, wie andere die Zeitung lesen.", "Nicht mit der Zunge. Mit den Barteln. Billiger Umbau, noch aus der Flut."],
   talk: [{ say: "regenleserin", text: "Setz dich nicht auf den Eimer. Der ist besetzt." }, { dialog: "regenleserin" }] });   // game/regenleserin.js
 Cutaway.room("dach", { name: "Das Dach", background: "dach_bg", walk: AD.walk,
   ambience: ["city_far", { sfx: "feed_rain", gain: 0.5 }], music: { theme: "juno", intensity: 0.2 },
@@ -111,8 +114,8 @@ Halcyon.threads.imai = [
 ];
 Halcyon.ledger.imai = { to: "R. IMAI", what: { truth: "die Wahrheit", dream: "ein Traum" } };
 Cutaway.actor("imai", { name: "Frau Imai", color: "#c8d8b0", room: "lucky_static", at: AI.imai, facing: "sw",
-  costume: { idle: "mock_imai", walk: "mock_imai", talk: "mock_imai" }, voice: { pitch: 60, range: 4, wave: "triangle", syllable: 85, speed: 0.9 },
-  look: ["Eine Frau vor einem Tee, der kalt ist. Hinter dem Ohr der blasse Punkt.", "Die kenn ich. Aus der Schlange vor der Klinik."],
+  costume: { idle: every("imai_idle_sw"), walk: every("imai_idle_sw"), talk: every("imai_talk_sw") }, voice: { pitch: 60, range: 4, wave: "triangle", syllable: 85, speed: 0.9 },
+  look: ["Eine Frau vor einem Tee, der kalt ist. Ein Ohr wie ein Elefant, darauf der blasse Punkt.", "Die kenn ich. Aus der Schlange vor der Klinik."],
   talk: [
     { if: ["imai_step=0", "!off_imai"], then: [
       "Die kenn ich. Aus der Schlange vor der Klinik.", "Hinter dem Ohr der blasse Punkt.", { say: "imai", text: "Sie sind die Glasserin. Danke. Keiner glaubt mir, nicht mal ich." },
@@ -167,21 +170,26 @@ Cutaway.dialog("traeger_wahl", { main: { choices: [
 ] } });
 
 // ---- the half repair: he lives on the scaffold at the big screen and repairs its left half; the right half is another contract
-Cutaway.actor("reparatur", { name: "Der Monteur", color: "#b0c0b0", at: Halcyon.at.kowalski.reparatur, facing: "sw",
-  costume: { idle: "mock_monteur", walk: "mock_monteur", talk: "mock_monteur" }, voice: { pitch: 48, range: 4, wave: "square", syllable: 80 },
-  look: ["Ein Mann auf einem Gerüst, mit Kocher, Wäscheleine und Schlafsack. Er wohnt da.", "Er schraubt an der linken Hälfte. Nur an der linken."],
+// (at work he has his back to the street whichever way he is turned, so 9-A reads; to talk he turns round, se or sw, towards Juno)
+Cutaway.actor("reparatur", { name: "Der Monteur", color: "#b0c0b0", at: Halcyon.at.kowalski.reparatur, facing: "ne",
+  costume: { idle: every("monteur_idle_ne"), walk: every("monteur_idle_ne"), talk: { se: "monteur_talk_se", sw: "monteur_talk_sw", ne: "monteur_talk_se", nw: "monteur_talk_sw" } }, voice: { pitch: 48, range: 4, wave: "square", syllable: 80 },
+  look: ["Ein Mann auf einem Gerüst, mit Kocher, Wäscheleine und Schlafsack. Er wohnt da.", "Er schraubt an der linken Hälfte. Nur an der linken.", "Pfoten wie ein Maulwurf, die Augen fast zu. Die Lampe sieht für ihn."],
   talk: [
     { if: "day=2", then: [{ say: "reparatur", text: "Links ist mein Vertrag. Rechts ist Vertrag 9-B. Der Kollege kommt seit 2087." }, "Und wenn links fertig ist?", { say: "reparatur", text: "Fertig? Junge Frau. Dann bin ich arbeitslos." }] },
     { if: "day=3", then: [{ say: "reparatur", text: "Der stottert nur, wenn du vorbeigehst. Ist dir das schon aufgefallen?" }, "Woran liegt das?", { say: "reparatur", text: "Weiß ich nicht. Das ist die rechte Hälfte." }] },
     { if: "day=4", then: [{ say: "reparatur", text: "Heute läuft sie gut, die Linke. Heute Abend ist was mit der Stadt." }, "Was denn?", { say: "reparatur", text: "Keine Ahnung. Ist nicht mein Vertrag." }] },
   ] });
-Cutaway.routine("reparatur", [{ day: [2, 3, 4], from: "18:00", to: "04:00", room: "kowalski", at: Halcyon.at.kowalski.reparatur, face: "sw" }]);
+Cutaway.routine("reparatur", [{ day: [2, 3, 4], from: "18:00", to: "04:00", room: "kowalski", at: Halcyon.at.kowalski.reparatur, face: "ne" }]);
 
 // ---- the Drain Market, as far as it stands: the alley's way down, the preacher of the Waking Church (awake nine days on Wednesday)
 const AM = Halcyon.at.drain_market;
 Cutaway.actor("prediger", { name: "Der Prediger", color: "#d8c8a0", room: "drain_market", at: AM.preacher, facing: "sw",
-  costume: { idle: "mock_prediger", walk: "mock_prediger", talk: "mock_prediger" }, voice: { pitch: 54, range: 8, wave: "sawtooth", syllable: 60, speed: 1.3 },
-  look: ["Ein dürrer Mann auf einer Kiste, eine Thermoskanne in jeder Hand. Die Wache Kirche.", "Er blinzelt nicht. Ich hab gezählt."],
+  // his counter shows the days he has been awake: 9 on Wednesday, 10, 11 (the _sw sets are flipped with the digits kept the right way round)
+  costume: { idle: every("prediger_idle_9_sw"), walk: every("prediger_idle_9_sw"), talk: every("prediger_talk_9_sw") },
+  poses: [{ if: "day=3", idle: every("prediger_idle_10_sw"), walk: every("prediger_idle_10_sw"), talk: every("prediger_talk_10_sw") },
+    { if: "day=4", idle: every("prediger_idle_11_sw"), walk: every("prediger_idle_11_sw"), talk: every("prediger_talk_11_sw") }],
+  voice: { pitch: 54, range: 8, wave: "sawtooth", syllable: 60, speed: 1.3 },
+  look: ["Ein dürrer Mann auf einer Kiste, eine Thermoskanne in jeder Hand. Die Wache Kirche.", "Er blinzelt nicht. Ich hab gezählt.", "Keine Lider mehr. Die Zunge macht das."],
   talk: [
     { if: "day=2", then: [{ say: "prediger", text: "Neun Tage! Neun Tage wach, und ich sehe klarer als ihr alle! Kaffee?" }, "Was ist da drin?", { say: "prediger", text: "Alles, was nicht schläft." }] },
     { if: "day=3", then: [{ say: "prediger", text: "Zehn Tage. Sie sagen, wer schläft, sieht nichts. Falsch! Wer schläft, sieht was anderes!" }, "Woher willst du das wissen?", { say: "prediger", text: "Ich weiß es nicht. Ich glaube es. Das ist billiger. Kaffee?" }] },

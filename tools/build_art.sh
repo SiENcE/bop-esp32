@@ -39,10 +39,11 @@ characters() {
     $PXL build art/characters/motte.px.js --out build/art/characters --no-preview | tail -n 1        # Motte (H3)
     $PXL build art/characters/bao.px.js --out build/art/characters --no-preview | tail -n 1          # Bao (H3)
     $PXL build art/characters/drone.px.js --out build/art/characters --no-preview | tail -n 1        # the patrol drone (the title)
+    $PXL build art/characters/stadt_people.px.js --out build/art/characters --no-preview | tail -n 1 # the city's four (Chapter 1)
     # Ines's handover reaches past her on one side: its anchor keeps her feet where her other sprites have them (15 wide, 22 high)
     echo '{"anchor":[7,22]}' > build/art/characters/anims/ines_feed_give.anchor.json
     # build-atlas's --only matches exact names or a trailing *, so the feed people go by prefix
-    $ATLAS build/art/characters assets/characters.js --only "juno_*,kessler_*,varga_*,commuter_*,yuen_*,ines_*,lantern_*,ashe_*,motte_*,bao_*,drone_*"
+    $ATLAS build/art/characters assets/characters.js --only "juno_*,kessler_*,varga_*,commuter_*,yuen_*,ines_*,lantern_*,ashe_*,motte_*,bao_*,drone_*,regen_*,imai_*,prediger_*,monteur_*"
 }
 
 ui() {

@@ -203,6 +203,7 @@ A location takes one key hue from this set and plays it against the night blues.
     pixels tall, a small mouth, the fringe showing under the hood; cute, but not a cartoon. The street
     sprites leave the implant out (decided 2026-11-04): the engine mirrors them for SW and NW, so a
     pixel on one cheek jumped to the other; it shows where she is drawn unmirrored (the title, close-ups).
+- **Animal mods** (decided 2026-11-06, story §10c): the Lower Ninth alters bodies cheaply, and some people show an animal in one large part that says something about them (the Rain Reader's catfish barbels, Frau Imai's elephant ear, the preacher's gecko eyes, the fitter's mole paws). They carry the silhouette; the rest stays a worn, ordinary person. Not everyone has one: Juno, Bao, Motte and Kessler don't. Still exactly two talking animals, Ratz and Tinte.
 - **Faces are 2–4 px in the world.** Feeling comes from posture, from what people do and from the
   words.
   - **Close-up portraits (to try):** for important conversations, a bust portrait (about 64x64,
