@@ -13,7 +13,7 @@
 //            (open: the frame, the plate beside it), note_war (two notes, no words: a scrawl and "??",
 //            the answer with its arrow), neon_tube (its left end dying), sign_14 (stencilled)
 //   stairs   stairs_concrete (treads with a steel nosing and a worn amber stripe; the dado follows the flight)
-//   props    corner_cam (Halcyon's, on its arm, its red eye), bin_bags, stair_rail, armchair (Frau Haldane asleep in it, the Lull point behind her ear)
+//   props    emergency_key (the lift's, on the wall), corner_cam (Halcyon's, on its arm, its red eye), bin_bags, stair_rail, armchair (Frau Haldane asleep in it, the Lull point behind her ear)
 // Keys "!k" are never lit. Small organic things are hand grids; the rest boxes and lines.
 include("../lib/text.js")
 
@@ -327,6 +327,22 @@ const K14 = (() => {
       pen.box(u0, v0, h0, L, W, 0.17, () => "G",
         (a, e, o) => (a >= 2 && a < o.aw - 1 && e >= 1 && e < o.ah - 1 ? (a === 3 && e === 2 ? "!v" : "k") : "4"),   // the hood, the lens
         (a, e, o) => (a === o.aw - 4 && e === 2 ? (f % 6 < 2 ? "!q" : "!r") : e === 0 ? "3" : e >= o.ah - 1 ? "6" : "5"))
+    },
+  })
+  // the lift's emergency key on the wall: a steel clip with its screw, an amber grip worn pale at the top, a long rod with
+  // the tube's light down its left side and its shadow on the wall, the hook at its foot
+  ISOKIT.prop("emergency_key", {
+    footprint: () => [],
+    draw(pen, p) {
+      const [hx, hy] = pen.P(p.at[0], p.at[1], p.h)
+      pen.at(p.at[0], p.at[1], p.h, "up")
+      const rod = Array(33).fill("....64b")
+      pen.grid(hx - 3, hy, [
+        "..4664.", "..4G64.", "..kkkkb",
+        "..RQQPb", "..QQQPb", "..QQPPb", "..QPPOb", "..kkkkb",
+        ...rod,
+        "6...64b", "64..64b", ".64.64b", "..644b.", "...bb..",
+      ])
     },
   })
   ISOKIT.prop("armchair", {

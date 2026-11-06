@@ -199,8 +199,10 @@ Die Abende sollen nach Leben in der Stadt schmecken, nicht nach Warten aufs Bett
 | 1 | `flat`, Fenster | Es klemmt: „Der Riegel sitzt im Rahmen. Da kommt man nur mit was Flachem ran.“ |
 | 2 | `flat`, Karton | Der alte Halcyon-Ausweis, `UNGÜLTIG`. Am Fenster: „Das erste Mal, dass das Ding was aufmacht.“ |
 | 3 | `sims` | Die Leiter hängt zwei Meter zu hoch. „Teo kam da früher mit irgendwas Langem ran.“ |
-| 4 | `kessel_14`, Aufzug | Über der Tür hängt der Notschlüssel, ein langer Haken: „Stecken bleiben müsste er erst mal fahren.“ |
+| 4 | `kessel_14`, Aufzug | Neben der Tür hängt der Notschlüssel, ein langer Haken: „Stecken bleiben müsste er erst mal fahren.“ |
 | 5 | `sims`, Leiter | Haken, die Leiter kommt runter, hoch aufs Dach. |
+
+Ausweis, Notschlüssel und der Weg aufs Dach sind schon im Prolog offen (entschieden 2026-11-06): Es gibt keinen Grund in der Welt, sie zu sperren, und die Regenleserin verrät nichts, was Vorwissen braucht. Kapitel 1 übernimmt beide Gegenstände. Der Notschlüssel hängt sichtbar neben der Aufzugtür, über der Tür sind schon Anzeige und Lampe.
 
 **Drei kleine Geschichten:**
 

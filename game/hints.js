@@ -41,6 +41,9 @@ Cutaway.hints([
     text: ["Noch nicht Viertel vor elf. Ich zähle mit.", "Warten geht am Deck und in jedem Feed.", "Drück WARTEN, bis es 22:45 ist."] },
   { if: "day=4", about: ["cam_cam31", "thumb_cam31", "app_glas", ...HOME],
     text: ["Es ist so weit.", "CAM 31 ist in GLASS.", "Öffne GLASS und klick CAM 31 an."] },
+  // the roof is open in the prologue too, and nothing it needs is up there
+  { if: ["day=1", { or: ["at:juno=sims", "at:juno=dach", "at:juno=dach_blick", "at:juno=dach_sitzen"] }], about: ["ladder", "hatch", "back", "window"],
+    text: ["Hier oben gibt's nichts zu essen. Ich hab nachgesehen.", "Zurück geht's über die Leiter und durchs Fenster.", "Klick die Leiter an, dann dein Fenster."] },
   { if: "!visited:deck", about: ["deck", "app_chat"],
     text: ["Juno! Frau Kessler hat einen Auftrag für dich.", "Der Auftrag ist auf mir. Auf dem Deck, meine ich.", "Setz dich ans Deck."] },
   { if: ["!read_kessler"], about: ["app_chat", "contact_kessler"],

@@ -45,6 +45,8 @@ ISO_MAPS.kessel_14 = {
   props: [
     // Halcyon's camera up in the corner, looking down the landing
     { id: "corner_cam", kit: "corner_cam", at: [0.03, 0.03], foot: [0.42, 0.2], h: 2.55, block: false },
+    // the lift's emergency key, a long hook, on the wall beside its doors; a prop of its own, since Juno takes it
+    { id: "haken", kit: "emergency_key", at: [1.72, 0.03], foot: [0.2, 0.05], h: 2.3, block: false },
     // the bin bags in front of the lift, which nobody is going to use anyway, waiting for Tuesday
     { id: "bags", kit: "bin_bags", at: [0.38, 0.08], foot: [0.95, 0.65], h: 0.55 },
     // the rail: along the well's open side and back to the wall at its far end; a bench in front of it,
@@ -56,7 +58,7 @@ ISO_MAPS.kessel_14 = {
     { id: "armchair", kit: "armchair", at: [-1.06, 2.61], foot: [0.65, 0.7], h: 1.06, behind: "door_haldane" },
   ],
   spots: {
-    arrive: [0.6, 1.85, "se"], door_juno: [0.4, 1.85, "nw"], notes: [0.45, 1.1, "nw"], haldane: [0.6, 3.7, "nw"], lift: [0.85, 0.95, "ne"],
+    arrive: [0.6, 1.85, "se"], door_juno: [0.4, 1.85, "nw"], notes: [0.45, 1.1, "nw"], haldane: [0.6, 3.7, "nw"], lift: [0.85, 0.95, "ne"], haken: [1.72, 0.55, "ne"],
     motte: [2.2, 1.95, "se"], stairs: [2.2, 0.35, "se"],
     motte_feet: [3.3, 1.86, "sw"], haldane_sits: [-0.72, 3.1, "nw", 0.4],
   },

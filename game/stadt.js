@@ -1,7 +1,8 @@
 // Halcyon: the city in Chapter 1 (docs/kapitel1-design.md, "Die Stadt"), on flat blocks (art/mock/). So far the
 // way up on to the Kessel Block's roof, the Rain Reader there and the first look at the Rings from below.
 // What Juno finds, she can take when she finds it: nothing here waits for an earlier click (CLAUDE.md, conventions). So each thing has its own flag.
-//   window_open, got_haken, ladder_down   the way up to the roof (the ID: has:ausweis, the lift's key: has:haken)
+//   got_ausweis, got_haken   Juno has taken the ID, the lift's key (from the prologue on: Chapter 1 keeps them)
+//   window_open, ladder_down   the way up to the roof
 //   traeger     the white carriers, Thursday night: watched | filmed | girl
 //   imai_step   the woman who remembers: 0, 1 she has told it, 2 Juno found the street and the night, 3 she told her (imai_told: truth | dream)
 //   link_cam14, news_who, news_stack   the newspaper war: she has glassed her own block; she has seen who it is; she has seen the stack
@@ -18,19 +19,21 @@ const flat = Cutaway.room.get("flat").hotspots, floor14 = Cutaway.room.get("kess
 // ---- the window of the flat: it sticks, and only something flat gets at the latch
 Cutaway.item("ausweis", { name: "Halcyon-Ausweis", icon: "inv_ausweis", look: "CIVIC MONITOR, J. REYES. UNGÜLTIG. Flach und hart." });
 Cutaway.item("haken", { name: "Notschlüssel", icon: "inv_haken", look: "Der Notschlüssel vom Aufzug. Ein langer Haken." });
-flat.box_old.use = [{ if: ["day>1", "!has:ausweis", "!off_roof"], then: ["Der Ausweis. CIVIC MONITOR, J. REYES. UNGÜLTIG.", "Flach und hart. Den steck ich ein.", { give: "ausweis" }],
+flat.box_old.look = ["Ein Karton von damals.", { if: "!got_ausweis", then: ["Mein Halcyon-Ausweis. CIVIC MONITOR, J. REYES. UNGÜLTIG."] }, "Und der Kaktus. Vertrocknet. Wie alles aus der Zeit."];
+flat.box_old.use = [{ if: ["!got_ausweis", "!off_roof"], then: ["Der Ausweis. CIVIC MONITOR, J. REYES. UNGÜLTIG.", "Flach und hart. Den steck ich ein.", { give: "ausweis" }, { set: "got_ausweis" }],
   else: ["Der Karton von damals. Mehr brauch ich daraus nicht."] }];
-flat.window.use = [{ if: "day=1", then: ["Das Fenster klemmt. Schon immer."],
-  else: [{ if: "window_open", then: [{ goto: "sims", at: AS.window, face: "se" }],
-    else: ["Klemmt. Der Riegel sitzt im Rahmen. Da kommt man nur mit was Flachem ran."] }] }];
+flat.window.use = [{ if: "window_open", then: [{ goto: "sims", at: AS.window, face: "se" }],
+  else: ["Klemmt. Der Riegel sitzt im Rahmen. Da kommt man nur mit was Flachem ran."] }];
 flat.window.with = { ausweis: [{ if: "!window_open", then: ["Der Ausweis in den Spalt. Hoch. Noch mal.", "Klick.", "Das erste Mal, dass das Ding was aufmacht.", { set: "window_open" }, { goto: "sims", at: AS.window, face: "se" }],
   else: ["Das Fenster ist offen."] }] };
-flat.window.look = [{ if: "day=1", then: flat.window.look, else: [...flat.window.look, "Rechts draußen geht die Leiter aufs Dach. Da oben war ich zuletzt mit Teo."] }];
+flat.window.look = [...flat.window.look, "Rechts draußen geht die Leiter aufs Dach. Da oben war ich zuletzt mit Teo."];
 
-// ---- the lift never runs; its emergency key hangs over the door all the same
-const liftLook = floor14.lift.look, liftUse = floor14.lift.use;
-floor14.lift.look = [{ if: "day=1", then: [liftLook], else: [liftLook, "Über der Tür hängt der Notschlüssel. Ein langer Haken."] }];
-floor14.lift.use = [{ if: ["day>1", "!got_haken", "!off_roof"], then: ["Der Notschlüssel. Lang genug für alles.", "Stecken bleiben müsste er erst mal fahren. Den nehm ich mit.", { give: "haken" }, { set: "got_haken" }], else: [liftUse] }];
+// ---- the lift never runs; its emergency key hangs on the wall beside the doors all the same, as a thing of its own (art/rooms/kessel_14.map.js)
+floor14.haken = { name: "Notschlüssel", rect: AK.hakenRect, walkTo: AK.haken, face: "ne", z: 1, if: ["!got_haken", "!off_roof"],
+  look: "Der Notschlüssel vom Aufzug. Ein langer Haken. Hängt da, falls der Aufzug mal fährt.",
+  use: ["Der Notschlüssel. Lang genug für alles.", "Stecken bleiben müsste er erst mal fahren. Den nehm ich mit.", { hide: "haken" }, { give: "haken" }, { set: "got_haken" }] };
+const room14 = Cutaway.room.get("kessel_14");
+room14.enter = [{ if: "got_haken", then: [{ hide: "haken" }] }, ...(room14.enter ?? [])];
 
 // ---- the ledge outside the window: Juno is afraid of heights (the old photo on the deck)
 Cutaway.room("sims", { name: "Der Sims", background: "sims_bg", walk: AS.walk,

@@ -80,7 +80,7 @@ code comments English.
 | `game/skin.js`, `font.js`, `transitions.js`, `sounds.js`, `music.js`, `title.js`, `hints.js` | the look (frames, cards, labels, choices), the fonts, room transitions, synthesised sounds and music, title and menu screens, hints |
 | `art/**/*.px.js` | pxl sources: `lib/` (shared `iso.js`, `feed.js`), `characters/`, `rooms/`, `cams/`, `mock/` (flat blocks of what isn't painted yet), `ui/`, `intro/`, `mockups/`, `test/`; `*_review.px.js` are review sheets, never built into the game |
 | `assets/*.js` | built atlases (checked in, so the game runs without Node) |
-| `tools/` | `build_art.sh`, `sync-engine.sh`, `render-sounds.mjs`, `solve-act.mjs` (one act alone), `check.sh` (all the checks), `check-hover.mjs` (the pointer turns hot), `portrait-title.py` (the profiles of Juno and Teo, cut from the title picture), `paths/` (Chapter 1's ways to click through) |
+| `tools/` | `build_art.sh`, `sync-engine.sh`, `render-sounds.mjs`, `solve-act.mjs` (one act alone), `check.sh` (all the checks), `check-hover.mjs` (the pointer turns hot), `portrait-title.py` (the profiles of Juno and Teo, cut from the title picture), `paths/` (the ways to click through, the prologue's and Chapter 1's) |
 | `studio.json` | the editor's studio: writable folders, layer files, tasks |
 | `build/`, `out/` | scratch (raw pxl output, screenshots, renders), not checked in |
 | `.claude/skills/claude-pxl/` | the pxl skill, its own repo (gitignored) |
@@ -131,8 +131,9 @@ After every change, all of these:
 
 ```sh
 node lib/cutaway/tools/validate.mjs index.html        # 0 errors (warnings are known: flags set but not yet tested)
-node lib/cutaway/tools/solve.mjs index.html --full    # "no soft-locks", every state has a hint (a few seconds)
+node tools/solve-act.mjs prolog --full --set off_roof  # the prologue's way, the roof shut: "no soft-locks", every state has a hint (open, the roof goes past the solver's limit)
 node lib/cutaway/tools/play.mjs index.html            # headless playthrough with real clicks: "all passed"
+node lib/cutaway/tools/play.mjs index.html --path tools/paths/prolog_dach.json   # the prologue with the roof: "all passed"
 node tools/solve-act.mjs kapitel1 --full --set off_roof,off_zeitung,off_imai,off_traeger,off_varga   # Chapter 1's main thread: "no soft-locks", every state has a hint
 # and each side story alone (sh tools/check.sh does all of it): --set off_main,know_meeting and off_<the others>
 node lib/cutaway/tools/play.mjs index.html --act kapitel1 --path tools/paths/kapitel1_main.json   # its main way with real clicks: "all passed"

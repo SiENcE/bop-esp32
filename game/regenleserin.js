@@ -8,6 +8,7 @@ const R = (/** @type {string} */ text) => ({ say: "regenleserin", text });
 
 Halcyon.talkTree("regenleserin", [
   ["„Was schmeckst du heute?“", [
+    { if: "day=1", then: [R("Der Siebte. Waschmittel, viel zu viel davon."), "Und?", R("Da hat einer was rauszuwaschen.")] },
     { if: "day=2", then: [R("Der Vierte. Die gießen ihre Orchideen."), "Das schmeckt man?", R("Dünger, Kind. Teurer als deine Miete.")] },
     { if: "day=3", then: [R("Der Sechste. Champagner, verdünnt. Jemand feiert, dass ein anderer schläft."), "Sagt das der Regen?", R("Alles kommt runter. Früher oder später.")] },
     { if: "day=4", then: [R("Heute schmeckt's nach gar nichts."), "Ist das gut?", R("Das hatte ich noch nie."),
