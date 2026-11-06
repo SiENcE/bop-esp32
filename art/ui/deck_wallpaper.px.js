@@ -23,6 +23,7 @@
 //                    ends at the parapet's top: the parapet and the tar before it have no rain and no puddles.
 //                    The Rain Reader's own length of gutter on a pole stands before the parapet (story §10c), its
 //                    drip falling where her bucket is (her actor stands at game/places.js, dach.reader).
+//                    dach_heute looks further right, over more city: the left tower and her place are out of the picture.
 //
 // Palette keys: the world palette (style guide §5: k, steel 1-6, wet e f z Z X, magenta n M m N, warm
 // O P Q R W, cyan c C v V, red r q, Juno's j y Y, skin s S) plus the smog lit from below (A B D G);
@@ -48,6 +49,8 @@ pal({
 
 {
   const W = 320, H = 180, SEAT = 136                     // SEAT: the parapet's top, where they sit
+  // dach_sitzen looks further right than the rest (kapitel1-design, "Die Stadt"): from x 105, past the left tower and the Rain Reader's place, over a city that goes on to WIDE
+  const WIDE = 425, SIT_FROM = 105
   const BAY = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5]
   const bay = (x, y) => (BAY[(y & 3) * 4 + (x & 3)] + 0.5) / 16
   const hash = (a, b) => { let h = (a * 374761393 + b * 668265263) | 0; h = Math.imul(h ^ (h >>> 13), 1274126177); return ((h ^ (h >>> 16)) >>> 0) / 4294967296 }
@@ -63,13 +66,13 @@ pal({
   const GLYPHS = { H: "101101111101101", A: "010101111101101", L: "100100100100111", C: "011100100100011", Y: "101101010010010",
     O: "111101101101111", N: "110101101101101", D: "110101101101110", E: "111100110100111", S: "011100010001110",
     B: "110101110101110", T: "111010010010010", R: "110101110101101", P: "110101110100100" }
-  const pen = () => {
-    const buf = Array.from({ length: H }, () => new Array(W).fill("1"))
+  const pen = (w = W) => {
+    const buf = Array.from({ length: H }, () => new Array(w).fill("1"))
     const p = {
-      buf,
-      px(x, y, k) { x = Math.round(x); y = Math.round(y); if (k && x >= 0 && y >= 0 && x < W && y < H) buf[y][x] = k },
+      buf, w,
+      px(x, y, k) { x = Math.round(x); y = Math.round(y); if (k && x >= 0 && y >= 0 && x < w && y < H) buf[y][x] = k },
       rect(x, y, w, h, k) { for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) p.px(x + i, y + j, k) },
-      key(x, y) { x = Math.round(x); y = Math.round(y); return x >= 0 && y >= 0 && x < W && y < H ? buf[y][x] : undefined },
+      key(x, y) { x = Math.round(x); y = Math.round(y); return x >= 0 && y >= 0 && x < w && y < H ? buf[y][x] : undefined },
       text(x, y, str, k) { [...str].forEach((ch, n) => { const g = GLYPHS[ch]; if (g) for (let i = 0; i < 15; i++) if (g[i] === "1") p.px(x + n * 4 + (i % 3), y + Math.floor(i / 3), k) }) },
       grid(str, x, y) {
         const rows = str.split("\n").map((r) => r.trim()).filter((r) => r), on = (i, j) => rows[j] && rows[j][i] && rows[j][i] !== "."
@@ -117,6 +120,44 @@ pal({
     jyjyyyyyyyyjyyyyyyyyjjjjj
     jjyyyyyyyyyjyyyyyyyyjjjjj
     jjjjjjjjjjjjjjjjjjjjjjjjj`
+  // Juno today: 31, taller and wider than the girl above, the same hood with its seam, the satchel's strap across her back and
+  // the bag at her hip, sitting a little to the left of where she sat, with the room for him beside her empty.
+  const JUNO_NOW = `
+    .........YYYYYY...........
+    .......YYYyyyyyyy.........
+    ......YYyyyyjyyyyyj.......
+    .....YYyyyyyjyyyyyjj......
+    .....Yyyyyyyjyyyyyyj......
+    ....YYyyyyyyjyyyyyyjj.....
+    ....Yyyyyyyyjyyyyyyjj.....
+    ....Yyyyyyyyjyyyyyyjj.....
+    ....Yyyyyyyyjyyyyyyjj.....
+    ....yyyyyyyyjyyyyyyjj.....
+    ....yyyyyyyyjyyyyyyjj.....
+    ....jyyyyyyyyyyyyyjjj.....
+    .....jyyyyyyyyyyyjjj......
+    ....YjjjyyyyyyyyjjjjY.....
+    ..YYYyyjjjjjjjjjjjyyyYY...
+    .YYyyyyyyyyyyyyyyyyyyyjjj.
+    .Yy3yyyyyyyyyyyyyyyyyyyjj.
+    YYyy3yyyyyyyyyyyyyyyyyyyjj
+    Yyyyy3yyyyyyyyyyyyyyyyyyjj
+    Yyyyyy3yyyyyjyyyyyyyyyyyjj
+    Yyyyyyy3yyyyjyyyyyyyyyyyjj
+    yyyyyyyy3yyyjyyyyyyyyyyyjj
+    yyyyyjyyy3yyjyyyyyyyjyyyjj
+    yyyyyjyyyy3yjyyyyyyyjyyyjj
+    yyyyjyyyyyy3jyyyyyyyjyyyjj
+    yyyyjyyyyyyj3yyyyyyyyjyyjj
+    yyyjyyyyyyyjy3yyyyyyyjyyjj
+    yyyjyyyyyyyjyy3yyyyyyjyjjj
+    yyjyyyyyyyyjyyy3yyyyyyjjjj
+    yyjyyyyyyyyjyyyy3k66665jjj
+    jyjyyyyyyyyjyyyyyk555554jj
+    jyyyyyyyyyyjyyyyyk544444jj
+    jjyyyyyyyyyjyyyyyk544444jj
+    jjyyyyyyyyyjyyyyyk544444jj
+    jjjjjjjjjjjjjjjjjk444444jj`
   // Teo: tousled hair lit on top, his right ear, the nape, his hoodie's hood bunched at the neck (rust, the
   // orange he will wear at the pumps), the blinker kids wear so they're found (cyan). His head tipped onto
   // her shoulder.
@@ -184,7 +225,7 @@ pal({
   // the smog: dark under the ring, lit from the streets toward the horizon, most over the canal
   const smog = (x, y) => Math.min(1, Math.max(0, (y - 22) / (HZ - 22)) ** 1.5 * 0.92 + 0.16 * Math.exp(-(((x - VX) / 50) ** 2)) * Math.max(0, Math.min(1, (y - 40) / 40)))
   /** a band of blocks along the ground: [x0, x1, top] from a seed, between tops t0..t1 */
-  const blocks = (seed, t0, t1, w0, w1) => { const out = []; for (let x = -6, i = 0; x < W + 6; i++) { const w = w0 + Math.floor(hash(seed, i) * (w1 - w0)); out.push([x, x + w, t0 + Math.floor(hash(i, seed) * (t1 - t0))]); x += w } return out }
+  const blocks = (seed, t0, t1, w0, w1) => { const out = []; for (let x = -6, i = 0; x < WIDE + 6; i++) { const w = w0 + Math.floor(hash(seed, i) * (w1 - w0)); out.push([x, x + w, t0 + Math.floor(hash(i, seed) * (t1 - t0))]); x += w } return out }
 
   // The loop: 24 frames of 100 ms. Everything that moves is a function of the frame f alone, and every
   // period divides 24 (or moves 24 px, or a whole wrap, per loop), so frame 23 runs on into frame 0.
@@ -198,17 +239,18 @@ pal({
   // letters, the city has more screens in it, and who sits on the ledge is `sitting` (false: nobody)
   function paint(c, f, today = false, sitting = false) {
     const lit = { k: "1", 1: "2", 2: "3", 3: "4", 4: "5", 5: "6", A: "B", B: "D", D: "G", G: "4", e: "f", f: "z", z: "Z", Z: "X", c: "C", C: "v", v: "V", n: "M", M: "m", m: "N", O: "P", P: "Q", Q: "R" }
-    const air = (x, y) => tone(SMOG, smog(x, y) * 4, x, y)
+    const air = (x, y) => tone(SMOG, smog(x, y) * 4, x, y), nearR = c.w - 22                // the near tower on the right stands at the picture's edge
 
-    for (let y = 0; y < SEAT; y++) for (let x = 0; x < W; x++) c.px(x, y, air(x, y))
+    for (let y = 0; y < SEAT; y++) for (let x = 0; x < c.w; x++) c.px(x, y, air(x, y))
     // far traffic: two lanes of lights in the smog, one coming, one going, 1 px a frame; the towers drawn
     // after them hide them, so they are only seen gliding through the gaps
     for (const [y, dir, offs, k] of [[67, -1, [0, 9], "R"], [71, 1, [5, 17], "r"]]) for (const o of offs) for (let n = -1; n < 14; n++) {
       const x = 96 + ((o + dir * f) % 24 + 24) % 24 + n * 24
-      if (x >= 96 && x < 298) { c.px(x, y, k); if (k === "R") c.px(x + 1, y, "O") }
+      if (x >= 96 && x < nearR) { c.px(x, y, k); if (k === "R") c.px(x + 1, y, "O") }
     }
     // the far towers, standing in the smog: a shade darker than the air, their feet lost in it
-    const far = [[96, 106, 44], [164, 174, 50], [198, 208, 56], [210, 222, 40], [222, 230, 62], [244, 254, 54], [256, 270, 42], [270, 278, 58], [6, 18, 48], [60, 72, 52]]
+    const far = [[96, 106, 44], [164, 174, 50], [198, 208, 56], [210, 222, 40], [222, 230, 62], [244, 254, 54], [256, 270, 42], [270, 278, 58], [6, 18, 48], [60, 72, 52],
+      ...(sitting ? [[286, 298, 48], [302, 310, 60], [318, 332, 38], [336, 344, 56], [376, 386, 46], [392, 402, 62]] : [])]
     for (const [x0, x1, top] of [...FAR3, ...far]) for (let y = top; y < HZ + 4; y++) for (let x = x0; x < x1; x++)
       c.px(x, y, tone(SMOG, smog(x, y) * 4 - 1.2 + Math.max(0, y - HZ + 10) * 0.05, x, y))
     for (const [x0, x1, top] of far) for (let y = top + 3; y < HZ - 2; y += 3) for (let x = x0 + 1; x < x1 - 1; x += 2) if (hash(x * 7, y) < 0.06) c.px(x, y, "O")
@@ -312,29 +354,40 @@ pal({
     }
     c.rect(96, 49, 9, 57, "n"); c.rect(96, 49, 9, 1, "M"); c.rect(96, 105, 9, 1, "M"); c.rect(104, 49, 1, 57, "k")
     "NOODLES".split("").forEach((ch, i) => c.text(99, 52 + i * 7, ch, today && (i === 1 || i === 2) ? "n" : i === 3 && stutter ? "M" : "m"))
+    // further on, only in the wider look from the ledge: a block with a sign of its own, selling what the screen sells, the city's own English
+    if (sitting) {
+      c.rect(346, 44, 26, SEAT - 44, "1"); c.rect(346, 44, 2, SEAT - 44, "2"); c.rect(346, 44, 26, 1, "3")
+      for (let y = 52; y < SEAT; y += 7) for (let x = 349; x < 358; x += 2) if (hash(x * 3, y) < 0.22) c.px(x, y, hash(y, x) < 0.75 ? "P" : "Q")
+      for (let y = 46; y < 92; y++) for (let x = 352; x < 372; x++) {
+        const d = Math.max(360 - x, 56 - y, y - 86)
+        if (d > 0 && d < 5 && c.key(x, y) === "1" && bay(x, y) < 0.6 - d * 0.12) c.px(x, y, "n")
+      }
+      c.rect(360, 56, 9, 30, "n"); c.rect(360, 56, 9, 1, "M"); c.rect(360, 85, 9, 1, "M"); c.rect(368, 56, 1, 30, "k")
+      "REST".split("").forEach((ch, i) => c.text(363, 59 + i * 6, ch, f % 12 === 7 && i === 2 ? "M" : "m"))
+    }
     // the near tower on the right: homes, their warm windows
-    c.rect(298, 0, 22, SEAT, "1"); c.rect(298, 0, 1, SEAT, "2")
-    for (const [x, y] of [[303, 52], [311, 66], [303, 94], [313, 108]]) { c.rect(x, y, 3, 3, "P"); c.px(x, y, "Q"); c.px(x + 1, y, "Q") }
+    c.rect(nearR, 0, 22, SEAT, "1"); c.rect(nearR, 0, 1, SEAT, "2")
+    for (const [x, y] of [[5, 52], [13, 66], [5, 94], [15, 108]]) { c.rect(nearR + x, y, 3, 3, "P"); c.px(nearR + x, y, "Q"); c.px(nearR + x + 1, y, "Q") }
 
     // the underside of the ring above: panels, ribs running to the rim, the lamps, the rim lit from below
-    for (let x = 0; x < W; x++) {
+    for (let x = 0; x < c.w; x++) {
       const r = rim(x)
       for (let y = 0; y < r; y++) c.px(x, y, y > r - 6 ? "2" : "1")
       c.px(x, r - 1, "3"); c.px(x, r, "n"); if (x % 2) c.px(x, r + 1, "n")
     }
-    for (const y of [6, 12, 16]) for (let x = 0; x < W; x++) if (y < rim(x) - 2) c.px(x, y, "2")
-    for (let x0 = -80; x0 < W + 80; x0 += 46) for (let y = 0; y < 40; y++) {      // ribs, toward the city's middle
+    for (const y of [6, 12, 16]) for (let x = 0; x < c.w; x++) if (y < rim(x) - 2) c.px(x, y, "2")
+    for (let x0 = -80; x0 < c.w + 80; x0 += 46) for (let y = 0; y < 40; y++) {      // ribs, toward the city's middle
       const x = Math.round(x0 + (215 - x0) * (y / 120)); if (y < rim(x) - 1) c.px(x, y, "k")
     }
-    for (let x = 9; x < W; x += 22) { const r = rim(x); c.px(x, r - 1, "R"); c.px(x, r - 2, "4") }
+    for (let x = 9; x < c.w; x += 22) { const r = rim(x); c.px(x, r - 1, "R"); c.px(x, r - 2, "4") }
 
     // the roof: the parapet (its wet top catching the glow, rain runs down its face), the tar before it
-    c.rect(0, SEAT, W, 1, "4"); c.rect(0, SEAT + 1, W, 2, "3"); c.rect(0, SEAT + 3, W, 1, "2")
-    c.rect(0, SEAT + 4, W, 9, "2"); c.rect(0, SEAT + 12, W, 1, "1")
-    for (let x = 18; x < W; x += 26) c.rect(x, SEAT + 4, 1, 9, "1")
-    for (let x = 3; x < W; x += 5) if (hash(x, 5) < 0.4) c.rect(x, SEAT + 4, 1, 2 + Math.floor(hash(x, 6) * 5), "1")
-    for (let y = SEAT + 13; y < H; y++) for (let x = 0; x < W; x++) c.px(x, y, y < SEAT + 15 ? "k" : "e")
-    c.rect(0, SEAT + 15, W, 1, "1")                         // the cable along the parapet's foot
+    c.rect(0, SEAT, c.w, 1, "4"); c.rect(0, SEAT + 1, c.w, 2, "3"); c.rect(0, SEAT + 3, c.w, 1, "2")
+    c.rect(0, SEAT + 4, c.w, 9, "2"); c.rect(0, SEAT + 12, c.w, 1, "1")
+    for (let x = 18; x < c.w; x += 26) c.rect(x, SEAT + 4, 1, 9, "1")
+    for (let x = 3; x < c.w; x += 5) if (hash(x, 5) < 0.4) c.rect(x, SEAT + 4, 1, 2 + Math.floor(hash(x, 6) * 5), "1")
+    for (let y = SEAT + 13; y < H; y++) for (let x = 0; x < c.w; x++) c.px(x, y, y < SEAT + 15 ? "k" : "e")
+    c.rect(0, SEAT + 15, c.w, 1, "1")                         // the cable along the parapet's foot
     // splashes on the tar: each once a loop, for two frames (the photo only: today the rain ends at the parapet, the roof stays dry)
     if (!today) for (let i = 0; i < 30; i++) {
       const x = Math.floor(hash(i, 21) * W), y = 152 + Math.floor(hash(i, 22) * 26), a = (f - Math.floor(hash(i, 23) * FRAMES) + FRAMES) % FRAMES
@@ -352,8 +405,8 @@ pal({
     // rain over everything below the ring's rim but the two of them: thin streaks slanting down to the
     // right, a step lighter than what they fall in front of (so brightest before the lights), 7.5 px a
     // frame: each drop falls the picture's height once a loop
-    for (let i = 0; i < 150; i++) {
-      const y0 = (Math.floor(hash(i, 12) * H) + Math.floor(7.5 * f)) % H, x0 = Math.floor(hash(i, 11) * (W + 45)) - 45
+    for (let i = 0, drops = sitting ? 197 : 150; i < drops; i++) {
+      const y0 = (Math.floor(hash(i, 12) * H) + Math.floor(7.5 * f)) % H, x0 = Math.floor(hash(i, 11) * (c.w + 45)) - 45
       for (let d = 0; d < 3; d++) { const y = y0 + d, x = x0 + Math.floor(y / 4); if (y > rim(x) + 1 && y < (today ? SEAT : H)) { const k = c.key(x, y); if (lit[k]) c.px(x, y, lit[k]) } }
     }
 
@@ -381,11 +434,13 @@ pal({
         else if (sitting && y0 + dy < end + 30) { c.px(78, 164, "C"); c.px(80, 164, "C") }
         else if (t === 0) c.px(79, y0, "v")
       }
-      // Juno, grown up, alone where the two of them sat (blocks: to be painted when the look is approved)
-      if (sitting) {
-        c.rect(198, 112, 26, 25, "k"); c.rect(199, 113, 24, 24, "y"); c.rect(199, 113, 3, 24, "Y"); c.rect(219, 113, 4, 24, "j")
-        c.rect(204, 99, 14, 15, "k"); c.rect(205, 100, 12, 14, "y"); c.rect(205, 100, 12, 2, "Y"); c.rect(214, 102, 3, 12, "j")
-        for (let n = 0; n < 16; n++) c.px(201 + n, 114 + Math.round(n * 0.9), "3")
+      // Juno, grown up, alone where the two of them sat
+      if (sitting) c.grid(JUNO_NOW, 197, 101)
+      // today's new screens further on
+      if (sitting) for (const [x, y, w, h, k, l, phase] of [[312, 92, 14, 8, "M", "m", 5], [334, 104, 10, 6, "c", "v", 13], [388, 90, 12, 8, "c", "v", 19]]) {
+        c.rect(x, y, w, h, k); c.rect(x + 1, y + 1, w - 2, 1, l); c.rect(x + 2, y + 3, w - 5, 1, l)
+        const line = (f + phase) % FRAMES * h / FRAMES | 0
+        for (let i = 0; i < w; i++) c.px(x + i, y + line, lit[c.key(x + i, y + line)])
       }
     } else {
     c.grid(JUNO, 197, 105)
@@ -397,7 +452,7 @@ pal({
       const h = (f * 0.5 + j * 2) % 12, y = Math.round(127 - h), x = 240 + Math.round(Math.sin(h * 0.6 + 1) * 1.2 + h * 0.08)
       if (h < 10) { c.px(x, y, h < 6 ? "5" : "4"); if (h < 7) c.px(x, y - 1, "4") }
     }
-    { const dx = Math.round(1.5 * wave(f, FRAMES)), dy = Math.round(0.7 * wave(f, 12, 0.25)); c.grid(CAM, 289 + dx, 104 + dy); c.px(290 + dx, 106 + dy, f % 12 < 2 ? "q" : "r") }
+    { const dx = Math.round(1.5 * wave(f, FRAMES)), dy = Math.round(0.7 * wave(f, 12, 0.25)); c.grid(CAM, nearR - 9 + dx, 104 + dy); c.px(nearR - 8 + dx, 106 + dy, f % 12 < 2 ? "q" : "r") }
 
     // puddles in the tar: they mirror what stands above the parapet's foot (the ledge, the two of them, the
     // glow), a step darker; the rain's ripples drift through them and the hood's reflection trembles
@@ -410,7 +465,7 @@ pal({
       }
   }
   // the roof today (art/mock: they go into assets/mock.js with the blocks until they are painted)
-  const today = (c, sitting) => { const p = pen(); paint(p, c.frame, true, sitting); for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) c.px(x, y, p.buf[y][x]) }
+  const today = (c, sitting) => { const p = pen(sitting ? WIDE : W), from = sitting ? SIT_FROM : 0; paint(p, c.frame, true, sitting); for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) c.px(x, y, p.buf[y][x + from]) }
   anim("dach_bg", { w: W, h: H, frames: FRAMES, fps: 10 }, (c) => today(c, false))
   anim("dach_heute", { w: W, h: H, frames: FRAMES, fps: 10 }, (c) => today(c, true))
   const PHOTOS = []

@@ -204,6 +204,8 @@ Die Abende sollen nach Leben in der Stadt schmecken, nicht nach Warten aufs Bett
 
 Ausweis, Notschlüssel und der Weg aufs Dach sind schon im Prolog offen (entschieden 2026-11-06): Es gibt keinen Grund in der Welt, sie zu sperren, und die Regenleserin verrät nichts, was Vorwissen braucht. Kapitel 1 übernimmt beide Gegenstände. Der Notschlüssel hängt sichtbar neben der Aufzugtür, über der Tür sind schon Anzeige und Lampe.
 
+**„Unser Platz“** (`dach_sitzen`, entschieden 2026-11-06): Wenn Juno sitzt, sieht man einen anderen Ausschnitt als beim Laufen: weiter rechts, ohne den linken Turm und ohne den Platz der Regenleserin, denn sonst müsste sie im Bild sein. Dafür geht die Stadt nach rechts weiter, mit einem Block und seinem Schild `REST` und weiteren Schirmen. Juno ist von hinten gemalt, die Kapuze, der Riemen der Tasche, die Tasche an der Hüfte, und neben ihr ist Platz für jemanden, der nicht da ist. Bild: `docs/rooms/dach_sitzen_mock_x3.png`.
+
 **Drei kleine Geschichten:**
 
 | Geschichte | Was passiert | Verbindung zur Hauptstory |
