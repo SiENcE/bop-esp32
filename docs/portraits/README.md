@@ -23,5 +23,5 @@ Die ganze Reihe: `figuren_index_x3.png`. Jede Figur gibt es als `<id>_x4.png` mi
 | `sable` | Sable | Hehlerei auf dem Drain-Markt, kauft alles, was atmet | |
 | `koch` | Der Koch von Yuen's | steht am Herd und hat alles schon gesehen | |
 | `ines` | Dr. Ines Calder | Schlaftechnikerin in einer Lull-Klinik | **Spoiler** |
-| `lantern` | Lantern | Oskar Lind, Piratensender | **Spoiler** |
+| `lantern` | Lantern | Oskar Lind, Piratensender: grüner Iro, Okular, Antennen, eine kleine Laterne um den Hals; das Porträt zeigt den Rollstuhl nicht | **Spoiler** |
 | `ashe` | Corvin Ashe | der Mann im weißen Regenmantel | **Spoiler** |

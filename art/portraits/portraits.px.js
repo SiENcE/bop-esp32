@@ -58,7 +58,7 @@ const PANELS = {
   sable: { top: "#3a1f6e", ground: "#140c2a" },
   koch: { top: "#46a892", ground: "#1a4c46" },
   ines: { top: "#e48cac", ground: "#7c3a5c" },
-  lantern: { top: "#5a9a34", ground: "#182c10" },
+  lantern: { top: "#c8208e", ground: "#2e0a48" },
 }
 const STRIPES = [[0, 15], [16, 4], [21, 3], [25, 3], [30, 2], [34, 2], [39, 1], [44, 1], [50, 1]]
 
@@ -1547,84 +1547,100 @@ portrait("ines", PANELS.ines, (p) => {
 // Turned away and looking back at us over his shoulder, out of a hood he made himself: lean, red stubble, a sharp nose and one eye gone narrow; deciding whether you are the
 // problem. The antennas stand up behind him, their tips lit. At the bottom the tyre of his chair and the hand on it, ready to go.
 portrait("lantern", PANELS.lantern, (p) => {
-  const P = { lit: "#a89878", base: "#7c6e54", dim: "#544a38", deep: "#322c22" }
-  const S = { lit: "#a87660", base: "#7a4e3e", dim: "#54322a", deep: "#2e1a18" }
-  const R = "#a8a4a0"
-  const TIP = "#b0f0a0"
-  // the antennas, from behind his shoulder, each with its light
-  const AER = [[60, 54, 72, 7], [54, 52, 60, 3], [66, 60, 77, 22], [18, 58, 8, 18]]
-  for (const [x0, y0, x1, y1] of AER) { p.line(`${x0},${y0} ${x1},${y1}`, INK, true); p.line(`${x0 + 1},${y0} ${x1 + 1},${y1}`, GREY.dim, true) }
-  // the poncho: one wide slope from the hood, patched from whatever there was, stitched where you can see it
-  const pon = p.part("-6,104! -6,90 6,72 22,62 56,62 72,72 86,88 86,104!", P.base)
-  pon.edge(6, 2, P.dim)
-  pon.tone("-6,92 4,74 18,66 12,78 2,92", P.lit)
+  const S = { lit: "#b57f5e", base: "#83503a", dim: "#5a3426", deep: "#2e1a18" }
+  const G = { lit: "#eaffdc", base: "#b0f0a0", dim: "#58c070", deep: "#1f6a48" }     // his own colour, in his hair and his lens
+  const V = { lit: "#7f63c8", base: "#54418a", dim: "#3a2a64", deep: "#241a40" }     // the poncho
+  const SHAVED = "#3e281f"
+  // the antennas, from the headset, each with its own light: he hears everything
+  const AER = [[62, 38, 74, 7, "#ff4fd3"], [64, 40, 70, 19, "#62def0"], [60, 36, 64, 4, G.lit]]
+  for (const [x0, y0, x1, y1] of AER) { p.line(`${x0},${y0} ${x1},${y1}`, INK, true); p.line(`${x0 + 1},${y0} ${x1 + 1},${y1}`, GREY.base, true) }
+  // the poncho, patched in whatever colours there were
+  const pon = p.part("-6,104! -4,88 8,76 24,70 56,70 72,76 84,88 86,104!", V.base)
+  pon.edge(6, 2, V.dim)
+  pon.tone("-4,90 6,78 20,72 12,82 2,92", V.lit)
   const patch = (path, t, d) => { const q = pon.within(path, t); q.edge(2, 2, d); q.ink(d); return q }
-  patch("6,84! 22,80! 24,96! 8,99!", "#7c4a34", "#4c2a1c")
-  patch("24,86! 34,86! 34,100! 22,100!", "#4e6a76", "#2f4450")
-  patch("58,64! 70,70! 66,78! 54,72!", "#8c7c3c", "#5a4e24")
-  for (let x = 7; x < 22; x += 3) p.put(x, 82 - Math.round((x - 6) / 4), P.lit)                 // stitches
-  // the hood thrown back: soft cloth, slumped in a heap round his neck, behind his head
-  const hood = p.part("10,74 8,60 14,48 26,42 54,42 66,48 72,60 70,74 40,80", P.dim)
-  hood.edge(4, 3, P.deep)
-  hood.tone("10,64 15,51 26,45 19,56", P.base)
-  for (const l of ["13,60 22,70 34,74", "67,58 60,68 48,74", "20,50 18,60 26,70"]) p.line(l, P.deep)
-  // the head, thin, looking back over his left shoulder: the nose to our left; short rough hair, going grey
-  const face = p.part("20,38 20,24 28,12 40,8 52,12 60,24 59,38 57,54 48,66 36,70 26,64 20,52", S.base)
-  face.edge(5, 2, S.dim)
-  face.tone("24,50 26,36 32,28 28,40", S.lit)
-  face.tone("44,48 54,40 52,54 44,62", S.dim)                  // the hollow of the cheek
-  face.tone("18,56 26,60 32,52 44,52 50,58 60,46 60,62 50,70 36,74 24,68", "#6e6058")
-  for (const [x, y] of [[25, 62], [29, 66], [34, 63], [38, 69], [44, 65], [49, 62], [53, 55], [46, 69], [31, 60]]) p.put(x, y, R)
-  // his hair, cropped and rough, and the grey in it
-  const HAIR2 = "#2a2622"
-  face.tone("16,4! 64,4! 64,28 57,23 50,20 40,21 31,22 25,26 20,36 16,34", HAIR2)
-  face.tone("30,9 42,8 52,13 44,12 34,12", "#4a4640")                  // the light on it, and the grey
-  // the headset's arm and its mic, a green light on it
-  p.line("58,44 52,60 42,63", INK)
-  p.rect(39, 61, 4, 3, INK); p.rect(40, 62, 2, 1, TIP)
-  // the wheel beside him, only its top in the panel's corner: a thick tyre, its rim, two spokes
-  const tyre = p.part(oval(76, 110, 36), "#1e222c")
-  tyre.tone(oval(74, 108, 35), "#343a48")
-  tyre.tone(oval(76, 110, 33), "#1e222c")
-  tyre.sep()
-  const rim = tyre.within(oval(76, 110, 29), STEEL.dim)
-  rim.edge(-2, -2, STEEL.lit)
-  rim.ink(INK)
-  rim.within(oval(76, 110, 26), P.deep)
-  for (const [x, y] of [[58, 88], [72, 84], [84, 86]]) p.line(`${x},${y} 76,110`, STEEL.lit)
-  // his arm comes down from under the poncho to the rim
-  const cuff = p.part("30,82 42,78 46,88 36,94", P.dim)
-  cuff.edge(2, 2, P.deep)
-  cuff.sep()
+  patch("4,84! 20,80! 22,96! 6,99!", "#ff4fd3", "#a8238a")
+  patch("56,78! 72,82! 72,96! 54,94!", "#1f88a4", "#123c4e")
+  patch("24,92! 36,90! 36,102! 24,102!", "#e8843c", "#8e4a22")
+  patch("46,92! 54,92! 54,102! 46,102!", G.dim, G.deep)
+  for (let x = 5; x < 20; x += 3) p.put(x, 85 - Math.round((x - 4) / 4), "#ffc0f2")   // stitches
+  for (let y = 80; y < 94; y += 3) p.put(73, y, "#dafcff")
+  // the hood, thrown back in a soft heap
+  const hood = p.part("12,78 13,66 24,59 56,59 67,66 68,78 40,84", V.dim)
+  hood.edge(4, 3, V.deep)
+  hood.tone("13,70 22,62 30,62 20,70", V.base)
+  for (const l of ["18,72 28,78", "62,70 52,78"]) p.line(l, V.deep)
+  // the neck, a cable for a collar
+  const neck = p.part("30,62 50,62 50,76 40,80 30,76", S.dim)
+  neck.edge(3, 0, S.deep)
+  // the head, narrow, the sides shaved
+  const head = p.part("23,42 24,28 31,20 49,20 56,28 57,42 55,54 48,65 40,68 32,65 25,54", S.base)
+  head.edge(4, 2, S.dim)
+  head.tone("26,30 32,22 38,21 30,28", S.lit)
+  head.tone("20,16! 32,16! 30,28 26,36 21,38", SHAVED)
+  head.tone("48,16! 60,16! 60,38 54,36 50,28", SHAVED)
+  // the ear, with its rings
+  const ear = p.part(oval(22, 45, 3, 5), S.base)
+  ear.edge(1, 1, S.dim)
+  // the crest: dyed, stiff, leaning; the loudest thing in the room
+  const crest = p.part("32,30 29,20 25,12 31,14 30,5 36,11 38,1 43,10 48,3 48,13 54,9 51,21 48,30 40,26", G.base)
+  crest.edge(3, 2, G.dim)
+  crest.edge(1, 1, G.deep)
+  crest.tone("31,18 35,12 38,8 37,18 33,24", G.lit)
+  // the headset's cup, lit in magenta
+  const cup = p.part(oval(59, 44, 6, 8), "#1a2337")
+  cup.edge(2, 2, "#0c0e1a")
+  cup.ink("#41547a")
   p.outline()
-  // the antennas' lights, no ink
-  for (const [, , x, y] of AER) { p.rect(x - 1, y - 1, 4, 4, "#5a9a50"); p.rect(x, y, 2, 2, TIP); p.put(x, y, "#ffffff") }
-  // the hand on the rim, from the side
-  fingers(p, 42, 78, [8, 9, 9, 7], S)
-  // the eyes: looking back at us to the corner; the near one narrowed down to a line, the far one still deciding
-  const E = { k: INK, w: "#f0ece0", i: "#20242c", d: S.deep, g: "#ffffff", s: S.dim }
-  p.grid(24, 37, [
+  // what has its own light, without ink
+  for (const [, , x, y, t] of AER) { p.rect(x - 1, y - 1, 4, 4, "#14162a"); p.rect(x, y, 2, 2, t) }
+  p.rect(57, 42, 3, 4, "#ff4fd3"); p.put(57, 42, "#ffc0f2")
+  p.put(20, 48, "#dfe6ee"); p.put(20, 45, "#dfe6ee"); p.put(20, 42, "#62def0")      // the rings in his ear
+  // the collar's cable and the little lantern on it: the name
+  p.rect(30, 73, 20, 2, INK); p.rect(31, 73, 18, 1, "#41547a")
+  p.grid(36, 75, [
+    "..kkkk..",
+    ".kbbbbk.",
+    "kbGGGGbk",
+    "kbGWWGbk",
+    "kbGWWGbk",
+    "kbGGGGbk",
+    ".kbbbbk.",
+    "..kkkk..",
+  ], { k: INK, b: "#617aa0", G: G.base, W: G.lit })
+  // the stubbled sides: a few strokes, a line of circuit inked on the temple and the cheek, cyan
+  p.line("54,30 55,36 52,40", "#62def0"); p.put(52, 41, "#dafcff"); p.put(55, 29, "#dafcff")
+  p.line("52,50 54,54 51,57", "#1f88a4")
+  // the lens over his right eye, on a strap: bright, cracked, with something scrolling in it
+  p.line("24,36 34,31", INK)
+  const rim = p.part(oval(32, 42, 9.5), "#41547a")
+  rim.edge(2, 2, "#1a2337")
+  rim.edge(-1, -1, "#a8b4c4")
+  rim.ink(INK)
+  const lens = rim.within(oval(32, 42, 7), G.deep)
+  lens.tone("24,34! 36,34! 30,40 25,44", G.dim)
+  for (const [x, y, n] of [[28, 39, 7], [27, 42, 9], [28, 45, 5]]) p.rect(x, y, n, 1, G.lit)
+  p.grid(26, 36, ["V.", "VV", ".V"], { V: "#ffffff" })
+  p.line("36,36 33,41 37,47", INK)
+  // the other eye: narrowed, sizing you up, the brow high, a bar through it
+  p.grid(44, 39, [
     "kkkkkkkk.",
-    ".kwiikkkk",
-    "..kwwiik.",
-    "...kkkk..",
-  ], E)
-  p.grid(41, 34, [
-    "kkkkkkkkkkkk",
-    ".kkkkkkkkkkk",
-    "..wwiiiwwwk.",
-    "..wwiigwwk..",
-    "...kkkkkk...",
-  ], E)
-  // the brows: down and in
-  p.grid(23, 32, ["kkk......", "...kkkk..", ".......kk"], { k: "#1a100e" })
-  p.grid(40, 30, ["......kkkkk", "...kkkk....", "kkk........"], { k: "#1a100e" })
-  // the nose: sharp, towards our left, with its own shadow
-  p.grid(31, 41, ["...ss", "...ss", "..sss", ".ssss", "ddsss", "..ddd"], E)
-  // the mouth pressed tight, slanting; he has not finished the sentence
-  p.grid(29, 55, ["kkkkkkkkkkkk.....", "............kkkkk"], E)
-  // a scar through the near brow
-  p.line("46,28 49,33", "#c8a490")
+    ".wwggkww.",
+    ".wwgkkw..",
+    "..kkkkk..",
+    "...dddd..",
+  ], { k: INK, w: "#f0ece0", g: G.dim, d: S.dim })
+  p.grid(43, 34, ["......kkk", "...kkkk..", "kkkk....."], { k: "#1a100e" })
+  p.rect(52, 33, 1, 3, "#dfe6ee")
+  // the nose; a crooked smirk with a steel tooth; a dyed tuft under the lip
+  p.grid(40, 46, ["..s", "..s", ".ss", "dss", "ddd"], { s: S.dim, d: S.deep })
+  p.grid(31, 56, [
+    "k.............k",
+    ".kkkkkkkkkkkkk.",
+    "...wwTwwwwkk...",
+    "....kkkkkk.....",
+  ], { k: "#1a0c0a", w: "#f0ece0", T: "#a8b4c4" })
+  p.grid(37, 62, [".GG.", "GGGG", ".GG."], { G: G.dim })
 })
 
 // With the name under the picture: the portraits for the index and for telling them apart; the plain sprites stay for marketing.
