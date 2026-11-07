@@ -3,7 +3,7 @@
 # Chapter 1's side stories are threads of their own: each is solved alone with the others shut (off_<thread>, game/stadt.js),
 # since together they would multiply each other's states; and without job C's chain (off_main, the place known from the start), which they don't need.
 cd "$(dirname "$0")/.."
-THREADS="roof zeitung imai traeger varga"
+THREADS="roof zeitung imai traeger varga tide"
 failed=0
 line() { printf '%-28s %s\n' "$1" "$2"; }
 need() { case "$2" in *"$3"*) ;; *) failed=1; line "$1" "FAILED: $2" ;; esac; }

@@ -23,7 +23,7 @@ Halcyon.talkTree = function (id, topics, bye = "Bis dann.") {
       if (!more) return { text, then, ...(when ? { if: when } : {}) };
       const sub = `${name}.${i}`;
       level(sub, more, { text: "Was anderes.", silent: true, goto: name });
-      return { text, then, goto: sub };
+      return { text, then, goto: sub, ...(when ? { if: when } : {}) };
     }), way];
   };
   level("main", topics, { text: bye, silent: true, goto: "end" });

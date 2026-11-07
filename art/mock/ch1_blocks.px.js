@@ -250,3 +250,60 @@ anim("mock_row_way", { w: 30, h: 76, frames: 1, fps: 1, pivot: "bottom" }, (c) =
   }
   c.rect(20, 2, 7, 30, "k"); c.rect(21, 3, 5, 28, "M"); for (let y = 5; y < 29; y += 6) { c.rect(22, y, 3, 1, "y"); c.rect(23, y + 1, 1, 3, "y") }
 })
+
+// ---- job B (game/auftrag_tide.js): Jade Row's cameras, Okonkwo's shop, the people of the night, Ratz
+pal({ s: "#5a3a2a", S: "#8a5a3e", o: "#6a5030", O: "#a88a58" })
+// CAM 07: Halcyon's camera high at the lane's near end, looking down it: the shop's window on the left (Okonkwo seen from above, behind his
+// counter), the machine on the right-hand kerb, the gate small at the far end; floors light, so the dark figures show
+scene("cam07_bg", { w: W, h: H, bg: "0" }, (c) => {
+  // (the left column is the cameras' strip: nothing that matters lies under x 76)
+  c.rect(0, 0, W, H, "3")
+  for (let y = 0; y < H; y++) { const l = Math.round(196 - y * 0.45), r = Math.round(258 + y * 0.35); c.hline(l, y, r - l, y < 36 ? "5" : "8") }
+  c.rect(202, 6, 50, 26, "2"); c.rect(206, 10, 42, 18, "7"); c.rect(210, 32, 4, 12, "5"); c.rect(240, 32, 4, 12, "5"); SIGN(c, 196, 0, 62, "JADE ROW", "5", "9")
+  c.rect(80, 44, 70, 68, "1"); c.rect(82, 46, 66, 64, "8"); c.rect(82, 94, 66, 16, "5"); for (let x = 86; x < 144; x += 8) c.rect(x, 50, 5, 8, "6")
+  SIGN(c, 80, 32, 70, "OKONKWO", "2", "9")
+  c.rect(282, 62, 18, 50, "2"); c.rect(284, 66, 14, 18, "9"); c.px(298, 64, "9")
+  for (const [x, y] of [[166, 70], [166, 110], [276, 120]]) c.rect(x, y, 4, 22, "9")
+})
+// CAM 07V: the machine's own camera, a fisheye at hip height across the lane: the shop's window big, its counter, the safe under it with its keypad
+scene("cam07v_bg", { w: W, h: H, bg: "0" }, (c) => {
+  c.rect(0, 0, W, H, "3")
+  c.rect(30, 16, 260, 120, "2"); c.rect(34, 20, 252, 112, "8")
+  for (const y of [34, 54]) { c.rect(40, y, 240, 3, "5"); for (let x = 44; x < 276; x += 12) c.rect(x, y - 10, 8, 10, x % 24 ? "6" : "7") }
+  c.rect(34, 96, 252, 36, "5"); c.hline(34, 96, 252, "9")
+  c.rect(196, 104, 40, 26, "2"); c.rect(200, 108, 16, 12, "4"); c.rect(220, 108, 12, 14, "9")
+  c.rect(0, 136, W, 44, "4"); c.hline(0, 136, W, "6")
+  SIGN(c, 110, 4, 100, "OKONKWO", "4", "9")
+  // the fisheye's dark corners
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) { const dx = (x - 160) / 170, dy = (y - 90) / 105; if (dx * dx + dy * dy > 1) c.px(x, y, "0") }
+})
+// the keypad in close-up: five digits on its little screen, the last ones still lit
+scene("zoom_keypad", { w: 60, h: 40, bg: "1" }, (c) => {
+  c.rect(0, 0, 60, 40, "2"); c.rect(4, 3, 52, 10, "1"); TXT.draw(c, 30, 5, "4-1-7-0-9", "9", { font: "hud", align: "center" })
+  for (let j = 0; j < 4; j++) for (let i = 0; i < 3; i++) { c.rect(10 + i * 15, 16 + j * 6, 10, 4, "4"); c.rect(13 + i * 15, 17 + j * 6, 4, 2, j === 1 && i === 0 ? "9" : "6") }
+})
+// Okonkwo's shop from inside: shelves of rice and batteries, the counter, a photograph on the wall, the door back to the lane
+scene("okonkwo_shop_bg", { w: W, h: H, bg: "k" }, (c) => {
+  c.rect(0, 0, W, 112, "o"); c.rect(0, 112, W, 68, "a"); c.hline(0, 112, W, "y")
+  c.rect(0, 50, 18, 120, "b"); c.rect(3, 54, 12, 50, "y")
+  for (const y of [34, 58, 82]) { c.rect(30, y, 120, 3, "s"); for (let x = 32; x < 148; x += 7) c.rect(x, y - 9, 5, 9, (x + y) % 3 ? "O" : "h") }
+  c.rect(140, 96, 120, 24, "s"); c.hline(140, 96, 120, "O"); c.rect(150, 100, 30, 14, "b"); c.rect(154, 103, 22, 4, "v")
+  c.rect(230, 40, 30, 24, "k"); c.rect(232, 42, 26, 20, "h"); c.rect(232, 52, 26, 10, "f"); for (const x of [237, 244, 251]) c.rect(x, 46, 3, 8, "S")
+  c.rect(270, 30, 40, 70, "S"); c.rect(274, 34, 32, 30, "y")
+})
+// the people of job B, not painted yet: Okonkwo in his cardigan (in the shop and from above in the feeds), Lt. Morrow in her trench coat,
+// a Tidewater boy with the glowing mark at his neck, the patrol car; Ratz with his parka, headphones and glowing collar
+anim("mock_okonkwo", { w: 19, h: 48, frames: 1, fps: 1, outline: "k", pivot: "bottom" }, (c) => {
+  c.rect(6, 0, 7, 9, "S"); c.rect(6, 0, 7, 2, "k"); c.rect(6, 4, 7, 1, "h"); c.rect(3, 9, 13, 22, "O"); c.rect(5, 10, 9, 20, "o"); c.rect(5, 31, 9, 17, "d")
+})
+anim("mock_okonkwo_feed", { w: 13, h: 23, frames: 1, fps: 1, outline: "1", pivot: "bottom" }, (c) => { c.rect(4, 0, 5, 6, "6"); c.rect(2, 6, 9, 10, "7"); c.rect(3, 16, 3, 7, "4"); c.rect(7, 16, 3, 7, "4") })
+anim("mock_okonkwo_kneel", { w: 15, h: 15, frames: 1, fps: 1, outline: "1", pivot: "bottom" }, (c) => { c.rect(4, 0, 6, 5, "6"); c.rect(2, 5, 10, 7, "7"); c.rect(1, 12, 13, 3, "4") })
+anim("mock_morrow_feed", { w: 13, h: 25, frames: 1, fps: 1, outline: "1", pivot: "bottom" }, (c) => { c.rect(4, 0, 5, 6, "5"); c.rect(2, 6, 9, 15, "7"); c.rect(3, 21, 3, 4, "3"); c.rect(7, 21, 3, 4, "3"); c.rect(8, 10, 4, 3, "9") })
+anim("mock_tide_feed", { w: 12, h: 22, frames: 1, fps: 1, outline: "1", pivot: "bottom" }, (c) => { c.rect(3, 0, 6, 6, "3"); c.rect(4, 6, 4, 1, "9"); c.rect(2, 7, 8, 9, "4"); c.rect(3, 16, 2, 6, "3"); c.rect(7, 16, 2, 6, "3") })
+anim("mock_car_feed", { w: 40, h: 18, frames: 1, fps: 1, outline: "1", pivot: "bottom" }, (c) => { c.rect(0, 6, 40, 10, "3"); c.rect(8, 0, 22, 7, "2"); c.rect(10, 1, 18, 5, "5"); c.rect(2, 9, 4, 2, "9"); c.rect(34, 9, 4, 2, "9"); c.rect(16, 0, 6, 1, "9") })
+anim("mock_ratz", { w: 22, h: 26, frames: 1, fps: 1, outline: "k", pivot: "bottom" }, (c) => {
+  c.rect(7, 2, 9, 8, "g"); c.rect(5, 1, 3, 4, "h"); c.rect(15, 1, 3, 4, "h"); c.rect(6, 4, 12, 2, "k"); c.px(14, 6, "k"); c.rect(16, 7, 3, 2, "h")
+  c.rect(6, 10, 11, 2, "v"); c.rect(4, 12, 14, 11, "e"); c.rect(5, 23, 4, 3, "d"); c.rect(13, 23, 4, 3, "d"); c.rect(0, 20, 5, 2, "h"); c.rect(0, 18, 2, 3, "h")
+})
+anim("inv_tap", { w: 18, h: 13, frames: 1, fps: 1, outline: "k" }, (c) => { c.rect(1, 4, 10, 6, "e"); c.rect(11, 6, 6, 2, "h"); c.rect(3, 6, 3, 2, "v"); c.rect(0, 2, 2, 9, "g") })
+anim("inv_reis", { w: 18, h: 13, frames: 1, fps: 1, outline: "k" }, (c) => { c.rect(1, 2, 16, 9, "h"); c.rect(1, 2, 16, 2, "S"); c.rect(5, 5, 8, 3, "O") })

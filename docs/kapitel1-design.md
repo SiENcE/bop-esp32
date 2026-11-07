@@ -97,6 +97,18 @@ grüßt Juno jeden Abend.
 | B8 | `cam07` | **Morrow**: in den Nächten von Abend 1 und 2, 00:30, ein Polizeiwagen hält vor dem Laden. Lt. Morrow nimmt von einem Tidewater-Jungen einen Umschlag (Kiemenschlitze, die Leuchtmarkierung am Hals im Feed hell wie eine Lampe). Zuhören: „Das ist für die ruhige Woche. Freitag fährt keiner die Kowalski." Moment `morrow_bribe` (für Kap. 2 und 4 wichtig, wer ihn aufzeichnet, hat etwas gegen Morrow). | optional `+clip_morrow_bribe` |
 | B9 | **Entscheidung K1b** | siehe unten | |
 
+**Im Mock gebaut** (`game/auftrag_tide.js`, auf Blöcken; Zeilen und Abläufe sind beim Durchspielen zu prüfen). Ein eigener Faden, `off_tide`, mit `got_tap`, `k1b` und `link_cam07v`; seine Wege sind `tools/paths/kapitel1_tide_*.json`. Abweichungen von der Kette:
+
+- **Annehmen entfällt** (kein `job_b`): TIDEs Nachricht steht ab Mittwoch im Chat („Okonkwo, Jade Row. …“).
+- **Der Laden steht in der Jade Row** (story §10c), gegenüber der Automat mit der Kamera. `cam07` ist Halcyons Kamera über der Gasse, mit Junos altem Zugang, und hat **nur einen Blick**: Die drei Stellungen des Designs entfallen im Mock, weil der Laden nicht mehr an der Kowalski liegt. Von oben verdeckt Okonkwos Rücken um 01:00 das Tastenfeld.
+- **Der Abzweiger** kommt nur von Ratz (60 Chits, ein Gespräch mit verschachtelten Themen); Mottes Weg kommt mit seinen Lektionen.
+- **Die Drohne:** Juno wartet selbst ab, bis sie vorbei ist, dann klemmt sie den Abzweiger an. Nichts hängt am Timing (CLAUDE.md, Konventionen).
+- **`cam07v`:** Okonkwo steht abends an der Theke, um 01:00 kniet er am Tresor; ein Klick auf ihn zeigt den Code im Zoom. Wer später kommt, findet ihn im Puffer derselben Nacht.
+- **Warnen** geht im Laden, solange er offen hat (bis 01:00), auch ohne den Code: TIDEs Nachricht sagt genug. Dafür gibt es die Stange Reis (ein Gegenstand). Wer gewarnt hat, sieht ihn um eins einen neuen Code tippen.
+- **Falscher Code** und **Verkaufen** gehen im Chat, sobald Juno den echten Code kennt (sonst wüsste sie nicht, wie einer aussieht).
+- **Morrow** um 00:30 in `cam07`: der Streifenwagen, der Tidewater-Junge, der Umschlag; aufnehmen oder nur zuhören.
+- **EVIs Hinweise** zu B sprechen am Mittwoch und Donnerstag ab 22:45, nach denen zu A.
+
 ### Entscheidung K1b
 
 | Wahl | Was Juno tut | Folge | Kassenbuch |

@@ -18,6 +18,14 @@ Cutaway.hints([
     [["link_cam15", "!cache_note_kessler_hideout"], ["Er kommt um halb elf ins Morpheus.", "Schau zu, welche Kapsel er nimmt. Sonst hat der Puffer es.", "Öffne CAM 15 um 22:30 und klick ihn an."]],
     [["cache_note_kessler_hideout", "!k1a"], ["Du weißt, wo er ist. Varga will das auch wissen.", "Varga ist im CHAT. Kapsel 23 hat einen Bildschirm.", "Antworte Varga, oder schreib auf den Bildschirm. Was davon, weiß ich nicht. Das weißt du."]],
   ].map(([when, text]) => ({ if: ["day>1", "day<4", "time>=20:30", "time<22:45", "!off_varga", ...when], text })),
+  // job B speaks from a quarter to eleven, when job A has done (Okonkwo opens his safe at one): nothing of it is needed either
+  ...[
+    [["!got_tap", "!link_cam07v"], ["Okonkwo macht um eins seinen Tresor auf. TIDE will den Code.", "Von oben sieht man nur seinen Rücken. Der Automat gegenüber schaut auf Augenhöhe.", "Kauf bei Ratz auf dem Drain-Markt einen Abzweiger."]],
+    [["got_tap", "!link_cam07v"], ["Du hast einen Abzweiger! Ich will wissen, wofür.", "Der Automat in der Jade Row hat eine kleine Kamera.", "Benutz den Abzweiger am Automaten gegenüber von Okonkwos Laden."]],
+    [["link_cam07v", "!cache_note_safe_code", "time<01:15"], ["Um eins macht er den Tresor auf.", "CAM 07V sieht das Tastenfeld.", "Öffne CAM 07V, spul vor bis 01:00 und klick ihn an."]],
+    [["link_cam07v", "!cache_note_safe_code", "time>=01:15"], ["Er hat den Tresor schon auf- und zugemacht. Ich hab es aber.", "Die Kameras behalten die ganze Nacht.", "Öffne CAM 07V und drück PUFFER."]],
+    [["cache_note_safe_code"], ["Du hast den Code. TIDE will ihn auch.", "TIDE ist im CHAT. Okonkwo ist in seinem Laden, bis eins.", "Antworte TIDE, oder geh zu Okonkwo. Was davon, weiß ich nicht. Das weißt du."]],
+  ].map(([when, text]) => ({ if: ["day>1", "day<4", "time>=22:45", "!off_tide", "!k1b", ...when], text })),
   { if: ["day=3", "moment:ines_tide", "!know_meeting"], about: ["cam_cam30", "rewind", "app_glas", ...HOME],
     text: ["Ines war am Sumpf-Abgang. Das Bild ist noch da.", "Die Kameras behalten den ganzen Abend. Der Puffer!", "Öffne CAM 30 und drück PUFFER."] },
   { if: ["day=3", "moment:ines_drop", "!know_meeting"], about: ["cam_cam30", "app_glas", ...HOME],
