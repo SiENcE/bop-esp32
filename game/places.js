@@ -71,7 +71,7 @@ Halcyon.at = {
   jade_row: {
     walk: [[67, 142, 253, 142, 306, 176, 14, 176]], arrive: [292, 172], back: [292, 172], mid: [186, 158], shop: [78, 146], machine: [232, 146], soup: [214, 144], far: [160, 143], parlour: [112, 143], pharmacy: [196, 143],
     backRect: [296, 112, 24, 38], windowRect: [55, 88, 31, 48], doorRect: [88, 84, 11, 44], signRect: [53, 60, 38, 26], machineRect: [232, 84, 28, 58], soupRect: [212, 82, 20, 50],
-    parlourRect: [106, 86, 18, 30], pharmacyRect: [195, 88, 13, 24], gateRect: [136, 50, 48, 46], screenRect: [136, 4, 48, 44], signsRect: [195, 56, 22, 32],
+    parlourRect: [118, 88, 8, 26], arcadeRect: [100, 90, 16, 32], balconyRect: [58, 22, 54, 42], nightRect: [212, 8, 43, 62], carRect: [168, 92, 24, 17], pharmacyRect: [195, 88, 13, 24], gateRect: [136, 50, 48, 46], screenRect: [136, 4, 48, 44], signsRect: [195, 56, 22, 32],
   },
   // outside the flat's window: the ledge (kapitel1-design, "Die Stadt")
   sims: {

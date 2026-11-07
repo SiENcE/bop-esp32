@@ -12,6 +12,11 @@
     use: [{ if: "day=1", then: ["Nicht heute. Heute will ich Bao."], else: [{ goto: "jade_row", at: AJ.arrive, face: "nw" }] }] };
 
   Cutaway.room("jade_row", { name: "Jade Row", background: "jade_row_bg", walk: AJ.walk,
+    // the lane's life, none of it a state: the steam at its end; in front of Juno the heads along the edge
+    props: [
+      { id: "steam", image: "jade_steam", at: [108, 40], anchor: [0, 0], baseline: 1 },
+      { id: "crowd", image: "jade_crowd", at: [0, 148], anchor: [0, 0], baseline: 300 },
+    ],
     fx: [
       { kind: "rain", rect: [0, 0, 320, 180], count: 60, color: "#41547a", speed: 140, slant: 0.3, length: 3 },
       { kind: "rain", rect: [0, 0, 320, 180], count: 45, color: "#6c809a", speed: 210, slant: 0.3, length: 5 },
@@ -27,6 +32,10 @@
       pharmacy: { name: "Apotheke", rect: AJ.pharmacyRect, walkTo: AJ.pharmacy, face: "ne", look: "Eine Apotheke. Vorn Tee, hinten alles andere." },
       signs: { name: "Schilder", rect: AJ.signsRect, walkTo: AJ.pharmacy, face: "ne", look: "Die Zeichen kann hier kaum noch einer lesen. Sie leuchten trotzdem." },
       gate: { name: "Das Tor", rect: AJ.gateRect, walkTo: AJ.far, face: "ne", look: "JADE ROW. Das Tor ist älter als die Flut. Das meiste hier ist das." },
+      balcony: { name: "Balkon", rect: AJ.balconyRect, walkTo: AJ.shop, face: "nw", look: "Über Okonkwo raucht einer und sieht runter. Dasselbe wie ich, nur billiger." },
+      night: { name: "NACHTMARKT", rect: AJ.nightRect, walkTo: AJ.pharmacy, face: "ne", look: "Nachtmarkt. Sagt Mei. Einen Markt gibt's hier schon lange nicht mehr. Die Nacht schon." },
+      arcade: { name: "Spielautomaten", rect: AJ.arcadeRect, walkTo: AJ.parlour, face: "nw", look: "SUMP RUNNER, als Automat. Der da spielt, seit ich hier wohne. Motte wär längst weiter." },
+      car: { name: "Der Wagen", rect: AJ.carRect, walkTo: AJ.far, face: "ne", look: "Ein Wagen mit laufendem Motor und Licht an. Hier hält nur, wer wartet." },
       screen: { name: "Der große Schirm", rect: AJ.screenRect, walkTo: AJ.far, face: "ne", look: "LULL. FREE. Zwei Wochen gratis. Danach kostet's." },
     },
   });
