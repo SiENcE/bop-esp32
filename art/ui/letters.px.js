@@ -39,7 +39,7 @@ function titleLetters(word, sc, gap) {
 
 // the camera display's 3x5 capitals (game/font.js "hud"), for readouts drawn into a buffer
 const HUD3 = {
-  " ": "... ... ... ... ...", "/": "..# ..# .#. #.. #..", ".": ". . . . #", ":": ". # . # .",
+  " ": "... ... ... ... ...", "/": "..# ..# .#. #.. #..", ".": ". . . . #", ":": ". # . # .", "·": ". . # . .",
   A: ".#. #.# ### #.# #.#", C: ".## #.. #.. #.. .##", E: "### #.. ##. #.. ###", H: "#.# #.# ### #.# #.#",
   I: "### .#. .#. .#. ###", L: "#.. #.. #.. #.. ###", N: "##. #.# #.# #.# #.#", O: ".#. #.# #.# #.# .#.",
   R: "##. #.# ##. #.# #.#", S: ".## #.. .#. ..# ##.", T: "### .#. .#. .#. .#.", V: "#.# #.# #.# #.# .#.",
@@ -65,12 +65,12 @@ const hudWidth = (text) => [...text].reduce((w, ch) => w + (HUD3[ch] ?? HUD3["?"
 /**
  * The title block, the same on the title screen and the menu screen: a magenta rule, GLASS SISTER as
  * outline letters at 3x in one pale colour (no gradient, no shadow), a magenta rule, and the place spaced
- * out under it: HALCYON . LOWER NINTH . 2091. `w` and `h` its size from its top left. Keys: "V" the
+ * out under it: NAGI·WA . LOWER NINTH . 2091. `w` and `h` its size from its top left. Keys: "V" the
  * letters, "m" the rules and the glitch's magenta, "v" the place and the glitch's cyan.
  */
 function titleBlock() {
   const T = titleLetters("GLASS SISTER", 3, 3), SIDE = 10
-  const place = "HALCYON . LOWER NINTH . 2091", STEP = 6, pw = place.length * STEP - 3
+  const place = "NAGI·WA . LOWER NINTH . 2091", STEP = 6, pw = place.length * STEP - 3
   const w = T.w + 2 * SIDE, h = T.h + 21
   return {
     w, h,

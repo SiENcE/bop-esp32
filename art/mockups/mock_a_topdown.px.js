@@ -59,7 +59,7 @@ const shadeKeys = (c, keys, ramp, f, box = [0, 0, c.w, c.h], sharp = 2) => {
 
 // ================================================================ the broken ad screen
 // One function of (x, y, frame) so the zoom window can show the same pixels three times as big.
-// Left: what is left of the advert, a sleeping smiling face ("HALCYON: SLEEP BETTER"). A crack down
+// Left: what is left of the advert, a sleeping smiling face ("NAGI·WA: SLEEP BETTER"). A crack down
 // the middle. Right: static, and in it a single huge eye.
 const EYE = `
 .......wwwwwww.......
@@ -183,7 +183,7 @@ function northBlock(c) {
 function screen(c) {
   const [sx, sy, sw, sh] = SCR
   for (let y = 0; y < sh; y++) for (let x = 0; x < sw; x++) c.px(sx + x, sy + y, screenKey(x, y, c.frame))
-  c.text(sx + 1, sy + 16, "HALCYON", "w")
+  c.text(sx + 1, sy + 16, "NAGI·WA", "w")
   c.hline(sx + 1, sy + 21, 14, "u")                       // the slogan, too small to read: SLEEP BETTER
   c.hline(sx + 17, sy + 21, 10, "u")
 }

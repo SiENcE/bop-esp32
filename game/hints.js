@@ -1,4 +1,4 @@
-// Halcyon: the hint button's hints for the prologue (docs/kapitel0-design.md §6.5), in EVI's voice: she says
+// Nagiwa: the hint button's hints for the prologue (docs/kapitel0-design.md §6.5), in EVI's voice: she says
 // them (game/evi.js: Cutaway.hints.configure({ by: "evi" })), clear about data, a little lost about people. The first whose `if`
 // holds is the one for now; each ask shows the next, plainer line. `about`: what is still needed
 // (solve.mjs --full checks both).
@@ -35,11 +35,11 @@ Cutaway.hints([
   { if: ["day=3", "!know_meeting", "link_cam23"], about: ["cam_cam23", "rewind", "wait", "bed", ...HOME],
     text: ["Ines wäscht donnerstags anders. Ich hab nachgesehen.", "Um acht ist sie im Waschsalon.", "Öffne CAM 23 und spul vor bis 20:00."] },
   { if: ["day>1", "day<4", "!know_meeting", "!tag_ines"], about: ["ines", "cam_cam21", "wait", "bed", "app_glas", ...HOME],
-    text: ["WREN will wissen, wen Ines Calder trifft. Sie kommt um sieben aus der Klinik.", "CAM 21 ist Halcyons. Dein alter Zugang geht noch.", "Öffne CAM 21, spul vor bis 19:00 und markier sie."] },
+    text: ["WREN will wissen, wen Ines Calder trifft. Sie kommt um sieben aus der Klinik.", "CAM 21 ist Nagi·was. Dein alter Zugang geht noch.", "Öffne CAM 21, spul vor bis 19:00 und markier sie."] },
   { if: ["day>1", "day<4", "!know_meeting"], about: ["menu", "cam_cam23", "wait", "bed", "app_glas", ...HOME],
     text: ["Folg ihr. Sie isst gegenüber der Klinik.", "Die Speisekarte im Fenster hat das WLAN. Dann der Waschsalon, der hat einen Werkscode.", "Zoom auf die Speisekarte in CAM 21, dann klick in GLASS CAM 23 an."] },
   { if: ["day>1", "!link_cam31"], about: ["cam_cam31", "app_glas", ...HOME],
-    text: ["CAM 31 ist älter als Halcyon. Sie will einen Takt, keinen Code.", "Den Takt hat jeder, der mit Lull schläft. Motte zählt ihn bei seiner Mutter mit. Frag ihn.", "Lang, kurz, kurz, lang. Klick CAM 31 an und gib das ein."] },
+    text: ["CAM 31 ist älter als Nagi·wa. Sie will einen Takt, keinen Code.", "Den Takt hat jeder, der mit Lull schläft. Motte zählt ihn bei seiner Mutter mit. Frag ihn.", "Lang, kurz, kurz, lang. Klick CAM 31 an und gib das ein."] },
   // the stick is nothing the chapter needs: said here, before going to bed, for whoever hasn't been there
   { if: ["day=3", "moment:ines_drop", "!stick_ines", "!off_main"], about: ["bed", "wait", "close", "back", "door_juno", "stairs", "kessel_door", "dryer6", "laundromat", "alley", "door"],
     text: ["Ines hat was in Trockner 6 gelegt. Das ist gar nicht weit.", "Durch die Gasse zum Waschsalon. Oder du lässt es.", "Warte bis eins und geh ins Bett. Dann ist der nächste Abend."] },

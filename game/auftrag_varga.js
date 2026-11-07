@@ -1,4 +1,4 @@
-// Halcyon: job A of Chapter 1, "Der verschwundene Schuldner" (docs/kapitel1-design.md §3), on flat blocks. Varga wants Kessler found.
+// Nagiwa: job A of Chapter 1, "Der verschwundene Schuldner" (docs/kapitel1-design.md §3), on flat blocks. Varga wants Kessler found.
 // Kessler has gone under, but he can't leave his noodles: at 22:15 someone with a hood draws number 7 on cam03, at 22:30 he crawls
 // into capsule 23 of the Morpheus (cam15, its code from Sable). Then K1a: sell him, lie, or warn him on his capsule's screen.
 //   varga_step    1: Juno has recognised him and knows about the Morpheus (nothing asks whether she took the job: finding him is enough)
@@ -8,7 +8,7 @@
 "use strict";
 
 (function () {
-const A3 = Halcyon.at.cam03, A15 = Halcyon.at.cam15, AM = Halcyon.at.drain_market, AB = Halcyon.at.sable_booth;
+const A3 = Nagiwa.at.cam03, A15 = Nagiwa.at.cam15, AM = Nagiwa.at.drain_market, AB = Nagiwa.at.sable_booth;
 const S = (/** @type {string} */ text) => ({ say: "sable", text });
 
 // ---- who he is now: a person of his own, so the prologue's Kessler keeps his scarf
@@ -16,7 +16,7 @@ const RECOGNISED = [{ zoom: "zoom_vending_n7" }, "Die Sieben. Huhn scharf.", "Ka
   "Am Finger ein heller Streifen. Da war mal ein Ring.", { tag: "kessler2" }, { set: "varga_step", value: 1 }, "Hab dich, Herr Kessler.",
   "Er geht nicht heim. Er geht zum Morpheus, dem Kapselhotel. Das ist jetzt auf der Karte."];
 const CAPSULE = ["Er kriecht in eine Kapsel. Die Nummer ...", "Dreiundzwanzig.", { cache: "note_kessler_hideout" }, "Achtzig Zentimeter hoch. Da wohnt er jetzt."];
-Halcyon.people.kessler2 = { name: "KESSLER", known: "varga_step", label: "Jemand mit Kapuze", speaker: "Kessler" };
+Nagiwa.people.kessler2 = { name: "KESSLER", known: "varga_step", label: "Jemand mit Kapuze", speaker: "Kessler" };
 Cutaway.actor("kessler2", { name: "Jemand mit Kapuze", color: "#b8c890",
   costume: { idle: "mock_kessler_hood", walk: "mock_kessler_hood", talk: "mock_kessler_hood" }, speed: [14, 10], voice: { pitch: 50, wave: "square", syllable: 80 },
   look: [{ if: "at:kessler2=cam15", then: ["Er sieht sich nicht um. Er weiß, wo er hinwill."],
@@ -37,11 +37,11 @@ const streetVending = Cutaway.room.get("kowalski").hotspots.vending;
 streetVending.look = [...streetVending.look, { if: "day>1", then: ["Da war die Nummer 7 drin."] }];
 
 // ---- cam15, the Morpheus. Its own net: no sticker, no factory code. Whoever sells access has it.
-Halcyon.cams.cam15 = { id: "15", place: "KAPSELHOTEL MORPHEUS", owner: "MORPHEUS, PRIVAT", map: [8, 62], if: "varga_step",
+Nagiwa.cams.cam15 = { id: "15", place: "KAPSELHOTEL MORPHEUS", owner: "MORPHEUS, PRIVAT", map: [8, 62], if: "varga_step",
   tryIt: ["Das Morpheus hat ein eigenes Netz. Kein Aufkleber, kein Werkscode.", "Zugänge verkauft Sable."],
   linked: ["Sables Code. Geht."] };
-Halcyon.cache.note_kessler_hideout = { kind: "note", name: "KESSLER, KAPSEL 23", about: "Kapselhotel Morpheus, Kapsel 23. Er kommt um halb elf, ohne Schal." };
-Halcyon.camRoom("cam15", { background: "cam15_bg", mic: { at: A15.mic, clear: 40, lost: 150 }, hotspots: {
+Nagiwa.cache.note_kessler_hideout = { kind: "note", name: "KESSLER, KAPSEL 23", about: "Kapselhotel Morpheus, Kapsel 23. Er kommt um halb elf, ohne Schal." };
+Nagiwa.camRoom("cam15", { background: "cam15_bg", mic: { at: A15.mic, clear: 40, lost: 150 }, hotspots: {
   capsules: { name: "Kapseln", rect: A15.capsules, look: ["Zwei Reihen Kapseln. Hier schläft, wer nicht gefunden werden will.", "Oder wer sich nichts anderes leisten kann."] },
   kapsel23: { name: "Kapsel 23", rect: A15.c23, if: "cache_note_kessler_hideout",
     look: [{ if: "kessler_gone", then: [{ if: "k1a=sold", then: ["Kapsel 23 steht offen. Auf dem Boden liegt eine zerbrochene Brille."], else: ["Kapsel 23 ist leer. Auf dem Bildschirm steht noch meine Zeile."] }], else: ["Kapsel 23.", "Jede Kapsel hat einen Bildschirm, und das Hotel schreibt drauf, wann man raus muss."] }],
@@ -55,7 +55,7 @@ Cutaway.dialog("k1a_warn", { main: { choices: [
 ] } });
 
 // ---- Sable sells access. The booth is behind a curtain on the Drain Market. Only a hotel Juno knows of can be asked for.
-Halcyon.ledger.sable_kessler.what.swap = "Kesslers Schulden, gegen einen Code";
+Nagiwa.ledger.sable_kessler.what.swap = "Kesslers Schulden, gegen einen Code";
 Cutaway.actor("sable", { name: "Sable", color: "#ff4fd3", room: "sable_booth", at: AB.sable, facing: "sw",
   costume: { idle: "mock_sable", walk: "mock_sable", talk: "mock_sable" }, voice: { pitch: 56, range: 3, wave: "triangle", syllable: 80, speed: 0.95 },
   look: ["Sable. Ein Mantel, eine Pfeife und eine Preisliste.", "Bei Sable hat alles einen Preis. Das ist das Ehrliche daran."],
@@ -86,10 +86,10 @@ Cutaway.room("sable_booth", { name: "Sables Bude", background: "sable_booth_bg",
   } });
 
 // ---- the chat: what Varga wrote, what Juno can send (the place she found is her only way in: nothing to accept first)
-Object.assign(Halcyon.contacts, { varga: { name: "G. VARGA", color: "#a0a0b8", status: "online", if: ["day>1", "!off_varga"], unread: "!read_varga",
+Object.assign(Nagiwa.contacts, { varga: { name: "G. VARGA", color: "#a0a0b8", status: "online", if: ["day>1", "!off_varga"], unread: "!read_varga",
   open: [{ if: "!read_varga", then: [{ set: "read_varga" }, "Den Rest kriegt er von Kessler nicht. Also soll ich ihn suchen."] }] } });
 Cutaway.state.view("read_varga");
-Halcyon.threads.varga = [
+Nagiwa.threads.varga = [
   { from: "varga", at: "18:05", text: "Du warst bei Yuen's. Ich hab dich nicht gesehen, aber ich weiß, wie das läuft." },
   { from: "varga", at: "18:05", text: "Kessler ist weg. Finde ihn. 400." },
   { from: "varga", if: "ledger_sable_kessler=sold", at: "18:06", text: "Sable sagt, du bist gut." },
@@ -99,19 +99,19 @@ Halcyon.threads.varga = [
   { from: "juno", if: "k1a=lied", text: "Pfandhaus am Fischmarkt. Hinterzimmer." },
   { from: "varga", if: "k1a=lied", text: "200 jetzt. Den Rest, wenn ich ihn hab." },
 ];
-Halcyon.replies.varga = [
+Nagiwa.replies.varga = [
   { id: "sold", text: "Kapsel 23 senden.", if: ["cache_note_kessler_hideout", "!k1a"],
     use: [{ set: "k1a", value: "sold" }, { ledger: "varga", value: "sold" }, "Vierhundert. Für eine Zahl.", { evi: "froh" }, { say: "evi", text: "Er ist gefunden! Freut sich Frau Kessler jetzt?" }] },
   { id: "lied", text: "Einen falschen Ort senden.", if: ["cache_note_kessler_hideout", "!k1a"],
     use: [{ set: "k1a", value: "lied" }, { ledger: "varga", value: "lied" }, "Das Geld will er wiederhaben. Das Problem hab ich dann später.", { evi: "verwirrt" }, { say: "evi", text: "Da ist er aber nicht. Hast du dich vertippt?" }, "Nein."] },
 ];
-Object.assign(Halcyon.ledger, {
+Object.assign(Nagiwa.ledger, {
   varga: { to: "G. VARGA", what: { sold: "Kessler, Kapsel 23", lied: "ein falscher Ort (geliehen)" }, chits: { sold: 400, lied: 200 } },
   kessler_warn: { to: "KESSLER", what: { warned: "gewarnt" } },
 });
 
 // sold: Varga's people come the night after (the next evening's capsule stands open)
 const TAKEN = { if: "k1a=sold", then: [{ set: "kessler_gone" }] };
-(Halcyon.nights[3].passes ??= []).push(TAKEN);
-Halcyon.nights[4].passes.unshift(TAKEN);
+(Nagiwa.nights[3].passes ??= []).push(TAKEN);
+Nagiwa.nights[4].passes.unshift(TAKEN);
 })();

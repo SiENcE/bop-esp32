@@ -18,7 +18,7 @@ try {
   await chrome.open(pathToFileURL(resolve("index.html")).href + "?manual&nointro");
   const r = await chrome.ev(`(async () => {
     const only = ${JSON.stringify(only)}.split(",").filter(Boolean);
-    const names = Halcyon.sounds.filter((n) => !only.length || only.includes(n));
+    const names = Nagiwa.sounds.filter((n) => !only.length || only.includes(n));
     const parts = (d) => [].concat(d.tone ?? [], d.noise ?? []);
     const len = (d) => Math.max(...parts(d).map((p) => (p.at ?? 0) + (p.ms ?? 300))) / 1000 + 0.15;
     const rate = 44100, done = [];

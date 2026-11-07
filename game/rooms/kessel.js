@@ -1,12 +1,12 @@
-// Halcyon: the Kessel Block, Juno's building (kapitel0-design §6.2 steps 13-15, §7.1), its rooms baked from
+// Nagiwa: the Kessel Block, Juno's building (kapitel0-design §6.2 steps 13-15, §7.1), its rooms baked from
 // their maps. The 14th floor's landing (kessel_14): Juno's door 14B, Frau Haldane's open door 14C (she and
 // her armchair are in the picture, seen through it), the note war, Motte on the bench, the stairs down. The
-// lobby (kessel_lobby): the stairs, the lift out of order, Halcyon's poster, the mailboxes with the rent
+// lobby (kessel_lobby): the stairs, the lift out of order, Nagi·wa's poster, the mailboxes with the rent
 // notice (rent_notice: Chapter 1's goal), the notice board, the street door.
 "use strict";
 
 (function () {
-  const AK = Halcyon.at.kessel_14, AF = Halcyon.at.flat, AL = Halcyon.at.kessel_lobby;
+  const AK = Nagiwa.at.kessel_14, AF = Nagiwa.at.flat, AL = Nagiwa.at.kessel_lobby;
 
   // Fourteen floors, the lift never runs. The first time each way: black, steps on steel and the floors counting by; then only the steps
   // (view flags: how it looks, no state for the solver)
@@ -52,7 +52,7 @@
       bags: { name: "Müllsäcke", poly: AK.bagsPoly, walkTo: AK.bags, face: "ne",
         look: "Müll, vor dem Aufzug. Der stört da keinen. Abgeholt wird dienstags. Theoretisch." },
       corner_cam: { name: "Kamera", poly: AK.corner_camPoly, walkTo: AK.lift, face: "ne",
-        look: "Halcyons Kamera, oben in der Ecke. Ich weiß genau, wie der Flur von da oben aussieht." },
+        look: "Nagi·was Kamera, oben in der Ecke. Ich weiß genau, wie der Flur von da oben aussieht." },
       bench: { name: "Bank", poly: AK.benchPoly, walkTo: AK.motte, face: "ne", z: -1,
         look: ["Eine Bank, die irgendwer hochgetragen und hier vergessen hat.", "Motte sitzt fast jeden Abend drauf."] },
       stairs: { name: "Treppe", poly: AK.railPoly, walkTo: AK.stairs, face: "se",
@@ -77,7 +77,7 @@
         look: ["OUT OF ORDER. Seit ich denken kann.", "Angeblich fährt er dienstags. Ich hab's nie erlebt."],
         use: "Ich drück trotzdem. Das Licht blinkt. Sonst nichts." },
       poster: { name: "Plakat", rect: AL.posterRect, walkTo: AL.poster, face: "ne",
-        look: ["SLEPT WELL? HALCYON LISTENS.", "Schlecht geschlafen. Und ich hör auch zu, Halcyon. Den ganzen Tag."] },
+        look: ["SLEPT WELL? NAGI·WA LISTENS.", "Schlecht geschlafen. Und ich hör auch zu, Nagi·wa. Den ganzen Tag."] },
       mailboxes: { name: "Briefkästen", rect: AL.mailboxesRect, walkTo: AL.mailboxes, face: "nw",
         look: [{ if: "!rent_notice", then: ["Aus meinem Briefkasten guckt was Rotes. Rot heißt nie was Gutes."], else: ["Mein Briefkasten. Die Mahnung hab ich. Mehr will ich heute nicht wissen."] }],
         use: [{ if: "!rent_notice", then: [{ set: "rent_notice" }, "Eine Mietmahnung. Fällig in drei Tagen: 900 Chits.", "Davon Hüllenabgabe: 310.",
@@ -87,11 +87,11 @@
       door: { name: "Haustür", rect: AL.doorRect, walkTo: AL.door, face: "nw",
         look: "Die Haustür. Draußen regnet's. Draußen regnet's immer.",
         use: [{ if: "!rent_notice", then: ["Erst noch die Post. Wenn ich schon unten bin."],
-          else: [{ goto: "kowalski", at: Halcyon.at.kowalski.arrive, face: "se" }] }] },
+          else: [{ goto: "kowalski", at: Nagiwa.at.kowalski.arrive, face: "se" }] }] },
       sign: { name: "Warnschild", poly: AL.signPoly, walkTo: AL.sign, face: "nw",
         look: "Vorsicht, nass. Das Schild steht seit Wochen hier. Der Boden ist seitdem nass." },
       flyers: { name: "Werbezettel", poly: AL.flyersPoly, walkTo: AL.mailboxes, face: "nw",
-        look: "Werbung. Lull zum halben Preis. Schlaf besser, schlaf Halcyon. Hundertmal, auf dem Boden." },
+        look: "Werbung. Lull zum halben Preis. Schlaf besser, schlaf Nagi·wa. Hundertmal, auf dem Boden." },
     },
     enter: [{ if: "day=1", then: [{ once: ["Unten. Es riecht nach Regen und nach dem Müll von vierzehn Stockwerken."] }] }],
   });

@@ -10,6 +10,7 @@ pal({
 })
 ramps("0123456789")
 include("../lib/text.js")
+include("../lib/kanji.js")
 
 const W = 320, H = 180
 /** a sign: its board and its text, centred on the board */
@@ -29,7 +30,7 @@ scene("cam21_bg", { w: W, h: H, bg: "0" }, (c) => {
   c.rect(232, 128, 72, 40, "3"); c.rect(238, 134, 28, 28, "7"); c.rect(242, 139, 20, 2, "2"); c.rect(242, 144, 20, 2, "2"); c.rect(242, 149, 14, 2, "2")
   SIGN(c, 232, 116, 72, "PHO PUMP")
 })
-// the 14th floor from Halcyon's camera in the corner: the doors of 14C and 14A, a mat with the paper, the lift
+// the 14th floor from Nagi·wa's camera in the corner: the doors of 14C and 14A, a mat with the paper, the lift
 scene("cam14_bg", { w: W, h: H, bg: "0" }, (c) => {
   ROOM(c, "5", "7", 88)
   c.rect(78, 34, 38, 54, "2"); c.rect(196, 34, 38, 54, "3"); c.rect(262, 34, 40, 54, "3")
@@ -169,13 +170,13 @@ scene("cam18_bg", { w: W, h: H, bg: "0" }, (c) => {
 // LUCKY STATIC from inside: the bar, the karaoke machine, a table
 scene("lucky_static_bg", { w: W, h: H, bg: "k" }, (c) => {
   c.rect(0, 0, W, 112, "b"); c.rect(0, 112, W, 68, "a"); c.hline(0, 112, W, "e")
-  // the counter, low enough that Mei shows behind it; shelves of bottles; Halcyon's news over it; Mei's slate with the tabs
+  // the counter, low enough that Mei shows behind it; shelves of bottles; Nagi·wa's news over it; Mei's slate with the tabs
   c.rect(150, 84, 160, 28, "f"); c.hline(150, 84, 160, "h")
   for (const [x0, x1] of [[152, 228], [236, 306]]) {
     c.rect(x0, 80, x1 - x0, 2, "e")
     for (let x = x0 + 2, i = 0; x < x1 - 3; x += 6, i++) c.rect(x, 72 + (i % 2), 3, 8 - (i % 2), ["g", "h", "e", "v", "g", "f"][i % 6])
   }
-  c.rect(160, 24, 56, 32, "d"); c.rect(163, 27, 50, 26, "a"); TXT.draw(c, 188, 30, "HALCYON", "v", { font: "hud", align: "center" }); c.rect(168, 40, 40, 2, "v"); c.rect(168, 45, 28, 2, "f")
+  c.rect(160, 24, 56, 32, "d"); c.rect(163, 27, 50, 26, "a"); KANJI.draw(c, 174, 29, "v"); c.rect(168, 44, 40, 2, "v"); c.rect(168, 48, 28, 2, "f")
   c.rect(236, 26, 66, 42, "d"); c.rect(238, 28, 62, 38, "a")
   for (const [row, n] of [[0, 7], [1, 3], [2, 13], [3, 5]]) for (let i = 0; i < n; i++) {
     const y = 31 + row * 9, x = 242 + i * 4 + Math.floor(i / 5) * 2
@@ -264,7 +265,7 @@ anim("mock_row_way", { w: 30, h: 76, frames: 1, fps: 1, pivot: "bottom" }, (c) =
 
 // ---- job B (game/auftrag_tide.js): Jade Row's cameras, Okonkwo's shop, the people of the night, Ratz
 pal({ s: "#5a3a2a", S: "#8a5a3e", o: "#6a5030", O: "#a88a58" })
-// CAM 07: Halcyon's camera high at the lane's near end, looking down it: the shop's window on the left (Okonkwo seen from above, behind his
+// CAM 07: Nagi·wa's camera high at the lane's near end, looking down it: the shop's window on the left (Okonkwo seen from above, behind his
 // counter), the machine on the right-hand kerb, the gate small at the far end; floors light, so the dark figures show
 scene("cam07_bg", { w: W, h: H, bg: "0" }, (c) => {
   // (the left column is the cameras' strip: nothing that matters lies under x 76)

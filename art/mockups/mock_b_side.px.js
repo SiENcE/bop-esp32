@@ -406,7 +406,7 @@ sprite("_set", { w: W, h: H }, (c) => { sky(c); barFront(c); screenBlock(c); sid
 // ------------------------------------------------------------------ what moves
 anim("_clock", { w: 1, h: 1, frames: FR, fps: 10 }, () => {})
 
-// the broken ad screen: half the ad (a sleeping face, HALCYON: SLEEP BETTER), half static with an eye
+// the broken ad screen: half the ad (a sleeping face, NAGI·WA: SLEEP BETTER), half static with an eye
 function screen(c) {
   const f = fr(c), { x: X0, y: Y0, w, h } = SCREEN
   c.rect(X0, Y0, w, h, "L"); c.rect(X0, Y0, w, 18, "l")
@@ -418,7 +418,7 @@ function screen(c) {
   for (const ex of [198, 208]) { c.hline(ex, 27, 3, "6"); c.px(ex - 1, 28, "6"); c.px(ex + 3, 28, "6"); c.hline(ex, 30, 3, "9") }
   c.px(203, 32, "S"); c.hline(200, 35, 7, "S"); c.px(199, 34, "S"); c.px(207, 34, "S")
   c.ellipse(204, 49, 20, 5, "v"); c.ellipse(204, 48, 18, 3, "l")                                      // the pillow
-  c.text(166, 44, "HALCYON:", "v"); c.text(166, 51, "SLEEP", "v"); c.text(166, 57, "BETTER", "0")
+  c.text(166, 44, "NAGI·WA:", "v"); c.text(166, 51, "SLEEP", "v"); c.text(166, 57, "BETTER", "0")
   // the other half has gone to static: its edge tears row by row, and moves
   for (let y = Y0; y < Y0 + h; y++) {
     const edge = 208 + Math.floor(ihash(y >> 1, f) * 9) - (y > 40 ? 8 : 0)

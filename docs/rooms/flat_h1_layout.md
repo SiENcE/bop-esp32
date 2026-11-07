@@ -107,7 +107,7 @@ The floor lamp stands right by the deck spot, so Juno keeps a warm key where she
 
 ## For `game/places.js` and `game/prolog.js`
 
-`Halcyon.at.flat` still holds placeholder guesses; these replace them:
+`Nagiwa.at.flat` still holds placeholder guesses; these replace them:
 
 ```js
 flat: {

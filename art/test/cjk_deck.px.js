@@ -9,13 +9,13 @@ include("cjk_glyphs.js")
 /** Write mixed text: CJK in the 12 px glyphs (their top 2 px above the Latin capitals), the rest in our font. */
 const ZH = {
   cjk: (ch) => !!CJK_GLYPHS[ch],
-  measure(s, font = "halcyon") {
+  measure(s, font = "nagiwa") {
     let w = 0
     for (const ch of s) w += ZH.cjk(ch) ? 13 : TXT.measure(ch, font) + 1
     return Math.max(0, w - 1)
   },
   draw(c, x, y, s, k, o = {}) {
-    const font = o.font ?? "halcyon", w = ZH.measure(s, font)
+    const font = o.font ?? "nagiwa", w = ZH.measure(s, font)
     const pass = (key, ox, oy) => {
       let cx = x + ox - (o.align === "center" ? Math.floor(w / 2) : o.align === "right" ? w : 0)
       for (const ch of s) {
@@ -67,7 +67,7 @@ const ZCONTACTS = [
   { name: "凯斯勒太太", status: "在线", dot: "v", fresh: true, ava: "Q", on: true },
   { name: "SABLE", status: "离开", dot: "Q", ava: "M" },
   { name: "TEO", status: "睡觉中", dot: "5", ava: "R" },
-  { name: "HALCYON 服务", status: "广告", dot: "4", ava: "C" },
+  { name: "NAGI·WA 服务", status: "广告", dot: "4", ava: "C" },
 ]
 sprite("zh_deck_chat", { w: W, h: H }, (c) => {
   wallpaper(c); zhHeader(c); zhIcons(c, "chat")

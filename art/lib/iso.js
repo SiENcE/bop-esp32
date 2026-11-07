@@ -1,4 +1,4 @@
-// Halcyon's isometric kit (style guide §4, §5, §7, §12): the world palette and the helpers every
+// Glass Sister's isometric kit (style guide §4, §5, §7, §12): the world palette and the helpers every
 // street-mode room is drawn with, taken from the approved mockup art/mockups/mock_c_iso.px.js
 // (which stays as it is). Include it from a room file with its palette:
 //

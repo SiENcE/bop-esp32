@@ -1,8 +1,8 @@
-// Halcyon: the intro's float over the sea (shots A1, A2 of docs/kapitel0-design.md §5; game/intro.js plays them).
+// Nagiwa: the intro's float over the sea (shots A1, A2 of docs/kapitel0-design.md §5; game/intro.js plays them).
 // A camera CAM_H metres over the water looks along +Z, its horizon at the shot's `hz`, and floats along a dark
 // channel (no lights within LANE metres of the middle). The lights on the water sit on a grid of 10 m cells (a
 // cell's hash says whether it has huts or rafts and how lit); the city's camera masts stand at (X, Z); the drones
-// hover at (X, Z, Y); Halcyon stands at its own Z on the water and grows as the camera nears it (drawn here, ring
+// hover at (X, Z, Y); Nagi·wa stands at its own Z on the water and grows as the camera nears it (drawn here, ring
 // by ring, so it stays crisp at any size). The painted parts: art/intro/float.px.js (the skies, the masts' heads,
 // the drone).
 "use strict";
@@ -15,13 +15,13 @@
     ink: "#131a2a", steel: "#1a2337", steel2: "#232f47", steelLit: "#2f3e5a", beam: "#2f3e5a", beam2: "#41547a", pod: "#b9c6d8",
     green: "#55a585", greenDim: "#266252",
   };
-  const { bay, rnd, px } = Halcyon.intro;
+  const { bay, rnd, px } = Nagiwa.intro;
 
   /**
    * A shot of the float.
    * @typedef {{hz: number, sky: string, seed: number, travel: number, lit: number, masts: [number, number, number][],
    *   city?: number, drones?: [number, number, number, number][], pods?: [number, number, number][]}} FloatShot
-   * masts: [X, Z, height] in metres; city: Halcyon's Z; drones: [X, Z, Y, the beam's sweep phase];
+   * masts: [X, Z, height] in metres; city: Nagi·wa's Z; drones: [X, Z, Y, the beam's sweep phase];
    * pods: [y, speed px/s, length]
    */
   /** @type {Record<string, FloatShot>} */
@@ -33,17 +33,17 @@
       masts: [[-38, 70, 34], [44, 100, 36], [-110, 230, 34], [130, 270, 32], [-60, 400, 34], [80, 440, 32]],
       drones: [[-120, 330, 60, 0], [150, 400, 70, 2]], pods: [[34, 9, 6], [52, -6, 5]] },
   };
-  // Halcyon's size: at Z the city's scale is CITY_K / Z (1 = 9 rings of 7 px, the lowest 256 px wide)
+  // Nagi·wa's size: at Z the city's scale is CITY_K / Z (1 = 9 rings of 7 px, the lowest 256 px wide)
   const CITY_K = 323;
 
   // the float's rooms: no sounds of their own, the music alone
   for (const [id, shot] of Object.entries(SHOTS)) {
     Cutaway.room(`intro_${id}`, { name: "Intro", color: "#06080f", float: id });
-    Halcyon.intro.shots[id] = (ctx, p, t) => draw(ctx, shot, p, t);
+    Nagiwa.intro.shots[id] = (ctx, p, t) => draw(ctx, shot, p, t);
   }
 
   /**
-   * Halcyon from the sea at scale k, standing on the water at (cx, y0): 9 rings, the Lower Ninth widest at the
+   * Nagi·wa from the sea at scale k, standing on the water at (cx, y0): 9 rings, the Lower Ninth widest at the
    * bottom; each ring its ledge in shadow, its underside lit by the ring below, its facade with two rows of
    * windows (amber homes, magenta ads low down, cyan in the Krone; each window a place on the ring, so it stays
    * where it is as the city grows); the tower through them with the hall's green band, its mast, the ring logo,
@@ -102,7 +102,7 @@
       const x = Math.round((((t / 1000) * v) % (W + 40) + (W + 40)) % (W + 40)) - 20;
       px(ctx, C.pod, x, y, len); px(ctx, C.white, v > 0 ? x + len - 1 : x, y);
     }
-    // the lights on the water: rows of cells from far to near (Halcyon among them at its Z); the farther,
+    // the lights on the water: rows of cells from far to near (Nagi·wa among them at its Z); the farther,
     // the fewer (they come out of the haze); none in the channel the camera floats along
     let cityDrawn = !s.city;
     const first = Math.ceil((camZ + NEAR) / CELL), last = Math.floor((camZ + FAR) / CELL);

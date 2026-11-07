@@ -1,4 +1,4 @@
-// Halcyon: the prologue "Nachtschicht", steps 0–11 (docs/kapitel0-design.md §6): the H2 vertical slice.
+// Nagiwa: the prologue "Nachtschicht", steps 0–11 (docs/kapitel0-design.md §6): the H2 vertical slice.
 // Juno's flat and her deck; Kessler leaves the pump authority at 22:00 (cam03), phones, walks to Yuen's
 // and gives Varga his wedding ring at 22:35 (cam04). Juno tags, listens, links cam04 with the code she
 // zooms in on, records the ring (or takes it from the buffer), and answers Frau Kessler (choice P1).
@@ -6,13 +6,13 @@
 
 (function () {
 // ---- what the cache and the Kassenbuch know
-Object.assign(Halcyon.cache, {
+Object.assign(Nagiwa.cache, {
   note_kessler_photo: { kind: "note", name: "FOTO KESSLER", about: "Kessler mit hellem Schal. „Den hab ich ihm gestrickt.“" },
   clip_kessler_ring: { kind: "clip", name: "KESSLER, RING, 22:35", about: "Kessler zieht den Ehering ab und gibt ihn einem Mann im grauen Mantel." },
   clip_kessler_cut: { kind: "clip", name: "KESSLER, RING (12 S)", about: "Zwölf Sekunden: ein Mann zieht seinen Ehering ab. Was davor war und danach, ist weg." },
   note_kessler_debt: { kind: "note", name: "KESSLER SCHULDET VARGA", about: "Kessler schuldet Gus Varga Geld. Frist: Freitag." },
 });
-Object.assign(Halcyon.ledger, {
+Object.assign(Nagiwa.ledger, {
   kessler: { to: "M. KESSLER", what: { full: "die Wahrheit", cut: "ein Ehebruch", nothing: "nichts" }, chits: { full: 200, cut: 300 } },
   sable_kessler: { to: "SABLE", what: { sold: "Kesslers Schulden" }, chits: { sold: 120 } },
 });
@@ -25,7 +25,7 @@ Cutaway.time.configure({
 });
 
 // ---- routines (where everyone is when)
-const A3 = Halcyon.at.cam03, A4 = Halcyon.at.cam04;
+const A3 = Nagiwa.at.cam03, A4 = Nagiwa.at.cam04;
 Cutaway.routine("kessler", [
   // out of the door, past the noodle machine as every evening, then under the canopy's far end with his phone (far from the
   // camera's mic)
@@ -82,14 +82,14 @@ Cutaway.moment("kessler_ring", {
 // ---- the clip editor (step 9, docs/kapitel0-design.md §2.4): the ring clip runs 22:31-22:37; cutting keeps
 // the ring alone (12 seconds that look like a man taking off his ring for someone else); EVI asks if that is
 // allowed, and how Juno answers moves evi_trust (answering at all is being open with her)
-Halcyon.clips.clip_kessler_ring = {
+Nagiwa.clips.clip_kessler_ring = {
   cam: "cam04", from: 31, to: 37.2, thumb: "zoom_ring",
   moments: [[31, 32.4, "SETZT SICH"], [32.4, 34.6, "REDEN"], [34.6, 34.8, "RING"], [34.8, 37.2, "BIS FREITAG"]],
   people: [["kessler", 31, 37.2], ["varga", 31.1, 37.2]],
   cut: { moment: 2, gives: "clip_kessler_cut", if: "day=1", then: [{ evi: "neugierig" },
     { say: "evi", text: "Wenn man das Ende weglässt, ist es eine andere Geschichte. Ist das erlaubt?" }, { dialog: "evi_cut" }] },
 };
-Halcyon.clips.clip_kessler_cut = { cam: "cam04", from: 34.6, to: 34.8, thumb: "zoom_ring", moments: [[34.6, 34.8, "RING"]], people: [["kessler", 34.6, 34.8], ["varga", 34.6, 34.8]] };
+Nagiwa.clips.clip_kessler_cut = { cam: "cam04", from: 34.6, to: 34.8, thumb: "zoom_ring", moments: [[34.6, 34.8, "RING"]], people: [["kessler", 34.6, 34.8], ["varga", 34.6, 34.8]] };
 Cutaway.dialog("evi_cut", {
   main: {
     choices: [
@@ -101,12 +101,12 @@ Cutaway.dialog("evi_cut", {
 });
 
 // ---- the old photo on the deck (game/deck.js): what Juno says looking at it (a click shows it whole)
-Halcyon.photo.look = ["Teo und ich, auf dem Dach vom Kessel-Block. Er hatte nie Angst vor der Höhe. Ich schon.",
+Nagiwa.photo.look = ["Teo und ich, auf dem Dach vom Kessel-Block. Er hatte nie Angst vor der Höhe. Ich schon.",
   { say: "evi", text: "Ihr seid sehr klein darauf." }];
 
 // ---- the deck (game/deck.js, EVI: game/evi.js). Step 0a: the first time tonight it boots, EVI wakes up
 // and points at the chat (docs/kapitel0-design.md §6.2)
-Halcyon.deckEnter = [{ unset: "rec_on" }, { if: "day=1", then: [{ once: [
+Nagiwa.deckEnter = [{ unset: "rec_on" }, { if: "day=1", then: [{ once: [
   { deck_boot: true }, { evi: "froh" },
   { say: "evi", text: "Guten Abend, Juno! Eine neue Nachricht. Null Abendessen." },
   "Danke, EVI.",
@@ -119,17 +119,17 @@ Halcyon.deckEnter = [{ unset: "rec_on" }, { if: "day=1", then: [{ once: [
 
 // ---- the chat (game/deck.js): who writes to Juno tonight, what they wrote, what she can answer
 // (contacts that appear later come last, so the rows stay put)
-Object.assign(Halcyon.contacts, {
+Object.assign(Nagiwa.contacts, {
   kessler: { name: "M. KESSLER", color: "#eea040", status: "online",
     // the dot: her first message, and in Chapter 1 the new one (a view: reading it changes nothing else)
     unread: { or: ["!read_kessler", ["day>1", "!read_kessler_again"]] },
     open: [{ set: "read_kessler" }, { set: "read_kessler_again" }, { if: "day=1", then: [{ once: ["Überstunden. Klar.", { evi: "neugierig" }, { say: "evi", text: "Pumpenverwaltung Ost! Da hab ich eine Kamera für dich." }, { evi_point: "glas" }] }] }] },
   teo: { name: "TEO", color: "#ffa040", status: "schläft", unread: "~never" },
-  halcyon: { name: "HALCYON SERVICE", color: "#62def0", status: "Werbung", unread: "~never" },
+  nagiwa: { name: "NAGI·WA SERVICE", color: "#62def0", status: "Werbung", unread: "~never" },
   sable: { name: "SABLE", color: "#ff4fd3", status: "abwesend", if: "p1", unread: ["day=1", "cache_note_kessler_debt", "!ledger_sable_kessler"] },
-  // (Teo and Halcyon's spam are old news: no dot)
+  // (Teo and Nagi·wa's spam are old news: no dot)
 });
-Object.assign(Halcyon.threads, {
+Object.assign(Nagiwa.threads, {
   kessler: [
     { from: "kessler", at: "21:12", text: "Mein Mann kommt seit Wochen spät. Er sagt, Überstunden. Ich will Beweise." },
     { from: "kessler", at: "21:12", text: "Pumpenverwaltung Ost, er geht um 22 Uhr." },
@@ -146,9 +146,9 @@ Object.assign(Halcyon.threads, {
   teo: [
     { from: "teo", at: "gestern", text: "Bin heut früh im Bett. Schlaf du auch mal, Ju." },
   ],
-  halcyon: [
-    { from: "halcyon", at: "20:00", text: "LULL: TWO WEEKS FREE. Vier Stunden Schlaf wie zehn." },
-    { from: "halcyon", at: "20:00", text: "Ihre Hüllenabgabe wurde angepasst." },
+  nagiwa: [
+    { from: "nagiwa", at: "20:00", text: "LULL: TWO WEEKS FREE. Vier Stunden Schlaf wie zehn." },
+    { from: "nagiwa", at: "20:00", text: "Ihre Hüllenabgabe wurde angepasst." },
   ],
   sable: [
     { from: "sable", if: "p1", text: "Ruhige Nacht? Ich kaufe alles, was atmet. S." },
@@ -157,7 +157,7 @@ Object.assign(Halcyon.threads, {
   ],
 });
 // P1: what Frau Kessler gets (docs/kapitel0-design.md §6.3); and Sable's offer
-Object.assign(Halcyon.replies, {
+Object.assign(Nagiwa.replies, {
   kessler: [
     { id: "full", text: "Den ganzen Clip schicken.", if: ["cache_clip_kessler_ring", "!p1"],
       use: [{ set: "p1", value: "full" }, { ledger: "kessler", value: "full" }, "Die Wahrheit. Für zweihundert.",
@@ -178,7 +178,7 @@ Object.assign(Halcyon.replies, {
 
 // ---- the flat (art/rooms/flat.px.js; geometry: docs/rooms/flat_layout.md). Hotspots in this order: the
 // last match wins, so the big shapes come first
-const AF = Halcyon.at.flat;
+const AF = Nagiwa.at.flat;
 // Bao's broth to go (step 16): Juno eats it at home, and then the bed takes her into Chapter 1
 Cutaway.item("suppe", { name: "Baos Brühe", icon: "inv_suppe", look: "Brühe zum Mitnehmen, Deckel drauf. Noch warm." });
 const EAT_HOME = [{ walk: AF.deck }, { face: "ne" }, "Baos Brühe. Noch warm. Fast.", "...", "Salzig. Genau richtig.", { remove: "suppe" }, { set: "soup_eaten" },
@@ -196,19 +196,19 @@ Cutaway.room("flat", {
     bed: { name: "Bett", poly: AF.bedPoly, walkTo: AF.bed, face: "nw",
       look: "Eine Matratze auf einer Palette. Schlafen kann ich später. Oder nie.",
       // the prologue's night ends when Juno has eaten and goes to bed: sleeping goes on into Chapter 1, with its card and then the new evening's
-      use: [{ if: "day>1", then: Halcyon.sleep, else: [{ if: "soup_eaten", then: PROLOGUE_SLEEP, else: ["Schlafen kann ich später. Oder nie."] }] }] },
+      use: [{ if: "day>1", then: Nagiwa.sleep, else: [{ if: "soup_eaten", then: PROLOGUE_SLEEP, else: ["Schlafen kann ich später. Oder nie."] }] }] },
     fridge: { name: "Kühlschrank", poly: AF.fridgePoly, walkTo: AF.fridge, face: "ne",
       look: "Der Kühlschrank. Er brummt, als hätte er was zu sagen.", use: [{ set: "fridge_empty" }, "Licht. Sonst nichts."] },
     deck: { name: "Deck", poly: AF.deckPoly, walkTo: AF.deck, face: "ne",
       look: "Mein Deck. Drei Bildschirme, die nicht zusammenpassen, und ein Feed, der nie schläft.",
       use: [{ goto: "deck" }] },
     window: { name: "Fenster", rect: AF.windowRect, walkTo: AF.window, face: "ne",
-      look: ["Regen. Gegenüber das Hotel, und dahinter der große Bildschirm.", "HALCYON: SLEEP BETTER. Ich schlafe schlecht, danke."] },
+      look: ["Regen. Gegenüber das Hotel, und dahinter der große Bildschirm.", "NAGI·WA: SLEEP BETTER. Ich schlafe schlecht, danke."] },
     door: { name: "Tür", rect: AF.doorRect, walkTo: AF.door, face: "nw",
       look: "Die Tür zum Flur.",
       use: [{ if: "!p1", then: ["Erst der Auftrag. Dann Essen."],
         else: [{ if: "!fridge_empty", then: ["Hunger. Mal sehen, was der Kühlschrank sagt."],
-          else: [{ goto: "kessel_14", at: Halcyon.at.kessel_14.arrive, face: "se" }] }] }] },
+          else: [{ goto: "kessel_14", at: Nagiwa.at.kessel_14.arrive, face: "se" }] }] }] },
     laundry: { name: "Wäsche", rect: AF.laundryRect, walkTo: AF.laundry, face: "ne",
       look: "Wäsche. Sauber oder nicht, das weiß inzwischen niemand mehr." },
     noodles: { name: "Nudelbecher", rect: AF.noodlesRect, walkTo: AF.noodles, face: "ne",
@@ -216,7 +216,7 @@ Cutaway.room("flat", {
     pinboard: { name: "Pinnwand", rect: AF.pinboardRect, walkTo: AF.pinboard, face: "nw",
       look: "Fotos, Fäden, Zettel. Leute, die ich kenne, ohne dass sie mich kennen." },
     box_old: { name: "Karton", rect: AF.boxRect, walkTo: AF.box, face: "nw",
-      look: ["Ein Karton von damals.", "Mein Halcyon-Ausweis. CIVIC MONITOR, J. REYES. UNGÜLTIG.", "Und der Kaktus. Vertrocknet. Wie alles aus der Zeit."] },
+      look: ["Ein Karton von damals.", "Mein Nagi·wa-Ausweis. CIVIC MONITOR, J. REYES. UNGÜLTIG.", "Und der Kaktus. Vertrocknet. Wie alles aus der Zeit."] },
   },
   enter: [{ unset: "deck_app" },
     { if: ["day=1", "has:suppe"], then: EAT_HOME },
@@ -229,7 +229,7 @@ Cutaway.room("flat", {
 
 // ---- the act
 // NETZ on the prologue's evening (and Chapter 1's first: the record low is still the headline on Wednesday)
-Halcyon.netz.push(
+Nagiwa.netz.push(
   { kind: "head", if: "day<3", text: "Kriminalität im Neunten auf Rekordtief." },
   { kind: "ad", label: "LULL // SLEEP BETTER", text: "Vier Stunden wie zehn. Zwei Wochen gratis." },
   { kind: "live", label: "NINTH LIVE // TONIGHT" });

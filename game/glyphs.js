@@ -1,18 +1,18 @@
-// Halcyon: the letters of the game's two fonts (docs/style-guide.md §8a), as data with no engine in it, so
+// Nagiwa: the letters of the game's two fonts (docs/style-guide.md §8a), as data with no engine in it, so
 // the game (game/font.js defines the fonts with them) and the pxl art (art/lib/text.js writes with them:
 // mockups, and any art that shows the game's own interface) use the very same glyphs.
-//   HALCYON_GLYPHS.halcyon  the 5x7 terminal face, square and hard-cornered, with the frames' motif: where a
+//   NAGIWA_GLYPHS.nagiwa  the 5x7 terminal face, square and hard-cornered, with the frames' motif: where a
 //                           letter closes round a corner, the top left and the bottom right are cut at 45°
 //                           (O C G Q S 0 6 8 9 ...), every other corner stays square. Capitals and digits
 //                           are 7 rows; lowercase has a 5-row x-height and 2-row descenders; the umlauts'
 //                           dots sit two rows above the capitals. Line height 10.
-//   HALCYON_GLYPHS.hud      3x5 capitals (umlauts with their dots above) for the camera display, the deck's
+//   NAGIWA_GLYPHS.hud      3x5 capitals (umlauts with their dots above) for the camera display, the deck's
 //                           header and labels, and readouts. Line height 7. Text for it is upper-cased.
 // A glyph is its rows ("#" ink, "." none), or { dy, rows } when it starts dy rows above the line's top.
 "use strict";
 
-/** @type {{halcyon: Record<string, string[] | {dy: number, rows: string[]}>, hud: Record<string, string[] | {dy: number, rows: string[]}>}} */
-const HALCYON_GLYPHS = (function () {
+/** @type {{nagiwa: Record<string, string[] | {dy: number, rows: string[]}>, hud: Record<string, string[] | {dy: number, rows: string[]}>}} */
+const NAGIWA_GLYPHS = (function () {
   /** @param {string} s rows separated by spaces */
   const g = (s) => s.split(" ");
   /** @param {number} dy @param {string} s */
@@ -178,5 +178,5 @@ const HALCYON_GLYPHS = (function () {
     ẞ: ["##.", "#.#", "##.", "#.#", "##."],
     "…": [".....", ".....", ".....", ".....", "#.#.#"],
   };
-  return { halcyon: G, hud: HUD_GLYPHS };
+  return { nagiwa: G, hud: HUD_GLYPHS };
 })();

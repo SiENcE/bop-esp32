@@ -7,7 +7,7 @@ verb-less (left click acts, right click looks), 320x180 native unless a style sa
 
 ## Working premise (placeholder)
 
-Year 2091, the Lower Ninth Ring of the arcology **Halcyon**: a city stacked on itself, where acid
+Year 2091, the Lower Ninth Ring of the arcology **Nagi·wa**: a city stacked on itself, where acid
 rain never stops and the ad screens never sleep. **Juno Reyes**, a night-shift repair tech, starts
 hearing a voice inside the city's broken ad screens. Tonight one of them said her name.
 
@@ -18,7 +18,7 @@ Night, heavy rain, a narrow street outside the noodle bar **LUCKY STATIC**.
 | Thing | Notes |
 |---|---|
 | **Juno** (protagonist) | yellow hooded rain slicker (hood up, the iconic read, even from above), black cargo trousers, heavy boots, a grey tool satchel on a strap, short black hair under the hood, a thin cyan cyber-implant line on one cheek. Standing, looking at the ad screen. |
-| **The broken ad screen** | a big wall screen, cracked, glitching: half an advert (a smiling face, "HALCYON: SLEEP BETTER"), half static with a single huge eye in it. The plot hook. Cold cyan/white light. |
+| **The broken ad screen** | a big wall screen, cracked, glitching: half an advert (a smiling face, "NAGI·WA: SLEEP BETTER"), half static with a single huge eye in it. The plot hook. Cold cyan/white light. |
 | **LUCKY STATIC** | the noodle bar's door and its neon sign (magenta/pink), steamy warm light spilling from the door or window. |
 | **Street cook / NPC** | an old man under a battered umbrella at a tiny noodle cart (steam from the pot), or sitting on a crate. |
 | **Vending machine** | glowing, one dead panel, a "OUT OF ORDER" sticker. |

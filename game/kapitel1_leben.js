@@ -1,11 +1,11 @@
-// Halcyon: the life around Chapter 1's jobs (docs/kapitel1-design.md §7): Teo's visit on Wednesday at 18:30, Motte's lessons, Bao, the stuttering ad screen.
+// Nagiwa: the life around Chapter 1's jobs (docs/kapitel1-design.md §7): Teo's visit on Wednesday at 18:30, Motte's lessons, Bao, the stuttering ad screen.
 // Teo comes by on Wednesday evening with soup from Bao. The visit can't be missed: at 18:30 there is a knock wherever Juno is waiting,
 // she opens the door, and afterwards she is back where she was. A scene without choices, so it costs the solver nothing but its moment;
 // what Juno learns there (Teo is on Lull) other talks read from `moment:teo_visit`.
 "use strict";
 
 (function () {
-const AF = Halcyon.at.flat;
+const AF = Nagiwa.at.flat;
 const T = (/** @type {string} */ text) => ({ say: "teo", text });
 
 Cutaway.actor("teo", { name: "Teo", color: "#ffa040",
@@ -52,24 +52,24 @@ Cutaway.dialog("motte_lektion", { main: {
     ...[0, 1, 2].map((n) => ({ text: QUESTION[n], if: [`moth_lesson>=${n}`, `moth_lesson<${n + 1}`], goto: "end", then: [...(n ? [] : ["Eine Sache pro Abend. Heute: Was ist eine Kamera?"]), ...LESSON[n], { set: "moth_lesson", value: n + 1 }, { set: "moth_today" }] })),
     { text: "„Heute nicht.“", goto: "end", then: [M("Morgen dann.")] },
   ] } });
-for (const night of [3, 4]) (Halcyon.nights[night].passes ??= []).push({ unset: "moth_today" });
+for (const night of [3, 4]) (Nagiwa.nights[night].passes ??= []).push({ unset: "moth_today" });
 
 // ---- NETZ in Chapter 1 (kapitel1-design §7): every evening a new page; EVI reads the headline to Juno once an evening and gets it
 // wrong (she reads data well and people badly); on the Glasser board on Thursday the post "Mein Vater wacht nicht auf", on Friday its end.
 // Which evening EVI has read is a view (netz_read: the day), so it costs the solver nothing.
 Cutaway.state.view("netz_read");
 const L_KOW = "L., Kowalski-Straße";
-Halcyon.netz.push(
-  { kind: "sub", if: "day=2", text: "Hüllenabgabe ab Dezember angepasst. Halcyon dankt für Ihr Verständnis." },
+Nagiwa.netz.push(
+  { kind: "sub", if: "day=2", text: "Hüllenabgabe ab Dezember angepasst. Nagi·wa dankt für Ihr Verständnis." },
   { kind: "board", if: "day=2", text: "Suche Abzweiger, zahle bar. Bitte nicht Ratz.", by: "anonym" },
-  { kind: "head", if: "day=3", text: "Ruhe-Erschöpfung: kein Grund zur Sorge, sagen Halcyons Ärzte." },
+  { kind: "head", if: "day=3", text: "Ruhe-Erschöpfung: kein Grund zur Sorge, sagen Nagi·was Ärzte." },
   { kind: "sub", if: "day=3", text: "Die Lull-Kliniken im Neunten haben jetzt auch nachts offen." },
   { kind: "board", if: "day=3", text: "Wer weiß was über Ruhe-Erschöpfung? Mein Vater wacht nicht auf.", by: L_KOW },
   { kind: "head", if: "day=4", text: "Das Wetter für den Neunten: Tropfen aus dem Vierten. Später trocken." },
-  { kind: "sub", if: "day=4", text: "Halcyon wünscht dem Neunten eine ruhige Nacht." },
+  { kind: "sub", if: "day=4", text: "Nagi·wa wünscht dem Neunten eine ruhige Nacht." },
   { kind: "board", if: "day=4", text: "Mein Vater ist weg. Zwei in Weiß haben ihn abgeholt. Sie waren sehr freundlich.", by: L_KOW });
 const READ = (/** @type {number} */ day, /** @type {any[]} */ said) => ({ if: [`day=${day}`, `netz_read<${day}`], then: [{ set: "netz_read", value: day }, ...said] });
-(Halcyon.appOpen.netz ??= []).push(
+(Nagiwa.appOpen.netz ??= []).push(
   READ(2, [{ evi: "neugierig" }, { say: "evi", text: "Kriminalität auf Rekordtief. Heißt das, die Verbrecher schlafen?" }, "Die meisten."]),
   READ(3, [{ evi: "froh" }, { say: "evi", text: "Kein Grund zur Sorge! Dann sorgt sich jetzt keiner mehr?" }, "Das ist der Plan."]),
   READ(4, [{ evi: "froh" }, { say: "evi", text: "Später trocken! Ich hab nachgesehen: Das gab es hier noch nie." }, "Ich weiß."]));
@@ -91,7 +91,7 @@ for (const id of ["bao", "cart"]) {
 // the ad screen stutters as Juno passes (the repair man noticed it too): on Thursday a second of CAM 03, Kessler under the awning,
 // two nights old; on Friday only the eye, and Juno can't say whether it was on the screen or in her own eye. A look: it costs nothing.
 const adLook = street.ad.look;
-street.ad.look = [{ if: "day=3", then: ["HALCYON. SLEEP BETTER.", "Eben hat er gestottert. Eine Sekunde lang: CAM 03, Kessler unterm Vordach.", "Von Dienstag. Das war mein Bild."] },
+street.ad.look = [{ if: "day=3", then: ["NAGI·WA. SLEEP BETTER.", "Eben hat er gestottert. Eine Sekunde lang: CAM 03, Kessler unterm Vordach.", "Von Dienstag. Das war mein Bild."] },
   { if: "day=4", then: ["Er stottert. Und eine Sekunde lang ist da nur das Auge.", "Auf dem Schirm? Oder bei mir?"] },
   { if: "day<3", then: adLook }];
 })();

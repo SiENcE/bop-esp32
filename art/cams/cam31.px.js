@@ -1,7 +1,7 @@
 // CAM 31, the old metro station, Line 31 (docs/kapitel1-design.md §8; style guide §9, §12): where Chapter 1 ends.
 // Painted from the approved blockout: the same camera, the same place in meters.
 //
-// The camera is what Halcyon bolted on and forgot: a box on the old overhead gantry above the flooded tracks,
+// The camera is what Nagi·wa bolted on and forgot: a box on the old overhead gantry above the flooded tracks,
 // 6.5 m over the water, 40 degrees down, yaw 24 toward the tunnel. It looks across the water at the platform, so
 // everyone on it faces us, and the player sees what stands beyond the stairs' long cheek, which Ines and Lantern cannot. Why this height: the feeds draw no
 // depth scale (game/places.js), so a person must be about the same size at the stairs and at the edge.
@@ -228,7 +228,7 @@ const paintBg = (c) => { const img = halfBake(); for (let y = 0; y < H; y++) for
 // they sit on it, at 1x because they must survive the post-effects.
 function signText(c) {
   const a = project(CAM, [SIGN.x0, (SIGN.y0 + SIGN.y1) / 2, ZW - 0.06]), b = project(CAM, [SIGN.x1, (SIGN.y0 + SIGN.y1) / 2, ZW - 0.06])
-  const s = "LINE 31", G = HALCYON_GLYPHS.hud
+  const s = "LINE 31", G = NAGIWA_GLYPHS.hud
   let x = Math.round((a[0] + b[0]) / 2 - TXT.measure(s, "hud") / 2)
   for (const ch of s) {
     const g = G[ch] ?? G["?"], rows = Array.isArray(g) ? g : g.rows, dy = Array.isArray(g) ? 0 : g.dy

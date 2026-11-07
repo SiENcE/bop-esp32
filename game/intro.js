@@ -1,15 +1,15 @@
-// Halcyon: the intro "Die letzte Schicht" (docs/kapitel0-design.md §5; storyboard art/test/intro_blocks.px.js).
+// Nagiwa: the intro "Die letzte Schicht" (docs/kapitel0-design.md §5; storyboard art/test/intro_blocks.px.js).
 // The sequence and what its shots share. The shots the game draws itself (the camera really moves through them)
-// are rooms with `float: "<shot>"`: their files register a drawer in Halcyon.intro.shots (game/intro_sea.js: the
+// are rooms with `float: "<shot>"`: their files register a drawer in Nagiwa.intro.shots (game/intro_sea.js: the
 // float over the sea, A1 and A2; game/intro_tower.js: the tower and in through its window, C; game/intro_desk.js:
 // what moves in shot 2; game/intro_ride.js: the ride D), drawn over the
 // room each frame; the action { float: [from, to], ms, ease } moves the camera through the shot (its progress
-// Halcyon.intro.p, 0..1). The opening has no sounds, the music alone.
+// Nagiwa.intro.p, 0..1). The opening has no sounds, the music alone.
 "use strict";
 
 (function () {
   const BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5];
-  Halcyon.intro = {
+  Nagiwa.intro = {
     /** The camera's progress through its shot, 0..1 (a tween moves it; a skip sets it at once). */
     p: 0,
     /** @type {Record<string, (ctx: CanvasRenderingContext2D, p: number, t: number) => void>} each shot's drawer */
@@ -28,15 +28,15 @@
 
   // { float: [from, to], ms, ease }: the camera moves through the shot (wait: false goes on at once)
   Cutaway.script.action("float", (s) => {
-    const [from, to] = Array.isArray(s.float) ? s.float : [Halcyon.intro.p, Number(s.float)];
-    Halcyon.intro.p = from;
-    const done = Cutaway.tween.to({ key: "float", ms: s.ms, ease: s.ease ?? "linear", step: (k) => { Halcyon.intro.p = from + (to - from) * k; } });
+    const [from, to] = Array.isArray(s.float) ? s.float : [Nagiwa.intro.p, Number(s.float)];
+    Nagiwa.intro.p = from;
+    const done = Cutaway.tween.to({ key: "float", ms: s.ms, ease: s.ease ?? "linear", step: (k) => { Nagiwa.intro.p = from + (to - from) * k; } });
     return s.wait === false ? undefined : done;
   });
 
   Cutaway.events.on("frame.screen", (/** @type {CanvasRenderingContext2D} */ ctx) => {
-    const r = Cutaway.scene.room, shot = r?.float && Halcyon.intro.shots[r.float];
-    if (shot) shot(ctx, Halcyon.intro.p, Cutaway.clock.time);
+    const r = Cutaway.scene.room, shot = r?.float && Nagiwa.intro.shots[r.float];
+    if (shot) shot(ctx, Nagiwa.intro.p, Cutaway.clock.time);
   });
 
   // The sequence: before the title on the first start, then from the title menu (game/game.js). So far the
@@ -52,7 +52,7 @@
       { float: [0, 1], ms: 16000, wait: false },
       { fade: 0, ms: 3000 },
       { wait: 2500 },
-      { caption: "HALCYON, 2088", at: "bl", type: true, ms: 4000 },
+      { caption: "NAGI·WA, 2088", at: "bl", type: true, ms: 4000 },
       { wait: 5500 },
       { shot: "a2" },
       { goto: "intro_a2", transition: "dissolve" },
@@ -77,7 +77,7 @@
       { shot: "announce" },
       { goto: "intro_hall", transition: "dissolve" },
       { camera: [100, 60], ms: 0 },
-      { caption: "Ab morgen übernimmt die automatische Auswertung. Halcyon dankt Ihnen für Ihren Dienst.", at: "c", color: "#62def0", ms: 6500 },
+      { caption: "Ab morgen übernimmt die automatische Auswertung. Nagi·wa dankt Ihnen für Ihren Dienst.", at: "c", color: "#62def0", ms: 6500 },
       // 4: the screens go out, back to front, the camera going with them to Juno; hers is the last, close; her face
       // in the dead glass. Nothing to hear
       { shot: "out" },

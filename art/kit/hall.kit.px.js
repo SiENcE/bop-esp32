@@ -1,4 +1,4 @@
-// The kit of the observation hall (art/rooms/hall.map.js), Halcyon Tower, 2088. Registered with ISOKIT
+// The kit of the observation hall (art/rooms/hall.map.js), Nagi·wa Tower, 2088. Registered with ISOKIT
 // (art/lib/isokit.js); include after art/lib/iso.js (palette), art/lib/isomap.js, art/lib/isokit.js.
 //   floor   c  carpet tiles, 0.5 m, laid in turns; a floor box under each desk where its cables go down
 //           a  the aisle along the screen wall: smooth, darker
@@ -9,7 +9,7 @@
 //           hall_panel   the near walls' stubs
 //   props   desk  a slab on two side panels, a cable tray under it, three monitors with their feeds, the
 //           keyboard; a round tub armchair on a round foot, its high back toward us, so no legs show; in it
-//           a watcher in Halcyon's grey: round shoulders over the chair's rim, the arms forward to the keys
+//           a watcher in Nagi·wa's grey: round shoulders over the chair's rim, the arms forward to the keys
 //           (typing), the head with its hair (cut, colour and skin vary by desk), the implant's cyan point behind
 //           the ear (no cable: the implant lays its tags over what the eye sees on the monitors). Juno's (the
 //           map's `juno: true`): her short black hair, the cactus and the cup, her yellow coat over the chair

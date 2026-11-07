@@ -13,7 +13,7 @@
 //            (open: the frame, the plate beside it), note_war (two notes, no words: a scrawl and "??",
 //            the answer with its arrow), neon_tube (its left end dying), sign_14 (stencilled)
 //   stairs   stairs_concrete (treads with a steel nosing and a worn amber stripe; the dado follows the flight)
-//   props    emergency_key (the lift's, on the wall), corner_cam (Halcyon's, on its arm, its red eye), bin_bags, stair_rail, armchair (Frau Haldane asleep in it, the Lull point behind her ear)
+//   props    emergency_key (the lift's, on the wall), corner_cam (Nagi·wa's, on its arm, its red eye), bin_bags, stair_rail, armchair (Frau Haldane asleep in it, the Lull point behind her ear)
 // Keys "!k" are never lit. Small organic things are hand grids; the rest boxes and lines.
 include("../lib/text.js")
 
@@ -316,7 +316,7 @@ const K14 = (() => {
   // Frau Haldane asleep in front of her TV (deeper in the room, out of sight: only its light), seen from
   // behind: the armchair's back toward the door, over it her grey hair in curlers, fallen a little to one
   // side, the Lull point's blue behind her ear; her arm hanging over the armrest, a slipper fallen off
-  // Halcyon's camera up in the corner: an arm from the ceiling's edge, the housing along the wall, its lens at the end towards the
+  // Nagi·wa's camera up in the corner: an arm from the ceiling's edge, the housing along the wall, its lens at the end towards the
   // landing, the red eye blinking on its side
   ISOKIT.prop("corner_cam", {
     frames: 12,

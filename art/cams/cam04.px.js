@@ -3,7 +3,7 @@
 // The camera sits in the ceiling over the front wall (3.3 m up, 52 degrees down, a wide 2.8 mm
 // lens with a strong barrel). At the back the counter with the cook's station (stove, pots, the
 // hood) and stools; on the back wall the menu boards and, on a shelf in the right corner, a TV
-// running a Halcyon ad (the brightest thing in the room). On the left the window to the street,
+// running a Nagi·wa ad (the brightest thing in the room). On the left the window to the street,
 // rain on the glass and neon behind it, and the door at its far end. Four small tables with
 // stools; the near one, right under the camera, is where Kessler and Varga will sit (left empty).
 // Prologue (docs/kapitel0-design.md §6.2 steps 7-8): 22:30 Kessler sits down with Varga; 22:35 the
@@ -159,14 +159,14 @@ const MATS = {
     if (n[0] > -0.5) return { a: 0.15, e: 0 }
     const [, y, z] = P, u = (z - TV.z0) / (TV.z1 - TV.z0), v = (TV.y1 - y) / (TV.y1 - TV.y0)
     if (u < 0.06 || u > 0.94 || v < 0.08 || v > 0.92) return { a: 0.08, e: 0 }                   // the bezel
-    // the Halcyon ad: a pale wash, a sleeping face (an oval, closed eyes), the logo ring in a corner
+    // the Nagi·wa ad: a pale wash, a sleeping face (an oval, closed eyes), the logo ring in a corner
     let e = 0.95 + 0.1 * v
     const fx = (u - 0.38) / 0.2, fy = (v - 0.5) / 0.34
     if (fx * fx + fy * fy < 1) e = 1.4
     if (Math.abs(fy + 0.05) < 0.12 && Math.abs(Math.abs(fx) - 0.4) < 0.2) e = 0.25                // closed eyes
     if (Math.abs(fy - 0.5) < 0.1 && Math.abs(fx) < 0.3) e = 0.4                                     // a smile
     const rx = (u - 0.8) / 0.09, ry = (v - 0.3) / 0.15, rr = Math.hypot(rx, ry)
-    if (rr > 0.5 && rr < 1) e = 1.4                                                                   // the Halcyon ring
+    if (rr > 0.5 && rr < 1) e = 1.4                                                                   // the Nagi·wa ring
     if (v > 0.8) e = 1.2                                                                              // the caption band
     return { a: 0, e }
   },

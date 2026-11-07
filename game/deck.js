@@ -1,4 +1,4 @@
-// Halcyon: Juno's deck as a computer (docs/kapitel0-design.md §2, mockup F: docs/mockups/mock_f_deck_*). A
+// Nagiwa: Juno's deck as a computer (docs/kapitel0-design.md §2, mockup F: docs/mockups/mock_f_deck_*). A
 // watched room (`deck`) without a picture of its own: this file gives it its hotspots and draws the screen
 // over it (the engine's "frame.screen" moment). What is open is state the solver sees, kept to one flag:
 //   deck_app     the app whose window is open (glas, chat, cache, buch, konto, netz, radio, muell), or none;
@@ -8,7 +8,7 @@
 //   read_<id>    a contact's messages have been read (only where it matters: a contact's `unread` says when
 //                its dot shows, by default until read_<id>)
 // One window at a time (style guide §8). The deck's content (contacts, threads, replies) comes from the
-// chapters (game/prolog.js) into Halcyon.contacts / threads / replies; Halcyon.buildDeck() makes the room
+// chapters (game/prolog.js) into Nagiwa.contacts / threads / replies; Nagiwa.buildDeck() makes the room
 // once everything is loaded (game/game.js). On the deck EVI is the hint button (her corner, bottom right);
 // the satchel and the engine's buttons are hidden there (room `buttons: false`).
 "use strict";
@@ -20,13 +20,13 @@
     steel5: "#41547a", steel6: "#617aa0", cyanDeep: "#123c4e", cyanDark: "#1f88a4", cyan: "#62def0", cyanPale: "#dafcff",
     magenta: "#ff4fd3", magentaDark: "#a8238a", amber: "#eea040", yellow: "#fff070", yellowDim: "#9a7406", mint: "#8ef5d8",
   };
-  const t = Halcyon.t, S = () => Cutaway.state;
+  const t = Nagiwa.t, S = () => Cutaway.state;
   const hud = () => Cutaway.font.get("hud"), main = () => Cutaway.ui.font();
 
   // ---------------------------------------------------------------- the layout (mockup F)
   const APPS = ["glas", "chat", "cache", "buch", "konto", "netz", "radio", "muell"];
   const LABEL = { glas: "GLASS", chat: "CHAT", cache: "CACHE", buch: "BUCH", konto: "KONTO", netz: "NETZ", radio: "RADIO", muell: "MÜLL" };
-  const D = Halcyon.deckUI = {
+  const D = Nagiwa.deckUI = {
     header: 11,
     /** the app icons: two columns of four @param {number} i */
     icon: (i) => [8 + (i >> 2) * 34, 16 + (i & 3) * 34],
@@ -55,47 +55,47 @@
 
   // the deck's registries, filled by the chapters
   /** @type {Record<string, {name: string, color: string, status: string, if?: any, unread?: any, open?: any[]}>} */
-  Halcyon.contacts = {};
+  Nagiwa.contacts = {};
   /** @type {Record<string, {from: string, text?: string, photo?: string, clip?: string, at?: string, if?: any}[]>} */
-  Halcyon.threads = {};
+  Nagiwa.threads = {};
   /** @type {Record<string, {id: string, text: string, if?: any, use: any[]}[]>} */
-  Halcyon.replies = {};
+  Nagiwa.replies = {};
   /** The clip editor's clips (docs/kapitel0-design.md §2.4), by cache id: the camera, the minutes it runs
    * (22:31 is 31), its moments and who is in it, what a cut keeps and makes (a new cache entry), the script
    * after the cut. A clip from another hour gives it (`hour`, 22 by default); one Juno filmed herself has no camera, only a place
    * (`where`). Anonymising (from Chapter 1, while `anon.if` holds) blurs every face for good: the flag `anon_<cache id>`.
    * @type {Record<string, {cam?: string, where?: string, hour?: number, from: number, to: number, thumb?: string, moments: [number, number, string][],
    *   people: [string, number, number][], cut?: {moment: number, gives: string, if?: any, then?: any[]}, anon?: {if?: any, then?: any[]}}>} */
-  Halcyon.clips = {};
-  /** NETZ, HalcyonNet's page (kapitel0-design §2.1): headlines, small news, the Glasser board, ads, drawn in that order, each while its
+  Nagiwa.clips = {};
+  /** NETZ, Nagi·wa-Net's page (kapitel0-design §2.1): headlines, small news, the Glasser board, ads, drawn in that order, each while its
    * `if` holds (the chapters fill it; texts German, labels the city's English)
    * @type {{kind: "head" | "sub" | "ad" | "board" | "live", text?: string, label?: string, by?: string, if?: any}[]} */
-  Halcyon.netz = [];
+  Nagiwa.netz = [];
   /** what is said when an app opens (EVI reading the news to Juno): by app, a script
    * @type {Record<string, any[]>} */
-  Halcyon.appOpen = {};
+  Nagiwa.appOpen = {};
   /** the old photo (art/ui/deck_wallpaper.px.js): what Juno says looking at it, its music (a click shows it whole) */
-  Halcyon.photo = { music: { theme: "memory", fade: 2 }, back: { theme: "juno", intensity: 0.4, speaker: 1, fade: 2 }, look: /** @type {any} */ (null) };
+  Nagiwa.photo = { music: { theme: "memory", fade: 2 }, back: { theme: "juno", intensity: 0.4, speaker: 1, fade: 2 }, look: /** @type {any} */ (null) };
 
   const inRect = (/** @type {number} */ x, /** @type {number} */ y, /** @type {number[]} */ [rx, ry, rw, rh]) => x >= rx && y >= ry && x < rx + rw && y < ry + rh;
 
   // ---------------------------------------------------------------- the room
-  Halcyon.buildDeck = function () {
+  Nagiwa.buildDeck = function () {
     const [X, Y, WW, HH] = D.win;
     /** @type {Record<string, any>} */
     const hs = {};
     const app = (/** @type {string} */ a) => `deck_app=${a}`;
     APPS.forEach((a, i) => {
       const [x, y] = D.icon(i);
-      hs[`app_${a}`] = { name: LABEL[a], rect: [x - 3, y - 2, 30, 34], use: [{ set: "deck_app", value: a }, { sfx: "type" }, ...(Halcyon.appOpen[a] ?? [])],
+      hs[`app_${a}`] = { name: LABEL[a], rect: [x - 3, y - 2, 30, 34], use: [{ set: "deck_app", value: a }, { sfx: "type" }, ...(Nagiwa.appOpen[a] ?? [])],
         look: `${LABEL[a]}.` };
     });
     hs.win_close = { name: "Schließen", rect: D.close, if: "deck_app", z: 6, use: [{ unset: "deck_app" }, { sfx: "type" }] };
     hs.wait = { name: "Warten", rect: D.buttons.wait, z: 6, use: [{ forward: true }] };
-    hs.close = { name: "Zurück", rect: D.buttons.back, z: 6, exit: { to: "flat", at: Halcyon.at.flat.deck, face: "ne" } };
-    const anyChat = { or: ["deck_app=chat", ...Object.keys(Halcyon.contacts).map((id) => `deck_app=chat_${id}`)] };
+    hs.close = { name: "Zurück", rect: D.buttons.back, z: 6, exit: { to: "flat", at: Nagiwa.at.flat.deck, face: "ne" } };
+    const anyChat = { or: ["deck_app=chat", ...Object.keys(Nagiwa.contacts).map((id) => `deck_app=chat_${id}`)] };
     // GLASS: the cameras on the map
-    for (const [id, cam] of Object.entries(Halcyon.cams)) {
+    for (const [id, cam] of Object.entries(Nagiwa.cams)) {
       const [mx, my] = cam.map, x = D.map[0] + mx, y = D.map[1] + my;
       hs[`cam_${id}`] = {
         name: `CAM ${cam.id}`, rect: [x - 4, y - 4, D.camBox, 18], if: [app("glas"), ...(cam.if ? [cam.if] : [])], z: 4,
@@ -106,27 +106,27 @@
       };
     }
     // CHAT: the contacts (those that appear later come last, so the rows stay put), the replies
-    Object.entries(Halcyon.contacts).forEach(([id, c], i) => {
+    Object.entries(Nagiwa.contacts).forEach(([id, c], i) => {
       hs[`contact_${id}`] = { name: c.name, rect: [D.contacts.x, D.contacts.y - 3 + i * D.contacts.row, D.contacts.w, D.contacts.row - 1],
         if: [anyChat, ...(c.if ? [c.if] : [])], z: 4, use: [{ set: "deck_app", value: `chat_${id}` }, ...(c.unread ? [] : [{ set: `read_${id}` }]), ...(/** @type {any} */ (c).open ?? [])] };
     });
-    for (const [who, list] of Object.entries(Halcyon.replies)) list.forEach((r, i) => {
+    for (const [who, list] of Object.entries(Nagiwa.replies)) list.forEach((r, i) => {
       hs[`reply_${who}_${r.id}`] = { name: r.text, rect: [D.thread.x - 2, Y + HH - 14 - (list.length - 1 - i) * 11, X + WW - 4 - D.thread.x, 11],
         if: [`deck_app=chat_${who}`, ...(r.if ? [].concat(r.if) : [])], z: 5, use: [{ sfx: "mail" }, ...r.use] };
     });
     // CACHE: what Juno has; looking at an entry says what it is
-    Object.entries(Halcyon.cache).forEach(([id, c], i) => {
+    Object.entries(Nagiwa.cache).forEach(([id, c], i) => {
       hs[`cache_${id}`] = { name: c.name, rect: [X + 4, D.cache.y - 3 + i * D.cache.row, WW - 8, D.cache.row - 1], if: [app("cache"), `cache_${id}`], z: 4,
-        look: c.about, use: Halcyon.clips[id] ? [{ set: "deck_app", value: `clip_${id}` }, { sfx: "type" }] : c.about };
+        look: c.about, use: Nagiwa.clips[id] ? [{ set: "deck_app", value: `clip_${id}` }, { sfx: "type" }] : c.about };
     });
     // the clip editor: cutting keeps one moment and makes a new clip of it
-    for (const [id, clip] of Object.entries(Halcyon.clips)) {
+    for (const [id, clip] of Object.entries(Nagiwa.clips)) {
       if (!clip.cut) continue;
       hs[`clip_cut_${id}`] = { name: "Schneiden", rect: [X + 8, D.clip.tools, 44, 10], z: 5, if: [`deck_app=clip_${id}`, `!cache_${clip.cut.gives}`, ...(clip.cut.if ? [clip.cut.if] : [])],
         use: [{ sfx: "glitch" }, { cache: clip.cut.gives }, ...(clip.cut.then ?? [])] };
     }
     // anonymising: every face blurred, in Juno's copy for good (the button stands after SCHNEIDEN, as the editor draws it)
-    for (const [id, clip] of Object.entries(Halcyon.clips)) {
+    for (const [id, clip] of Object.entries(Nagiwa.clips)) {
       if (!clip.anon) continue;
       hs[`clip_anon_${id}`] = { name: "Anonymisieren", rect: [X + 8 + D.clip.anon[0], D.clip.tools, D.clip.anon[1], 10], z: 5,
         if: [`deck_app=clip_${id}`, `!anon_${id}`, ...(clip.anon.if ? [].concat(clip.anon.if) : [])],
@@ -134,10 +134,10 @@
     }
     // the old photo: a click on the wallpaper shows it whole, with its music; a click anywhere closes it
     hs.photo = { name: "Das alte Foto", rect: [80, 14, 206, 104], if: "!deck_app", z: 1,
-      look: Halcyon.photo.look ?? "Das Foto von Teo und mir.",
-      use: [{ set: "deck_app", value: "photo" }, { music: Halcyon.photo.music }] };
+      look: Nagiwa.photo.look ?? "Das Foto von Teo und mir.",
+      use: [{ set: "deck_app", value: "photo" }, { music: Nagiwa.photo.music }] };
     hs.photo_close = { name: "Zurück", rect: [0, 0, W, H], if: "deck_app=photo", z: 9,
-      use: [{ unset: "deck_app" }, { music: Halcyon.photo.back }] };
+      use: [{ unset: "deck_app" }, { music: Nagiwa.photo.back }] };
     // the files on the desktop (under the window when one is open)
     hs.file_steuer = { name: "steuer_2089_NICHT_ÖFFNEN.txt", rect: D.files.steuer, if: "!deck_app",
       look: "Die Steuer von 2089. Solange ich sie nicht öffne, gibt es sie nicht.", use: "Nein." };
@@ -147,7 +147,7 @@
     hs.evi = { name: "EVI", rect: D.evi, z: 6, use: [{ hint: true }],
       look: "EVI. Sie wohnt auf meinem Deck und liest Kameras besser als Menschen." };
 
-    Cutaway.room("deck", { name: "Deck", color: C.night, observe: true, deck: true, buttons: false, hotspots: hs, enter: Halcyon.deckEnter ?? [],
+    Cutaway.room("deck", { name: "Deck", color: C.night, observe: true, deck: true, buttons: false, hotspots: hs, enter: Nagiwa.deckEnter ?? [],
       ambience: ["deck_fans", { sfx: "rain_glass", gain: 0.5 }, { sfx: "city_far", gain: 0.6 }],
       music: { theme: "juno", intensity: 0.4, speaker: 1 } });                    // the theme through the wall
   };
@@ -199,8 +199,8 @@
   }
   const pointer = () => ({ x: Cutaway.input.x, y: Cutaway.input.y });
   /** does a contact have news for Juno? (its own `unread` condition, else until its thread was opened) @param {string} id */
-  const fresh = (id) => { const c = Halcyon.contacts[id]; return S().test(c.if) && (c.unread ? S().test(c.unread) : !S().flag(`read_${id}`) && (Halcyon.threads[id] ?? []).some((m) => S().test(m.if))); };
-  const unread = () => Object.keys(Halcyon.contacts).filter(fresh).length;
+  const fresh = (id) => { const c = Nagiwa.contacts[id]; return S().test(c.if) && (c.unread ? S().test(c.unread) : !S().flag(`read_${id}`) && (Nagiwa.threads[id] ?? []).some((m) => S().test(m.if))); };
+  const unread = () => Object.keys(Nagiwa.contacts).filter(fresh).length;
   /** the open app and, in the chat, whose thread */
   const opened = () => {
     const v = String(S().flag("deck_app") ?? "");
@@ -216,7 +216,7 @@
     const p = pointer();
     button(ctx, D.buttons.back, "ZURÜCK", inRect(p.x, p.y, D.buttons.back));
     button(ctx, D.buttons.wait, "WARTEN", inRect(p.x, p.y, D.buttons.wait));
-    const [date, time] = Halcyon.stamp().split(" ");
+    const [date, time] = Nagiwa.stamp().split(" ");
     let x = D.buttons.wait[0] - 6;
     small(ctx, t("{chits} CHITS", { chits: Number(S().flag("chits") ?? 0) }), x, 3, C.cyanPale, "right"); x -= hud().measure(t("{chits} CHITS", { chits: Number(S().flag("chits") ?? 0) })) + 7;
     small(ctx, date, x, 3, C.steel6, "right"); x -= hud().measure(date) + 6;
@@ -238,7 +238,7 @@
       if (a === open || hot) { rect(ctx, a === open ? C.cyanDeep : "rgba(18, 60, 78, 0.55)", x - 3, y - 2, 30, 34); rect(ctx, C.cyan, x - 3, y - 2, 1, 34); }
       sprite(ctx, `deck_icon_${a}`, x, y);
       small(ctx, t(LABEL[a]), x + 12, y + 26, a === open ? C.cyanPale : C.steel6, "center");
-      const news = (a === "chat" && unread() > 0) || (a === "glas" && Object.keys(Halcyon.cams).some((c) => S().flag(`code_${c}`) && !S().flag(`link_${c}`) && S().test(Halcyon.cams[c].if)));
+      const news = (a === "chat" && unread() > 0) || (a === "glas" && Object.keys(Nagiwa.cams).some((c) => S().flag(`code_${c}`) && !S().flag(`link_${c}`) && S().test(Nagiwa.cams[c].if)));
       if (news) { rect(ctx, C.ink, x + 20, y - 1, 4, 4); rect(ctx, C.magenta, x + 21, y, 2, 2); }
     });
     if (!open) for (const [id, label] of [["steuer", "STEUER_2089_NICHT_ÖFFNEN.TXT"], ["essen", "ESSEN!!.TXT"]]) {
@@ -346,7 +346,7 @@
       ctx.fillStyle = C.steel3;
       for (const [x, y, w, h] of [[8, 40, 212, 3], [8, 86, 212, 3], [60, 12, 3, 108], [150, 12, 3, 108], [100, 43, 3, 43]]) ctx.fillRect(mx + x, my + y, w, h);
       ctx.fillStyle = C.cyanDeep; ctx.fillRect(mx + 8, my + 104, 212, 6);                    // the canal
-      for (const [id, cam] of Object.entries(Halcyon.cams)) {
+      for (const [id, cam] of Object.entries(Nagiwa.cams)) {
         if (!S().test(cam.if)) continue;
         const x = mx + cam.map[0], y = my + cam.map[1], linked = !!S().flag(`link_${id}`), code = !!S().flag(`code_${id}`);
         const hot = inRect(pointer().x, pointer().y, [x - 4, y - 4, D.camBox, 18]);
@@ -360,7 +360,7 @@
     chat(/** @type {CanvasRenderingContext2D} */ ctx) {
       const [X, Y, WW, HH] = D.win, K = D.contacts, with_ = opened().with, p = pointer();
       small(ctx, t("KONTAKTE"), K.x + 2, Y + 7, C.steel6);
-      const listTop = K.y - 3, listBottom = Y + HH - 4, known = Object.entries(Halcyon.contacts).filter(([, c]) => S().test(c.if)), C1 = scroll.contacts;
+      const listTop = K.y - 3, listBottom = Y + HH - 4, known = Object.entries(Nagiwa.contacts).filter(([, c]) => S().test(c.if)), C1 = scroll.contacts;
       C1.max = Math.max(0, known.length * K.row - 1 - (listBottom - listTop)); C1.to = Math.min(C1.to, C1.max);
       ctx.save(); ctx.beginPath(); ctx.rect(K.x, listTop, K.w, listBottom - listTop); ctx.clip();
       known.forEach(([id, c], i) => {
@@ -379,16 +379,16 @@
       scrollBar(ctx, C1, K.x + K.w - 10, listTop, listBottom, false, p);
       rect(ctx, C.steel3, K.x + K.w + 1, Y + 5, 1, HH - 10);
       const tx = D.thread.x, tw = X + WW - 6 - tx;
-      const who = Halcyon.contacts[with_];
+      const who = Nagiwa.contacts[with_];
       if (!who) return;
       small(ctx, t(who.name), tx, Y + 7, C.cyanPale);
       small(ctx, t(who.status), X + WW - 22, Y + 7, C.cyan, "right");
       rect(ctx, C.steel3, tx, Y + 14, tw, 1);
       // Juno's replies at the bottom (each a hotspot), the thread above them, its newest messages last
-      const replies = (Halcyon.replies[with_] ?? []).map((r, i) => ({ r, i, list: Halcyon.replies[with_] })).filter(({ r }) => S().test(r.if));
+      const replies = (Nagiwa.replies[with_] ?? []).map((r, i) => ({ r, i, list: Nagiwa.replies[with_] })).filter(({ r }) => S().test(r.if));
       let bottom = Y + HH - 4;
       if (replies.length) {
-        const list = Halcyon.replies[with_], top = Y + HH - 14 - (list.length - 1) * 11;
+        const list = Nagiwa.replies[with_], top = Y + HH - 14 - (list.length - 1) * 11;
         rect(ctx, C.steel3, tx - 2, top - 3, tw + 4, 1); rect(ctx, C.cyan, tx - 2, top - 3, 20, 1);
         for (const { r, i } of replies) {
           const y = Y + HH - 14 - (list.length - 1 - i) * 11, hot = inRect(p.x, p.y, [tx - 2, y, tw + 2, 11]);
@@ -399,7 +399,7 @@
         bottom = top - 6;
       }
       // the messages as boxes, laid out from the bottom up, in the column left of the scroll bar
-      const msgs = (Halcyon.threads[with_] ?? []).filter((m) => S().test(m.if)), mw = tw - 12;
+      const msgs = (Nagiwa.threads[with_] ?? []).filter((m) => S().test(m.if)), mw = tw - 12;
       /** @type {{m: any, lines: string[], h: number}[]} */
       const boxes = msgs.map((m) => {
         const lines = m.text ? wrap(t(m.text), tw - 44) : [];
@@ -436,7 +436,7 @@
     /** CACHE: clips and notes, with what they are; those she has, close together, scrolling when they run over */
     cache(/** @type {CanvasRenderingContext2D} */ ctx) {
       const [X, Y, WW, HH] = D.win, p = pointer(), top = D.cache.y - 3, bottom = Y + HH - 4, R = D.cache.row, L = scroll.cache;
-      const own = Object.entries(Halcyon.cache).filter(([id]) => S().flag(`cache_${id}`));
+      const own = Object.entries(Nagiwa.cache).filter(([id]) => S().flag(`cache_${id}`));
       if (!own.length) text(ctx, t("Noch nichts."), X + 8, D.cache.y, C.steel6);
       L.max = Math.max(0, own.length * R - 1 - (bottom - top)); L.to = Math.min(L.to, L.max);
       const rw = WW - 22;
@@ -457,7 +457,7 @@
     buch(/** @type {CanvasRenderingContext2D} */ ctx) {
       const [X, Y, WW, HH] = D.win, top = D.buch.y, bottom = Y + HH - 4, R = D.buch.row, L = scroll.buch;
       small(ctx, t("KASSENBUCH"), X + 8, D.buch.y - 8, C.steel6);
-      const done = Object.entries(Halcyon.ledger).filter(([k]) => S().flag(`ledger_${k}`));
+      const done = Object.entries(Nagiwa.ledger).filter(([k]) => S().flag(`ledger_${k}`));
       if (!done.length) text(ctx, t("Noch nichts."), X + 8, D.buch.y + 2, C.steel6);
       L.max = Math.max(0, done.length * R + 2 - (bottom - top)); L.to = Math.min(L.to, L.max);
       ctx.save(); ctx.beginPath(); ctx.rect(X + 4, top, WW - 20, bottom - top); ctx.clip();
@@ -482,12 +482,12 @@
       small(ctx, t("BAO"), X + 8, Y + 80, C.steel6);
       text(ctx, t("ANGESCHRIEBEN"), X + 8, Y + 89, C.cyanPale);
     },
-    /** NETZ: HalcyonNet's page this evening: the headlines, the small news, the Glasser board, the ads (Halcyon.netz) */
+    /** NETZ: Nagi·wa-Net's page this evening: the headlines, the small news, the Glasser board, the ads (Nagiwa.netz) */
     netz(/** @type {CanvasRenderingContext2D} */ ctx) {
       const [X, Y0, WW, HH] = D.win, top = Y0 + 5, bottom = Y0 + HH - 4, L = scroll.netz, Y = Y0 - Math.round(L.y), tw = WW - 30;
       ctx.save(); ctx.beginPath(); ctx.rect(X + 4, top, WW - 8, bottom - top); ctx.clip();
-      rect(ctx, C.cyanDeep, X + 6, Y + 8, WW - 22, 12); small(ctx, "HALCYON.NET", X + 10, Y + 12, C.cyanPale);
-      const shown = Halcyon.netz.filter((n) => S().test(n.if));
+      rect(ctx, C.cyanDeep, X + 6, Y + 8, WW - 22, 12); small(ctx, "NAGI·WA.NET", X + 10, Y + 12, C.cyanPale);
+      const shown = Nagiwa.netz.filter((n) => S().test(n.if));
       let y = Y + 26, board = false;
       for (const kind of ["head", "sub", "board", "ad", "live"]) for (const n of shown.filter((n) => n.kind === kind)) {
         if (kind === "head") { const ls = wrap(t(n.text ?? ""), tw); ls.forEach((l, i) => text(ctx, l, X + 8, y + i * 10, C.cyanPale)); y += ls.length * 10 + 4; }
@@ -511,13 +511,13 @@
     radio(/** @type {CanvasRenderingContext2D} */ ctx) {
       const [X, Y] = D.win;
       small(ctx, "NINTH FM // 88.4", X + 8, Y + 10, C.cyanPale);
-      small(ctx, "HALCYON EASY // 101.0", X + 8, Y + 22, C.steel6);
+      small(ctx, "NAGI·WA EASY // 101.0", X + 8, Y + 22, C.steel6);
       small(ctx, "KESSEL ROOFTOP // 94.2", X + 8, Y + 34, C.steel6);
     },
     /** MÜLL: what Juno threw away and never opened */
     muell(/** @type {CanvasRenderingContext2D} */ ctx) {
       const [X, Y] = D.win;
-      small(ctx, "HALCYON_PERSONAL_KUENDIGUNG.MSG", X + 8, Y + 10, C.steel6);
+      small(ctx, "NAGIWA_PERSONAL_KUENDIGUNG.MSG", X + 8, Y + 10, C.steel6);
       small(ctx, "AN_TEO_ENTWURF_3.TXT", X + 8, Y + 22, C.steel6);
       small(ctx, "AN_TEO_ENTWURF_7.TXT", X + 8, Y + 34, C.steel6);
     },
@@ -525,7 +525,7 @@
 
   // ---------------------------------------------------------------- EVI in her corner
   function evi(/** @type {CanvasRenderingContext2D} */ ctx) {
-    const p = pointer(), hot = inRect(p.x, p.y, D.evi), E = Halcyon.evi;
+    const p = pointer(), hot = inRect(p.x, p.y, D.evi), E = Nagiwa.evi;
     const talking = Cutaway.ui.line?.actor === "evi", bob = talking && Math.floor(Cutaway.clock.time / 180) % 2 ? 1 : 0;
     if (E.face) sprite(ctx, `evi_${E.face}`, D.evi[0], D.evi[1] - bob);
     else if (talking) sprite(ctx, "evi_froh", D.evi[0], D.evi[1] - bob);
@@ -547,9 +547,9 @@
   /** a small canvas the clip's picture is shrunk into, for anonymising */
   const mosaic = /** @type {CanvasRenderingContext2D} */ (document.createElement("canvas").getContext("2d"));
   function editor(ctx, id) {
-    const clip = Halcyon.clips[id], [X, Y, WW, HH] = D.win, E = D.clip, p = pointer();
+    const clip = Nagiwa.clips[id], [X, Y, WW, HH] = D.win, E = D.clip, p = pointer();
     if (!clip) return;
-    const cam = clip.cam ? Halcyon.cams[clip.cam] : null, cut = clip.cut && S().flag(`cache_${clip.cut.gives}`), anon = !!S().flag(`anon_${id}`);
+    const cam = clip.cam ? Nagiwa.cams[clip.cam] : null, cut = clip.cut && S().flag(`cache_${clip.cut.gives}`), anon = !!S().flag(`anon_${id}`);
     const anonOn = !!clip.anon && !anon && S().test(clip.anon.if);
     // the picture: the moment the cut keeps, in the feed's phosphor, with the implant's tags
     const [px, py, pw, ph] = E.pic;
@@ -571,7 +571,7 @@
     const hh = String(clip.hour ?? 22).padStart(2, "0"), mm = (/** @type {number} */ m) => `${hh}:${String(Math.floor(m)).padStart(2, "0")}`;
     const meta = [["WO", cam ? t("{cam} // {place}", { cam: t("CAM {id}", { id: cam.id }), place: t(cam.place) }) : t(clip.where ?? "")],
       ["WANN", `${mm(clip.from)}-${mm(clip.to)}`], ["LÄNGE", t("{min} MIN", { min: `${Math.floor(clip.to - clip.from)}:${String(Math.round(((clip.to - clip.from) % 1) * 60)).padStart(2, "0")}` })],
-      ["WER", anon ? t("ANONYMISIERT") : clip.people.map(([who]) => t(Halcyon.people[who]?.name ?? who)).join(", ")]];
+      ["WER", anon ? t("ANONYMISIERT") : clip.people.map(([who]) => t(Nagiwa.people[who]?.name ?? who)).join(", ")]];
     meta.forEach(([k, v], i) => { small(ctx, t(k), E.meta, py + 1 + i * 15, C.steel6); small(ctx, fit(v, X + WW - 6 - E.meta, hud()), E.meta, py + 8 + i * 15, C.cyanPale); });
     // the timeline: the minutes, the moments, who is in the picture when; the cut in brackets
     const [lx, ly, lw] = E.line, at = (/** @type {number} */ m) => Math.round(lx + (m - clip.from) / (clip.to - clip.from) * lw);
@@ -585,7 +585,7 @@
     });
     clip.people.forEach(([who, a, b], i) => {
       const y = ly + 21 + i * 8;
-      small(ctx, anon ? "???" : t(Halcyon.people[who]?.name ?? who), lx, y, C.steel6);
+      small(ctx, anon ? "???" : t(Nagiwa.people[who]?.name ?? who), lx, y, C.steel6);
       rect(ctx, C.steel4, Math.max(at(a), lx + 34), y + 1, at(b) - Math.max(at(a), lx + 34), 3);
     });
     if (clip.cut) {
@@ -608,8 +608,8 @@
 
   /** the boot: a second of scrolling lines and a glitch, then EVI wakes (rubs her eyes) */
   function boot(/** @type {CanvasRenderingContext2D} */ ctx) {
-    const age = Cutaway.clock.time - Halcyon.evi.boot;
-    if (Halcyon.evi.boot < 0 || age > 1300) return false;
+    const age = Cutaway.clock.time - Nagiwa.evi.boot;
+    if (Nagiwa.evi.boot < 0 || age > 1300) return false;
     rect(ctx, C.night, 0, 0, W, H);
     const rows = ["NINTH//SYS 4.1", "MEM 512M OK", "GLASS LINK ... OK", "CACHE 8 SLOTS", "LEDGER ... OK", "EVAL-7 ... WAKE"];
     rows.slice(0, Math.min(rows.length, Math.floor(age / 160) + 1)).forEach((r, i) => small(ctx, r, 8, 8 + i * 8, i === rows.length - 1 ? C.mint : C.cyanDark));
@@ -625,7 +625,7 @@
     if (S().flag("deck_app") === "photo") { sprite(ctx, "deck_photo", 0, 0); return; }     // the old photo, whole
     desktop(ctx);
     const { app: open, clip } = opened();
-    if (clip) { frame(ctx, t("CACHE // {name}", { name: t(Halcyon.cache[clip]?.name ?? clip) })); editor(ctx, clip); }
+    if (clip) { frame(ctx, t("CACHE // {name}", { name: t(Nagiwa.cache[clip]?.name ?? clip) })); editor(ctx, clip); }
     else if (open && /** @type {any} */ (APP_DRAW)[open]) { frame(ctx, LABEL[/** @type {keyof typeof LABEL} */ (open)]); /** @type {any} */ (APP_DRAW)[open](ctx); }
     header(ctx);
     evi(ctx);

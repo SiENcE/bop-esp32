@@ -12,7 +12,7 @@
 pal({
   0: "#030a0a", 1: "#071514", 2: "#0c221f", 3: "#12332d", 4: "#1a483e", 5: "#266252", 6: "#388169", 7: "#55a585", 8: "#8acfae", 9: "#d4f7e2",   // the phosphor
   k: "#0c0e1a", n: "#06080f", A: "#131a2a", B: "#1a2337", C: "#232f47", D: "#2f3e5a", E: "#41547a",                                          // ink, night steel
-  g: "#565e70", G: "#8e96a8", h: "#3d4656",                                                                                                 // Halcyon's grey, its shade
+  g: "#565e70", G: "#8e96a8", h: "#3d4656",                                                                                                 // Nagi·wa's grey, its shade
   S: "#d79676", s: "#93583f", O: "#552b1c", l: "#a9c29c", m: "#6f8f76",                                                                       // skin; skin in the monitor's light
   c: "#123c4e", v: "#62def0",                                                                                                                // the lanyard, the implant
 })

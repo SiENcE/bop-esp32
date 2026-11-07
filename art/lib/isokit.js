@@ -1,4 +1,4 @@
-// Halcyon's room kit and its bake (docs/ideas/iso-tiles.md, style guide §4 and §7): a street-mode room's
+// Glass Sister's room kit and its bake (docs/ideas/iso-tiles.md, style guide §4 and §7): a street-mode room's
 // map (art/lib/isomap.js, art/rooms/<id>.map.js) baked with its light into the picture and the props.
 // pxl-side JavaScript; include it after art/lib/iso.js (its palette and helpers: bay, ihash) and
 // art/lib/isomap.js, then the kit files (art/kit/*.kit.px.js) that register the pieces, then bake:

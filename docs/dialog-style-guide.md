@@ -9,7 +9,7 @@ ihre Stimme wird mit der ersten guten Zeile hier nachgetragen.
 
 ## 1. Der Grundsatz
 
-**Schreib nicht wie für ein Cyberpunk-Spiel. Schreib Menschen, die zufällig in Halcyon leben.**
+**Schreib nicht wie für ein Cyberpunk-Spiel. Schreib Menschen, die zufällig in Nagi·wa leben.**
 
 Das Seltsame ist Alltag, und niemand wundert sich. Die Leute haben Hunger, Schulden, schlechte Laune, kleine Gewohnheiten, Menschen,
 die sie vermissen, und Dinge, über die sie nicht reden wollen. Der Ton folgt der Bibel (§1, §3): still, erwachsen, moralisch grau,
@@ -77,7 +77,7 @@ verkauft, das Kassenbuch rechnet. So darf auch eine schöne Zeile fallen, ohne d
 - **Zu viel Slang.** Glass, Shine, Sinker und Chits wirken, wenn sie selbstverständlich und sparsam fallen.
 - **Zu viel Poesie.** Die Stadt darf poetisch aussehen, ihre Leute reden nicht ständig so.
 - **Zu viele Einzeiler.** Niemand ist eine Sprüchemaschine. Ernste Gespräche brauchen auch unspektakuläre Sätze. Die Blicke, die schon im Spiel stehen, bleiben, wie sie sind (entschieden 2026-11-06).
-- **Zu viel Erklärung.** Niemand erzählt seine Biografie oder Halcyons Geschichte, nur weil ein Gespräch begonnen hat.
+- **Zu viel Erklärung.** Niemand erzählt seine Biografie oder Nagi·was Geschichte, nur weil ein Gespräch begonnen hat.
 - **Künstliche Coolness.** Juno ist keine unfehlbare Heldin. Sie sieht zu viel, isst zu wenig und weiß nicht immer, was sie tun soll.
 - **Melodram.** Wer ständig von Verrat, Schicksal, Dunkelheit und der Wahrheit redet, verliert das Menschliche.
 
@@ -127,10 +127,11 @@ viel, später was daraus wurde. Es urteilt nie.
   **Sinker**, **Chits**. Eigennamen ebenso: Lull, Civic Rest, NINTH LIVE.
 - **Die Quiet** ist Singular: „Die Quiet stürmt den Block.“
 - **Der Neunte, die Krone, die Ringe** sagen die Leute von hier, nie „die Arkologie“.
+- **Nagi·wa** schreibt sich im Text immer mit dem Mittelpunkt, im Genitiv „Nagi·was“ („Nagi·was Kamera“); auf Schildern `NAGI·WA` oder nur `凪輪` (Bibel §10d). Gesprochen: Na-gi-wa.
 - **Lull und das Implantat sind zweierlei.** Lull ist der blasse Punkt hinter dem Ohr der anderen; „das Implantat“ ist nur das der
   Beobachter, also Junos. Ein Lull-Nutzer sagt „Lull“ oder „das Licht hinterm Ohr“. Dass beide zusammengehören, kommt erst nach und
   nach heraus (Bibel §10a).
-- **Sinker** sagen die Leute, **Ruhe-Erschöpfung** sagt Halcyon. Wer das zweite sagt, zitiert es meist.
+- **Sinker** sagen die Leute, **Ruhe-Erschöpfung** sagt Nagi·wa. Wer das zweite sagt, zitiert es meist.
 - **Sable** bekommt im Deutschen keine Pronomen und keine gegenderten Rollenwörter (Bibel §10). Die Sätze werden darum herum gebaut.
 - **Keine Spielwörter in Junos Mund:** kein „Linksklick“ oder „Rechtsklick“, denn der Text muss auch für den Finger und später den Controller stimmen.
 - **Den Takt** „lang, kurz, kurz, lang“ sagen im Klartext nur Motte (wenn Juno fragt, wie er bei seiner Mutter mitzählt) und EVI als letzte Stufe ihres Hinweises (Bibel §10c, geändert 2026-11-07). Juno selbst sagt ihn nie.
@@ -145,7 +146,7 @@ viel, später was daraus wurde. Es urteilt nie.
 
 **Bau** (technisch, `CLAUDE.md` und `dialog-design` §4)
 
-- Nie mehr als vier Optionen auf einmal, den Weg zurück mitgezählt. Längere Gespräche verschachteln sich (`Halcyon.talkTree`).
+- Nie mehr als vier Optionen auf einmal, den Weg zurück mitgezählt. Längere Gespräche verschachteln sich (`Nagiwa.talkTree`).
 - Alle Texte gehen über i18n; gemalter Text ist nur für Schilder und Technik der Stadt (englisch).
 - Reaktionen **lesen** Flags, sie setzen nur welche, wenn es für die Geschichte zählt. Flavour darf man wieder fragen und kostet dann
   keinen Zustand. Was hier etwas für später anlegt, steht im Design-Dokument des Kapitels (wie `kapitel1-design` §7).
@@ -157,7 +158,7 @@ viel, später was daraus wurde. Es urteilt nie.
 Die Anrede sagt etwas über Nähe und Abstand, nichts über Geschlecht, Herkunft oder Alter, und für alle gilt dieselbe Regel:
 
 - **Du ist im Neunten normal.** Wer sich kennt oder auf derselben Straße lebt, duzt sich.
-- **Sie schafft Abstand.** Es gilt gegenüber Fremden, Ämtern, Halcyon und allen, die dafür bezahlen, dass man sie nicht kennt: Frau Imai,
+- **Sie schafft Abstand.** Es gilt gegenüber Fremden, Ämtern, Nagi·wa und allen, die dafür bezahlen, dass man sie nicht kennt: Frau Imai,
   WREN, Vesper, Morrow, Aubrecht.
 - **Der Wechsel vom Sie zum Du ist ein kleines Ereignis** in der Beziehung. Die Handlung hängt nie daran, weil es den Unterschied im
   Englischen nicht gibt (H10).
@@ -242,7 +243,7 @@ und sie müssen nicht jedes Mal komisch sein. Noch keine Zeile im Spiel.
 ### Tinte: die alte Kollegin
 
 Langsam, trocken, gelassen, sehr kurze Sätze. Kein Orakel, keine langen Metaphern: eine fast vierzigjährige Krake, die seit Jahren mit Teo
-arbeitet und mehr weiß, als Halcyon ihr zutraut. Sie zählt, und sie sagt, was sie gezählt hat.
+arbeitet und mehr weiß, als Nagi·wa ihr zutraut. Sie zählt, und sie sagt, was sie gezählt hat.
 
 > „Dein Bruder schläft im Becken-Raum. Er hört nicht. Komm.“
 
@@ -321,12 +322,12 @@ denselben Beruf hat. Seine erste Äußerung im Spiel ist ein Blick in die Kamera
 Viele Stimmen zugleich (die von Frau Haldane ist darunter). Wenn er durch das Implantat spricht: Magenta-Weiß, Kleinbuchstaben, ohne Namen,
 und der Spieler merkt es zuerst am Ton (`dialog-design` §2). Sonst noch offen.
 
-### Geschäftsleute und Halcyon
+### Geschäftsleute und Nagi·wa
 
 - **Varga** droht wie jemand, der eine Rechnung stellt: „Bis Freitag, Kessler. Sonst holen wir uns mehr als einen Ring.“
 - **WREN** schreibt, als wäre alles schon bezahlt, siezt und grüßt nicht: „Wie Sie wollen. Das Angebot bleibt.“
 - **Vesper** ist begeistert vom Echten und merkt nichts: „Ohne Gesichter ist es kein Leben.“
-- **Halcyon selbst** ist immer freundlich, immer im Sie und sagt nie etwas: „Halcyon dankt Ihnen für Ihren Dienst.“ „Ihre Meldung wird
+- **Nagi·wa selbst** ist immer freundlich, immer im Sie und sagt nie etwas: „Nagi·wa dankt Ihnen für Ihren Dienst.“ „Ihre Meldung wird
   bearbeitet.“
 
 ## 7. Die inneren Stimmen

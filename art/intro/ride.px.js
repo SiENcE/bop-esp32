@@ -107,7 +107,7 @@ function closeUp(c, T) {
   for (let y = 106; y < NEAR_RIM; y++) { const inset = Math.round((y - 106) / 8); c.rect(49 + inset, y, 42 - 2 * inset, 1, T.potMid); c.rect(49 + inset, y, 5, 1, T.potLit); c.rect(85 - inset, y, 6, 1, T.pot) }
   c.rect(50, 100, 40, 2, T.soil)
 
-  // the cup on the right, white once, a chip in its rim; the ring of Halcyon on it; yesterday's coffee down its side
+  // the cup on the right, white once, a chip in its rim; the ring of Nagi·wa on it; yesterday's coffee down its side
   const UX = 228, UW = 56, UTOP = 68
   c.rect(UX - 12, 80, 14, 4, T.cupMid); c.rect(UX - 14, 84, 4, 18, T.cupMid); c.rect(UX - 12, 102, 14, 4, T.cup)   // the handle
   c.rect(UX, UTOP, UW, NEAR_RIM - UTOP, T.cupMid)
@@ -131,7 +131,7 @@ function closeUp(c, T) {
   c.rect(0, NEAR_RIM, W, 4, T.rim); c.hline(0, NEAR_RIM + 3, W, T.cut)
   for (let x = 1; x < W; x += 4) c.px(x, NEAR_RIM + 1, T.cut)
   c.rect(120, NEAR_RIM, 34, 16, T.rim); c.hline(120, NEAR_RIM + 15, 34, T.cut)
-  TXT.draw(c, 8, NEAR_RIM + 12, "HALCYON SUPPLY  1 OF 1", T.print, { font: "hud" })
+  TXT.draw(c, 8, NEAR_RIM + 12, "NAGI·WA SUPPLY  1 OF 1", T.print, { font: "hud" })
 
   // her sleeve coming in from the right, its cuff, her hand over the rim, four fingers down the outside
   const HX = 244
@@ -200,7 +200,7 @@ function sleeper(c, x, y, skin, shade, hair, point) {
 }
 adScreen("intro_d_ad_sleep", "#123c4e", "#1f88a4", (c, x, y, w, h) => {
   c.rect(x, y, w, h, "#123c4e"); c.rect(x, y + h - 6, w, 6, "#1f88a4")
-  TXT.draw(c, x + w / 2, y + 7, "HALCYON", "#dafcff", { align: "center" })
+  TXT.draw(c, x + w / 2, y + 7, "NAGI·WA", "#dafcff", { align: "center" })
   TXT.draw(c, x + w / 2, y + 21, "SLEEP BETTER", "#62def0", { font: "hud", align: "center" })
 })
 adScreen("intro_d_ad_hours", "#2c2026", "#4a3026", (c, x, y, w, h) => {

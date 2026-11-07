@@ -1,9 +1,9 @@
-// Halcyon: Jade Row, the lane left of Kowalski Street, on blocks (art/mock/jade_row.px.js): the view down its length. Okonkwo's corner shop stands in it, and
+// Nagiwa: Jade Row, the lane left of Kowalski Street, on blocks (art/mock/jade_row.px.js): the view down its length. Okonkwo's corner shop stands in it, and
 // across the lane the machine whose small camera sees into his window: job B of Chapter 1 plays here. Open from Chapter 1 on.
 "use strict";
 
 (function () {
-  const AJ = Halcyon.at.jade_row, AW = Halcyon.at.kowalski;
+  const AJ = Nagiwa.at.jade_row, AW = Nagiwa.at.kowalski;
   const kowalski = Cutaway.room.get("kowalski");
   // on the street's left end a way through, as a block: the street's map isn't changed until it is painted
   (kowalski.props ??= []).push({ id: "row_way", image: "mock_row_way", at: [14, 162], baseline: 0 });

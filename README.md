@@ -4,7 +4,7 @@ Ein eigenständiges Cyberpunk-Point-and-Click-Adventure in Pixel Art, das im Bro
 
 ![Juno in der Kowalski Street, an Baos Essenswagen im Regen](docs/rooms/kowalski_x3.png)
 
-Halcyon ist eine Stadt und zugleich der Konzern, dem sie gehört. Juno ist Hackerin in der Lower Ninth: Sie
+Nagi·wa ist eine Stadt und zugleich der Konzern, dem sie gehört. Juno ist Hackerin in der Lower Ninth: Sie
 beobachtet Menschen durch die Kameras der Stadt und verkauft, was sie dabei erfährt, auf dem Schwarzmarkt.
 Vor die Tür geht sie nur, um zu essen und zu handeln. Dann sieht sie eines Nachts ein schweres Verbrechen mit
 an. Daraus werden ein moralischer Konflikt und eine Ermittlung, die nach und nach ein viel größeres Geheimnis

@@ -1,4 +1,4 @@
-// Halcyon: the intro's shot C (docs/kapitel0-design.md §5; game/intro.js plays it): Halcyon Tower close, at
+// Nagiwa: the intro's shot C (docs/kapitel0-design.md §5; game/intro.js plays it): Nagi·wa Tower close, at
 // 05:45; one floor's windows glow phosphor green (the observation hall), and the camera flies at one of them and in
 // through it. Drawn here in perspective, in metres, so every edge stays a whole pixel as it grows: the facade is a
 // plane D metres in front of the camera, the target window's middle at (0, 0); the camera starts D0 away and
@@ -13,14 +13,14 @@
     ink: "#0c0e1a", green: "#55a585", greenDim: "#266252", greenPale: "#8acfae", greenWhite: "#d4f7e2",
     cyan: "#1f88a4", cyanLit: "#62def0", red: "#ff3a3a", redDim: "#7e1420", deck: "#232f47",
   };
-  const { bay, rnd, px } = Halcyon.intro;
+  const { bay, rnd, px } = Nagiwa.intro;
   // the tower: 60 m wide, from the Krone's deck (Y -70) to its roof (Y 44); windows every 4 m across and up,
   // 2.8 x 2.2 m; the hall's floor at Y 0, its windows taller
   const TX = 30, TB = -70, TT = 44, STEP = 4, WW = 1.4, WH = 1.1, HALL_H = 1.5;
 
   Cutaway.room("intro_c", { name: "Intro", color: C.sky, float: "c" });
 
-  Halcyon.intro.shots.c = (ctx, p, t) => {
+  Nagiwa.intro.shots.c = (ctx, p, t) => {
     // the distance shrinks at a steady rate of zoom (geometric), so the push-in neither crawls nor leaps at the end
     const D = D0 * Math.pow(D1 / D0, p), camY = (LOW * (D - D1)) / (D0 - D1), k = F / D;   // a straight line to the window
     const sx = (/** @type {number} */ X) => 160 + X * k, sy = (/** @type {number} */ Y) => 90 - (Y - camY) * k;

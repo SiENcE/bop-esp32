@@ -43,7 +43,7 @@ ISO_MAPS.kessel_14 = {
   // the stairs go down along +u from the top step at u 2.5 (they run on under the floor past the well)
   stairs: { id: "stairs", kit: "stairs_concrete", from: [2.5, 0], to: [4.0, 1.0], down: "+u", rise: 0.18, tread: 0.3 },
   props: [
-    // Halcyon's camera up in the corner, looking down the landing
+    // Nagi·wa's camera up in the corner, looking down the landing
     { id: "corner_cam", kit: "corner_cam", at: [0.03, 0.03], foot: [0.42, 0.2], h: 2.55, block: false },
     // the lift's emergency key, a long hook, on the wall beside its doors; a prop of its own, since Juno takes it
     { id: "haken", kit: "emergency_key", at: [1.72, 0.03], foot: [0.2, 0.05], h: 2.3, block: false },

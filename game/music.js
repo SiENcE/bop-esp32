@@ -1,4 +1,4 @@
-// Halcyon: the music (docs/style-guide.md §8a "Music", docs/kapitel0-design.md §9), synthesised with the
+// Nagiwa: the music (docs/style-guide.md §8a "Music", docs/kapitel0-design.md §9), synthesised with the
 // engine (Cutaway.synth, Cutaway.score): dark synth in the line of Vangelis's Blade Runner and the SNES
 // Shadowrun. Two themes at the same tempo and in the same key, so going into a camera and back stays in time:
 //   juno   Juno's theme, D minor (Aeolian), 72 bpm: an electric piano carries the tune, a CS-80-like pad
@@ -140,7 +140,7 @@
   // ---------------------------------------------------------------- opening: the intro's float over the sea
   // The neo-noir opening (game/intro.js), with the memory theme's instruments but its own tune: a pedal D under
   // everything the whole way (the city never lets go), wide brass swells over it, far thunder, bells like lights
-  // on the water; the ribbon lead comes in once Halcyon is near, falling slowly from D to A. 56 bpm, D.
+  // on the water; the ribbon lead comes in once Nagi·wa is near, falling slowly from D to A. 56 bpm, D.
   const oDsus = "D3+A3+D4+E4", oDm = "D3+A3+C4+F4", oBb = "Bb2+F3+A3+D4", oC = "C3+G3+D4+E4", oGmD = "D3+G3+Bb3+D4", oAsus = "A2+D3+E3+G3";
   Cutaway.score.theme("opening", {
     tempo: 56, key: "D",

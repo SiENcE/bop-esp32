@@ -14,7 +14,7 @@
 //   openings kessel_street_door (the lobby's glass door from outside: its cold light, the yellow sign),
 //            lucky_window (the bar: lamps, bottles, the counter, two regulars' backs, the TV, OPEN, steam on
 //            the glass), lucky_door (open: the light pouring out under a noren), lucky_sign (LUCKY STATIC in
-//            tubes, the Y stuttering), ad_screen (HALCYON, SLEEP BETTER, a sleeping face; the other half
+//            tubes, the Y stuttering), ad_screen (NAGI·WA, SLEEP BETTER, a sleeping face; the other half
 //            broken: static, cracks from an impact), alley_gate (a lattice gate chained shut, DRAIN MKT, the
 //            steps down into the dark, a lamp far below)
 //   props    vending (a noodle machine with a mood: its little face), bao_cart (the cart, its counter, the
@@ -172,7 +172,7 @@ const KOW = (() => {
       return near(s, 5.4, 0.015) ? "3" : "4"
     }
     if (near(s, 5.35, 0.022) && h < 0.85) return "k"
-    // torn posters by it: Halcyon's cyan, a gig's magenta over it, both torn
+    // torn posters by it: Nagi·wa's cyan, a gig's magenta over it, both torn
     if (s >= 5.62 && s < 5.84 && h >= 0.75 && h < 1.4) {
       const torn = h > 1.3 - 0.06 * Math.sin(s * 70) || (s > 5.74 && h < 0.95)
       if (torn) return h > 1.36 ? "3" : "2"
@@ -300,7 +300,7 @@ const KOW = (() => {
   // ---------------------------------------------------------------- the big ad screen, half broken
   // What the screen shows (y down, its top-left at (X, Y), aw x ah px), every key unlit ("!"), so the opening and
   // the prologue's moment (art/rooms/kowalski.px.js, kowalski_ad_*) draw the same screen:
-  //   "normal"   the advert (HALCYON, a woman asleep on her pillow, SLEEP BETTER) and the broken half: static,
+  //   "normal"   the advert (NAGI·WA, a woman asleep on her pillow, SLEEP BETTER) and the broken half: static,
   //              cracks from an impact, a glitch sliding through the advert
   //   "stutter"  it fails: torn rows, the static eating into the advert, the picture dropping out
   //   "eye"      all static; an eye opens in it and turns to look down-left, at the street (n: 0..19)
@@ -312,12 +312,12 @@ const KOW = (() => {
   const big = (c, x, y, text, k, q) => {
     let cx = x
     for (const ch of text) {
-      const g = HALCYON_GLYPHS.halcyon[ch] ?? HALCYON_GLYPHS.halcyon["?"], rows = Array.isArray(g) ? g : g.rows, dy = Array.isArray(g) ? 0 : g.dy
+      const g = NAGIWA_GLYPHS.nagiwa[ch] ?? NAGIWA_GLYPHS.nagiwa["?"], rows = Array.isArray(g) ? g : g.rows, dy = Array.isArray(g) ? 0 : g.dy
       rows.forEach((r, ry) => { for (let rx = 0; rx < r.length; rx++) if (r[rx] === "#") c.rect(cx + rx * q, y + (dy + ry) * q, q, q, k) })
       cx += (rows[0].length + 1) * q
     }
   }
-  const bigWidth = (text, q) => [...text].reduce((w, ch) => { const g = HALCYON_GLYPHS.halcyon[ch] ?? HALCYON_GLYPHS.halcyon["?"]; return w + ((Array.isArray(g) ? g : g.rows)[0].length + 1) * q }, -q)
+  const bigWidth = (text, q) => [...text].reduce((w, ch) => { const g = NAGIWA_GLYPHS.nagiwa[ch] ?? NAGIWA_GLYPHS.nagiwa["?"]; return w + ((Array.isArray(g) ? g : g.rows)[0].length + 1) * q }, -q)
   function adScreen(c, X, Y, aw, ah, f, mode = "normal", n = 0) {
     const half = fl(aw * 0.52)
     if (mode === "eye") {
@@ -346,9 +346,9 @@ const KOW = (() => {
       for (let x = X; x < X + aw; x++) { const k = c.key(x, band); c.px(x, band, k === "!V" ? "!v" : k === "!c" ? "!C" : k) }
       return
     }
-    // the advert: HALCYON, a sleeping face, SLEEP BETTER
+    // the advert: NAGI·WA, a sleeping face, SLEEP BETTER
     c.rect(X, Y, half + 4, ah, "!C"); c.rect(X, Y, half + 4, 12, "!c")
-    TXT.draw(c, X + 4, Y + 3, "HALCYON", "!V")
+    TXT.draw(c, X + 4, Y + 3, "NAGI·WA", "!V")
     // a woman asleep, her cheek on a pillow, smiling: the pillow, her hair, her face, eyes shut
     const fx = X + fl(half / 2) + 1, fy = Y + 33
     c.rect(X + 3, fy + 6, half - 4, 12, "!H"); c.hline(X + 3, fy + 6, half - 4, "!V"); c.hline(X + 3, fy + 17, half - 4, "!h")

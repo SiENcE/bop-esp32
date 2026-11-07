@@ -315,7 +315,7 @@ function screen(c) {
   c.line(x0 + 7, y0 + 22, x0 + 10, y0 + 22, "q"); c.line(x0 + 15, y0 + 22, x0 + 18, y0 + 22, "q")   // shut eyes
   c.px(x0 + 6, y0 + 21, "q"); c.px(x0 + 19, y0 + 21, "q")
   c.line(x0 + 9, y0 + 30, x0 + 12, y0 + 32, "Q"); c.line(x0 + 13, y0 + 32, x0 + 17, y0 + 30, "Q")  // the smile
-  c.text(x0 + 2, y0 + 2, "HALCYON", "S")
+  c.text(x0 + 2, y0 + 2, "NAGI·WA", "S")
   c.text(x0 + 2, y0 + h - 7, "SLEEP", "S"); c.text(x0 + 2 + 22, y0 + h - 7, "BET", "s")
   // the dead half: static, and in it one huge eye looking down at the street
   for (let y = y0; y < y0 + h; y++) for (let xx = mid; xx < x0 + w; xx++) {

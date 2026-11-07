@@ -1,8 +1,8 @@
-// Halcyon: the sounds (docs/style-guide.md §8a "Sounds"): synthesised with the engine (Cutaway.sfx,
+// Nagiwa: the sounds (docs/style-guide.md §8a "Sounds"): synthesised with the engine (Cutaway.sfx,
 // no files), electric, cold and small. No cartoon sounds: hum, data chirps, keys, a modem's handshake,
 // relays, static, rain on glass. Where they play:
-//   the implant and the feeds   tag (halcyon.js), rec (rooms/cams.js, screens.js), zoom (halcyon.js),
-//                               cache (halcyon.js), link (rooms/deck.js)
+//   the implant and the feeds   tag (nagiwa.js), rec (rooms/cams.js, screens.js), zoom (nagiwa.js),
+//                               cache (nagiwa.js), link (rooms/deck.js)
 //   room changes                jack_in, jack_out, static, glitch (here, by the kind in transitions.js)
 //   the deck                    mail, boot, type (the cards' letters: skin.js), evi (the hint button, here)
 //   ambience (rooms' loops)     rain_glass, city_far, neon_buzz, fridge_hum, deck_fans, feed_hiss, feed_rain
@@ -11,9 +11,9 @@
 
 (function () {
   /** The game's sounds by name, in the order they are defined (tools/render-sounds.mjs plays them). @type {string[]} */
-  Halcyon.sounds = [];
+  Nagiwa.sounds = [];
   /** @param {string} name @param {any} def */
-  const S = (name, def) => { Halcyon.sounds.push(name); Cutaway.sfx.define(name, def); };
+  const S = (name, def) => { Nagiwa.sounds.push(name); Cutaway.sfx.define(name, def); };
 
   // ---------------------------------------------------------------- the stairs of the Kessel Block
   // two feet on a steel flight: a dull step and the landing's ring
@@ -76,8 +76,8 @@
   // a room change: by its kind (transitions.js); only where the change is shown (not in the tools)
   Cutaway.events.on("room.leave", (/** @type {{id?: string, to: string}} */ e) => {
     if (!Cutaway.fx.active || Cutaway.script.fast || !e.id || e.id === e.to) return;
-    const k = Halcyon.transitionKind({ from: e.id, to: e.to });
-    Cutaway.events.emit("sfx", { sfx: k === "jack" ? (Halcyon.isScreen(e.to) ? "jack_in" : "jack_out") : k });
+    const k = Nagiwa.transitionKind({ from: e.id, to: e.to });
+    Cutaway.events.emit("sfx", { sfx: k === "jack" ? (Nagiwa.isScreen(e.to) ? "jack_in" : "jack_out") : k });
   });
   // EVI answers the hint button
   Cutaway.events.on("hint", () => Cutaway.events.emit("sfx", { sfx: "evi" }));

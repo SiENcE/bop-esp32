@@ -1,20 +1,20 @@
-// Halcyon: the cameras of the prologue (docs/kapitel0-design.md §3, §7.2). Each is a watched room: no
+// Nagiwa: the cameras of the prologue (docs/kapitel0-design.md §3, §7.2). Each is a watched room: no
 // Juno in it, the phosphor look as live post-effects over its baked picture, a microphone, lines in the
 // audio bar with the speaker's name. Its display (OSD) and the implant's overlay: game/screens.js.
 "use strict";
 
 (function () {
-Halcyon.cams.cam03 = { id: "03", place: "OSTBRÜCKE", owner: "PUMPENVERWALTUNG OST", map: [64, 14] };
+Nagiwa.cams.cam03 = { id: "03", place: "OSTBRÜCKE", owner: "PUMPENVERWALTUNG OST", map: [64, 14] };
 // cam04 is on Juno's map only once she knows Kessler is going to Yuen's (`if`)
-Halcyon.cams.cam04 = { id: "04", place: "IMBISS YUEN", owner: "YUEN'S, PRIVAT", map: [120, 62], if: "heard_yuens",
+Nagiwa.cams.cam04 = { id: "04", place: "IMBISS YUEN", owner: "YUEN'S, PRIVAT", map: [120, 62], if: "heard_yuens",
   linked: [{ evi: "froh" }, { say: "evi", text: "Verbunden! Hallo, Kamera vier." }] };          // what happens when it is linked (step 6)
 
 /** The phosphor duotone (docs/style-guide.md §9), the same ten values as the art. */
-Halcyon.PHOSPHOR = ["#030a0a", "#071514", "#0c221f", "#12332d", "#1a483e", "#266252", "#388169", "#55a585", "#8acfae", "#d4f7e2"];
+Nagiwa.PHOSPHOR = ["#030a0a", "#071514", "#0c221f", "#12332d", "#1a483e", "#266252", "#388169", "#55a585", "#8acfae", "#d4f7e2"];
 /** The feeds' live artefacts: grain, the ramp, scanlines, a rolling band, the lens's dark corners. */
-Halcyon.FEED_POST = [
+Nagiwa.FEED_POST = [
   { noise: 0.035 },
-  { palette: Halcyon.PHOSPHOR, dither: 0.6 },
+  { palette: Nagiwa.PHOSPHOR, dither: 0.6 },
   { scanlines: 2, amount: 0.1 },
   { roll: { speed: 24, height: 9, amount: 0.14 } },
   { vignette: 0.2 },
@@ -26,14 +26,14 @@ Halcyon.FEED_POST = [
  * @param {string} id @param {Record<string, any>} o
  */
 /** Where the display's buttons and camera column are (screens.js draws them there). */
-Halcyon.osd = {
+Nagiwa.osd = {
   rewind: [172, 13, 40, 10], rec: [214, 13, 24, 10], wait: [240, 13, 26, 10], back: [268, 13, 48, 10],
   /** @param {number} i */
   thumb: (i) => [4 + Math.floor(i / 8) * 36, 42 + (i % 8) * 13, 34, 10],      // two columns: eight rows reach down to where the bag's bar begins
 };
 
-Halcyon.camRoom = function (id, o) {
-  const O = Halcyon.osd;
+Nagiwa.camRoom = function (id, o) {
+  const O = Nagiwa.osd;
   /** @type {Record<string, any>} */
   const hotspots = {
     // (only where something can be recorded, `rec`: else every state in a camera would come twice, REC on and off)
@@ -44,32 +44,32 @@ Halcyon.camRoom = function (id, o) {
     ...o.hotspots,
   };
   if (hotspots.rewind) hotspots.rewind.rect = O.rewind;
-  Cutaway.room(id, { name: `CAM ${Halcyon.cams[id].id}`, background: `${id}_bg`, observe: true, feed: id,
-    post: Halcyon.FEED_POST, lines: "bottom", label: true, ambience: ["feed_hiss", "feed_rain", "city_far"],
+  Cutaway.room(id, { name: `CAM ${Nagiwa.cams[id].id}`, background: `${id}_bg`, observe: true, feed: id,
+    post: Nagiwa.FEED_POST, lines: "bottom", label: true, ambience: ["feed_hiss", "feed_rain", "city_far"],
     music: { theme: "glass", intensity: 0.2 }, ...o, hotspots,
     // REC belongs to the camera it was pressed on: leaving it stops the recording (kapitel0-design §3)
     enter: [{ unset: "rec_on" }, ...(o.enter ?? [])] });
 };
 
 /** The strip of linked cameras, in every camera's room: once all of them are known (game.js), so a chapter's cameras are in the prologue's rooms too. */
-Halcyon.buildCamStrip = function () {
-  const ids = Object.keys(Halcyon.cams);
+Nagiwa.buildCamStrip = function () {
+  const ids = Object.keys(Nagiwa.cams);
   for (const id of ids) {
     const room = Cutaway.room.get(id);
     ids.forEach((c, i) => {
-      if (c !== id) room.hotspots[`thumb_${c}`] = { name: `CAM ${Halcyon.cams[c].id}`, rect: Halcyon.osd.thumb(i), z: 5, if: [`link_${c}`, ...(Halcyon.cams[c].if ? [Halcyon.cams[c].if] : []), ...(room.strip ? [room.strip] : [])], use: [{ goto: c }] };
+      if (c !== id) room.hotspots[`thumb_${c}`] = { name: `CAM ${Nagiwa.cams[c].id}`, rect: Nagiwa.osd.thumb(i), z: 5, if: [`link_${c}`, ...(Nagiwa.cams[c].if ? [Nagiwa.cams[c].if] : []), ...(room.strip ? [room.strip] : [])], use: [{ goto: c }] };
     });
   }
 };
 
-const A3 = Halcyon.at.cam03, A4 = Halcyon.at.cam04;
+const A3 = Nagiwa.at.cam03, A4 = Nagiwa.at.cam04;
 
-Halcyon.camRoom("cam03", {
+Nagiwa.camRoom("cam03", {
   mic: { at: A3.mic, clear: 40, lost: 150 },
   hotspots: {
     mast: { name: "Kamera am Mast", rect: A3.mast, if: "day=1",
       look: "Gegenüber, am Mast: noch eine Kamera. Zeigt auf die Ecke bei Yuen's.",
-      use: [{ zoom: "zoom_sticker_cam04" }, "HCS-04. K7-731.", "Der Wartungscode, auf das Gehäuse geklebt. Halcyon spart an allem.", { zoom: false }, { set: "code_cam04" }] },
+      use: [{ zoom: "zoom_sticker_cam04" }, "HCS-04. K7-731.", "Der Wartungscode, auf das Gehäuse geklebt. Nagi·wa spart an allem.", { zoom: false }, { set: "code_cam04" }] },
     vending: { name: "Nudelautomat", rect: A3.vending,
       look: "Ein Nudelautomat. Halb die Pumpenverwaltung isst daraus.", use: [{ zoom: "zoom_vending_n7" }, "Nummer 7, Huhn scharf. Die Taste ist abgegriffen.", { zoom: false }] },
     office: { name: "Pumpenverwaltung Ost", rect: A3.officeDoor, look: "Die Pumpenverwaltung. Um zehn ist Schichtende." },
@@ -80,11 +80,11 @@ Halcyon.camRoom("cam03", {
   },
 });
 
-Halcyon.camRoom("cam04", {
+Nagiwa.camRoom("cam04", {
   ambience: ["feed_hiss", "fridge_hum", { sfx: "feed_rain", gain: 0.4 }],      // inside Yuen's: the kitchen, the rain beyond the window
   mic: { at: A4.mic, clear: 20, lost: 80 },
   hotspots: {
-    tv: { name: "Fernseher", rect: A4.tv, look: "Halcyon-Werbung. Eine Frau schläft und lächelt dabei. SLEEP BETTER." },
+    tv: { name: "Fernseher", rect: A4.tv, look: "Nagi·wa-Werbung. Eine Frau schläft und lächelt dabei. SLEEP BETTER." },
     counter: { name: "Theke", rect: A4.counterBox, look: "Yuen's. Nudeln, Tee, und keine Fragen." },
     rewind: { name: "Puffer", z: 5, if: ["moment:kessler_ring", "!cache_clip_kessler_ring"],
       use: ["Puffer. Zurück auf 22:35.", { zoom: "zoom_ring" }, "Da. Er zieht den Ring ab und schiebt ihn rüber.",

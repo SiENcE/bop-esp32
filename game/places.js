@@ -1,4 +1,4 @@
-// Halcyon: positions in the rooms, in one place. Street-mode rooms built from a map come measured from their
+// Nagiwa: positions in the rooms, in one place. Street-mode rooms built from a map come measured from their
 // bake (game/rooms/<id>.layout.js, written by tools/build_art.sh); the cameras from their layout notes
 // (docs/cams/*_layout.md). Rooms, routines and moments read them from here.
 "use strict";
@@ -16,20 +16,20 @@ function fromLayout(/** @type {any} */ L) {
   return at;
 }
 
-Halcyon.at = {
+Nagiwa.at = {
   // measured from the flat's map and its bake (art/rooms/flat.map.js, game/rooms/flat.layout.js)
-  flat: fromLayout(Halcyon.layouts.flat),
+  flat: fromLayout(Nagiwa.layouts.flat),
   // the 14th floor's landing (art/rooms/kessel_14.map.js, game/rooms/kessel_14.layout.js)
-  kessel_14: fromLayout(Halcyon.layouts.kessel_14),
+  kessel_14: fromLayout(Nagiwa.layouts.kessel_14),
   // the lobby (art/rooms/kessel_lobby.map.js, game/rooms/kessel_lobby.layout.js)
-  kessel_lobby: fromLayout(Halcyon.layouts.kessel_lobby),
+  kessel_lobby: fromLayout(Nagiwa.layouts.kessel_lobby),
   // the observation hall, the intro's shot 1 (art/rooms/hall.map.js, game/rooms/hall.layout.js)
-  hall: fromLayout(Halcyon.layouts.hall),
+  hall: fromLayout(Nagiwa.layouts.hall),
   // Kowalski Street (art/rooms/kowalski.map.js, game/rooms/kowalski.layout.js)
   kowalski: {
     fromGasse: [346, 170],
     west: [16, 164], westRect: [0, 92, 30, 56],   // the way on to the left, into the lane (a block for now: mock_row_way)
-    ...fromLayout(Halcyon.layouts.kowalski),
+    ...fromLayout(Nagiwa.layouts.kowalski),
     // the room's effects, on the screen (from the map's projection): the light hanging in the rain out of
     // LUCKY STATIC's door and under the ad screen, glints on the puddles, drops off an AC unit, the Kessel
     // Block's transom and the cornice by the alley
@@ -37,10 +37,10 @@ Halcyon.at = {
     glints: [[264, 164], [123, 150], [130, 169], [285, 158]],
     drips: [[247, 2, 95], [166, 8, 77], [396, 88, 170]],
     // the implant's brackets round the ad screen in the JUNO. moment
-    adMark: [Halcyon.layouts.kowalski.openings.ad[0] - 3, Halcyon.layouts.kowalski.openings.ad[1] + 2,
-      Halcyon.layouts.kowalski.openings.ad[2] + 6, Halcyon.layouts.kowalski.openings.ad[3] + 1],
+    adMark: [Nagiwa.layouts.kowalski.openings.ad[0] - 3, Nagiwa.layouts.kowalski.openings.ad[1] + 2,
+      Nagiwa.layouts.kowalski.openings.ad[2] + 6, Nagiwa.layouts.kowalski.openings.ad[3] + 1],
     // Bao's hotspot: his top half over the counter (the cart's own below it)
-    baoRect: [Halcyon.layouts.kowalski.spots.bao[0] - 15, Halcyon.layouts.kowalski.spots.bao[1] - 48, 31, 25],
+    baoRect: [Nagiwa.layouts.kowalski.spots.bao[0] - 15, Nagiwa.layouts.kowalski.spots.bao[1] - 48, 31, 25],
   },
   // measured from the cameras' projections (docs/cams/cam03_layout.md, cam04_layout.md). No depth `scale`: the
   // feed figures stay at their drawn size (scaling 24 px pixel art by 0.7–1.9 would smear it; the seated
@@ -58,7 +58,7 @@ Halcyon.at = {
   cam22: { seat: [120, 112], door: [20, 100], mic: [120, 100], bar: [24, 118, 272, 20] },
   cam23: { dryer6: [168, 76], counter: [262, 150], mic: [168, 100], dryers: [16, 28, 236, 40], desk: [268, 80, 44, 60] },
   cam24: { door: [160, 96], off: [40, 150], mic: [160, 110], entrance: [124, 24, 72, 66] },
-  // job B (game/auftrag_tide.js): Jade Row from Halcyon's camera above it, and from the machine's own at hip height
+  // job B (game/auftrag_tide.js): Jade Row from Nagi·wa's camera above it, and from the machine's own at hip height
   cam07: { okonkwo: [118, 104], car: [244, 144], morrow: [214, 146], boy: [196, 148], mic: [200, 124], windowRect: [80, 44, 70, 68], machineRect: [280, 60, 22, 54] },
   cam07v: { counter: [160, 100], safe: [214, 132], mic: [160, 110], safeRect: [196, 104, 40, 26], shelvesRect: [40, 24, 240, 40] },
   cam15: { door: [60, 150], spot: [262, 100], mic: [160, 100], capsules: [44, 28, 272, 52], c23: [248, 28, 30, 25] },

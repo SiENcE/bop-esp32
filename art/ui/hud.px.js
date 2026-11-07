@@ -1,5 +1,5 @@
 // The interface's own sprites (style guide §8 and §8a): what the engine draws over every room, in the
-// Halcyon look instead of its built-in icons.
+// Glass Sister look instead of its built-in icons.
 //
 //   ui_cursor        the pointer: a pale cyan arrow with an ink outline, its tip at [5, 5]
 //   ui_cursor_hot    over a hotspot: four corner brackets round the tip and a dot on it, pulsing (the

@@ -1,4 +1,4 @@
-// Halcyon: how the picture changes between rooms (docs/style-guide.md §8a "Transitions"), drawn instead
+// Nagiwa: how the picture changes between rooms (docs/style-guide.md §8a "Transitions"), drawn instead
 // of the engine's plain fade (Cutaway.fx.setTransition). Three kinds, by what the rooms are:
 //   street to street        a glitch scan: rows go dark from the top down, a cyan line at the edge,
 //                           the rows beside it slipping sideways (and back up when the new room comes)
@@ -83,8 +83,8 @@
   }
 
   // the sounds play by the same kinds (game/sounds.js)
-  Halcyon.transitionKind = kind;
-  Halcyon.isScreen = screen;
+  Nagiwa.transitionKind = kind;
+  Nagiwa.isScreen = screen;
 
   Cutaway.fx.setTransition({
     draw: (ctx, t) => { const k = kind(t); if (k === "jack") jack(ctx, t); else if (k === "static") staticNoise(ctx, t); else glitch(ctx, t); },

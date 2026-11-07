@@ -1,4 +1,4 @@
-// Halcyon: the end of Chapter 1 (docs/kapitel1-design.md §8). Juno watches Ines die in cam31 and everything she tries
+// Nagiwa: the end of Chapter 1 (docs/kapitel1-design.md §8). Juno watches Ines die in cam31 and everything she tries
 // fails where the player can see it. One straight chain, so the solver gains a handful of states:
 //   end_beat     unknown (the overlay says ???) > threat (the player's hands are free, and nothing helps) > kill > look > after (her flat)
 //   ines_down    Ines lies on the platform
@@ -8,14 +8,14 @@
 "use strict";
 
 (function () {
-const A = Halcyon.at.cam31, AF = Halcyon.at.flat;
+const A = Nagiwa.at.cam31, AF = Nagiwa.at.flat;
 
 // Story §10: every drastic scene comes in two versions, the same story with a different picture
 Cutaway.settings.define("violence", { page: "content", pageLabel: "Inhalt", label: "Gewalt",
   options: [["bars", "mit Balken"], ["shown", "gezeigt"]], default: "bars" });
 
 // ---- the people. Ashe has no face in the feed: the mask outshines the camera
-Halcyon.people.ashe = { name: "???" };
+Nagiwa.people.ashe = { name: "???" };
 Cutaway.actor("ashe", { name: "???", color: "#ff7a6a", speed: [5, 2.5], voice: { pitch: 50, wave: "sine", syllable: 90 },
   costume: { idle: "ashe_feed", walk: "ashe_feed_walk", talk: "ashe_feed" },
   poses: [{ if: "end_beat=look", idle: "ashe_feed_look", walk: "ashe_feed_look", talk: "ashe_feed_look" },
@@ -28,12 +28,12 @@ Cutaway.routine("ashe", [{ day: 4, from: "23:02", to: "23:30", room: "cam31", at
 Cutaway.state.view("ashe_lit");
 const SHADOW_ENDS = 74;   // where the lamp's light begins on his way (art/cams/cam31.px.js: the stairs' long cheek hides it from the lamp up to here, and hides him from Ines and Lantern)
 
-Halcyon.cache.clip_ines_death = { kind: "clip", name: "CAM 31, 23:03", about: "Die alte Metro. Alles, bis er hochsieht." };
-Object.assign(Halcyon.ledger, { ines: { to: "Ines Calder", what: { dead: "tot" } } });
-Halcyon.threads.wren.push({ from: "wren", if: "ledger_wren_live", at: "23:05", text: "Zahlung erfolgt. Danke für die Live-Übertragung." });
+Nagiwa.cache.clip_ines_death = { kind: "clip", name: "CAM 31, 23:03", about: "Die alte Metro. Alles, bis er hochsieht." };
+Object.assign(Nagiwa.ledger, { ines: { to: "Ines Calder", what: { dead: "tot" } } });
+Nagiwa.threads.wren.push({ from: "wren", if: "ledger_wren_live", at: "23:05", text: "Zahlung erfolgt. Danke für die Live-Übertragung." });
 
-// ---- the overlay tries to mark him (game/screens.js draws Halcyon.links)
-Halcyon.links.push(
+// ---- the overlay tries to mark him (game/screens.js draws Nagiwa.links)
+Nagiwa.links.push(
   { actor: "ashe", if: "end_beat=unknown", label: "???", color: "implant" },
   { actor: "ashe", if: { or: ["end_beat=threat", "end_beat=kill"] }, label: "BEDROHUNG", color: "red" },
 );
@@ -42,7 +42,7 @@ Halcyon.links.push(
 const fx = { tear: 0, bars: 0 };
 const hash = (/** @type {number} */ a, /** @type {number} */ b) => { let h = Math.imul(a, 374761393) + Math.imul(b, 668265263) | 0; h = Math.imul(h ^ (h >>> 13), 1274126177); return ((h ^ (h >>> 16)) >>> 0) / 4294967296; };
 const moving = () => Cutaway.settings.values.motion !== false;
-Cutaway.events.on("room.enter", () => { fx.tear = 0; fx.bars = 0; Halcyon.feedFails = {}; });
+Cutaway.events.on("room.enter", () => { fx.tear = 0; fx.bars = 0; Nagiwa.feedFails = {}; });
 
 // the old tube's flicker, before the phosphor ramp, so it stays on the ramp
 Cutaway.post.add("old_tube", (/** @type {any} */ px, /** @type {any} */ o, /** @type {number} */ t) => {
@@ -65,7 +65,7 @@ Cutaway.post.add("cam31_break", (/** @type {any} */ px, /** @type {any} */ _o, /
   if (b > 0) for (let y = 0; y < h; y++) if (y < b || y >= h - b) for (let x = 0; x < w; x++) { const i = (y * w + x) * 4; data[i] = 3; data[i + 1] = 10; data[i + 2] = 10; }
 });
 // the display twitches with the picture
-Halcyon.feedJitter = () => (fx.tear > 0.3 && moving() ? Math.round((hash(Math.floor(Cutaway.clock.time / 60), 3) - 0.5) * 6) : 0);
+Nagiwa.feedJitter = () => (fx.tear > 0.3 && moving() ? Math.round((hash(Math.floor(Cutaway.clock.time / 60), 3) - 0.5) * 6) : 0);
 
 // { cam31_fx: { tear: 1 }, ms: 600 } moves the picture's break there and waits
 Cutaway.script.action("cam31_fx", (s) => {
@@ -73,8 +73,8 @@ Cutaway.script.action("cam31_fx", (s) => {
   return Cutaway.tween.to({ key: "cam31_fx", ms: s.ms, step: (/** @type {number} */ k) => { for (const n of Object.keys(to)) /** @type {any} */ (fx)[n] = /** @type {any} */ (from)[n] + (to[n] - /** @type {any} */ (from)[n]) * k; } });
 });
 // { osd_fail: "try_chat", text: "NICHT ZUGESTELLT" } the button says so from now on (only the look: not saved)
-Halcyon.feedFails = {};
-Cutaway.script.action("osd_fail", (s) => { Halcyon.feedFails[s.osd_fail] = s.text; });
+Nagiwa.feedFails = {};
+Cutaway.script.action("osd_fail", (s) => { Nagiwa.feedFails[s.osd_fail] = s.text; });
 Cutaway.i18n.declare("feed display", ["KEIN ZUGRIFF", "NICHT ZUGESTELLT", "KEIN LAUTSPRECHER", "WIRD BEARBEITET", "STEUERN", "CHAT: INES", "LAUTSPRECHER", "REVIER 9", "SIGNAL LOST", "???", "BEDROHUNG"]);
 
 // ---- 22:55 to 23:02: she comes, he comes, and then someone else
@@ -124,9 +124,9 @@ TRIES.forEach(([id, name, osd, fail, lines], i) => {
     use: [{ sfx: "static", gain: 0.4 }, { osd_fail: id, text: fail }, ...lines] };
 });
 
-const O = Halcyon.osd;
-Halcyon.camRoom("cam31", { background: "cam31_bg", mic: { at: A.mic, clear: 60, lost: 150 },
-  post: [{ noise: 0.08 }, { old_tube: 0.3 }, { palette: Halcyon.PHOSPHOR, dither: 0.6 }, { scanlines: 2, amount: 0.14 }, { roll: { speed: 24, height: 9, amount: 0.14 } }, { vignette: 0.28 }, { cam31_break: true }],
+const O = Nagiwa.osd;
+Nagiwa.camRoom("cam31", { background: "cam31_bg", mic: { at: A.mic, clear: 60, lost: 150 },
+  post: [{ noise: 0.08 }, { old_tube: 0.3 }, { palette: Nagiwa.PHOSPHOR, dither: 0.6 }, { scanlines: 2, amount: 0.14 }, { roll: { speed: 24, height: 9, amount: 0.14 } }, { vignette: 0.28 }, { cam31_break: true }],
   rec: ["moment:ines_meeting", "!ines_down"], strip: "!moment:ines_meeting",
   hotspots: { ...tries,
     wait: { name: "Vorspulen", rect: O.wait, z: 5, use: [{ if: "end_beat=threat", then: ["Das läuft auch ohne mich.", { time: "next" }], else: [{ forward: true }] }] },
@@ -207,7 +207,7 @@ Cutaway.moment("ines_death", { room: "cam31", day: 4, from: "23:03", to: "23:30"
 
 // no music, only the fans; the pointer stays and nothing answers
 Cutaway.room("signal_lost", { name: "CAM 31", observe: true, feed: "cam31", lost: true, lines: "bottom", rec: "~never", strip: "~never",
-  post: [{ noise: 0.12 }, { palette: Halcyon.PHOSPHOR, dither: 0.6 }, { scanlines: 2, amount: 0.14 }],
+  post: [{ noise: 0.12 }, { palette: Nagiwa.PHOSPHOR, dither: 0.6 }, { scanlines: 2, amount: 0.14 }],
   ambience: ["deck_fans"], music: { stop: true, fade: 200 }, hotspots: {} });
 
 // her flat, with nothing to click (a room of its own: the flat's hotspots stay as they are). So that it shows: black bars as in a film, and the lamp is

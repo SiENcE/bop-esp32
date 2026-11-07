@@ -1,4 +1,4 @@
-// Halcyon: EVI, the AI on Juno's deck (docs/kapitel0-design.md §2.2; story §4, §6: Halcyon's discarded
+// Nagiwa: EVI, the AI on Juno's deck (docs/kapitel0-design.md §2.2; story §4, §6: Nagi·wa's discarded
 // AUTO-EVAL prototype). For the player she is first of all the cute AI in the deck's corner: curious, kind,
 // good with data, hopeless at reading people. She explains the deck in her own voice (no tutorial boxes),
 // reports messages and gives the hints (she is the hint button: in the satchel, on the deck in her corner).
@@ -14,7 +14,7 @@
 "use strict";
 
 (function () {
-  Halcyon.evi = { face: /** @type {string | null} */ (null), point: /** @type {string | null} */ (null), boot: -1,
+  Nagiwa.evi = { face: /** @type {string | null} */ (null), point: /** @type {string | null} */ (null), boot: -1,
     /** @type {{who: string, since: number} | null} */ card: null };
 
   Cutaway.actor("evi", {
@@ -29,7 +29,7 @@
   // On touch, looking is a long press, and nobody finds that by themselves: EVI says so after the first taps, and again now and then
   // for as long as nobody has done it. On this device, not in the save: it is about the fingers, not the story.
   const [HOLD_FIRST, HOLD_AGAIN] = Cutaway.i18n.declare("evi", ["Psst. Finger drauf und halten: Dann schaut Juno genauer hin.", "Du hältst nie den Finger drauf. Dabei hat Juno zu allem was zu sagen. Leider."]);
-  const HOLD_KEY = "halcyon.heldOnce";
+  const HOLD_KEY = "glass-sister.heldOnce";
   let held = false, taps = 0, /** @type {string | null} */ due = null;
   try { held = localStorage.getItem(HOLD_KEY) === "1"; } catch { /* private mode: she may say it again */ }
   const playing = () => !!Cutaway.scene?.room && !Cutaway.scene.backdrop && !!Cutaway.scene.active && !Cutaway.acts?.titleOpen;
@@ -45,14 +45,14 @@
     Cutaway.script.run([{ say: "evi", text }], { path: "evi.hold" });
   });
 
-  Cutaway.script.action("evi", (s) => { Halcyon.evi.face = s.evi ? String(s.evi) : null; });
-  Cutaway.script.action("evi_point", (s) => { Halcyon.evi.point = s.evi_point ? String(s.evi_point) : null; });
+  Cutaway.script.action("evi", (s) => { Nagiwa.evi.face = s.evi ? String(s.evi) : null; });
+  Cutaway.script.action("evi_point", (s) => { Nagiwa.evi.point = s.evi_point ? String(s.evi_point) : null; });
   Cutaway.script.action("deck_boot", async (s, ctx) => {
     if (Cutaway.script.fast) return;
-    Halcyon.evi.boot = Cutaway.clock.time;
+    Nagiwa.evi.boot = Cutaway.clock.time;
     Cutaway.events.emit("sfx", { sfx: "boot" });
     await Cutaway.script.exec([{ wait: 1300 }], ctx);
-    Halcyon.evi.boot = -1;
+    Nagiwa.evi.boot = -1;
   });
   // EVI goes along on the pocket deck in Juno's bag: always in it, of no use to anybody (story §10b)
 Cutaway.item("evi_bag", { name: "EVI", icon: "ui_evi", fixed: true,
@@ -60,28 +60,28 @@ Cutaway.item("evi_bag", { name: "EVI", icon: "ui_evi", fixed: true,
 
 Cutaway.script.action("notify", (s) => {
     if (Cutaway.script.fast) return;
-    Halcyon.evi.card = { who: String(s.notify), since: Cutaway.clock.time };
+    Nagiwa.evi.card = { who: String(s.notify), since: Cutaway.clock.time };
     Cutaway.events.emit("sfx", { sfx: "mail" });
   });
   // her face lasts as long as the script that set it
-  Cutaway.events.on("script.busy", (/** @type {boolean} */ busy) => { if (!busy) Halcyon.evi.face = null; });
-  Cutaway.events.on("room.enter", () => { Halcyon.evi.boot = -1; });
+  Cutaway.events.on("script.busy", (/** @type {boolean} */ busy) => { if (!busy) Nagiwa.evi.face = null; });
+  Cutaway.events.on("room.enter", () => { Nagiwa.evi.boot = -1; });
 
   // ---------------------------------------------------------------- the message card (every mode)
   const CARD = { x: 192, y: 15, w: 124, h: 25, ms: 5200 };
   const cardRect = () => [CARD.x, CARD.y, CARD.w, CARD.h];
-  const cardOn = () => !!Halcyon.evi.card && Cutaway.clock.time - Halcyon.evi.card.since < CARD.ms;
+  const cardOn = () => !!Nagiwa.evi.card && Cutaway.clock.time - Nagiwa.evi.card.since < CARD.ms;
   Cutaway.i18n.declare("message card", ["{time}"]);
 
   /** @param {CanvasRenderingContext2D} ctx */
   function card(ctx) {
     if (!cardOn()) return;
-    const c = /** @type {{who: string, since: number}} */ (Halcyon.evi.card), contact = Halcyon.contacts[c.who];
+    const c = /** @type {{who: string, since: number}} */ (Nagiwa.evi.card), contact = Nagiwa.contacts[c.who];
     if (!contact) return;
-    const msgs = (Halcyon.threads[c.who] ?? []).filter((m) => Cutaway.state.test(m.if)), last = msgs[msgs.length - 1];
+    const msgs = (Nagiwa.threads[c.who] ?? []).filter((m) => Cutaway.state.test(m.if)), last = msgs[msgs.length - 1];
     const age = Cutaway.clock.time - c.since, slide = Math.min(1, age / 220), out = Math.max(0, (age - (CARD.ms - 300)) / 300);
     const x = Math.round(CARD.x + (1 - slide) * 130 + out * 130), y = CARD.y, { w, h } = CARD;
-    const hud = Cutaway.font.get("hud"), f = Cutaway.ui.font(), t = Halcyon.t;
+    const hud = Cutaway.font.get("hud"), f = Cutaway.ui.font(), t = Nagiwa.t;
     // a chamfered card (the skin's), its sender in their colour, the first line
     ctx.fillStyle = "#090d18";
     for (let r = 0; r < h; r++) { const a = Math.max(0, 4 - r), b = w - 1 - Math.max(0, 4 - (h - 1 - r)); ctx.fillRect(x + a, y + r, b - a + 1, 1); }
@@ -105,8 +105,8 @@ Cutaway.script.action("notify", (s) => {
       if (!cardOn()) return false;
       const [x, y, w, h] = cardRect();
       if (p.x < x || p.y < y || p.x >= x + w || p.y >= y + h) return false;
-      const who = /** @type {any} */ (Halcyon.evi.card).who;
-      Halcyon.evi.card = null;
+      const who = /** @type {any} */ (Nagiwa.evi.card).who;
+      Nagiwa.evi.card = null;
       // on the deck the card opens the chat on that thread; elsewhere it just goes away
       if (Cutaway.scene.room?.deck && !Cutaway.script.busy) Cutaway.script.run([{ set: "deck_app", value: `chat_${who}` }]);
       return true;
@@ -122,7 +122,7 @@ Cutaway.script.action("notify", (s) => {
     z: 44, modal: true,
     render(/** @type {CanvasRenderingContext2D} */ ctx) {
       // a room without the satchel can still have her in its corner, small, with the face she has now, all the time she is there
-      if (Cutaway.scene.room?.eviCorner) { Cutaway.assets.draw(ctx, `evi_${Halcyon.evi.face ?? "froh"}`, 290, 132, { anchor: [0, 0], t: Cutaway.clock.time }); return; }
+      if (Cutaway.scene.room?.eviCorner) { Cutaway.assets.draw(ctx, `evi_${Nagiwa.evi.face ?? "froh"}`, 290, 132, { anchor: [0, 0], t: Cutaway.clock.time }); return; }
       if (Cutaway.ui.line?.actor !== "evi" || !Cutaway.script.busy) return;
       if (Cutaway.scene.room?.buttons === false) return;
       const bag = Cutaway.inventory.bagCentre(), y = Cutaway.inventory.corner === "bottom" ? Cutaway.display.height - 16 : 5;

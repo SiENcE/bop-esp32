@@ -7,7 +7,7 @@ fremdere Welt mit Gezeitenmods, Tieren aus den Flutprogrammen und der Flutschuld
 Ensemble (§4); siehe §10.
 Stil: `docs/style-guide.md` (Straßenmodus in Iso, Feed-Modus durch gekaperte Kameras).
 
-Eigennamen der Spielwelt (Halcyon, Lull, Civic Rest, die Quiet) bleiben englisch, wie in der Stadt selbst.
+Eigennamen der Spielwelt (Nagi·wa, Lull, Civic Rest, die Quiet) bleiben englisch, wie in der Stadt selbst.
 
 ## 1. Umfang
 
@@ -35,28 +35,28 @@ kostenlose Demo sein.
 4. **Entscheidungen verzweigen; Rätsel führen nie in eine Sackgasse.** Entscheidungen sind Flags. Jedes
    Kapitel lässt sich aus jedem Zustand heraus beenden, und der Solver beweist das.
 5. **Schlaf.** Der ganzen Stadt wird Schlaf verkauft. Das Geheimnis liegt im Schlaf.
-6. **Ausgemustert.** Juno, EVI, die Tiere aus den Flutprogrammen, der ganze Neunte: Halcyon hat sie
+6. **Ausgemustert.** Juno, EVI, die Tiere aus den Flutprogrammen, der ganze Neunte: Nagi·wa hat sie
    gebraucht, umgebaut und weggelegt. Wer weggelegt wurde, hält zusammen. Daher kommt die Wärme des
    Spiels, und daher kommt sein Witz.
 
 ## 3. Die Welt
 
-**Halcyon** ist eine Arkologie, in den 2050ern über einer ertrunkenen Küstenstadt gebaut. Das Meer
-nahm die alten Straßen, und Halcyon stapelte neue darauf: neun **Ringe**, von den Meerespumpen ganz
+**Nagi·wa** ist eine Arkologie, in den 2050ern über einer ertrunkenen Küstenstadt gebaut. Das Meer
+nahm die alten Straßen, und Nagi·wa stapelte neue darauf: neun **Ringe**, von den Meerespumpen ganz
 unten bis zur **Krone** ganz oben.
 
 - **Der Untere Neunte Ring** ist ganz unten: feucht, überfüllt, laut und von Werbung beleuchtet. „Im
   Neunten regnet es, ob es regnet oder nicht": Das Wasser ist Abwasser und Kondenswasser der oberen
   Ringe, das durch die kaputte Hülle tropft.
-- **Das Jahr ist 2091.** Die Kriminalität im Neunten ist in sechs Jahren um 80 % gesunken. Halcyon
+- **Das Jahr ist 2091.** Die Kriminalität im Neunten ist in sechs Jahren um 80 % gesunken. Nagi·wa
   schreibt das seiner zivilen Überwachung zu und seinem Geschenk an die Menschen: **Lull**, einem
   billigen Schlafimplantat, von außen ein blasser Leuchtpunkt hinter dem Ohr. Vier Stunden mit Lull erholen wie zehn. Der halbe Neunte nutzt es, um
-  Doppelschichten zu arbeiten. Die Werbung ist überall: **HALCYON: SLEEP BETTER.**
+  Doppelschichten zu arbeiten. Die Werbung ist überall: **NAGI·WA: SLEEP BETTER.**
 - **Slang:**
   - **Glass**: die Kamera-Feeds („im Glass", „ins Glass gucken");
   - **Glasser**: Leute, die sie hacken (Juno ist Glasserin; das Verb: glassen);
   - **Shine**: Informationen, die man verkaufen kann;
-  - **Sinker**: Lull-Nutzer, die nicht mehr aufwachen. Halcyon nennt das „Ruhe-Erschöpfung" und
+  - **Sinker**: Lull-Nutzer, die nicht mehr aufwachen. Nagi·wa nennt das „Ruhe-Erschöpfung" und
     bringt sie in seine **Schlafstationen**.
 - **Geld:** Chits.
 
@@ -64,25 +64,25 @@ unten bis zur **Krone** ganz oben.
 
 Vorbild für den Ton sind *Read Only Memories*, *Undertale* und *Deltarune*: Das Seltsame ist Alltag,
 niemand wundert sich, und Witz und Aufrichtigkeit stehen mitten im Ernst. Unser Seltsames kommt aus
-einer Quelle, der Flut. Halcyon hat die Stadt nicht nur gestapelt, es hat Menschen, Tiere und
+einer Quelle, der Flut. Nagi·wa hat die Stadt nicht nur gestapelt, es hat Menschen, Tiere und
 Maschinen für die Arbeit am Wasser umgebaut.
 
 - **Die Flutschuld.** Wer im Neunten wohnt, stammt von den Menschen der ertrunkenen Stadt ab, und
-  Halcyon hat ihnen den Bau der Ringe über ihren Köpfen in Rechnung gestellt. Die Schuld wird vererbt
+  Nagi·wa hat ihnen den Bau der Ringe über ihren Köpfen in Rechnung gestellt. Die Schuld wird vererbt
   und steckt in jeder Miete als **Hüllenabgabe**. Kein Kind im Neunten wird schuldenfrei geboren.
   Deshalb arbeitet der halbe Neunte Doppelschichten, und deshalb nimmt der halbe Neunte Lull. Die
   Flutschuld ist eine Regel der Welt, kein Handlungsstrang: Sie steht auf jeder Mietmahnung, im
   Konto auf dem Deck und in den Gesprächen.
-- **Gezeitenmods.** Für die Arbeit in den Pumpen und Schleusen hat Halcyon in den 2060ern Menschen
+- **Gezeitenmods.** Für die Arbeit in den Pumpen und Schleusen hat Nagi·wa in den 2060ern Menschen
   umgebaut: Kiemenschlitze am Hals, Schwimmhäute, Nickhäute über den Augen für trübes Wasser,
   leuchtende Markierungen auf der Haut, damit man sich im Dunkeln findet. Das Programm ist lange
   eingestellt, die Mods sind geblieben und werden weitervererbt oder auf dem Drain-Markt nachgebaut.
   Die Gezeitenleute sind heute eine eigene Kultur im Neunten, mit eigenem Slang. Im Feed leuchten ihre
   Markierungen heller als alles andere, und das ist ein Werkzeug für Rätsel.
-- **Die Tiere aus den Flutprogrammen.** Halcyon hat auch Tiere für die Arbeit verbessert: Ratten, die
+- **Die Tiere aus den Flutprogrammen.** Nagi·wa hat auch Tiere für die Arbeit verbessert: Ratten, die
   Kabel durch Rohre ziehen, zu eng für Menschen, und Kraken, die die Filter der Meerespumpen reinigen.
   Sie wurden klüger, als geplant war. Der Sprechkragen, mit dem man ihnen Befehle gab, spricht seitdem
-  in beide Richtungen. Halcyon beendete die Programme und ließ die Tiere, wo sie waren. Nur wenige
+  in beide Richtungen. Nagi·wa beendete die Programme und ließ die Tiere, wo sie waren. Nur wenige
   sprechen, und das Spiel hat **genau zwei** von ihnen: **Ratz** und **Tinte** (§4). Sie sind
   Nebenfiguren mit eigenen Geschichten, keine Maskottchen.
 - **Maschinen mit Eigenheiten.** Die Nudelautomaten haben Launen, ein Aufzug fährt angeblich dienstags,
@@ -112,7 +112,7 @@ Maschinen für die Arbeit am Wasser umgebaut.
 | Darunter | **Die Sümpfe** | überflutete Straßen der alten Stadt unter dem Neunten; Lanterns Versteck |
 | Mitte (5.) | **Die Transitachse**, die Aufzüge zwischen den Ringen | Kontrollpunkte, der einzige legale Weg nach oben |
 | Mitte | **Die Schlafstation** | Reihen von Sinkern in weißem Licht |
-| Krone | **Halcyon Tower, Civic Rest** | Aubrechts Büros; sauber, kalt, lautlos |
+| Krone | **Nagi·wa Tower, Civic Rest** | Aubrechts Büros; sauber, kalt, lautlos |
 | Krone | **Der Ruhekern** | das Finale: wo die Stadt schläft |
 
 Jeder Ort hat eine oder mehrere Kameras für den Feed-Modus (`CAM nn`). Orte und Kameras zusammen
@@ -125,20 +125,20 @@ Cyan nur für Technik.
 
 | Wer | Rolle | Aussehen und Silhouette (Akzent im Feed) | Farbe |
 |---|---|---|---|
-| **Juno Reyes**, 31 | Glasserin und Informationshändlerin; früher **zivile Beobachterin** bei Halcyon (eine menschliche Kamerabeobachterin), vor drei Jahren entlassen, als „automatische Auswertung" ihr Team ersetzte; ihr Beobachter-Implantat durfte sie behalten, weil das Herausnehmen mehr gekostet hätte | gelber Regenmantel mit Kapuze, Umhängetasche, Implantat hinter dem Ohr (unter der Kapuze nicht zu sehen; auf dem Titelbild als Cyan-Linie über der Wange) | `#fff070` |
+| **Juno Reyes**, 31 | Glasserin und Informationshändlerin; früher **zivile Beobachterin** bei Nagi·wa (eine menschliche Kamerabeobachterin), vor drei Jahren entlassen, als „automatische Auswertung" ihr Team ersetzte; ihr Beobachter-Implantat durfte sie behalten, weil das Herausnehmen mehr gekostet hätte | gelber Regenmantel mit Kapuze, Umhängetasche, Implantat hinter dem Ohr (unter der Kapuze nicht zu sehen; auf dem Titelbild als Cyan-Linie über der Wange) | `#fff070` |
 | **EVI** | die KI auf Junos Deck: der ausgemusterte Prototyp der „automatischen Auswertung" (§6), den Juno vor der Löschung gerettet hat. Neugierig, lieb, gut mit Daten und hoffnungslos schlecht darin, Menschen zu lesen; fragt Juno ständig, warum Menschen Dinge tun. Erklärt das Deck, meldet Nachrichten, gibt die Hinweise. Lebt auf dem Deck und geht auf dem Taschen-Deck mit (§10b). | ein kleines rundes Pixelwesen mit großen Augen und zwei Antennen-Ohren, auf dem Desktop etwa 24 px, in der Tasche 16 px; 6 Gesichter (froh, neugierig, verwirrt, besorgt, müde, Glitch) | `#8ef5d8` |
-| **Teo Reyes**, 23 | ihr jüngerer Bruder; arbeitet Doppelschichten in Pumpenhalle 3, **mit Lull**; fröhlich und stolz, zahlt ihre Miete, wenn sie es nicht kann. Hat sich mit 18 einen **Gezeitenmod** machen lassen (Kiemen), weil Taucher das Doppelte verdienen: Halcyons idealer Arbeiter, umgebaut für die Schicht und betäubt für die Nacht. | orange Arbeitsweste, Gehörschutz um den Hals, Kiemenschlitze, die im Feed leuchten | `#ffa040` |
+| **Teo Reyes**, 23 | ihr jüngerer Bruder; arbeitet Doppelschichten in Pumpenhalle 3, **mit Lull**; fröhlich und stolz, zahlt ihre Miete, wenn sie es nicht kann. Hat sich mit 18 einen **Gezeitenmod** machen lassen (Kiemen), weil Taucher das Doppelte verdienen: Nagi·was idealer Arbeiter, umgebaut für die Schicht und betäubt für die Nacht. | orange Arbeitsweste, Gehörschutz um den Hals, Kiemenschlitze, die im Feed leuchten | `#ffa040` |
 | **Bao**, über 70 | betreibt die Nudel-Garküche vor dem LUCKY STATIC; lässt Juno anschreiben; kennt jeden. Redet ständig von seinem Mann Lou, „meinem Alten", der nie zu sehen ist, bis zum Epilog. Hat nur einen Arm. | Schirm, weiße Schürze, der andere Ärmel hochgesteckt | `#e8c890` |
 | **Sable** | Junos Kontakt für Hehlerware auf dem Drain-Markt; nichtbinär; charmant, ehrlich darin, unehrlich zu sein (Sprachregel in §10) | langer magentafarbener Mantel, rasierter Kopf, eine brennende Pfeife | `#ff4fd3` |
 | **Ratz** | eine **Kabelratte** aus dem alten Flutprogramm, so groß wie ein kleiner Hund, die auf dem Drain-Markt Elektroschrott verkauft; schnell, gierig, abergläubisch, kennt jedes Rohr unter dem Neunten. Spricht durch einen geflickten Sprechkragen, der manchmal Wörter vertauscht. | Kopfhörer, ein viel zu großer Parka, der Schwanz schaut raus; der Kragen glimmt | `#90d0a0` |
-| **Tinte** | eine **Pumpenkrake** aus dem Flutprogramm, sehr alt, im Filterbecken von Pumpenhalle 3; Teos Kollegin und beste Freundin bei der Arbeit. Langsam, weise, trocken witzig; acht Arme, die jeder etwas anderes tun. Weiß mehr über die Sinker der Pumpenhalle als Halcyon glaubt. | ein großer Schatten im Becken, ein Sprechkragen, Saugnäpfe am Glas | `#b0b8ff` |
+| **Tinte** | eine **Pumpenkrake** aus dem Flutprogramm, sehr alt, im Filterbecken von Pumpenhalle 3; Teos Kollegin und beste Freundin bei der Arbeit. Langsam, weise, trocken witzig; acht Arme, die jeder etwas anderes tun. Weiß mehr über die Sinker der Pumpenhalle als Nagi·wa glaubt. | ein großer Schatten im Becken, ein Sprechkragen, Saugnäpfe am Glas | `#b0b8ff` |
 | **Motte**, 12 | ein Kurierkind im Kessel-Block, das Juno vergöttert und Glassen lernen will | übergroße weiße Mütze | `#f0f0a0` |
 | **Frau Haldane** | Nachbarin gegenüber; immer auf Lull, immer müde, freundlich | ein rosa Morgenmantel | `#ffa8d8` |
 | **„WREN"** | ein anonymer Auftraggeber, der viel zu gut zahlt | nur Text, auf dem Deck | `#d0d8f0` |
 | **Dr. Ines Calder** | Schlaftechnikerin in einer Lull-Klinik, die Schlafprotokolle hinausschmuggelt | weißer Klinikkittel, dunkler Zopf | `#f0a0c0` |
 | **„Lantern"** (Oskar Lind; so sieht er aus: `docs/portraits/lantern_x4.png`) | ein Piratensender, der Werbebildschirme für zehn Sekunden Wahrheit kapert; Ines' Kontakt; paranoid. Sitzt seit einem Pumpenunfall im Rollstuhl, den er für die Sümpfe umgebaut hat: Schwimmer, ein Bootsmotor, Schubdüsen für kurze Sätze über Treppen und Leitern, der Sender eingebaut. | geflickter Poncho; der Rollstuhl mit Schwimmern, Düsen und einem Bündel Antennen | `#b0f0a0` |
-| **Lt. Agnes Morrow** | Revier 9; nimmt Geld von Halcyon und hasst sich dafür; ihre Tochter ist eine Lull-Sinkerin | grauer Trenchcoat, Polizeimarke am Band | `#a8b8d0` |
-| **Corvin Ashe** | ein Agent der **Quiet**, Halcyons inoffizieller Sicherheitseinheit; früher selbst Beobachter in Junos Halle; höflich, geduldig, der Mörder | weißer Regenmantel, im Feed ohne Gesicht (eine Maske, die die Kamera überstrahlt) | `#ff7a6a` |
+| **Lt. Agnes Morrow** | Revier 9; nimmt Geld von Nagi·wa und hasst sich dafür; ihre Tochter ist eine Lull-Sinkerin | grauer Trenchcoat, Polizeimarke am Band | `#a8b8d0` |
+| **Corvin Ashe** | ein Agent der **Quiet**, Nagi·was inoffizieller Sicherheitseinheit; früher selbst Beobachter in Junos Halle; höflich, geduldig, der Mörder | weißer Regenmantel, im Feed ohne Gesicht (eine Maske, die die Kamera überstrahlt) | `#ff7a6a` |
 | **Direktorin Selene Aubrecht** | Leiterin von Civic Rest, dem Lull-Programm; glaubt, den Neunten gerettet zu haben, und die Zahlen geben ihr recht | weißer Anzug, silbernes Haar | `#e8f0ff` |
 | **Der Zeuge** | das Auge in den Bildschirmen (§6) | eine Störung, ein Auge, viele Stimmen zugleich | `#ffc0f2` (Magenta-Weiß) |
 
@@ -164,19 +164,19 @@ Cyan nur für Technik.
 Wird langsam über die Kapitel enthüllt; der Spieler soll es einen Schritt vor Juno erraten können.
 
 1. **Der Rückgang der Kriminalität ist echt, aber die „automatische Auswertung" ist eine Lüge.** Keine
-   Maschine sieht sich die Kameras des Neunten an. Halcyon hat es nie geschafft, dass eine Maschine
+   Maschine sieht sich die Kameras des Neunten an. Nagi·wa hat es nie geschafft, dass eine Maschine
    Menschen so gut liest wie Menschen.
    - **Der Beweis lebt auf Junos Deck.** Das Projekt AUTO-EVAL wurde mit den Markierungen der
      menschlichen Beobachter trainiert, auch mit Junos Klammern. Es scheiterte: Das Modell hielt
-     Tränen für Regen und Umarmungen für Ringkämpfe. Halcyon stellte es **ein halbes Jahr vor der
+     Tränen für Regen und Umarmungen für Ringkämpfe. Nagi·wa stellte es **ein halbes Jahr vor der
      Entlassung der Beobachter** ein und verkündete trotzdem, die automatische Auswertung übernehme. In
      ihrer letzten Woche fand Juno den Prototyp EVAL-7 auf einem Server, der gelöscht werden sollte,
      und nahm ihn mit, weil er ihr leid tat. Sie nannte ihn EVI. Juno weiß, dass EVI ein
-     ausgemustertes Halcyon-Testmodell ist. Sie weiß nicht, dass EVI genau die Maschine ist, die
+     ausgemustertes Nagi·wa-Testmodell ist. Sie weiß nicht, dass EVI genau die Maschine ist, die
      angeblich ihren Job macht, und dass es diese Maschine nie gegeben hat.
 2. **Die Schlafenden sehen zu.** Lull erholt dich nicht nur. Während du schläfst, leiht es sich deine
    Sehrinde und spielt dir Kamera-Feeds vor. Jeder Lull-Nutzer im Neunten verbringt seine Nächte damit,
-   das Glass der Stadt zu träumen, und sein schlafender Verstand markiert, was falsch aussieht. Halcyon
+   das Glass der Stadt zu träumen, und sein schlafender Verstand markiert, was falsch aussieht. Nagi·wa
    nennt das **Civic Rest**. Der Neunte wird vom Neunten überwacht, im Schlaf. **Die Leute, die Juno
    ersetzt haben, sind ihre Nachbarn.**
 3. **Die Schlafenden begannen, den Traum zu teilen.** Millionen Stunden verbundenen Schlafs ließen
@@ -188,8 +188,8 @@ Wird langsam über die Kapitel enthüllt; der Spieler soll es einen Schritt vor 
    Einzige von ihnen im Neunten, die das Glass noch jede Nacht *wach* beobachtet, so wie der Zeuge es im Schlaf beobachtet. Er sieht ihr
    seit drei Jahren beim Zusehen zu. Als der Bildschirm ihren Namen sagt, spricht er zum ersten Mal.
 5. **Warum Ines starb:** Ihre Schlafprotokolle bewiesen, dass die Hirnaktivität der Lull-Nutzer mit
-   den Zeitstempeln der Kameras übereinstimmt. Sie wollte sie Lantern geben. Halcyon heuerte eine
-   Glasserin an, um das Treffen zu finden: Juno. Die eigenen Kameras reichten nicht, weil Ines Halcyons Netz meidet; Nudelbar und
+   den Zeitstempeln der Kameras übereinstimmt. Sie wollte sie Lantern geben. Nagi·wa heuerte eine
+   Glasserin an, um das Treffen zu finden: Juno. Die eigenen Kameras reichten nicht, weil Ines Nagi·was Netz meidet; Nudelbar und
    Waschsalon haben private Kameras.
 6. **Was Aubrecht plant:** Der Zeuge wächst und beginnt zu handeln. Er verweigert manche Markierungen
    und versteckt Menschen. Aubrecht will ihn **beschneiden**: ein Firmware-Update, das die gemeinsame
@@ -208,9 +208,9 @@ Die „Rätsel" hier sind der Umriss; jedes Kapitel bekommt später ein eigenes 
 **Bringt bei:** das Deck und EVI, Feed-Modus (zusehen, zuhören, markieren, aufzeichnen), Verkaufen,
 Straßenmodus.
 
-- **Vorspann (vor dem Titel, überspringbar):** drei Jahre früher. Die Beobachtungshalle von Halcyon:
+- **Vorspann (vor dem Titel, überspringbar):** drei Jahre früher. Die Beobachtungshalle von Nagi·wa:
   Reihen von Menschen mit Implantaten vor Wänden voller Kamerabilder, Juno mittendrin. Die letzte
-  Schicht. Eine Durchsage: „Ab morgen übernimmt die automatische Auswertung. Halcyon dankt Ihnen für
+  Schicht. Eine Durchsage: „Ab morgen übernimmt die automatische Auswertung. Nagi·wa dankt Ihnen für
   Ihren Dienst." Die Bildschirme gehen einer nach dem anderen aus. Juno fährt mit ihrem Karton hinunter, und
   das Implantat bleibt in ihrem Kopf. Damit endet der Vorspann; das heutige Deck zeigt erst der Prolog (§10b).
 - **Das Deck:** Es fährt hoch, und EVI begrüßt Juno („Guten Abend! Eine neue Nachricht. Null
@@ -269,7 +269,7 @@ Straßenmodus.
   - Ines' Wohnung (ein Einbruch im Straßenmodus, gelenkt durch den Feed: Die Kameras zeigen, wann der
     Flur frei ist);
   - ihre Klinik (Lull-Klinik 9-Ost, als Patientin bei einem Aufnahmegespräch);
-  - **die Fälschung:** Am zweiten Tag zeigen die Halcyon-Nachrichten einen Clip aus CAM 31, in dem
+  - **die Fälschung:** Am zweiten Tag zeigen die Nagi·wa-Nachrichten einen Clip aus CAM 31, in dem
     *Lantern* Ines tötet. Revier 9 jagt ihn. Juno legt die Fälschung im Clip-Editor neben ihre
     Aufnahme und findet, wo sie geschnitten ist (ein Feed-Rätsel am Schreibtisch: Zeitstempel,
     Regentropfen, die zweimal fallen, Ashes überstrahlte Maske, die fehlt). Der Beweis hilft bei jeder
@@ -283,7 +283,7 @@ Straßenmodus.
 
   | Was Juno tut | Was passiert |
   |---|---|
-  | **Ihn an Sable verkaufen** | ein Vermögen; Sable verkauft ihn an Halcyon weiter; er verschwindet; Sable steht in Junos Schuld und verrät sie später (Kap. 4) |
+  | **Ihn an Sable verkaufen** | ein Vermögen; Sable verkauft ihn an Nagi·wa weiter; er verschwindet; Sable steht in Junos Schuld und verrät sie später (Kap. 4) |
   | **Ihn Morrow geben** | er verschwindet im Revier 9, und Juno wird markiert; Morrow kennt Juno jetzt, was sich später wenden lässt |
   | **Lantern finden und ihm den Clip geben** | eine gefährliche Suche in den Sümpfen; Lantern wird ein Verbündeter; seine Sendung kommt zu früh, und er wird gejagt |
   | **Ihn behalten** | jetzt die sicherste Wahl; niemand weiß davon; Juno ist allein, und das Kassenbuch vergisst nicht |
@@ -292,7 +292,7 @@ Straßenmodus.
   den Stick, legt sie ihn zurück oder bringt ihn ihm, §10b) und sendet sie über seinen Piratensender, aber dem gejagten „Mörder“ glaubt niemand. Juno
   legt sie neben ihre Kameras: Die REM-Spitzen der Lull-Nutzer stimmen mit den
   Zeitstempeln der Kameras überein, auf die Sekunde. In dieser Nacht wacht Teo nicht auf. **Teo ist ein
-  Sinker.** Die Nachricht kommt nicht von Halcyon, sondern von Tinte, über das Netz der Pumpenhalle:
+  Sinker.** Die Nachricht kommt nicht von Nagi·wa, sondern von Tinte, über das Netz der Pumpenhalle:
   „Dein Bruder schläft im Becken-Raum. Er hört nicht. Komm."
 
 ### Kapitel 3: Lull (~2 Std.)
@@ -357,7 +357,7 @@ Straßenmodus.
 
 ### Kapitel 5: Die Krone (~2 Std.)
 
-**Ziel:** in den Halcyon Tower gelangen und den Ruhekern finden.
+**Ziel:** in den Nagi·wa Tower gelangen und den Ruhekern finden.
 
 - **Aubrecht** trifft Juno ganz offen. Das Gespräch lässt sich auf verschiedene Arten führen, aber sein
   Inhalt steht fest:
@@ -377,7 +377,7 @@ Straßenmodus.
 
 ### Kapitel 6: Besser schlafen (das Finale, ~1,5 Std.)
 
-**Ziel:** entscheiden, was mit Halcyon, dem Zeugen und Teo geschieht.
+**Ziel:** entscheiden, was mit Nagi·wa, dem Zeugen und Teo geschieht.
 
 - **Der Ruhekern** ist der Ort, an dem alle Lull-Signale zusammenlaufen: eine Kathedrale aus Servern
   und ein einzelner weißer Raum mit einem Stuhl.
@@ -399,10 +399,10 @@ Straßenmodus.
 
 | Ende | Wie | Was es ist |
 |---|---|---|
-| **Licht aus** | alles senden (Lanterns Netzwerk plus der Zeuge, der jeden Bildschirm übernimmt) | die Wahrheit für die ganze Stadt. Lull wird binnen einer Woche abgeschaltet. Der Zeuge stirbt, als die Schlafenden aufwachen, und Teo wacht mit ihnen auf. Halcyon versinkt im Chaos, und die Kriminalität kommt zurück. Bittersüß. |
-| **Erwachen** | die Beschneidung still stoppen und den Zeugen selbst entscheiden lassen | er lässt jeden Schlafenden gehen und löst sich in ihnen auf. Der Neunte wacht auf und erinnert sich an die Träume der anderen. Halcyon steht noch, aber es ist blind. Hoffnungsvoll und seltsam. |
+| **Licht aus** | alles senden (Lanterns Netzwerk plus der Zeuge, der jeden Bildschirm übernimmt) | die Wahrheit für die ganze Stadt. Lull wird binnen einer Woche abgeschaltet. Der Zeuge stirbt, als die Schlafenden aufwachen, und Teo wacht mit ihnen auf. Nagi·wa versinkt im Chaos, und die Kriminalität kommt zurück. Bittersüß. |
+| **Erwachen** | die Beschneidung still stoppen und den Zeugen selbst entscheiden lassen | er lässt jeden Schlafenden gehen und löst sich in ihnen auf. Der Neunte wacht auf und erinnert sich an die Träume der anderen. Nagi·wa steht noch, aber es ist blind. Hoffnungsvoll und seltsam. |
 | **Der lange Schlaf** | Juno bleibt auf dem Stuhl | sie wird das wache Auge des Zeugen: Die Kameras bekommen ein Gewissen. Junos Körper schläft; Teo wacht auf und besucht sie. Still und traurig. |
-| **Besser schlafen** | Aubrechts Angebot annehmen | die Beschneidung findet statt, und Lull wird Pflicht. Juno lebt in den mittleren Ringen und überwacht für Halcyon. Teo ist gerettet oder verloren, je nach Entscheidung 4. Das dunkle Ende. |
+| **Besser schlafen** | Aubrechts Angebot annehmen | die Beschneidung findet statt, und Lull wird Pflicht. Juno lebt in den mittleren Ringen und überwacht für Nagi·wa. Teo ist gerettet oder verloren, je nach Entscheidung 4. Das dunkle Ende. |
 | **Zeugnis** (versteckt) | braucht einen lebenden Lantern, eine umgestimmte Morrow, den nicht verkauften Clip, Teo im Traum gelassen und das Vertrauen des Zeugen | der Zeuge sagt aus, live, vor der ganzen Stadt, auf jedem Bildschirm. Aubrecht stürzt, Lull wird freiwillig und ehrlich, und die Schlafenden wachen auf, wenn sie wollen. Das beste Ende und das am schwersten verdiente. |
 
 ## 9. Nebengeschichten (~4–6 Std.)
@@ -431,7 +431,7 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
   nicht: „Ohne Gesichter ist es kein Leben."
 - **Ratz:** Er sucht seine Kolonie, die beim Ende des Kabelprogramms in die Rohre unter der Krone
   gezogen ist. Juno findet sie über alte Wartungskameras. Lohn: Ratz zeigt ihr in Kap. 4 die Rohre.
-- **Tinte:** Halcyon will die Filterbecken auf Maschinen umstellen, und Tinte soll „ins Meer
+- **Tinte:** Nagi·wa will die Filterbecken auf Maschinen umstellen, und Tinte soll „ins Meer
   entlassen" werden, mit fast 40 Jahren, uralt für eine Krake, und nicht mehr fürs offene Wasser gemacht. Juno kann es verhindern,
   verzögern oder den Abschied filmen (und verkaufen).
 - **Baos Vergangenheit:** Er war Koch in der alten Stadt vor der Flut; ein Rezept und ein Foto in den
@@ -446,7 +446,7 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
 - **Sprache:** Die Spieltexte sind **zuerst Deutsch**; eine **englische Fassung kommt später**. Texte
   daher von Anfang an über die Sprachdateien der Engine (`i18n`) anlegen, nie fest in Grafiken. Die
   Ausnahme sind die Werbeslogans und Schilder der Stadt: Sie bleiben in beiden Fassungen **englisch**
-  („HALCYON: SLEEP BETTER", „LUCKY STATIC") und dürfen deshalb in die Grafik gezeichnet werden.
+  („NAGI·WA: SLEEP BETTER", „LUCKY STATIC") und dürfen deshalb in die Grafik gezeichnet werden.
 - **Gewaltdarstellung:** Ines' Tod (und jede andere drastische Szene) gibt es in **zwei Fassungen**,
   wählbar in den Einstellungen (Inhalt):
   - **mit schwarzem Rahmen:** Im entscheidenden Moment schließen sich schwarze Balken über dem Feed;
@@ -457,11 +457,11 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
 - **Junos Vergangenheit** als zivile Beobachterin ist **von Anfang an klar** (siehe Prolog). Was erst
   später enthüllt wird, ist, *wer* sie ersetzt hat (§6, Punkt 2) und warum ihr Implantat den Zeugen
   hört (§6, Punkt 4).
-- **Namen:** Halcyon (die Stadt und der Konzern), Lull, der Zeuge und die Figuren bleiben vorerst.
-- **Der Titel des Spiels: Glass Sister** (2026-11-03). „Halcyon" war als Spieltitel verbraucht (mehrere
+- **Namen:** Nagi·wa (die Stadt und der Konzern), Lull, der Zeuge und die Figuren bleiben vorerst.
+- **Der Titel des Spiels: Glass Sister** (2026-11-03). „Nagi·wa" war als Spieltitel verbraucht (mehrere
   Spiele dieses Namens) und unpersönlich. „Glass Sister" sagt zweierlei: Juno ist Teos Schwester (der
   Kern der Geschichte: er wird zum Sinker), und sie lebt im Glass. Der Titel bleibt in beiden Fassungen
-  englisch, wie die Schilder der Stadt. Die Stadt heißt weiter Halcyon.
+  englisch, wie die Schilder der Stadt. Die Stadt heißt weiter Nagi·wa.
 - **Der Slang der Stadt ist englisch**, auch im deutschen Text, mit englischer Aussprache: **Glass**
   (die Feeds; nicht „Glas", das wäre ein Trinkgefäß), **Glasser** / **Glasserin**, **glassen**, dazu
   Shine, Sinker, Chits. Kapitel 1 heißt „Glass".
@@ -472,7 +472,7 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
   Auswertung (§6, Punkt 1). Gestaltung: `docs/kapitel0-design.md` §2.
 - **Die Welt ist fremder**, im Ton von *Read Only Memories*, *Undertale* und *Deltarune*, aber aus
   unserer eigenen Logik (die Flut, §3): Gezeitenmods, die Flutschuld, Maschinen mit Eigenheiten und
-  **genau zwei sprechende Tiere** aus Halcyons Flutprogrammen (Ratz, Tinte). Mehr nicht, damit sie
+  **genau zwei sprechende Tiere** aus Nagi·was Flutprogrammen (Ratz, Tinte). Mehr nicht, damit sie
   besonders bleiben.
 - **Vielfalt** im Ensemble, selbstverständlich und ohne Kommentar (§4: Sable nichtbinär, Bao und sein
   Mann, Lantern im Rollstuhl, Teo mit Gezeitenmod).
@@ -491,7 +491,7 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
   Neo-Noir-Vorspanns, mit eigenen Bildern. Er läuft nur beim ersten Start von selbst und ist im Menü wieder
   abspielbar; der Titelbildschirm mit dem Glass-Sister-Logo kommt bei jedem Start.
 - **Was das Beobachter-Implantat ist** (klärt §6, Punkt 4, und Kapitel 3): **Lull ist das Beobachter-Implantat in
-  billig.** Halcyon hat Lull aus dem Beobachterprogramm gebaut und das Wachsein herausgenommen; deshalb sprechen
+  billig.** Nagi·wa hat Lull aus dem Beobachterprogramm gebaut und das Wachsein herausgenommen; deshalb sprechen
   beide dasselbe Protokoll. Das Implantat kann wach Kameras verbinden, Markierungen ins eigene Auge legen und den
   Zeugen empfangen, aber nicht in die gemeinsame Ebene hinein. Lull öffnet diese Ebene und schaltet dabei das
   Bewusstsein ab. Beides zusammen: Lull öffnet die Tür, das Implantat hält Juno wach.
@@ -506,7 +506,7 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
   ihm auf, weil sie die Einzige im Neunten ist, die noch jede Nacht wach auf dem Protokoll ist. Die Steigerung: erst nur in ihrem Kopf, im Finale
   übernimmt er wirklich die Bildschirme.
 - **Wie der Spieler es erfährt** (nicht nur in der Bibel): über Dokumente und Junos innere Stimme, Schritt für Schritt.
-  - Ab Kapitel 1, Abend 1, auf dem Deck: Junos altes **Beobachter-Handbuch** von Halcyon (eine Notiz im CACHE, `kapitel1-design` §7), mit dem, was das
+  - Ab Kapitel 1, Abend 1, auf dem Deck: Junos altes **Beobachter-Handbuch** von Nagi·wa (eine Notiz im CACHE, `kapitel1-design` §7), mit dem, was das
     Implantat kann, wo es sitzt, und dem Namen des Protokolls.
   - Kapitel 1, `cam21`: Über jemandem in der Schlange steht im Feed ein unbekannter Link (`UNKNOWN LINK`) in ihrem Overlay, der pulsiert, wenn er aktiv ist. Niemand erklärt es.
   - Kapitel 3, bevor sie Lull nimmt: In Ines' Schlafprotokollen steht die Kennung der Lull-Firmware, und sie ist die aus
@@ -543,7 +543,7 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
 - **Das Flüstern** (entschieden 2026-11-06): Das Mikro hängt neben Ines, Ashe steht zu weit weg. Nur Juno hört, wo der Schlüssel liegt („Sonst weiß es keiner.“ „Doch. Ich.“). **Die Live-Übertragung an WREN ist nur Bild.** Hat Juno den Stick genommen, stirbt Ines in dem Glauben, Lantern habe alles.
 - **Der Stick in Kapitel 2** (entschieden 2026-11-06): Lässt Juno ihn liegen, holt Lantern ihn noch in der Nacht. Hat sie ihn, findet Lantern die Sechs leer. Juno legt ihn dann anonym zurück (Lantern sieht jede Nacht nach) oder bringt ihn Lantern selbst; dieser Weg bleibt immer offen. **Die Quiet bekommt den Stick nie.** Erfährt sie von der Sechs, weil Juno ihre Aufnahme ungeschnitten weitergibt, findet sie den Trockner leer und bleibt dort sitzen. Juno sieht das auf `cam23`, und Zurücklegen geht dann nicht mehr. Hält Lantern den Stick schon, kommt sie ohnehin zu spät.
 - **WRENs Geld:** 1500 für den Ort (250 vorab, 1250 beim Senden; wer den Vorschuss zurückschickt und doch sendet, bekommt 1500), dazu 750 für die Live-Übertragung, getrennt im Kassenbuch.
-- **Kamera 31:** Halcyon hat die alten Metrokameras einst nachgerüstet und dann vergessen; deshalb versteht sie das Beobachter-Protokoll.
+- **Kamera 31:** Nagi·wa hat die alten Metrokameras einst nachgerüstet und dann vergessen; deshalb versteht sie das Beobachter-Protokoll.
 - **Das Ende von Kapitel 1 spielt Junos Ohnmacht aus** (`kapitel1-design` §8): Alles, was sie versucht, scheitert sichtbar. Nachdem Ashe in
   die Kamera gesehen hat, läuft eine Störung durchs Bild, und der Feed bricht ab.
 - **Das Implantat ist immer cyan**, auch Junos Klammern 2088 in der Halle.
@@ -552,7 +552,7 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
   „Bringst du mir was mit?“ bleibt, wie es ist.
 - **Der Aufzug fährt nie.** „Angeblich dienstags“ bleibt als Witz.
 - **Der 14. Stock:** Frau Haldanes Tür sitzt in der linken Wand vorn, die Fahrräder sind weg, die Müllsäcke stehen vor dem Aufzug, oben in
-  der Ecke hängt Halcyons Kamera. Das Post-it in der Wohnung ist gestrichen.
+  der Ecke hängt Nagi·was Kamera. Das Post-it in der Wohnung ist gestrichen.
 - **Ein Haus, ein Grundriss:** Aufzug und Treppe stehen auf jedem Stockwerk an derselben Stelle (`kessel_14`, `kessel_lobby`).
 - **Schilder in Grafik sind englisch**, auch geplante: `GLASSER LIES`, `SUDS & SPIN` (der Waschsalon), `NO SNEAKERS IN THE DRYER`, `OUT OF ORDER`,
   `KIDNEYS ONLY`, Sables Preisliste `NAMES 50. ADDRESSES 80. SECRETS: ASK.`
@@ -608,3 +608,4 @@ Die Blockskizzen für den Mord und die Figuren der Stadt sind freigegeben (`docs
 
 - **Der Prolog wird immer gespielt.** Kapitel einzeln anwählen geht höchstens nach dem Durchspielen, vielleicht gar nicht, wenn es zu kompliziert wird: Ein Kapitel ohne seine Vorgeschichte müsste jede frühere Entscheidung raten. `?act=kapitel1` bleibt ein Einstieg für Entwicklung und Tests; dort beginnt Kapitel 1 mit der Antwort des Durchspielwegs (Motte freundlich, die ganze Wahrheit an Frau Kessler).
 - **Motte sagt den Takt,** das ist fairer: Fragt Juno, wie er beim Licht seiner Mutter mitzählt, sagt er „Lang, kurz, kurz, lang. Dann Pause.“ EVI sagt ihn weiter als letzte Stufe ihres Hinweises, und ihr zweiter Hinweis schickt zu Motte. Juno sagt ihn nie.
+- **Die Stadt und die Firma heißen Nagi·wa** (vorher Halcyon, der Name passte nicht zum Spiel): 凪輪, *nagi* ist die Windstille auf See (dasselbe, was Halcyon meinte), *wa* der Ring, also „Ring der Windstille“, eine Stadt aus Ringen, die Schlaf verkauft. Geschrieben wird im Text **Nagi·wa** (Genitiv „Nagi·was“), auf Schildern und Bildschirmen **NAGI·WA**, und ab und zu nur die Zeichen **凪輪** (im alten Foto am Deck von 2074, auf dem Fernseher im LUCKY STATIC). Vorher im Netz gesucht: kein Treffer als Name einer Stadt, Firma oder eines Spiels; ins Markenregister ist noch nicht geschaut.

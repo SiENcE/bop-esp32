@@ -7,7 +7,7 @@
 //            m  the doormat
 //   walls    lobby_steel  riveted steel panels to the dado, painted plaster above, the conduit under the
 //            ceiling, rust run down from a rivet
-//   openings poster_listens (Halcyon's ad: a sleeping face, SLEPT WELL? HALCYON LISTENS.), mailboxes (Juno's with the
+//   openings poster_listens (Nagi·wa's ad: a sleeping face, SLEPT WELL? NAGI·WA LISTENS.), mailboxes (Juno's with the
 //            rent notice), notice_board (flyers, a lost cat), street_door (glass, the street's magenta and
 //            the rain beyond it, the push bar)
 //   props    stairs_up (the flight up to the first floor along the right wall), wet_sign (a yellow A-frame, a
@@ -62,7 +62,7 @@ const KLOBBY = (() => {
     return "3"
   })
 
-  // ---------------------------------------------------------------- Halcyon's poster
+  // ---------------------------------------------------------------- Nagi·wa's poster
   ISOKIT.opening("poster_listens", {
     pad: 0.03,
     paint(s, h, o) {
@@ -78,7 +78,7 @@ const KLOBBY = (() => {
         c.hline(fl(W / 2) - 1, 14, 3, "s")                                           // the smile
         c.ellipse(W - 8, 7, 2, 2, "V"); c.ellipse(W - 8, 7, 1, 1, "C")               // the ring
         TXT.draw(c, 2, 22, "SLEPT WELL?", "V", { font: "hud" })
-        TXT.draw(c, 2, 30, "HALCYON", "V", { font: "hud" })
+        TXT.draw(c, 2, 30, "NAGI·WA", "V", { font: "hud" })
         TXT.draw(c, W - 34, 37, "LISTENS.", "v", { font: "hud" })   // to the right: the flight hides its lower left corner
         c.rect(W - 6, H - 5, 4, 4, "c")                                              // a corner torn off
       }, -1, -1)

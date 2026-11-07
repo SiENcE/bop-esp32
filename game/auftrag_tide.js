@@ -1,4 +1,4 @@
-// Halcyon: job B of Chapter 1, "Der Eckladen" (docs/kapitel1-design.md §4), on blocks. TIDE wants the code of Okonkwo's safe in Jade Row.
+// Nagiwa: job B of Chapter 1, "Der Eckladen" (docs/kapitel1-design.md §4), on blocks. TIDE wants the code of Okonkwo's safe in Jade Row.
 // From above (cam07) his back hides the keypad when he opens it at 01:00; the machine across the lane sees it at hip height, once it is tapped
 // (a tap from Ratz on the Drain Market). Then K1b: sell the code, sell a false one, or warn him in his shop. Lt. Morrow takes an envelope at 00:30.
 //   got_tap   Juno has bought the tap (the item `abzweiger` until it is used on the machine)
@@ -9,38 +9,38 @@
 "use strict";
 
 (function () {
-const AJ = Halcyon.at.jade_row, A7 = Halcyon.at.cam07, AV = Halcyon.at.cam07v, AO = Halcyon.at.okonkwo_shop, AM = Halcyon.at.drain_market;
+const AJ = Nagiwa.at.jade_row, A7 = Nagiwa.at.cam07, AV = Nagiwa.at.cam07v, AO = Nagiwa.at.okonkwo_shop, AM = Nagiwa.at.drain_market;
 const O = (/** @type {string} */ text) => ({ say: "okonkwo", text });
 const RZ = (/** @type {string} */ text) => ({ say: "ratz", text });
 const OPEN = "time<01:00";      // the shop is open from the evening until one, every evening
 
 // ---- the chat: TIDE's message, what Juno can send (the code she has is her only way in: nothing to accept first)
-Object.assign(Halcyon.contacts, { tide: { name: "TIDE", color: "#7ab0c0", status: "online", if: ["day>1", "!off_tide"], unread: "!read_tide",
+Object.assign(Nagiwa.contacts, { tide: { name: "TIDE", color: "#7ab0c0", status: "online", if: ["day>1", "!off_tide"], unread: "!read_tide",
   open: [{ if: "!read_tide", then: [{ set: "read_tide" }, "Okonkwo. Der grüßt mich jeden Abend."] }] } });
 Cutaway.state.view("read_tide");
-Halcyon.threads.tide = [
+Nagiwa.threads.tide = [
   { from: "tide", at: "18:15", text: "Okonkwo, Jade Row. Wir wollen den Tresorcode. 500. Keine Fragen." },
   { from: "juno", if: "k1b=sold", text: "4-1-7-0-9." },
   { from: "tide", if: "k1b=sold", text: "500. Gut." },
   { from: "juno", if: "k1b=lied", text: "3-8-2-0-6." },
   { from: "tide", if: "k1b=lied", text: "250 jetzt. Den Rest, wenn er aufgeht." },
 ];
-Halcyon.replies.tide = [
+Nagiwa.replies.tide = [
   { id: "sold", text: "Den Code senden.", if: ["cache_note_safe_code", "!k1b"],
     use: [{ set: "k1b", value: "sold" }, { ledger: "tide", value: "sold" }, "Fünf Zahlen. Fünfhundert Chits.", { evi: "froh" }, { say: "evi", text: "Ein Tresor! Was ist da drin?" }, "Nicht meins."] },
   { id: "lied", text: "Einen falschen Code senden.", if: ["cache_note_safe_code", "!k1b"],
     use: [{ set: "k1b", value: "lied" }, { ledger: "tide", value: "lied" }, "Das merken die erst, wenn sie davorstehen.", { evi: "verwirrt" }, { say: "evi", text: "Der stimmt aber nicht. Ich hab mitgelesen." }, "Eben."] },
 ];
-Object.assign(Halcyon.ledger, {
+Object.assign(Nagiwa.ledger, {
   tide: { to: "TIDE", what: { sold: "Okonkwos Tresor", lied: "ein falscher Code" }, chits: { sold: 500, lied: 250 } },
   okonkwo: { to: "OKONKWO", what: { warned: "gewarnt. Eine Stange Reis" } },
 });
-Halcyon.cache.note_safe_code = { kind: "note", name: "OKONKWOS TRESOR", about: "Jade Row, unter der Theke. Um eins macht er auf. 4-1-7-0-9." };
-Halcyon.cache.clip_morrow_bribe = { kind: "clip", name: "MORROWS UMSCHLAG", about: "Jade Row, 00:30. Lt. Morrow nimmt einen Umschlag von einem Tidewater-Jungen. „Freitag fährt keiner die Kowalski.“" };
+Nagiwa.cache.note_safe_code = { kind: "note", name: "OKONKWOS TRESOR", about: "Jade Row, unter der Theke. Um eins macht er auf. 4-1-7-0-9." };
+Nagiwa.cache.clip_morrow_bribe = { kind: "clip", name: "MORROWS UMSCHLAG", about: "Jade Row, 00:30. Lt. Morrow nimmt einen Umschlag von einem Tidewater-Jungen. „Freitag fährt keiner die Kowalski.“" };
 
-// ---- CAM 07, Halcyon's camera over the lane (Juno's old access): from above Okonkwo's back hides the keypad
-Halcyon.cams.cam07 = { id: "07", place: "JADE ROW", owner: "HALCYON", map: [64, 62], if: ["day>1", "!off_tide"] };
-Halcyon.cams.cam07v = { id: "07V", place: "JADE ROW, AUTOMAT", owner: "SMILE FOR A COUPON", map: [8, 86], if: ["link_cam07v", "!off_tide"] };
+// ---- CAM 07, Nagi·wa's camera over the lane (Juno's old access): from above Okonkwo's back hides the keypad
+Nagiwa.cams.cam07 = { id: "07", place: "JADE ROW", owner: "NAGI·WA", map: [64, 62], if: ["day>1", "!off_tide"] };
+Nagiwa.cams.cam07v = { id: "07V", place: "JADE ROW, AUTOMAT", owner: "SMILE FOR A COUPON", map: [8, 86], if: ["link_cam07v", "!off_tide"] };
 Cutaway.actor("okonkwo_feed", { name: "Okonkwo", color: "#d8b890",
   costume: { idle: "mock_okonkwo_kneel", walk: "mock_okonkwo_kneel", talk: "mock_okonkwo_kneel" },
   look: ["Okonkwo. Laden zu, und er kniet hinter der Theke."],
@@ -60,7 +60,7 @@ Cutaway.routine("okonkwo_feed", [{ day: [2, 3], from: "01:00", to: "01:15", if: 
 Cutaway.routine("morrow", [{ day: [2, 3], from: "00:30", to: "00:45", if: "!off_tide", room: "cam07", at: A7.morrow, face: "se" }]);
 Cutaway.routine("tide_boy", [{ day: [2, 3], from: "00:30", to: "00:45", if: "!off_tide", room: "cam07", at: A7.boy, face: "se" }]);
 Cutaway.routine("streife", [{ day: [2, 3], from: "00:30", to: "00:45", if: "!off_tide", room: "cam07", at: A7.car }]);
-Halcyon.camRoom("cam07", { background: "cam07_bg", mic: { at: A7.mic, clear: 40, lost: 150 }, hotspots: {
+Nagiwa.camRoom("cam07", { background: "cam07_bg", mic: { at: A7.mic, clear: 40, lost: 150 }, hotspots: {
   shop: { name: "Okonkwos Laden", rect: A7.windowRect, look: ["Okonkwos Laden von oben. Ich seh die Theke, und ihn, wenn er da ist.", "Den Tresor nicht. Der ist unter der Theke."] },
   machine: { name: "Automat", rect: A7.machineRect, look: "Der Automat gegenüber. SMILE FOR A COUPON. Der sieht ihm genau ins Fenster." },
 } });
@@ -77,7 +77,7 @@ Cutaway.actor("okonkwo_safe", { name: "Okonkwo", color: "#d8b890",
   talk: [{ if: "k1b=warned", then: ["Er tippt einen neuen Code. Gut so."], else: [{ if: "cache_note_safe_code", then: ["Den Code hab ich."], else: READ }] }] });
 Cutaway.routine("okonkwo_v", [{ day: [2, 3, 4], from: "18:00", to: "01:00", if: "!off_tide", room: "cam07v", at: AV.counter }]);
 Cutaway.routine("okonkwo_safe", [{ day: [2, 3], from: "01:00", to: "01:15", if: "!off_tide", room: "cam07v", at: AV.safe }]);
-Halcyon.camRoom("cam07v", { background: "cam07v_bg", mic: { at: AV.mic, clear: 40, lost: 150 }, hotspots: {
+Nagiwa.camRoom("cam07v", { background: "cam07v_bg", mic: { at: AV.mic, clear: 40, lost: 150 }, hotspots: {
   safe: { name: "Tresor", rect: AV.safeRect, look: "Der Tresor unter der Theke. Das Tastenfeld zeigt genau zu mir." },
   shelves: { name: "Regale", rect: AV.shelvesRect, look: "Reis, Batterien, Zigaretten. Und ein Foto, das ich von hier nicht erkenne." },
   rewind: { name: "Puffer", z: 5, if: ["day<4", "time>=01:15", "!cache_note_safe_code", "!k1b"], use: ["Puffer. Zurück auf eins.", ...READ] },
@@ -108,7 +108,7 @@ Cutaway.actor("okonkwo", { name: "Okonkwo", color: "#d8b890", room: "okonkwo_sho
   costume: { idle: "mock_okonkwo", walk: "mock_okonkwo", talk: "mock_okonkwo" }, voice: { pitch: 46, range: 3, wave: "triangle", syllable: 90, speed: 0.85 },
   look: ["Okonkwo. Strickjacke, Lesebrille. Er rechnet noch auf Papier."],
   talk: [O("Juno. Guten Abend."), { dialog: "okonkwo" }] });
-Halcyon.talkTree("okonkwo", [
+Nagiwa.talkTree("okonkwo", [
   ["„Wie läuft's?“", [
     { if: "day=2", then: [O("Batterien gehen. Reis geht. Zigaretten gehen immer."), "Und du?", O("Ich gehe um eins.")] },
     { if: "day=3", then: [O("Draußen steht ein Wagen und wartet. Der wartet nicht auf mich.")] },
@@ -133,7 +133,7 @@ Cutaway.actor("ratz", { name: "Ratz", color: "#90d0a0", room: "drain_market", at
   costume: { idle: "mock_ratz", walk: "mock_ratz", talk: "mock_ratz" }, voice: { pitch: 72, range: 6, wave: "square", syllable: 55, speed: 1.3 },
   look: ["Ratz. Eine Kabelratte, so groß wie ein kleiner Hund, in einem Parka, der ihm nie passen wird.", "Der Kragen leuchtet, wenn er redet. Er redet viel."],
   talk: [RZ("Kundschaft! Kauf was, oder kauf was anderes."), { dialog: "ratz" }] });
-Halcyon.talkTree("ratz", [
+Nagiwa.talkTree("ratz", [
   ["„Was hast du da?“", [RZ("Alles, was nicht festgeschraubt ist. Und Schraubenzieher.")], [
     ["„Einen Abzweiger. Hast du einen?“", [RZ("Sechzig Chits. Freundschaftspreis."), RZ("Feindschaftspreis wär achtzig. Wir sind Freunde?")], [
       ["„Sechzig. Hier.“", [{ inc: "chits", by: -60 }, { give: "abzweiger" }, { set: "got_tap" }, RZ("Freunde. Ich hab's gewusst."), RZ("Klemmt an alles, was ein Kabel hat. Auch an Kabel.")], undefined, ["chits>=60", "!got_tap"]],

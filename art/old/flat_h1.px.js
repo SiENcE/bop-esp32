@@ -473,7 +473,7 @@ const FLAT = (() => {
       })
   }, { foot: FOOT.bed })
 
-  // the old box: cardboard, its flaps open; her Halcyon badge on its grey lanyard hangs out over the
+  // the old box: cardboard, its flaps open; her Nagi·wa badge on its grey lanyard hangs out over the
   // front; the dried cactus's top shows over the rim
   prop("flat_box", (p) => {
     const [u0, v0, du, dv] = FOOT.box, h = 8

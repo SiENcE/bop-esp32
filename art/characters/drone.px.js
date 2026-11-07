@@ -1,4 +1,4 @@
-// Halcyon's patrol drone (style guide §5: red is the system's eye), at the new scale: about 0.8 m across, so
+// Nagi·wa's patrol drone (style guide §5: red is the system's eye), at the new scale: about 0.8 m across, so
 // 27 px; seen from a little above, as street mode sees it. It hovers: the body bobs a pixel, the two rotors
 // are a blur that flickers, the red eye in its sensor band pulses, its searchlight's lens glows under it (the
 // beam itself and its pool on the street are the room's: a haze and an added lamp).

@@ -1,11 +1,11 @@
-// Halcyon: Kowalski Street (kapitel0-design §6.2 steps 16-17, §7.1), the street outside the Kessel Block, baked
+// Nagiwa: Kowalski Street (kapitel0-design §6.2 steps 16-17, §7.1), the street outside the Kessel Block, baked
 // from its map (art/rooms/kowalski.map.js); 416 px wide, it scrolls. The Kessel Block's door back in, LUCKY
 // STATIC (the bar, enterable in Chapter 1), Bao's cart under its umbrella, the noodle machine, the big broken
 // ad screen (the prologue ends there: JUNO.), the alley down to the Drain Market (shut tonight), the bins.
 "use strict";
 
 (function () {
-  const AW = Halcyon.at.kowalski, AL = Halcyon.at.kessel_lobby;
+  const AW = Nagiwa.at.kowalski, AL = Nagiwa.at.kessel_lobby;
 
   // Step 17 (kapitel0-design §6.2): after the meal the broken screen over the street stutters, the eye in its
   // static turns to Juno, JUNO. over the whole screen (the stinger "witness"); then the advert again. Only the
@@ -79,10 +79,10 @@
         use: "Er nimmt keine Chits von mir. Wir hatten einen Streit." },
       scaffold: { name: "Gerüst", poly: AW.scaffoldPoly, walkTo: AW.scaffold, face: "ne", look: "Gerüst, Kocher, Schlafsack. Wer da wohnt, kriegt keine Mahnung." },
       ad: { name: "Werbebildschirm", rect: AW.adRect, walkTo: AW.ad, face: "ne",
-        look: ["HALCYON. SLEEP BETTER.", "Die Hälfte vom Bildschirm ist kaputt. Die bessere Hälfte."] },
+        look: ["NAGI·WA. SLEEP BETTER.", "Die Hälfte vom Bildschirm ist kaputt. Die bessere Hälfte."] },
       alley: { name: "Gasse", rect: AW.alleyRect, walkTo: AW.alley, face: "ne",
         look: [{ if: "day=1", then: ["Da runter geht's zum Drain-Markt. Das Gitter ist zu."], else: ["Die Gasse. Da runter geht's zum Drain-Markt, und zum Waschsalon."] }],
-        use: [{ if: "day=1", then: ["Nicht heute Nacht."], else: [{ goto: "gasse", at: Halcyon.at.gasse.arrive, face: "se" }] }] },
+        use: [{ if: "day=1", then: ["Nicht heute Nacht."], else: [{ goto: "gasse", at: Nagiwa.at.gasse.arrive, face: "se" }] }] },
       bins: { name: "Mülltonne", poly: AW.binsPoly, walkTo: AW.bins, face: "ne",
         look: "Die Tonne ist so voll, dass der Deckel auf einem Sack steht." },
       bao: { name: "Bao", rect: AW.baoRect, walkTo: AW.eat, face: "ne", z: 2,

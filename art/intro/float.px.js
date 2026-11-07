@@ -6,7 +6,7 @@
 //   intro_sky_a2      the same, its horizon lower (the camera looks up at the city: HZ_A2)
 //   intro_mast_1..5   a camera mast's head (the city's cameras stand in the water): its housings, the lenses, the
 //                     red eye blinking; five sizes, the game picks one by distance (24 frames at 4 fps: the lens
-//                     pans once in 6 s; pivot bottom-centre, on the column's top). Halcyon itself the game draws
+//                     pans once in 6 s; pivot bottom-centre, on the column's top). Nagi·wa itself the game draws
 //                     (at any size, as it nears)
 //   intro_drone       a patrol drone far off: 7 px, its red eye blinking (12 frames)
 // Colours: the world palette (style guide §5); dithering only for the light's falloff (the haze, the glow).

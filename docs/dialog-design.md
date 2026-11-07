@@ -23,7 +23,7 @@ Verkauf, jede Warnung stärkt eine Stimme. Wer Juno ist, hört man.
 
 | Stimme | Wer sie ist | Was sie hört und sagt | Stärker durch | Farbe |
 |---|---|---|---|---|
-| **DIE BEOBACHTERIN** | Junos Halcyon-Ausbildung, kühl, genau | Körpersprache, Details, Lügen im Gesicht, was nicht ins Bild passt | genau hinsehen: zoomen, markieren, Momente aufzeichnen | `#9cd0ff` |
+| **DIE BEOBACHTERIN** | Junos Nagi·wa-Ausbildung, kühl, genau | Körpersprache, Details, Lügen im Gesicht, was nicht ins Bild passt | genau hinsehen: zoomen, markieren, Momente aufzeichnen | `#9cd0ff` |
 | **DIE HÄNDLERIN** | der Drain-Markt in ihr, zynisch, witzig | was etwas wert ist, wer wem was schuldet, wie man feilscht | Shine verkaufen, feilschen, Geld nehmen | `#c890ff` |
 | **DIE SCHWESTER** | Teo, die Wärme, die sie sich nicht leistet | was jemand braucht, Schuld, Mitgefühl | warnen, helfen, verschenken, für Teo da sein | `#ffb070` |
 | **DER HUNGER** | der Körper: Hunger, Müdigkeit, Angst | Gefahr, Erschöpfung, Fluchtwege, wann es Zeit ist zu gehen | fliehen, essen, schlafen, überleben | `#e8c890` |
@@ -59,7 +59,7 @@ Verkauf, jede Warnung stärkt eine Stimme. Wer Juno ist, hört man.
 
 ## 4. Wie ein Gespräch gebaut ist
 
-- **Nie mehr als vier Optionen auf einmal** (entschieden 2026-11-05), den Weg zurück oder hinaus mitgezählt. Längere Gespräche sind verschachtelt: Ein Thema anschneiden bringt seine eigenen Optionen. `Halcyon.talkTree` (`game/talk.js`) baut so ein Gespräch und lässt mehr gar nicht zu.
+- **Nie mehr als vier Optionen auf einmal** (entschieden 2026-11-05), den Weg zurück oder hinaus mitgezählt. Längere Gespräche sind verschachtelt: Ein Thema anschneiden bringt seine eigenen Optionen. `Nagiwa.talkTree` (`game/talk.js`) baut so ein Gespräch und lässt mehr gar nicht zu.
 - **Nabe und Speichen:** Jedes größere Gespräch hat eine Nabe (die Fragen, die offen sind) und
   Speichen (Themen), die zur Nabe zurückführen. Abgehakte Themen verschwinden oder ändern sich.
 - **Haltungen statt Ja/Nein:** Wahlen unterscheiden sich im Ton (kalt, warm, spöttisch, ehrlich), und

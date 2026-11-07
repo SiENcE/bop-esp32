@@ -1,4 +1,4 @@
-// The observation hall in Halcyon Tower, 2088 (the intro's shot 1, docs/kapitel0-design.md §5), as a map
+// The observation hall in Nagi·wa Tower, 2088 (the intro's shot 1, docs/kapitel0-design.md §5), as a map
 // (art/lib/isomap.js has the format). Every length in meters. At the street's scale (style guide §4), so the
 // hall is bigger than the screen and the camera moves over it: both back walls are screens from the dado to
 // under the ceiling; four rows of desks run along u, five desks each, a watcher at every one facing the right

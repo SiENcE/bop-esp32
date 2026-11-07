@@ -73,7 +73,7 @@ Yuen's ..." far under the canopy, the whole line once he steps under the camera.
 
 ## For `game/places.js`
 
-`Halcyon.at.cam03` still holds placeholder guesses; these replace them:
+`Nagiwa.at.cam03` still holds placeholder guesses; these replace them:
 
 ```js
 cam03: {

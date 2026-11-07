@@ -1,4 +1,4 @@
-// Halcyon: the intro's ride D (docs/kapitel0-design.md §5; game/intro.js plays it): Juno going down the Transitachse in
+// Nagiwa: the intro's ride D (docs/kapitel0-design.md §5; game/intro.js plays it): Juno going down the Transitachse in
 // a glass lift. Everything outside the glass is drawn here, in rectangles on a shared scroll `s` (px of descent), so it
 // stays crisp and the close-up and the whole lift are one journey: the decks of the rings rush up past, from the Krone's
 // cold light through the middle's to the Ninth's amber and magenta. Painted over it (art/intro/ride.px.js): the box close
@@ -7,7 +7,7 @@
 "use strict";
 
 (function () {
-  const { px, rnd } = Halcyon.intro;
+  const { px, rnd } = Nagiwa.intro;
   const W = 320, H = 180;
   const SPEED = 360, CLOSE_MS = 3200, LIFT_MS = 11000;                  // px a second; as long as game/intro.js plays them
   const CLOSE_PX = (CLOSE_MS / 1000) * SPEED, TOTAL = CLOSE_PX + (LIFT_MS / 1000) * SPEED;
@@ -108,7 +108,7 @@
   Cutaway.room("intro_d_close", { name: "Transitachse", color: "#06080f", float: "d_close" });
   Cutaway.room("intro_d", { name: "Transitachse", color: "#06080f", float: "d" });
 
-  Halcyon.intro.shots.d_close = (ctx, p) => {
+  Nagiwa.intro.shots.d_close = (ctx, p) => {
     const s = p * CLOSE_PX;
     outside(ctx, s);
     Cutaway.assets.draw(ctx, "intro_d_close", 0, 0, { anchor: [0, 0] });
@@ -121,7 +121,7 @@
     }
   };
 
-  Halcyon.intro.shots.d = (ctx, p, t) => {
+  Nagiwa.intro.shots.d = (ctx, p, t) => {
     const s = CLOSE_PX + p * (TOTAL - CLOSE_PX);
     outside(ctx, s);
     rails(ctx, s);

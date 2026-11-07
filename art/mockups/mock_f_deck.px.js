@@ -72,7 +72,7 @@ function button(c, x, y, label, on, dim) {
   return w
 }
 /** wrap a text into lines no wider than w */
-function wrap(s, w, font = "halcyon") {
+function wrap(s, w, font = "nagiwa") {
   const out = []; let line = ""
   for (const word of s.split(" ")) { const t = line ? line + " " + word : word; if (TXT.measure(t, font) > w && line) { out.push(line); line = word } else line = t }
   if (line) out.push(line)
@@ -333,7 +333,7 @@ const CONTACTS = [
   { name: "M. KESSLER", status: "online", dot: "v", fresh: true, ava: "Q", on: true },
   { name: "SABLE", status: "abwesend", dot: "Q", ava: "M" },
   { name: "TEO", status: "schläft", dot: "5", ava: "R", zz: true },
-  { name: "HALCYON SERVICE", status: "Werbung", dot: "4", ava: "C" },
+  { name: "NAGI·WA SERVICE", status: "Werbung", dot: "4", ava: "C" },
 ]
 sprite("mock_f_deck_chat", { w: W, h: H }, (c) => {
   wallpaper(c); header(c, { unread: 1 }); icons(c, "chat")

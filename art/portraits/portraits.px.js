@@ -1916,7 +1916,7 @@ const nameLines = (id) => NAMES[id].split("\n").length
 const nameH = (lines) => 3 + lines * 10
 const named = (c, id, x, y) => {
   c.stamp(`portrait_${id}`, x, y)
-  TXT.draw(c, x + Math.floor(PW / 2), y + PH + 3, NAMES[id], "#dce4ee", { font: "halcyon", align: "center" })
+  TXT.draw(c, x + Math.floor(PW / 2), y + PH + 3, NAMES[id], "#dce4ee", { font: "nagiwa", align: "center" })
 }
 for (const id of Object.keys(NAMES)) scene(`named_${id}`, { w: PW, h: PH + nameH(nameLines(id)), bg: INK }, (c) => named(c, id, 0, 0))
 
@@ -1933,5 +1933,5 @@ scene("review_juno_teo", { w: 4 * PW + 2 * GAP + PAIR_GAP + 2 * GAP, h: PH + nam
   const x = GAP + i * (2 * PW + GAP + PAIR_GAP)
   c.stamp(a, x, GAP)
   c.stamp(b, x + PW + GAP, GAP)
-  TXT.draw(c, x + PW + Math.floor(GAP / 2), GAP + PH + 3, NAMES[id], "#dce4ee", { font: "halcyon", align: "center" })
+  TXT.draw(c, x + PW + Math.floor(GAP / 2), GAP + PH + 3, NAMES[id], "#dce4ee", { font: "nagiwa", align: "center" })
 }))

@@ -1,4 +1,4 @@
-// Halcyon: the intro's shot 2 (docs/kapitel0-design.md §5; game/intro.js plays it): Juno at her desk, close. The
+// Nagiwa: the intro's shot 2 (docs/kapitel0-design.md §5; game/intro.js plays it): Juno at her desk, close. The
 // picture is art/intro/desk.px.js; what moves is drawn here, driven by the shot's progress: people walking through
 // the feed, a man who walks in and stops; then her brackets close on him (the implant's cyan, as always), the implant's point behind her ear
 // lights, her hand presses. Everything in the feed is clipped to the monitor's picture. Shot 4's end is here too: the
@@ -7,7 +7,7 @@
 "use strict";
 
 (function () {
-  const { px } = Halcyon.intro;
+  const { px } = Nagiwa.intro;
   const SX = 35, SY = 35, SW = 174, SH = 86;
   const PH = { walker: "#8acfae", dark: "#12332d", man: "#d4f7e2" };
   const CYAN = "#3ff2ff", SKIN = "#d79676", SKIN_LIT = "#a9c29c";
@@ -69,11 +69,11 @@
     // the implant answers: the point behind her ear lights as she tags, then settles
     if (p > LOCK - 0.1 && (p < LOCK + 0.12 || Math.floor(t / 300) % 4 !== 0)) px(ctx, CYAN, 265, 89, 2, 2);
   }
-  Halcyon.intro.shots.desk = desk;
+  Nagiwa.intro.shots.desk = desk;
   // the hall out round her: the same picture on her monitor, nothing new happens in it any more
-  Halcyon.intro.shots.desk_last = (ctx, p, t) => desk(ctx, 1, t);
+  Nagiwa.intro.shots.desk_last = (ctx, p, t) => desk(ctx, 1, t);
   // her monitor goes out as a CRT does: the picture folds into a bright line that narrows to nothing
-  Halcyon.intro.shots.desk_dark = (ctx, p) => {
+  Nagiwa.intro.shots.desk_dark = (ctx, p) => {
     hand(ctx, 0, "#552b1c", "#93583f");
     if (p >= 1) return;
     px(ctx, "#030a0a", SX, SY, SW, SH);

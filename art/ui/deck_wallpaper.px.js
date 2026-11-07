@@ -1,8 +1,8 @@
 // The deck's desktop wallpaper (docs/kapitel0-design.md §2.1, style guide §8 "The deck"): an old photo,
 // Juno (14, already in the yellow slicker, hood up) and her little brother Teo (6), in 2074, from behind
 // and a little above, sitting on the parapet of a flat roof in the Lower Ninth at night, in the rain,
-// looking out over Halcyon. Over them the underside of the ring above (the Ninth never sees the sky), its
-// rim lamps and the drip that is the Ninth's rain; ahead the towers, the big HALCYON screen of 2074
+// looking out over Nagi·wa. Over them the underside of the ring above (the Ninth never sees the sky), its
+// rim lamps and the drip that is the Ninth's rain; ahead the towers, the big NAGI·WA screen of 2074
 // ("RISE ABOVE", the sun the Ninth never sees), amber windows, a magenta NOODLES sign, the flooded streets'
 // glow coming up through the smog. Teo leans his head on her shoulder, her arm round him; on the ledge
 // beside him the noodle cup they shared, still steaming. A camera drone hovers by, watching them (its red eye).
@@ -11,7 +11,7 @@
 // The kids stay still; around them: rain falling over everything down to the parapet, the cup's steam rising and curling,
 // rings where the rain hits the canal, its reflections breaking up, the taxi's light trembling, the hood's
 // reflection trembling in the puddle, the drone drifting and blinking, the NOODLES sign humming (its glow
-// breathing, the D stuttering), the HALCYON screen's band rolling down and the sun's glow breathing, the
+// breathing, the D stuttering), the NAGI·WA screen's band rolling down and the sun's glow breathing, the
 // spine's lifts climbing and its beacons, two lanes of far traffic in the smog, windows going on and off.
 //   deck_photo       the photo at full strength (to judge the picture)
 //   deck_wallpaper   the photo as the deck shows it: every colour taken down to a dark, faded tone (an old
@@ -29,6 +29,7 @@
 // O P Q R W, cyan c C v V, red r q, Juno's j y Y, skin s S) plus the smog lit from below (A B D G);
 // the dimmed print's own keys: steel a b d g h i l, magenta o p, amber t u, yellow w x U, cyan H I, red L K.
 // Included by art/mockups/mock_f_deck.px.js; its helpers live in the block below (one shared JS scope).
+include("../lib/kanji.js")
 pal({
   k: "#0c0e1a",
   1: "#131a2a", 2: "#1a2337", 3: "#232f47", 4: "#2f3e5a", 5: "#41547a", 6: "#617aa0",
@@ -65,7 +66,8 @@ pal({
   // Its grid() draws a hand grid with an ink outline round it, as a stamped sprite with outline: "k" does.
   const GLYPHS = { H: "101101111101101", A: "010101111101101", L: "100100100100111", C: "011100100100011", Y: "101101010010010",
     O: "111101101101111", N: "110101101101101", D: "110101101101110", E: "111100110100111", S: "011100010001110",
-    B: "110101110101110", T: "111010010010010", R: "110101110101101", P: "110101110100100" }
+    B: "110101110101110", T: "111010010010010", R: "110101110101101", P: "110101110100100",
+    G: "011100101101011", I: "111010010010111", W: "101101111111101" }
   const pen = (w = W) => {
     const buf = Array.from({ length: H }, () => new Array(w).fill("1"))
     const p = {
@@ -266,7 +268,7 @@ pal({
     { const r = f % 12; if (r < 3) c.px(181, 30, "q"); else if (r === 3) c.px(181, 30, "r") }
     { const k = during(f, 14, 20) ? "v" : f === 13 || f === 20 ? "C" : null; if (k) c.px(192, 50, k) }
 
-    // the HALCYON tower and its screen: the sun rising over the water, the city's promise in 2074
+    // the NAGI·WA tower and its screen: the sun rising over the water, the city's promise in 2074
     c.rect(104, 28, 64, HZ + 10 - 28, "2"); c.rect(164, 28, 4, HZ + 10 - 28, "1"); c.rect(104, 28, 60, 1, "3")
     for (let y = 68; y < HZ + 10; y += 3) for (let x = 106; x < 163; x += 3) if (hash(x, y * 3) < 0.08) c.px(x, y, hash(y, x) < 0.7 ? "P" : "c")
     if (during(f, 6, 17)) c.px(118, 71, "P"); if (during(f, 15, 3)) c.px(148, 74, "P")
@@ -275,7 +277,8 @@ pal({
     c.rect(110, 33, 50, 31, "1")
     for (let y = 35; y < 62; y++) for (let x = 112; x < 158; x++) c.px(x, y, y < 50 ? ((x + y) % 4 ? "c" : "C") : (y & 1 ? "c" : "C"))
     { const rb = 35 + Math.floor(f * 27 / FRAMES); for (let x = 112; x < 158; x++) { c.px(x, rb, "C"); if (rb > 35 && x % 2) c.px(x, rb - 1, "C") } }
-    c.text(122, 37, "HALCYON", "V")
+    // the city's name: in 2074 its two characters (the original mark), today NAGI·WA (pxl's own letters have no middle dot: it is set by hand)
+    if (today) { c.text(122, 37, "NAGI", "V"); c.px(138, 39, "V"); c.text(140, 37, "WA", "V") } else KANJI.draw(c, 121, 33, "V")
     if (today) { c.text(125, 44, "SLEEP", "V"); c.text(123, 50, "BETTER", "V") }
     const glow = 0.5 + 0.5 * wave(f, FRAMES)
     if (!today) for (let y = 43; y < 55; y++) for (let x = 123; x < 148; x++) {

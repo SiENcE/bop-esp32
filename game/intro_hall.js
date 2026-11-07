@@ -1,4 +1,4 @@
-// Halcyon: the intro's observation hall (shots 1, 3, 4 of docs/kapitel0-design.md §5; game/intro.js plays them),
+// Nagiwa: the intro's observation hall (shots 1, 3, 4 of docs/kapitel0-design.md §5; game/intro.js plays them),
 // baked from its map (art/rooms/hall.map.js). At the street's scale, bigger than the screen: the camera moves
 // over it. Its hum and the keys are the only sounds besides the music. Shot 4 is drawn over the same picture
 // (the room `intro_hall_out`, the shot's progress p): the screen walls go out cell by cell from the back corner, then
@@ -7,13 +7,13 @@
 "use strict";
 
 (function () {
-  const AH = Halcyon.at.hall;
+  const AH = Nagiwa.at.hall;
   Cutaway.room("intro_hall", {
     name: "Beobachtungshalle", background: "hall_bg", size: [576, 416], props: AH.props,
     ambience: [{ sfx: "deck_fans", gain: 0.8 }, { sfx: "fridge_hum", gain: 0.4 }],
   });
 
-  const { rnd, px } = Halcyon.intro;
+  const { rnd, px } = Nagiwa.intro;
   const [CX, CY] = AH.corner, DARK = "#030a0a", BEZEL = "#0c221f";
   const WALL_END = 0.28, JUNO = "31";
 
@@ -31,7 +31,7 @@
 
   Cutaway.room("intro_hall_out", { name: "Beobachtungshalle", background: "hall_bg", size: [576, 416], props: AH.props, float: "hall_out" });
 
-  Halcyon.intro.shots.hall_out = (ctx, p, t) => {
+  Nagiwa.intro.shots.hall_out = (ctx, p, t) => {
     const cam = Cutaway.scene.camera, ox = CX - cam.x, oy = CY - cam.y;
     if (p < 0.01) stopped.clear();
     // the walls: cells 0.8 x 0.5 m from h 0.45 (26 px along the wall, 15 px high); the right wall runs down to the

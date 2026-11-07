@@ -1,4 +1,4 @@
-// Halcyon's iso maps: a street-mode room described as a map (docs/ideas/iso-tiles.md, style guide §4), and
+// Glass Sister's iso maps: a street-mode room described as a map (docs/ideas/iso-tiles.md, style guide §4), and
 // the geometry the bake and the game need from it. Pure JavaScript, no pxl and no engine: the art includes
 // it (art/lib/isokit.js draws a map) and Node loads it (tools/iso-layout.mjs writes the measured layout).
 //

@@ -6,7 +6,7 @@
 (function () {
 const R = (/** @type {string} */ text) => ({ say: "regenleserin", text });
 
-Halcyon.talkTree("regenleserin", [
+Nagiwa.talkTree("regenleserin", [
   ["„Was schmeckst du heute?“", [
     { if: "day=1", then: [R("Der Siebte. Waschmittel, viel zu viel davon."), "Und?", R("Da hat einer was rauszuwaschen.")] },
     { if: "day=2", then: [R("Der Vierte. Die gießen ihre Orchideen."), "Das schmeckt man?", R("Dünger, Kind. Teurer als deine Miete.")] },
@@ -60,7 +60,7 @@ Halcyon.talkTree("regenleserin", [
         ["„Zufall.“", [R("Schmeckt nicht nach Zufall.")]],
       ]],
       ["„Das Licht hinterm Ohr?“", [R("Hast du auch so eins?")], [
-        ["„Was Älteres. Von Halcyon, aus meiner Zeit in der Halle.“", [R("Wo sitzt es?"), "Hinterm Ohr. Aber es leuchtet nur, wenn ich arbeite.", R("Dieselbe Stelle."), R("Sparsam, die Leute da oben.")]],
+        ["„Was Älteres. Von Nagi·wa, aus meiner Zeit in der Halle.“", [R("Wo sitzt es?"), "Hinterm Ohr. Aber es leuchtet nur, wenn ich arbeite.", R("Dieselbe Stelle."), R("Sparsam, die Leute da oben.")]],
       ]],
       ["„Und die Sinker?“", [R("Ruhe-Erschöpfung. Dann kommt der Wagen, der nicht hupt. Zwei in Weiß, sehr freundlich."), R("Weiß, hier unten! Das hält keinen Tag, das Wasser färbt alles."), R("Wer hier in Weiß rumläuft, kommt nicht von hier und bleibt nicht lang.")], [
         ["„Wo bringen sie sie hin?“", [R("Nach oben. Das ist das Einzige aus dem Neunten, was je nach oben gekommen ist.")]],

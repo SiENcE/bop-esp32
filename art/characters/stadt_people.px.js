@@ -5,7 +5,7 @@
 // Street mode (iso 2:1), drawn facing SE. They stay where they are when the engine turns them, so game/stadt.js gives every facing the
 // same view (as Bao and Motte); the _sw sets are the flipped ones, painted so that what is written on them still reads.
 //   regen_idle_*, regen_talk_*                       the Rain Reader, a catfish: 38 px on her bucket; a drop falls on the counter, a barbel twitches
-//   imai_idle_*, imai_talk_*                         Frau Imai, a sloth: 41 px at her table; the Lull point keeps Halcyon.lullBeat
+//   imai_idle_*, imai_talk_*                         Frau Imai, a sloth: 41 px at her table; the Lull point keeps Nagiwa.lullBeat
 //   prediger_idle_<day>_*, prediger_talk_<day>_*     the Preacher, a gecko: 54 px on a 12 px crate, 67 with the thermos; 9, 10, 11 on his counter; he licks his eye
 //   monteur_idle_ne, monteur_talk_*                  the Fitter, a mole: 52 px, 58 with the arm raised; from behind at work, his arm going; turned round to talk
 // Every frame of a figure has one canvas, odd in width, pivot bottom-centre under the feet: nothing jumps.
@@ -46,7 +46,7 @@ const sleeve = (c, x0, y0, x1, y1, t, lit, mid, shade) => { for (let i = 0; i < 
 const write = (c, x, y, s, key, mirrored) => {
   const w = TXT.measure(s, "hud"); let at = 0
   for (const ch of s) {
-    const rows = HALCYON_GLYPHS.hud[ch]
+    const rows = NAGIWA_GLYPHS.hud[ch]
     rows.forEach((row, j) => [...row].forEach((b, i) => { if (b === "#") c.px(mirrored ? x + w - 1 - at - i : x + at + i, y + j, key) }))
     at += rows[0].length + 1
   }
@@ -108,7 +108,7 @@ for (const [dir, flip] of SETS) {
 
 // ---------------------------------------------------------------- Frau Imai, at her table, with the tea that has gone cold
 const IW = 51, IH = 41, im = (h) => IH - 1 - h
-// Halcyon.lullBeat (game/halcyon.js) as lengths, from the start of its 3600 ms: on, off, on, off, on, off, on, off. Long, short, short, long, then the pause.
+// Nagiwa.lullBeat (game/nagiwa.js) as lengths, from the start of its 3600 ms: on, off, on, off, on, off, on, off. Long, short, short, long, then the pause.
 const LULL = [800, 300, 250, 300, 250, 300, 800, 600]
 const imai = (c, o = {}) => {
   // the chair behind her; her legs under the table

@@ -22,7 +22,7 @@ perspective, the painted parts in `art/intro/float.px.js` -> `assets/intro.js`; 
 The engine's version is in `lib/cutaway/VERSION.txt`.
 
 What was added on 2026-11-04 (in order):
-- every text through i18n (`Halcyon.t`, the engine's `i18n.declare`); a Chinese layout test
+- every text through i18n (`Nagiwa.t`, the engine's `i18n.declare`); a Chinese layout test
   (`docs/ideas/chinesisch.md`);
 - H2b's mockup F (`docs/mockups/mock_f_deck_*`), the old photo as the deck's wallpaper, animated
   (`art/ui/deck_wallpaper.px.js`), its music "memory" (`game/music.js`; engine: `bend`, `vibrato.rise`, the
@@ -115,7 +115,7 @@ order to build it. The model is the Loonies' plan (`B:\Github_my\the_goonies\doc
     text; the engine translates them. An English table later maps source text to English
     (`Cutaway.i18n.table("en", {...})`, or the editor's Texts tab: CSV out, CSV in).
   - Texts the game draws itself (the deck, the feeds' display, the skin's readouts, its own lists:
-    cache, Kassenbuch, cameras, people) go through `Halcyon.t(text, { part })` and are declared with
+    cache, Kassenbuch, cameras, people) go through `Nagiwa.t(text, { part })` and are declared with
     `Cutaway.i18n.declare(where, [...])`, so validate and the Texts tab see them too (done 2026-11-04,
     engine commit c429aae). Placeholders like `{n}` are filled in after the translation.
   - Check: a pseudo language (every letter through `t()` becomes x) in a screenshot; anything still

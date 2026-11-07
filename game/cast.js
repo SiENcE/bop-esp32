@@ -1,11 +1,11 @@
-// Halcyon: the people (docs/story.md §4, docs/kapitel0-design.md §8). Subtitle colours follow the style
+// Nagiwa: the people (docs/story.md §4, docs/kapitel0-design.md §8). Subtitle colours follow the style
 // guide's colour meanings: red only for threats, cyan only for technology.
 "use strict";
 
 (function () {
 Cutaway.actor("juno", {
   name: "Juno", color: "#fff070",
-  room: "flat", at: Halcyon.at.flat.start, facing: "ne",
+  room: "flat", at: Nagiwa.at.flat.start, facing: "ne",
   // isometric: front three-quarter (se) and back three-quarter (ne), mirrored for sw and nw (art/characters/juno.px.js)
   costume: {
     idle: { se: "juno_idle_se", ne: "juno_idle_ne" },
@@ -24,7 +24,7 @@ Cutaway.actor("juno", {
 // handheld (art/characters/motte.px.js: drawn facing SE, mirrored for SW, the way he faces the landing)
 Cutaway.actor("motte", {
   name: "Motte", color: "#f0f0a0",
-  room: "kessel_14", at: Halcyon.at.kessel_14.motte_feet, facing: "sw",
+  room: "kessel_14", at: Nagiwa.at.kessel_14.motte_feet, facing: "sw",
   // the same pose for every facing (the engine turns him toward Juno when she talks to him: he stays on the bench)
   costume: {
     idle: { se: "motte_sit_sw", sw: "motte_sit_sw", ne: "motte_sit_sw", nw: "motte_sit_sw" },
@@ -45,7 +45,7 @@ Cutaway.actor("motte", {
 // (game/rooms/kowalski.js) talks to him, from where Juno eats, and knows its room for the moment after
 Cutaway.actor("bao", {
   name: "Bao", color: "#e8c890", hidden: true,
-  room: "kowalski", at: Halcyon.at.kowalski.bao, facing: "sw",
+  room: "kowalski", at: Nagiwa.at.kowalski.bao, facing: "sw",
   // the same pose for every facing: he stays behind his cart
   costume: {
     idle: { se: "bao_idle_sw", sw: "bao_idle_sw", ne: "bao_idle_sw", nw: "bao_idle_sw" },
@@ -56,8 +56,8 @@ Cutaway.actor("bao", {
 });
 
 // ---- people in the feeds (only ever seen through cameras in the prologue)
-// a stranger in the crowd ("Pendler") until Juno tags him; then "Kessler" (Halcyon.names)
-Halcyon.people.kessler = { name: "KESSLER", known: "tag_kessler", label: "Pendler", speaker: "Kessler" };
+// a stranger in the crowd ("Pendler") until Juno tags him; then "Kessler" (Nagiwa.names)
+Nagiwa.people.kessler = { name: "KESSLER", known: "tag_kessler", label: "Pendler", speaker: "Kessler" };
 Cutaway.actor("kessler", {
   name: "Pendler", color: "#b8c890",
   costume: { idle: "kessler_feed", walk: "kessler_feed_walk", talk: "kessler_feed_phone" },
@@ -68,7 +68,7 @@ Cutaway.actor("kessler", {
     "Die Klammern macht nicht das Deck, die macht mein Implantat.", "Das durften wir behalten, damals. Sie sagten, das Herausnehmen kostet mehr."] }],
 });
 
-Halcyon.people.varga = { name: "VARGA", known: "saw_varga", label: "Mann im grauen Mantel", speaker: "Varga" };
+Nagiwa.people.varga = { name: "VARGA", known: "saw_varga", label: "Mann im grauen Mantel", speaker: "Varga" };
 Cutaway.actor("varga", {
   name: "Mann im grauen Mantel", color: "#a0a0b8",
   costume: { idle: "varga_feed", walk: "varga_feed_walk", talk: "varga_feed" },

@@ -6,37 +6,37 @@ das Spiel; Kapitel 1 ist bisher nur Entwurf. Die Nummern in eckigen Klammern ver
 
 ## Die Welt
 
-Halcyon ist eine Arkologie über einer ertrunkenen Küstenstadt. Als das Meer in den 2050ern die alten Straßen nahm, stapelte
+Nagi·wa ist eine Arkologie über einer ertrunkenen Küstenstadt. Als das Meer in den 2050ern die alten Straßen nahm, stapelte
 der Konzern neue darauf: neun Ringe, von den Meerespumpen ganz unten bis zur Krone ganz oben. Stadt und Konzern tragen
 denselben Namen, und das ist kein Zufall.
 
 Ganz unten liegt der Untere Neunte Ring, feucht, überfüllt und von Werbung beleuchtet. Im Neunten regnet es, ob es regnet
 oder nicht, denn das Wasser ist das Abwasser der Ringe darüber. Wer hier wohnt, stammt von den Menschen der ertrunkenen
-Stadt ab, und Halcyon hat ihnen den Bau der Ringe über ihren Köpfen in Rechnung gestellt. Diese Flutschuld wird vererbt und
+Stadt ab, und Nagi·wa hat ihnen den Bau der Ringe über ihren Köpfen in Rechnung gestellt. Diese Flutschuld wird vererbt und
 steckt in jeder Miete als Hüllenabgabe. Kein Kind im Neunten wird schuldenfrei geboren.
 
-Für die Arbeit am Wasser hat Halcyon Menschen und Tiere umgebaut. Die Gezeitenleute tragen Kiemen und Leuchtmarkierungen
+Für die Arbeit am Wasser hat Nagi·wa Menschen und Tiere umgebaut. Die Gezeitenleute tragen Kiemen und Leuchtmarkierungen
 und sind längst eine eigene Kultur. Ratten zogen Kabel durch die Rohre, Kraken reinigten die Filter, und ein paar von ihnen
 wurden klüger als geplant. Die Nudelautomaten haben Launen. Niemand wundert sich mehr darüber.
 
-Es ist 2091. Die Kriminalität im Neunten ist in sechs Jahren um achtzig Prozent gefallen. Halcyon dankt dafür seiner
+Es ist 2091. Die Kriminalität im Neunten ist in sechs Jahren um achtzig Prozent gefallen. Nagi·wa dankt dafür seiner
 Überwachung und seinem Geschenk an die Menschen: Lull, einem billigen Schlafimplantat, von außen ein blasser, langsam
 pulsierender Punkt hinter dem Ohr. Vier Stunden mit Lull erholen wie zehn, und so schafft der halbe Neunte die Doppelschichten,
-mit denen er die Flutschuld abzahlt. Die Werbung ist überall: HALCYON: SLEEP BETTER. Wer mit Lull irgendwann nicht mehr aufwacht,
-ist ein Sinker; Halcyon nennt das Ruhe-Erschöpfung und bringt ihn auf eine Schlafstation.
+mit denen er die Flutschuld abzahlt. Die Werbung ist überall: NAGI·WA: SLEEP BETTER. Wer mit Lull irgendwann nicht mehr aufwacht,
+ist ein Sinker; Nagi·wa nennt das Ruhe-Erschöpfung und bringt ihn auf eine Schlafstation.
 
 Die Kamerabilder der Stadt heißen Glass. Wer sie hackt, ist Glasser oder Glasserin. Was man dabei erfährt und verkaufen
 kann, heißt Shine, und bezahlt wird in Chits.
 
 ## Vorspann: Die letzte Schicht
 
-Halcyon, 2088. Die Kamera schwebt tief über ein Meer voller Lichter, Pfahlhütten, Flöße, Bojen, einen dunklen Kanal entlang.
+Nagi·wa, 2088. Die Kamera schwebt tief über ein Meer voller Lichter, Pfahlhütten, Flöße, Bojen, einen dunklen Kanal entlang.
 Links und rechts stehen Kameramasten im Wasser, mit glimmenden Linsen und roten Augen. Am Ende des Kanals wächst die Stadt
 aus dem Dunst, neun Ringe übereinander und der Turm mitten hindurch. Patrouillendrohnen leuchten das Wasser ab. Ganz nah am
 Turm glimmt ein einziges Stockwerk grün, und die Kamera fliegt durch eines seiner Fenster hinein.
 
 Dahinter liegt die Beobachtungshalle. Es ist kurz vor sechs am Morgen des 30. April. Beide Rückwände sind Bildschirme vom
-Boden bis zur Decke, davor sitzen vier Reihen zu fünf Pulten, Menschen in Halcyon-Grau, und unter der Decke hängen
+Boden bis zur Decke, davor sitzen vier Reihen zu fünf Pulten, Menschen in Nagi·wa-Grau, und unter der Decke hängen
 Kuppelkameras, die die Beobachter beobachten. In der vordersten Reihe sitzt Juno Reyes. Auf ihrem Pult stehen ein Kaktus und
 eine Tasse, über ihrem Sessel hängt ein gelber Mantel, das einzige Gelb im Raum.
 
@@ -44,12 +44,12 @@ Auf ihrem Monitor läuft die Kowalski-Straße. Passanten gehen durch das Bild, e
 Klammern schließen sich um ihn, und hinter ihrem Ohr leuchtet ein winziger Cyan-Punkt auf. Sie sagt nichts. Sie macht ihre
 Arbeit.
 
-Dann läuft eine Durchsage über die ganze Breite: „Ab morgen übernimmt die automatische Auswertung. Halcyon dankt Ihnen für
+Dann läuft eine Durchsage über die ganze Breite: „Ab morgen übernimmt die automatische Auswertung. Nagi·wa dankt Ihnen für
 Ihren Dienst.“ Sie arbeiten weiter. Dann gehen die Bildschirme aus, erst die Wände, von der Ecke her, dann die Pulte, Reihe
 für Reihe. Wessen Monitor erloschen ist, hört auf zu tippen. Zuletzt brennt nur noch Junos, dann fällt auch er zu einer
 hellen Linie zusammen und ist dunkel. Im toten Glas bleibt ihr Gesicht. Es ist vollkommen still.
 
-Dann, ohne ein Wort, ein Karton aus nächster Nähe: ein Kaktus, eine Tasse mit Halcyons Ring und ein schwerer Datenstick mit
+Dann, ohne ein Wort, ein Karton aus nächster Nähe: ein Kaktus, eine Tasse mit Nagi·was Ring und ein schwerer Datenstick mit
 dem Aufkleber `EVAL-7 // DELETE`. Niemand kommentiert das. Ihr gelber Ärmel liegt auf dem Rand. Schnitt: Juno im Mantel mit
 dem Karton im gläsernen Aufzug. Sie fährt die Transitachse hinab, und die Decks der Ringe rasen an ihr vorbei, dazwischen
 Hochhäuser, Lichtkegel und Schatten. Oben ist das Licht kalt und sauber. Nach unten hin wird es Bernstein und Magenta, das Neon
@@ -79,7 +79,7 @@ nur noch wenige wie sie, weit verstreut, und manche sind inzwischen selbst auf L
 
 Kessler telefoniert unter dem Vordach. Erst ist er zu weit weg, dann versteht sie ihn: „Ja, ich bring's mit. Alles. Halb elf,
 bei Yuen's.“ Yuen's hat eine Kamera, nur hat Juno sie nicht. Aber gegenüber hängt eine am Mast, und auf dem Gehäuse klebt der
-Wartungscode. „Halcyon spart an allem.“ EVI ist begeistert: „Verbunden! Hallo, Kamera vier.“
+Wartungscode. „Nagi·wa spart an allem.“ EVI ist begeistert: „Verbunden! Hallo, Kamera vier.“
 
 Halb elf im Imbiss Yuen. Kessler sitzt einem breiten Mann im grauen Mantel gegenüber, Gus Varga. „Das ist nicht alles,
 Kessler.“ – „Mehr hab ich nicht. Ehrlich.“ – „Dann gib mir, was du hast.“ Kessler zieht seinen Ehering ab und schiebt ihn über
@@ -106,7 +106,7 @@ den Leuten wurde. EVI führt es. „Ich schreib alles auf. Du hast gesagt, ich s
 Taschen-Deck ein, und EVI kommt darauf mit. „Bringst du mir was mit?“, fragt EVI. „Du isst nicht.“ – „Ich weiß. Bringst du mir was
 mit?“ In einem alten Karton liegen Junos Ausweis, CIVIC MONITOR, J. REYES, UNGÜLTIG, und der Kaktus von ihrem Pult, vertrocknet.
 
-Der Flur ist grün wie ein Aquarium, nur ohne Fische. In der Wand der Aufzug, darauf ein Zettel: OUT OF ORDER, davor die Müllsäcke. Oben in der Ecke hängt Halcyons Kamera. Frau Haldanes Tür steht offen, sie schläft im Sessel, ein blauer Punkt
+Der Flur ist grün wie ein Aquarium, nur ohne Fische. In der Wand der Aufzug, darauf ein Zettel: OUT OF ORDER, davor die Müllsäcke. Oben in der Ecke hängt Nagi·was Kamera. Frau Haldanes Tür steht offen, sie schläft im Sessel, ein blauer Punkt
 pulsiert hinter ihrem Ohr. „Sie schläft, wie andere Leute blinzeln.“ Auf der Bank sitzt Motte, zwölf Jahre alt, Kurierkind, in
 einer viel zu großen weißen Mütze. „Was machst du eigentlich? Den ganzen Tag?“ Was Juno antwortet, freundlich, ausweichend oder
 abweisend, merkt er sich.
@@ -138,7 +138,7 @@ Reihenfolge laufen, und nebenher lebt die Stadt weiter, ob man zusieht oder nich
 Um halb sieben klopft Teo, Junos Bruder, 23 Jahre alt, in oranger Arbeitsweste, den Gehörschutz um den Hals, darunter
 Kiemenschlitze, denn mit 18 hat er sich umbauen lassen, weil Taucher das Doppelte verdienen. Er bringt Essen von Bao und lacht über
 seine Doppelschichten in Pumpenhalle 3. „Vier Stunden Lull, und ich bin wie neu.“ Hinter seinem Ohr pulsiert der blaue Punkt. „Seit
-wann?“ – „Seit es gratis ist.“ Sie reden über Junos Halcyon-Zeit. „Du redest noch immer, als hätten sie dich gefeuert, weil du
+wann?“ – „Seit es gratis ist.“ Sie reden über Junos Nagi·wa-Zeit. „Du redest noch immer, als hätten sie dich gefeuert, weil du
 schlecht warst.“
 
 Auf dem Deck warten drei Nachrichten.
@@ -156,10 +156,10 @@ zahlt.“
 
 Und Frau Kessler schreibt: „Er ist nicht heimgekommen.“ Was sie sonst noch schreibt, hängt davon ab, was Juno ihr geschickt hat.
 
-Die App NETZ ist neu, HalcyonNet mit Nachrichten und dem Glasser-Brett. EVI liest die Schlagzeilen vor und versteht sie falsch:
+Die App NETZ ist neu, Nagi·wa-Net mit Nachrichten und dem Glasser-Brett. EVI liest die Schlagzeilen vor und versteht sie falsch:
 „Kriminalität auf Rekordtief. Heißt das, die Verbrecher schlafen?“
 
-Im CACHE liegt noch Junos altes Beobachter-Handbuch von Halcyon: Das Implantat sitzt hinter dem Ohr, es
+Im CACHE liegt noch Junos altes Beobachter-Handbuch von Nagi·wa: Das Implantat sitzt hinter dem Ohr, es
 markiert, was sie sieht, und verbindet sie über das Protokoll `OBS-4` mit jeder Kamera, die es versteht; die Wach-Ebene hält sie dabei bei
 Bewusstsein.
 
@@ -228,7 +228,7 @@ dazu: wie viele zugesehen haben.
 
 ### Dr. Ines Calder
 
-Das ist der Faden, der durch alle drei Abende läuft. CAM 21 vor der Klinik ist eine Halcyon-Kamera, und Junos alter Zugang geht
+Das ist der Faden, der durch alle drei Abende läuft. CAM 21 vor der Klinik ist eine Nagi·wa-Kamera, und Junos alter Zugang geht
 noch. „Sie haben die Codes nie geändert.“ Über jemandem in der Schlange müder Menschen steht in Junos Overlay eine zweite Klammer, dazu
 `UNKNOWN LINK`, und sie pulsiert. Niemand erklärt es. Um sieben kommt Ines aus der
 weißen Klinik, vorbei an der Schlange. Sie
@@ -244,7 +244,7 @@ hinsieht.“
 Juno kann selbst in den Waschsalon gehen. Auf dem Stick liegt nur ein Schlüssel; wozu, weiß sie noch nicht. Sie legt ihn zurück, oder sie
 behält ihn.
 
-Die Kamera in der alten Station ist älter als Halcyon. Der Konzern hat sie einst nachgerüstet und dann vergessen, und kein Code findet
+Die Kamera in der alten Station ist älter als Nagi·wa. Der Konzern hat sie einst nachgerüstet und dann vergessen, und kein Code findet
 sie. Nur das alte Beobachter-Protokoll, das Juno im Kopf trägt, verbindet sie: „Das kann nur noch mein Kopf.“ Im Rauschen vor dem Bild
 steht für einen Takt das Auge.
 
@@ -255,7 +255,7 @@ Varga schreibt: „Freitag ist heute.“ WREN will bis 22 Uhr den Ort.
 Dann die Entscheidung, die das Kapitel trägt:
 
 - **Senden:** Die restlichen 1250 Chits kommen. „Danke. Und schauen Sie heute Nacht zu. Für die Live-Übertragung zahlen wir 750 extra.“ Von
-  jetzt an weiß die Quiet, Halcyons inoffizielle Sicherheitseinheit, genau, wer Juno ist.
+  jetzt an weiß die Quiet, Nagi·was inoffizielle Sicherheitseinheit, genau, wer Juno ist.
 - **Nicht senden:** „Schade. Es gibt andere Glasser.“ Juno sieht trotzdem zu, um Ines zu warnen. Die Quiet muss später erst suchen, wer
   an dieser Kamera saß.
 

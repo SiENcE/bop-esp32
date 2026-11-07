@@ -671,7 +671,7 @@ const FLATKIT = (() => {
     },
   })
 
-  // the old box: cardboard, its flaps open; her Halcyon badge on its lanyard hangs out over the front;
+  // the old box: cardboard, its flaps open; her Nagi·wa badge on its lanyard hangs out over the front;
   // the dried cactus shows over the rim, papers under it; a shipping label, THIS WAY UP
   ISOKIT.prop("box_old", {
     draw(p, m) {
@@ -702,7 +702,7 @@ const FLATKIT = (() => {
       const [kx, ky] = p.P(u0 + 0.22, v0 + 0.2, H - 0.05)
       p.at(u0 + 0.22, v0 + 0.2, H, "up")
       p.grid(kx - 3, ky - 10, ["...s...", ".s.s...", ".s.s.s.", ".sss.s.", "...sss.", "...s...", "..PPPP.", "..OPPO.", "...OO.."])
-      // the lanyard over the front rim, the badge hanging from it: HALCYON, a cyan logo, her old photo
+      // the lanyard over the front rim, the badge hanging from it: NAGI·WA, a cyan logo, her old photo
       const [lx, ly] = p.P(u0 + 0.3, v0 + dv, H)
       p.at(u0 + 0.3, v0 + dv + 0.02, H - 0.1, "v")
       p.line(lx - 2, ly - 1, lx - 1, ly + 4, "g"); p.line(lx, ly - 1, lx + 1, ly + 4, "G")

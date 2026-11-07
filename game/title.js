@@ -25,7 +25,7 @@ Cutaway.room("title", {
   music: { theme: "juno", intensity: 0.6 },
 });
 
-Halcyon.title = {
+Nagiwa.title = {
   room: "title", logo: "title_logo", name: "Glass Sister",
   splash: { room: "splash" },
   tagline: "JACK IN",                          // the city's tech speaks English (story §10)

@@ -6,7 +6,7 @@
 (function () {
 const M = (/** @type {string} */ text) => ({ say: "motte", text });
 
-Halcyon.talkTree("motte_mehr", [
+Nagiwa.talkTree("motte_mehr", [
   ["„Was spielst du da?“", [M("Sump Runner. Du bist eine Kabelratte."), M("Du ziehst Kabel durch die Rohre, und oben geht das Licht an.")], [
     ["„Das ist ein Job.“", [M("Ja, aber mit Musik."), M("Im neunten Level hört das Rohr auf. Ganz oben, unter der Krone. Da kommt keiner weiter.")]],
     ["„Woher hast du das Ding?“", [M("Ein Tideboy. Keiner hat das Paket abgeholt, das zählt als Trinkgeld."), M("Vier Stunden Akku, dann zehn laden. Umgekehrt wie Lull.")]],

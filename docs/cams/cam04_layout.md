@@ -14,7 +14,7 @@ change the blockout or the camera, then re-measure, never edit these by hand.
 | Camera | in the ceiling over the front wall, 3.3 m up, 52° down, yaw −8°, a wide CCTV lens (F 105, barrel k 0.22) |
 | Room | 6 x 5.6 m. Back: the counter (1.05 m) with four bar stools, behind it the cook's station (stove, stock pot, wok, a low fridge with the rice cooker) under a hood, three lit menu boards above |
 | Left | the window to the street: neon blurred behind the glass, rain running down it; the door at its far end |
-| Right | the TV high on the wall (Halcyon ad: a sleeping face, the ring logo, a caption band; the brightest thing in the room) and a lit drinks fridge under it |
+| Right | the TV high on the wall (Nagi·wa ad: a sleeping face, the ring logo, a caption band; the brightest thing in the room) and a lit drinks fridge under it |
 | Tables | four small tables (0.7 m) with two stools each: `near` right under the camera (empty: Kessler and Varga), `win1` and `win2` by the window, `mid` |
 
 ## Walk areas (Cutaway `walk`, flat x, y lists)
@@ -80,7 +80,7 @@ In the ceiling over the near table, toward Varga's side. Distances from the mic:
 
 ## For `game/places.js`
 
-`Halcyon.at.cam04` still holds placeholder guesses; these replace them:
+`Nagiwa.at.cam04` still holds placeholder guesses; these replace them:
 
 ```js
 cam04: {

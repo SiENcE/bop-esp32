@@ -1,6 +1,6 @@
 # Glass Sister
 
-An original cyberpunk point-and-click adventure. **Glass Sister** is the title; **Halcyon** is the city and
+An original cyberpunk point-and-click adventure. **Glass Sister** is the title; **Nagi·wa** is the city and
 the corporation that owns it. Juno, a hacker in the Lower Ninth, watches people through the city's cameras
 and sells what she learns on the black market; she goes out for food and to buy and sell; one night she
 watches a serious crime, which leads her into a moral conflict and an investigation that slowly uncovers a
@@ -47,12 +47,12 @@ code comments English.
 
 - Game text is German first, English later (H10). **Every text on screen goes through i18n.** Texts in the
   data are written inline in German (the source text; the engine translates them). Texts the game draws
-  itself go through `Halcyon.t(text, { part })` and are declared with `Cutaway.i18n.declare(where, [...])`
-  where they are drawn (lists: `Halcyon.declareTexts`), so validate and the editor's Texts tab see them.
+  itself go through `Nagiwa.t(text, { part })` and are declared with `Cutaway.i18n.declare(where, [...])`
+  where they are drawn (lists: `Nagiwa.declareTexts`), so validate and the editor's Texts tab see them.
   Never put German words into art; painted text is only for signs, ads and the city's tech (English).
 - The city's signs and ads are English art in both languages, and so is its slang, also inside German
   sentences: **Glass** (the feeds), **Glasser/Glasserin**, **glassen**, **Shine**, **Sinker**, **Chits**.
-- **EVI** is the cute AI on Juno's deck (Halcyon's discarded AUTO-EVAL prototype, trained on Juno's tags);
+- **EVI** is the cute AI on Juno's deck (Nagi·wa's discarded AUTO-EVAL prototype, trained on Juno's tags);
   she is also the hint button. Talking animals: Ratz, Tinte. NINTH LIVE, tide mods, the inherited flood debt.
 - Violent scenes have two variants: black bars (the default) and shown.
 - Subtitle colours follow the style guide's colour meanings: red only for threats, cyan only for technology.
@@ -63,18 +63,18 @@ code comments English.
 |---|---|
 | `index.html` | loads the engine (in its load order), the built art, then the game; `file://` works |
 | `game/game.js` | start-up (`Cutaway.start`: 320x180, `de`, title screen), loaded last |
-| `game/halcyon.js` | the global `Halcyon`: the game's own actions and helpers, the registries (`cache`, `ledger`, `cams`, names); its header lists the flag conventions (`chits`, `tag_<who>`, `code_<cam>`, `link_<cam>`, `cache_<id>`, `ledger_<id>`, `rec_on`) |
-| `game/places.js` | `Halcyon.at`: every position, walk area and prop placement; rooms built from a map take theirs from `game/rooms/<id>.layout.js` (generated: never edit) |
+| `game/nagiwa.js` | the global `Nagiwa`: the game's own actions and helpers, the registries (`cache`, `ledger`, `cams`, names); its header lists the flag conventions (`chits`, `tag_<who>`, `code_<cam>`, `link_<cam>`, `cache_<id>`, `ledger_<id>`, `rec_on`) |
+| `game/places.js` | `Nagiwa.at`: every position, walk area and prop placement; rooms built from a map take theirs from `game/rooms/<id>.layout.js` (generated: never edit) |
 | `game/cast.js`, `game/motte.js` | the actors (Juno in iso, the feed people); what Juno can say to Motte in passing |
-| `game/talk.js` | `Halcyon.talkTree`: a talk as a tree, where a topic opens its own options, never more than four at once |
-| `game/deck.js` | the deck as a computer (mockup F): its room (`buttons: false`, one flag `deck_app` for the open window, `chat_<contact>` for a thread) and its screen: the desktop with the wallpaper, the apps' windows (GLASS, CHAT, CACHE, BUCH, KONTO, NETZ, RADIO, MÜLL), EVI in her corner as the hint button; the chapters fill `Halcyon.contacts`, `threads`, `replies` |
+| `game/talk.js` | `Nagiwa.talkTree`: a talk as a tree, where a topic opens its own options, never more than four at once |
+| `game/deck.js` | the deck as a computer (mockup F): its room (`buttons: false`, one flag `deck_app` for the open window, `chat_<contact>` for a thread) and its screen: the desktop with the wallpaper, the apps' windows (GLASS, CHAT, CACHE, BUCH, KONTO, NETZ, RADIO, MÜLL), EVI in her corner as the hint button; the chapters fill `Nagiwa.contacts`, `threads`, `replies` |
 | `game/evi.js` | EVI: her voice (lines in their own place beside her corner, `lineBox`), she says the hints (`hints.configure({ by: "evi" })`); actions `{ evi: face }`, `{ evi_point: app }`, `{ deck_boot }`, `{ notify: contact }` (the message card over every mode) |
 | `game/rooms/jade_row.js` | Jade Row, the lane left of Kowalski Street: a view down its length, not iso, on blocks (`art/mock/jade_row.px.js`); Okonkwo's shop and the machine that sees into it |
 | `game/rooms/<id>.js` | rooms: `cams.js` (cam03, cam04: watched rooms with the phosphor post-effects), `<id>.layout.js` (generated) |
 | `game/prolog.js` | the prologue act (steps 0–11), its cache and ledger entries, game time |
 | `game/stadt.js`, `game/regenleserin.js` | Chapter 1's city: the way on to the roof, the Rain Reader and her talk, the newspaper war, Frau Imai, the white carriers (each a thread of its own) |
 | `game/vesper.js` | Vesper, the buyer for NINTH LIVE: from Thursday he buys raw clips in the chat, the viewers come into the Kassenbuch overnight; anonymising in the clip editor (only while his thread is open); a thread of its own (`off_vesper`) |
-| `game/lucky_static.js` | LUCKY STATIC from inside: Mei behind her counter, the slate with the tabs, Halcyon's news on the TV, the two regulars; flavour by the day, no flag |
+| `game/lucky_static.js` | LUCKY STATIC from inside: Mei behind her counter, the slate with the tabs, Nagi·wa's news on the TV, the two regulars; flavour by the day, no flag |
 | `game/auftrag_varga.js` | Chapter 1's job A: Varga wants Kessler found, the hood at the machine in cam03, Sable's booth, the Morpheus (cam15), K1a; a thread of its own (`off_varga`) |
 | `game/evenings.js`, `game/kapitel1.js`, `game/kapitel1_ende.js` | what every chapter's evenings share (the bed, the evening's card); Chapter 1: its act on game days 2 to 4, WREN, the rent, Friday's clock (on blocks; the prologue goes on into it, `?act=kapitel1` begins it alone for development); its end in cam31, on blocks |
 | `game/intro.js`, `intro_sea.js`, `intro_tower.js`, `intro_hall.js`, `intro_desk.js`, `intro_ride.js` | the intro "Die letzte Schicht" (kapitel0-design §5): the sequence `intro` and the shots the game draws itself in perspective (rooms with `float: "<shot>"`, the action `{ float: [from, to], ms }`): the float over the lit sea (A1, A2), the tower and in through its window (C); painted parts in `art/intro/`; the observation hall (the room `intro_hall`, baked from `art/rooms/hall.map.js`); Juno at her desk (what moves over `art/intro/desk.px.js`); the ride down in the lift (`art/intro/ride.px.js`) |
@@ -105,7 +105,7 @@ Planned (PLAN.md §3): `feed.js`, `ledger.js`, `money.js`, `routines/<chapter>.j
   `solve --full` stays exhaustive. Every chapter must solve without soft-locks, and every state on the way
   needs a hint.
 - **What the player finds can be taken and used at once.** Nothing waits for an earlier click without a reason in the world: each thing has its own flag and the test is what the world allows (the item is there, the door is open). A gate needs a reason in the world: a time, knowledge the player really lacks (a date, a code), or a decision of the user's (the bed from 01:00). The prologue's tutorial steps are the exception.
-- **A dialogue never shows more than four options,** the way back included. Longer talks nest: a topic opens its own options (`Halcyon.talkTree`, `docs/dialog-design.md` §4).
+- **A dialogue never shows more than four options,** the way back included. Longer talks nest: a topic opens its own options (`Nagiwa.talkTree`, `docs/dialog-design.md` §4).
 - **Looking only tells more; nothing the game needs may hang on it.** Looking is a right click with the mouse (the user's decision, it stays) and a long press on touch; a controller is planned (`docs/PLAN.md`, C14). All input stays pointer clicks on hotspots or choices, so it reaches every device: nothing may be built that a controller couldn't do later (no hover-only information, no dragging, no gestures, no aiming or timing as the only way).
 - Positions live in `game/places.js`, not scattered in room files. A street-mode room is a map
   (`art/rooms/<id>.map.js`, format in `art/lib/isomap.js`) baked with the kit and its light
@@ -145,7 +145,7 @@ node lib/cutaway/tools/play.mjs index.html --act kapitel1 --path tools/paths/kap
 
 Keep Chapter 1's state small: a flag nobody asks about doubles every state. What only shows (a dot for unread) is a view flag; what
 the prologue leaves open is closed with `day=1`; a chapter marks the rooms Juno knows with `{ been_to: [...] }`; flavour is a look, not a
-moment (seen or not doubles what follows); what no longer matters is forgotten overnight (`Halcyon.nights[day].passes`). Every time is on the
+moment (seen or not doubles what follows); what no longer matters is forgotten overnight (`Nagiwa.nights[day].passes`). Every time is on the
 15-minute ticks and only waiting moves the clock: one time off the grid multiplied the states by ten (the one exception is a chain nothing branches on, the end in cam31). All the checks at once: `sh tools/check.sh` (about ten minutes). Side stories and jobs are threads of their own: each
 checked alone with the others shut (`off_<thread>`, `game/stadt.js`), since together they would multiply each other. What they do to each other is
 not covered by the solver: keep them independent (their own `<thread>_step` number, no flag shared).

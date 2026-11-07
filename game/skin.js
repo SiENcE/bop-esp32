@@ -1,4 +1,4 @@
-// Halcyon: the look of the engine's own interface (docs/style-guide.md §8 and §8a): the menu's frames, its
+// Nagiwa: the look of the engine's own interface (docs/style-guide.md §8 and §8a): the menu's frames, its
 // heading plate and buttons, the full-screen cards (act titles, the end), the pointer, the satchel and
 // the buttons beside it (their art: art/ui/hud.px.js). The frames and cards are drawn here, no art:
 // chamfered corners, cyan lines on night steel, a magenta tick, scanlines, small data readouts in the
@@ -16,8 +16,8 @@
   /** @param {CanvasRenderingContext2D} ctx @param {string} s @param {number} x @param {number} y @param {string} color @param {"left"|"center"|"right"} [align] */
   function readout(ctx, s, x, y, color, align = "left") { hud().draw(ctx, s.toUpperCase(), x, y, { color, align }); }
   // the frames' and cards' small readouts: the city's tech, English in every language, but through i18n
-  // like every text (Halcyon.t, declared for validate and the Texts tab)
-  const [SYS, NET, NINTH, SEQ] = Cutaway.i18n.declare("frames and cards", ["NINTH//SYS", "HALCYON.NET", "LOWER NINTH", "SEQ {n}"]);
+  // like every text (Nagiwa.t, declared for validate and the Texts tab)
+  const [SYS, NET, NINTH, SEQ] = Cutaway.i18n.declare("frames and cards", ["NINTH//SYS", "NAGI·WA.NET", "LOWER NINTH", "SEQ {n}"]);
 
   // ---------------------------------------------------------------- shapes
   /** A box with two corners cut at 45° (top left, bottom right): its rows, each [left, right] (inclusive).
@@ -77,7 +77,7 @@
     ctx.fillStyle = C.magentaDark;
     ctx.fillRect(x + w - 2, y + 13, 2, 2);
     for (let i = 0; i < 3; i++) { ctx.fillStyle = C.steel5; ctx.fillRect(x + 4 + i * 3, y + h - 3, 2, 1); }
-    const label = Halcyon.t(SYS), lw = hud().measure(label) + 4, lx = x + w - 10 - lw;
+    const label = Nagiwa.t(SYS), lw = hud().measure(label) + 4, lx = x + w - 10 - lw;
     ctx.fillStyle = o.fill ?? C.night;
     ctx.fillRect(lx, y + h - 1, lw, 1);
     readout(ctx, label, lx + 2, y + h - 3, C.steel6);
@@ -113,9 +113,9 @@
       ctx.fillRect(Math.min(bx, bx + sx * 11), by, 12, 1);
       ctx.fillRect(bx, Math.min(by, by + sy * 7), 1, 8);
     }
-    readout(ctx, Halcyon.t(NET), 14, 12, C.steel5);
-    readout(ctx, Halcyon.t(NINTH), W - 14, 12, C.steel5, "right");
-    readout(ctx, Halcyon.t(SEQ, { n: String(Math.floor(ms / 40) % 10000).padStart(4, "0") }), 14, H - 16, C.steel5);
+    readout(ctx, Nagiwa.t(NET), 14, 12, C.steel5);
+    readout(ctx, Nagiwa.t(NINTH), W - 14, 12, C.steel5, "right");
+    readout(ctx, Nagiwa.t(SEQ, { n: String(Math.floor(ms / 40) % 10000).padStart(4, "0") }), 14, H - 16, C.steel5);
     ctx.fillStyle = C.magenta;
     ctx.fillRect(W - 14, H - 16, 3, 5);
 

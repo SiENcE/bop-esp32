@@ -1,21 +1,21 @@
 // Write with the game's own fonts in pxl art (game/glyphs.js: the very glyphs game/font.js gives the engine),
 // laid out as the engine's Cutaway.font draws them: y is the top of the capitals, 1 px between glyphs, a
-// space as wide as its glyph, "\n" for lines (halcyon 10 px apart, hud 7), an outline in the 8 neighbours.
+// space as wide as its glyph, "\n" for lines (nagiwa 10 px apart, hud 7), an outline in the 8 neighbours.
 // For mockups and any art that shows the game's own interface, so its text reads as it will in the game.
 // Include it after a palette (it has none):
 //
 //   include("../lib/text.js")
-//   TXT.draw(c, 4, 4, "Teo schläft", "V", { font: "halcyon", outline: "k", align: "left" })
+//   TXT.draw(c, 4, 4, "Teo schläft", "V", { font: "nagiwa", outline: "k", align: "left" })
 //   TXT.measure("CHAT", "hud")                           // the width in px
 //
 // The hud font is capitals only: TXT upper-cases text for it, as the game does.
 include("../../game/glyphs.js")
 
 const TXT = {
-  LINE: { halcyon: 10, hud: 7 },
+  LINE: { nagiwa: 10, hud: 7 },
   /** @param {string} s @param {string} [font] */
-  measure(s, font = "halcyon") {
-    const G = HALCYON_GLYPHS[font], t = font === "hud" ? s.toUpperCase() : s
+  measure(s, font = "nagiwa") {
+    const G = NAGIWA_GLYPHS[font], t = font === "hud" ? s.toUpperCase() : s
     return Math.max(...t.split("\n").map((line) => {
       let w = 0
       for (const ch of line) { const g = G[ch] ?? G["?"]; w += (Array.isArray(g) ? g : g.rows)[0].length + 1 }
@@ -25,7 +25,7 @@ const TXT = {
   /** @param {any} c a pxl canvas @param {number} x @param {number} y @param {string} s @param {string} key
    *  @param {{font?: string, align?: "left" | "center" | "right", outline?: string}} [o] */
   draw(c, x, y, s, key, o = {}) {
-    const font = o.font ?? "halcyon", G = HALCYON_GLYPHS[font], t = font === "hud" ? s.toUpperCase() : s
+    const font = o.font ?? "nagiwa", G = NAGIWA_GLYPHS[font], t = font === "hud" ? s.toUpperCase() : s
     const pass = (k, ox, oy) => t.split("\n").forEach((line, i) => {
       const w = TXT.measure(line, font)
       let cx = Math.round(x) + ox - (o.align === "center" ? Math.floor(w / 2) : o.align === "right" ? w : 0)

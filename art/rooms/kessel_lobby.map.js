@@ -1,7 +1,7 @@
 // The Kessel Block's lobby as a map (art/lib/isomap.js has the format): the ground floor, where the stairs
 // come down and the street door lets the rain in. Every length in meters. Laid over the floors above it: the lift
 // (out of order) at the same place of the right back wall as upstairs, the flight along that wall ending at u 2.5, where the
-// landing's stairs begin (art/rooms/kessel_14.map.js), Halcyon's poster over the flight;
+// landing's stairs begin (art/rooms/kessel_14.map.js), Nagi·wa's poster over the flight;
 // in the left back wall the mailboxes, the notice board and the street door, glass, the magenta of the
 // street beyond it; the floor wet from the door in.
 "use strict";

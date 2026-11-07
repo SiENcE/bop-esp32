@@ -5,15 +5,15 @@
 //   intro_blocks_1 .. intro_blocks_4   the hall, Juno at her desk, the announcement, the screens going out
 //   intro_blocks_t, _d                 her words on black; the ride down the Transitachse, no words
 //   intro_blocks_6, _7                 today; the title screen with the logo
-//   intro_blocks_juno                  Juno in 2088 from the side: Halcyon grey, the badge on its lanyard, the box
+//   intro_blocks_juno                  Juno in 2088 from the side: Nagi·wa grey, the badge on its lanyard, the box
 //   intro_blocks, intro_blocks_opening all of them on one sheet; the opening and the ride
 // The words on the screen are the game's (German, through i18n); painted text only the city's (English).
 pal({
   k: "#0c0e1a", n: "#06080f", 1: "#131a2a", 2: "#1a2337", 3: "#232f47", 4: "#2f3e5a", 5: "#41547a", 6: "#617aa0",
   0: "#030a0a", 7: "#12332d", 8: "#266252", 9: "#55a585", P: "#8acfae", Q: "#d4f7e2",       // the phosphor screens
-  c: "#123c4e", C: "#1f88a4", v: "#62def0", V: "#dafcff",                                     // Halcyon's cyan
+  c: "#123c4e", C: "#1f88a4", v: "#62def0", V: "#dafcff",                                     // Nagi·wa's cyan
   y: "#eec414", Y: "#fff070", j: "#9a7406",                                                   // Juno's yellow
-  g: "#565e70", G: "#8e96a8", h: "#7d8ca4", H: "#b9c6d8",                                     // Halcyon grey, the uniform
+  g: "#565e70", G: "#8e96a8", h: "#7d8ca4", H: "#b9c6d8",                                     // Nagi·wa grey, the uniform
   s: "#93583f", S: "#d79676", u: "#1b1f2e", O: "#552b1c", R: "#ffd58a", W: "#fff4d8", q: "#ff3a3a",
   m: "#ff4fd3", M: "#a8238a", N: "#ffc0f2", w: "#3a4c64",
 })
@@ -72,7 +72,7 @@ function hall(c, out = 0) {
 sprite("intro_blocks_1", { w: W, h: H }, (c) => {
   hall(c)
   c.rect(0, H - 12, W, 12, "n"); TXT.draw(c, 6, H - 9, "2088-04-30  05:45", "9", { font: "hud" })
-  label(c, 1, "DIE BEOBACHTUNGSHALLE, HALCYON TOWER. BRUMMEN, TIPPEN")
+  label(c, 1, "DIE BEOBACHTUNGSHALLE, NAGI·WA TOWER. BRUMMEN, TIPPEN")
 })
 
 // ---------------------------------------------------------------- 2 Juno at her desk
@@ -111,7 +111,7 @@ sprite("intro_blocks_3", { w: W, h: H }, (c) => {
   for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) if ((x + y) % 2) c.px(x, y, "n")
   c.rect(0, 70, W, 40, "k"); c.hline(0, 70, W, "C"); c.hline(0, 109, W, "C")
   TXT.draw(c, 160, 78, "Ab morgen übernimmt die automatische Auswertung.", "V", { align: "center" })
-  TXT.draw(c, 160, 92, "Halcyon dankt Ihnen für Ihren Dienst.", "V", { align: "center" })
+  TXT.draw(c, 160, 92, "Nagi·wa dankt Ihnen für Ihren Dienst.", "V", { align: "center" })
   label(c, 3, "DIE DURCHSAGE, ÜBER DIE GANZE BREITE")
 })
 
@@ -127,7 +127,7 @@ sprite("intro_blocks_4", { w: W, h: H }, (c) => {
 
 // ---------------------------------------------------------------- Juno in 2088, for the Transitachse (D)
 function juno2088(c, x, y, flip = false) {
-  // side view, facing right (or left): 50 px; short black hair, Halcyon grey, dark trousers, the badge on its
+  // side view, facing right (or left): 50 px; short black hair, Nagi·wa grey, dark trousers, the badge on its
   // lanyard, the box in her arms (a cactus, a cup, the yellow coat folded, the data stick)
   const f = (dx) => (flip ? x - dx : x + dx), r = (dx, dy, w, h, k) => c.rect(flip ? x - dx - w + 1 : x + dx, y + dy, w, h, k)
   r(-3, -50, 7, 4, "u"); r(-4, -46, 8, 8, "S"); r(-4, -46, 3, 5, "u"); r(2, -43, 1, 1, "k")         // hair, face, the eye
@@ -168,7 +168,7 @@ sprite("intro_blocks_juno", { w: 60, h: 60, pivot: "bottom" }, (c) => { c.rect(0
 // at HZ), so the float can be drawn the same way in the game: lights and stacks at (X, Z), the camera moving in Z.
 // A1 low over the water: the drowned city's roofs, stilt huts, rafts and buoys lit to the horizon, the pumps'
 //    stacks standing out of the sea and flaring, the haze glowing; the camera drifts forward, slowly
-// A2 further on: Halcyon ahead in the haze, the nine rings stacked, the tower through them; the patrol
+// A2 further on: Nagi·wa ahead in the haze, the nine rings stacked, the tower through them; the patrol
 //    drones' searchlights sweeping the water; big stacks passing on both sides
 // C  the tower close, one window band glowing phosphor green; the camera goes in through one window
 const HZ = 60, F = 160, CAM_H = 20
@@ -220,12 +220,12 @@ function droneBeam(c, x, y, gx, gy, spread) {
 sprite("intro_blocks_a1", { w: W, h: H }, (c) => {
   skyAndSea(c); seaLights(c, 0)
   for (const [X, Z, t] of [[-150, 360, 40], [-70, 220, 44], [90, 280, 42], [130, 140, 40], [-95, 110, 46], [40, 460, 40], [230, 500, 38], [-30, 520, 40]]) stack(c, X, Z, t)
-  c.rect(60, 164, 200, 12, "n"); TXT.draw(c, 160, 166, "HALCYON, 2088", "6", { align: "center", font: "hud" })
+  c.rect(60, 164, 200, 12, "n"); TXT.draw(c, 160, 166, "NAGI·WA, 2088", "6", { align: "center", font: "hud" })
   label(c, "A1", "TIEF ÜBER DEM LICHTERMEER, LANGSAM VORWÄRTS. FLAMMENDE SCHLOTE. MUSIK")
 })
 sprite("intro_blocks_a2", { w: W, h: H }, (c) => {
   skyAndSea(c)
-  // Halcyon ahead in the haze: the nine rings stacked, narrower going up, their window bands dim with distance;
+  // Nagi·wa ahead in the haze: the nine rings stacked, narrower going up, their window bands dim with distance;
   // the tower through them, its ring logo, the hall's green band
   for (let r = 0; r < 9; r++) {
     const y0 = HZ + 2 - r * 5, half = 112 - r * 11
@@ -239,7 +239,7 @@ sprite("intro_blocks_a2", { w: W, h: H }, (c) => {
   droneBeam(c, 96, 40, 82, 112, 9); droneBeam(c, 236, 30, 252, 96, 7)
   for (const [X, Z, t] of [[-40, 70, 40], [44, 96, 42], [-110, 220, 40], [130, 260, 38]]) stack(c, X, Z, t)
   for (const [x, y] of [[120, 50], [208, 18]]) c.hline(x, y, 7, "H")                                  // transit pods
-  label(c, "A2", "HALCYON VORAUS IM DUNST. DROHNEN LEUCHTEN DAS WASSER AB. AUF DEN TURM ZU")
+  label(c, "A2", "NAGI·WA VORAUS IM DUNST. DROHNEN LEUCHTEN DAS WASSER AB. AUF DEN TURM ZU")
 })
 sprite("intro_blocks_c", { w: W, h: H }, (c) => {
   c.rect(0, 0, W, H, "n")
