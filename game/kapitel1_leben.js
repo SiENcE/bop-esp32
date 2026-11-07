@@ -1,4 +1,4 @@
-// Halcyon: the life around Chapter 1's jobs (docs/kapitel1-design.md §7): Teo's visit on Wednesday at 18:30, Motte's lessons.
+// Halcyon: the life around Chapter 1's jobs (docs/kapitel1-design.md §7): Teo's visit on Wednesday at 18:30, Motte's lessons, Bao, the stuttering ad screen.
 // Teo comes by on Wednesday evening with soup from Bao. The visit can't be missed: at 18:30 there is a knock wherever Juno is waiting,
 // she opens the door, and afterwards she is back where she was. A scene without choices, so it costs the solver nothing but its moment;
 // what Juno learns there (Teo is on Lull) other talks read from `moment:teo_visit`.
@@ -53,4 +53,25 @@ Cutaway.dialog("motte_lektion", { main: {
     { text: "„Heute nicht.“", goto: "end", then: [M("Morgen dann.")] },
   ] } });
 for (const night of [3, 4]) (Halcyon.nights[night].passes ??= []).push({ unset: "moth_today" });
+
+// ---- Bao in Chapter 1 (kapitel1-design §7, dialog-style-guide §8): he remembers Tuesday, he sees that something is on Juno's mind,
+// and on Friday he says less. Read from the day and from how she paid on Tuesday (bao_paid, kept from the prologue); nothing new is set.
+const B = (/** @type {string} */ text) => ({ say: "bao", text });
+const street = Cutaway.room.get("kowalski").hotspots;
+const BAO = [
+  { if: "day=2", then: [{ if: "bao_paid", then: [B("Juno! Bar, am Dienstag. Mein Alter glaubt es immer noch nicht.")], else: [B("Juno! Steht noch an, von Dienstag. Eilt nicht.")] },
+    B("Wie immer?"), "Wie immer.", "Heiß. Salzig.", B("Du guckst, als hättest du was gesehen."), "Ich guck immer so.", B("Eben.")] },
+  { if: "day=3", then: [B("Lou fragt, ob du krank bist. Du isst so schnell."), "Ich hab zu tun.", B("Zu tun hat man. Essen muss man.")] },
+  { if: "day=4", then: [B("Brühe."), "Danke.", "...", B("Heute ist es still. Iss langsam.")] },
+];
+for (const id of ["bao", "cart"]) {
+  const h = street[id], verb = id === "bao" ? "talk" : "use", before = h[verb];
+  h[verb] = [{ if: "day>1", then: BAO, else: before }];
+}
+// the ad screen stutters as Juno passes (the repair man noticed it too): on Thursday a second of CAM 03, Kessler under the awning,
+// two nights old; on Friday only the eye, and Juno can't say whether it was on the screen or in her own eye. A look: it costs nothing.
+const adLook = street.ad.look;
+street.ad.look = [{ if: "day=3", then: ["HALCYON. SLEEP BETTER.", "Eben hat er gestottert. Eine Sekunde lang: CAM 03, Kessler unterm Vordach.", "Von Dienstag. Das war mein Bild."] },
+  { if: "day=4", then: ["Er stottert. Und eine Sekunde lang ist da nur das Auge.", "Auf dem Schirm? Oder bei mir?"] },
+  { if: "day<3", then: adLook }];
 })();

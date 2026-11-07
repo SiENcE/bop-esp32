@@ -102,6 +102,22 @@ const PUNKT = ["Der Punkt hinter ihrem Ohr. Immer gleich.", "Woher kenn ich das?
 floor14.haldane.use = [{ if: ["day>1", "!news_stack", "!off_zeitung"], then: ["Die Tür steht offen. Sie schläft wirklich.", "Hinter dem Sessel. Ein Stapel Zeitungen, so hoch wie Motte.", { zoom: "look_zeitung" }, "Jede Seite. Gesichter, angestrichen.", "Nicht angestrichen. Vier Ecken. Um jedes Gesicht vier kleine Ecken.", "So markier ich.", { zoom: false }, { set: "news_stack" }, { cache: "note_haldane_marks" }, ...PUNKT,
     { evi: "besorgt" }, { say: "evi", text: "Warum macht sie das?" }, "Weiß ich nicht. Sie auch nicht."],
   else: [{ if: "day>1", then: PUNKT, else: [haldaneUse] }] }];
+// a click does a hotspot's first action, and her door's is talking: from Wednesday on that is the newspaper war's
+const haldaneTalk = floor14.haldane.talk;
+floor14.haldane.talk = [{ if: "day>1", then: floor14.haldane.use, else: [haldaneTalk] }];
+
+// ---- Frau Haldane awake (kapitel1-design §7): on Thursday evening she is free until her shift at seven and sits up in her chair. Her son
+// writes every Sunday from the Fifth, where he works, and for three Sundays he hasn't (the side story of her son's letters begins, story §9;
+// the Fifth is where the Rain Reader tastes saline). Nothing is a flag: it may be heard again.
+const H = (/** @type {string} */ text) => ({ say: "haldane", text });
+const AWAKE = "day=3", BEFORE_SHIFT = "time<19:00";
+Cutaway.actor("haldane", { name: "Frau Haldane", color: "#ffa8d8", voice: { pitch: 62, range: 3, wave: "triangle", syllable: 90, speed: 0.85 } });
+floor14.haldane.talk = [{ if: [AWAKE, BEFORE_SHIFT], then: [
+  H("Juno! Ich bin wach, stell dir vor. Bis sieben hab ich frei."), H("Hast du Post für mich? Nein. Du doch nicht."), "Wartest du auf was?",
+  H("Mein Junge schreibt jeden Sonntag. Aus dem Fünften, er hat da Arbeit."), H("Seit drei Sonntagen nichts."), "Vielleicht hat er viel zu tun.",
+  H("Das sag ich mir auch. Jeden Abend, bevor ich mein Licht anmach."), H("Dann schlaf ich, und morgens ist es nicht mehr so schlimm."), "..."],
+  else: floor14.haldane.talk }];
+floor14.haldane.look = [{ if: [AWAKE, BEFORE_SHIFT], then: ["Frau Haldane. Wach, im Sessel, mit Tee. Das seh ich selten.", "Hinter dem Ohr ihr Licht. Aus, für zwei Stunden."], else: floor14.haldane.look }];
 Halcyon.cache.note_haldane_marks = { kind: "note", name: "FRAU HALDANES ZEITUNGEN", about: "Ein Stapel hinter ihrem Sessel. Jedes Gesicht darin: vier Ecken. Wie meine." };
 
 // ---- the woman who remembers (story §9): a Lull user is sure she saw a murder in a street she has never been to, from above, as
