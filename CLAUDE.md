@@ -83,7 +83,7 @@ code comments English.
 | `game/skin.js`, `font.js`, `transitions.js`, `sounds.js`, `music.js`, `title.js`, `hints.js` | the look (frames, cards, labels, choices), the fonts, room transitions, synthesised sounds and music, title and menu screens, hints |
 | `art/**/*.px.js` | pxl sources: `lib/` (shared `iso.js`, `feed.js`), `characters/`, `rooms/`, `cams/`, `mock/` (flat blocks of what isn't painted yet), `ui/`, `intro/`, `mockups/`, `test/`; `*_review.px.js` are review sheets, never built into the game |
 | `assets/*.js` | built atlases (checked in, so the game runs without Node) |
-| `tools/` | `build_art.sh`, `sync-engine.sh`, `render-sounds.mjs`, `solve-act.mjs` (one act alone), `check.sh` (all the checks), `check-hover.mjs` (the pointer turns hot), `portrait-title.py` (the profiles of Juno and Teo, cut from the title picture), `paths/` (the ways to click through, the prologue's and Chapter 1's) |
+| `tools/` | `build_art.sh`, `sync-engine.sh`, `render-sounds.mjs`, `solve-act.mjs` (one act alone), `check.sh` (all the checks), `graph.sh` (the connections to look at), `check-hover.mjs` (the pointer turns hot), `portrait-title.py` (the profiles of Juno and Teo, cut from the title picture), `paths/` (the ways to click through, the prologue's and Chapter 1's) |
 | `studio.json` | the editor's studio: writable folders, layer files, tasks |
 | `build/`, `out/` | scratch (raw pxl output, screenshots, renders), not checked in |
 | `.claude/skills/claude-pxl/` | the pxl skill, its own repo (gitignored) |
@@ -122,6 +122,9 @@ Planned (PLAN.md §3): `feed.js`, `ledger.js`, `money.js`, `routines/<chapter>.j
   prologue (dev), `?manual` freezes the clock, `?nointro`, `?edit` / F10 the editor, F9 the debug overlay.
 - The editor with the studio: `node lib/cutaway/tools/studio.mjs` (guide: the engine's `docs/editor.md`, F1).
 - Engine copy: `sh tools/sync-engine.sh`.
+- The game's connections: `sh tools/graph.sh [prolog | main | <thread>]` searches as the checks do, watches every move (what it
+  needs, what it brings about) and writes `build/graph/<name>.js`; open the link it prints (the engine's `graph.html`): the
+  puzzle dependency chart with the winning way, and the state budget (which flag multiplies the states by how much).
 - Art: `sh tools/build_art.sh [test | characters | ui | title | intro | cams | mock | room <id> | rooms]` (no argument:
   everything).
 - Sounds: `node tools/render-sounds.mjs` (every sound of `game/sounds.js` into `build/sounds/`, `all.wav`
