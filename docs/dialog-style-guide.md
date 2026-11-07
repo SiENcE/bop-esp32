@@ -255,6 +255,16 @@ Juno vergöttert er, ohne es zu sagen.
 > „Ich warte seit zwei Jahren auf den Dienstag.“\
 > „Nachts geht sie an mir vorbei wie an einer Wand.“
 
+### Mei: die Wirtin
+
+Trocken, knapp, rechnet in Strichen statt in Chits. Fragt keinen was und hört alles; Gerüchte gibt sie weiter wie Wechselgeld, ohne
+Kommentar. Was kaputt ist und trotzdem läuft, nennt sie Glück. Duzt Juno. Nie rührselig, nie neugierig. (Ein Vorschlag, zu prüfen beim
+Durchspielen.)
+
+> „Wer anschreibt, kommt wieder.“\
+> „Die bar zahlen, seh ich nie wieder.“\
+> „Freundlich war er. Die sind immer freundlich.“
+
 ### Frau Haldane: die Nachbarin
 
 Immer müde, immer freundlich, auf Lull. Sie weiß nicht, was sie nachts tut, also weiß es auch ihr Text nie. Noch keine Zeile im Spiel,

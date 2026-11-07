@@ -169,7 +169,18 @@ scene("cam18_bg", { w: W, h: H, bg: "0" }, (c) => {
 // LUCKY STATIC from inside: the bar, the karaoke machine, a table
 scene("lucky_static_bg", { w: W, h: H, bg: "k" }, (c) => {
   c.rect(0, 0, W, 112, "b"); c.rect(0, 112, W, 68, "a"); c.hline(0, 112, W, "e")
-  c.rect(150, 70, 160, 40, "f"); c.hline(150, 70, 160, "h"); c.rect(160, 30, 60, 30, "d")
+  // the counter, low enough that Mei shows behind it; shelves of bottles; Halcyon's news over it; Mei's slate with the tabs
+  c.rect(150, 84, 160, 28, "f"); c.hline(150, 84, 160, "h")
+  for (const [x0, x1] of [[152, 228], [236, 306]]) {
+    c.rect(x0, 80, x1 - x0, 2, "e")
+    for (let x = x0 + 2, i = 0; x < x1 - 3; x += 6, i++) c.rect(x, 72 + (i % 2), 3, 8 - (i % 2), ["g", "h", "e", "v", "g", "f"][i % 6])
+  }
+  c.rect(160, 24, 56, 32, "d"); c.rect(163, 27, 50, 26, "a"); TXT.draw(c, 188, 30, "HALCYON", "v", { font: "hud", align: "center" }); c.rect(168, 40, 40, 2, "v"); c.rect(168, 45, 28, 2, "f")
+  c.rect(236, 26, 66, 42, "d"); c.rect(238, 28, 62, 38, "a")
+  for (const [row, n] of [[0, 7], [1, 3], [2, 13], [3, 5]]) for (let i = 0; i < n; i++) {
+    const y = 31 + row * 9, x = 242 + i * 4 + Math.floor(i / 5) * 2
+    if (i % 5 === 4) c.line(x - 16, y + 5, x - 1, y + 1, "h"); else c.rect(x, y, 1, 6, "h")
+  }
   c.rect(40, 56, 34, 56, "d"); c.rect(46, 62, 22, 16, "m")
   SIGN(c, 28, 40, 58, "OUT OF ORDER", "b", "y")
   c.rect(0, 60, 14, 116, "e")
@@ -312,4 +323,24 @@ pal({ T: "#ffa040", t: "#a85a1a", L: "#c8e0f0" })
 anim("mock_teo", { w: 21, h: 52, frames: 1, fps: 1, outline: "k", pivot: "bottom" }, (c) => {
   c.rect(7, 0, 8, 4, "k"); c.rect(7, 4, 8, 7, "S"); c.rect(14, 5, 2, 3, "L"); c.rect(8, 9, 2, 1, "s"); c.rect(5, 11, 12, 3, "g")
   c.rect(4, 14, 14, 15, "T"); c.rect(7, 14, 8, 15, "t"); c.rect(4, 22, 14, 1, "h"); c.rect(5, 29, 12, 4, "d"); c.rect(5, 33, 5, 19, "e"); c.rect(12, 33, 5, 19, "e")
+})
+// LUCKY STATIC's people, not painted yet. Mei behind her counter, only what shows above it (an anchor below the picture keeps her
+// feet on the floor behind the counter, tools/build_art.sh): her hair up with a pencil through it for the slate, a salmon cardigan,
+// her forearms on the counter. The regulars on their stools, from behind: he sleeps on his arms, the Lull patch behind his ear
+// (pale, an oval: like the title's); she sits up straight in her shawl.
+pal({ Q: "#ff9a7a", q: "#b0604a" })
+anim("mock_mei", { w: 17, h: 28, frames: 1, fps: 1, outline: "k", pivot: "bottom" }, (c) => {
+  c.rect(5, 0, 7, 4, "n"); c.rect(6, 0, 5, 2, "p"); c.rect(11, 0, 4, 1, "h"); c.rect(5, 4, 7, 7, "S"); c.rect(5, 4, 2, 3, "n"); c.px(7, 7, "k"); c.px(10, 7, "k"); c.rect(7, 9, 3, 1, "s")
+  c.rect(7, 11, 3, 2, "s"); c.rect(2, 13, 13, 15, "Q"); c.rect(6, 15, 5, 13, "d"); c.rect(2, 13, 2, 11, "q"); c.rect(13, 13, 2, 11, "q")
+  c.rect(0, 24, 17, 4, "Q"); c.rect(2, 25, 3, 3, "S"); c.rect(12, 25, 3, 3, "S")
+})
+anim("mock_stamm_a", { w: 18, h: 44, frames: 1, fps: 1, outline: "k", pivot: "bottom" }, (c) => {
+  c.rect(4, 26, 12, 3, "e"); c.rect(9, 29, 2, 15, "d"); c.rect(5, 38, 10, 1, "e")
+  c.rect(1, 14, 16, 13, "f"); c.rect(3, 13, 12, 3, "g"); c.rect(5, 9, 8, 6, "o"); c.rect(4, 8, 10, 3, "e"); c.rect(13, 11, 2, 2, "L")
+  c.rect(0, 12, 3, 4, "g"); c.rect(15, 12, 3, 4, "g"); c.rect(3, 27, 4, 11, "d"); c.rect(11, 27, 4, 11, "d")
+})
+anim("mock_stamm_b", { w: 16, h: 48, frames: 1, fps: 1, outline: "k", pivot: "bottom" }, (c) => {
+  c.rect(3, 30, 12, 3, "e"); c.rect(8, 33, 2, 15, "d"); c.rect(4, 42, 10, 1, "e")
+  c.rect(5, 1, 7, 8, "h"); c.rect(7, 0, 3, 2, "h"); c.rect(3, 9, 11, 21, "b"); c.rect(2, 9, 13, 7, "q"); c.rect(5, 15, 7, 2, "q")
+  c.rect(3, 30, 4, 12, "a"); c.rect(10, 30, 4, 12, "a")
 })

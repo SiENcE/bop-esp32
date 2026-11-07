@@ -94,6 +94,8 @@ mock() {
     done
     # the roof of today comes from the old photo's code
     $PXL build art/ui/deck_wallpaper.px.js --only dach_bg,dach_heute --out build/art/mock --no-preview | tail -n 1
+    # Mei shows only above her counter: her feet stand on the floor behind it, 35 px below the picture (19x30 with its outline)
+    echo '{"anchor":[9,64]}' > build/art/mock/anims/mock_mei.anchor.json
     $ATLAS build/art/mock assets/mock.js --only "cam*,gasse_*,laundromat_*,lucky_*,drain_*,sable_*,sims_*,dach_*,jade_*,okonkwo_*,mock_*,look_*,inv_*,zoom_keypad"
 }
 
