@@ -50,9 +50,9 @@ Halcyon.talkTree("regenleserin", [
     ]],
     ["„Du kennst mich noch?“", [R("Du warst die mit dem Kleinen. Eine Schale Nudeln für zwei, da vorn auf der Mauer."), R("Der hatte nie Angst vor der Höhe."), "Nein. Ich schon.", R("Was macht er jetzt?")], [
       ["„Pumpenhalle. Doppelschichten. Er ist dreiundzwanzig.“", [R("Hat er auch das Licht hinterm Ohr?")], [
-        // she only learns it when he comes by on Wednesday (kapitel1-design; his visit isn't built yet: then this asks for that, not the day)
-        ["„Seit es gratis ist.“", [R("Sag ihm, er soll mal raufkommen. Solange er die Leiter noch findet.")], undefined, "day>1"],
-        ["„Teo? Der schläft doch gar nicht.“", [R("Sag ihm, er soll mal raufkommen. Solange er die Leiter noch findet.")], undefined, "day=1"],
+        // she only learns it when he comes by on Wednesday at 18:30 (game/kapitel1_leben.js)
+        ["„Seit es gratis ist.“", [R("Sag ihm, er soll mal raufkommen. Solange er die Leiter noch findet.")], undefined, "moment:teo_visit"],
+        ["„Teo? Der schläft doch gar nicht.“", [R("Sag ihm, er soll mal raufkommen. Solange er die Leiter noch findet.")], undefined, "!moment:teo_visit"],
       ]],
     ]],
     ["„Was sagst du zu Lull?“", [R("Ich bin zweiundachtzig. Den Schlaf, den ich noch hab, schlaf ich selber."), R("Zwei Wochen gratis, steht auf dem Schirm. Das Wasser war auch mal gratis.")], [

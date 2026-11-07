@@ -196,6 +196,8 @@ Kap. 2: Nach dem Senden weiß die Quiet sofort, wer Juno ist; nach der Weigerung
 | Abend 1 | Deck | **Frau Kessler** schreibt, je nach P1. Die Wahrheit: „Er ist nicht heimgekommen. Schulden, haben Sie geschrieben. Wo ist er?“ Der Schnitt: „Er ist nicht heimgekommen. Zu ihr, nehme ich an.“ Nichts: „Er ist nicht heimgekommen. Sie haben wirklich nichts gefunden?“ |
 | ab Abend 1 | `kowalski` | **Bao** erinnert sich an den Dienstag. Bar bezahlt: „Bar! Mein Alter glaubt es immer noch nicht.“ Sonst: „Steht noch an, von Dienstag. Eilt nicht.“ |
 
+**Gebaut** (`game/kapitel1_leben.js`, auf Blöcken): **Teos Besuch** am Mittwoch um 18:30. Man kann ihn nicht verpassen: Es klopft, wo Juno auch gerade wartet, sie macht auf, und danach ist sie wieder, wo sie war (eine Szene ohne Wahl, kein Flag außer dem Moment). Die Regenleserin liest daraus, ob Juno von Teos Lull weiß. Die Zeilen sind ein Vorschlag, zu prüfen beim Durchspielen; der Dialog über die Halcyon-Zeit ist auf eine Zeile verkürzt.
+
 ### Die Stadt: rausgehen (entschieden 2026-11-05)
 
 Die Abende sollen nach Leben in der Stadt schmecken, nicht nach Warten aufs Bett. Das **Bett** geht erst ab 01:00 auf („Schlafen? Ich schlaf nicht vor eins. Nie.“).
