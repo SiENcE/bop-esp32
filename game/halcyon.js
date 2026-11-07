@@ -48,6 +48,7 @@ Halcyon.declareTexts = function () {
   d("chat", Object.values(Halcyon.contacts ?? {}).map((c) => c.status));
   d("chat", Object.values(Halcyon.threads ?? {}).flatMap((list) => list.flatMap((m) => [m.text, m.photo, m.clip, m.at].filter((x) => typeof x === "string"))));
   d("evenings", Object.values(Halcyon.nights ?? {}).flatMap((n) => [n.date, n.evening]));
+  d("NETZ", (Halcyon.netz ?? []).flatMap((n) => [n.text, n.by].filter((t) => typeof t === "string")));
   d("people", Object.values(Halcyon.people).flatMap((p) => [p.name, p.label, p.speaker].filter((t) => typeof t === "string")));
 };
 

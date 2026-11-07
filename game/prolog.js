@@ -218,6 +218,12 @@ Cutaway.room("flat", {
 });
 
 // ---- the act
+// NETZ on the prologue's evening (and Chapter 1's first: the record low is still the headline on Wednesday)
+Halcyon.netz.push(
+  { kind: "head", if: "day<3", text: "Kriminalität im Neunten auf Rekordtief." },
+  { kind: "ad", label: "LULL // SLEEP BETTER", text: "Vier Stunden wie zehn. Zwei Wochen gratis." },
+  { kind: "live", label: "NINTH LIVE // TONIGHT" });
+
 Cutaway.act("prolog", {
   title: "Prolog", name: "Nachtschicht", room: "flat", actor: "juno",
   start: [

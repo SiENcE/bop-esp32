@@ -54,6 +54,26 @@ Cutaway.dialog("motte_lektion", { main: {
   ] } });
 for (const night of [3, 4]) (Halcyon.nights[night].passes ??= []).push({ unset: "moth_today" });
 
+// ---- NETZ in Chapter 1 (kapitel1-design §7): every evening a new page; EVI reads the headline to Juno once an evening and gets it
+// wrong (she reads data well and people badly); on the Glasser board on Thursday the post "Mein Vater wacht nicht auf", on Friday its end.
+// Which evening EVI has read is a view (netz_read: the day), so it costs the solver nothing.
+Cutaway.state.view("netz_read");
+const L_KOW = "L., Kowalski-Straße";
+Halcyon.netz.push(
+  { kind: "sub", if: "day=2", text: "Hüllenabgabe ab Dezember angepasst. Halcyon dankt für Ihr Verständnis." },
+  { kind: "board", if: "day=2", text: "Suche Abzweiger, zahle bar. Bitte nicht Ratz.", by: "anonym" },
+  { kind: "head", if: "day=3", text: "Ruhe-Erschöpfung: kein Grund zur Sorge, sagen Halcyons Ärzte." },
+  { kind: "sub", if: "day=3", text: "Die Lull-Kliniken im Neunten haben jetzt auch nachts offen." },
+  { kind: "board", if: "day=3", text: "Wer weiß was über Ruhe-Erschöpfung? Mein Vater wacht nicht auf.", by: L_KOW },
+  { kind: "head", if: "day=4", text: "Das Wetter für den Neunten: Tropfen aus dem Vierten. Später trocken." },
+  { kind: "sub", if: "day=4", text: "Halcyon wünscht dem Neunten eine ruhige Nacht." },
+  { kind: "board", if: "day=4", text: "Mein Vater ist weg. Zwei in Weiß haben ihn abgeholt. Sie waren sehr freundlich.", by: L_KOW });
+const READ = (/** @type {number} */ day, /** @type {any[]} */ said) => ({ if: [`day=${day}`, `netz_read<${day}`], then: [{ set: "netz_read", value: day }, ...said] });
+(Halcyon.appOpen.netz ??= []).push(
+  READ(2, [{ evi: "neugierig" }, { say: "evi", text: "Kriminalität auf Rekordtief. Heißt das, die Verbrecher schlafen?" }, "Die meisten."]),
+  READ(3, [{ evi: "froh" }, { say: "evi", text: "Kein Grund zur Sorge! Dann sorgt sich jetzt keiner mehr?" }, "Das ist der Plan."]),
+  READ(4, [{ evi: "froh" }, { say: "evi", text: "Später trocken! Ich hab nachgesehen: Das gab es hier noch nie." }, "Ich weiß."]));
+
 // ---- Bao in Chapter 1 (kapitel1-design §7, dialog-style-guide §8): he remembers Tuesday, he sees that something is on Juno's mind,
 // and on Friday he says less. Read from the day and from how she paid on Tuesday (bao_paid, kept from the prologue); nothing new is set.
 const B = (/** @type {string} */ text) => ({ say: "bao", text });

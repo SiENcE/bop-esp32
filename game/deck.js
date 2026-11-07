@@ -48,7 +48,7 @@
     "abwesend", "schläft", "Werbung", "KASSENBUCH", "+{chits}", "KONTOSTAND", "MIETE", "{n} CHITS, FÄLLIG IN 3 TAGEN", "{n} CHITS, FÄLLIG IN 2 TAGEN", "{n} CHITS, FÄLLIG MORGEN", "{n} CHITS, FÄLLIG HEUTE", "{n} CHITS, BEZAHLT", "{n} CHITS, BEZAHLT VON TEO", "DAVON HÜLLENABGABE {n}",
     "BAO", "ANGESCHRIEBEN", "STEUER_2089_NICHT_ÖFFNEN.TXT", "ESSEN!!.TXT", "Noch nichts.", "…",
     "CACHE // {name}", "WO", "WANN", "LÄNGE", "WER", "{cam} // {place}", "{min} MIN", "SCHNEIDEN", "ANONYMISIEREN", "PRÜFEN", "MONTIEREN",
-    "SCHNITT {s} S", "GESCHNITTEN", "KAP. {n}", "ANONYMISIERT"]);
+    "SCHNITT {s} S", "GESCHNITTEN", "KAP. {n}", "ANONYMISIERT", "GLASSER-BRETT"]);
 
   // what is open is a view, not game state: the solver opens whatever window a move needs (engine state.view)
   Cutaway.state.view("deck_app");
@@ -67,6 +67,13 @@
    * @type {Record<string, {cam?: string, where?: string, hour?: number, from: number, to: number, thumb?: string, moments: [number, number, string][],
    *   people: [string, number, number][], cut?: {moment: number, gives: string, if?: any, then?: any[]}, anon?: {if?: any, then?: any[]}}>} */
   Halcyon.clips = {};
+  /** NETZ, HalcyonNet's page (kapitel0-design §2.1): headlines, small news, the Glasser board, ads, drawn in that order, each while its
+   * `if` holds (the chapters fill it; texts German, labels the city's English)
+   * @type {{kind: "head" | "sub" | "ad" | "board" | "live", text?: string, label?: string, by?: string, if?: any}[]} */
+  Halcyon.netz = [];
+  /** what is said when an app opens (EVI reading the news to Juno): by app, a script
+   * @type {Record<string, any[]>} */
+  Halcyon.appOpen = {};
   /** the old photo (art/ui/deck_wallpaper.px.js): what Juno says looking at it, its music (a click shows it whole) */
   Halcyon.photo = { music: { theme: "memory", fade: 2 }, back: { theme: "juno", intensity: 0.4, speaker: 1, fade: 2 }, look: /** @type {any} */ (null) };
 
@@ -80,7 +87,7 @@
     const app = (/** @type {string} */ a) => `deck_app=${a}`;
     APPS.forEach((a, i) => {
       const [x, y] = D.icon(i);
-      hs[`app_${a}`] = { name: LABEL[a], rect: [x - 3, y - 2, 30, 34], use: [{ set: "deck_app", value: a }, { sfx: "type" }],
+      hs[`app_${a}`] = { name: LABEL[a], rect: [x - 3, y - 2, 30, 34], use: [{ set: "deck_app", value: a }, { sfx: "type" }, ...(Halcyon.appOpen[a] ?? [])],
         look: `${LABEL[a]}.` };
     });
     hs.win_close = { name: "Schließen", rect: D.close, if: "deck_app", z: 6, use: [{ unset: "deck_app" }, { sfx: "type" }] };
@@ -330,7 +337,6 @@
     }
   }
 
-  const NETZ_H = 95;      // how tall NETZ's page is
   const APP_DRAW = {
     /** GLASS: the map of the quarter, every known camera a point; linked ones lit */
     glas(/** @type {CanvasRenderingContext2D} */ ctx) {
@@ -476,17 +482,29 @@
       small(ctx, t("BAO"), X + 8, Y + 80, C.steel6);
       text(ctx, t("ANGESCHRIEBEN"), X + 8, Y + 89, C.cyanPale);
     },
-    /** NETZ: HalcyonNet's front page (in the prologue only that) */
+    /** NETZ: HalcyonNet's page this evening: the headlines, the small news, the Glasser board, the ads (Halcyon.netz) */
     netz(/** @type {CanvasRenderingContext2D} */ ctx) {
-      const [X, Y0, WW, HH] = D.win, top = Y0 + 5, bottom = Y0 + HH - 4, L = scroll.netz, Y = Y0 - Math.round(L.y);
-      L.max = Math.max(0, NETZ_H - (bottom - top)); L.to = Math.min(L.to, L.max);        // (it all fits so far: the chapters' evenings will fill it)
+      const [X, Y0, WW, HH] = D.win, top = Y0 + 5, bottom = Y0 + HH - 4, L = scroll.netz, Y = Y0 - Math.round(L.y), tw = WW - 30;
       ctx.save(); ctx.beginPath(); ctx.rect(X + 4, top, WW - 8, bottom - top); ctx.clip();
       rect(ctx, C.cyanDeep, X + 6, Y + 8, WW - 22, 12); small(ctx, "HALCYON.NET", X + 10, Y + 12, C.cyanPale);
-      wrap(t("Kriminalität im Neunten auf Rekordtief."), WW - 30).forEach((l, i) => text(ctx, l, X + 8, Y + 26 + i * 10, C.cyanPale));
-      rect(ctx, C.magentaDark, X + 6, Y + 52, WW - 22, 30); small(ctx, "LULL // SLEEP BETTER", X + 10, Y + 56, C.magenta);
-      text(ctx, t("Vier Stunden wie zehn. Zwei Wochen gratis."), X + 10, Y + 66, "#ffc0f2");
-      small(ctx, "NINTH LIVE // TONIGHT", X + 8, Y + 92, C.amber);
+      const shown = Halcyon.netz.filter((n) => S().test(n.if));
+      let y = Y + 26, board = false;
+      for (const kind of ["head", "sub", "board", "ad", "live"]) for (const n of shown.filter((n) => n.kind === kind)) {
+        if (kind === "head") { const ls = wrap(t(n.text ?? ""), tw); ls.forEach((l, i) => text(ctx, l, X + 8, y + i * 10, C.cyanPale)); y += ls.length * 10 + 4; }
+        else if (kind === "sub") { const ls = wrap(t(n.text ?? ""), tw); ls.forEach((l, i) => text(ctx, l, X + 8, y + i * 10, C.steel6)); y += ls.length * 10 + 4; }
+        else if (kind === "ad") {
+          const ls = wrap(t(n.text ?? ""), tw - 4), h = 16 + ls.length * 10;
+          rect(ctx, C.magentaDark, X + 6, y, WW - 22, h); small(ctx, n.label ?? "", X + 10, y + 4, C.magenta);
+          ls.forEach((l, i) => text(ctx, l, X + 10, y + 14 + i * 10, "#ffc0f2")); y += h + 6;
+        } else if (kind === "board") {
+          if (!board) { board = true; rect(ctx, C.steel3, X + 6, y, WW - 22, 1); small(ctx, t("GLASSER-BRETT"), X + 8, y + 4, C.amber); y += 13; }
+          const ls = wrap(t(n.text ?? ""), tw - 4); ls.forEach((l, i) => text(ctx, l, X + 10, y + i * 10, C.cyanPale)); y += ls.length * 10;
+          if (n.by) { small(ctx, t(n.by), X + WW - 20, y + 1, C.steel6, "right"); y += 8; }
+          y += 5;
+        } else { small(ctx, n.label ?? "", X + 8, y + 2, C.amber); y += 12; }
+      }
       ctx.restore();
+      L.max = Math.max(0, y + Math.round(L.y) - Y0 - (bottom - top)); L.to = Math.min(L.to, L.max);
       scrollBar(ctx, L, X + WW - 15, top, bottom, false, pointer());
     },
     /** RADIO: the stations (the game's music; Lantern's pirate station comes in Chapter 2) */
@@ -504,7 +522,6 @@
       small(ctx, "AN_TEO_ENTWURF_7.TXT", X + 8, Y + 34, C.steel6);
     },
   };
-  Cutaway.i18n.declare("deck: net", ["Kriminalität im Neunten auf Rekordtief.", "Vier Stunden wie zehn. Zwei Wochen gratis."]);
 
   // ---------------------------------------------------------------- EVI in her corner
   function evi(/** @type {CanvasRenderingContext2D} */ ctx) {
