@@ -24,8 +24,7 @@
     { wait: 400 }, "Das war nicht auf dem Schirm. Das war in meinem Auge.",
     { wait: 500 }, { evi: "besorgt" }, { say: "evi", text: "Das war nicht ich. Ehrlich." },
     { wait: 800 }, { camera: "follow" },
-    { fade: "out", ms: 900 }, { card: "Glass", title: "Kapitel 1" },
-    { end: "Hier endet der Prolog. Kapitel 1 kommt als Nächstes." },
+    { fade: "out", ms: 900 }, { act: "next" },                 // on into Chapter 1, which shows its own card (game/kapitel1.js)
   ];
   // Step 16 (kapitel0-design §6.2): "Wie immer? Ich schreib's an." With money Juno may pay cash (bao_paid);
   // Bao is glad and writes it down all the same. Then she eats under his umbrella (ate_bao), and step 17 follows.
