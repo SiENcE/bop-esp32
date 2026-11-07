@@ -39,7 +39,7 @@
     thread: { x: 166 },
     cache: { y: 30, row: 22 },
     buch: { y: 30, row: 12 },
-    clip: { pic: [82, 23, 96, 56], meta: 185, line: [84, 90, 224], tools: 137 },   // the clip editor: picture, who/where, timeline, tools
+    clip: { pic: [82, 23, 96, 56], meta: 185, line: [84, 90, 224], tools: 137, anon: [48, 60] },   // the clip editor: picture, who/where, timeline, tools (ANONYMISIEREN: after, wide)
     map: [82, 22, 228, 124],                                  // GLASS's map inside the window
     camBox: 54,                                               // a camera's place on it, as wide as its longest line ("CODE BEKANNT"): keep the cameras this far apart
   };
@@ -48,7 +48,7 @@
     "abwesend", "schläft", "Werbung", "KASSENBUCH", "+{chits}", "KONTOSTAND", "MIETE", "{n} CHITS, FÄLLIG IN 3 TAGEN", "{n} CHITS, FÄLLIG IN 2 TAGEN", "{n} CHITS, FÄLLIG MORGEN", "{n} CHITS, FÄLLIG HEUTE", "{n} CHITS, BEZAHLT", "{n} CHITS, BEZAHLT VON TEO", "DAVON HÜLLENABGABE {n}",
     "BAO", "ANGESCHRIEBEN", "STEUER_2089_NICHT_ÖFFNEN.TXT", "ESSEN!!.TXT", "Noch nichts.", "…",
     "CACHE // {name}", "WO", "WANN", "LÄNGE", "WER", "{cam} // {place}", "{min} MIN", "SCHNEIDEN", "ANONYMISIEREN", "PRÜFEN", "MONTIEREN",
-    "SCHNITT {s} S", "GESCHNITTEN", "KAP. {n}"]);
+    "SCHNITT {s} S", "GESCHNITTEN", "KAP. {n}", "ANONYMISIERT"]);
 
   // what is open is a view, not game state: the solver opens whatever window a move needs (engine state.view)
   Cutaway.state.view("deck_app");
@@ -62,9 +62,10 @@
   Halcyon.replies = {};
   /** The clip editor's clips (docs/kapitel0-design.md §2.4), by cache id: the camera, the minutes it runs
    * (22:31 is 31), its moments and who is in it, what a cut keeps and makes (a new cache entry), the script
-   * after the cut.
-   * @type {Record<string, {cam: string, from: number, to: number, thumb?: string, moments: [number, number, string][],
-   *   people: [string, number, number][], cut?: {moment: number, gives: string, then?: any[]}}>} */
+   * after the cut. A clip from another hour gives it (`hour`, 22 by default); one Juno filmed herself has no camera, only a place
+   * (`where`). Anonymising (from Chapter 1, while `anon.if` holds) blurs every face for good: the flag `anon_<cache id>`.
+   * @type {Record<string, {cam?: string, where?: string, hour?: number, from: number, to: number, thumb?: string, moments: [number, number, string][],
+   *   people: [string, number, number][], cut?: {moment: number, gives: string, if?: any, then?: any[]}, anon?: {if?: any, then?: any[]}}>} */
   Halcyon.clips = {};
   /** the old photo (art/ui/deck_wallpaper.px.js): what Juno says looking at it, its music (a click shows it whole) */
   Halcyon.photo = { music: { theme: "memory", fade: 2 }, back: { theme: "juno", intensity: 0.4, speaker: 1, fade: 2 }, look: /** @type {any} */ (null) };
@@ -116,6 +117,13 @@
       if (!clip.cut) continue;
       hs[`clip_cut_${id}`] = { name: "Schneiden", rect: [X + 8, D.clip.tools, 44, 10], z: 5, if: [`deck_app=clip_${id}`, `!cache_${clip.cut.gives}`, ...(clip.cut.if ? [clip.cut.if] : [])],
         use: [{ sfx: "glitch" }, { cache: clip.cut.gives }, ...(clip.cut.then ?? [])] };
+    }
+    // anonymising: every face blurred, in Juno's copy for good (the button stands after SCHNEIDEN, as the editor draws it)
+    for (const [id, clip] of Object.entries(Halcyon.clips)) {
+      if (!clip.anon) continue;
+      hs[`clip_anon_${id}`] = { name: "Anonymisieren", rect: [X + 8 + D.clip.anon[0], D.clip.tools, D.clip.anon[1], 10], z: 5,
+        if: [`deck_app=clip_${id}`, `!anon_${id}`, ...(clip.anon.if ? [].concat(clip.anon.if) : [])],
+        use: [{ sfx: "glitch" }, { set: `anon_${id}` }, ...(clip.anon.then ?? [])] };
     }
     // the old photo: a click on the wallpaper shows it whole, with its music; a click anywhere closes it
     hs.photo = { name: "Das alte Foto", rect: [80, 14, 206, 104], if: "!deck_app", z: 1,
@@ -519,21 +527,34 @@
 
   // ---------------------------------------------------------------- the clip editor (mockup F, clip)
   /** @param {CanvasRenderingContext2D} ctx @param {string} id */
+  /** a small canvas the clip's picture is shrunk into, for anonymising */
+  const mosaic = /** @type {CanvasRenderingContext2D} */ (document.createElement("canvas").getContext("2d"));
   function editor(ctx, id) {
     const clip = Halcyon.clips[id], [X, Y, WW, HH] = D.win, E = D.clip, p = pointer();
     if (!clip) return;
-    const cam = Halcyon.cams[clip.cam], cut = clip.cut && S().flag(`cache_${clip.cut.gives}`);
+    const cam = clip.cam ? Halcyon.cams[clip.cam] : null, cut = clip.cut && S().flag(`cache_${clip.cut.gives}`), anon = !!S().flag(`anon_${id}`);
+    const anonOn = !!clip.anon && !anon && S().test(clip.anon.if);
     // the picture: the moment the cut keeps, in the feed's phosphor, with the implant's tags
     const [px, py, pw, ph] = E.pic;
     rect(ctx, C.ink, px - 1, py - 1, pw + 2, ph + 2);
     if (clip.thumb && Cutaway.assets.has(clip.thumb)) Cutaway.assets.draw(ctx, clip.thumb, px, py, { anchor: [0, 0], t: Cutaway.clock.time });
     else rect(ctx, "#12332d", px, py, pw, ph);
-    small(ctx, t("CAM {id}", { id: cam?.id ?? "" }), px + 2, py + 2, "#d4f7e2");
+    if (anon) {                                                     // the picture itself as a mosaic: the scene is still there, nobody in it
+      const M = 6, tiny = mosaic.canvas;
+      tiny.width = Math.ceil(pw / M); tiny.height = Math.ceil(ph / M);
+      mosaic.imageSmoothingEnabled = false; ctx.imageSmoothingEnabled = false;
+      mosaic.drawImage(ctx.canvas, px, py, pw, ph, 0, 0, tiny.width, tiny.height);
+      ctx.save(); ctx.beginPath(); ctx.rect(px, py, pw, ph); ctx.clip();
+      ctx.drawImage(tiny, 0, 0, tiny.width, tiny.height, px, py, tiny.width * M, tiny.height * M);
+      ctx.restore();
+      small(ctx, t("ANONYMISIERT"), px + pw / 2, py + ph - 7, "#d4f7e2", "center");
+    }
+    small(ctx, cam ? t("CAM {id}", { id: cam.id }) : t(clip.where ?? ""), px + 2, py + 2, "#d4f7e2");
     // where, when, how long, who
-    const mm = (/** @type {number} */ m) => `22:${String(Math.floor(m)).padStart(2, "0")}`;
-    const meta = [["WO", t("{cam} // {place}", { cam: t("CAM {id}", { id: cam?.id ?? "" }), place: t(cam?.place ?? "") })],
+    const hh = String(clip.hour ?? 22).padStart(2, "0"), mm = (/** @type {number} */ m) => `${hh}:${String(Math.floor(m)).padStart(2, "0")}`;
+    const meta = [["WO", cam ? t("{cam} // {place}", { cam: t("CAM {id}", { id: cam.id }), place: t(cam.place) }) : t(clip.where ?? "")],
       ["WANN", `${mm(clip.from)}-${mm(clip.to)}`], ["LÄNGE", t("{min} MIN", { min: `${Math.floor(clip.to - clip.from)}:${String(Math.round(((clip.to - clip.from) % 1) * 60)).padStart(2, "0")}` })],
-      ["WER", clip.people.map(([who]) => t(Halcyon.people[who]?.name ?? who)).join(", ")]];
+      ["WER", anon ? t("ANONYMISIERT") : clip.people.map(([who]) => t(Halcyon.people[who]?.name ?? who)).join(", ")]];
     meta.forEach(([k, v], i) => { small(ctx, t(k), E.meta, py + 1 + i * 15, C.steel6); small(ctx, fit(v, X + WW - 6 - E.meta, hud()), E.meta, py + 8 + i * 15, C.cyanPale); });
     // the timeline: the minutes, the moments, who is in the picture when; the cut in brackets
     const [lx, ly, lw] = E.line, at = (/** @type {number} */ m) => Math.round(lx + (m - clip.from) / (clip.to - clip.from) * lw);
@@ -547,7 +568,7 @@
     });
     clip.people.forEach(([who, a, b], i) => {
       const y = ly + 21 + i * 8;
-      small(ctx, t(Halcyon.people[who]?.name ?? who), lx, y, C.steel6);
+      small(ctx, anon ? "???" : t(Halcyon.people[who]?.name ?? who), lx, y, C.steel6);
       rect(ctx, C.steel4, Math.max(at(a), lx + 34), y + 1, at(b) - Math.max(at(a), lx + 34), 3);
     });
     if (clip.cut) {
@@ -556,11 +577,12 @@
       small(ctx, `${t(label)}: ${t(cut ? "GESCHNITTEN" : "SCHNITT {s} S", { s: Math.round((b - a) * 60) })}`, Math.round((at(a) + at(b)) / 2), ly + 40, C.cyan, "center");
       rect(ctx, C.yellow, Math.round((at(a) + at(b)) / 2), ly + 2, 1, 36);                     // the playhead: where Juno looks
     }
-    // the tools: cutting now; the others come in later chapters (locked)
+    // the tools: cutting from the prologue, anonymising from Chapter 1; the others come later (locked). The first two have
+    // fixed places, as their hotspots do (the room's, D.clip.anon)
     let bx = X + 8;
-    const tools = /** @type {[string, boolean, number | null][]} */ ([["SCHNEIDEN", !!clip.cut && !cut, null], ["ANONYMISIEREN", false, 1], ["PRÜFEN", false, 2], ["MONTIEREN", false, 2]]);
-    for (const [label, on, chapter] of tools) {
-      const w = hud().measure(t(label)) + 8, r = [bx, E.tools, w, 10], hot = on && inRect(p.x, p.y, r), dim = !on;
+    const tools = /** @type {[string, boolean, number | null][]} */ ([["SCHNEIDEN", !!clip.cut && !cut && S().test(clip.cut.if), E.anon[0] - 4], ["ANONYMISIEREN", anonOn, E.anon[1]], ["PRÜFEN", false, null], ["MONTIEREN", false, null]]);
+    for (const [label, on, fixed] of tools) {
+      const w = fixed ?? hud().measure(t(label)) + 8, r = [bx, E.tools, w, 10], hot = on && inRect(p.x, p.y, r), dim = !on;
       chamfer(ctx, bx, E.tools, w, 10, 2, hot ? C.cyanDark : on ? C.cyanDeep : C.steel1, dim ? C.steel3 : C.cyan, dim ? C.steel4 : C.cyanPale);
       small(ctx, t(label), bx + 4, E.tools + 3, dim ? C.steel4 : C.cyanPale);
       bx += w + 4;

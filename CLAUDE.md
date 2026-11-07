@@ -73,6 +73,7 @@ code comments English.
 | `game/rooms/<id>.js` | rooms: `cams.js` (cam03, cam04: watched rooms with the phosphor post-effects), `<id>.layout.js` (generated) |
 | `game/prolog.js` | the prologue act (steps 0–11), its cache and ledger entries, game time |
 | `game/stadt.js`, `game/regenleserin.js` | Chapter 1's city: the way on to the roof, the Rain Reader and her talk, the newspaper war, Frau Imai, the white carriers (each a thread of its own) |
+| `game/vesper.js` | Vesper, the buyer for NINTH LIVE: from Thursday he buys raw clips in the chat, the viewers come into the Kassenbuch overnight; anonymising in the clip editor (only while his thread is open); a thread of its own (`off_vesper`) |
 | `game/lucky_static.js` | LUCKY STATIC from inside: Mei behind her counter, the slate with the tabs, Halcyon's news on the TV, the two regulars; flavour by the day, no flag |
 | `game/auftrag_varga.js` | Chapter 1's job A: Varga wants Kessler found, the hood at the machine in cam03, Sable's booth, the Morpheus (cam15), K1a; a thread of its own (`off_varga`) |
 | `game/evenings.js`, `game/kapitel1.js`, `game/kapitel1_ende.js` | what every chapter's evenings share (the bed, the evening's card); Chapter 1: its act on game days 2 to 4, WREN, the rent, Friday's clock (so far the frame, with `[MOCK]` stand-ins; begins with `?act=kapitel1`, the prologue doesn't go on into it yet); its end in cam31, on blocks |

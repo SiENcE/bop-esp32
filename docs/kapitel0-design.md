@@ -177,7 +177,7 @@ darin. Was Juno damit tun kann, wächst über das Spiel:
 | Werkzeug | Was es tut | Folge | ab |
 |---|---|---|---|
 | **Schneiden** | einen Moment allein behalten | der Clip erzählt etwas anderes (Entscheidung P1) | Prolog |
-| **Anonymisieren** | Gesichter einzelner Personen verpixeln | der Clip ist weniger wert (manche Käufer nehmen ihn gar nicht: Vesper, Story §9), aber die Gefilmten sind geschützt; der Eintrag im Kassenbuch sagt „anonymisiert" | Kap. 1 |
+| **Anonymisieren** | Gesichter einzelner Personen verpixeln | der Clip ist weniger wert (manche Käufer nehmen ihn gar nicht: Vesper, Story §9), aber die Gefilmten sind geschützt; der Eintrag im Kassenbuch sagt „anonymisiert" | Kap. 1 (gebaut: ein Klick verpixelt das ganze Bild und alle Namen in Junos Kopie, für immer; in Kapitel 1 kauft niemand anonymisierte Clips, `kapitel1-design` §7) |
 | **Prüfen** | einen fremden Clip neben einen eigenen oder den Puffer legen und Schnitte finden (Zeitstempel, Regen, Licht, fehlende Dinge) | entlarvt Fälschungen; ein Rätsel am Schreibtisch | Kap. 2 (die Fälschung aus CAM 31) |
 | **Montieren** | Momente aus zwei Clips zu einem zusammensetzen | eine Fälschung, die Juno selbst macht; eine Wahl mit Gewicht, nie nötig für die Hauptgeschichte | Kap. 2 |
 
