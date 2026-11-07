@@ -344,3 +344,5 @@ anim("mock_stamm_b", { w: 16, h: 48, frames: 1, fps: 1, outline: "k", pivot: "bo
   c.rect(5, 1, 7, 8, "h"); c.rect(7, 0, 3, 2, "h"); c.rect(3, 9, 11, 21, "b"); c.rect(2, 9, 13, 7, "q"); c.rect(5, 15, 7, 2, "q")
   c.rect(3, 30, 4, 12, "a"); c.rect(10, 30, 4, 12, "a")
 })
+// Bao's broth to go: a white bowl with a lid and a twist of steam
+anim("inv_suppe", { w: 18, h: 13, frames: 1, fps: 1, outline: "k" }, (c) => { c.rect(3, 6, 12, 6, "h"); c.rect(2, 5, 14, 2, "g"); c.rect(7, 3, 4, 2, "g"); c.px(6, 1, "h"); c.px(7, 0, "h"); c.px(11, 1, "h"); c.rect(5, 8, 8, 1, "f") })

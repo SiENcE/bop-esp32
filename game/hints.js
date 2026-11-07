@@ -78,7 +78,12 @@ Cutaway.hints([
     text: ["Der Kühlschrank ist leer. Ich hab es gehört.", "Bao hat immer was.", "Geh durch die Tür."] },
   { if: ["visited:kessel_lobby", "!rent_notice"], about: ["mailboxes", "stairs", "door"],
     text: ["Aus deinem Briefkasten guckt was. Ich seh es von hier. Mit deinen Augen.", "Die Briefkästen sind links an der Wand.", "Schau in deinen Briefkasten."] },
-  { if: ["rent_notice", "visited:kowalski", "!ate_bao"], about: ["bao", "cart", "kessel_door"],
+  // the prologue's last steps: home with Bao's broth, eat it, sleep (and on into Chapter 1)
+  { if: ["day=1", "has:suppe"], about: ["kessel_door", "stairs", "door_juno"],
+    text: ["Deine Suppe wird kalt. Ich weiß nicht, wie das ist. Es klingt schlimm.", "Oben ist deine Wohnung. Haustür, Treppe, deine Tür.", "Geh nach Hause."] },
+  { if: ["day=1", "soup_eaten"], about: ["bed"],
+    text: ["Du gähnst. Ich hab's gesehen.", "Dein Bett steht in der Wohnung, an der Wand.", "Geh schlafen."] },
+  { if: ["rent_notice", "visited:kowalski", "!bao_soup"], about: ["bao", "cart", "kessel_door"],
     text: ["Riechst du das? Ich nicht. Ich hab keine Nase. Aber du.", "Bao steht hinter dem Wagen mit dem Schirm.", "Sprich mit Bao."] },
   { if: "rent_notice", about: ["door", "stairs"],
     text: ["Bao ist draußen. Draußen ist hinter der Haustür.", "Die Haustür ist links, die aus Glas.", "Geh durch die Haustür raus."] },

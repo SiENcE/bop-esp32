@@ -12,8 +12,9 @@ out=$(node lib/cutaway/tools/validate.mjs index.html 2>&1 | tail -1); line valid
 # the prologue's way with the roof shut (off_roof, as in Chapter 1): open, the roof multiplies its states beyond what the solver can walk
 out=$(node tools/solve-act.mjs prolog --full --set off_roof 2>&1)
 s=$(echo "$out" | grep -E "states in|soft-lock|SOFT|HINTS|^hints|UNSOLV" | tr '\n' ' '); line "prologue solve" "$s"; need "prologue solve" "$s" "no soft-locks"; need "prologue solve" "$s" "every state on the way"
-# the prologue goes on into Chapter 1: alone (--act) it ends where it would go on
-out=$(node lib/cutaway/tools/play.mjs index.html --act prolog 2>&1 | tail -1); line "prologue clicks" "$out"; need "prologue clicks" "$out" "all passed"
+# the prologue goes on into Chapter 1: alone (--act) it ends where it would go on; its way is the solver's (the roof open, play.mjs
+# alone would search past its limit)
+out=$(node lib/cutaway/tools/play.mjs index.html --act prolog --path tools/paths/prolog.json 2>&1 | tail -1); line "prologue clicks" "$out"; need "prologue clicks" "$out" "all passed"
 out=$(node lib/cutaway/tools/play.mjs index.html --act prolog --path tools/paths/prolog_dach.json 2>&1 | tail -1); line "clicks: prolog_dach" "$out"; need "clicks: prolog_dach" "$out" "all passed"
 # the whole game as it is played: from the title's new game through the prologue into Chapter 1 and to its end
 out=$(node lib/cutaway/tools/play.mjs index.html --path tools/paths/spiel.json 2>&1 | tail -1); line "clicks: spiel" "$out"; need "clicks: spiel" "$out" "all passed"
@@ -26,7 +27,7 @@ done
 for p in tools/paths/kapitel1_*.json; do
   n=$(basename "$p" .json); out=$(node lib/cutaway/tools/play.mjs index.html --act kapitel1 --path "$p" 2>&1 | tail -1); line "clicks: $n" "$out"; need "clicks: $n" "$out" "all passed"
 done
-out=$(node lib/cutaway/tools/play.mjs index.html --act prolog --touch 2>&1 | tail -1); line "prologue taps" "$out"; need "prologue taps" "$out" "all passed"
+out=$(node lib/cutaway/tools/play.mjs index.html --act prolog --touch --path tools/paths/prolog.json 2>&1 | tail -1); line "prologue taps" "$out"; need "prologue taps" "$out" "all passed"
 out=$(node lib/cutaway/tools/play.mjs index.html --act kapitel1 --touch --path tools/paths/kapitel1_main.json 2>&1 | tail -1); line "taps: kapitel1_main" "$out"; need "taps: kapitel1_main" "$out" "all passed"
 out=$(node tools/check-hover.mjs 2>&1 | tail -1); line "the pointer turns hot" "$out"; need "the pointer turns hot" "$out" "all passed"
 [ "$failed" = 0 ] && echo "ALL PASSED" || { echo "FAILED"; exit 1; }

@@ -24,21 +24,23 @@
     { wait: 400 }, "Das war nicht auf dem Schirm. Das war in meinem Auge.",
     { wait: 500 }, { evi: "besorgt" }, { say: "evi", text: "Das war nicht ich. Ehrlich." },
     { wait: 800 }, { camera: "follow" },
-    { fade: "out", ms: 900 }, { act: "next" },                 // on into Chapter 1, which shows its own card (game/kapitel1.js)
+    // the night isn't over yet: Juno takes the soup home, eats it there and goes to bed, and sleeping goes on into Chapter 1 (game/prolog.js)
+    { evi: "muede" }, { say: "evi", text: "Es wird langsam spät, Juno. Und deine Suppe wird kalt." }, "Ich geh ja schon."
   ];
   // Step 16 (kapitel0-design §6.2): "Wie immer? Ich schreib's an." With money Juno may pay cash (bao_paid);
-  // Bao is glad and writes it down all the same. Then she eats under his umbrella (ate_bao), and step 17 follows.
+  // Bao is glad and writes it down all the same. She takes the broth home (bao_soup, the item suppe), and step 17 follows.
   const EAT = [
     { say: "bao", text: "Kommt sofort." }, { wait: 600 },
     { say: "bao", text: "Mein Alter sagt, ich salz zu viel. Lou isst seit vierzig Jahren hier." },
     "Und hat er recht?",
     { say: "bao", text: "Er hat nie recht. Darum ist er mein Alter." },
-    "Heiß. Salzig. Genau richtig.", { set: "ate_bao" },
+    "Zum Mitnehmen heute, Bao. Ich ess oben.", { say: "bao", text: "Oben! Da wird sie kalt." },
+    { say: "bao", text: "Deckel drauf. Die Schale bringst du mir morgen." }, { give: "suppe" }, { set: "bao_soup" },
   ];
-  // talking to Bao (or using his cart): his dialogue, and once Juno has eaten, the moment (a script of the
+  // talking to Bao (or using his cart): his dialogue, and once Juno has her broth, the moment (a script of the
   // street's own, so it may play the screen's prop)
-  const BAO = [{ if: "!ate_bao", then: [{ dialog: "bao" }, { if: "ate_bao", then: JUNO }],
-    else: [{ say: "bao", text: "Noch eine Schale? Morgen. Morgen hast du wieder Hunger." }] }];
+  const BAO = [{ if: "!bao_soup", then: [{ dialog: "bao" }, { if: "bao_soup", then: JUNO }],
+    else: [{ say: "bao", text: "Ab nach oben mit dir. Die Brühe wird kalt." }] }];
   const LOOK = {
     background: "kowalski_bg", size: /** @type {[number, number]} */ ([416, 180]),
     // the props, and over the ad screen the prologue's moment (hidden until it comes: step 17)

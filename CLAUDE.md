@@ -135,7 +135,7 @@ After every change, all of these:
 ```sh
 node lib/cutaway/tools/validate.mjs index.html        # 0 errors (warnings are known: flags set but not yet tested)
 node tools/solve-act.mjs prolog --full --set off_roof  # the prologue's way, the roof shut: "no soft-locks", every state has a hint (open, the roof goes past the solver's limit)
-node lib/cutaway/tools/play.mjs index.html --act prolog   # the prologue alone with real clicks (it ends where it would go on): "all passed"
+node lib/cutaway/tools/play.mjs index.html --act prolog --path tools/paths/prolog.json   # the prologue alone with real clicks (it ends where it would go on): "all passed"
 node lib/cutaway/tools/play.mjs index.html --act prolog --path tools/paths/prolog_dach.json   # the prologue with the roof: "all passed"
 node lib/cutaway/tools/play.mjs index.html --path tools/paths/spiel.json   # the whole game from the title, the prologue into Chapter 1 and to its end: "all passed"
 node tools/solve-act.mjs kapitel1 --full --set off_roof,off_zeitung,off_imai,off_traeger,off_varga   # Chapter 1's main thread: "no soft-locks", every state has a hint

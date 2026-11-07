@@ -179,6 +179,13 @@ Object.assign(Halcyon.replies, {
 // ---- the flat (art/rooms/flat.px.js; geometry: docs/rooms/flat_layout.md). Hotspots in this order: the
 // last match wins, so the big shapes come first
 const AF = Halcyon.at.flat;
+// Bao's broth to go (step 16): Juno eats it at home, and then the bed takes her into Chapter 1
+Cutaway.item("suppe", { name: "Baos Brühe", icon: "inv_suppe", look: "Brühe zum Mitnehmen, Deckel drauf. Noch warm." });
+const EAT_HOME = [{ walk: AF.deck }, { face: "ne" }, "Baos Brühe. Noch warm. Fast.", "...", "Salzig. Genau richtig.", { remove: "suppe" }, { set: "soup_eaten" },
+  { evi: "froh" }, { say: "evi", text: "Du hast doch was mitgebracht. Eins Abendessen!" }, "Und jetzt ins Bett."];
+const PROLOGUE_SLEEP = ["Genug für heute.", { say: "evi", text: "Gute Nacht, Juno." }, { fade: "out", ms: 900 }, { act: "next" }];
+// the evening's card for Chapter 1's first evening, once, after the chapter's own card (a view: it costs the solver nothing)
+Cutaway.state.view("evening_shown");
 Cutaway.room("flat", {
   name: "Junos Wohnung", background: "flat_bg",
   ambience: ["rain_glass", "city_far", "neon_buzz", "fridge_hum"], music: { theme: "juno", intensity: 0.4 },
@@ -188,7 +195,8 @@ Cutaway.room("flat", {
   hotspots: {
     bed: { name: "Bett", poly: AF.bedPoly, walkTo: AF.bed, face: "nw",
       look: "Eine Matratze auf einer Palette. Schlafen kann ich später. Oder nie.",
-      use: [{ if: "day>1", then: Halcyon.sleep, else: ["Schlafen kann ich später. Oder nie."] }] },
+      // the prologue's night ends when Juno has eaten and goes to bed: sleeping goes on into Chapter 1, with its card and then the new evening's
+      use: [{ if: "day>1", then: Halcyon.sleep, else: [{ if: "soup_eaten", then: PROLOGUE_SLEEP, else: ["Schlafen kann ich später. Oder nie."] }] }] },
     fridge: { name: "Kühlschrank", poly: AF.fridgePoly, walkTo: AF.fridge, face: "ne",
       look: "Der Kühlschrank. Er brummt, als hätte er was zu sagen.", use: [{ set: "fridge_empty" }, "Licht. Sonst nichts."] },
     deck: { name: "Deck", poly: AF.deckPoly, walkTo: AF.deck, face: "ne",
@@ -211,6 +219,8 @@ Cutaway.room("flat", {
       look: ["Ein Karton von damals.", "Mein Halcyon-Ausweis. CIVIC MONITOR, J. REYES. UNGÜLTIG.", "Und der Kaktus. Vertrocknet. Wie alles aus der Zeit."] },
   },
   enter: [{ unset: "deck_app" },
+    { if: ["day=1", "has:suppe"], then: EAT_HOME },
+    { if: ["day=2", "evening_shown<2"], then: [{ set: "evening_shown", value: 2 }, { evening_card: true }] },
     { if: "day=1", then: [
       { if: "p1", then: [{ once: [{ say: "evi", text: "Bringst du mir was mit?" }, "Du isst nicht.", { say: "evi", text: "Ich weiß. Bringst du mir was mit?" }] }] },
       { once: ["Halb zehn. Frau Kesslers Mann hat um zehn Schichtende.", "Erst mal ans Deck."] }],
