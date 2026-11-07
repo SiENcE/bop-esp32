@@ -133,7 +133,7 @@ viel, später was daraus wurde. Es urteilt nie.
 - **Sinker** sagen die Leute, **Ruhe-Erschöpfung** sagt Halcyon. Wer das zweite sagt, zitiert es meist.
 - **Sable** bekommt im Deutschen keine Pronomen und keine gegenderten Rollenwörter (Bibel §10). Die Sätze werden darum herum gebaut.
 - **Keine Spielwörter in Junos Mund:** kein „Linksklick“ oder „Rechtsklick“, denn der Text muss auch für den Finger und später den Controller stimmen.
-- **Den Takt** „lang, kurz, kurz, lang“ sagt nur EVI im Klartext, als letzte Stufe ihres Hinweises (Bibel §10b).
+- **Den Takt** „lang, kurz, kurz, lang“ sagen im Klartext nur Motte (wenn Juno fragt, wie er bei seiner Mutter mitzählt) und EVI als letzte Stufe ihres Hinweises (Bibel §10c, geändert 2026-11-07). Juno selbst sagt ihn nie.
 - Pausen und Abbrüche schreiben wir `...`, Anführungszeichen `„…“`.
 - Eine Pointe, die nur auf Deutsch funktioniert, braucht schon beim Schreiben eine Idee für die englische Fassung (H10).
 

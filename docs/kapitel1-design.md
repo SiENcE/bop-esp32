@@ -198,6 +198,8 @@ Kap. 2: Nach dem Senden weiß die Quiet sofort, wer Juno ist; nach der Weigerung
 
 **Gebaut** (`game/kapitel1_leben.js`, auf Blöcken): **Teos Besuch** am Mittwoch um 18:30. Man kann ihn nicht verpassen: Es klopft, wo Juno auch gerade wartet, sie macht auf, und danach ist sie wieder, wo sie war (eine Szene ohne Wahl, kein Flag außer dem Moment). Die Regenleserin liest daraus, ob Juno von Teos Lull weiß. Die Zeilen sind ein Vorschlag, zu prüfen beim Durchspielen; der Dialog über die Halcyon-Zeit ist auf eine Zeile verkürzt.
 
+**Mottes Lektionen**, ebenda: Wenn Juno im Prolog freundlich war, fragt Motte jeden Abend „Zeigst du mir heute was?“, und Juno kann eine Lektion geben oder „Heute nicht.“ sagen. Eine pro Abend (`moth_today`, über Nacht vergessen), drei insgesamt (`moth_lesson`): was eine Kamera ist, wie man einen Code findet, warum man den eigenen Block nicht glasst. In der zweiten baut er aus seinem Tideboy einen Abzweiger, wenn Juno noch keinen hat (B5); nach der dritten ist er `moth_student`. Wer einen Abend auslässt, schafft nur zwei. Ein eigener Faden (`off_motte`); mit Auftrag B teilt er nur den Abzweiger (`got_tap`), der B einen Kauf spart. Ein Kapitel 1 ohne Prolog beginnt mit der freundlichen Antwort. Die zweite Lektion gibt noch nicht den Code von `cam24` (C4): Den gibt es im Mock am Freitag von selbst.
+
 ### Die Stadt: rausgehen (entschieden 2026-11-05)
 
 Die Abende sollen nach Leben in der Stadt schmecken, nicht nach Warten aufs Bett. Das **Bett** geht erst ab 01:00 auf („Schlafen? Ich schlaf nicht vor eins. Nie.“).
@@ -275,7 +277,7 @@ Ausweis, Notschlüssel und der Weg aufs Dach sind schon im Prolog offen (entschi
 | Der Spielstand ist weg: „Man macht immer ein Backup.“ „Wovon?“ „Von allem, was du nicht verlieren willst.“ | Motte rettet EVI (Kap. 4, „Du hast gesagt, man macht immer ein Backup.“) |
 | „Bis in den Fünften war ich schon“, „Die sehen eine Mütze.“ | Motte als Verbündeter im Tower (Kap. 5) |
 | Die Mütze, „damit man mich im Glass findet“; „Auch nicht, wenn mal was ist?“ „Dann schon.“ | die Razzia (Kap. 3) |
-| Das Licht hinterm Ohr seiner Mutter: „Komisch. Immer gleich. Ich zähl das manchmal mit.“ | der Takt für `cam31` (C7); im Klartext sagt ihn nur EVI, als letzte Stufe ihres Hinweises (§12) |
+| Das Licht hinterm Ohr seiner Mutter: „Komisch. Immer gleich. Ich zähl das manchmal mit.“ | der Takt für `cam31` (C7); fragt Juno, wie er zählt, sagt er ihn: „Lang, kurz, kurz, lang. Dann Pause.“ (story §10d); sonst EVI als letzte Stufe ihres Hinweises (§12) |
 | Sump Runner, das Rohr hört unter der Krone auf | Ratz' Kolonie, die Rohre (Kap. 4) |
 | Frau Haldane sagt nachts nicht hallo (Mittwoch) | der Zeitungskrieg |
 | Am Donnerstag die Rollos gegenüber, am Freitag keine Streife auf der Kowalski | die weißen Träger; „Freitag fährt keiner die Kowalski“ |
@@ -390,7 +392,7 @@ Die Hinweise spricht EVI (Prolog-Design §2.2, §6.5). Die Tabelle nennt die sch
 | B6 | „Die Drohne passt auf." | „Ihr Licht wandert. Warte." | „Benutze den Abzweiger, wenn der Lichtkegel weg ist." |
 | C6 | „Sie ist nicht nach Hause gegangen. Da ist doch ihr Bett.“ | „Der Sumpf-Abgang hat eine Kamera. Dein alter Zugang geht da.“ | „Öffne CAM 30. Um Viertel nach acht ist sie da.“ (Verpasst: „Öffne CAM 30 und drück PUFFER.“) |
 | Der Stick (optional) | „Ines hat was in Trockner 6 gelegt. Das ist gar nicht weit.“ | „Durch die Gasse zum Waschsalon. Oder du lässt es.“ | „Warte bis eins und geh ins Bett. Dann ist der nächste Abend.“ |
-| C7 | „CAM 31 ist älter als Halcyon. Sie will einen Takt, keinen Code." | „Den Takt hat jeder, der mit Lull schläft. Hinter dem Ohr. Frau Haldane schläft im Flur." | „Lang, kurz, kurz, lang. Klick CAM 31 an und gib das ein." |
+| C7 | „CAM 31 ist älter als Halcyon. Sie will einen Takt, keinen Code." | „Den Takt hat jeder, der mit Lull schläft. Motte zählt ihn bei seiner Mutter mit. Frag ihn." | „Lang, kurz, kurz, lang. Klick CAM 31 an und gib das ein." |
 | Die Drohung in `cam31` | „Ich hab nichts. Keine Tür, kein Licht, keine Nummer." | „Ich such weiter. Ich find nichts, was geht." | „Du kannst nichts tun, Juno. Ich auch nicht." |
 | Danach, in der Wohnung | „Juno?" | „Du sitzt nur da." | „Sag was. Bitte." |
 | Miete | „900 Chits bis Freitag." | „Jeder Auftrag bringt Geld. Oder jemand hilft dir." | „Du musst nichts verkaufen. Teo zahlt, wenn es nicht reicht." |

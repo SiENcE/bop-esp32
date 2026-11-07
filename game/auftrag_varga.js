@@ -112,6 +112,6 @@ Object.assign(Halcyon.ledger, {
 
 // sold: Varga's people come the night after (the next evening's capsule stands open)
 const TAKEN = { if: "k1a=sold", then: [{ set: "kessler_gone" }] };
-Halcyon.nights[3].passes = [TAKEN];
+(Halcyon.nights[3].passes ??= []).push(TAKEN);
 Halcyon.nights[4].passes.unshift(TAKEN);
 })();

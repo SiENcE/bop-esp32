@@ -39,7 +39,7 @@ Cutaway.hints([
   { if: ["day>1", "day<4", "!know_meeting"], about: ["menu", "cam_cam23", "wait", "bed", "app_glas", ...HOME],
     text: ["Folg ihr. Sie isst gegenüber der Klinik.", "Die Speisekarte im Fenster hat das WLAN. Dann der Waschsalon, der hat einen Werkscode.", "Zoom auf die Speisekarte in CAM 21, dann klick in GLASS CAM 23 an."] },
   { if: ["day>1", "!link_cam31"], about: ["cam_cam31", "app_glas", ...HOME],
-    text: ["CAM 31 ist älter als Halcyon. Sie will einen Takt, keinen Code.", "Den Takt hat jeder, der mit Lull schläft. Hinter dem Ohr. Frau Haldane schläft im Flur.", "Lang, kurz, kurz, lang. Klick CAM 31 an und gib das ein."] },
+    text: ["CAM 31 ist älter als Halcyon. Sie will einen Takt, keinen Code.", "Den Takt hat jeder, der mit Lull schläft. Motte zählt ihn bei seiner Mutter mit. Frag ihn.", "Lang, kurz, kurz, lang. Klick CAM 31 an und gib das ein."] },
   // the stick is nothing the chapter needs: said here, before going to bed, for whoever hasn't been there
   { if: ["day=3", "moment:ines_drop", "!stick_ines", "!off_main"], about: ["bed", "wait", "close", "back", "door_juno", "stairs", "kessel_door", "dryer6", "laundromat", "alley", "door"],
     text: ["Ines hat was in Trockner 6 gelegt. Das ist gar nicht weit.", "Durch die Gasse zum Waschsalon. Oder du lässt es.", "Warte bis eins und geh ins Bett. Dann ist der nächste Abend."] },

@@ -228,7 +228,7 @@ Cutaway.act("kapitel1", {
     { time: "18:00", day: 2 }, { give: "evi_bag", to: "juno" },
     { if: "got_ausweis", then: [{ give: "ausweis" }] }, { if: "got_haken", then: [{ give: "haken" }] },     // what she took in the prologue
     { place: "juno", room: "flat", at: AF.start, face: "ne" },
-    { if: "!p1", then: [{ set: "p1", value: "full" }, { set: "chits", value: 0 }, { ledger: "kessler", value: "full" }, { cache: "clip_kessler_ring" }, { cache: "note_kessler_debt" }] },
+    { if: "!p1", then: [{ set: "moth_kind" }, { set: "p1", value: "full" }, { set: "chits", value: 0 }, { ledger: "kessler", value: "full" }, { cache: "clip_kessler_ring" }, { cache: "note_kessler_debt" }] },
     { set: "code_cam03" }, { set: "link_cam03" }, { cache: "note_kessler_photo" }, { cache: "note_obs_handbook" },
     { set: "code_cam21" }, { set: "link_cam21" }, { set: "code_cam30" }, { set: "link_cam30" }, { set: "code_cam18" }, { set: "link_cam18" }, { set: "code_cam07" }, { set: "link_cam07" },   // Juno's old access
     { set: "know_ines" }, { set: "saw_varga" }, { set: "read_kessler" },
