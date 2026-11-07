@@ -611,7 +611,7 @@ function osd(c, f) {
   }
   const sh = { shadow: "0" }
   c.text(8, 7, "CAM 07 // LOWER NINTH / KOWALSKI ST", "9", sh)
-  c.text(8, 14, "NAGI·WA CIVIC SURVEILLANCE  ", "7", sh)
+  c.text(8, 14, "NAGI WA CIVIC SURVEILLANCE  ", "7", sh); c.px(25, 16, "7")      // pxl's 3x5 letters have no middle dot: set by hand
   c.text(8, 21, "LINK: J.REYES IMPLANT  OVERRIDE", "c", sh)
   c.text(312, 7, "2091-11-03 23:51:07", "9", { align: "r", shadow: "0" })
   if (f < FRAMES / 2) { c.circ(290, 16, 2, "9"); c.px(289, 15, "8") }
@@ -672,7 +672,7 @@ scene("mock_e_cctv", { w: W, h: H, bg: "0" },
     const [ax, ay] = at([SCREEN[0] + 1.6, SCREEN[2] + 0.42, FZ - 0.26])
     if (ih(c.frame, 0, 41) > 0.15) c.text(ax, ay - 2, "SLEEP BETTER", "2", { align: "c" })
     const [hx, hy] = at([SCREEN[0] + 1.6, SCREEN[3] - 0.32, FZ - 0.26])
-    c.text(hx, hy - 2, "NAGI·WA", "2", { align: "c" })
+    c.text(hx, hy - 2, "NAGI WA", "2", { align: "c" }); c.px(hx + 4, hy, "2")      // the middle dot by hand
   },
 glow("9", { r: 5, ramp: 2, keep: "9", where: SIGN_BOX }),
   (c) => CLEAN || overlay(c, c.frame),

@@ -170,7 +170,8 @@ sprite("_wallR", { w: 170, h: HR + 86 }, (c) => {
   // the advert, left half: NAGI·WA, SLEEP BETTER, a serene face with closed eyes and a smile
   F.rect(SCR.x0, SCR.e0, 50, 44, "C")
   for (let x = SCR.x0; x < SCR.x0 + 50; x++) for (let e = SCR.e0; e < SCR.e0 + 14; e++) if (bay(x, e) < 1 - (e - SCR.e0) / 14) F.px(x, e, "c")
-  F.text(49, 58, "NAGI·WA", "V", { font: "5x7" })
+  // (pxl's 5x7 letters have no middle dot: it is set by hand between NAGI and WA)
+  F.text(49, 58, "NAGI", "V", { font: "5x7" }); F.rect(73, 61, 1, 1, "V"); F.text(76, 58, "WA", "V", { font: "5x7" })
   F.rect(46, 15, 48, 6, "c"); F.text(47, 20, "SLEEP BETTER", "V")                       // the strapline
   F.ell(75, 37, 14, 13, "k"); F.ell(75, 37, 13, 12, "c")                                   // hair
   F.ell(75, 33, 11, 12, "k"); F.ell(75, 33, 10, 11, "V")                                   // face

@@ -5,20 +5,19 @@ Status (2026-11-07): **H0, H1, H1c, H2, H2c and H2b done; H3 under way; H4 (Chap
 floor's landing `kessel_14` (Frau Haldane asleep through her open door, the note war, Motte on his bench
 with his first dialogue, the look down the stairwell: the first top-down view, `look_shaft`) and the lobby
 `kessel_lobby` (the rent notice: `rent_notice`) and out into Kowalski Street, painted and baked from its map
-(`art/kit/kowalski.kit.px.js`, 416 px wide, it scrolls; `docs/rooms/kowalski_x3.png`, `kowalski_right_x3.png`):
+(`art/kit/kowalski.kit.px.js`, 416 px wide, it scrolls; `docs/rooms/kowalski_x3.png`):
 LUCKY STATIC, the half-broken ad screen, the noodle machine with its tired face, Bao's cart and umbrella (see-through
 where it hides someone: the engine's `seeThrough`), the alley shut; the cart ends the test section. Bao is painted
-(head A, `art/characters/bao.px.js`, `docs/characters/bao_game_x3.png`) behind his cart with step 16 ("Wie immer? Ich
+(head A, `art/characters/bao.px.js`) behind his cart with step 16 ("Wie immer? Ich
 schreib's an.", paying cash with `bao_paid`, eating: `ate_bao`); the menu screen shows the street whole as a still. Steps 17-18 follow it: the broken screen
 stutters, the eye in its static turns to Juno, JUNO. over the whole screen with the stinger "witness", Bao saw
 nothing, EVI: "Das war nicht ich. Ehrlich.", the card for Chapter 1 (`docs/rooms/kowalski_juno_x3.png`). **The
 prologue plays from the flat to its end.** The intro "Die letzte Schicht" (kapitel0-design §5) is decided as a storyboard in blocks
-(`art/test/intro_blocks.px.js`, `docs/rooms/intro_blocks.png`, the opening `intro_blocks_opening_x2.png`): one slow
+(`art/test/intro_blocks.px.js`): one slow
 float over the lit sea to the tower and in through its green window, the hall, the ride down without words; it plays
 on the first start only (and from the menu) and ends on the title screen with the logo, which comes on every start.
 The deck keeps its CRT and mouse. Painting it: the opening float (A1, A2), the tower (C, `game/intro_tower.js`) the observation hall (shot 1, `art/rooms/hall.map.js`, `game/intro_hall.js`) Juno at her desk (shot 2, `art/intro/desk.px.js`, `game/intro_desk.js`), the announcement (3) and the screens going out (4) play; still to come: her words on black (T), the ride down (D), today (6) and the logo (7) (`game/intro.js` draws it in
-perspective, the painted parts in `art/intro/float.px.js` -> `assets/intro.js`; `docs/rooms/intro_float_a1_x3.png`,
-`intro_float_a2_x3.png`), as the sequence "intro": on the first start before the splash, and from the menu ("Intro ansehen").
+perspective, the painted parts in `art/intro/float.px.js` -> `assets/intro.js`; `docs/rooms/intro_float_a2_x3.png`), as the sequence "intro": on the first start before the splash, and from the menu ("Intro ansehen").
 The engine's version is in `lib/cutaway/VERSION.txt`.
 
 What was added on 2026-11-04 (in order):

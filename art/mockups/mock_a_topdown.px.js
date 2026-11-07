@@ -183,7 +183,7 @@ function northBlock(c) {
 function screen(c) {
   const [sx, sy, sw, sh] = SCR
   for (let y = 0; y < sh; y++) for (let x = 0; x < sw; x++) c.px(sx + x, sy + y, screenKey(x, y, c.frame))
-  c.text(sx + 1, sy + 16, "NAGI·WA", "w")
+  c.text(sx + 1, sy + 16, "NAGI WA", "w"); c.px(sx + 18, sy + 18, "w")      // the middle dot by hand
   c.hline(sx + 1, sy + 21, 14, "u")                       // the slogan, too small to read: SLEEP BETTER
   c.hline(sx + 17, sy + 21, 10, "u")
 }

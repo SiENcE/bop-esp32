@@ -24,7 +24,7 @@ scene("nagiwa_logo", { w: 240, h: 200, bg: "k" }, (c) => {
   KANJI_AT(c, 165, 58, "c"); TXT.draw(c, 179, 76, "SLEEP BETTER", "h", { font: "hud", align: "center" })
   c.rect(124, 98, 110, 40, "m"); c.rect(126, 100, 106, 36, "a")
   KANJI_AT(c, 132, 106, "M"); TXT.draw(c, 165, 109, "NAGIWA", "M"); TXT.draw(c, 165, 121, "SLEEP BETTER", "h", { font: "hud" })
-  // as Halcyon's words stood in the game: the corner of a camera's display, the deck's NETZ header
+  // where the old name stood in the game: the corner of a camera's display, the deck's NETZ header
   TXT.draw(c, 6, 150, "NAGIWA CIVIC MONITOR // CAM 03", "g", { font: "hud" })
   TXT.draw(c, 6, 160, "NAGIWA.NET", "c", { font: "hud" })
   TXT.draw(c, 6, 172, "Nagiwa dankt Ihnen für Ihren Dienst.", "c")

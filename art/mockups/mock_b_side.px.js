@@ -418,7 +418,7 @@ function screen(c) {
   for (const ex of [198, 208]) { c.hline(ex, 27, 3, "6"); c.px(ex - 1, 28, "6"); c.px(ex + 3, 28, "6"); c.hline(ex, 30, 3, "9") }
   c.px(203, 32, "S"); c.hline(200, 35, 7, "S"); c.px(199, 34, "S"); c.px(207, 34, "S")
   c.ellipse(204, 49, 20, 5, "v"); c.ellipse(204, 48, 18, 3, "l")                                      // the pillow
-  c.text(166, 44, "NAGI·WA:", "v"); c.text(166, 51, "SLEEP", "v"); c.text(166, 57, "BETTER", "0")
+  c.text(166, 44, "NAGI WA:", "v"); c.px(183, 46, "v"); c.text(166, 51, "SLEEP", "v"); c.text(166, 57, "BETTER", "0")
   // the other half has gone to static: its edge tears row by row, and moves
   for (let y = Y0; y < Y0 + h; y++) {
     const edge = 208 + Math.floor(ihash(y >> 1, f) * 9) - (y > 40 ? 8 : 0)

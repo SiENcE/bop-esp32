@@ -236,8 +236,7 @@ Titelmenü jederzeit wieder abspielbar. Wo der Browser Ton erst nach einem Klick
 Geschwister hinter dem gesprungenen Glas, `art/ui/splash.px.js`), der **bei jedem Spielstart** kommt, mit oder ohne
 Vorspann; danach das Menü.
 
-**Entschieden (2026-11-04, Storyboard als Blöcke: `art/test/intro_blocks.px.js`, `docs/rooms/intro_blocks.png`, der
-Anfang: `docs/rooms/intro_blocks_opening_x2.png`):** Der Anfang hat die Stimmung eines Neo-Noir-Vorspanns, mit eigenen
+**Entschieden (2026-11-04, Storyboard als Blöcke: `art/test/intro_blocks.px.js`):** Der Anfang hat die Stimmung eines Neo-Noir-Vorspanns, mit eigenen
 Bildern: **ein einziger, langsamer Flug**, tief über die Stadt bis zum Turm und durch ein Fenster in die
 Beobachtungshalle. Die Aufzugfahrt (~10 s)
 hat **keinen Text**: die Ringe rasen vorbei, dazu nur eine langsame, melancholische, eindringliche Melodie. **Der Satz über das Implantat steht nicht im Vorspann** (2026-11-04, das Intro erklärt es nirgends): Juno sagt ihn, wenn sie zum ersten Mal jemanden markiert (Kessler in `cam03`, §6). Das Deck

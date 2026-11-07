@@ -588,7 +588,7 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
 
 ## 10c. Entscheidungen (2026-11-06)
 
-Die Blockskizzen für den Mord und die Figuren der Stadt sind freigegeben (`docs/cams/cam31_blocks_x3.png`, `docs/characters/feed_ch1_blocks_x4.png`, `docs/characters/stadt_people_blocks_x4.png`, `stadt_people_blocks_room_x3.png`):
+Die Blockskizzen für den Mord und die Figuren der Stadt sind freigegeben (`docs/cams/cam31_blocks_x3.png`, `docs/characters/feed_ch1_blocks_x4.png`, `docs/characters/stadt_people_blocks_x4.png`):
 
 - **Ashes Mantel** ist im Feed eine Stufe dunkler als Ines' Kittel (Wert 8 und 9), sonst wirkt er graugrün statt weiß. Die Maske brennt ohne dunklen Rand über den Kopf hinaus.
 - **`cam31` ist gröber, weil das Bild in halber Auflösung gebacken ist**, nicht nur wegen des Korns; die Figuren bleiben 1x.
