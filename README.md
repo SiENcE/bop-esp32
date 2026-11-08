@@ -33,8 +33,8 @@ später folgen.
 | Teil | Stand |
 |---|---|
 | Intro „Die letzte Schicht“ | fertig |
-| Prolog „Nachtschicht“ | spielbar bis zum Ende, geht noch nicht in Kapitel 1 über |
-| Kapitel 1 „Glass“ | spielbar, aber großteils Platzhalter-Blöcke und noch nicht vollständig |
+| Prolog „Nachtschicht“ | spielbar bis zum Ende, geht in Kapitel 1 über |
+| Kapitel 1 „Glass“ | von Anfang bis Ende spielbar, aber großteils noch Platzhalter-Blöcke; das Ende in cam31 ist gemalt |
 | Kapitel 2 bis 6 | nur als Entwurf in der Story-Bibel |
 
 ## Spielen
@@ -47,7 +47,11 @@ auch direkt von der Platte.
 | `index.html` | Titelbild |
 | `index.html?act=prolog` | direkt in den Prolog |
 | `index.html?act=kapitel1` | direkt in Kapitel 1 |
-| `index.html?edit` | der Editor der Engine (auch F10) |
+| `index.html?edit` | der Editor der Engine (auch F10), ohne Speichern in den Spielordner |
+
+Der Editor mit allem, was er kann (speichert direkt ins Spiel, startet Prüfungen und Grafik-Builds), läuft über
+das Studio, einen kleinen Server nur auf dem eigenen Rechner: `node lib/cutaway/tools/studio.mjs` im Spielordner
+öffnet das Spiel mit dem Editor im Browser.
 
 ## Technik
 
@@ -57,11 +61,31 @@ Dialoge sind Daten, sodass die Werkzeuge jedes Kapitel lesen und durchspielen k�
 Sackgassen und prüft, ob jeder Zustand einen Hinweis hat. Für die Werkzeuge braucht man Node.
 
 ```sh
-node lib/cutaway/tools/validate.mjs index.html       # prüft die Spieldaten
-node lib/cutaway/tools/solve.mjs index.html --full   # sucht im Prolog nach Sackgassen
-node lib/cutaway/tools/play.mjs index.html           # spielt den Prolog mit echten Klicks durch
-sh tools/check.sh                                    # alle Prüfungen (etwa zehn Minuten)
+node lib/cutaway/tools/validate.mjs index.html                         # prüft die Spieldaten
+node tools/solve-act.mjs prolog --full --set off_roof                  # sucht im Prolog nach Sackgassen
+node lib/cutaway/tools/play.mjs index.html --path tools/paths/spiel.json   # spielt das ganze Spiel mit echten Klicks durch
+sh tools/check.sh                                                      # alle Prüfungen (etwa zehn Minuten)
 ```
+
+### Die Zusammenhänge ansehen
+
+Der Solver kann beim Durchsuchen mitschreiben, was jeder Zug braucht und was er herbeiführt. Daraus entsteht
+ein Rätsel-Abhängigkeitsgraph: die Schritte als Kästen in der Farbe ihres Raums, die Fakten (Flags,
+Gegenstände, besuchte Räume) dazwischen, der gewonnene Weg nummeriert. Ein Klick auf einen Schritt oder ein
+Fakt zeigt, was davor nötig ist und was danach aufgeht. Dazu kommt das Zustands-Budget: welches Flag die Zahl
+der Zustände wie stark vervielfacht.
+
+```sh
+sh tools/graph.sh prolog     # der Prolog          → build/graph/prolog.js          (etwa 3½ Minuten)
+sh tools/graph.sh main       # Kapitel 1, Hauptfaden → build/graph/kapitel1_main.js (etwa 1¼ Minuten)
+sh tools/graph.sh varga      # ein Nebenfaden allein → build/graph/kapitel1_varga.js
+```
+
+Jeder Lauf gibt am Ende einen Link aus, der den Graphen als eigene Seite öffnet (auch direkt von der Platte).
+Im Editor ist es der Reiter **Connections**: Mit dem Studio stehen dort die Dateien aus `build/graph/` und
+die Knöpfe „graph: prolog“ und „graph: kapitel1 main“, die die Daten neu erzeugen; ohne Studio lädt
+„Load a file …“ eine fertige Datei. Von einem Schritt springt „Open in Things“ zu seinem Hotspot und dem
+Skript, das der Zug ausführt; ein Fakt listet jede Stelle, die es setzt oder abfragt.
 
 Die Grafik entsteht mit pxl aus Quelltexten in `art/`; die fertigen Atlanten liegen in `assets/`, damit
 das Spiel ohne Node läuft. Wer die Grafik neu bauen will, braucht zusätzlich den pxl-Skill, der ein eigenes
