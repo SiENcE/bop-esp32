@@ -49,9 +49,23 @@ auch direkt von der Platte.
 | `index.html?act=kapitel1` | direkt in Kapitel 1 |
 | `index.html?edit` | der Editor der Engine (auch F10), ohne Speichern in den Spielordner |
 
-Der Editor mit allem, was er kann (speichert direkt ins Spiel, startet Prüfungen und Grafik-Builds), läuft über
-das Studio, einen kleinen Server nur auf dem eigenen Rechner: `node lib/cutaway/tools/studio.mjs` im Spielordner
-öffnet das Spiel mit dem Editor im Browser.
+Der Editor mit allem, was er kann (speichert direkt ins Spiel, startet Prüfungen und Grafik-Builds, hat die
+Reiter des Spiels wie **Iso**), läuft über das Studio, einen kleinen Server nur auf dem eigenen Rechner:
+
+```sh
+node lib/cutaway/tools/studio.mjs      # im Spielordner; öffnet das Spiel mit dem Editor im Browser
+```
+
+Oben rechts im Editor zeigt **studio ●** (grün), dass das Studio verbunden ist. Steht dort **studio ○**, fehlt
+die Verbindung, und damit auch der Reiter Iso und das Speichern ins Spiel; der Editor sagt dann links unter den
+Arbeitsbereichen und in der Statuszeile, warum:
+
+- **Als Datei geöffnet** (`file://…/index.html?edit` oder F10): Das Studio starten, wie oben.
+- **Adresse ohne Schlüssel** (`http://127.0.0.1:7400/index.html?edit`): Die Seite muss mit der Adresse geöffnet
+  werden, die das Studio in seiner Konsole ausgibt, `…/index.html?edit&studio=<schlüssel>`; der Schlüssel ist das
+  Passwort der Seite. Kopieren und im Browser öffnen, oder das Studio neu starten.
+- **Altes Studio:** Ein Studio, das vor einer neuen Engine-Version gestartet wurde, mit Strg+C beenden und neu
+  starten.
 
 ## Technik
 
