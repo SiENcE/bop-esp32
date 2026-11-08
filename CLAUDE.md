@@ -41,6 +41,7 @@ code comments English.
 | `docs/rooms/`, `docs/cams/`, `docs/characters/` | review sheets of finished art; the cameras' layout notes (their positions go into `game/places.js`) |
 | `docs/portraits/` | the character index and marketing portraits (`figuren_index_x3.png`, Teo and Juno from both sides `juno_teo_seite_front_x3.png`, `README.md`), from `art/portraits/portraits.px.js`; not in the game |
 | `docs/ideas/` | studies: `iso-tiles.md` (rooms from maps, decided), `chinesisch.md` (a CJK layout test) |
+| `docs/editor-iso.md` | the guide to the editor's Iso tab (German): how to get there, its tools, save, bake, what to know; the Help tab shows it (F1 on the tab) |
 | `docs/NEXT-SESSION.md` | the prompt to start the next session |
 
 ## World words

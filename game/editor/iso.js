@@ -646,6 +646,9 @@
   // the Room tab of a baked room: its shapes come from the bake's layout, so a change there is undone or stays stale
   E.roomNote((id) => (maps.includes(id) ? `Baked from its map (art/rooms/${id}.map.js): the walk area, the props' places and the openings' rects come from game/rooms/${id}.layout.js, which the bake writes. Change them in the Iso tab and bake; shapes saved here (rooms/${id}.geo.js) would stay over every later bake.` : null));
   boot();
+  // its guide in the Help tab (F1 here opens it): docs/editor-iso.md, read through the studio
+  E.studio.read("docs/editor-iso.md").then((md) => E.modules.help?.addBook({ id: "iso", title: "Iso (the game)", file: "docs/editor-iso.md", md }, { iso: "intro" }))
+    .catch(() => { /* no guide: the tab works without it */ });
   E.modules.iso = { open, whereFrom, hit, get map() { return cur?.map; }, get src() { return cur?.src; }, get selected() { return sel; }, select(/** @type {any} */ s) { sel = s; E.refresh(); }, commit, paintCell, setTool(/** @type {string} */ t, /** @type {string} */ k) { tool = t; if (k !== undefined) floorKey = k; E.refresh(); }, get origin() { return origin; }, get originAt() { return originAt; }, boot, value, field, place, removeKey,
     setAdd(/** @type {string} */ k, /** @type {string} */ kit) { addKind = k; if (kit !== undefined) addKit = kit; tool = "add"; E.refresh(); } };
 })();
