@@ -111,8 +111,9 @@ const JS = (() => {
       // Okonkwo's window, his door beside it (wide: the user's, 2026-11-09), the sign over both
       if (box(1.0, 1.22, 0.45, 2.1)) { const s = Math.floor(h * 4); return h < 0.95 ? "P" : (s % 2 === 0 && Math.floor(z * 30) % 2 === 0) ? "P" : "Q" }
       if (box(1.26, 1.7, 0, 2.2)) return box(1.26, 1.29, 0, 2.2) || box(1.67, 1.7, 0, 2.2) || h > 2.14 ? "O" : h < 0.06 ? "P" : "Q"
-      // the door out on to the balcony over the shop, lit
-      if (box(0.97, 1.2, 2.97, 4.55)) return box(0.97, 0.99, 2.97, 4.55) || box(1.18, 1.2, 2.97, 4.55) || h > 4.49 ? "O" : Math.floor(z * 60) % 7 === 0 ? "P" : "Q"
+      // the door out on to the balcony over the shop, lit; no window over it (the user's, 2026-11-09)
+      if (box(0.97, 1.2, 2.97, 4.85)) return box(0.97, 0.99, 2.97, 4.85) || box(1.18, 1.2, 2.97, 4.85) || h > 4.79 ? "O" : Math.floor(z * 60) % 7 === 0 ? "P" : "Q"
+      if (box(0.9, 1.25, 4.85, 99)) return ((h - 2.95) % 1.05) / 1.05 < 0.08 ? "4" : "2"                  // the facade's plain storeys, as round its windows
       if (box(2.45, 3.2, 0, 2.3)) return h > 1.95 ? "n" : Math.floor(z * 8) % 2 ? "M" : "n"
     } else {
       // the passage back to Kowalski Street: an arch in the near wall, the way through it lit by the street's cyan
