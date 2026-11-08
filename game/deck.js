@@ -21,6 +21,10 @@
     magenta: "#ff4fd3", magentaDark: "#a8238a", amber: "#eea040", yellow: "#fff070", yellowDim: "#9a7406", mint: "#8ef5d8",
   };
   const t = Nagiwa.t, S = () => Cutaway.state;
+  /** NETZ's bookmarks (game/netz.js) */
+  const NETZ_TABS = ["START", "NAGI·WA", "BRETT", "ARCHIV", "SUCHE"];
+  /** the NETZ page drawn last: a new one begins at its top */
+  let netzShown = "";
   const hud = () => Cutaway.font.get("hud"), main = () => Cutaway.ui.font();
 
   // ---------------------------------------------------------------- the layout (mockup F)
@@ -39,7 +43,8 @@
     thread: { x: 166 },
     cache: { y: 30, row: 22 },
     buch: { y: 30, row: 12 },
-    radio: { y: 24, row: 15 },                                // RADIO's stations, then AUS, then what the presenter says
+    radio: { y: 24, row: 15 },
+    netz: { tabs: 24, tab: 37, title: 38, rows: 50, row: 13, back: 270, search: [34, 14, 114] },   // NETZ: the bookmarks, a page's title, its rows (a link each), SUCHE's buttons [y, row, column]                                // RADIO's stations, then AUS, then what the presenter says
     clip: { pic: [82, 23, 96, 56], meta: 185, line: [84, 90, 224], tools: 137, anon: [48, 60] },   // the clip editor: picture, who/where, timeline, tools (ANONYMISIEREN: after, wide)
     map: [82, 22, 228, 124],                                  // GLASS's map inside the window
     camBox: 54,                                               // a camera's place on it, as wide as its longest line ("CODE BEKANNT"): keep the cameras this far apart
@@ -68,9 +73,10 @@
    * @type {Record<string, {cam?: string, where?: string, hour?: number, from: number, to: number, thumb?: string, moments: [number, number, string][],
    *   people: [string, number, number][], cut?: {moment: number, gives: string, if?: any, then?: any[]}, anon?: {if?: any, then?: any[]}}>} */
   Nagiwa.clips = {};
-  /** NETZ, Nagi·wa-Net's page (kapitel0-design §2.1): headlines, small news, the Glasser board, ads, drawn in that order, each while its
-   * `if` holds (the chapters fill it; texts German, labels the city's English)
-   * @type {{kind: "head" | "sub" | "ad" | "board" | "live", text?: string, label?: string, by?: string, if?: any}[]} */
+  /** NETZ, Nagi·wa-Net's start page (kapitel0-design §2.1): headlines, small news, the Glasser board, ads, each in its row (`slot`, 0 to 7;
+   * entries of the same evening in rows of their own) while its `if` holds, one that opens a page naming it (`page`, game/netz.js)
+   * (the chapters fill it; texts German, labels the city's English)
+   * @type {{kind: "head" | "sub" | "ad" | "board" | "live", text?: string, label?: string, by?: string, if?: any, slot?: number, page?: string}[]} */
   Nagiwa.netz = [];
   /** what is said when an app opens (EVI reading the news to Juno): by app, a script
    * @type {Record<string, any[]>} */
@@ -139,6 +145,31 @@
       use: [{ set: "deck_app", value: "photo" }, { music: Nagiwa.photo.music }] };
     hs.photo_close = { name: "Zurück", rect: [0, 0, W, H], if: "deck_app=photo", z: 9,
       use: [{ unset: "deck_app" }, { radio_resume: Nagiwa.photo.back }] };
+    // NETZ (game/netz.js): the bookmarks, ZURÜCK, the start page's entries that open a page, a list's rows, SUCHE's terms and what they find;
+    // only views change (netz_page), each link a hotspot in its fixed row
+    const N = D.netz, open = (/** @type {string | null} */ page, /** @type {string} */ from = "") => [page ? { set: "netz_page", value: page } : { unset: "netz_page" },
+      from ? { set: "netz_from", value: from } : { unset: "netz_from" }, { sfx: "type" }];
+    const row = (/** @type {number} */ i) => [X + 6, N.rows - 3 + i * N.row, WW - 12, N.row - 1];
+    ["start", "nagiwa", "brett", "archiv", "suche"].forEach((tab, i) => {
+      hs[`netz_tab_${tab}`] = { name: NETZ_TABS[i], rect: [X + 6 + i * N.tab, N.tabs - 2, N.tab - 2, 11], if: app("netz"), z: 4, use: open(tab === "start" ? null : tab) };
+    });
+    for (const [id, pg] of Object.entries(Nagiwa.netzPages ?? {})) if (pg.up) {
+      hs[`netz_back_${id}`] = { name: "Zurück", rect: [N.back, N.tabs - 2, X + WW - 4 - N.back, 11], if: [app("netz"), `netz_page=${id}`], z: 4, use: [{ netz_back: true }] };
+    }
+    Nagiwa.netz.forEach((n, k) => {
+      if (n.page && n.slot !== undefined) hs[`netz_start_${k}`] = { name: n.text ?? n.label ?? n.page, rect: row(n.slot), if: [app("netz"), "!netz_page", ...(n.if ? [n.if] : [])], z: 4, use: open(n.page, "start") };
+    });
+    for (const [id, pg] of Object.entries(Nagiwa.netzPages ?? {})) (pg.rows ?? []).forEach((r, i) => {
+      hs[`netz_row_${id}_${i}`] = { name: Nagiwa.netzPages[r.page]?.label ?? r.page, rect: row(i), if: [app("netz"), `netz_page=${id}`, ...(r.if ? [r.if] : [])], z: 4, use: open(r.page) };
+    });
+    (Nagiwa.netzSearch ?? []).forEach((q, i) => {
+      const [sy, sr, sw] = N.search;
+      hs[`netz_term_${i}`] = { name: q.term, rect: [X + 6 + (i % 2) * sw, Y + sy + Math.floor(i / 2) * sr, sw - 2, sr - 2], if: [app("netz"), "netz_page=suche", ...(q.if ? [q.if] : [])], z: 4, use: open(`such_${i}`) };
+      hs[`netz_back_such_${i}`] = { name: "Zurück", rect: [N.back, N.tabs - 2, X + WW - 4 - N.back, 11], if: [app("netz"), `netz_page=such_${i}`], z: 4, use: [{ netz_back: true }] };
+      q.hits.forEach((h, k) => {
+        hs[`netz_hit_${i}_${k}`] = { name: Nagiwa.netzPages[h.page]?.label ?? h.page, rect: row(k), if: [app("netz"), `netz_page=such_${i}`, ...(h.if ? [h.if] : [])], z: 4, use: open(h.page, `such_${i}`) };
+      });
+    });
     // RADIO: a station tuned in with a click (game/radio.js), AUS turns it off
     [...(Nagiwa.radio ?? []), { id: "", name: "Radio aus" }].forEach((st, i) => {
       hs[`radio_${st.id || "off"}`] = { name: st.name, rect: [X + 6, D.radio.y - 3 + i * D.radio.row, WW - 12, D.radio.row - 1], if: app("radio"), z: 4,
@@ -488,29 +519,69 @@
       small(ctx, t("BAO"), X + 8, Y + 80, C.steel6);
       text(ctx, t("ANGESCHRIEBEN"), X + 8, Y + 89, C.cyanPale);
     },
-    /** NETZ: Nagi·wa-Net's page this evening: the headlines, the small news, the Glasser board, the ads (Nagiwa.netz) */
+    /** NETZ (game/netz.js): the bookmarks, then the page open: the evening's start page, a list, an article or a thread (their text scrolls), SUCHE */
     netz(/** @type {CanvasRenderingContext2D} */ ctx) {
-      const [X, Y0, WW, HH] = D.win, top = Y0 + 5, bottom = Y0 + HH - 4, L = scroll.netz, Y = Y0 - Math.round(L.y), tw = WW - 30;
+      const [X, Y0, WW, HH] = D.win, N = D.netz, p = pointer(), id = /** @type {string | undefined} */ (S().flag("netz_page")) || "start";
+      const pages = Nagiwa.netzPages ?? {}, search = Nagiwa.netzSearch ?? [], sm = /^such_(\d+)$/.exec(id), q = sm ? search[Number(sm[1])] : null, pg = pages[id];
+      // the bookmarks; ZURÜCK on a page under one
+      const tabOf = id === "start" ? "start" : sm || id === "suche" ? "suche" : pg?.rows ? id : (pg?.up ?? "start");
+      ["start", "nagiwa", "brett", "archiv", "suche"].forEach((tab, i) => {
+        const x = X + 6 + i * N.tab, on = tab === tabOf, hot = inRect(p.x, p.y, [x, N.tabs - 2, N.tab - 2, 11]);
+        rect(ctx, on ? C.cyanDeep : hot ? C.steel3 : C.steel2, x, N.tabs - 2, N.tab - 2, 11);
+        small(ctx, t(NETZ_TABS[i]), x + (N.tab - 2) / 2, N.tabs, on ? C.cyanPale : C.steel6, "center");
+      });
+      if (pg?.up || sm) small(ctx, `< ${t("ZURÜCK")}`, X + WW - 9, N.tabs, inRect(p.x, p.y, [N.back, N.tabs - 2, X + WW - 4 - N.back, 11]) ? C.cyanPale : C.cyan, "right");
+      /** a row: a label, a text cut to fit, lit under the pointer @param {number} i @param {string} label @param {string} line @param {string} lc @param {boolean} link */
+      const listRow = (i, label, line, lc, link) => {
+        const y = N.rows + i * N.row, hot = link && inRect(p.x, p.y, [X + 6, y - 3, WW - 12, N.row - 1]);
+        if (hot) rect(ctx, C.steel3, X + 6, y - 3, WW - 12, N.row - 1);
+        if (label) small(ctx, label, X + 10, y, lc);
+        text(ctx, fit(line, WW - (label ? 70 : 24)), X + (label ? 60 : 12), y - 2, link ? C.cyanPale : C.steel6);
+      };
+      if (id === "start") {
+        small(ctx, `NAGI·WA.NET // ${Nagiwa.stamp().slice(0, 10)}`, X + 8, N.title, C.cyanPale);
+        for (const n of Nagiwa.netz.filter((n) => n.slot !== undefined && S().test(n.if))) {
+          const label = n.kind === "head" ? t("HEUTE") : n.kind === "sub" ? t("MELDUNG") : n.kind === "board" ? t("BRETT") : n.kind === "ad" ? t("ANZEIGE") : t("LIVE");
+          const lc = n.kind === "ad" ? C.magenta : n.kind === "board" ? C.amber : n.kind === "live" ? C.amber : C.cyan;
+          listRow(n.slot ?? 0, label, t(n.text ?? n.label ?? ""), lc, !!n.page);
+        }
+        return;
+      }
+      if (id === "suche" || q) {
+        small(ctx, q ? t("TREFFER FÜR „{term}“", { term: t(q.term) }) : t("Wonach suchen Sie?"), X + 8, N.title, C.cyanPale);
+        if (q) {
+          const hits = q.hits.filter((h) => S().test(h.if));
+          hits.forEach((h) => listRow(q.hits.indexOf(h), "", t(pages[h.page]?.label ?? h.page), C.cyan, true));
+          if (!hits.length) text(ctx, t(q.none ?? "Keine Treffer."), X + 12, N.rows - 2, C.steel6);
+          return;
+        }
+        const [sy, sr, sw] = N.search;
+        search.forEach((s2, i) => {
+          if (!S().test(s2.if)) return;
+          const x = X + 6 + (i % 2) * sw, y = Y0 + sy + Math.floor(i / 2) * sr, hot = inRect(p.x, p.y, [x, y, sw - 2, sr - 2]);
+          rect(ctx, hot ? C.cyanDeep : C.steel2, x, y, sw - 2, sr - 2);
+          text(ctx, fit(t(s2.term), sw - 10), x + 4, y + 1, hot ? C.cyanPale : C.cyan);
+        });
+        return;
+      }
+      if (!pg) return;
+      small(ctx, t(pg.title), X + 8, N.title, C.cyanPale);
+      if (pg.rows) { pg.rows.forEach((r, i) => { if (S().test(r.if)) listRow(i, "", t(pages[r.page]?.label ?? r.page), C.cyan, true); }); return; }
+      // an article or a thread: its text scrolls under the title
+      const top = N.rows - 4, bottom = Y0 + HH - 4, L = scroll.netz, tw = WW - 30;
+      if (netzShown !== id) { netzShown = id; L.y = L.to = 0; }
       ctx.save(); ctx.beginPath(); ctx.rect(X + 4, top, WW - 8, bottom - top); ctx.clip();
-      rect(ctx, C.cyanDeep, X + 6, Y + 8, WW - 22, 12); small(ctx, "NAGI·WA.NET", X + 10, Y + 12, C.cyanPale);
-      const shown = Nagiwa.netz.filter((n) => S().test(n.if));
-      let y = Y + 26, board = false;
-      for (const kind of ["head", "sub", "board", "ad", "live"]) for (const n of shown.filter((n) => n.kind === kind)) {
-        if (kind === "head") { const ls = wrap(t(n.text ?? ""), tw); ls.forEach((l, i) => text(ctx, l, X + 8, y + i * 10, C.cyanPale)); y += ls.length * 10 + 4; }
-        else if (kind === "sub") { const ls = wrap(t(n.text ?? ""), tw); ls.forEach((l, i) => text(ctx, l, X + 8, y + i * 10, C.steel6)); y += ls.length * 10 + 4; }
-        else if (kind === "ad") {
-          const ls = wrap(t(n.text ?? ""), tw - 4), h = 16 + ls.length * 10;
-          rect(ctx, C.magentaDark, X + 6, y, WW - 22, h); small(ctx, n.label ?? "", X + 10, y + 4, C.magenta);
-          ls.forEach((l, i) => text(ctx, l, X + 10, y + 14 + i * 10, "#ffc0f2")); y += h + 6;
-        } else if (kind === "board") {
-          if (!board) { board = true; rect(ctx, C.steel3, X + 6, y, WW - 22, 1); small(ctx, t("GLASSER-BRETT"), X + 8, y + 4, C.amber); y += 13; }
-          const ls = wrap(t(n.text ?? ""), tw - 4); ls.forEach((l, i) => text(ctx, l, X + 10, y + i * 10, C.cyanPale)); y += ls.length * 10;
-          if (n.by) { small(ctx, t(n.by), X + WW - 20, y + 1, C.steel6, "right"); y += 8; }
-          y += 5;
-        } else { small(ctx, n.label ?? "", X + 8, y + 2, C.amber); y += 12; }
+      let y = top + 2 - Math.round(L.y);
+      if (pg.text) {
+        for (const para of pg.text) { const ls = wrap(t(para), tw); ls.forEach((l, i) => text(ctx, l, X + 10, y + i * 10, C.cyanPale)); y += ls.length * 10 + 5; }
+        if (pg.by) { small(ctx, t(pg.by), X + WW - 20, y, C.steel6, "right"); y += 10; }
+      }
+      for (const post of (pg.posts ?? []).filter((q2) => S().test(q2.if))) {
+        small(ctx, t(post.by), X + 10, y, C.amber); y += 8;
+        const ls = wrap(t(post.text), tw - 4); ls.forEach((l, i) => text(ctx, l, X + 12, y + i * 10, C.cyanPale)); y += ls.length * 10 + 5;
       }
       ctx.restore();
-      L.max = Math.max(0, y + Math.round(L.y) - Y0 - (bottom - top)); L.to = Math.min(L.to, L.max);
+      L.max = Math.max(0, y + Math.round(L.y) - bottom); L.to = Math.min(L.to, L.max);
       scrollBar(ctx, L, X + WW - 15, top, bottom, false, pointer());
     },
     /** RADIO: the stations (game/radio.js; Lantern's pirate station comes in Chapter 2), the one on lit; under them what its presenter says */

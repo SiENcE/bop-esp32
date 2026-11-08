@@ -60,14 +60,14 @@ for (const night of [3, 4]) (Nagiwa.nights[night].passes ??= []).push({ unset: "
 Cutaway.state.view("netz_read");
 const L_KOW = "L., Kowalski-Straße";
 Nagiwa.netz.push(
-  { kind: "sub", if: "day=2", text: "Hüllenabgabe ab Dezember angepasst. Nagi·wa dankt für Ihr Verständnis." },
-  { kind: "board", if: "day=2", text: "Suche Abzweiger, zahle bar. Bitte nicht Ratz.", by: "anonym" },
-  { kind: "head", if: "day=3", text: "Ruhe-Erschöpfung: kein Grund zur Sorge, sagen Nagi·was Ärzte." },
-  { kind: "sub", if: "day=3", text: "Die Lull-Kliniken im Neunten haben jetzt auch nachts offen." },
-  { kind: "board", if: "day=3", text: "Wer weiß was über Ruhe-Erschöpfung? Mein Vater wacht nicht auf.", by: L_KOW },
-  { kind: "head", if: "day=4", text: "Das Wetter für den Neunten: Tropfen aus dem Vierten. Später trocken." },
-  { kind: "sub", if: "day=4", text: "Nagi·wa wünscht dem Neunten eine ruhige Nacht." },
-  { kind: "board", if: "day=4", text: "Mein Vater ist weg. Zwei in Weiß haben ihn abgeholt. Sie waren sehr freundlich.", by: L_KOW });
+  { kind: "sub", slot: 1, page: "huelle", if: "day=2", text: "Hüllenabgabe ab Dezember angepasst. Nagi·wa dankt für Ihr Verständnis." },
+  { kind: "board", slot: 2, page: "abzweiger", if: "day=2", text: "Suche Abzweiger, zahle bar. Bitte nicht Ratz.", by: "anonym" },
+  { kind: "head", slot: 0, page: "ruhe", if: "day=3", text: "Ruhe-Erschöpfung: kein Grund zur Sorge, sagen Nagi·was Ärzte." },
+  { kind: "sub", slot: 1, page: "lull", if: "day=3", text: "Die Lull-Kliniken im Neunten haben jetzt auch nachts offen." },
+  { kind: "board", slot: 2, page: "vater", if: "day=3", text: "Wer weiß was über Ruhe-Erschöpfung? Mein Vater wacht nicht auf.", by: L_KOW },
+  { kind: "head", slot: 0, if: "day=4", text: "Das Wetter für den Neunten: Tropfen aus dem Vierten. Später trocken." },
+  { kind: "sub", slot: 1, if: "day=4", text: "Nagi·wa wünscht dem Neunten eine ruhige Nacht." },
+  { kind: "board", slot: 2, page: "vater", if: "day=4", text: "Mein Vater ist weg. Zwei in Weiß haben ihn abgeholt. Sie waren sehr freundlich.", by: L_KOW });
 const READ = (/** @type {number} */ day, /** @type {any[]} */ said) => ({ if: [`day=${day}`, `netz_read<${day}`], then: [{ set: "netz_read", value: day }, ...said] });
 (Nagiwa.appOpen.netz ??= []).push(
   READ(2, [{ evi: "neugierig" }, { say: "evi", text: "Kriminalität auf Rekordtief. Heißt das, die Verbrecher schlafen?" }, "Die meisten."]),

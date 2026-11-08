@@ -230,9 +230,11 @@ Cutaway.room("flat", {
 // ---- the act
 // NETZ on the prologue's evening (and Chapter 1's first: the record low is still the headline on Wednesday)
 Nagiwa.netz.push(
-  { kind: "head", if: "day<3", text: "Kriminalität im Neunten auf Rekordtief." },
-  { kind: "ad", label: "LULL // SLEEP BETTER", text: "Vier Stunden wie zehn. Zwei Wochen gratis." },
-  { kind: "live", label: "NINTH LIVE // TONIGHT" });
+  { kind: "head", slot: 0, page: "rekordtief", if: "day<3", text: "Kriminalität im Neunten auf Rekordtief." },
+  { kind: "sub", slot: 1, if: "day=1", text: "Pumpenhalle 3: Wartung planmäßig. Nagi·wa dankt den Nachtschichten." },
+  { kind: "board", slot: 2, page: "automat", if: "day=1", text: "Der Nudelautomat Ecke Kowalski frisst Chits. Schon wieder.", by: "K." },
+  { kind: "ad", slot: 3, page: "lull", label: "LULL // SLEEP BETTER", text: "Vier Stunden wie zehn. Zwei Wochen gratis." },
+  { kind: "live", slot: 4, page: "ninthlive", label: "NINTH LIVE // TONIGHT" });
 
 Cutaway.act("prolog", {
   title: "Prolog", name: "Nachtschicht", room: "flat", actor: "juno",
