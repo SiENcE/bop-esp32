@@ -136,6 +136,9 @@ Planned (PLAN.md §3): `feed.js`, `ledger.js`, `money.js`, `routines/<chapter>.j
   "Where from?" (or Alt+click) on a pixel opens the kit piece or the map line that made it. Change the map there or in the
   file, never the layout's numbers (the Room tab of a baked room says so on top). A spot's name is what the game calls
   (`Nagiwa.at.<room>.<spot>`): rename one in the map and the game together.
+- The tab Schedule (engine; it was called Time): routines and moments over the game day; their times change by dragging, and a picked moment's
+  `play` and `unseen` open as blocks, written into the game's file (only the steps that changed; what the code computes,
+  as `A.stairs` or the `AT(...)` stops, is left to the file).
 - The tab Sequences (engine) puts a sequence (the intro) on a timeline under the picture: its shots, rooms, camera drives,
   `float`s, captions and music in lanes; the playhead shows any moment (Space plays from it); a bar's end drags its
   length, a step that goes on at once drags between the waits, steps are added at the playhead; a camera step's frame
@@ -149,7 +152,17 @@ Planned (PLAN.md §3): `feed.js`, `ledger.js`, `money.js`, `routines/<chapter>.j
   `node lib/cutaway/tools/shot.mjs index.html --size 960x540 --query "manual&act=prolog" --eval "await Cutaway.debug.settle()" --out build/shots/x3.png --buffer build/shots/1x.png`
   (`--query manual` alone: the title screen).
 
-After every change, all of these:
+After a change, the checks that fit it (the user's decision, 2026-11-08: the whole of `sh tools/check.sh`, about 25 minutes, is too long
+for small changes):
+
+| the change | the checks |
+|---|---|
+| only the editor, docs or tools (nothing the game loads while it plays) | `validate` |
+| the engine's runtime, or the game's code without new state (art, texts, a look, a screen) | `validate` and the whole game with real clicks (`play.mjs ... spiel.json`) |
+| story, flags, puzzles, times (anything the solver sees) | as above, and the solver and the click paths of the chapter or thread it touches |
+| before a bigger milestone (a chapter done, a release) | all of it: `sh tools/check.sh` |
+
+The checks themselves:
 
 ```sh
 node lib/cutaway/tools/validate.mjs index.html        # 0 errors (warnings are known: flags set but not yet tested)
