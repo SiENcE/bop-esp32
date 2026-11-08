@@ -330,6 +330,17 @@ und der Spieler merkt es zuerst am Ton (`dialog-design` §2). Sonst noch offen.
 - **Nagi·wa selbst** ist immer freundlich, immer im Sie und sagt nie etwas: „Nagi·wa dankt Ihnen für Ihren Dienst.“ „Ihre Meldung wird
   bearbeitet.“
 
+### Die Stimmen im Radio
+
+Drei Sender (`game/radio.js`); ihre Moderatoren reden zwischen den Stücken, wie man im Radio redet: zu allen und zu niemandem, kurz, mit
+Ansagen, Grüßen, Wetter und dem, was gerade los ist. Sie wissen nichts von Juno. (Vorschläge, 2026-11-08, noch nicht geprüft.)
+
+- **NINTH FM**, die Nachtsendung des Neunten: kennt die Straße, duzt ihre Hörer („ihr“), trocken und ein bisschen müde, auf ihrer Seite.
+  „Wer die Miete schon hat: Glückwunsch. Wer nicht: Das nächste ist für dich.“
+- **NAGI·WA EASY** ist Nagi·was Stimme (oben): freundlich, Sie, sagt nichts. „Entspannung ist ein Recht. Um den Rest kümmern wir uns.“
+- **KESSEL ROOFTOP**: jemand im Block legt nachts Platten auf, verschlafen, sagt nie, wer er ist. „Keine Werbung. Kein Geld. Nur Regen auf
+  dem Mikrofon.“
+
 ## 7. Die inneren Stimmen
 
 Die sechs Stimmen (`dialog-design` §2) sind Teile von Juno, und man hört sie auch ohne Farbe auseinander. Sie sagen einen Satz, selten zwei,

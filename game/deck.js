@@ -39,6 +39,7 @@
     thread: { x: 166 },
     cache: { y: 30, row: 22 },
     buch: { y: 30, row: 12 },
+    radio: { y: 24, row: 15 },                                // RADIO's stations, then AUS, then what the presenter says
     clip: { pic: [82, 23, 96, 56], meta: 185, line: [84, 90, 224], tools: 137, anon: [48, 60] },   // the clip editor: picture, who/where, timeline, tools (ANONYMISIEREN: after, wide)
     map: [82, 22, 228, 124],                                  // GLASS's map inside the window
     camBox: 54,                                               // a camera's place on it, as wide as its longest line ("CODE BEKANNT"): keep the cameras this far apart
@@ -137,7 +138,12 @@
       look: Nagiwa.photo.look ?? "Das Foto von Teo und mir.",
       use: [{ set: "deck_app", value: "photo" }, { music: Nagiwa.photo.music }] };
     hs.photo_close = { name: "Zurück", rect: [0, 0, W, H], if: "deck_app=photo", z: 9,
-      use: [{ unset: "deck_app" }, { music: Nagiwa.photo.back }] };
+      use: [{ unset: "deck_app" }, { radio_resume: Nagiwa.photo.back }] };
+    // RADIO: a station tuned in with a click (game/radio.js), AUS turns it off
+    [...(Nagiwa.radio ?? []), { id: "", name: "Radio aus" }].forEach((st, i) => {
+      hs[`radio_${st.id || "off"}`] = { name: st.name, rect: [X + 6, D.radio.y - 3 + i * D.radio.row, WW - 12, D.radio.row - 1], if: app("radio"), z: 4,
+        use: [{ radio: st.id || false }] };
+    });
     // the files on the desktop (under the window when one is open)
     hs.file_steuer = { name: "steuer_2089_NICHT_ÖFFNEN.txt", rect: D.files.steuer, if: "!deck_app",
       look: "Die Steuer von 2089. Solange ich sie nicht öffne, gibt es sie nicht.", use: "Nein." };
@@ -507,12 +513,22 @@
       L.max = Math.max(0, y + Math.round(L.y) - Y0 - (bottom - top)); L.to = Math.min(L.to, L.max);
       scrollBar(ctx, L, X + WW - 15, top, bottom, false, pointer());
     },
-    /** RADIO: the stations (the game's music; Lantern's pirate station comes in Chapter 2) */
+    /** RADIO: the stations (game/radio.js; Lantern's pirate station comes in Chapter 2), the one on lit; under them what its presenter says */
     radio(/** @type {CanvasRenderingContext2D} */ ctx) {
-      const [X, Y] = D.win;
-      small(ctx, "NINTH FM // 88.4", X + 8, Y + 10, C.cyanPale);
-      small(ctx, "NAGI·WA EASY // 101.0", X + 8, Y + 22, C.steel6);
-      small(ctx, "KESSEL ROOFTOP // 94.2", X + 8, Y + 34, C.steel6);
+      const [X, , WW, HH] = D.win, on = Nagiwa.radioOn?.() ?? null, p = pointer(), R = D.radio;
+      [...(Nagiwa.radio ?? []), null].forEach((st, i) => {
+        const y = R.y + i * R.row, hot = inRect(p.x, p.y, [X + 6, y - 3, WW - 12, R.row - 1]), lit = st ? st === on : !on;
+        if (lit || hot) rect(ctx, lit ? C.cyanDeep : C.steel2, X + 6, y - 3, WW - 12, R.row - 1);
+        if (lit) rect(ctx, C.cyan, X + 6, y - 3, 2, R.row - 1);
+        if (st) { small(ctx, st.freq, X + 12, y + 2, lit ? C.cyanPale : C.steel6); small(ctx, st.name, X + 40, y + 2, lit ? C.cyanPale : C.steel6); }
+        else small(ctx, t("AUS"), X + 12, y + 2, lit ? C.cyanPale : C.steel6);
+      });
+      if (!on) return;
+      const top = R.y + 4 * R.row + 4, line = Nagiwa.radioLine?.() ?? "";
+      rect(ctx, C.steel3, X + 6, top, WW - 12, 1);
+      if (Math.floor(Cutaway.clock.time / 600) % 2) rect(ctx, C.magenta, X + 8, top + 5, 3, 3);
+      small(ctx, `${t("ON AIR")} // ${on.name}`, X + 14, top + 4, C.amber);
+      wrap(line, WW - 24).slice(0, Math.floor((D.win[1] + HH - top - 18) / 10)).forEach((l, i) => text(ctx, l, X + 10, top + 15 + i * 10, C.cyanPale));
     },
     /** MÜLL: what Juno threw away and never opened */
     muell(/** @type {CanvasRenderingContext2D} */ ctx) {

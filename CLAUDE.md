@@ -69,6 +69,7 @@ code comments English.
 | `game/cast.js`, `game/motte.js` | the actors (Juno in iso, the feed people); what Juno can say to Motte in passing |
 | `game/talk.js` | `Nagiwa.talkTree`: a talk as a tree, where a topic opens its own options, never more than four at once |
 | `game/deck.js` | the deck as a computer (mockup F): its room (`buttons: false`, one flag `deck_app` for the open window, `chat_<contact>` for a thread) and its screen: the desktop with the wallpaper, the apps' windows (GLASS, CHAT, CACHE, BUCH, KONTO, NETZ, RADIO, MÜLL), EVI in her corner as the hint button; the chapters fill `Nagiwa.contacts`, `threads`, `replies` |
+| `game/radio.js` | the RADIO on the deck: three stations (their music in `game/music.js`), heard on the deck and in the flat; the presenters' lines while its window is open; the station a view flag (`radio`) |
 | `game/evi.js` | EVI: her voice (lines in their own place beside her corner, `lineBox`), she says the hints (`hints.configure({ by: "evi" })`); actions `{ evi: face }`, `{ evi_point: app }`, `{ deck_boot }`, `{ notify: contact }` (the message card over every mode) |
 | `game/rooms/jade_row.js` | Jade Row, the lane left of Kowalski Street: a view down its length, not iso, on blocks (`art/mock/jade_row.px.js`); Okonkwo's shop and the machine that sees into it |
 | `game/rooms/<id>.js` | rooms: `cams.js` (cam03, cam04: watched rooms with the phosphor post-effects), `<id>.layout.js` (generated) |

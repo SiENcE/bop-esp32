@@ -8,6 +8,7 @@
 //   glass  the feeds: the theme steps back; a low drone on D, a glass bell now and then, the rain and
 //          the camera's hiss (ambience) do the rest. With the intensity a slow pulse comes in ("pulse").
 //   opening the intro's float over the sea (below, after memory). descent: the ride down in the lift, after it.
+//   easy, rooftop: two of the radio's stations (game/radio.js); the third, NINTH FM, plays Juno's theme.
 // Stingers: "clue" (a moment caught), "witness" (the screen says JUNO.: everything else stops for it).
 // Listen: node lib/cutaway/tools/render-music.mjs index.html --out build/music/juno.wav --steps '[...]'
 "use strict";
@@ -179,6 +180,54 @@
         bells: bars(". . . . . . . . A6 . . . . . . .", ". . . . . . . . . . . . E6 . . .", ". . . . . . . . D6 . . . . . . ."),
       } },
       tail: { bars: 2, next: "tail", tracks: { brass: bars(hold(oDsus), hold(oDsus)), pedal: bars(hold("D1"), hold("D1")) } },
+    },
+  });
+
+  // ---------------------------------------------------------------- the radio's stations (game/radio.js), heard through its speaker
+  // NAGI·WA EASY: the company's own station, music to wait to. Smooth and bright and about nothing: F major, a soft
+  // electric piano on the off-beats, a vibraphone tune that goes up and comes back, a round bass, a shaker. 88 bpm.
+  I("vibes", { type: "fm", ratio: 4, index: 0.55, indexDecay: 1.4, amp: { a: 0.003, d: 1.3, s: 0.08, r: 0.9 }, gain: 0.075, reverb: 0.45, delay: 0.18, pan: 0.15 });
+  I("softbass", { type: "sub", wave: "sine", filter: { cutoff: 380, q: 0.8 }, amp: { a: 0.01, d: 0.45, s: 0.45, r: 0.2 }, gain: 0.3 });
+  I("shaker", { type: "drum", kind: "hat", gain: 0.045, pan: -0.25 });
+  const eF = "F3+A3+C4+E4", eD = "D3+F3+A3+C4", eG = "G3+Bb3+D4+F4", eC = "E3+G3+Bb3+C4", eBb = "Bb2+D3+F3+A3", eA = "A2+C#3+E3+G3";
+  /** the piano on two and four @param {string} c */
+  const comp = (c) => `. . . . ${c} - . . . . . . ${c} - . .`;
+  const SHAKE = ". . x . . . x . . . x . . . x x";
+  Cutaway.score.theme("easy", {
+    tempo: 88, key: "F",
+    tracks: { keys: { inst: "epiano" }, vibes: { inst: "vibes" }, bass: { inst: "softbass" }, shaker: { inst: "shaker" } },
+    sections: {
+      a: { bars: 4, next: "b", tracks: {
+        keys: bars(comp(eF), comp(eD), comp(eG), comp(eC)),
+        bass: bars("F2 - - - . . C2 - F2 - - - . . A2 -", "D2 - - - . . A2 - D2 - - - . . F2 -", "G2 - - - . . D2 - G2 - - - . . Bb2 -", "C2 - - - . . G2 - C2 - - - E2 - G2 -"),
+        vibes: bars("A4 - - - C5 - - - E5 - D5 - C5 - - -", "D5 - - - A4 - - - F4 - - - - - - -", "G4 - - - Bb4 - - - D5 - C5 - Bb4 - - -", "A4 - - - - - - - G4 - - - - - - -"),
+        shaker: bars(SHAKE, SHAKE, SHAKE, SHAKE),
+      } },
+      b: { bars: 4, next: "a", tracks: {
+        keys: bars(comp(eBb), comp(eA), comp(eD), comp(eC)),
+        bass: bars("Bb1 - - - . . F2 - Bb1 - - - . . D2 -", "A1 - - - . . E2 - A1 - - - . . C#2 -", "D2 - - - . . A2 - D2 - - - . . C2 -", "C2 - - - . . G2 - C2 - - - . . . ."),
+        vibes: bars("D5 - - - F5 - - - E5 - D5 - C5 - - -", "C#5 - - - - - - - A4 - - - - - - -", "F5 - - - E5 - - - D5 - C5 - A4 - - -", "G4 - - - - - - - - - - - . . . ."),
+        shaker: bars(SHAKE, SHAKE, SHAKE, SHAKE),
+      } },
+    },
+  });
+
+  // KESSEL ROOFTOP: somebody in the block plays records late at night. Slow and warm and a little worn: D Dorian, the
+  // Rhodes breaking jazz chords, a lazy beat (the snare late in the bar), a walking bass, and the needle's crackle. 70 bpm.
+  I("lofikick", { type: "drum", kind: "kick", decay: 0.35, gain: 0.42 });
+  I("lofisnare", { type: "drum", kind: "snare", gate: 0.2, gain: 0.16, reverb: 0.25 });
+  I("crackle", { type: "drum", kind: "hat", gain: 0.018, pan: 0.1 });
+  I("lofibass", { type: "sub", wave: "triangle", filter: { cutoff: 300, q: 1 }, amp: { a: 0.01, d: 0.5, s: 0.4, r: 0.25 }, gain: 0.28 });
+  const LOFI = { kick: "x . . . . . . x . . x . . . . .", snare: ". . . . . . . . . X . . . . . .", crackle: "x . . x . . . . . x . x . . . x" };
+  Cutaway.score.theme("rooftop", {
+    tempo: 70, key: "D",
+    tracks: { rhodes: { inst: "br_rhodes" }, bass: { inst: "lofibass" }, kick: { inst: "lofikick" }, snare: { inst: "lofisnare" }, crackle: { inst: "crackle" } },
+    sections: {
+      a: { bars: 4, tracks: {
+        ...LOFI,
+        rhodes: bars(slow(["E3", "G3", "D4", "F#4"]), slow(["A2", "G3", "C#4", "F#4"]), slow(["D3", "F#3", "C#4", "E4"]), slow(["B2", "A3", "D4", "F#4"])),
+        bass: bars("E2 - - - . . B2 - G2 - - - . . . .", "A1 - - - . . E2 - G2 - - - . . . .", "D2 - - - . . A2 - F#2 - - - . . . .", "B1 - - - . . F#2 - A2 - - - . . . ."),
+      } },
     },
   });
 
