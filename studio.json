@@ -19,6 +19,8 @@
     "graph: prolog": ["sh", "tools/graph.sh", "prolog"],
     "graph: kapitel1 main": ["sh", "tools/graph.sh", "main"],
     "art: everything": ["sh", "tools/build_art.sh"],
-    "art: test street": ["sh", "tools/build_art.sh", "test"]
-  }
+    "art: test street": ["sh", "tools/build_art.sh", "test"],
+    "art: room": ["sh", "tools/build_art.sh", "room", "{room}"]
+  },
+  "editor": ["game/editor/iso.js"]
 }

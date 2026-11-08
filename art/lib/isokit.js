@@ -182,15 +182,17 @@ const ISOKIT = (() => {
   function buffer(W, H) {
     const n = W * H
     // zone: 0 the room, 1.. the rooms seen through open openings (ctx.zones[i] its opening's id)
-    return { W, H, k: new Array(n).fill(null), pos: new Float32Array(n * 3), nrm: new Int8Array(n), lit: new Uint8Array(n), has: new Uint8Array(n), zone: new Uint8Array(n) }
+    // who: which part of the map painted each pixel (an index into the bake's picks; 0 none), for the editor's question
+    // "where does this pixel come from?" (B.whoNow: the part being painted)
+    return { W, H, k: new Array(n).fill(null), pos: new Float32Array(n * 3), nrm: new Int8Array(n), lit: new Uint8Array(n), has: new Uint8Array(n), zone: new Uint8Array(n), who: new Int16Array(n) }
   }
   function put(B, x, y, k, pos, n) {
     if (!k || x < 0 || y < 0 || x >= B.W || y >= B.H) return
     const i = y * B.W + x
     let lit = 1
     if (k.length === 2 && k[0] === "!") { k = k[1]; lit = 0 }
-    if (k === "_") { B.k[i] = null; B.has[i] = 0; return }
-    B.k[i] = k; B.lit[i] = lit; B.zone[i] = B.zoneNow ?? 0
+    if (k === "_") { B.k[i] = null; B.has[i] = 0; B.who[i] = 0; return }
+    B.k[i] = k; B.lit[i] = lit; B.zone[i] = B.zoneNow ?? 0; B.who[i] = B.whoNow ?? 0
     if (pos) { B.pos[i * 3] = pos[0]; B.pos[i * 3 + 1] = pos[1]; B.pos[i * 3 + 2] = pos[2]; B.nrm[i] = n || 0; B.has[i] = 1 }
   }
 
@@ -479,11 +481,15 @@ const ISOKIT = (() => {
     const zones = [null]
     for (const o of Object.values(openings)) if (o.open) { o.zone = zones.length; zones.push(o.id) }
     const ctx = { openings, solids, contact, ceiling, halos, zones }
+    // the picks: every part of the map that paints, once (its index is what a pixel's `who` holds)
+    const picks = [null], pickOf = new Map()
+    const pick = (el) => { const key = JSON.stringify(el); if (!pickOf.has(key)) { pickOf.set(key, picks.length); picks.push(el) } return pickOf.get(key) }
 
     // ---- a flight down through the floor (the map's stairs): drawn first, so the floor in front of the
     // hole hides its lower steps
     function drawStairs(B, f) {
       const s = map.stairs, k = KIT.stairs[s.kit] ?? {}, [u0, v0] = s.from, [u1, v1] = s.to
+      B.whoNow = pick({ kind: "stairs", id: s.id, kit: s.kit })
       const n = Math.ceil((u1 - u0) / s.tread) + 1, deep = (n + 1) * s.rise
       const well = k.well ?? (() => "1"), riser = k.riser ?? (() => "2"), tread = k.tread ?? (() => "3")
       G.faceV(B, v0, u0, u1 + s.tread, -deep, 0, (a, e, o) => well(o.s, o.h - deep, { x: o.x, y: o.y, f }))
@@ -529,6 +535,7 @@ const ISOKIT = (() => {
       map.floor.forEach((row, j) => [...row].forEach((key, i) => {
         if (key === ".") return
         const u0 = i * map.cell, v0 = j * map.cell, sh = KIT.floor[key] ?? (() => "z")
+        B.whoNow = pick({ kind: "floor", key, kit: key })
         G.top(B, u0, v0, u0 + map.cell, v0 + map.cell, 0, (u, v, x, y) => sh(u, v, { x, y, f, map }))
       }))
       const memo = {}
@@ -538,6 +545,9 @@ const ISOKIT = (() => {
         const a1 = alongU ? Math.max(w.from[0], w.to[0]) : Math.max(w.from[1], w.to[1])
         const len = a1 - a0, fix = alongU ? w.from[1] : w.from[0]
         const kit = KIT.wall[w.kit], face = typeof kit === "function" ? kit : kit?.face ?? (() => "3")
+        const wallWho = B.whoNow = pick({ kind: "wall", i: wi, kit: w.kit })
+        const opWho = {}
+        for (const o of map.openings ?? []) if (o.wall === wi) opWho[o.id] = pick({ kind: "opening", id: o.id, kit: o.kit })
         const cap = kit?.cap ?? ((inner) => (inner ? "5" : "4"))
         if (w.stub) {
           // a near wall cut to a stub: its top, its section down through the floor slab (toward the viewer)
@@ -576,8 +586,9 @@ const ISOKIT = (() => {
             memo[mk] ??= {}
             if (op.open && ls >= 0 && ls < ow && lh >= 0 && lh < oh) (holes[op.id] ??= []).push([o.x, o.y])
             const k = op.def?.paint?.(ls, lh, { a: fl(ls * G.SU), e: fl(lh * G.VPM), w: ow, h: oh, aw, ah, x: o.x, y: o.y, f, gx, gy, memo: memo[mk], op })
-            if (k) return k
+            if (k) { B.whoNow = opWho[op.id]; return k }
           }
+          B.whoNow = wallWho
           return face(s, h, o)
         }
         // s: meters from the wall's `from` (its lower end), a: px from its screen-left end
@@ -587,9 +598,10 @@ const ISOKIT = (() => {
       // through each open opening, its room (the opening's own paint keeps its frame)
       for (const op of Object.values(openings)) {
         if (!op.open || !holes[op.id]) continue
-        const B2 = renderBehind(op, f)
+        const B2 = renderBehind(op, f), behind = pick({ kind: "behind", id: op.id, kit: op.kit })
         for (const [x, y] of holes[op.id]) {
           const i = y * W + x
+          B.who[i] = behind
           if (B2.k[i]) {
             B.k[i] = B2.k[i]; B.lit[i] = B2.lit[i]; B.has[i] = B2.has[i]; B.nrm[i] = B2.nrm[i]
             for (let c = 0; c < 3; c++) B.pos[i * 3 + c] = B2.pos[i * 3 + c]
@@ -633,7 +645,7 @@ const ISOKIT = (() => {
     anim(`${id}_bg`, { w: W, h: H, frames, fps }, (c) => { c.rect(0, 0, W, H, bg); blit(c, BG[c.frame ?? 0]) }, ...glows)
 
     // ---- the props: each drawn where it stands, lit, cut to its box, outlined, pivot bottom-centre
-    const props = {}
+    const props = {}, propPick = {}
     for (const p of map.props ?? []) {
       if (p.behind) continue                                  // baked into the picture, through its opening
       const k = KIT.prop[p.kit]
@@ -647,6 +659,8 @@ const ISOKIT = (() => {
         return B
       }
       const F0 = renderProp(0)
+      propPick[p.id] = []
+      for (let i = 0; i < F0.k.length; i++) if (F0.k[i]) propPick[p.id].push(i)
       let nf = k?.frames > 1 ? frames : 1
       if (nf === 1) {
         const lit0 = lightsOf(map, 0).filter((L) => L.stutters)
@@ -673,6 +687,13 @@ const ISOKIT = (() => {
     }
     const layout = ISOMAP.layout(map)
     for (const [pid, d] of Object.entries(props)) if (layout.props[pid]) Object.assign(layout.props[pid], { at: d.at, box: d.box, sprite: d.name })
+    // where each pixel of the first frame comes from, the props over the picture: one line the build keeps
+    // (tools/build_art.sh: build/art/rooms/<id>.pick.json), read by the editor's Iso tab; runs of the same part
+    const who = Int16Array.from(BG[0].who)
+    for (const [pid, F] of Object.entries(propPick)) { const n = pick({ kind: "prop", id: pid, kit: (map.props ?? []).find((q) => q.id === pid)?.kit }); for (const i of F) who[i] = n }
+    const runs = []
+    for (let i = 0; i < who.length;) { let j = i; while (j < who.length && who[j] === who[i]) j++; runs.push(who[i], j - i); i = j }
+    console.log("ISO_PICK " + JSON.stringify({ id, w: W, h: H, picks, runs }))
     return { map, P, props, layout, G, ctx }
   }
 

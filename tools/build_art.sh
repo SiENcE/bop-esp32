@@ -108,6 +108,8 @@ room() {
     if grep -q "^ISO_LAYOUT " "build/art/rooms/$id.log"; then
         node tools/iso-layout.mjs "$id" --stdin --out "game/rooms/$id.layout.js" < "build/art/rooms/$id.log"
     fi
+    # where each pixel comes from (the editor's Iso tab asks): scratch, not checked in
+    grep "^ISO_PICK " "build/art/rooms/$id.log" | cut -c10- > "build/art/rooms/$id.pick.json" || true
     $ATLAS "build/art/rooms/$id" "assets/room_$id.js" --only "${id}_*"
 }
 

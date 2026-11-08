@@ -87,6 +87,17 @@ die Knöpfe „graph: prolog“ und „graph: kapitel1 main“, die die Daten ne
 „Load a file …“ eine fertige Datei. Von einem Schritt springt „Open in Things“ zu seinem Hotspot und dem
 Skript, das der Zug ausführt; ein Fakt listet jede Stelle, die es setzt oder abfragt.
 
+### Räume im Editor
+
+Mit dem Studio hat der Editor zwei Reiter für die Räume. **Map** zeigt alle Räume als Bilder mit ihren
+Ausgängen und Skript-Warps, dazu, was vom Start aus nicht erreichbar ist und welche Wege ins Leere führen.
+**Iso** bearbeitet die Karte eines Straßen-Raums (`art/rooms/<id>.map.js`) direkt über seinem Bild:
+Requisiten, Türen und Fenster, Spots und Lampen verschieben, den Boden mit den Schlüsseln des Kits bemalen,
+Werte im Inspektor ändern. „Save“ schreibt nur die geänderten Werte zurück (Kommentare bleiben), „Bake“
+baut den Raum neu und lädt die Grafik. „Where from?“ (oder Alt+Klick) auf ein Pixel nennt das Teil der
+Karte und das Kit-Stück, das es gemalt hat, und öffnet die Zeile im Quelltext. Die Hintergründe bleiben so
+Code: Gemalt wird im Kit, nicht in den Pixeln.
+
 Die Grafik entsteht mit pxl aus Quelltexten in `art/`; die fertigen Atlanten liegen in `assets/`, damit
 das Spiel ohne Node läuft. Wer die Grafik neu bauen will, braucht zusätzlich den pxl-Skill, der ein eigenes
 Repository ist und hier nicht mitkommt.

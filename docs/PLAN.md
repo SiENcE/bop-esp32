@@ -26,6 +26,10 @@ facts they need and bring about, the winning way numbered) and the state budget 
 item or once-mark makes). The editor shows it too (the tab Connections, with the studio's tasks "graph: …"): a step opens its
 hotspot with the script in Things, a fact lists every place that sets or asks it, and Things shows a hotspot's steps. Next, if
 wanted: a timetable of the evenings (who is where at which tick), the city's map with the cameras, the hints over the chart.
+Rooms in the editor (2026-11-08): the engine's tab Map (every room, its exits and script warps, unreachable and broken ways) and
+the game's tab Iso (`game/editor/iso.js`): a street-mode room's map edited over its picture, saved back value by value and baked
+from there; "Where from?" on a pixel opens the kit piece or map line that painted it (the bake now records it). Painting pixels
+over a baked background was dropped (the user's decision): the art stays code, changed in the map and the kit.
 
 What was added on 2026-11-04 (in order):
 - every text through i18n (`Nagiwa.t`, the engine's `i18n.declare`); a Chinese layout test
