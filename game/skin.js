@@ -1,7 +1,7 @@
 // Nagiwa: the look of the engine's own interface (docs/style-guide.md §8 and §8a): the menu's frames, its
 // heading plate and buttons, the full-screen cards (act titles, the end), the pointer, the satchel and
 // the buttons beside it (their art: art/ui/hud.px.js). The frames and cards are drawn here, no art:
-// chamfered corners, cyan lines on night steel, a magenta tick, scanlines, small data readouts in the
+// chamfered corners, cyan lines on night steel, scanlines, small data readouts in the
 // 3x5 HUD font (game/font.js), cards that type themselves on with a block cursor and glitch now and then.
 "use strict";
 
@@ -60,22 +60,16 @@
         ctx.fillStyle = i === 0 ? C.cyan : i === h - 1 ? C.cyanDark : C.cyanDeep;
         ctx.fillRect(x + s, y + i, w - 2 * s, 1);
       }
-      ctx.fillStyle = C.magenta;
-      ctx.fillRect(x + w - 6, y + 2, 2, 2);
       return;
     }
     if (o.kind === "button" || o.small) {
       chamfer(ctx, x, y, w, h, 3, o.hover ? C.cyanDeep : "rgba(10, 14, 26, 0.9)", o.hover ? C.cyan : C.cyanDark, o.hover ? C.cyanPale : C.cyan);
       return;
     }
-    // a page (or a card's frame): night steel, scanlines, cyan edges, a magenta tick, a label in the line
+    // a page (or a card's frame): night steel, scanlines, cyan edges, a label in the line
     if (o.shadow !== false) { ctx.fillStyle = "rgba(0, 0, 0, 0.45)"; rows(w, h, 6).forEach(([a, b], i) => ctx.fillRect(x + a + 2, y + i + 2, b - a + 1, 1)); }
     chamfer(ctx, x, y, w, h, 6, o.fill ?? "rgba(9, 13, 24, 0.94)", C.cyanDark, C.cyan);
     scanlines(ctx, x + 1, y + 1, w - 2, h - 2);
-    ctx.fillStyle = C.magenta;
-    ctx.fillRect(x + w - 2, y + 4, 2, 8);
-    ctx.fillStyle = C.magentaDark;
-    ctx.fillRect(x + w - 2, y + 13, 2, 2);
     for (let i = 0; i < 3; i++) { ctx.fillStyle = C.steel5; ctx.fillRect(x + 4 + i * 3, y + h - 3, 2, 1); }
     const label = Nagiwa.t(SYS), lw = hud().measure(label) + 4, lx = x + w - 10 - lw;
     ctx.fillStyle = o.fill ?? C.night;
