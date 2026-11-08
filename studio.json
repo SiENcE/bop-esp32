@@ -20,7 +20,8 @@
     "graph: kapitel1 main": ["sh", "tools/graph.sh", "main"],
     "art: everything": ["sh", "tools/build_art.sh"],
     "art: test street": ["sh", "tools/build_art.sh", "test"],
-    "art: room": ["sh", "tools/build_art.sh", "room", "{room}"]
+    "art: room": ["sh", "tools/build_art.sh", "room", "{room}"],
+    "room: new": ["node", "tools/new-room.mjs", "{room}", "{u}", "{v}"]
   },
   "editor": ["game/editor/iso.js"]
 }
