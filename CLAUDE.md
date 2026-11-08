@@ -41,7 +41,7 @@ code comments English.
 | `docs/rooms/`, `docs/cams/`, `docs/characters/` | review sheets of finished art; the cameras' layout notes (their positions go into `game/places.js`) |
 | `docs/portraits/` | the character index and marketing portraits (`figuren_index_x3.png`, Teo and Juno from both sides `juno_teo_seite_front_x3.png`, `README.md`), from `art/portraits/portraits.px.js`; not in the game |
 | `docs/ideas/` | studies: `iso-tiles.md` (rooms from maps, decided), `chinesisch.md` (a CJK layout test) |
-| `docs/editor-iso.md`, `docs/iso-maps.md` | the guide to the editor's Iso tab (German: how to get there, its tools, save, bake, what to know) and the iso maps' format (the map's keys, the kit's calls, the bake); the editor's Help shows them inside its Editor guide and its Reference (F1 on the tab) |
+| `docs/editor-iso.md`, `docs/iso-maps.md` | the guide to the editor's Iso-Editor tab (German: how to get there, its tools, save, bake, what to know) and the iso maps' format (the map's keys, the kit's calls, the bake); the editor's Help shows them inside its Editor guide and its Reference (F1 on the tab) |
 | `docs/NEXT-SESSION.md` | the prompt to start the next session |
 
 ## World words
@@ -81,7 +81,7 @@ code comments English.
 | `game/auftrag_varga.js` | Chapter 1's job A: Varga wants Kessler found, the hood at the machine in cam03, Sable's booth, the Morpheus (cam15), K1a; a thread of its own (`off_varga`) |
 | `game/evenings.js`, `game/kapitel1.js`, `game/kapitel1_ende.js` | what every chapter's evenings share (the bed, the evening's card); Chapter 1: its act on game days 2 to 4, WREN, the rent, Friday's clock (on blocks; the prologue goes on into it, `?act=kapitel1` begins it alone for development); its end in cam31, on blocks |
 | `game/intro.js`, `intro_sea.js`, `intro_tower.js`, `intro_hall.js`, `intro_desk.js`, `intro_ride.js` | the intro "Die letzte Schicht" (kapitel0-design §5): the sequence `intro` and the shots the game draws itself in perspective (rooms with `float: "<shot>"`, the action `{ float: [from, to], ms }`): the float over the lit sea (A1, A2), the tower and in through its window (C); painted parts in `art/intro/`; the observation hall (the room `intro_hall`, baked from `art/rooms/hall.map.js`); Juno at her desk (what moves over `art/intro/desk.px.js`); the ride down in the lift (`art/intro/ride.px.js`) |
-| `game/editor/iso.js` | the editor's Iso tab (the studio loads it: `studio.json` "editor"): a room's map edited in full over its picture (props, openings, spots, lamps, walls, the stairs, no-walk rects: drawn, dragged, deleted; the floor painted; the room's size; every other key as written), saved back changing only the values touched, baked with the task "art: room"; "Where from?" names the map part and kit piece that painted a pixel (the bake's picks, `build/art/rooms/<id>.pick.json`) and opens either at its line; its tools and kinds as icons in the overlay's colours, kinds shown or hidden, what a click takes lit under the pointer, the map's parts listed on the left, keys (V A F W, 1 to 7, Del, Ctrl+D); New map (the task "room: new") and the cell size |
+| `game/editor/iso.js` | the editor's Iso-Editor tab (the studio loads it: `studio.json` "editor"): a room's map edited in full over its picture (props, openings, spots, lamps, walls, the stairs, no-walk rects: drawn, dragged, deleted; the floor painted; the room's size; every other key as written), saved back changing only the values touched, baked with the task "art: room"; "Where from?" names the map part and kit piece that painted a pixel (the bake's picks, `build/art/rooms/<id>.pick.json`) and opens either at its line; its tools and kinds as icons in the overlay's colours, kinds shown or hidden, what a click takes lit under the pointer, the map's parts listed on the left, keys (V A F W, 1 to 7, Del, Ctrl+D); New map (the task "room: new") and the cell size |
 | `game/screens.js` | the UI layer that draws the deck's screen, the feeds' OSD, the implant overlay and zoom windows (rooms hold the hotspots so the solver sees every click; this layer only draws) |
 | `game/glyphs.js` | the letters of both fonts as plain data, shared by `game/font.js` and the art (`art/lib/text.js` writes with them in pxl, so mockups and interface art read as in the game) |
 | `game/skin.js`, `font.js`, `transitions.js`, `sounds.js`, `music.js`, `title.js`, `hints.js` | the look (frames, cards, labels, choices), the fonts, room transitions, synthesised sounds and music, title and menu screens, hints |
@@ -132,11 +132,11 @@ Planned (PLAN.md §3): `feed.js`, `ledger.js`, `money.js`, `routines/<chapter>.j
   editor it is the tab Connections: the studio's tasks "graph: prolog" and "graph: kapitel1 main" make the data
   (`studio.json`, the folder `build/graph`), a step opens its script in Things, a fact lists every place that sets or asks it.
 - In the editor with the studio: the tab Map (every room with its exits and script warps, what is unreachable) and the game's
-  own tab Iso (`game/editor/iso.js`): a street-mode room's map edited over its picture and baked from there (`art: room`);
+  own tab Iso-Editor (`game/editor/iso.js`): a street-mode room's map edited over its picture and baked from there (`art: room`);
   "Where from?" (or Alt+click) on a pixel opens the kit piece or the map line that made it. Change the map there or in the
   file, never the layout's numbers (the Room tab of a baked room says so on top). A spot's name is what the game calls
   (`Nagiwa.at.<room>.<spot>`): rename one in the map and the game together.
-- The tab Film (engine) puts a sequence (the intro) on a timeline under the picture: its shots, rooms, camera drives,
+- The tab Sequences (engine) puts a sequence (the intro) on a timeline under the picture: its shots, rooms, camera drives,
   `float`s, captions and music in lanes; the playhead shows any moment (Space plays from it); a bar's end drags its
   length, a step that goes on at once drags between the waits, steps are added at the playhead; a camera step's frame
   drags on the room's map. The changes go into `game/intro.js` itself (only the steps changed, the comments kept);

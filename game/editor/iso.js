@@ -1,4 +1,4 @@
-// The editor's Iso tab (the studio loads it: studio.json "editor"): a street-mode room's map
+// The editor's Iso-Editor tab (the studio loads it: studio.json "editor"): a street-mode room's map
 // (art/rooms/<id>.map.js, art/lib/isomap.js) edited over the game's picture of it. The map's parts are drawn
 // over the room: the floor's cells by key, the walls, the openings, the props' boxes, the spots and the lamps,
 // and the walk area the map gives (as the bake will measure it). Drag a prop, an opening along its wall, a spot
@@ -707,7 +707,7 @@
     [...new Set([v, ...piecesHere(type).map((q) => q.name)])].map((n) => el("option", { value: n, textContent: n, selected: n === v })));
 
   function build(/** @type {HTMLElement} */ box) {
-    if (!E.studio.available) { box.append(el("div", { className: "cw-dim" }, ["The Iso tab works with the studio (node lib/cutaway/tools/studio.mjs): it reads and writes the room's map."])); return; }
+    if (!E.studio.available) { box.append(el("div", { className: "cw-dim" }, ["The Iso-Editor works with the studio (node lib/cutaway/tools/studio.mjs): it reads and writes the room's map."])); return; }
     if (!ISOMAP) { box.append(el("div", { className: "cw-dim" }, [loading ? "reading the maps and kits ..." : "..."])); boot(); return; }
     box.append(el("div", { style: { margin: "4px 0" } }, ["map ", el("select", { onchange: async (/** @type {any} */ e) => { const id = e.target.value; if (!id) return; if (Cutaway.room.ids().includes(id)) await E.openRoom(id); await open(id); } },
       [el("option", { value: "", textContent: "(a room's map)" }), ...maps.map((id) => el("option", { value: id, textContent: id, selected: id === cur?.id }))]),
@@ -1100,7 +1100,7 @@
       pick: (/** @type {string} */ k) => { const [kind, i] = k.split(":"); if (!show[LAYER_OF[kind]]) { show[LAYER_OF[kind]] = true; keepShow(); } sel = { kind, i: Number(i) }; if (tool !== "select") tool = "select"; E.refresh(); } })], { note: String(items.length) }));
   }
 
-  E.tab({ id: "iso", label: "Iso", build, render, drag, hover, key, browse, del: () => deleteSel(),
+  E.tab({ id: "iso", label: "Iso-Editor", build, render, drag, hover, key, browse, del: () => deleteSel(),
     save: () => save(),
     undo: () => { if (cur?.undo.length) { cur.redo.push(cur.src); const s = /** @type {string} */ (cur.undo.pop()); cur.src = s; cur.root = rootOf(s, cur.id); cur.map = evalMap(s, cur.id); E.refresh(); } },
     redo: () => { if (cur?.redo.length) { cur.undo.push(cur.src); const s = /** @type {string} */ (cur.redo.pop()); cur.src = s; cur.root = rootOf(s, cur.id); cur.map = evalMap(s, cur.id); E.refresh(); } },
@@ -1112,7 +1112,7 @@
   boot();
   // its guide inside the editor's Help (F1 here opens it): how to use the tab in the editor guide
   // (docs/editor-iso.md), the maps' format in the reference (docs/iso-maps.md), read through the studio
-  E.studio.read("docs/editor-iso.md").then((md) => E.modules.help?.addBook({ id: "iso", title: "Iso", file: "docs/editor-iso.md", md }, { iso: "intro" }, { into: "editor" }))
+  E.studio.read("docs/editor-iso.md").then((md) => E.modules.help?.addBook({ id: "iso", title: "Iso-Editor", file: "docs/editor-iso.md", md }, { iso: "intro" }, { into: "editor" }))
     .catch(() => { /* no guide: the tab works without it */ });
   E.studio.read("docs/iso-maps.md").then((md) => E.modules.help?.addBook({ id: "isomaps", title: "Iso-Karten", file: "docs/iso-maps.md", md }, {}, { into: "reference" }))
     .catch(() => { /* no format page */ });

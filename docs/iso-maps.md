@@ -2,7 +2,7 @@
 
 Das Format der Straßen-Räume des Spiels: eine Karte (`art/rooms/<id>.map.js`) sagt, was wo steht, ein Kit
 (`art/kit/*.kit.px.js`) wie es aussieht, und der Bake (`art/lib/isokit.js`) macht daraus mit Licht das Bild,
-die Requisiten und das Layout. Die Karte bearbeitet der Reiter **Iso** (siehe „Iso“ in der Editor-Anleitung);
+die Requisiten und das Layout. Die Karte bearbeitet der Reiter **Iso-Editor** (siehe „Iso-Editor“ in der Editor-Anleitung);
 diese Seite beschreibt, was in ihr stehen kann. Die maßgebliche Beschreibung steht oben in
 `art/lib/isomap.js` (die Karte) und `art/lib/isokit.js` (Kit und Bake).
 

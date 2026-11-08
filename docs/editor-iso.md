@@ -1,6 +1,6 @@
-# Iso
+# Iso-Editor
 
-Die Räume auf der Karte. Der Reiter **Iso** gehört zum Spiel, nicht zur Engine (`game/editor/iso.js`). Er bearbeitet die Karte eines
+Die Räume auf der Karte. Der Reiter **Iso-Editor** gehört zum Spiel, nicht zur Engine (`game/editor/iso.js`). Er bearbeitet die Karte eines
 Straßen-Raums (`art/rooms/<id>.map.js`, das Format steht in `art/lib/isomap.js`) direkt über dem Bild des
 Raums und baut den Raum danach neu. Die Hintergründe bleiben dabei Code: Gemalt wird im Kit
 (`art/kit/*.kit.px.js`), die Karte sagt, was wo steht.
@@ -10,7 +10,7 @@ Raums und baut den Raum danach neu. Die Hintergründe bleiben dabei Code: Gemalt
 1. Das Studio starten, im Spielordner: `node lib/cutaway/tools/studio.mjs`. Es öffnet das Spiel mit dem
    Editor im Browser. Ohne Studio (F10 oder `?edit`) gibt es den Reiter nicht: Er liest und schreibt die
    Kartendateien, das kann nur das Studio.
-2. Links unter WORKSPACES **Iso** wählen (oder Tools > The game's tabs > Iso).
+2. Links unter WORKSPACES **Iso-Editor** wählen (oder Tools > The game's tabs > Iso-Editor).
 3. Er öffnet die Karte des Raums, in dem man gerade ist. Räume mit Karte: `flat`, `kessel_14`,
    `kessel_lobby`, `kowalski`, `hall` (der Saal im Intro). Ein anderer Raum: oben im Feld **map** wählen,
    oder links unter ROOMS hingehen.

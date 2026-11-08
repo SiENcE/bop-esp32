@@ -50,7 +50,7 @@ auch direkt von der Platte.
 | `index.html?edit` | der Editor der Engine (auch F10), ohne Speichern in den Spielordner |
 
 Der Editor mit allem, was er kann (speichert direkt ins Spiel, startet Prüfungen und Grafik-Builds, hat die
-Reiter des Spiels wie **Iso**), läuft über das Studio, einen kleinen Server nur auf dem eigenen Rechner:
+Reiter des Spiels wie **Iso-Editor**), läuft über das Studio, einen kleinen Server nur auf dem eigenen Rechner:
 
 ```sh
 node lib/cutaway/tools/studio.mjs      # im Spielordner; öffnet das Spiel mit dem Editor im Browser
@@ -111,7 +111,7 @@ Das Zustands-Budget des Prologs: Der Raum, `tag_varga` und `evi_trust` vervielfa
 
 Mit dem Studio hat der Editor zwei Reiter für die Räume. **Map** zeigt alle Räume als Bilder mit ihren
 Ausgängen und Skript-Warps, dazu, was vom Start aus nicht erreichbar ist und welche Wege ins Leere führen.
-**Iso** bearbeitet die Karte eines Straßen-Raums (`art/rooms/<id>.map.js`) direkt über seinem Bild:
+**Iso-Editor** bearbeitet die Karte eines Straßen-Raums (`art/rooms/<id>.map.js`) direkt über seinem Bild:
 Wände, Requisiten, Türen und Fenster, die Treppe, Sperrflächen, Spots und Lampen anlegen, verschieben und
 löschen, den Boden mit den Schlüsseln des Kits bemalen, die Größe des Raums und jeden übrigen Wert der Karte im
 Inspektor ändern. „Save“ schreibt nur die geänderten Werte zurück (Kommentare bleiben), „Bake“
