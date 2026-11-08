@@ -13,7 +13,7 @@
 
 (function () {
   const E = Cutaway.editor, el = E.el, button = E.button;
-  const SNAP = 0.05, COL = { floor: "#3df27a", wall: "#9a8cff", opening: "#3ae8ff", prop: "#ffa03a", spot: "#ffe14a", light: "#fff27a", walk: "#3df27a", sel: "#ff5ad8" };
+  const SNAP = 0.05, COL = { stairs: "#ff8a3a", nowalk: "#ff4a5a", floor: "#3df27a", wall: "#9a8cff", opening: "#3ae8ff", prop: "#ffa03a", spot: "#ffe14a", light: "#fff27a", walk: "#3df27a", sel: "#ff5ad8" };
 
   // ---------------------------------------------------------------- a JS literal with its places in the text
   // The map files are JavaScript: objects, arrays, strings, numbers, comments, now and then code (a computed
@@ -125,8 +125,10 @@
   let cur = null;
   /** @type {{w: number, h: number, picks: any[], who: Int16Array} | null} */ let picks = null;
   let tool = "select", floorKey = "", loading = false;
-  /** what the Add tool places (a prop, an opening on a wall, a spot, a lamp) and with which kit piece */
+  /** what the Add tool places (a prop, an opening on a wall, a spot, a lamp, a wall, the stairs, a no-walk rect) and with which kit piece */
   let addKind = "prop", addKit = "";
+  /** @type {{kind: string, a: number[], b: number[]} | null} a wall, the stairs or a no-walk rect being drawn (floor meters) */
+  let adding = null;
   /** @type {Set<string>} the kit files the room's bake includes (art/rooms/<id>.px.js): only their pieces can be baked there */
   let kitsHere = new Set();
   /** @type {{kind: string, i: number} | null} the selected part: a prop, opening, spot (i: its name's index), light, wall */
@@ -224,6 +226,23 @@
     else put(a, "[]");
   }
 
+  /** Several values replaced in one change (one step of undo). @param {[Lit, string][]} edits */
+  function putAll(edits) {
+    if (!cur) return;
+    let src = cur.src;
+    for (const [n, text] of edits.slice().sort((a, b) => b[0].s - a[0].s)) src = src.slice(0, n.s) + text + src.slice(n.e);
+    change(src);
+  }
+  /** Changes that are one step of undo together (each reads the text the one before left). @param {() => void} fn */
+  function batch(fn) {
+    if (!cur) return;
+    const n = cur.undo.length;
+    fn();
+    if (cur.undo.length > n + 1) cur.undo.length = n + 1;
+  }
+  /** A list of numbers as the maps write it. @param {number[]} a */
+  const nums = (a) => `[${a.map((x) => num(x)).join(", ")}]`;
+
   /** Take a key out of an object node (with its comma). @param {Lit} o @param {string} key */
   function removeKey(o, key) {
     if (!cur || !o.props) return;
@@ -294,6 +313,14 @@
   /** A wall's face on the screen. @param {any} w */
   const wallQuad = (w) => [P(w.from[0], w.from[1]), P(w.to[0], w.to[1]), P(w.to[0], w.to[1], w.stub ? 0.17 : w.h), P(w.from[0], w.from[1], w.stub ? 0.17 : w.h)];
   const spotNames = () => Object.keys(cur?.map.spots ?? {});
+  /** A rect on the floor (meters), on the screen. @param {number} u0 @param {number} v0 @param {number} u1 @param {number} v1 */
+  const floorQuad = (u0, v0, u1, v1) => [P(u0, v0), P(u1, v0), P(u1, v1), P(u0, v1)];
+  /** The stairs' rect on the floor: from its top step to its end. @param {any} st */
+  const stairsQuad = (st) => floorQuad(Math.min(st.from[0], st.to[0]), Math.min(st.from[1], st.to[1]), Math.max(st.from[0], st.to[0]), Math.max(st.from[1], st.to[1]));
+  /** A no-walk rect [u0, v0, du, dv] on the screen. @param {number[]} r */
+  const nowalkQuad = (r) => floorQuad(r[0], r[1], r[0] + r[2], r[1] + r[3]);
+  /** Is a wall along u (v the same at both ends)? @param {any} w */
+  const alongU = (w) => w.from[1] === w.to[1];
 
   /** What is under a point of the room (room pixels): the smallest first. @param {number} x @param {number} y */
   function hit(x, y) {
@@ -306,6 +333,8 @@
     const props = (m.props ?? []).map((p, i) => ({ p, i })).filter(({ p }) => !p.behind).sort((a, b) => (b.p.at[0] + b.p.foot[0] + b.p.at[1] + b.p.foot[1]) - (a.p.at[0] + a.p.foot[0] + a.p.at[1] + a.p.foot[1]));
     for (const { p, i } of props) if (inside(propHull(p), x, y)) return { kind: "prop", i };
     for (let i = 0; i < (m.openings ?? []).length; i++) if (inside(openingQuad(m.openings[i]), x, y)) return { kind: "opening", i };
+    if (m.stairs && inside(stairsQuad(m.stairs), x, y)) return { kind: "stairs", i: 0 };
+    for (let i = 0; i < (m.nowalk ?? []).length; i++) if (inside(nowalkQuad(m.nowalk[i]), x, y)) return { kind: "nowalk", i };
     for (let i = 0; i < m.walls.length; i++) if (inside(wallQuad(m.walls[i]), x, y)) return { kind: "wall", i };
     return null;
   }
@@ -340,6 +369,31 @@
       }));
     }
     m.walls.forEach((/** @type {any} */ w, /** @type {number} */ i) => poly(wallQuad(w), COL.wall, false, is("wall", i)));
+    // a selected wall's ends: drag one to make the wall longer or shorter
+    if (sel?.kind === "wall" && m.walls[sel.i]) for (const end of [m.walls[sel.i].from, m.walls[sel.i].to]) { const [x, y] = P(end[0], end[1]); ctx.fillStyle = COL.sel; ctx.fillRect(x - 2, y - 2, 5, 5); }
+    if (m.stairs) {
+      const st = m.stairs, q = stairsQuad(st);
+      ctx.setLineDash([3, 2]); poly(q, COL.stairs, true, is("stairs", 0)); ctx.setLineDash([]);
+      // its steps, a line at every tread along u
+      ctx.strokeStyle = COL.stairs; ctx.globalAlpha = 0.6;
+      for (let a = Math.min(st.from[0], st.to[0]) + (st.tread || 0.3); a < Math.max(st.from[0], st.to[0]); a += st.tread || 0.3) {
+        const [x0, y0] = P(a, Math.min(st.from[1], st.to[1])), [x1, y1] = P(a, Math.max(st.from[1], st.to[1]));
+        ctx.beginPath(); ctx.moveTo(x0 + 0.5, y0 + 0.5); ctx.lineTo(x1 + 0.5, y1 + 0.5); ctx.stroke();
+      }
+      ctx.globalAlpha = 1;
+    }
+    (m.nowalk ?? []).forEach((/** @type {number[]} */ r, /** @type {number} */ i) => {
+      const q = nowalkQuad(r);
+      poly(q, COL.nowalk, true, is("nowalk", i));
+      ctx.beginPath(); ctx.moveTo(q[0][0] + 0.5, q[0][1] + 0.5); ctx.lineTo(q[2][0] + 0.5, q[2][1] + 0.5); ctx.moveTo(q[1][0] + 0.5, q[1][1] + 0.5); ctx.lineTo(q[3][0] + 0.5, q[3][1] + 0.5); ctx.stroke();
+    });
+    if (adding) {
+      const [u0, v0] = adding.a, [u1, v1] = adding.b;
+      ctx.setLineDash([2, 2]);
+      if (adding.kind === "wall") { const w = wallOf(adding.a, adding.b); poly(wallQuad({ ...w, h: wallHeight() }), COL.sel); }
+      else poly(floorQuad(Math.min(u0, u1), Math.min(v0, v1), Math.max(u0, u1), Math.max(v0, v1)), COL.sel);
+      ctx.setLineDash([]);
+    }
     (m.openings ?? []).forEach((/** @type {any} */ o, /** @type {number} */ i) => poly(openingQuad(o), COL.opening, true, is("opening", i)));
     // a prop moved since the bake: its sprite where it will stand (the bake draws it anew there), over its old place
     const baked = /** @type {any} */ (window).Nagiwa?.layouts?.[cur.id]?.props ?? {}, was = savedMap();
@@ -363,7 +417,7 @@
 
   // ---------------------------------------------------------------- the pointer
 
-  /** @type {{kind: string, i: number, uv: number[], orig: any, moved: boolean} | null} */
+  /** @type {{kind: string, i: number, uv: number[], orig: any, moved: boolean, end?: number} | null} */
   let dragging = null;
 
   /** @param {{x: number, y: number}} p @param {"down" | "move" | "up"} phase @param {PointerEvent} e */
@@ -373,13 +427,24 @@
     if (phase === "down") {
       if (e.button !== 0) return false;
       if (tool === "where" || e.altKey) { whereFrom(Math.floor(p.x), Math.floor(p.y)); return true; }
+      if (tool === "add" && (addKind === "wall" || addKind === "stairs" || addKind === "nowalk")) { const uv = uvAt(p.x, p.y).map(snap); adding = { kind: addKind, a: uv, b: uv }; return true; }
       if (tool === "add") { place(p); return true; }
+      // a selected wall's end, grabbed: the wall gets longer or shorter
+      if (sel?.kind === "wall" && m.walls[sel.i]) {
+        const w = m.walls[sel.i], end = [w.from, w.to].findIndex((q) => { const [x, y] = P(q[0], q[1]); return Math.abs(x - p.x) <= 3 && Math.abs(y - p.y) <= 3; });
+        if (end >= 0) { dragging = { kind: "wallEnd", i: sel.i, end, uv: uvAt(p.x, p.y), orig: JSON.parse(JSON.stringify(w)), moved: false }; return true; }
+      }
       if (tool === "floor") { paintCell(p); dragging = { kind: "floor", i: 0, uv: [], orig: null, moved: true }; return true; }
       sel = hit(p.x, p.y);
       E.refresh();
-      if (!sel || sel.kind === "wall") return true;
+      if (!sel) return true;
       const it = partOf(sel);
       dragging = { kind: sel.kind, i: sel.i, uv: uvAt(p.x, p.y), orig: JSON.parse(JSON.stringify(it)), moved: false };
+      return true;
+    }
+    if (adding) {
+      adding.b = uvAt(p.x, p.y).map(snap);
+      if (phase === "up") { const a = adding; adding = null; drawn(a); }
       return true;
     }
     if (!dragging) return true;
@@ -395,21 +460,30 @@
         const w = m.walls[o.wall], d = w.from[1] === w.to[1] ? du : dv;
         it.from = Math.round((o.from + d) * 100) / 100; it.to = Math.round((o.to + d) * 100) / 100;
       }
+      if (dragging.kind === "wall" || dragging.kind === "stairs") { it.from = [snap(o.from[0] + du), snap(o.from[1] + dv)]; it.to = [snap(o.to[0] + du), snap(o.to[1] + dv)]; }
+      if (dragging.kind === "wallEnd") {
+        // along its own line only: a wall stays on its u or v
+        const k = dragging.end ? "to" : "from", q = o[k], w = m.walls[dragging.i];
+        w[k] = alongU(o) ? [snap(q[0] + du), q[1]] : [q[0], snap(q[1] + dv)];
+      }
+      if (dragging.kind === "nowalk") m.nowalk[dragging.i] = [snap(o[0] + du), snap(o[1] + dv), o[2], o[3]];
       return true;
     }
     // up: what was dragged goes into the text, one step of undo
     const d = dragging;
     dragging = null;
     if (d.kind === "floor" || !d.moved) return true;
-    const it = d.kind === "spot" ? m.spots[spotNames()[d.i]] : partOf(d);
-    commit(d.kind, d.i, it);
+    const it = d.kind === "spot" ? m.spots[spotNames()[d.i]] : d.kind === "wallEnd" ? m.walls[d.i] : partOf(d);
+    commit(d.kind === "wallEnd" ? "wall" : d.kind, d.i, it);
     return true;
   }
 
   /** The value of a part in the map. @param {{kind: string, i: number}} s */
   function partOf(s) {
     const m = cur?.map;
-    return s.kind === "prop" ? m.props[s.i] : s.kind === "opening" ? m.openings[s.i] : s.kind === "light" ? m.lights[s.i] : s.kind === "wall" ? m.walls[s.i] : m.spots[spotNames()[s.i]];
+    // a part undone or deleted since it was picked: nothing (the selection lets go)
+    return s.kind === "prop" ? m?.props?.[s.i] : s.kind === "opening" ? m?.openings?.[s.i] : s.kind === "light" ? m?.lights?.[s.i] : s.kind === "wall" ? m?.walls?.[s.i]
+      : s.kind === "stairs" ? m?.stairs : s.kind === "nowalk" ? m?.nowalk?.[s.i] : m?.spots?.[spotNames()[s.i]];
   }
 
   /** Write a dragged part's new place into the text. @param {string} kind @param {number} i @param {any} it */
@@ -419,6 +493,21 @@
       const spots = field(cur.root, "spots"), n = field(spots, spotNames()[i]);
       if (n?.t === "arr") put(n, `[${it.map((/** @type {any} */ x) => (typeof x === "number" ? num(x) : JSON.stringify(x))).join(", ")}]`);
       else E.setStatus("iso: this spot is computed in the map's code: change it in the file");
+      return;
+    }
+    if (kind === "stairs") {
+      const n = field(cur.root, "stairs"), f = field(n, "from"), t = field(n, "to");
+      if (f && t) putAll([[f, nums(it.from)], [t, nums(it.to)]]); else E.setStatus("iso: the stairs are computed in the map's code: change them in the file");
+      return;
+    }
+    if (kind === "nowalk") {
+      const a = field(cur.root, "nowalk"), n = a?.items?.[i];
+      if (n?.t === "arr") put(n, nums(it)); else E.setStatus("iso: this rect is computed in the map's code: change it in the file");
+      return;
+    }
+    if (kind === "wall") {
+      const n = itemNode("walls", i)?.n, f = field(n, "from"), t = field(n, "to");
+      if (f && t) putAll([[f, nums(it.from)], [t, nums(it.to)]]); else { E.setStatus("iso: this wall is computed in the map's code: change it in the file"); cur.map = evalMap(cur.src, cur.id); }
       return;
     }
     const list = kind === "prop" ? "props" : kind === "opening" ? "openings" : "lights", node = itemNode(list, i)?.n;
@@ -502,8 +591,9 @@
     box.append(el("div", { style: { margin: "4px 0" } }, [["select", "Move"], ["add", "Add"], ["floor", "Floor"], ["where", "Where from?"]].map(([t, label]) =>
       button(tool === t ? `● ${label}` : label, () => { tool = t; E.refresh(); }, t === "select" ? "pick and drag props, openings, spots, lamps" : t === "add" ? "place a new prop, opening, spot or lamp with a click" : t === "floor" ? "paint the floor's cells with a kit key" : "which part of the map and which kit piece painted a pixel (also Alt+click)"))));
     if (tool === "add") {
-      const kinds = [["prop", "a prop: click on the floor"], ["opening", "an opening: click on a wall (low: a door, higher: a window)"], ["spot", "a spot: click where people stand"], ["light", "a lamp: click on the floor (2.2 m up)"]];
-      const pieces = addKind === "prop" || addKind === "opening" ? piecesHere(addKind).map((q) => q.name) : [];
+      const kinds = [["prop", "a prop: click on the floor"], ["opening", "an opening: click on a wall (low: a door, higher: a window)"], ["spot", "a spot: click where people stand"], ["light", "a lamp: click on the floor (2.2 m up)"],
+        ["wall", "a wall: drag along the floor (it keeps to u or v, as high as the room's walls)"], ["stairs", "the stairs: drag their rect on the floor, from the top step along +u (one flight a room)"], ["nowalk", "a no-walk rect: drag it on the floor (drawn, not walked)"]];
+      const pieces = ["prop", "opening", "wall", "stairs"].includes(addKind) ? piecesHere(addKind).map((q) => q.name) : [];
       if (pieces.length && !pieces.includes(addKit)) addKit = pieces[0];
       box.append(el("div", { className: "cw-sec" }, [
         el("div", {}, kinds.map(([k, title]) => button(addKind === k ? `● ${k}` : k, () => { addKind = k; E.refresh(); }, title))),
@@ -521,18 +611,18 @@
         ...(originAt?.mapLine ? [el("div", { style: { cursor: "pointer", color: "#7ad8ff" }, title: "open the map at this part", onclick: () => { const o = /** @type {any} */ (originAt); E.modules.art?.openSource(o.map, o.mapLine); } }, [`map: ${originAt.map}:${originAt.mapLine}`])] : [])]));
     }
     if (sel) box.append(details());
-    else box.append(el("div", { className: "cw-dim" }, ["Click a part over the picture: a prop (orange), an opening (cyan), a spot (yellow), a lamp, a wall. Drag to move it (0.05 m steps)."]));
+    else box.append(roomBox());
     box.append(el("div", { className: "cw-dim", style: { marginTop: "6px" } }, [`${(cur.map.props ?? []).length} props · ${(cur.map.openings ?? []).length} openings · ${spotNames().length} spots · ${(cur.map.lights ?? []).length} lamps; the dashed green line is the walk area the map gives`]));
   }
 
   /** The selected part's fields. */
   function details() {
     const s = /** @type {{kind: string, i: number}} */ (sel), it = partOf(s), sec = el("div", { className: "cw-sec" });
-    if (!it) return sec;
+    if (!it) { sel = null; return roomBox(); }
     const list = s.kind === "prop" ? "props" : s.kind === "opening" ? "openings" : s.kind === "light" ? "lights" : s.kind === "wall" ? "walls" : "";
-    const node = list ? itemNode(list, s.i)?.n : field(field(cur?.root, "spots"), spotNames()[s.i]);
+    const node = list ? itemNode(list, s.i)?.n : s.kind === "stairs" ? field(cur?.root, "stairs") : s.kind === "nowalk" ? field(cur?.root, "nowalk")?.items?.[s.i] : field(field(cur?.root, "spots"), spotNames()[s.i]);
     const computed = !node;
-    const title = s.kind === "spot" ? `spot "${spotNames()[s.i]}"` : `${s.kind} ${it.id ? `"${it.id}"` : s.i}`;
+    const title = s.kind === "spot" ? `spot "${spotNames()[s.i]}"` : s.kind === "nowalk" ? `no-walk rect ${s.i}` : s.kind === "stairs" ? `stairs "${it.id ?? ""}"` : `${s.kind} ${it.id ? `"${it.id}"` : s.i}`;
     sec.append(el("div", { style: { fontWeight: "bold" } }, [title]));
     if (computed) { sec.append(el("div", { className: "cw-dim" }, ["computed in the map's code: change it in the file"])); return sec; }
     const n = /** @type {Lit} */ (node), set = (/** @type {string} */ key, /** @type {string} */ text) => setKey(n, key, text);
@@ -564,10 +654,147 @@
         el("div", { className: "cw-dim" }, ["the game's light; the baked light is its \"bake\" (in the file)"]),
         button("Delete", () => { const a = itemNode("lights", s.i)?.a; if (a) { removeItem(a, s.i); sel = null; } }, "take it out of the map"), idField(n, it.id));
     } else if (s.kind === "wall") {
-      sec.append(el("div", {}, ["kit ", kitSelect("wall", it.kit, (k) => set("kit", JSON.stringify(k))), " ", numField("h", it.h, (x) => set("h", num(x)))]));
+      const ends = (/** @type {number[]} */ f, /** @type {number[]} */ t) => putAll([[/** @type {Lit} */ (field(n, "from")), nums(f)], [/** @type {Lit} */ (field(n, "to")), nums(t)]]);
+      sec.append(el("div", {}, ["kit ", kitSelect("wall", it.kit, (k) => set("kit", JSON.stringify(k))), " ", numField("h", it.h, (x) => set("h", num(x)))]),
+        el("div", {}, [numField("from u", it.from[0], (x) => ends([x, it.from[1]], alongU(it) ? it.to : [x, it.to[1]])), numField("v", it.from[1], (x) => ends([it.from[0], x], alongU(it) ? [it.to[0], x] : it.to))]),
+        el("div", {}, [numField("to u", it.to[0], (x) => ends(alongU(it) ? it.from : [x, it.from[1]], [x, it.to[1]])), numField("v", it.to[1], (x) => ends(alongU(it) ? [it.from[0], x] : it.from, [it.to[0], x]))]),
+        el("div", { className: "cw-dim" }, [`along ${alongU(it) ? "u" : "v"}, ${num(Math.abs(alongU(it) ? it.to[0] - it.from[0] : it.to[1] - it.from[1]))} m; its inner face toward +${alongU(it) ? "v" : "u"}; ${(cur?.map.openings ?? []).filter((/** @type {any} */ o) => o.wall === s.i).length} openings in it`]),
+        el("label", {}, [el("input", { type: "checkbox", checked: !!it.stub, onchange: (/** @type {any} */ e) => (e.target.checked ? set("stub", "true") : removeKey(n, "stub")) }), " a near wall cut to a stub"]),
+        el("div", { style: { marginTop: "4px" } }, [button("Delete", () => deleteWall(s.i), "take it out (its openings with it; the walls after it move up a place)")]));
+    } else if (s.kind === "stairs") {
+      const ends = (/** @type {number[]} */ f, /** @type {number[]} */ t) => putAll([[/** @type {Lit} */ (field(n, "from")), nums(f)], [/** @type {Lit} */ (field(n, "to")), nums(t)]]);
+      sec.append(idField(n, it.id), el("div", {}, ["kit ", kitSelect("stairs", it.kit, (k) => set("kit", JSON.stringify(k)))]),
+        el("div", {}, [numField("from u", it.from[0], (x) => ends([x, it.from[1]], it.to)), numField("v", it.from[1], (x) => ends([it.from[0], x], it.to))]),
+        el("div", {}, [numField("to u", it.to[0], (x) => ends(it.from, [x, it.to[1]])), numField("v", it.to[1], (x) => ends(it.from, [it.to[0], x]))]),
+        el("div", {}, [numField("rise", it.rise ?? 0.18, (x) => set("rise", num(x))), numField("tread", it.tread ?? 0.3, (x) => set("tread", num(x))), "down ", el("select", { onchange: (/** @type {any} */ e) => set("down", JSON.stringify(e.target.value)) }, ["+u"].map((d) => el("option", { value: d, textContent: d, selected: d === it.down })))]),
+        el("div", { className: "cw-dim" }, ["a flight down through a hole in the floor, from the top step at from u along +u"]),
+        ...(piecesHere("stairs").some((q) => q.name === it.kit) ? [] : [el("div", { style: { color: "#ffd27a" } }, [`the room's bake includes no stairs kit "${it.kit}": they are drawn plain (include a kit with ISOKIT.stairs in art/rooms/${cur?.id}.px.js)`])]),
+        el("div", { style: { marginTop: "4px" } }, [button("Cut the floor", cutFloor, "make the floor's cells under the stairs a hole (\".\")"), button("Delete", () => { const r = cur?.root; if (r) { removeKey(r, "stairs"); sel = null; } }, "take the stairs out (the hole in the floor stays)")]));
+    } else if (s.kind === "nowalk") {
+      const r = /** @type {number[]} */ (it), w = (/** @type {number} */ k, /** @type {number} */ x) => { const a = r.slice(); a[k] = x; put(n, nums(a)); };
+      sec.append(el("div", {}, [numField("u", r[0], (x) => w(0, x)), numField("v", r[1], (x) => w(1, x))]), el("div", {}, [numField("du", r[2], (x) => w(2, x)), numField("dv", r[3], (x) => w(3, x))]),
+        el("div", { className: "cw-dim" }, ["floor that is drawn but not walked (a corner the screen's edge cuts off)"]),
+        button("Delete", () => { const a = field(cur?.root, "nowalk"); if (a) { removeItem(a, s.i); sel = null; } }, "take it out of the map"));
     }
+    // the keys the form doesn't show, each to change, and the ones the format knows to add
+    const KNOWN = /** @type {Record<string, string[]>} */ ({ prop: ["id", "kit", "at", "foot", "h", "block"], opening: ["id", "wall", "from", "to", "h", "kit"], light: ["id", "at", "power", "r"],
+      wall: ["from", "to", "h", "kit", "stub"], stairs: ["id", "kit", "from", "to", "rise", "tread", "down"] });
+    const OFFER = /** @type {Record<string, [string, string][]>} */ ({ prop: [["seeThrough", "true"], ["standOn", "true"], ["behind", '""']], opening: [["open", '{ depth: 1.5, floor: "", wall: "" }']],
+      light: [["color", '"#ffd8a0"'], ["flicker", "0.1"], ["bake", "{ reach: 2, power: 1 }"]], wall: [], stairs: [] });
+    if (KNOWN[s.kind] && n.t === "obj") sec.append(moreKeys(n, KNOWN[s.kind], OFFER[s.kind] ?? []));
     // its line in the map
     if (cur) { const at = lineOf(cur.src, n.s), path = cur.path; sec.append(el("div", { style: { cursor: "pointer", color: "#7ad8ff", marginTop: "4px" }, onclick: () => { E.modules.art?.openSource(path, at); } }, [`map: ${path}:${at}`])); }
+    return sec;
+  }
+
+  /** The height new walls get: that of the room's walls. */
+  const wallHeight = () => Math.max(0, ...(cur?.map.walls ?? []).filter((/** @type {any} */ w) => !w.stub).map((/** @type {any} */ w) => w.h)) || 2.8;
+  /** A wall from a drag: along the axis it went further on, from its lower end. @param {number[]} a @param {number[]} b */
+  function wallOf(a, b) {
+    const onU = Math.abs(b[0] - a[0]) >= Math.abs(b[1] - a[1]);
+    return onU ? { from: [Math.min(a[0], b[0]), a[1]], to: [Math.max(a[0], b[0]), a[1]] } : { from: [a[0], Math.min(a[1], b[1])], to: [a[0], Math.max(a[1], b[1])] };
+  }
+
+  /** A wall, the stairs or a no-walk rect drawn with the Add tool. @param {{kind: string, a: number[], b: number[]}} d */
+  function drawn(d) {
+    if (!cur) return;
+    const m = cur.map, [u0, v0] = [Math.min(d.a[0], d.b[0]), Math.min(d.a[1], d.b[1])], [u1, v1] = [Math.max(d.a[0], d.b[0]), Math.max(d.a[1], d.b[1])];
+    if (d.kind === "wall") {
+      const w = wallOf(d.a, d.b);
+      if (w.from[0] === w.to[0] && w.from[1] === w.to[1]) return;
+      if (addTo("walls", `{ from: ${nums(w.from)}, to: ${nums(w.to)}, h: ${num(wallHeight())}, kit: ${JSON.stringify(addKit)} }`)) sel = { kind: "wall", i: cur.map.walls.length - 1 };
+    } else if (d.kind === "stairs") {
+      if (m.stairs) { E.setStatus("iso: the map has its flight of stairs already (one a room): move or change it"); return; }
+      if (u1 - u0 < 0.3 || v1 - v0 < 0.3) return;
+      setKey(cur.root, "stairs", `{ id: "stairs", kit: ${JSON.stringify(addKit)}, from: ${nums([u0, v0])}, to: ${nums([u1, v1])}, down: "+u", rise: 0.18, tread: 0.3 }`);
+      sel = { kind: "stairs", i: 0 };
+      E.setStatus("iso: the stairs go down through a hole in the floor: Cut the floor makes it");
+    } else if (d.kind === "nowalk") {
+      if (u1 - u0 < SNAP || v1 - v0 < SNAP) return;
+      if (addTo("nowalk", nums([u0, v0, u1 - u0, v1 - v0]))) sel = { kind: "nowalk", i: cur.map.nowalk.length - 1 };
+    }
+    E.refresh();
+  }
+
+  /** Delete a wall: the openings in it go too, the walls after it move up a place (their openings' numbers follow). @param {number} i */
+  function deleteWall(i) {
+    if (!cur) return;
+    const own = (cur.map.openings ?? []).filter((/** @type {any} */ o) => o.wall === i).map((/** @type {any} */ o) => o.id);
+    if (own.length && !confirm(`Wall ${i} has ${own.join(", ")} in it: delete them with it?`)) return;
+    batch(() => {
+      // its openings, from the last (each removal reads the text again)
+      for (let k = (cur?.map.openings ?? []).length - 1; k >= 0; k--) if (cur?.map.openings[k].wall === i) { const a = field(cur?.root, "openings"); if (a) removeItem(a, k); }
+      // the openings in the walls after it: one wall lower
+      const later = (cur?.map.openings ?? []).map((/** @type {any} */ o, /** @type {number} */ k) => ({ o, k })).filter(({ o }) => o.wall > i);
+      putAll(later.map(({ o, k }) => /** @type {[Lit, string]} */ ([/** @type {Lit} */ (field(field(cur?.root, "openings")?.items?.[k], "wall")), String(o.wall - 1)])).filter(([n]) => n));
+      const a = field(cur?.root, "walls");
+      if (a) removeItem(a, i);
+    });
+    sel = null;
+    E.refresh();
+  }
+
+  /** The floor's cells under the stairs made a hole ("."), as the stairs need. */
+  function cutFloor() {
+    if (!cur?.map.stairs) return;
+    const m = cur.map, st = m.stairs, rows = field(cur.root, "floor");
+    if (!rows?.items) return;
+    const [u0, u1] = [Math.min(st.from[0], st.to[0]), Math.max(st.from[0], st.to[0])], [v0, v1] = [Math.min(st.from[1], st.to[1]), Math.max(st.from[1], st.to[1])];
+    /** @type {[Lit, string][]} */
+    const edits = [];
+    m.floor.forEach((/** @type {string} */ row, /** @type {number} */ j) => {
+      const next = [...row].map((k, i) => ((i + 0.5) * m.cell > u0 && (i + 0.5) * m.cell < u1 && (j + 0.5) * m.cell > v0 && (j + 0.5) * m.cell < v1 ? "." : k)).join("");
+      const n = /** @type {Lit[]} */ (rows.items)[j];
+      if (next !== row && n?.t === "str") edits.push([n, JSON.stringify(next)]);
+    });
+    if (edits.length) putAll(edits); else E.setStatus("iso: the floor under the stairs is open already");
+  }
+
+  /** The room's size changed: the floor's rows made to fit (new cells "." no floor, cells outside cut). @param {number} U @param {number} V */
+  function resize(U, V) {
+    if (!cur) return;
+    const m = cur.map, rows = field(cur.root, "floor"), size = field(cur.root, "size");
+    if (!rows?.items || !size) { E.setStatus("iso: the map's floor or size is computed in code: change them in the file"); return; }
+    const nu = Math.round(U / m.cell), nv = Math.round(V / m.cell);
+    const next = Array.from({ length: nv }, (_, j) => (m.floor[j] ?? "").slice(0, nu).padEnd(nu, "."));
+    const first = rows.items[0], lineStart = first ? cur.src.lastIndexOf("\n", first.s) + 1 : rows.s;
+    const indent = first ? /^\s*/.exec(cur.src.slice(lineStart))?.[0] ?? "    " : "    ", close = indent.slice(2);
+    putAll([[size, nums([U, V])], [rows, `[\n${next.map((r) => `${indent}${JSON.stringify(r)},`).join("\n")}\n${close}]`]]);
+  }
+
+  /** The keys of a part the form doesn't show, each to change, take away or add (any key the format knows). @param {Lit} n @param {string[]} known @param {[string, string][]} offer keys to add, with a value to begin with */
+  function moreKeys(n, known, offer) {
+    const box = el("div", { style: { marginTop: "6px" } }, [el("div", { className: "cw-dim" }, ["more (as written in the map):"])]);
+    for (const pr of n.props ?? []) {
+      if (!pr.key || known.includes(pr.key)) continue;
+      const vn = pr.node, key = pr.key;
+      box.append(el("div", { style: { display: "flex", gap: "4px", alignItems: "center", margin: "2px 0" } }, [
+        el("span", { style: { minWidth: "70px" } }, [key]),
+        el("input", { value: cur?.src.slice(vn.s, vn.e) ?? "", style: { flex: "1", font: "11px Consolas, monospace" }, title: vn.t === "code" ? "computed: as code" : "a value as JavaScript",
+          onchange: (/** @type {any} */ e) => put(vn, e.target.value) }),
+        button("x", () => { removeKey(n, key); }, `take ${key} away`)]));
+    }
+    const k = /** @type {HTMLInputElement} */ (el("input", { placeholder: "key", style: { width: "70px" } }));
+    const v = /** @type {HTMLInputElement} */ (el("input", { placeholder: "value", style: { width: "110px" } }));
+    box.append(el("div", { style: { margin: "2px 0" } }, [k, v, button("+", () => { if (/^[A-Za-z_]\w*$/.test(k.value.trim()) && v.value.trim()) setKey(n, k.value.trim(), v.value.trim()); }, "add a key")]));
+    const free = offer.filter(([key]) => !field(n, key));
+    if (free.length) box.append(el("div", {}, [el("span", { className: "cw-dim" }, ["add: "]), ...free.map(([key, val]) => button(key, () => setKey(n, key, val), `${key}: ${val}`))]));
+    return box;
+  }
+
+  /** The room's own values (nothing picked): its size, where it sits on the screen, the picture's size, the walls' margin. */
+  function roomBox() {
+    const m = cur?.map, root = cur?.root, sec = el("div", { className: "cw-sec" }, [el("div", { style: { fontWeight: "bold" } }, [`room ${cur?.id}`])]);
+    if (!m || !root) return sec;
+    /** @param {string} key @param {number[]} v */
+    const pairSet = (key, v) => { const f = field(root, key); if (f) put(f, nums(v)); else setKey(root, key, nums(v)); };
+    sec.append(
+      el("div", {}, [numField("U", m.size[0], (x) => resize(x, m.size[1])), numField("V", m.size[1], (x) => resize(m.size[0], x)), el("span", { className: "cw-dim" }, [` m, cells of ${m.cell} m`])]),
+      el("div", {}, [numField("at x", m.at[0], (x) => pairSet("at", [x, m.at[1]])), numField("y", m.at[1], (x) => pairSet("at", [m.at[0], x])), el("span", { className: "cw-dim" }, [" the back corner on the screen"])]),
+      el("div", {}, [numField("screen w", m.screen[0], (x) => pairSet("screen", [x, m.screen[1]])), numField("h", m.screen[1], (x) => pairSet("screen", [m.screen[0], x]))]),
+      el("div", {}, [numField("margin", m.margin ?? 0.2, (x) => setKey(root, "margin", num(x))), el("span", { className: "cw-dim" }, [" how far feet keep from walls and props"])]),
+      el("div", { className: "cw-dim", style: { marginTop: "4px" } }, ["Click a part over the picture: a prop (orange), an opening (cyan), a spot (yellow), a lamp, a wall (violet; its ends drag), the stairs, a no-walk rect (red). Drag to move it (0.05 m steps)."]),
+      moreKeys(root, ["size", "cell", "floor", "at", "screen", "walls", "openings", "props", "stairs", "nowalk", "spots", "lights", "margin"], []));
     return sec;
   }
 
@@ -626,12 +853,14 @@
 
   /** Arrows nudge the selected part along the floor's axes (right/left: u, down/up: v; Shift: 0.25 m). @param {KeyboardEvent} e */
   function key(e) {
-    if (!cur || !sel || sel.kind === "wall") return false;
+    if (!cur || !sel) return false;
     const d = /** @type {Record<string, number[]>} */ ({ ArrowRight: [1, 0], ArrowLeft: [-1, 0], ArrowDown: [0, 1], ArrowUp: [0, -1] })[e.key];
     if (!d) return false;
     const k = e.shiftKey ? 0.25 : SNAP, du = d[0] * k, dv = d[1] * k, it = partOf(sel);
     if (sel.kind === "spot") commit("spot", sel.i, [snap(it[0] + du), snap(it[1] + dv), ...it.slice(2)]);
     else if (sel.kind === "opening") { const w = cur.map.walls[it.wall], s = w.from[1] === w.to[1] ? du : dv; commit("opening", sel.i, { from: it.from + s, to: it.to + s }); }
+    else if (sel.kind === "wall" || sel.kind === "stairs") commit(sel.kind, sel.i, { from: [snap(it.from[0] + du), snap(it.from[1] + dv)], to: [snap(it.to[0] + du), snap(it.to[1] + dv)] });
+    else if (sel.kind === "nowalk") commit("nowalk", sel.i, [snap(it[0] + du), snap(it[1] + dv), it[2], it[3]]);
     else commit(sel.kind, sel.i, { at: [snap(it.at[0] + du), snap(it.at[1] + dv), ...(sel.kind === "light" ? [it.at[2]] : [])] });
     return true;
   }
@@ -649,6 +878,6 @@
   // its guide in the Help tab (F1 here opens it): docs/editor-iso.md, read through the studio
   E.studio.read("docs/editor-iso.md").then((md) => E.modules.help?.addBook({ id: "iso", title: "Iso (the game)", file: "docs/editor-iso.md", md }, { iso: "intro" }))
     .catch(() => { /* no guide: the tab works without it */ });
-  E.modules.iso = { open, whereFrom, hit, get map() { return cur?.map; }, get src() { return cur?.src; }, get selected() { return sel; }, select(/** @type {any} */ s) { sel = s; E.refresh(); }, commit, paintCell, setTool(/** @type {string} */ t, /** @type {string} */ k) { tool = t; if (k !== undefined) floorKey = k; E.refresh(); }, get origin() { return origin; }, get originAt() { return originAt; }, boot, value, field, place, removeKey,
+  E.modules.iso = { open, whereFrom, hit, get map() { return cur?.map; }, get src() { return cur?.src; }, get selected() { return sel; }, select(/** @type {any} */ s) { sel = s; E.refresh(); }, commit, paintCell, setTool(/** @type {string} */ t, /** @type {string} */ k) { tool = t; if (k !== undefined) floorKey = k; E.refresh(); }, get origin() { return origin; }, get originAt() { return originAt; }, boot, value, field, place, removeKey, drawn, deleteWall, cutFloor, resize,
     setAdd(/** @type {string} */ k, /** @type {string} */ kit) { addKind = k; if (kit !== undefined) addKit = kit; tool = "add"; E.refresh(); } };
 })();

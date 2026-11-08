@@ -27,8 +27,9 @@ item or once-mark makes). The editor shows it too (the tab Connections, with the
 hotspot with the script in Things, a fact lists every place that sets or asks it, and Things shows a hotspot's steps. Next, if
 wanted: a timetable of the evenings (who is where at which tick), the city's map with the cameras, the hints over the chart.
 Rooms in the editor (2026-11-08): the engine's tab Map (every room, its exits and script warps, unreachable and broken ways) and
-the game's tab Iso (`game/editor/iso.js`): a street-mode room's map edited over its picture (parts moved, added, deleted, the
-floor painted), saved back value by value and baked from there, the Room tab of a baked room warning that its shapes come from
+the game's tab Iso (`game/editor/iso.js`): a street-mode room's map edited in full over its picture (every part of the format
+drawn, moved, deleted, walls with their openings renumbered, the stairs and their hole, the floor painted, the room resized,
+every other key as written), saved back value by value and baked from there, the Room tab of a baked room warning that its shapes come from
 the bake; "Where from?" on a pixel opens the kit piece or map line that painted it (the bake now records it). Painting pixels
 over a baked background was dropped (the user's decision): the art stays code, changed in the map and the kit.
 
