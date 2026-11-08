@@ -136,6 +136,11 @@ Planned (PLAN.md §3): `feed.js`, `ledger.js`, `money.js`, `routines/<chapter>.j
   "Where from?" (or Alt+click) on a pixel opens the kit piece or the map line that made it. Change the map there or in the
   file, never the layout's numbers (the Room tab of a baked room says so on top). A spot's name is what the game calls
   (`Nagiwa.at.<room>.<spot>`): rename one in the map and the game together.
+- The tab Film (engine) puts a sequence (the intro) on a timeline under the picture: its shots, rooms, camera drives,
+  `float`s, captions and music in lanes; the playhead shows any moment (Space plays from it); a bar's end drags its
+  length, a step that goes on at once drags between the waits, steps are added at the playhead; a camera step's frame
+  drags on the room's map. The changes go into `game/intro.js` itself (only the steps changed, the comments kept);
+  Ctrl+S writes it. The intro's shots the game draws itself (`float`) have no map: their timing is the `float` bar.
 - Art: `sh tools/build_art.sh [test | characters | ui | title | intro | cams | mock | room <id> | rooms]` (no argument:
   everything).
 - Sounds: `node tools/render-sounds.mjs` (every sound of `game/sounds.js` into `build/sounds/`, `all.wav`
