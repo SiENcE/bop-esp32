@@ -16,9 +16,11 @@
 //            the glass), lucky_door (open: the light pouring out under a noren), lucky_sign (LUCKY STATIC in
 //            tubes, the Y stuttering), ad_screen (NAGI·WA, SLEEP BETTER, a sleeping face; the other half
 //            broken: static, cracks from an impact), alley_gate (a lattice gate chained shut, DRAIN MKT, the
-//            steps down into the dark, a lamp far below)
+//            steps down into the dark, a lamp far below), alley_gate_open (the same, the gate pushed aside),
+//            row_passage (the way through to Jade Row: its frame; inside it the floor "j" and the walls
+//            "row_tunnel"), row_sign (JADE / ROW)
 //   props    vending (a noodle machine with a mood: its little face), bao_cart (the cart, its counter, the
-//            pot, the umbrella, the lantern), bins (a wheelie bin, the lid held up by a bag), string_lights,
+//            pot with Bao's ladle in it, the umbrella, the lantern), row_lantern (in the passage), bins (a wheelie bin, the lid held up by a bag), string_lights,
 //            scaffold (the fitter's bay: boards, a ladder, a sleeping bag under the deck, his stove, his washing
 //            run across the half of the screen that is another contract)
 // The city's text is English art (style guide §8a); Juno says what it means in German. Keys "!k" are never
@@ -48,7 +50,8 @@ const KOW = (() => {
 
   // ---------------------------------------------------------------- floors
   // the cable Bao's cart runs on, stolen from the electrical box on the Kessel Block, across the sidewalk
-  const CABLE = [[0.04, 5.35], [0.5, 4.9], [0.95, 4.1], [1.35, 3.35], [1.8, 2.8], [2.2, 2.55]]
+  // (the box is just inside the passage to Jade Row, on its side wall: the cable comes out along it)
+  const CABLE = [[-0.32, 5.07], [0.1, 5.07], [0.5, 4.9], [0.95, 4.1], [1.35, 3.35], [1.8, 2.8], [2.2, 2.55]]
   const cable = (u, v) => { const d = toLine(u, v, CABLE); return d < 0.022 ? "k" : d < 0.04 && v < CABLE[0][1] && (u + v) % 0.3 < 0.2 ? "1" : null }
   // the sidewalk: 0.5 m slabs, two ages of them; one cracked across, one sunken with water in it
   ISOKIT.floor("s", (u, v) => {
@@ -164,21 +167,6 @@ const KOW = (() => {
     const k = LEFT_WINDOWS(s, h); if (k) return k
     if (h >= 3.15 && h < 3.36) return h > 3.32 ? "5" : h < 3.18 ? "1" : "4"            // the cornice
     if (h >= 3.36) return near(h % 1.15, 0.1, 0.02) ? "3" : "2"
-    // the electrical box the cart's cable comes out of: its door, the red lamp, the cable down to the floor
-    if (s >= 5.2 && s < 5.6 && h >= 0.85 && h < 1.6) {
-      if (h > 1.56) return "5"
-      if (s < 5.23 || s > 5.57 || h < 0.88) return "2"
-      if (near(s, 5.32, 0.02) && near(h, 1.45, 0.025)) return "!q"
-      return near(s, 5.4, 0.015) ? "3" : "4"
-    }
-    if (near(s, 5.35, 0.022) && h < 0.85) return "k"
-    // torn posters by it: Nagi·wa's cyan, a gig's magenta over it, both torn
-    if (s >= 5.62 && s < 5.84 && h >= 0.75 && h < 1.4) {
-      const torn = h > 1.3 - 0.06 * Math.sin(s * 70) || (s > 5.74 && h < 0.95)
-      if (torn) return h > 1.36 ? "3" : "2"
-      if (s > 5.7 && h < 1.2) return near(h % 0.08, 0, 0.015) ? "N" : "M"
-      return near(h % 0.1, 0.05, 0.015) ? "v" : "C"
-    }
     // the buzzer panel by the street door (two columns of buttons), the camera over the door
     if (s >= 1.26 && s < 1.42 && h >= 1.05 && h < 1.55) return s < 1.28 || s > 1.4 || h < 1.07 || h > 1.53 ? "2" : near((h - 1.05) % 0.07, 0.035, 0.015) && !near(s, 1.34, 0.02) ? "6" : "4"
     if (s >= 1.28 && s < 1.56 && h >= 2.4 && h < 2.55) return near(s, 1.31, 0.02) && near(h, 2.47, 0.02) ? "!q" : h > 2.52 ? "5" : s > 1.51 ? "2" : "4"
@@ -409,11 +397,14 @@ const KOW = (() => {
     },
   })
 
-  // ---------------------------------------------------------------- the alley to the Drain Market: shut tonight
-  ISOKIT.opening("alley_gate", {
+  // ---------------------------------------------------------------- the alley to the Drain Market: shut on the
+  // prologue's night (alley_gate), open from Chapter 1 on (alley_gate_open: the lattice pushed together against the
+  // left post, the chain hanging off it, the padlock open on its end; the room shows it over the shut one, see
+  // art/rooms/kowalski.px.js)
+  const alleyGate = (open) => ({
     pad: [0.06, 0, 0.06, 0.1],
     paint(s, h, o) {
-      return pic(o, "alley", [2, 0, 2, 3], (c, X, Y) => {
+      return pic(o, open ? "alley_open" : "alley", [2, 0, 2, 3], (c, X, Y) => {
         const { aw, ah } = o
         c.rect(X - 2, Y - 3, aw + 4, ah + 3, "1"); c.rect(X, Y, aw, ah, "k")
         // the steps going down into the dark, a lamp far down at the bottom
@@ -421,18 +412,34 @@ const KOW = (() => {
         const lx = X + fl(aw / 2), ly = Y + 26
         for (let y = ly - 7; y < ly + 8; y++) for (let x = lx - 7; x < lx + 8; x++) { const d = Math.hypot(x - lx, (y - ly) * 1.3); if (d < 7 && bay(x, y) < 0.7 * (1 - d / 7)) c.px(x, y, "!O") }
         c.rect(lx - 1, ly, 3, 2, "!Q"); c.px(lx, ly, "!R")
-        // the lattice gate pulled across and chained: its rails, the crossing bars
+        // the gate's rails: on top, and its track in the floor
         const g0 = Y + ah - 64
         c.rect(X, g0, aw, 3, "4"); c.hline(X, g0, aw, "5"); c.rect(X, Y + ah - 3, aw, 3, "3")
-        for (let y = g0 + 3; y < Y + ah - 3; y++) for (let x = X; x < X + aw; x++) {
-          const p = (x - X + (y - g0)) % 8, q = (x - X - (y - g0) + 800) % 8
-          if (p === 0 || q === 0) c.px(x, y, "4")
-          if ((x - X) % 8 === 4) c.px(x, y, "3")
+        if (!open) {
+          // the lattice pulled across, its crossing bars; the chain and the padlock in the middle
+          for (let y = g0 + 3; y < Y + ah - 3; y++) for (let x = X; x < X + aw; x++) {
+            const p = (x - X + (y - g0)) % 8, q = (x - X - (y - g0) + 800) % 8
+            if (p === 0 || q === 0) c.px(x, y, "4")
+            if ((x - X) % 8 === 4) c.px(x, y, "3")
+          }
+          const cx = X + fl(aw / 2), cy = Y + ah - 34
+          c.line(cx - 7, cy - 3, cx + 6, cy + 2, "G"); c.line(cx - 7, cy - 2, cx + 6, cy + 3, "g")
+          c.rect(cx - 2, cy + 2, 5, 5, "G"); c.hline(cx - 2, cy + 6, 5, "g"); c.px(cx, cy + 4, "1"); c.rect(cx - 1, cy, 3, 2, "g")
+        } else {
+          // the lattice pushed together against the left post: its bars close, their crossings short zigzags
+          const fw = 6
+          for (let y = g0 + 3; y < Y + ah - 3; y++) for (let x = X; x < X + fw; x++) {
+            const r = (y - g0) % 6
+            if ((x - X) % 2 === 0) c.px(x, y, (x - X) % 4 === 0 ? "4" : "3")
+            else if (r === (x - X) % 6 || r === 5 - ((x - X) % 6)) c.px(x, y, "4")
+          }
+          c.vline(X + fw, g0 + 3, ah - 67, "1")
+          // the chain hangs off the fold, the padlock open at its end
+          const cy = Y + ah - 38
+          c.line(X + fw, cy, X + fw + 2, cy + 9, "G"); c.line(X + fw + 1, cy, X + fw + 3, cy + 9, "g")
+          c.rect(X + fw + 1, cy + 10, 4, 4, "G"); c.hline(X + fw + 1, cy + 13, 4, "g"); c.px(X + fw + 2, cy + 11, "1")
+          c.vline(X + fw + 4, cy + 7, 3, "g")
         }
-        // the chain and the padlock in the middle
-        const cx = X + fl(aw / 2), cy = Y + ah - 34
-        c.line(cx - 7, cy - 3, cx + 6, cy + 2, "G"); c.line(cx - 7, cy - 2, cx + 6, cy + 3, "g")
-        c.rect(cx - 2, cy + 2, 5, 5, "G"); c.hline(cx - 2, cy + 6, 5, "g"); c.px(cx, cy + 4, "1"); c.rect(cx - 1, cy, 3, 2, "g")
         // DRAIN MKT on an enamel plate on the gate's top rail, an arrow down
         const px0 = X, py0 = g0 - 22
         c.rect(px0, py0, aw, 20, "c"); c.rect(px0 + 1, py0 + 1, aw - 2, 18, "C")
@@ -442,6 +449,78 @@ const KOW = (() => {
       })
     },
   })
+  ISOKIT.opening("alley_gate", alleyGate(false))
+  ISOKIT.opening("alley_gate_open", alleyGate(true))
+
+  // ---------------------------------------------------------------- the passage to Jade Row, at the left facade's
+  // near end: a bare concrete frame under a steel lintel, open; inside (the map's open: its floor "j", its walls
+  // "row_tunnel") wet concrete going back into the building, the lane's warm light coming down it from the far end,
+  // just inside the electrical box Bao's cable comes from and a torn poster; JADE / ROW over it on a plate
+  ISOKIT.opening("row_passage", {
+    pad: [0.1, 0, 0.1, 0.12],
+    halo: [{ color: "#ffb860", reach: 0.4, power: 0.9 }],
+    paint(s, h, o) {
+      const { a, e, aw, ah } = o
+      if (a >= 0 && a < aw && e < ah) return null                                                   // the way through
+      if (e >= ah) return e === ah ? "k" : e === ah + 3 ? "6" : a % 6 === 3 && e === ah + 2 ? "6" : "5"   // the steel lintel, rivets
+      if (a === -1 || a === aw) return "k"
+      return a === -3 || a === aw + 2 ? "6" : e % 10 === 6 ? "4" : "5"                             // the frame's bare concrete
+    },
+  })
+  ISOKIT.opening("row_sign", {
+    pad: 0.03,
+    halo: [{ color: "#ffb860", reach: 0.5, power: 1.1 }],
+    paint(s, h, o) {
+      return pic(o, "row_sign", [1, 1, 1, 1], (c, X, Y) => {
+        const { aw, ah } = o
+        c.rect(X - 1, Y - 1, aw + 2, ah + 2, "k"); c.rect(X, Y, aw, ah, "n"); c.rect(X + 1, Y + 1, aw - 2, ah - 2, "!m"); c.rect(X + 2, Y + 2, aw - 4, ah - 4, "n")
+        TXT.draw(c, X + fl(aw / 2), Y + 3, "JADE", "!Q", { font: "hud", align: "center" })
+        TXT.draw(c, X + fl(aw / 2), Y + 10, "ROW", "!Q", { font: "hud", align: "center" })
+      })
+    },
+  })
+  // the passage's floor: poured concrete, wet; the lane's warm light lies on it the deeper it goes (unlit keys: it is
+  // that light); Bao's cable along the wall
+  const deepLight = (d, x, y, n) => {
+    const t = (d - 0.12) / 0.7 + n
+    if (t < 0) return null
+    const b = ISO.bay(x, y)
+    return t > 0.85 ? (b < 0.6 ? "!Q" : "!P") : t > 0.55 ? (b < 0.5 ? "!P" : "!A") : t > 0.25 ? (b < 0.45 ? "!A" : "!a") : b < t * 2.2 ? "!a" : null
+  }
+  ISOKIT.floor("j", (u, v, o) => {
+    const k = cable(u, v); if (k) return k
+    if (near(u % 0.6, 0, 0.02)) return "e"
+    return deepLight(-u, o.x, o.y, near(v, 5.43, 0.2) ? 0.1 : -0.1) ?? (ih(fl(u * 9), fl(v * 7)) < 0.12 ? "f" : "z")
+  })
+  // its walls: the side wall we see into (depth from the mouth), the far end (out of sight)
+  ISOKIT.wall("row_tunnel", (s, h, o) => {
+    if (o.len < 1) return "!Q"
+    const d = o.len - s
+    if (h < 0.06) return "1"
+    // the electrical box the cart's cable comes out of: its door, the red lamp, the cable down to the floor
+    if (d >= 0.06 && d < 0.4 && h >= 0.85 && h < 1.5) {
+      if (h > 1.46) return "5"
+      if (d < 0.09 || d > 0.37 || h < 0.88) return "2"
+      if (near(d, 0.3, 0.02) && near(h, 1.36, 0.025)) return "!q"
+      return near(d, 0.22, 0.015) ? "3" : "4"
+    }
+    if (near(d, 0.3, 0.02) && h < 0.85) return "k"
+    // a poster for a gig, magenta, half torn off
+    if (d >= 0.46 && d < 0.66 && h >= 0.5 && h < 1.1 && !(h > 1.0 - 0.06 * Math.sin(d * 70))) return near(h % 0.08, 0, 0.015) ? "N" : "M"
+    if (near(h, 1.95, 0.03)) return d > 0.5 ? "!A" : "5"                                             // a pipe along it
+    // concrete, the lane's light on it the deeper it goes (the lower, the more: it comes off the wet floor too)
+    return deepLight(d, o.x, o.y, (1.2 - h) * 0.12) ?? (near(h % 0.6, 0, 0.012) ? "2" : "3")
+  })
+  // the paper lantern just inside, under the passage's ceiling (drawn through the opening: the map's `behind`)
+  ISOKIT.prop("row_lantern", {
+    draw(pen, p) {
+      const [x, y] = pen.P(p.at[0] + p.foot[0] / 2, p.at[1] + p.foot[1] / 2, p.h)
+      pen.at(p.at[0], p.at[1], p.h - 0.2, "v")
+      pen.vline(x, y, 3, "k")
+      pen.grid(x - 2, y + 3, [".kkk.", "kQRQk", "kRWRk", "kQRQk", ".kPk.", "..k.."], { k: "k", Q: "!Q", R: "!R", W: "!W", P: "!P" })
+    },
+  })
+
 
   // ---------------------------------------------------------------- props
   // the noodle machine: cups behind glass, one row sold out, the dispenser flap; over the buttons its little
@@ -551,22 +630,27 @@ const KOW = (() => {
         if (a >= 4 && a <= 8 && e >= 5 && e <= 16) return a === 4 || e === 16 ? "h" : "H"            // a towel on its hook
         return e % 5 === 0 ? "O" : "P"
       }
-      // the body on its frame, a hand's breadth over the street; under it the dark, the axle, the wheels
+      // the body on its frame, a hand's breadth over the street; under it the dark, the axle, the wheels (drawn
+      // first: they stand under the body, so its sides hide their tops)
       const LIFT = 0.22
-      pen.box(u0 + 0.06, v0 + 0.06, 0.12, du - 0.12, dv - 0.12, 0.03, null, () => "1", () => "1")    // the axle frame
-      pen.box(u0, v0, LIFT, du, dv, H - LIFT, (lu, lv) => (lu > du - 0.06 || lv > dv - 0.06 ? "6" : "5"), side, front)
       const wheel = (a, e) => {
         const d = Math.hypot(a - 4, e - 4)
         return d > 4.3 ? null : d < 1.2 ? "5" : d < 2.6 ? (fl(Math.atan2(e - 4, a - 4) * 2) % 2 ? "3" : "2") : "1"
       }
       for (const uc of [u0 + 0.18, u0 + du - 0.18]) { pen.at(uc, v0 + dv, 0.13, "v"); pen.faceV(v0 + dv - 0.03, uc - 0.13, uc + 0.13, 0, 0.27, (a, e) => wheel(a, e)) }
       pen.at(u0 + du, v0 + 0.18, 0.13, "u"); pen.faceU(u0 + du - 0.03, v0 + 0.05, v0 + 0.31, 0, 0.27, (a, e) => wheel(a, e))
+      pen.at()
+      pen.box(u0 + 0.06, v0 + 0.06, 0.12, du - 0.12, dv - 0.12, 0.03, null, () => "1", () => "1")    // the axle frame
+      pen.box(u0, v0, LIFT, du, dv, H - LIFT, (lu, lv) => (lu > du - 0.06 || lv > dv - 0.06 ? "6" : "5"), side, front)
       // on the counter: the stockpot, the bowls stacked, the chopsticks in their cup
       const top = (u, v, h) => { pen.at(u, v, h, "up"); return pen.P(u, v, h) }
       // (copper, its own light: steel went under in the counter's cyan glow), standing in its own dark ring on the counter
       { const [x, y] = top(u0 + 0.75, v0 + 0.3, H); pen.ellipse(x, y + 1, 9, 4, "k"); pen.ellipse(x, y, 7, 3, "!O"); pen.rect(x - 7, y - 8, 15, 8, "!P"); pen.rect(x - 7, y - 8, 3, 8, "!Q"); pen.rect(x + 4, y - 8, 4, 8, "!O")
         pen.vline(x - 8, y - 8, 8, "k"); pen.vline(x + 8, y - 8, 8, "k")
-        pen.ellipse(x, y - 8, 7, 3, "!R"); pen.ellipse(x, y - 8, 6, 2, "!O"); pen.hline(x - 3, y - 8, 6, "!P"); pen.px(x + 2, y - 9, "!W") }
+        pen.ellipse(x, y - 8, 7, 3, "!R"); pen.ellipse(x, y - 8, 6, 2, "!O"); pen.hline(x - 3, y - 8, 6, "!P"); pen.px(x + 2, y - 9, "!W")
+        // Bao's ladle stands in the broth: its handle comes up over the back rim to his hand (art/characters/bao.px.js
+        // holds the rest of it, its column right over this one), a ring in the broth where it goes in
+        pen.vline(x + 1, y - 12, 4, "G"); pen.px(x, y - 8, "!R"); pen.px(x + 2, y - 8, "!R") }
       { const [x, y] = top(u0 + 0.25, v0 + 0.42, H + 0.02); pen.ellipse(x, y, 3, 1, "H"); pen.hline(x - 2, y, 5, "h"); pen.ellipse(x, y - 2, 3, 1, "H"); pen.hline(x - 2, y - 2, 5, "h") }
       { const [x, y] = top(u0 + 0.12, v0 + 0.15, H); pen.rect(x - 1, y - 4, 3, 4, "O"); pen.line(x - 1, y - 9, x, y - 4, "P"); pen.line(x + 1, y - 9, x + 1, y - 4, "R") }
     },

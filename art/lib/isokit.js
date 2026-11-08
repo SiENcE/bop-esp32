@@ -88,7 +88,9 @@
 //   `<id>_<prop id>` per prop (outlined in ink, pivot bottom-centre, drawn where it stands; an anim when its
 //   kit animates or a stuttering light lies on it). Returns { map, P, props, layout }: props[id] = { name,
 //   box: [x, y, w, h] (the sprite on the screen, outline included), at: [x, y] (its bottom-centre, where the
-//   engine places it), frames }, layout = ISOMAP.layout(map) with each prop's `at` and `box` added.
+//   engine places it), frames }, layout = ISOMAP.layout(map) with each prop's `at` and `box` added, BG the
+//   painted frames (pixel buffers: k[y * W + x] a key) and blit(c, B, x0, y0) to draw one. define: false only
+//   paints the frames and returns { BG, blit } (a variant of the room, cut out by the caller).
 "use strict";
 
 const ISOKIT = (() => {
@@ -414,7 +416,7 @@ const ISOKIT = (() => {
   const blit = (c, B, ox = 0, oy = 0) => { for (let y = 0; y < c.h; y++) for (let x = 0; x < c.w; x++) { const X = x + ox, Y = y + oy; if (X < 0 || Y < 0 || X >= B.W || Y >= B.H) continue; const k = B.k[Y * B.W + X]; if (k) c.px(x, y, k) } }
 
   // ---------------------------------------------------------------- the bake
-  function bake(map, { id, frames = 12, fps = 10, bg = "k", glows = [], thick = 0.25, slab = 0.3, stub = 0.17, sheen = null } = {}) {
+  function bake(map, { id, frames = 12, fps = 10, bg = "k", glows = [], thick = 0.25, slab = 0.3, stub = 0.17, sheen = null, define = true } = {}) {
     const G = geometry(map), [W, H] = map.screen, P = G.P
     const ceiling = Math.max(...map.walls.map((w) => w.h))
     // the openings, each with its wall, its rect along it and its crossing test for light from outside
@@ -642,6 +644,8 @@ const ISOKIT = (() => {
     }
     const BG = []
     for (let f = 0; f < frames; f++) BG.push(renderBg(f))
+    // define: false only paints (a variant of the room, cut out by the caller: a gate standing open)
+    if (!define) return { map, P, BG, blit, G, ctx }
     anim(`${id}_bg`, { w: W, h: H, frames, fps }, (c) => { c.rect(0, 0, W, H, bg); blit(c, BG[c.frame ?? 0]) }, ...glows)
 
     // ---- the props: each drawn where it stands, lit, cut to its box, outlined, pivot bottom-centre
@@ -694,7 +698,7 @@ const ISOKIT = (() => {
     const runs = []
     for (let i = 0; i < who.length;) { let j = i; while (j < who.length && who[j] === who[i]) j++; runs.push(who[i], j - i); i = j }
     console.log("ISO_PICK " + JSON.stringify({ id, w: W, h: H, picks, runs }))
-    return { map, P, props, layout, G, ctx }
+    return { map, P, props, layout, G, ctx, BG, blit }
   }
 
   return { KIT, TINT, SHADE, familyOf, floor, wall, opening, prop, stairs, grid, first, raster, bake, intensity, lightsOf, buffer, geometry, makePen, lightPass }

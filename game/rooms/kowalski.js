@@ -1,7 +1,8 @@
 // Nagiwa: Kowalski Street (kapitel0-design §6.2 steps 16-17, §7.1), the street outside the Kessel Block, baked
 // from its map (art/rooms/kowalski.map.js); 416 px wide, it scrolls. The Kessel Block's door back in, LUCKY
 // STATIC (the bar, enterable in Chapter 1), Bao's cart under its umbrella, the noodle machine, the big broken
-// ad screen (the prologue ends there: JUNO.), the alley down to the Drain Market (shut tonight), the bins.
+// ad screen (the prologue ends there: JUNO.), the alley down to the Drain Market (shut on the prologue's night),
+// the bins; the passage to Jade Row at the left end (game/rooms/jade_row.js gives it its hotspot).
 "use strict";
 
 (function () {
@@ -44,7 +45,9 @@
   const LOOK = {
     background: "kowalski_bg", size: /** @type {[number, number]} */ ([416, 180]),
     // the props, and over the ad screen the prologue's moment (hidden until it comes: step 17)
-    props: [...AW.props, { id: "ad_fx", image: "kowalski_ad_stutter", at: [AW.adRect[0], AW.adRect[1]], anchor: [0, 0], baseline: 0, hidden: true }],
+    props: [...AW.props, { id: "ad_fx", image: "kowalski_ad_stutter", at: [AW.adRect[0], AW.adRect[1]], anchor: [0, 0], baseline: 0, hidden: true },
+      // the alley's gate pushed aside from Chapter 1 on (shut on the prologue's night): a condition, no state of its own
+      { id: "alley_open", image: "kowalski_alley_open", at: AW.alleyOpen, anchor: [0, 0], baseline: 0, if: "day>=2" }],
     // the map's lamps: the bar's warm light, its sign's magenta, the screen's cyan, the machine, the lantern
     light: { ambient: 0.8, color: "#d4dcf4", lamps: AW.lamps.map((/** @type {any} */ { bake, zone, ...lamp }) => lamp) },
     // the rain in two layers (far and dim, near and bright), the light hanging in it, glints, drops

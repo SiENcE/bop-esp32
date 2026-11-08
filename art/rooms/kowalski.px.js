@@ -8,6 +8,8 @@
 //                     out of the drain
 //   kowalski_vending, kowalski_cart, kowalski_umbrella, kowalski_bins, kowalski_scaffold, kowalski_lights   the props, pivot
 //                     bottom-centre (the string lights and cables without an outline)
+//   kowalski_alley_open   the alley's gate pushed aside (from Chapter 1 on), only what differs from the shut
+//                     one, its top-left at layout.alleyOpen
 //   kowalski_ad_stutter, kowalski_ad_eye, kowalski_ad_juno   the prologue's moment (step 17) on the ad screen,
 //                     each the size of the screen's rect in the layout (openings.ad), its top-left there:
 //                     the screen failing (8 frames, a loop), the eye opening in the static and turning to look
@@ -63,6 +65,21 @@ const KOWALSKI = ISOKIT.bake(KW_MAP, {
   anim("kowalski_ad_stutter", { w: BOX[2], h: BOX[3], frames: 8, fps: 10 }, onScreen("stutter"), ...glows)
   anim("kowalski_ad_eye", { w: BOX[2], h: BOX[3], frames: 20, fps: 10 }, onScreen("eye"), ...glows)
   anim("kowalski_ad_juno", { w: BOX[2], h: BOX[3], frames: 8, fps: 10 }, onScreen("juno"), ...glows)
+}
+
+// ---- the alley's gate standing open (from Chapter 1 on): the street baked again with the gate pushed aside; what
+// differs from the shut one is kowalski_alley_open, laid over the picture at layout.alleyOpen (game/rooms/kowalski.js
+// shows it from day 2). Only frame 0: nothing that stutters reaches the alley.
+{
+  const OPEN = ISOKIT.bake({ ...KW_MAP, openings: KW_MAP.openings.map((o) => (o.id === "alley" ? { ...o, kit: "alley_gate_open" } : o)) },
+    { id: "kowalski", frames: 1, sheen: { reach: 3.4, map: (u, v) => (KOW.inPuddle(u, v) ? ISO.MIRROR : ISO.SHEEN), keys: (u, v) => KOW.cellAt(u, v) !== "." }, define: false })
+  const A = KOWALSKI.BG[0], B = OPEN.BG[0], W = A.W
+  let x0 = Infinity, y0 = Infinity, x1 = -1, y1 = -1
+  for (let i = 0; i < B.k.length; i++) if (B.k[i] !== A.k[i]) { const x = i % W, y = Math.floor(i / W); x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x); y1 = Math.max(y1, y) }
+  sprite("kowalski_alley_open", { w: x1 - x0 + 1, h: y1 - y0 + 1 }, (c) => {
+    for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) { const i = y * W + x; if (B.k[i] !== A.k[i] && B.k[i]) c.px(x - x0, y - y0, B.k[i]) }
+  })
+  KOWALSKI.layout.alleyOpen = [x0, y0]
 }
 
 console.log("ISO_LAYOUT " + JSON.stringify({ id: "kowalski", ...KOWALSKI.layout }))

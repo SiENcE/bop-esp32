@@ -81,16 +81,42 @@ const JS = (() => {
   }
   // ---------------------------------------------------------------- B: the lane, down its length (metres on the ground: z = 1 is where Juno walks, 30 px to the metre)
   const B = { W: 320, H: 180, VX: 160, VY: 80, EYE: 70, HALF: 105, END: 4.4 }
+  // the passage in the right-hand wall, back to Kowalski Street: an arch (z 0.62 to 0.88 along the wall), and through it
+  // what the eye sees, cast on: the passage's far side, its floor, its ceiling, the street's cyan coming down it
+  const T = { z0: 0.62, z1: 0.88, side: 2.3, rise: 0.62, ceil: 2.75, eye: 70 / 30 }
+  const tunnel = (z, h) => {
+    const zc = (T.z0 + T.z1) / 2, hw = (T.z1 - T.z0) / 2, q = (z - zc) / hw
+    if (Math.abs(q) > 1.12) return null
+    const top = T.side + T.rise * Math.sqrt(Math.max(0, 1 - q * q))
+    if (h >= top + 0.12) return null
+    if (Math.abs(q) > 1 || h >= top) return Math.abs(q) > 1.06 || h >= top + 0.07 ? "4" : "5"           // the arch's concrete, its edge
+    // the ray from the eye through this point of the wall plane (m = 3.5) runs on into the passage
+    const kWall = T.z1 / z, kFloor = h < T.eye ? T.eye / (T.eye - h) : Infinity, kCeil = h > T.eye ? (T.ceil - T.eye) / (h - T.eye) : Infinity
+    const k = Math.min(kWall, kFloor, kCeil), d = 3.5 * k - 3.5, lit = Math.min(1, d / 1.1)
+    const b = ISO.bay(Math.round(z * 400), Math.round(h * 40))
+    if (k === kCeil) return lit > 0.6 && b < 0.3 ? "c" : "1"
+    if (k === kFloor) return d < 0.08 ? "1" : (b < lit * 0.9 ? (lit > 0.7 ? "C" : "c") : Math.floor(d * 14) % 3 === 0 ? "f" : "e")
+    // its far side: concrete in rows, a pipe, the light growing towards the street
+    const hh = T.eye + k * (h - T.eye)
+    if (Math.abs(hh - 2.0) < 0.05) return lit > 0.5 ? "C" : "4"
+    if (hh < 0.08) return "1"
+    return b < lit * lit ? (lit > 0.75 ? "v" : "C") : b < lit ? "c" : Math.floor(hh / 0.45) % 2 ? "2" : "3"
+  }
   // a face on a wall by depth and height: what it shows; null leaves it plain
   const wallKey = (side, z, h, f) => {
     const box = (z0, z1, h0, h1) => z >= z0 && z < z1 && h >= h0 && h < h1
     const lit = ISO.ihash(Math.floor(z * 3) + side * 9, Math.floor(h * 0.9))
     if (side < 0) {
       if (box(0.98, 1.52, 2.3, 2.85)) return "O"
-      if (box(1.0, 1.42, 0.45, 2.1)) { const s = Math.floor(h * 4); return h < 0.95 ? "P" : (s % 2 === 0 && Math.floor(z * 30) % 2 === 0) ? "P" : "Q" }
-      if (box(1.46, 1.68, 0, 2.15)) return "Q"
+      // Okonkwo's window, his door beside it (wide: the user's, 2026-11-09), the sign over both
+      if (box(1.0, 1.22, 0.45, 2.1)) { const s = Math.floor(h * 4); return h < 0.95 ? "P" : (s % 2 === 0 && Math.floor(z * 30) % 2 === 0) ? "P" : "Q" }
+      if (box(1.26, 1.7, 0, 2.2)) return box(1.26, 1.29, 0, 2.2) || box(1.67, 1.7, 0, 2.2) || h > 2.14 ? "O" : h < 0.06 ? "P" : "Q"
+      // the door out on to the balcony over the shop, lit
+      if (box(0.97, 1.2, 2.97, 4.55)) return box(0.97, 0.99, 2.97, 4.55) || box(1.18, 1.2, 2.97, 4.55) || h > 4.49 ? "O" : Math.floor(z * 60) % 7 === 0 ? "P" : "Q"
       if (box(2.45, 3.2, 0, 2.3)) return h > 1.95 ? "n" : Math.floor(z * 8) % 2 ? "M" : "n"
     } else {
+      // the passage back to Kowalski Street: an arch in the near wall, the way through it lit by the street's cyan
+      if (z >= 0.6 && z < 0.9) { const k = tunnel(z, h); if (k) return k }
       if (box(1.28, 2.05, 0.3, 2.2)) return h > 1.75 ? "M" : h < 0.95 ? "O" : "Q"
       if (box(2.2, 3.0, 0.4, 2.1)) return h > 1.8 ? "c" : Math.floor(h * 4) % 2 ? "C" : "v"
     }
@@ -144,7 +170,7 @@ const JS = (() => {
         }
       } }
     // the shop's name, foreshortened: drawn on the wall's slope
-    const [x0, y0] = bP(-3.5, 1.0, 2.75), [x1] = bP(-3.5, 1.5, 2.75); text(c, Math.round((x0 + x1) / 2), y0 + 10, "OKONKWO", "W")
+    const [x0, y0] = bP(-3.5, 1.0, 2.75), [x1] = bP(-3.5, 1.5, 2.75); text(c, Math.round((x0 + x1) / 2), y0 + 5, "OKONKWO", "W")
   }
   // what stands in the lane, far to near: signs sticking out of the walls towards us, portals over the lane with a big lantern each, lines of small lanterns, the arcade, the parked car, people
   const bFront = (c) => {
@@ -177,8 +203,8 @@ const JS = (() => {
     items.push([1.8, () => { across(1.8, 5.6, 2, "k", 3); across(1.8, 5.6, 2, "m", 2) }])
     items.push([1.16, () => { across(1.16, 5.0, 3, "k", 3); across(1.16, 5.0, 3, "v", 2) }])
     // a balcony on the left-hand facade over the shop: its slab seen from below, a rail, someone leaning on it, washing behind
-    items.push([1.3, () => {
-      const P = (m, z, h) => bP(m, z, h), z0 = 1.05, z1 = 1.62, h0 = 3.32, h1 = 4.25, m0 = -3.5, m1 = -2.62
+    items.push([1.1, () => {
+      const P = (m, z, h) => bP(m, z, h), z0 = 0.92, z1 = 1.32, h0 = 2.95, h1 = 3.75, m0 = -3.5, m1 = -2.62
       for (let x = P(m0, z0, 0)[0]; x <= P(m1, z1, 0)[0]; x++) {
         // the slab's underside and its front edge, row by row between the near and far edges
         const zf = (30 * m1) / (x - 160)
@@ -191,8 +217,8 @@ const JS = (() => {
       // the rail's near side
       const [xa, yt] = P(m0, z0, h1), [xb] = P(m1, z0, h1), [, yf] = P(m0, z0, h0)
       c.hline(xa, yt, xb - xa, "5"); c.hline(xa, yt + 1, xb - xa, "k"); for (let x = xa; x < xb; x += 4) c.vline(x, yt + 1, yf - yt - 1, "k")
-      const [px, pf] = P(-3.0, 1.3, h0); person(c, px, pf, "4", "s", false, 0.74)
-      const [wx, wy] = P(-3.4, 1.42, h1 + 0.5); for (const [dx, k] of [[0, "h"], [7, "U"], [14, "H"]]) c.rect(wx + dx, wy + 2, 5, 8, k)
+      const [px, pf] = P(-3.05, 1.14, h0); person(c, px, pf, "4", "s", false, 0.82)
+      const [wx, wy] = P(-3.4, 1.26, h1 + 0.45); for (const [dx, k] of [[0, "h"], [7, "U"], [14, "H"]]) c.rect(wx + dx, wy + 2, 5, 8, k)
     }])
     // two arcade cabinets with their backs to the left wall, screens towards the lane, someone playing; we see their sides
     for (const [z, bright] of [[2.25, "V"], [1.85, "v"]]) items.push([z, () => {
@@ -246,7 +272,7 @@ const JS = (() => {
   const steam = (c) => { c.plume(24, 62, "mMn", { every: 3, life: 22, rise: 46, wind: -0.15, size: [1, 3], seed: 5, frame: c.frame ?? 0 }) }
   // heads and umbrellas of people between us and the lane, along the picture's lower corners
   const crowd = (c) => {
-    for (const [x, rx] of [[20, 24], [62, 9], [300, 22]]) { c.ellipse(x, 24, rx, 8, "k"); c.ellipse(x, 22, rx - 2, 3, "1") }
+    for (const [x, rx] of [[20, 24], [62, 9]]) { c.ellipse(x, 24, rx, 8, "k"); c.ellipse(x, 22, rx - 2, 3, "1") }
   }
   const bMirror = (c) => {
     const { W, H, VX, VY, EYE } = B

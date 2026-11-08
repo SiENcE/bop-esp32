@@ -111,8 +111,9 @@ const bao = (c, o = {}) => {
 }
 
 const opts = (more) => ({ w: IW, h: IH, outline: "k", pivot: "bottom", ...more })
-// the ladle going round the pot: the hand's offset per frame
-const STIR = [[0, 0], [1, 0], [1, 1], [0, 1], [0, 0], [1, 0], [1, 1], [0, 1]]
+// the ladle going up and down in the pot: the hand's offset per frame. Only up and down: the ladle's handle
+// over the broth is the cart's (art/kit/kowalski.kit.px.js), in the column right under his fist
+const STIR = [[0, 0], [0, 0], [0, 1], [0, 1], [0, 0], [0, 0], [0, 1], [0, 1]]
 for (const [dir, flip] of [["se", null], ["sw", "x"]]) {
   const o = flip ? { flip } : {}
   anim(`bao_idle_${dir}`, opts({ frames: 8, fps: 6, ...o }), (c) => bao(c, { hand: STIR[c.frame], blink: c.frame === 6 }))

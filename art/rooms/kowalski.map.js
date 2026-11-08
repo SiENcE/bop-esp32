@@ -3,7 +3,8 @@
 // Two facades meet at the back corner. On the left one the Kessel Block's street door, then LUCKY STATIC
 // (its window, its door, its neon over them; enterable in Chapter 1). On the right one the vending machine,
 // the big broken ad screen (the prologue's end: JUNO.), the alley down to the Drain Market at the far end
-// (closed tonight). In front Bao's cart under its umbrella; string lights across; puddles. Before the screen's
+// (shut on the prologue's night, open from Chapter 1 on). At the left facade's near end the passage through the
+// building into Jade Row, its name over it. In front Bao's cart under its umbrella; string lights across; puddles. Before the screen's
 // left half the fitter's scaffold, always (story §10c): he lives on it.
 "use strict";
 
@@ -39,6 +40,10 @@ ISO_MAPS.kowalski = {
     { id: "lucky_sign", wall: 1, from: 1.6, to: 4.8, h: [2.35, 3.05], kit: "lucky_sign" },
     { id: "ad", wall: 0, from: 2.2, to: 5.6, h: [1.1, 3.35], kit: "ad_screen" },
     { id: "alley", wall: 0, from: 6.0, to: 7.0, h: [0, 3.0], kit: "alley_gate" },
+    // the passage to Jade Row: open, its inside goes back into the building (the lane's light at its end is out of
+    // sight; its lantern and the electrical box Bao's cable is stolen from are just inside)
+    { id: "west", wall: 1, from: 5.02, to: 5.84, h: [0, 2.3], kit: "row_passage", open: { depth: 3.0, side: 0, h: 2.3, floor: "j", wall: "row_tunnel" } },
+    { id: "west_sign", wall: 1, from: 5.02, to: 5.84, h: [2.45, 3.0], kit: "row_sign" },
   ],
   props: [
     { id: "vending", kit: "vending", at: [0.9, 0.05], foot: [0.7, 0.55], h: 1.85 },
@@ -52,10 +57,12 @@ ISO_MAPS.kowalski = {
     { id: "umbrella", kit: "bao_umbrella", over: "cart", at: [2.2, 2.0], foot: [1.1, 0.6], h: 2.4, block: false, seeThrough: true },
     // the string lights across the street, high over everyone (block: false: they stand on nothing)
     { id: "lights", kit: "string_lights", at: [0.05, 0.05], foot: [0.1, 0.1], h: 3.5, block: false },
+    // in the passage, just inside: a paper lantern under its ceiling (baked into the picture through the opening)
+    { id: "row_lantern", kit: "row_lantern", behind: "west", at: [-0.2, 5.38], foot: [0.12, 0.12], h: 2.25, block: false },
   ],
   spots: {
     arrive: [0.6, 0.75, "se"], kessel_door: [0.4, 0.7, "nw"], vending: [1.25, 0.85, "ne"], ad: [3.8, 1.2, "ne"],
-    alley: [6.0, 0.9, "ne"], lucky: [0.6, 2.8, "nw"], lucky_door: [0.5, 4.45, "nw"], bins: [5.6, 0.85, "ne"],
+    alley: [6.0, 0.9, "ne"], west: [0.3, 5.43, "nw"], lucky: [0.6, 2.8, "nw"], lucky_door: [0.5, 4.45, "nw"], bins: [5.6, 0.85, "ne"],
     bao: [2.75, 1.7, "sw"], eat: [2.75, 2.95, "ne"],
     reparatur: [2.55, 0.42, "ne", 1.1], scaffold: [3.5, 1.12, "ne"],    // the fitter on his deck, where Juno talks up to him
     steam: [2.95, 2.3, null, 1.22],    // over Bao's pot (the steam's fx rises from it)
@@ -70,6 +77,8 @@ ISO_MAPS.kowalski = {
     { id: "vending", at: [1.25, 0.65, 1.2], r: 50, power: 0.8, color: "#dafcff", flicker: 0.05, glow: 5, bake: { reach: 2.0, power: 1.4 } },
     // the fitter's stove: a small warm pool on his boards
     { id: "stove", at: [3.45, 0.44, 1.3], r: 18, power: 0.4, color: "#ffb860", flicker: 0.15, bake: { reach: 0.75, power: 1.6 } },
+    // the passage's lantern and the lane's light behind it, spilling out on the sidewalk at its mouth
+    { id: "row", at: [0.12, 5.43, 1.7], r: 46, power: 0.7, color: "#ffb860", flicker: 0.08, bake: { reach: 1.7, power: 1.5, floor: 1.4 } },
     { id: "lantern", at: [2.47, 2.72, 1.95], r: 50, power: 0.8, color: "#ffd58a", flicker: 0.1, glow: 6, bake: { reach: 1.9, power: 1.6 } },
   ],
 };
