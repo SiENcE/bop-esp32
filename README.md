@@ -92,8 +92,8 @@ Skript, das der Zug ausführt; ein Fakt listet jede Stelle, die es setzt oder ab
 Mit dem Studio hat der Editor zwei Reiter für die Räume. **Map** zeigt alle Räume als Bilder mit ihren
 Ausgängen und Skript-Warps, dazu, was vom Start aus nicht erreichbar ist und welche Wege ins Leere führen.
 **Iso** bearbeitet die Karte eines Straßen-Raums (`art/rooms/<id>.map.js`) direkt über seinem Bild:
-Requisiten, Türen und Fenster, Spots und Lampen verschieben, den Boden mit den Schlüsseln des Kits bemalen,
-Werte im Inspektor ändern. „Save“ schreibt nur die geänderten Werte zurück (Kommentare bleiben), „Bake“
+Requisiten, Türen und Fenster, Spots und Lampen verschieben, neu anlegen und löschen, den Boden mit den
+Schlüsseln des Kits bemalen, Werte im Inspektor ändern. „Save“ schreibt nur die geänderten Werte zurück (Kommentare bleiben), „Bake“
 baut den Raum neu und lädt die Grafik. „Where from?“ (oder Alt+Klick) auf ein Pixel nennt das Teil der
 Karte und das Kit-Stück, das es gemalt hat, und öffnet die Zeile im Quelltext. Die Hintergründe bleiben so
 Code: Gemalt wird im Kit, nicht in den Pixeln.
