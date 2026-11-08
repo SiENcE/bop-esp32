@@ -124,7 +124,9 @@ Planned (PLAN.md §3): `feed.js`, `ledger.js`, `money.js`, `routines/<chapter>.j
 - Engine copy: `sh tools/sync-engine.sh`.
 - The game's connections: `sh tools/graph.sh [prolog | main | <thread>]` searches as the checks do, watches every move (what it
   needs, what it brings about) and writes `build/graph/<name>.js`; open the link it prints (the engine's `graph.html`): the
-  puzzle dependency chart with the winning way, and the state budget (which flag multiplies the states by how much).
+  puzzle dependency chart with the winning way, and the state budget (which flag multiplies the states by how much). In the
+  editor it is the tab Connections: the studio's tasks "graph: prolog" and "graph: kapitel1 main" make the data
+  (`studio.json`, the folder `build/graph`), a step opens its script in Things, a fact lists every place that sets or asks it.
 - Art: `sh tools/build_art.sh [test | characters | ui | title | intro | cams | mock | room <id> | rooms]` (no argument:
   everything).
 - Sounds: `node tools/render-sounds.mjs` (every sound of `game/sounds.js` into `build/sounds/`, `all.wav`

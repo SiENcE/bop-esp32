@@ -23,8 +23,9 @@ The engine's version is in `lib/cutaway/VERSION.txt`.
 The game's connections can be looked at (2026-11-08): `sh tools/graph.sh [prolog | main | <thread>]` (the engine's
 `graph.mjs` and `graph.html`) searches as the checks do and watches every move: the puzzle dependency chart (steps, the
 facts they need and bring about, the winning way numbered) and the state budget (how many times more states each flag,
-item or once-mark makes). Next, if wanted: a timetable of the evenings (who is where at which tick), the city's map with
-the cameras, the hints over the chart.
+item or once-mark makes). The editor shows it too (the tab Connections, with the studio's tasks "graph: …"): a step opens its
+hotspot with the script in Things, a fact lists every place that sets or asks it, and Things shows a hotspot's steps. Next, if
+wanted: a timetable of the evenings (who is where at which tick), the city's map with the cameras, the hints over the chart.
 
 What was added on 2026-11-04 (in order):
 - every text through i18n (`Nagiwa.t`, the engine's `i18n.declare`); a Chinese layout test

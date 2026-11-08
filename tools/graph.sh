@@ -10,8 +10,8 @@ off() { r=""; [ "$1" = main ] || r=",off_main,know_meeting"; [ "$1" = motte ] &&
 mkdir -p build/graph
 for what in ${@:-prolog main}; do
   if [ "$what" = prolog ]; then
-    node lib/cutaway/tools/graph.mjs index.html --act prolog --set off_roof --out build/graph/prolog.js | grep -E "states in|^open"
+    node lib/cutaway/tools/graph.mjs index.html --act prolog --set off_roof --out build/graph/prolog.js | grep -E "states in|^wrote|^open"
   else
-    node lib/cutaway/tools/graph.mjs index.html --act kapitel1 --set "$(off "$what")" --out "build/graph/kapitel1_$what.js" | grep -E "states in|^open"
+    node lib/cutaway/tools/graph.mjs index.html --act kapitel1 --set "$(off "$what")" --out "build/graph/kapitel1_$what.js" | grep -E "states in|^wrote|^open"
   fi
 done

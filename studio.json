@@ -9,11 +9,15 @@
     "art": "art/import",
     "artAtlas": "assets/imported.js",
     "audio": "assets/audio.js",
-    "voices": "assets/voices.{lang}.js"
+    "voices": "assets/voices.{lang}.js",
+    "graph": "build/graph"
   },
   "tasks": {
     "validate": ["node", "lib/cutaway/tools/validate.mjs", "index.html"],
-    "solve": ["node", "lib/cutaway/tools/solve.mjs", "index.html", "--full"],
+    "solve: prolog": ["node", "tools/solve-act.mjs", "prolog", "--full", "--set", "off_roof"],
+    "solve: kapitel1 main": ["node", "tools/solve-act.mjs", "kapitel1", "--full", "--set", "off_roof,off_zeitung,off_imai,off_traeger,off_varga,off_tide,off_motte,off_vesper"],
+    "graph: prolog": ["sh", "tools/graph.sh", "prolog"],
+    "graph: kapitel1 main": ["sh", "tools/graph.sh", "main"],
     "art: everything": ["sh", "tools/build_art.sh"],
     "art: test street": ["sh", "tools/build_art.sh", "test"]
   }
