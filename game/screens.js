@@ -1,7 +1,7 @@
 // Nagiwa: what the deck and the feeds draw over their rooms (docs/style-guide.md §8–9,
 // docs/kapitel0-design.md §2–3). The rooms hold the hotspots (so the solver sees every click); this
 // layer only draws: the feeds' display (OSD), the implant's overlay and the zoom window (the deck is
-// game/deck.js). A room says what it is: `feed: "cam03"` (a key of Nagiwa.cams).
+// game/deck.js), and in street mode the implant's timestamp. A room says what it is: `feed: "cam03"` (a key of Nagiwa.cams).
 "use strict";
 
 (function () {
@@ -124,6 +124,33 @@
   let mark = null;
   Cutaway.script.action("implant_mark", (s) => { mark = s.implant_mark || null; });
 
+  // ------------------------------------------------------------------ the implant's timestamp (street mode)
+  // Juno sees the street as a camera sees its picture: the implant stamps it, small and dim at the top left, the day and
+  // the time (style guide §8a, mockup docs/mockups/mock_g_time.png, variant A). It lights up when the clock moves or she
+  // comes into a room, then goes back to dim. Not in the feeds (their display has its own stamp), the deck (its clock),
+  // the shots the game draws itself (the intro), sequences, the title.
+  const WEEKDAY = Cutaway.i18n.declare("implant clock", ["SO", "MO", "DI", "MI", "DO", "FR", "SA"]);
+  /** what the stamp last showed (a change lights it up) and since when it is lit (ms of the frame clock) */
+  let stampWas = "", litAt = -1e9;
+  /** The weekday of the game day now (after midnight: the next one), as the stamp writes it. */
+  function weekday() {
+    const n = Cutaway.time.now, [y, m, d] = Nagiwa.day1;
+    return t(WEEKDAY[new Date(Date.UTC(y, m - 1, d + n.day - 1 + (n.minutes >= 1440 ? 1 : 0))).getUTCDay()]);
+  }
+  /** @param {CanvasRenderingContext2D} ctx @param {any} r the room */
+  function timestamp(ctx, r) {
+    if (r.feed || r.id === "deck" || r.float || Cutaway.sequence.playing() || !Cutaway.time.used || !Cutaway.acts.current) return;
+    const label = `${weekday()} ${Cutaway.time.now.text}`, now = Cutaway.clock.time, key = `${r.id} ${label}`;
+    if (key !== stampWas) { stampWas = key; litAt = now; }
+    // lit for 1.5 s, then it fades back to dim over 0.8 s
+    const since = now - litAt, a = since < 1500 ? 1 : since < 2300 ? 1 - ((since - 1500) / 800) * 0.45 : 0.55;
+    ctx.globalAlpha = a;
+    ctx.fillStyle = C.cyanDark;
+    ctx.fillRect(3, 3, 5, 1); ctx.fillRect(3, 3, 1, 5);
+    small(ctx, label, 7, 5, since < 2300 ? C.implant : C.cyan);
+    ctx.globalAlpha = 1;
+  }
+
   // REC can be pressed while a scene in a feed plays (a moment is a script: clicks would only skip its
   // lines): a modal layer takes the click on the REC button then. Otherwise the room's `rec` hotspot does.
   Cutaway.ui.addLayer({
@@ -146,6 +173,7 @@
     const r = Cutaway.scene.room;
     if (!r || Cutaway.scene.backdrop) return;
     if (r.feed) { ctx.save(); ctx.translate(Nagiwa.feedJitter?.() ?? 0, 0); feed(ctx, r.feed); ctx.restore(); }
+    timestamp(ctx, r);
     zoom(ctx);
     if (mark) brackets(ctx, [mark[0] - Cutaway.scene.camera.x, mark[1] - Cutaway.scene.camera.y, mark[2], mark[3]], C.implant, 10);
   });
