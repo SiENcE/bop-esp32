@@ -101,6 +101,12 @@ die Knöpfe „graph: prolog“ und „graph: kapitel1 main“, die die Daten ne
 „Load a file …“ eine fertige Datei. Von einem Schritt springt „Open in Things“ zu seinem Hotspot und dem
 Skript, das der Zug ausführt; ein Fakt listet jede Stelle, die es setzt oder abfragt.
 
+![Connections im Editor: der Hauptfaden von Kapitel 1, nur was der gewonnene Weg braucht; die Kameras liefern know_meeting, das Gespräch an cam31 link_cam31, cam31 end_beat=threat; rechts der gewählte Schritt mit dem, was er braucht und herbeiführt](docs/editor/connections.png)
+
+Das Zustands-Budget des Prologs: Der Raum, `tag_varga` und `evi_trust` vervielfachen die Zustände am meisten.
+
+![Das Zustands-Budget des Prologs als Balken: wie viele Male mehr Zustände jedes Flag macht](docs/editor/connections_budget.png)
+
 ### Räume im Editor
 
 Mit dem Studio hat der Editor zwei Reiter für die Räume. **Map** zeigt alle Räume als Bilder mit ihren
@@ -111,8 +117,17 @@ löschen, den Boden mit den Schlüsseln des Kits bemalen, die Größe des Raums 
 Inspektor ändern. „Save“ schreibt nur die geänderten Werte zurück (Kommentare bleiben), „Bake“
 baut den Raum neu und lädt die Grafik. „Where from?“ (oder Alt+Klick) auf ein Pixel nennt das Teil der
 Karte und das Kit-Stück, das es gemalt hat, und öffnet die Zeile im Quelltext. Die Hintergründe bleiben so
-Code: Gemalt wird im Kit, nicht in den Pixeln. Die Anleitung steht in [`docs/editor-iso.md`](docs/editor-iso.md)
-und im Editor unter F1, wenn der Reiter offen ist.
+Code: Gemalt wird im Kit, nicht in den Pixeln. Die Anleitung steht in [`docs/editor-iso.md`](docs/editor-iso.md),
+das Format der Karten in [`docs/iso-maps.md`](docs/iso-maps.md); im Editor stehen beide in der Hilfe (F1, wenn der
+Reiter offen ist: im Buch „Editor“ und in der „Reference“). Das Mausrad zoomt das Bild, die Scrollbalken am Rand
+des Arbeitsbereichs verschieben es, und die Seitenleisten und das Ausgabefenster lassen sich an ihren Kanten
+größer ziehen.
+
+![Der Iso-Reiter in der Lobby: über dem Bild die Karte (Wände violett, Öffnungen cyan, Requisiten orange, Spots und Lampen gelb, die Gehfläche grün gestrichelt); „Where from?“ auf dem Plakat nennt die Öffnung poster, ihr Kit-Stück in art/kit/kessel_lobby.kit.px.js Zeile 66 und ihre Zeile in der Karte](docs/editor/iso_lobby.png)
+
+![Der Iso-Reiter im 14. Stock: der Boden nach seinen Schlüsseln eingefärbt, die Treppe gewählt mit Kit, Ecken, Stufenhöhe und -tiefe, „Cut the floor“](docs/editor/iso_floor.png)
+
+![Map im Editor: alle Räume als Bilder mit ihren Ausgängen und Skript-Warps, die Lobby gewählt mit ihren Wegen hinein und hinaus; signal_lost und flat_danach rot gestrichelt: vom Start aus nicht erreichbar](docs/editor/map.png)
 
 Die Grafik entsteht mit pxl aus Quelltexten in `art/`; die fertigen Atlanten liegen in `assets/`, damit
 das Spiel ohne Node läuft. Wer die Grafik neu bauen will, braucht zusätzlich den pxl-Skill, der ein eigenes
