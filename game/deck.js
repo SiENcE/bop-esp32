@@ -292,7 +292,6 @@
     chamfer(ctx, x, y, w, h, 6, C.fill, C.cyanDark, C.cyan);
     ctx.fillStyle = C.steel1;
     for (let r = y + 2; r < y + h - 1; r += 2) for (let q = x + 2 + (r % 3); q < x + w - 2; q += 3) ctx.fillRect(q, r, 1, 1);   // faint scanlines
-    rect(ctx, C.magenta, x + w - 2, y + 5, 2, 8); rect(ctx, C.magentaDark, x + w - 2, y + 14, 2, 2);
     const tw = hud().measure(t(title).toUpperCase()) + 12;
     for (let r = 0; r < 8; r++) rect(ctx, r === 0 ? C.cyan : C.cyanDeep, x + 8 + (7 - r), y - 3 + r, tw - (7 - r), 1);
     small(ctx, t(title), x + 17, y - 1, C.cyanPale);
