@@ -1,6 +1,6 @@
-# Iso: die Räume auf der Karte
+# Iso
 
-Der Reiter **Iso** gehört zum Spiel, nicht zur Engine (`game/editor/iso.js`). Er bearbeitet die Karte eines
+Die Räume auf der Karte. Der Reiter **Iso** gehört zum Spiel, nicht zur Engine (`game/editor/iso.js`). Er bearbeitet die Karte eines
 Straßen-Raums (`art/rooms/<id>.map.js`, das Format steht in `art/lib/isomap.js`) direkt über dem Bild des
 Raums und baut den Raum danach neu. Die Hintergründe bleiben dabei Code: Gemalt wird im Kit
 (`art/kit/*.kit.px.js`), die Karte sagt, was wo steht.
@@ -15,7 +15,7 @@ Raums und baut den Raum danach neu. Die Hintergründe bleiben dabei Code: Gemalt
    `kessel_lobby`, `kowalski`, `hall` (der Saal im Intro). Ein anderer Raum: oben im Feld **map** wählen,
    oder links unter ROOMS hingehen.
 
-F1 im Reiter öffnet diese Seite.
+F1 im Reiter öffnet diese Seite. Was in einer Karte stehen kann, beschreibt die Reference unter „Iso-Karten“.
 
 ## Was man sieht
 
