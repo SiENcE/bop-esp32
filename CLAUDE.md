@@ -4,7 +4,7 @@ An original cyberpunk point-and-click adventure. **Glass Sister** is the title; 
 the corporation that owns it. Juno, a hacker in the Lower Ninth, watches people through the city's cameras
 and sells what she learns on the black market; she goes out for food and to buy and sell; one night she
 watches a serious crime, which leads her into a moral conflict and an investigation that slowly uncovers a
-much larger secret. The mood comes from Dreamweb (`docs/dreamweb.txt`, `docs/screenshots/`: internal
+much larger secret. The mood comes from Dreamweb (`docs/walkthroughs/dreamweb.txt`, `docs/screenshots/`: internal
 reference only, gitignored); the world, characters and story are our own.
 
 Talk to the user in German. Docs are German (except `PLAN.md` and `style-guide.md`, which are English),
@@ -37,7 +37,7 @@ code comments English.
 | `docs/dialog-style-guide.md` | **how all text sounds** (German): the tone, the techniques, the kinds of text, hard rules (du/Sie, Lull vs. implant, length), a voice card for every character and inner voice, a checklist; read it before writing any line |
 | `docs/style-guide.md` | **all art and UI** (decided). §8a "Everything is cyberpunk" lists every part of the screen and its state |
 | `docs/PLAN.md` | the build plan: engine work C1–C13, phases H0–H10 with "done when"; status at the top |
-| `docs/mockups/` | the decided looks: street mode `mock_c_iso_x3.png`, feed mode `mock_e_cctv_x3.png`; new mockups go here (`mock_f_deck` next) |
+| `docs/mockups/` | the decided looks: street mode `mock_c_iso_x3.png`, feed mode `mock_e_cctv_x3.png`; the deck `mock_f_deck_*.png`; new mockups go here |
 | `docs/rooms/`, `docs/cams/`, `docs/characters/` | review sheets of finished art; the cameras' layout notes (their positions go into `game/places.js`) |
 | `docs/portraits/` | the character index and marketing portraits (`figuren_index_x3.png`, Teo and Juno from both sides `juno_teo_seite_front_x3.png`, `README.md`), from `art/portraits/portraits.px.js`; not in the game |
 | `docs/ideas/` | studies: `iso-tiles.md` (rooms from maps, decided), `chinesisch.md` (a CJK layout test) |
@@ -72,13 +72,13 @@ code comments English.
 | `game/radio.js` | the RADIO on the deck: three stations (their music in `game/music.js`), heard on the deck and in the flat; the presenters' lines while its window is open; the station a view flag (`radio`) |
 | `game/evi.js` | EVI: her voice (lines in their own place beside her corner, `lineBox`), she says the hints (`hints.configure({ by: "evi" })`); actions `{ evi: face }`, `{ evi_point: app }`, `{ deck_boot }`, `{ notify: contact }` (the message card over every mode) |
 | `game/rooms/jade_row.js` | Jade Row, the lane left of Kowalski Street: a view down its length, not iso, on blocks (`art/mock/jade_row.px.js`); Okonkwo's shop and the machine that sees into it |
-| `game/rooms/<id>.js` | rooms: `cams.js` (cam03, cam04: watched rooms with the phosphor post-effects), `<id>.layout.js` (generated) |
+| `game/rooms/<id>.js` | rooms: `kessel.js` (the Kessel Block's floors), `kowalski.js` (Kowalski Street), `cams.js` (cam03, cam04: watched rooms with the phosphor post-effects), `<id>.layout.js` (generated) |
 | `game/prolog.js` | the prologue act (steps 0–11), its cache and ledger entries, game time |
 | `game/stadt.js`, `game/regenleserin.js` | Chapter 1's city: the way on to the roof, the Rain Reader and her talk, the newspaper war, Frau Imai, the white carriers (each a thread of its own) |
 | `game/vesper.js` | Vesper, the buyer for NINTH LIVE: from Thursday he buys raw clips in the chat, the viewers come into the Kassenbuch overnight; anonymising in the clip editor (only while his thread is open); a thread of its own (`off_vesper`) |
-| `game/lucky_static.js` | LUCKY STATIC from inside: Mei behind her counter, the slate with the tabs, Nagi·wa's news on the TV, the two regulars; flavour by the day, no flag |
-| `game/auftrag_varga.js` | Chapter 1's job A: Varga wants Kessler found, the hood at the machine in cam03, Sable's booth, the Morpheus (cam15), K1a; a thread of its own (`off_varga`) |
-| `game/evenings.js`, `game/kapitel1.js`, `game/kapitel1_ende.js` | what every chapter's evenings share (the bed, the evening's card); Chapter 1: its act on game days 2 to 4, WREN, the rent, Friday's clock (on blocks; the prologue goes on into it, `?act=kapitel1` begins it alone for development); its end in cam31, on blocks |
+| `game/lucky_static.js`, `game/karaoke.js` | LUCKY STATIC from inside: Mei behind her counter, the slate with the tabs, Nagi·wa's news on the TV, the two regulars; flavour by the day, no flag; the karaoke machine, a small game of its own without a flag |
+| `game/auftrag_varga.js` | Chapter 1's job A: Varga wants Kessler found, the hood at the machine in cam03, Sable's booth, the Morpheus (cam15), K1a; a thread of its own (`off_varga`); `game/auftrag_tide.js` job B, Okonkwo's safe in Jade Row (`off_tide`) |
+| `game/evenings.js`, `game/kapitel1.js`, `game/kapitel1_leben.js`, `game/kapitel1_ende.js` | what every chapter's evenings share (the bed, the evening's card); Chapter 1: its act on game days 2 to 4, WREN, the rent, Friday's clock (on blocks; the prologue goes on into it, `?act=kapitel1` begins it alone for development); the life around its jobs (Teo's visit, Motte, Bao); its end in cam31, on blocks |
 | `game/intro.js`, `intro_sea.js`, `intro_tower.js`, `intro_hall.js`, `intro_desk.js`, `intro_ride.js` | the intro "Die letzte Schicht" (kapitel0-design §5): the sequence `intro` and the shots the game draws itself in perspective (rooms with `float: "<shot>"`, the action `{ float: [from, to], ms }`): the float over the lit sea (A1, A2), the tower and in through its window (C); painted parts in `art/intro/`; the observation hall (the room `intro_hall`, baked from `art/rooms/hall.map.js`); Juno at her desk (what moves over `art/intro/desk.px.js`); the ride down in the lift (`art/intro/ride.px.js`) |
 | `game/editor/iso.js` | the editor's Iso-Editor tab (the studio loads it: `studio.json` "editor"): a room's map edited in full over its picture (props, openings, spots, lamps, walls, the stairs, no-walk rects: drawn, dragged, deleted; the floor painted; the room's size; every other key as written), saved back changing only the values touched, baked with the task "art: room"; "Where from?" names the map part and kit piece that painted a pixel (the bake's picks, `build/art/rooms/<id>.pick.json`) and opens either at its line; its tools and kinds as icons in the overlay's colours, kinds shown or hidden, what a click takes lit under the pointer, the map's parts listed on the left, keys (V A F W, 1 to 7, Del, Ctrl+D); New map (the task "room: new") and the cell size |
 | `game/screens.js` | the UI layer that draws the deck's screen, the feeds' OSD, the implant overlay and zoom windows (rooms hold the hotspots so the solver sees every click; this layer only draws) |
@@ -86,13 +86,10 @@ code comments English.
 | `game/skin.js`, `font.js`, `transitions.js`, `sounds.js`, `music.js`, `title.js`, `hints.js` | the look (frames, cards, labels, choices), the fonts, room transitions, synthesised sounds and music, title and menu screens, hints |
 | `art/**/*.px.js` | pxl sources: `lib/` (shared `iso.js`, `feed.js`), `characters/`, `rooms/`, `cams/`, `mock/` (flat blocks of what isn't painted yet), `ui/`, `intro/`, `mockups/`, `test/`; `*_review.px.js` are review sheets, never built into the game |
 | `assets/*.js` | built atlases (checked in, so the game runs without Node) |
-| `tools/` | `build_art.sh`, `sync-engine.sh`, `render-sounds.mjs`, `solve-act.mjs` (one act alone), `check.sh` (all the checks), `graph.sh` (the connections to look at), `check-hover.mjs` (the pointer turns hot), `new-room.mjs` (a new street-mode room from a template: map, bake file, own kit, baked, then the game's room, places and index.html; `--remove` takes it out), `portrait-title.py` (the profiles of Juno and Teo, cut from the title picture), `paths/` (the ways to click through, the prologue's and Chapter 1's) |
+| `tools/` | `build_art.sh`, `sync-engine.sh`, `render-sounds.mjs`, `solve-act.mjs` (one act alone), `check.sh` (all the checks), `graph.sh` (the connections to look at), `check-hover.mjs` (the pointer turns hot), `new-room.mjs` (a new street-mode room from a template: map, bake file, own kit, baked, then the game's room, places and index.html; `--remove` takes it out), `iso-layout.mjs` (a map's numbers, as the bake writes them), `title-backdrop.mjs` (the menu's backdrop brought to 320x180), `cjk-raster.mjs` (CJK glyphs for layout tests), `portrait-title.py` (the profiles of Juno and Teo, cut from the title picture), `paths/` (the ways to click through, the prologue's and Chapter 1's) |
 | `studio.json` | the editor's studio: writable folders, layer files, tasks |
 | `build/`, `out/` | scratch (raw pxl output, screenshots, renders), not checked in |
 | `.claude/skills/claude-pxl/` | the pxl skill, its own repo (gitignored) |
-
-Planned (PLAN.md §3): `feed.js`, `ledger.js`, `money.js`, `routines/<chapter>.js`,
-`strings/en.js` (H10).
 
 ## Conventions
 
@@ -177,7 +174,7 @@ node lib/cutaway/tools/play.mjs index.html --act kapitel1 --path tools/paths/kap
 Keep Chapter 1's state small: a flag nobody asks about doubles every state. What only shows (a dot for unread) is a view flag; what
 the prologue leaves open is closed with `day=1`; a chapter marks the rooms Juno knows with `{ been_to: [...] }`; flavour is a look, not a
 moment (seen or not doubles what follows); what no longer matters is forgotten overnight (`Nagiwa.nights[day].passes`). Every time is on the
-15-minute ticks and only waiting moves the clock: one time off the grid multiplied the states by ten (the one exception is a chain nothing branches on, the end in cam31). All the checks at once: `sh tools/check.sh` (about ten minutes). Side stories and jobs are threads of their own: each
+15-minute ticks and only waiting moves the clock: one time off the grid multiplied the states by ten (the one exception is a chain nothing branches on, the end in cam31). Side stories and jobs are threads of their own: each
 checked alone with the others shut (`off_<thread>`, `game/stadt.js`), since together they would multiply each other. What they do to each other is
 not covered by the solver: keep them independent (their own `<thread>_step` number, no flag shared).
 
@@ -191,7 +188,7 @@ not covered by the solver: keep them independent (their own `<thread>_step` numb
 
 ## How we work
 
-- Small steps. Each step ends with screenshots shown to the user, the three checks above passing, and a
+- Small steps. Each step ends with screenshots shown to the user, the checks that fit the change passing, and a
   commit.
 - Commit messages: one descriptive paragraph saying what changed and how it looks or plays, ending with the
   check results (e.g. "validate 0 errors, play.mjs: all passed"). **No Claude/AI attribution** (no
