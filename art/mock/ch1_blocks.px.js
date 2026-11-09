@@ -103,7 +103,9 @@ scene("gasse_bg", { w: W, h: H, bg: "k" }, (c) => {
   c.rect(118, 50, 64, 54, "k")
   for (let y = 50; y < 74; y++) { const i = Math.floor((y - 50) * 0.9); c.hline(118 + i, y, 64 - 2 * i, y < 62 ? "a" : "b") }      // the ceiling, lower toward the back
   for (let y = 84; y < 103; y++) c.hline(124, y, 52, y < 93 ? "p" : y < 101 ? "n" : "m")                                           // the glow from below
-  for (let i = 0; i < 14; i++) { c.px(121 + i, 89 + i, "f"); c.px(178 - i, 89 + i, "f") }                                          // the handrails dropping away
+  // the handrails (as the user drew them): from the post's top a short bend, then steeply down past the sill, close to the side walls
+  const RAIL = [[0, 0], [1, 1], [1, 2], [2, 3], [2, 4], [2, 5], [3, 6], [3, 7], [3, 8], [4, 9], [4, 10], [4, 11], [4, 12], [5, 13], [5, 14], [5, 15]]
+  for (const [dx, dy] of RAIL) { c.px(120 + dx, 87 + dy, "g"); c.px(179 - dx, 87 + dy, "g") }
   c.rect(120, 86, 1, 17, "f"); c.rect(179, 86, 1, 17, "f")                                                                         // their first posts at the sill
   c.hline(118, 103, 64, "e")                                                                                                       // the sill: the top step's edge
   c.rect(116, 48, 2, 56, "e"); c.rect(182, 48, 2, 56, "e")
