@@ -5,7 +5,7 @@
 // its note, the sign NO SNEAKERS IN THE DRYER over them (and trainers going round behind the doors of 2, 3 and 7); on the left back
 // wall three washers and, by the door, the counter with the man asleep behind it (his chair is in his figure). Two tubes with a
 // green cast (kapitel1-design §9); CAM 23 hangs as a cheap dome over the aisle in front of dryers 5 and 6. The user's decisions
-// of 2026-11-09. Blocks for now (art/kit/laundromat.kit.px.js): to be judged before anything is painted.
+// of 2026-11-09. Painted (art/kit/laundromat.kit.px.js) after the user approved the blocks.
 "use strict";
 
 ISO_MAPS.laundromat = {
@@ -31,7 +31,10 @@ ISO_MAPS.laundromat = {
     { from: [5, 0], to: [5, 4], h: 2.6, kit: "lm_wall", stub: true },
   ],
   openings: [
-    { id: "sign", wall: 0, from: 1.2, to: 3.7, h: [1.5, 1.9], kit: "lm_sign" },
+    { id: "sign", wall: 0, from: 1.2, to: 3.7, h: [1.45, 1.94], kit: "lm_sign" },
+    // the notices over the washers (a lost sock among them), the clock over the counter
+    { id: "board", wall: 1, from: 0.95, to: 1.75, h: [1.3, 1.82], kit: "lm_board" },
+    { id: "clock", wall: 1, from: 2.85, to: 3.35, h: [1.85, 2.3], kit: "lm_clock" },
   ],
   // behind the counter is the sleeper's (his chair is in his figure): nobody walks there
   nowalk: [[0, 2.7, 0.65, 0.7]],
@@ -71,8 +74,8 @@ ISO_MAPS.laundromat = {
   },
   lights: [
     // the two tubes, white with the green cast of old phosphor
-    { id: "tube1", at: [1.6, 1.63, 2.45], r: 150, power: 1.0, color: "#d0f0d8", flicker: 0.03, bake: { line: [[1.1, 1.63, 2.45], [2.1, 1.63, 2.45]], reach: 3, power: 1.4, wrap: 0.5 } },
-    { id: "tube2", at: [3.6, 1.63, 2.45], r: 150, power: 0.8, color: "#c0e8c8", flicker: 0.12, bake: { line: [[3.1, 1.63, 2.45], [4.1, 1.63, 2.45]], reach: 3, power: 1.2, wrap: 0.5 } },
+    { id: "tube1", at: [1.6, 1.63, 2.45], r: 150, power: 1.0, color: "#d0f0d8", flicker: 0.03, bake: { family: "green", line: [[1.1, 1.63, 2.45], [2.1, 1.63, 2.45]], reach: 3.2, power: 1.6, wrap: 0.5 } },
+    { id: "tube2", at: [3.6, 1.63, 2.45], r: 150, power: 0.8, color: "#c0e8c8", flicker: 0.12, bake: { family: "green", line: [[3.1, 1.63, 2.45], [4.1, 1.63, 2.45]], reach: 3.2, power: 1.4, wrap: 0.5 } },
     // the alley's light in through the window and the door
     { id: "alley", at: [3.0, 4.6, 1.6], r: 100, power: 0.6, color: "#62def0", bake: { reach: 2.2, power: 1.2, wrap: 0.3 } },
   ],
