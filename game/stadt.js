@@ -167,7 +167,9 @@ Cutaway.dialog("imai_wahl", { main: { choices: [
 ] } });
 Nagiwa.cams.cam18 = { id: "18", place: "ALTER FISCHMARKT", owner: "NAGI·WA", map: [120, 14], if: "imai_step>=1" };
 Nagiwa.cache.note_imai_street = { kind: "note", name: "FRAU IMAIS TREPPE", about: "CAM 18, 29.10., 03:12. Es ist passiert. Sie schlief. Sie hat es von hier oben gesehen." };
-Nagiwa.camRoom("cam18", { background: "cam18_bg", mic: { at: A18.mic, clear: 40, lost: 150 }, hotspots: {
+// the rain from the left: the camera hangs crooked
+Nagiwa.camRoom("cam18", { background: "cam18_bg", mic: { at: A18.mic, clear: 40, lost: 150 },
+  fx: [{ kind: "rain", rect: [0, 0, 320, 180], count: 45, color: "#8acfae", speed: 170, slant: 0.45, length: 4 }], hotspots: {
   fish: { name: "Fisch", rect: A18.fish, z: 1, look: ["Jemand hat einen Fisch auf die Stufen gemalt. FISH steht drunter, falls jemand fragt.", "Von unten sieht man nur Striche auf den Stufen. Den Fisch sieht man nur von hier oben."] },
   stairs: { name: "Treppe", rect: A18.stairs, look: ["Das ist die Treppe zum alten Fischmarkt.", "Der Regen kommt von links, weil die Kamera schief hängt."] },
   rewind: { name: "Archiv", z: 5, if: "imai_step=1",

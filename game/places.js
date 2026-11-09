@@ -63,8 +63,9 @@ Nagiwa.at = {
     return { shift: S, door: [dh[0] + dh[2] / 2 + S, dh[1] + dh[3] - 2], mat: [L.spots.stairs[0] - 24 + S, L.spots.stairs[1] + 4], mic: [180, 130], exposure: 2.2,
       doorsRect: [dh[0] + S, dj[1], dj[0] + dj[2] - dh[0], dh[1] + dh[3] - dj[1]] };
   })(),
-  // straight down over the stairs (art/mock/ch1_blocks.px.js, CAM18): the fish painted over the steps lies on them, its hotspot over theirs
-  cam18: { mic: [160, 96], fish: [134, 40, 52, 120], stairs: [110, 30, 100, 128] },
+  // almost straight down over the stairs (art/cams/cam18.px.js, measured there: CAM18_LAYOUT): the fish painted over the steps lies on
+  // them, its hotspot over theirs
+  cam18: { mic: [154, 93], fish: [128, 43, 53, 107], stairs: [113, 32, 88, 117] },
   cam22: { seat: [120, 112], mic: [120, 100], bar: [80, 118, 216, 20] },
   // CAM 23 is the laundromat's own picture (one place, one picture: kapitel0-design §3), moved right by `shift` so the washers clear
   // the cameras' strip; Ines stands where Juno would: at a washer on Wednesday, at dryer 6 on Thursday
