@@ -260,5 +260,5 @@ else is drawn at scale. If feed mode doesn't feel right there, change the design
 - Music: synthesised like the Loonies (the engine's synth), its style to be decided (dark synth, sparse
   piano, rain).
 - The game's lines in whole sentences (dialog-style-guide §3, decided 2026-11-10): the prologue is rewritten; Chapter 1 follows thread
-  by thread (the jobs, the city's threads, the life, the end in cam31), each shown to the user as before and after. Still to decide:
-  which characters keep the telegram style as their own (the proposal is in §3).
+  by thread (the jobs, the city's threads, the life, the end in cam31), each shown to the user as before and after. The voices' measures are decided
+  (§3): Morrow, Sable, DER HUNGER and DIE BEOBACHTERIN in telegram style, the Rain Reader lyrical, Aubrecht in long, smooth sentences.

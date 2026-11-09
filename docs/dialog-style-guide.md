@@ -75,7 +75,7 @@ verkauft, das Kassenbuch rechnet. So darf auch eine schöne Zeile fallen, ohne d
 ## 3. Was wir vermeiden
 
 - **Zu viel Slang.** Glass, Shine, Sinker und Chits wirken, wenn sie selbstverständlich und sparsam fallen.
-- **Zu viel Poesie.** Die Stadt darf poetisch aussehen, ihre Leute reden nicht ständig so.
+- **Zu viel Poesie.** Die Stadt darf poetisch aussehen, ihre Leute reden nicht ständig so. Die eine Ausnahme ist die Regenleserin (unten).
 - **Wortgruppen statt Sätze.** „Eine Treppe. Ein Fisch. Regen von links.“ So redet kein Mensch. Wer spricht, sagt ganze Sätze mit Subjekt und Verb: „Da ist eine Treppe, und auf den Stufen ist ein großer Fisch. Es regnet von links.“ Das gilt für alle Figuren, auch für Junos Blicke und Gedanken. Ein Satz darf abbrechen, wo ein Mensch wirklich abbricht (Zögern, Ausweichen, „...“), aber eine Reihe von Stichworten ist kein Stil (entschieden 2026-11-09 von der Nutzerin).
   Die alten Zeilen werden gezielt umgeschrieben, nicht erst beim nächsten Anfassen: zuerst der Prolog (2026-11-10), dann Kapitel 1 Strang für Strang, jede Zeile der Nutzerin als Vorher und Nachher gezeigt (entschieden 2026-11-10).
   **Kurz darf es trotzdem sein,** und manchmal ist das gerade witzig. Der Telegrammstil bleibt an diesen Stellen (entschieden 2026-11-10):
@@ -83,8 +83,13 @@ verkauft, das Kassenbuch rechnet. So darf auch eine schöne Zeile fallen, ohne d
   - **Echtes Zögern und Abbrechen:** „Bao. Hast du ...“, „...“.
   - **Kurze Antworten im Gespräch:** „Dann schon.“, „Ich weiß.“, „Nein.“, und eine trockene Antwort wie Baos „Brühe. Wie gestern. Morgen auch.“ auf „Was gibt's heute?“.
   - **Eile im Feed,** wenn gerade etwas passiert: „REC, schnell.“, „Mist.“
-  - **Als Stilmittel einiger Figuren,** die so reden, weil es zu ihnen gehört. Wer das ist, entscheidet die Nutzerin; der Vorschlag: Morrow (dienstlich), Tinte (langsam, sehr kurz), Sable im Geschäft („Nett. 120.“), DER HUNGER (Befehle) und DIE BEOBACHTERIN (wie ein Bericht).
+  - **Als Stimme von vier Figuren,** die so reden, weil es zu ihnen gehört: Morrow, Sable, DER HUNGER und DIE BEOBACHTERIN (entschieden 2026-11-10, siehe „Das Satzmaß“ unten).
   Nie im Telegrammstil stehen Junos Blicke, ihre Gedanken in Ruhe und Beschreibungen: Die sagt sie in ganzen Sätzen, und ihre Pointe bleibt dabei („Das ist Gus Varga. Er ist kein Liebhaber, er ist ein Kredithai.“).
+- **Ein Satzmaß für alle.** Die meisten reden in ganzen, kurzen bis mittleren Sätzen, und drei Maße heben einzelne Figuren davon ab (entschieden 2026-11-10):
+  - **Telegrammstil:** Morrow (wie ein Funkspruch), Sable (jedes Wort kostet), DER HUNGER (Befehle) und DIE BEOBACHTERIN (wie ein Bericht). Sie lassen weg, was sich von selbst versteht, auch das Verb.
+  - **Lyrisch:** die Regenleserin. Ihre Sätze haben Rhythmus und Bilder, aber die Bilder kommen aus Geschmack, Wasser und Wetter (§2, „Bilder kommen aus der Hand“). Sie ist trotzdem kein Orakel.
+  - **Lange, geschmeidige Sätze:** Direktorin Aubrecht. Ein Gedanke läuft bei ihr über Nebensätze und Kommas, ohne Bruch und ohne Eile, und gerade darin klingt das Ungeheuerliche vernünftig. Ein solcher Satz darf über mehrere Zeilen gehen (§5).
+  Dadurch erkennt man diese Figuren schon am Satzbau. Die anderen tun es ihnen nicht nach, auch nicht für eine Pointe.
 - **Zu viele Einzeiler.** Niemand ist eine Sprüchemaschine. Ernste Gespräche brauchen auch unspektakuläre Sätze. (Die Entscheidung vom 2026-11-06, dass die vorhandenen Blicke bleiben, wie sie sind, ist am 2026-11-10 aufgehoben: Sie werden in ganze Sätze umgeschrieben, und ihre Pointen bleiben.)
 - **Zu viel Erklärung.** Niemand erzählt seine Biografie oder Nagi·was Geschichte, nur weil ein Gespräch begonnen hat.
 - **Künstliche Coolness.** Juno ist keine unfehlbare Heldin. Sie sieht zu viel, isst zu wenig und weiß nicht immer, was sie tun soll.
@@ -152,6 +157,7 @@ viel, später was daraus wurde. Es urteilt nie.
 - Eine gesprochene Zeile bleibt **unter etwa 90 Zeichen** (im Spiel heute: die Hälfte unter 45, neun von zehn unter 85). Ein längerer
   Gedanke wird auf mehrere Zeilen verteilt, und sein Umbruch ist eine Pause.
 - Kurz heißt wenige Wörter, nicht ohne Verb: „Meine Matratze liegt auf einer Palette.“ hat 40 Zeichen (§3).
+- Aubrechts lange Sätze laufen über mehrere Zeilen. Jede Zeile bleibt unter 90 Zeichen, und umbrochen wird an einem Komma, nicht mitten im Gedanken.
 - Der geplante Protokoll-Modus hat etwa 21 Zeichen je Zeile (`dialog-design` §5): noch ein Grund für kurze Sätze.
 
 **Bau** (technisch, `CLAUDE.md` und `dialog-design` §4)
@@ -236,7 +242,7 @@ Mann, „meinem Alten“, und ab und zu fällt der Name Lou (Bibel §10b), ohne 
 
 ### Sable: der Handel
 
-Charmant, präzise, geschäftlich, sprachlich kontrollierter als Juno. Jede Information hat einen Preis, und Sable weiß genau, wann ein Satz
+Charmant, präzise, geschäftlich, sprachlich kontrollierter als Juno. Sable redet und schreibt im Telegrammstil, als kostete jedes Wort (§3). Jede Information hat einen Preis, und Sable weiß genau, wann ein Satz
 mehr verrät als nötig. Keine Unterweltfigur, die in Rätseln spricht. Sable ist ehrlich darin, unehrlich zu sein: Das ist interessanter als
 bloßes Lügen.
 
@@ -284,7 +290,8 @@ nur Junos Blick auf sie.
 ### Die Regenleserin: die Merkwürdige vom Dach
 
 Zweiundachtzig, sagt „Kind“, kennt Juno und Teo von früher. Spricht in Geschmack und Wetter, und das Wetter ist Klatsch. Sie darf von allen
-am schönsten reden, weil alles von ihrer Zunge kommt. Sie weiß nie, was sie weiß.
+am schönsten reden, weil alles von ihrer Zunge kommt: Sie ist die eine Figur, die lyrisch spricht (§3), in ganzen Sätzen mit Rhythmus
+und Bildern aus Geschmack, Wasser und Wetter. Sie weiß nie, was sie weiß.
 
 > „Du verkaufst Shine, Kind. Ich sag nur, wie's schmeckt.“\
 > „Sag ihm, er soll mal raufkommen. Solange er die Leiter noch findet.“
@@ -299,7 +306,7 @@ seinen Gründen falsch und mit seinem Verdacht richtig. Die Reparatur: Dienst na
 
 ### Lt. Agnes Morrow: die Müde
 
-Knapp und dienstlich, und sie hasst, was sie tut. Jede Frage nach ihrer Tochter prallt am Dienst ab. Spricht lieber über Vorschriften als
+Knapp und dienstlich, und sie hasst, was sie tut. Sie redet im Telegrammstil, wie ein Funkspruch (§3). Jede Frage nach ihrer Tochter prallt am Dienst ab. Spricht lieber über Vorschriften als
 über sich. Das Geld nimmt sie, als wäre es Papierkram.
 
 > „Das ist für die ruhige Woche. Freitag fährt keiner die Kowalski.“
@@ -316,10 +323,14 @@ sie weiß. Lantern: misstrauisch, vorsichtig, bricht Sätze ab. Lanterns Stimme 
 
 Ruhig, rational, kultiviert. Sie hält sich für eine vernünftige Person, die eine schwierige Entscheidung getroffen hat, und glaubt an ihre
 Zahlen. Sie droht nicht und muss nicht so tun, als wäre sie böse: Sie ist freundlich und sagt dabei etwas Ungeheuerliches. Was sie anordnet,
-nennt sie nie so.
+nennt sie nie so. Sie redet in langen, geschmeidigen Sätzen, als Einzige im Spiel (§3): Ein Gedanke läuft über Nebensätze und Kommas,
+ohne Eile, und kommt freundlich an etwas Ungeheuerlichem an. Die zwei kurzen Zeilen unten stammen aus der Bibel, von vor dieser
+Entscheidung; sie werden in ihrem Maß neu geschrieben, wenn ihr Kapitel kommt. Die dritte ist ein Vorschlag für das Maß.
 
 > „Das Problem Calder ist gelöst.“\
-> „AUTO-EVAL. Wir haben dich abgeschaltet.“
+> „AUTO-EVAL. Wir haben dich abgeschaltet.“\
+> „Wir haben lange überlegt, ob man einen Menschen fragen muss, bevor man ihm die Nacht abnimmt,\
+> und uns am Ende für die Freundlichkeit entschieden, ihn mit dieser Frage nicht zu belasten.“
 
 ### Corvin Ashe: die höfliche Bedrohung
 
@@ -359,10 +370,10 @@ Wert hoch genug ist. Sie dürfen sich irren, einander widersprechen und lügen. 
 
 | Stimme | Klang | Worauf sie achtet | Sagt nie |
 |---|---|---|---|
-| **DIE BEOBACHTERIN** | kühl, genau, wie ein Bericht | was zu sehen ist: Hände, Blicke, was nicht passt | was jemand fühlen sollte |
+| **DIE BEOBACHTERIN** | kühl, genau, wie ein Bericht, im Telegrammstil (§3) | was zu sehen ist: Hände, Blicke, was nicht passt | was jemand fühlen sollte |
 | **DIE HÄNDLERIN** | zynisch, witzig, schnell | was etwas wert ist, wer wem was schuldet | etwas umsonst |
 | **DIE SCHWESTER** | warm, leise, ungeduldig | was jemand braucht | etwas Kluges |
-| **DER HUNGER** | sehr kurz, körperlich, oft Befehle | Müdigkeit, Angst, Essen, Fluchtwege | etwas über andere |
+| **DER HUNGER** | sehr kurz, körperlich, oft Befehle, im Telegrammstil (§3) | Müdigkeit, Angst, Essen, Fluchtwege | etwas über andere |
 | **DAS IMPLANTAT** | sachlich, fremd, Technikwörter, kein Ich | Protokolle, Netze, Kameras, Codes | etwas über Menschen |
 | **DAS KASSENBUCH** | trocken, unerbittlich, wie ein Buchhalter | was eine Tat kostet und wer bezahlt | was Juno tun soll |
 
@@ -403,7 +414,7 @@ So etwas wird bewusst angelegt, wie Mottes Backup oder der Satz über die Leiter
 1. Würde sie jemand sagen, der hier lebt, oder nur jemand, der es dem Spieler erklären will?
 2. Erkennt man die Figur ohne Namen und Farbe?
 3. Geht es unter der Oberfläche um etwas anderes?
-4. Ist es ein ganzer Satz, wie ihn ein Mensch sagt, und keine Reihe von Wortgruppen? Oder ist es eine der Stellen, an denen der Telegrammstil bleiben darf (§3)? Darf das auch unspektakulär sein? Muss hier wirklich eine Pointe stehen?
+4. Ist es ein ganzer Satz, wie ihn ein Mensch sagt, und keine Reihe von Wortgruppen? Oder ist es eine der Stellen, an denen der Telegrammstil bleiben darf? Passt das Satzmaß zur Figur (§3)? Darf das auch unspektakulär sein? Muss hier wirklich eine Pointe stehen?
 5. Stimmt sie mit der Bibel überein (Fakten, Du und Sie, Lull und Implantat)?
 6. Unter etwa 90 Zeichen? Ist die Haltung einer Wahl vor dem Klick klar?
 7. Geht sie auf Englisch noch?
