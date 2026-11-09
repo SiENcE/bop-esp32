@@ -87,18 +87,23 @@ const KIT_GASSE = (() => {
       })
     },
   })
-  // the passage to Kowalski Street: a dark way through the building, the street's cyan at its far end
-  ISOKIT.opening("gs_passage", {
+  // the arch to Kowalski Street: the wall round a round-topped way through (open: its passage is the map's open room, floor "q", walls
+  // "gs_tunnel"), its stones edged lighter
+  ISOKIT.opening("gs_arch", {
     paint(s, h, o) {
-      return pic(o, "passage", (c, W, H) => {
-        c.rect(0, 0, W, H, "k")
-        const ix = fl(W * 0.3), iw = W - 2 * ix, iy = fl(H * 0.3)
-        for (let y = 0; y < iy; y++) { const i = fl((y / iy) * ix); c.hline(i, y, W - 2 * i, "1") }   // the ceiling going back
-        c.rect(ix, iy, iw, H - iy - 1, "!c"); c.rect(ix + 1, iy + 2, iw - 2, H - iy - 4, "!C"); c.hline(ix, H - 2, iw, "!v")
-        c.rect(0, 0, 1, H, "3"); c.rect(W - 1, 0, 1, H, "3"); c.hline(0, H - 1, W, "2")
-      })
+      const { a, e, aw, ah } = o, r = aw / 2, cx = aw / 2, top = ah - r
+      const inside = (x, y) => y < top || Math.hypot(x - cx, y - top) < r
+      if (a >= 0 && a < aw && e >= 0 && e < ah && inside(a + 0.5, e + 0.5)) return null
+      if (a >= -2 && a < aw + 2 && e < ah + 2 && (inside(a - 1.5, e) || inside(a + 2.5, e) || inside(a + 0.5, e - 2))) return "3"
+      return "2"
     },
   })
+  // the passage: the street's cyan coming in from its far end, on its floor and its side wall the deeper they go
+  const street = (d, x, y) => { const t = d / 1.4, b = ISO.bay(x, y); return t > 0.75 ? (b < 0.6 ? "!C" : "!c") : t > 0.45 ? (b < 0.5 ? "!c" : "!t") : t > 0.2 ? (b < 0.4 ? "!t" : null) : null }
+  ISOKIT.floor("q", (u, v, o) => street(-u, o.x, o.y) ?? (near(u % 0.4, 0, 0.02) ? "e" : "f"))
+  ISOKIT.wall("gs_tunnel", (s, h, o) => (Math.abs(o.len - 1.4) > 0.01 ? "!C" : h < 0.06 ? "e" : street(1.4 - s, o.x, o.y) ?? "1"))
+  // the ad screen's frame and its dark glass (the ads are gasse_ad, laid over it)
+  ISOKIT.opening("gs_adscreen", { pad: 0.04, paint(s, h, o) { const { a, e, aw, ah } = o; return a >= 0 && a < aw && e >= 0 && e < ah ? "!1" : "4" } })
   ISOKIT.opening("gs_market_sign", {
     paint(s, h, o) {
       return pic(o, "msign", (c, W, H) => { c.rect(0, 0, W, H, "2"); c.rect(1, 1, W - 2, H - 2, "n"); TXT.draw(c, fl(W / 2), fl((H - 5) / 2), "DRAIN MARKET", "!m", { font: "hud", align: "center" }) })
@@ -106,13 +111,13 @@ const KIT_GASSE = (() => {
   })
 
   // ---------------------------------------------------------------- props
-  // the statue from before the flood: a woman on her plinth, one hand up as if to stop the water; someone has fixed a ring of cyan
-  // light behind her head; candles and paper cranes at her foot
+  // the flood's memorial: a woman on her plinth, one hand up as if to stop the water; on the plinth's front the plaque with the names;
+  // someone has fixed a ring of cyan light behind her head; candles and paper cranes at her foot
   ISOKIT.prop("gs_statue", {
     frames: NF,
     draw(pen, p, f) {
       const [u, v] = p.at, [du, dv] = p.foot, cu = u + du / 2, cv = v + dv / 2
-      pen.box(u, v, 0, du, dv, 0.5, () => "3", () => "2", () => "2")
+      pen.box(u, v, 0, du, dv, 0.5, () => "3", () => "2", (a, e, o) => (a > 2 && a < o.aw - 3 && e > 2 && e < o.ah - 3 ? (e % 2 && a % 5 ? "2" : "4") : "2"))
       pen.box(cu - 0.16, cv - 0.14, 0.5, 0.32, 0.28, 1.0, () => "4", () => "3", () => "4")           // the robe
       pen.box(cu - 0.11, cv - 0.1, 1.5, 0.22, 0.2, 0.32, () => "5", () => "4", () => "4")            // the shoulders
       pen.box(cu - 0.07, cv - 0.07, 1.82, 0.14, 0.14, 0.2, () => "5", () => "4", () => "5")          // the head

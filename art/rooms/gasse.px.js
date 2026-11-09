@@ -41,5 +41,35 @@ const gsWater = (c) => {
 }
 const GASSE = ISOKIT.bake(ISO_MAPS.gasse, { id: "gasse", frames: 12, fps: 10, glows: [gsWater, gsSteam] })
 
+// The ad screen on the left wall: three ads of the Lower Ninth (no Lull: tide mods, buying up the flood debt, an arcade game), each
+// for ten frames at 3 fps, a glitch where one changes to the next; drawn flat and laid onto the wall's slope pixel by pixel as the bake
+// lays an opening (wall 1: from the screen's left end, h from the foot), so it sits on the opening "ad" (game/kapitel1.js shows it)
+{
+  const AD = ISO_MAPS.gasse.openings.find((o) => o.id === "ad"), [CX, CY] = ISO_MAPS.gasse.at, BOX = GASSE.layout.openings.ad
+  const AW = Math.round((AD.to - AD.from) * 32), AH = Math.round((AD.h[1] - AD.h[0]) * 30), M = Math.floor(AW / 2)
+  const T = (r, y, s, k) => TXT.draw(r, M, y, s, k, { font: "hud", align: "center" })
+  const ADS = [
+    (r) => { r.rect(0, 0, AW, AH, "n"); T(r, 3, "TIDE", "m"); T(r, 9, "MODS", "m")
+      r.grid(M - 6, 18, ["..vvvvv.....", ".vvvvvvv..v.", "vvkvvvvvvvv.", ".vvvvvvv..v.", "..vvvvv....."]); T(r, 27, "GILLS", "N"); T(r, 35, "-40%", "Q") },
+    (r) => { r.rect(0, 0, AW, AH, "c"); T(r, 4, "FLOOD", "V"); T(r, 10, "DEBT?", "V"); r.hline(4, 18, AW - 8, "C"); T(r, 22, "WE", "Q"); T(r, 28, "BUY IT", "Q"); T(r, 37, "CALL", "v") },
+    (r) => { r.rect(0, 0, AW, AH, "O"); T(r, 3, "SUMP", "R"); T(r, 9, "RUNNER", "R")
+      r.grid(M - 3, 17, ["..yy..", "..yy..", ".yyyy.", "y.yy.y", "..yy..", ".y..y.", "y....y"]); r.hline(2, 25, AW - 4, "P"); T(r, 29, "3", "W"); T(r, 36, "CHITS", "W") },
+  ]
+  anim("gasse_ad", { w: BOX[2], h: BOX[3], frames: 30, fps: 3 }, (c) => {
+    const f = c.frame ?? 0, ad = Math.floor(f / 10) % 3, R = ISOKIT.raster(AW, AH, (r) => {
+      ADS[ad](r)
+      if (f % 10 === 0) for (let y = 0; y < AH; y += 3) for (let x = 0; x < AW; x++) if ((x * 7 + y * 13 + f) % 5 === 0) r.px(x, y, "V")      // the change, a glitch
+    })
+    for (let y = 0; y < BOX[3]; y++) for (let x = 0; x < BOX[2]; x++) {
+      const X = BOX[0] + x, Y = BOX[1] + y, v = (CX - X - 0.5) / 32
+      if (v < AD.from || v >= AD.to) continue
+      const h = (CY + 16 * v - Y - 0.5) / 30
+      if (h < AD.h[0] || h >= AD.h[1]) continue
+      const k = R(Math.floor((AD.to - v) * 32), Math.floor((h - AD.h[0]) * 30))
+      if (k) c.px(x, y, k)
+    }
+  }, glow("mNvV", { r: 3, strength: 0.3 }))
+}
+
 // the measured numbers for the game: tools/build_art.sh picks this line up and writes game/rooms/gasse.layout.js
 console.log("ISO_LAYOUT " + JSON.stringify({ id: "gasse", ...GASSE.layout }))

@@ -3,13 +3,13 @@
 // running on toward us out of the picture. Its near right edge is a balcony, a railing all along it, the quay wall and the water below,
 // the alley mirrored in it (drawn in art/rooms/gasse.px.js; the user's wishes and drawings, 2026-11-09). The picture is wider and
 // taller than the screen and scrolls with Juno. It lies behind Kowalski Street's right facade (the gate there, wall 0 of
-// art/rooms/kowalski.map.js): the way in from the street is a passage through the building in the left back wall, at the picture's
-// left edge, the street's cyan at its far end. The right back wall is
+// art/rooms/kowalski.map.js): the way in from the street is a tall arch through the building in the left wall, at the picture's left
+// edge, the street's cyan at the far end of its passage; nearer the corner an ad screen on the wall, its ads changing. The right back wall is
 // SUDS & SPIN's front, the same wall the laundromat shows from inside as its near left one (art/rooms/laundromat.map.js: its u is this
 // one's minus 0.6): the door at its left end under a lamp, the long window, the sign, the dryers' vent puffing steam, a flat's window
 // above. On the left back wall a niche where somebody lives (a mattress, a pot) and the way down to the Drain Market under its sign
 // (kapitel1-design §9: nothing to walk over; the handrails as the user drew them). In the middle an old statue from before the flood,
-// candles at its foot, a light from above on it. Dark (the user's wish): a few bright neon lights and cones of light, the rest night.
+// candles at its foot, a light from above on it: the flood's memorial, the names on its plinth. Dark (the user's wish): a few bright neon lights and cones of light, the rest night.
 // Blocks for now (art/kit/gasse.kit.px.js): to be judged before anything is painted.
 "use strict";
 
@@ -54,11 +54,13 @@ ISO_MAPS.gasse = {
     // the way down to the Drain Market and its sign
     { id: "market", wall: 1, from: 1.85, to: 3.25, h: [0, 2.2], kit: "gs_market" },
     { id: "market_sign", wall: 1, from: 1.75, to: 3.35, h: [2.35, 2.75], kit: "gs_market_sign" },
-    // the passage through the building to Kowalski Street
-    { id: "kowalski", wall: 1, from: 5.0, to: 5.95, h: [0, 2.2], kit: "gs_passage" },
+    // an ad screen on the wall, its ads changing (gasse_ad over it, art/rooms/gasse.px.js)
+    { id: "ad", wall: 1, from: 4.9, to: 5.85, h: [0.55, 2.1], kit: "gs_adscreen" },
+    // the arch through the building to Kowalski Street, at the picture's left edge: open, its passage going back to the street's cyan
+    { id: "kowalski", wall: 1, from: 5.95, to: 7.0, h: [0, 3.2], kit: "gs_arch", open: { depth: 1.4, side: 0, h: 3.2, floor: "q", wall: "gs_tunnel" } },
   ],
   // the deck runs on beyond the picture's left edge: nobody walks out of it
-  nowalk: [[0, 6.5, 0.5, 2.5], [0.5, 7.0, 0.5, 2.0], [1.0, 7.5, 0.5, 1.5], [1.5, 8.0, 0.5, 1.0]],
+  nowalk: [[0, 7.05, 0.3, 1.95], [0.3, 7.3, 0.3, 1.7], [0.6, 7.55, 0.5, 1.45], [1.1, 8.05, 0.5, 0.95], [1.6, 8.55, 0.5, 0.45]],
   props: [
     // in the niche (baked into the picture through it)
     { id: "mattress", kit: "gs_mattress", behind: "niche", at: [-0.82, 0.42], foot: [0.72, 0.86], h: 0.14, block: false },
@@ -74,7 +76,7 @@ ISO_MAPS.gasse = {
     { id: "cables", kit: "gs_cables", at: [0.05, 0.05], foot: [0.1, 0.1], h: 3.0, block: false },
   ],
   spots: {
-    arrive: [0.55, 5.5, "se"], kowalski: [0.4, 5.5, "nw"],
+    arrive: [0.75, 6.6, "ne"], kowalski: [0.45, 6.8, "nw"], ad: [0.55, 5.35, "nw"],
     laundromat: [1.1, 0.45, "ne"], market: [0.45, 2.55, "nw"], niche: [0.5, 0.85, "nw"], statue: [2.95, 4.35, "ne"],
     water: [5.55, 3.2, "se"],
   },
@@ -88,7 +90,8 @@ ISO_MAPS.gasse = {
     // the light on the statue from above (a lamp somebody hung on the cables for it), and the candles at its foot
     { id: "statue", at: [2.95, 3.65, 3.2], r: 60, power: 0.8, color: "#ffd58a", flicker: 0.04, bake: { reach: 3.5, power: 1.8, floor: 1.6, dir: [0, 0, -1], wrap: 0.3 } },
     { id: "candles", at: [2.95, 4.1, 0.15], r: 26, power: 0.5, color: "#ffb860", flicker: 0.25, bake: { reach: 0.6, power: 1.6 } },
-    // the street's cyan at the passage's far end
-    { id: "street", at: [0.15, 5.5, 1.4], r: 50, power: 0.4, color: "#62def0", bake: { reach: 0.9, power: 1.4, floor: 1.3 } },
+    // the street's cyan at the far end of the arch's passage, coming out through it; the ad screen's glow
+    { id: "street", zone: "kowalski", at: [-1.3, 6.8, 1.6], r: 60, power: 0.5, color: "#62def0", bake: { reach: 2.6, power: 1.8, floor: 1.4 } },
+    { id: "ad", at: [0.15, 5.37, 1.3], r: 40, power: 0.4, color: "#ff4fd3", flicker: 0.15, bake: { reach: 1.2, power: 1.4, floor: 1.4 } },
   ],
 };
