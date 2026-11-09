@@ -199,6 +199,13 @@ Menschen darin sind Figuren mit Tagesabläufen (§4). Die Maus bedient das Impla
 | **Steuern** | Linksklick auf ein vernetztes Ding (Tür, Licht, Kamera, Automat) | nur mit Zugang: öffnen, schalten, Kamera schwenken (manche Kameras haben 2–3 Stellungen). Ab Kap. 1. |
 | **Verlassen** | Esc oder der Knopf `DECK` | zurück zum Deck |
 
+**Ein Ort, ein Bild** (entschieden 2026-11-09): Schaut eine Kamera auf einen Ort, an den Juno im
+Straßenmodus gehen kann, ist ihr Feed **genau diese Szene**: das Iso-Bild des Raums mit seinen Props und
+Figuren unter dem Feed-Filter, wie `cam14` den 14. Stock zeigt (höchstens verschoben, damit nichts unter
+der Kameraleiste liegt, heller belichtet; die Kamera fehlt im eigenen Bild). Das hält beide Ansichten
+gleich, und es gibt nur ein Bild zu malen. Nur Kameras auf Orte, die Juno nie betritt, dürfen eine
+eigene Einstellung haben (von oben, Fischauge, gekippt).
+
 **Momente.** Ein Feed zeigt Abläufe; wichtig für Rätsel sind **Momente**: Ereignisse mit einem
 Namen, die ein Clip enthalten kann (`kessler_ring`: Kessler gibt Varga seinen Ehering). Ein Moment
 geschieht zu seiner Zeit, ob jemand zusieht oder nicht. Damit kein Spieler hängen bleibt:
