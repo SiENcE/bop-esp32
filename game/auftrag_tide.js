@@ -105,7 +105,7 @@ jade.hotspots.door = { name: "Okonkwos Laden", rect: AJ.doorRect, walkTo: AJ.sho
 
 // ---- the shop: Okonkwo, who greets her every evening; warning him is telling him
 Cutaway.actor("okonkwo", { name: "Okonkwo", color: "#d8b890", room: "okonkwo_shop", at: AO.okonkwo, facing: "sw", walkTo: AO.front, face: "ne",
-  costume: { idle: "mock_okonkwo", walk: "mock_okonkwo", talk: "mock_okonkwo" }, voice: { pitch: 46, range: 3, wave: "triangle", syllable: 90, speed: 0.85 },
+  costume: { idle: "mock_okonkwo_bust", walk: "mock_okonkwo_bust", talk: "mock_okonkwo_bust" }, voice: { pitch: 46, range: 3, wave: "triangle", syllable: 90, speed: 0.85 },
   look: ["Okonkwo. Strickjacke, Lesebrille. Er rechnet noch auf Papier."],
   talk: [O("Juno. Guten Abend."), { dialog: "okonkwo" }] });
 Nagiwa.talkTree("okonkwo", [

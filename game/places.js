@@ -54,22 +54,29 @@ Nagiwa.at = {
     mast: [271, 23, 22, 15], vending: [68, 45, 31, 36], officeDoor: [74, 20, 23, 47],
   },
   // Chapter 1's blocks (art/mock/ch1_blocks.px.js)
-  cam21: { door: [152, 80], walkOff: [300, 110], queue: [[70, 96], [86, 100], [102, 104], [118, 108]], menu: [238, 134, 28, 28], clinic: [130, 26, 44, 50], mic: [152, 90] },
-  cam14: { door: [97, 112], mat: [190, 116], mic: [150, 100], doorsRect: [70, 30, 170, 58] },
-  cam18: { mic: [150, 100], sign: [176, 22, 56, 26], stairs: [100, 70, 120, 90] },
-  cam22: { seat: [120, 112], door: [20, 100], mic: [120, 100], bar: [24, 118, 272, 20] },
-  cam23: { dryer6: [168, 76], counter: [262, 150], mic: [168, 100], dryers: [16, 28, 236, 40], desk: [268, 80, 44, 60] },
-  cam24: { door: [160, 96], off: [40, 150], mic: [160, 110], entrance: [124, 24, 72, 66] },
+  // (the left column of every feed is the cameras' strip, x 4 to 74, and the top left its name: nothing that matters lies there)
+  cam21: { door: [152, 80], walkOff: [300, 110], queue: [[86, 96], [102, 100], [118, 104], [134, 108]], menu: [238, 134, 28, 28], clinic: [130, 26, 44, 50], mic: [152, 90] },
+  // the 14th floor's own picture and props (game/rooms/kessel.js), moved right by `shift` so Frau Haldane's door clears the strip: she
+  // comes out of it and walks to the papers at the head of the stairs
+  cam14: (() => {
+    const L = Nagiwa.layouts.kessel_14, S = 56, dh = L.openings.door_haldane, dj = L.openings.door_juno;
+    return { shift: S, door: [dh[0] + dh[2] / 2 + S, dh[1] + dh[3] - 2], mat: [L.spots.stairs[0] - 24 + S, L.spots.stairs[1] + 4], mic: [180, 130], exposure: 2.2,
+      doorsRect: [dh[0] + S, dj[1], dj[0] + dj[2] - dh[0], dh[1] + dh[3] - dj[1]] };
+  })(),
+  cam18: { mic: [150, 100], sign: [176, 27, 56, 26], stairs: [100, 70, 120, 90] },
+  cam22: { seat: [120, 112], mic: [120, 100], bar: [80, 118, 216, 20] },
+  cam23: { dryer6: [232, 76], counter: [262, 150], mic: [200, 100], dryers: [80, 28, 220, 40], desk: [268, 80, 44, 60] },
+  cam24: { door: [160, 96], off: [104, 174], mic: [160, 110], entrance: [124, 24, 72, 66] },
   // job B (game/auftrag_tide.js): Jade Row from Nagi·wa's camera above it, and from the machine's own at hip height
   cam07: { okonkwo: [118, 104], car: [244, 144], morrow: [214, 146], boy: [196, 148], mic: [200, 124], windowRect: [80, 44, 70, 68], machineRect: [280, 60, 22, 54] },
-  cam07v: { counter: [160, 100], safe: [214, 132], mic: [160, 110], safeRect: [196, 104, 40, 26], shelvesRect: [40, 24, 240, 40] },
-  cam15: { door: [60, 150], spot: [262, 100], mic: [160, 100], capsules: [44, 28, 272, 52], c23: [248, 28, 30, 25] },
+  cam07v: { counter: [160, 100], safe: [214, 132], mic: [160, 110], safeRect: [196, 104, 40, 26], shelvesRect: [84, 24, 152, 40] },
+  cam15: { door: [160, 150], spot: [271, 100], mic: [200, 100], capsules: [84, 28, 229, 52], c23: [258, 28, 26, 25] },
   cam30: { top: [160, 84], water: [160, 146], board: [222, 112], mic: [160, 100], sign: [88, 30, 144, 11], tide: [232, 52, 56, 36] },
   // measured from the camera in art/cams/cam31.px.js (it logs them when built)
   cam31: { stairs: [96, 83], top: [92, 67], shadow: [59, 92], edge: [151, 117], meet: [112, 99], asheMeet: [97, 90], tunnel: [284, 111], lantern: [183, 131], mic: [135, 108], tries: [244, 26, 72] },
   gasse: {
-    walk: [[10, 112, 310, 112, 318, 176, 2, 176]], arrive: [24, 150], kowalski: [14, 150], laundromat: [260, 116], market: [150, 132], niche: [52, 116],
-    kowalskiRect: [0, 110, 26, 70], laundromatRect: [232, 40, 56, 64], marketRect: [112, 122, 76, 30], nicheRect: [30, 44, 44, 60], cablesRect: [0, 10, 320, 28],
+    walk: [[10, 112, 310, 112, 318, 176, 2, 176]], arrive: [24, 150], kowalski: [14, 150], laundromat: [260, 116], market: [150, 116], niche: [52, 116],
+    kowalskiRect: [0, 110, 26, 70], laundromatRect: [232, 40, 56, 64], marketRect: [114, 30, 72, 74], nicheRect: [30, 44, 44, 60], cablesRect: [0, 10, 320, 28],
   },
   // the lane left of Kowalski Street, down its length (art/mock/jade_row.px.js: blocks, z = 1 where Juno walks, 30 px to the metre there). She keeps to the near band: her
   // sprite has one size, right for that depth, so the shop's door and the machine are reached from in front of them
@@ -81,7 +88,7 @@ Nagiwa.at = {
   // outside the flat's window: the ledge (kapitel1-design, "Die Stadt")
   sims: {
     walk: [[20, 128, 300, 128, 300, 152, 20, 152]], window: [50, 140], ladder: [262, 140],
-    windowRect: [28, 62, 44, 62], ladderRect: [250, 0, 26, 92], belowRect: [0, 156, 320, 24],
+    windowRect: [28, 62, 44, 62], ladderRect: [250, 0, 26, 40], belowRect: [0, 156, 320, 24],
   },
   dach: {
     // the old photo's camera (art/ui/deck_wallpaper.px.js): the parapet across the picture, the tar in front of it
@@ -98,9 +105,11 @@ Nagiwa.at = {
     walk: [[12, 118, 308, 118, 316, 176, 4, 176]], arrive: [24, 150], door: [10, 150], front: [150, 128], sable: [176, 118],
     curtainRect: [0, 50, 16, 126], pricesRect: [224, 14, 86, 36], screensRect: [112, 42, 100, 38], birdRect: [36, 40, 30, 44],
   },
+  // looking from the window at the back wall (as CAM 07V): Okonkwo behind the counter (his bust stands on the walk area's edge, drawn over
+  // the counter, as Mei), the safe in its right-hand end; the door to the lane at the front left
   okonkwo_shop: {
-    walk: [[12, 118, 308, 118, 316, 176, 4, 176]], arrive: [30, 150], door: [12, 150], front: [150, 154], okonkwo: [214, 119], shelves: [90, 126],
-    doorRect: [0, 50, 18, 120], shelvesRect: [30, 24, 120, 62], counterRect: [140, 96, 120, 24], photoRect: [230, 40, 30, 24],
+    walk: [[12, 124, 308, 124, 316, 176, 4, 176]], arrive: [30, 150], door: [12, 150], front: [142, 146], okonkwo: [178, 124], shelves: [110, 132],
+    doorRect: [0, 50, 18, 120], shelvesRect: [30, 24, 180, 62], counterRect: [70, 92, 180, 28], photoRect: [220, 40, 30, 24],
   },
   lucky_static: {
     walk: [[12, 118, 308, 118, 316, 176, 4, 176]], arrive: [24, 150], door: [10, 150], bar: [174, 124], imai: [110, 134],

@@ -30,12 +30,13 @@ scene("cam21_bg", { w: W, h: H, bg: "0" }, (c) => {
   c.rect(232, 128, 72, 40, "3"); c.rect(238, 134, 28, 28, "7"); c.rect(242, 139, 20, 2, "2"); c.rect(242, 144, 20, 2, "2"); c.rect(242, 149, 14, 2, "2")
   SIGN(c, 232, 116, 72, "PHO PUMP")
 })
-// the 14th floor from Nagi·wa's camera in the corner: the doors of 14C and 14A, a mat with the paper, the lift
-scene("cam14_bg", { w: W, h: H, bg: "0" }, (c) => {
-  ROOM(c, "5", "7", 88)
-  c.rect(78, 34, 38, 54, "2"); c.rect(196, 34, 38, 54, "3"); c.rect(262, 34, 40, 54, "3")
-  TXT.draw(c, 97, 50, "14C", "8", { font: "hud", align: "center" }); TXT.draw(c, 215, 50, "14A", "8", { font: "hud", align: "center" })
-  c.rect(198, 94, 32, 16, "4"); c.rect(208, 98, 12, 8, "9")
+// (cam14 is the 14th floor's own picture under the feed's filter: game/stadt.js)
+// what cam14 adds to it: the morning's papers at the head of the stairs, and Frau Haldane at the floor's scale, asleep on her feet in
+// her dressing gown, her arms hanging (the feed's filter turns both green)
+anim("mock_papers", { w: 12, h: 6, frames: 1, fps: 1, pivot: "bottom" }, (c) => { c.rect(0, 1, 12, 5, "h"); c.rect(1, 0, 10, 4, "g"); c.hline(2, 2, 7, "e") })
+anim("mock_haldane", { w: 15, h: 46, frames: 1, fps: 1, outline: "k", pivot: "bottom" }, (c) => {
+  c.rect(4, 0, 7, 4, "h"); c.rect(4, 4, 7, 7, "g"); c.hline(5, 7, 2, "e"); c.hline(8, 7, 2, "e")
+  c.rect(2, 11, 11, 31, "f"); c.rect(6, 11, 3, 31, "e"); c.rect(1, 13, 2, 16, "f"); c.rect(12, 13, 2, 16, "f"); c.rect(3, 42, 4, 4, "h"); c.rect(8, 42, 4, 4, "h")
 })
 // a close-up: one page of the stack, every face in it marked with four corners
 scene("look_zeitung", { w: 170, h: 112, bg: "h" }, (c) => {
@@ -48,20 +49,22 @@ scene("look_zeitung", { w: 170, h: 112, bg: "h" }, (c) => {
 })
 // the bar: the counter across the room, seen from over it
 scene("cam22_bg", { w: W, h: H, bg: "0" }, (c) => {
+  // (the left column is the cameras' strip: nothing that matters lies under x 76)
   ROOM(c, "2", "5", 62)
-  c.rect(30, 18, 60, 34, "3"); c.rect(120, 18, 60, 34, "3"); c.rect(210, 18, 60, 34, "3")
-  c.rect(24, 118, 272, 20, "6"); c.hline(24, 118, 272, "8")
-  for (const x of [60, 120, 180, 240]) c.rect(x, 100, 12, 14, "2")
+  c.rect(90, 18, 60, 34, "3"); c.rect(160, 18, 60, 34, "3"); c.rect(230, 18, 60, 34, "3")
+  c.rect(80, 118, 216, 20, "6"); c.hline(80, 118, 216, "8")
+  for (const x of [114, 154, 194, 234]) c.rect(x, 100, 12, 14, "2")
   SIGN(c, 110, 4, 100, "PHO PUMP")
 })
 // the laundromat from its ceiling: the dryers in a row, the dead one with its note, the counter
 scene("cam23_bg", { w: W, h: H, bg: "0" }, (c) => {
   ROOM(c, "3", "5", 74)
+  // (the left column is the cameras' strip: the row begins after it)
   for (let i = 0; i < 8; i++) {
-    const x = 16 + i * 30
-    c.rect(x, 28, 26, 40, "4"); c.rect(x + 5, 36, 16, 16, "2"); c.rect(x + 8, 39, 10, 10, i === 5 ? "1" : "3")
-    if (i === 5) c.rect(x + 8, 31, 10, 7, "8")
-    TXT.draw(c, x + 13, 56, String(i + 1), i === 5 ? "9" : "7", { font: "hud", align: "center" })
+    const x = 80 + i * 28
+    c.rect(x, 28, 24, 40, "4"); c.rect(x + 4, 36, 16, 16, "2"); c.rect(x + 7, 39, 10, 10, i === 5 ? "1" : "3")
+    if (i === 5) c.rect(x + 7, 31, 10, 7, "8")
+    TXT.draw(c, x + 12, 56, String(i + 1), i === 5 ? "9" : "7", { font: "hud", align: "center" })
   }
   c.rect(268, 80, 44, 60, "6"); c.hline(268, 80, 44, "8")
   SIGN(c, 96, 8, 112, "SUDS & SPIN")
@@ -91,17 +94,22 @@ scene("cam30_bg", { w: W, h: H, bg: "0" }, (c) => {
 scene("gasse_bg", { w: W, h: H, bg: "k" }, (c) => {
   c.rect(0, 0, W, 104, "b"); c.rect(0, 104, W, 76, "a")
   for (const y of [14, 22, 34]) c.hline(0, y, W, "e")
-  c.rect(30, 44, 44, 60, "d"); c.rect(120, 52, 30, 52, "d"); c.rect(232, 40, 56, 64, "e")
+  c.rect(30, 44, 44, 60, "d"); c.rect(232, 40, 56, 64, "e")
   SIGN(c, 228, 26, 64, "SUDS & SPIN", "d", "h")
-  c.rect(0, 150, 30, 30, "e"); c.rect(120, 138, 60, 14, "e")
-  SIGN(c, 112, 122, 76, "DRAIN MARKET", "d", "h")
+  c.rect(0, 150, 30, 30, "e")
+  // the way down to the market: an opening in the back wall, its stairs going down into the dark (as the street's sign says, DRAIN MKT
+  // and an arrow down), nothing anyone walks over
+  c.rect(118, 50, 64, 54, "k"); for (let i = 0; i < 6; i++) c.rect(122 + i * 3, 92 - i * 7, 56 - i * 6, 4, ["f", "e", "d", "b", "a", "k"][i])
+  c.rect(116, 48, 2, 56, "e"); c.rect(182, 48, 2, 56, "e")
+  SIGN(c, 112, 36, 76, "DRAIN MARKET", "d", "h")
 })
 // the ledge outside the flat: the wall of the block, the window, the ladder hanging too high, the street far below
 scene("sims_bg", { w: W, h: H, bg: "k" }, (c) => {
   c.rect(0, 0, W, 128, "d"); c.rect(0, 128, W, 26, "f"); c.hline(0, 128, W, "h")
   for (const x of [120, 180]) c.rect(x, 40, 34, 40, "e")
   c.rect(28, 62, 44, 62, "g"); c.rect(32, 66, 36, 54, "m")
-  c.rect(254, 0, 3, 92, "h"); c.rect(270, 0, 3, 92, "h"); for (let y = 6; y < 92; y += 10) c.hline(254, y, 19, "h")
+  // the ladder ends two metres above where Juno could reach (her head is at y 88 on the ledge, her hands up at about 74)
+  c.rect(254, 0, 3, 36, "h"); c.rect(270, 0, 3, 36, "h"); for (let y = 6; y < 36; y += 10) c.hline(254, y, 19, "h")
   c.rect(0, 154, W, 26, "a"); for (const [x, k] of [[30, "M"], [90, "y"], [150, "g"], [214, "M"], [280, "y"]]) c.rect(x, 170, 8, 3, k)
 })
 // The look upwards: along the transit axis, the spine the old photo shows going into the ring above. Each Ring is a ceiling with a
@@ -164,8 +172,9 @@ scene("dach_blick_b_bg", { w: W, h: H, bg: "k" }, (c) => {
 scene("cam18_bg", { w: W, h: H, bg: "0" }, (c) => {
   ROOM(c, "4", "5", 60)
   for (let i = 0; i < 7; i++) c.rect(100 + i * 2, 70 + i * 13, 120 - i * 4, 13, String(8 - i))
-  c.rect(176, 22, 56, 26, "2"); c.rect(186, 28, 28, 8, "8"); c.rect(214, 26, 8, 12, "8")
-  TXT.draw(c, 204, 39, "FISH", "9", { font: "hud", align: "center" })
+  // (under the display's buttons, which end at y 23)
+  c.rect(176, 27, 56, 26, "2"); c.rect(186, 33, 28, 8, "8"); c.rect(214, 31, 8, 12, "8")
+  TXT.draw(c, 204, 44, "FISH", "9", { font: "hud", align: "center" })
 })
 // LUCKY STATIC from inside: the bar, the karaoke machine, a table
 scene("lucky_static_bg", { w: W, h: H, bg: "k" }, (c) => {
@@ -192,7 +201,8 @@ scene("drain_market_bg", { w: W, h: H, bg: "k" }, (c) => {
   c.rect(0, 0, W, 112, "b"); c.rect(0, 112, W, 68, "a"); c.hline(0, 112, W, "y")
   c.rect(30, 66, 66, 42, "d"); SIGN(c, 30, 54, 66, "KIDNEYS ONLY", "m", "M")
   c.rect(106, 66, 58, 42, "d"); for (let i = 0; i < 5; i++) c.rect(112 + i * 10, 78, 6, 12, "g")
-  c.rect(170, 66, 30, 42, "e"); c.rect(0, 50, 18, 120, "e"); for (let y = 56; y < 170; y += 9) c.hline(2, y, 14, "g")
+  // the stairs up to the alley at the left (it comes down out of the alley's back wall)
+  c.rect(170, 66, 30, 42, "e"); c.rect(0, 50, 18, 120, "e"); for (let y = 56; y < 170; y += 9) c.hline(2, y, Math.min(14, 4 + (170 - y) / 9), "g")
   c.rect(262, 50, 44, 66, "n"); for (let x = 266; x < 306; x += 8) c.rect(x, 50, 2, 66, "m")
 })
 // Sable's booth behind the curtain: violet and amber, a table full of screens, the price list, a wire bird in its cage
@@ -208,12 +218,13 @@ scene("sable_booth_bg", { w: W, h: H, bg: "k" }, (c) => {
 // the Morpheus from its corridor's ceiling: two rows of capsules with their numbers, each with a small screen
 scene("cam15_bg", { w: W, h: H, bg: "0" }, (c) => {
   ROOM(c, "4", "7", 84)
+  // (the left column is the cameras' strip: the capsules begin after it, the door Kessler comes through is under the camera)
   for (let row = 0; row < 2; row++) for (let i = 0; i < 8; i++) {
-    const x = 44 + i * 34, y = 28 + row * 27, n = 17 + row * 8 + i
-    c.rect(x, y, 30, 25, "2"); c.rect(x + 2, y + 2, 26, 21, "3"); c.rect(x + 20, y + 4, 6, 4, "8")
-    TXT.draw(c, x + 11, y + 12, String(n), "9", { font: "hud", align: "center" })
+    const x = 84 + i * 29, y = 28 + row * 27, n = 17 + row * 8 + i
+    c.rect(x, y, 26, 25, "2"); c.rect(x + 2, y + 2, 22, 21, "3"); c.rect(x + 17, y + 4, 6, 4, "8")
+    TXT.draw(c, x + 10, y + 12, String(n), "9", { font: "hud", align: "center" })
   }
-  SIGN(c, 110, 0, 100, "MORPHEUS"); c.rect(46, 110, 28, 70, "6")
+  SIGN(c, 110, 0, 100, "MORPHEUS"); c.rect(146, 120, 28, 60, "6")
 })
 // who walks through cam03 and cam15 now: a hood where the scarf was
 anim("mock_kessler_hood", { w: 13, h: 24, frames: 1, fps: 1, outline: "1", pivot: "bottom" }, (c) => {
@@ -269,10 +280,13 @@ scene("cam07_bg", { w: W, h: H, bg: "0" }, (c) => {
 })
 // CAM 07V: the machine's own camera, a fisheye at hip height across the lane: the shop's window big, its counter, the safe under it with its keypad
 scene("cam07v_bg", { w: W, h: H, bg: "0" }, (c) => {
+  // (the window begins after the cameras' strip). Through it, as from inside (docs/kapitel1-design.md §4): the shelves on the back wall,
+  // the counter across, the safe built into its right-hand end with its door and keypad towards the window
   c.rect(0, 0, W, H, "3")
-  c.rect(30, 16, 260, 120, "2"); c.rect(34, 20, 252, 112, "8")
-  for (const y of [34, 54]) { c.rect(40, y, 240, 3, "5"); for (let x = 44; x < 276; x += 12) c.rect(x, y - 10, 8, 10, x % 24 ? "6" : "7") }
-  c.rect(34, 96, 252, 36, "5"); c.hline(34, 96, 252, "9")
+  c.rect(76, 16, 214, 120, "2"); c.rect(80, 20, 206, 112, "8")
+  for (const y of [34, 54]) { c.rect(84, y, 152, 3, "5"); for (let x = 88; x < 232; x += 12) c.rect(x, y - 10, 8, 10, x % 24 ? "6" : "7") }
+  c.rect(250, 36, 26, 60, "6"); c.rect(252, 38, 22, 58, "5"); c.px(270, 68, "9")                // the store room's door, behind the counter's end
+  c.rect(80, 96, 156, 36, "5"); c.hline(80, 96, 156, "9")
   c.rect(196, 104, 40, 26, "2"); c.rect(200, 108, 16, 12, "4"); c.rect(220, 108, 12, 14, "9")
   c.rect(0, 136, W, 44, "4"); c.hline(0, 136, W, "6")
   SIGN(c, 110, 4, 100, "OKONKWO", "4", "9")
@@ -284,14 +298,23 @@ scene("zoom_keypad", { w: 60, h: 40, bg: "1" }, (c) => {
   c.rect(0, 0, 60, 40, "2"); c.rect(4, 3, 52, 10, "1"); TXT.draw(c, 30, 5, "4-1-7-0-9", "9", { font: "hud", align: "center" })
   for (let j = 0; j < 4; j++) for (let i = 0; i < 3; i++) { c.rect(10 + i * 15, 16 + j * 6, 10, 4, "4"); c.rect(13 + i * 15, 17 + j * 6, 4, 2, j === 1 && i === 0 ? "9" : "6") }
 })
-// Okonkwo's shop from inside: shelves of rice and batteries, the counter, a photograph on the wall, the door back to the lane
+// Okonkwo's shop from inside, looking from the window at the back wall as CAM 07V does across the lane (docs/kapitel1-design.md §4): the
+// shelves of rice and batteries on the back wall, the counter across in front of them with Okonkwo behind it, the safe built into its
+// right-hand end, its door and keypad towards the window; the family's photograph over it, the store room's door beside it. The window
+// and the door to the lane are behind us: the door's edge at the front left, the lane's neon on the floor
 scene("okonkwo_shop_bg", { w: W, h: H, bg: "k" }, (c) => {
   c.rect(0, 0, W, 112, "o"); c.rect(0, 112, W, 68, "a"); c.hline(0, 112, W, "y")
+  for (const y of [34, 58, 82]) { c.rect(30, y, 180, 3, "s"); for (let x = 32; x < 208; x += 7) c.rect(x, y - 9, 5, 9, (x + y) % 3 ? "O" : "h") }
+  c.rect(262, 36, 38, 76, "s"); c.rect(266, 40, 30, 72, "S"); c.px(291, 78, "O")
+  c.rect(220, 40, 30, 24, "k"); c.rect(222, 42, 26, 20, "h"); c.rect(222, 52, 26, 10, "f"); for (const x of [227, 234, 241]) c.rect(x, 46, 3, 8, "S")
+  c.rect(70, 92, 180, 28, "s"); c.hline(70, 92, 180, "O"); c.rect(84, 96, 30, 12, "b"); c.rect(88, 99, 22, 4, "v")
+  c.rect(220, 95, 28, 23, "e"); c.rect(222, 97, 24, 19, "f"); c.rect(238, 100, 6, 8, "h"); c.rect(225, 104, 8, 2, "e")
   c.rect(0, 50, 18, 120, "b"); c.rect(3, 54, 12, 50, "y")
-  for (const y of [34, 58, 82]) { c.rect(30, y, 120, 3, "s"); for (let x = 32; x < 148; x += 7) c.rect(x, y - 9, 5, 9, (x + y) % 3 ? "O" : "h") }
-  c.rect(140, 96, 120, 24, "s"); c.hline(140, 96, 120, "O"); c.rect(150, 100, 30, 14, "b"); c.rect(154, 103, 22, 4, "v")
-  c.rect(230, 40, 30, 24, "k"); c.rect(232, 42, 26, 20, "h"); c.rect(232, 52, 26, 10, "f"); for (const x of [237, 244, 251]) c.rect(x, 46, 3, 8, "S")
-  c.rect(270, 30, 40, 70, "S"); c.rect(274, 34, 32, 30, "y")
+  for (const [x, w, k] of [[120, 90, "f"], [150, 50, "g"]]) c.rect(x, 162 - (w - 50) / 8, w, 4, k)
+})
+// Okonkwo behind his counter: only what shows over it (an anchor below the picture keeps his feet behind the counter, tools/build_art.sh)
+anim("mock_okonkwo_bust", { w: 19, h: 25, frames: 1, fps: 1, outline: "k", pivot: "bottom" }, (c) => {
+  c.rect(6, 0, 7, 9, "S"); c.rect(6, 0, 7, 2, "k"); c.rect(6, 4, 7, 1, "h"); c.rect(3, 9, 13, 16, "O"); c.rect(5, 10, 9, 15, "o")
 })
 // the people of job B, not painted yet: Okonkwo in his cardigan (in the shop and from above in the feeds), Lt. Morrow in her trench coat,
 // a Tidewater boy with the glowing mark at his neck, the patrol car; Ratz with his parka, headphones and glowing collar

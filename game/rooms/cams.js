@@ -11,6 +11,9 @@ Nagiwa.cams.cam04 = { id: "04", place: "IMBISS YUEN", owner: "YUEN'S, PRIVAT", m
 
 /** The phosphor duotone (docs/style-guide.md §9), the same ten values as the art. */
 Nagiwa.PHOSPHOR = ["#030a0a", "#071514", "#0c221f", "#12332d", "#1a483e", "#266252", "#388169", "#55a585", "#8acfae", "#d4f7e2"];
+/** A camera that looks at a room painted for street mode (cam14) sees it brighter than Juno does: its sensor lifts the night before the ramp.
+ * `{ exposure: k }` multiplies every colour by k. */
+Cutaway.post.add("exposure", (px, o) => { const k = Number(o.exposure) || 1, d = px.data; for (let i = 0; i < d.length; i += 4) { d[i] *= k; d[i + 1] *= k; d[i + 2] *= k; } });
 /** The feeds' live artefacts: grain, the ramp, scanlines, a rolling band, the lens's dark corners. */
 Nagiwa.FEED_POST = [
   { noise: 0.035 },

@@ -88,12 +88,24 @@ Cutaway.dialog("zeitung_cam", { main: { choices: [
 ] } });
 Nagiwa.cams.cam14 = { id: "14", place: "KESSEL-BLOCK, 14. STOCK", owner: "NAGI·WA", map: [8, 14], if: "link_cam14" };
 Cutaway.actor("haldane_feed", { name: "Jemand im Morgenmantel", color: "#ffa8d8",
-  costume: { idle: "commuter_d_feed", walk: "commuter_d_feed_walk", talk: "commuter_d_feed" }, speed: [6, 3],
+  costume: { idle: "mock_haldane", walk: "mock_haldane", talk: "mock_haldane" }, speed: [8, 4],
   look: ["Jemand im Morgenmantel. Sehr langsam.", "Die Hände hängen einfach runter."],
   talk: [{ if: "!news_who", then: ["Halb drei. Morgenmantel. Die geht langsam, die Augen ...", "Die Augen sind zu.", "Frau Haldane. Aus 14C. Sie holt sich die Zeitung, ihre eigene und die von 14A.", "Ihr eigener Zettel. WER KLAUT MEINE ZEITUNG.", { set: "news_who" }, { evi: "verwirrt" }, { say: "evi", text: "Sie schläft. Darf man das?" }],
     else: ["Frau Haldane. Sie schläft und holt die Zeitung. Die markier ich nicht."] }] });
 Cutaway.routine("haldane_feed", [{ day: [2, 3], from: "02:30", to: "02:45", room: "cam14", at: AC.door, path: [AC.door, AC.mat, AC.door] }]);
-Nagiwa.camRoom("cam14", { background: "cam14_bg", mic: { at: AC.mic, clear: 40, lost: 150 }, hotspots: {
+// CAM 14 is the floor's own picture (the user's wish, 2026-11-09): its bake and props under the feed's filter, moved right by AC.shift
+// so Frau Haldane's door clears the cameras' strip. The camera itself is left out of its own picture; the hook only while it hangs
+const K14 = Nagiwa.at.kessel_14, SH = AC.shift;
+const shiftX = (/** @type {number[]} */ xs) => xs.map((v, i) => (i % 2 ? v : v + SH));
+Nagiwa.camRoom("cam14", { background: undefined, color: Nagiwa.PHOSPHOR[0], mic: { at: AC.mic, clear: 40, lost: 150 },
+  post: [{ exposure: AC.exposure }, ...Nagiwa.FEED_POST],
+  props: [
+    { id: "floor14", image: "kessel_14_bg", at: [SH, 0], anchor: [0, 0], baseline: -1000 },
+    ...K14.props.filter((/** @type {any} */ p) => p.id !== "corner_cam").map((/** @type {any} */ p) => ({ ...p, at: [p.at[0] + SH, p.at[1]],
+      ...(p.front ? { front: shiftX(p.front) } : {}), ...(p.id === "haken" ? { if: "!got_haken" } : {}) })),
+    { id: "papers", image: "mock_papers", at: [AC.mat[0] + 8, AC.mat[1] - 1], if: "time<02:45" },
+  ],
+  hotspots: {
   doors: { name: "Türen", rect: AC.doorsRect, look: ["Der Flur von oben. Genau wie ich's in Erinnerung hab.", "Den hab ich ja mal beobachtet, von Berufs wegen."] },
 } });
 const haldaneUse = floor14.haldane.use;
@@ -218,7 +230,7 @@ Cutaway.actor("prediger", { name: "Der Prediger", color: "#d8c8a0", room: "drain
 Cutaway.room("drain_market", { name: "Drain-Markt", background: "drain_market_bg", walk: AM.walk,
   ambience: ["city_far", "neon_buzz"], music: { theme: "juno", intensity: 0.4 },
   hotspots: {
-    up: { name: "Zur Gasse", rect: AM.upRect, walkTo: AM.up, face: "sw", use: [{ goto: "gasse", at: Nagiwa.at.gasse.market, face: "ne" }] },
+    up: { name: "Zur Gasse", rect: AM.upRect, walkTo: AM.up, face: "sw", use: [{ goto: "gasse", at: Nagiwa.at.gasse.market, face: "se" }] },
     kidneys: { name: "Stand", rect: AM.kidneysRect, walkTo: AM.stalls, face: "ne", look: "KIDNEYS ONLY. Der Mann dahinter sieht gesund aus. Das ist das Unheimliche." },
     jars: { name: "Implantate", rect: AM.jarsRect, walkTo: AM.stalls, face: "ne", look: "Gebrauchte Implantate, in Gläsern. Eins davon sieht aus wie meins." },
     stalls: { name: "Stände", rect: AM.stallsRect, walkTo: AM.stalls, face: "ne", look: "[MOCK] Hier kommen noch Ratz und Sables Vorhang." },

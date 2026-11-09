@@ -198,7 +198,7 @@ Cutaway.room("gasse", { name: "Die Gasse", background: "gasse_bg", walk: AG.walk
     kowalski: { name: "Zur Kowalski-Straße", rect: AG.kowalskiRect, walkTo: AG.kowalski, face: "sw", use: [{ goto: "kowalski", at: Nagiwa.at.kowalski.fromGasse, face: "nw" }] },
     laundromat: { name: "SUDS & SPIN", rect: AG.laundromatRect, walkTo: AG.laundromat, face: "ne", look: "Der Waschsalon. Ein Viertel weiter, der Gasse nach.",
       use: [{ goto: "laundromat", at: AW.arrive, face: "se" }] },
-    market: { name: "Zum Drain-Markt", rect: AG.marketRect, walkTo: AG.market, face: "se", look: "Da runter ist der Drain-Markt.", use: "[MOCK] Den bau ich erst noch." },
+    market: { name: "Zum Drain-Markt", rect: AG.marketRect, walkTo: AG.market, face: "ne", look: "Da runter ist der Drain-Markt.", use: "[MOCK] Den bau ich erst noch." },
     niche: { name: "Nische", rect: AG.nicheRect, walkTo: AG.niche, face: "ne", look: "Eine Nische mit einer Matratze und einem Topf. Hier wohnt jemand." },
     cables: { name: "Kabel", rect: AG.cablesRect, walkTo: AG.niche, face: "ne", look: "Kabel, armdick. Alle tropfen. Keiner weiß mehr, wohin sie gehen." },
   } });
