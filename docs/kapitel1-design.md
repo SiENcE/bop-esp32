@@ -326,7 +326,7 @@ Live-Übertragung.“ 750 Chits, die zweite Zeile im Kassenbuch. Es schreibt sic
 | `okonkwo_shop` | 320x180 | warmes Glühlampenlicht, Regale | Tür → `jade_row` | Theke, Tresor (dahinter), Reissäcke, Batterien, Okonkwo | ein Foto von Okonkwos Familie vor der Flut, am Strand der alten Stadt |
 | `drain_market` | 480x180 (scrollt; entschieden 2026-11-09: ein größerer Raum, damit er wie ein voller Markt aussieht; der Block ist noch 320) | Bernstein, Rauch, Magenta-Neon | Treppe hinauf → `gasse`, Vorhang → `sable_booth`, Treppe hinab (Kap. 2) | Stände: Ratz' Elektroschrott, ein Garküchenstand, ein Organ-Tausch-Schild (`KIDNEYS ONLY`), gebrauchte Implantate in Gläsern | ein Prediger der „Wachen Kirche", der gegen Lull predigt; niemand hört zu |
 | `sable_booth` | 320x180 | Violett und Bernstein, Rauch | Vorhang → `drain_market` | Sable hinter einem Tisch voller Bildschirme, ein Käfig mit einem Vogel aus Draht | Sables Preisliste an der Wand: `NAMES 50. ADDRESSES 80. SECRETS: ASK.` |
-| `laundromat` | 320x180 | Grünstich, Neonröhren, Dampf | Tür → `gasse` | 8 Maschinen, der kaputte Trockner 6 mit einem Zettel `OUT OF ORDER`, die Theke, ein schlafender Mann | ein Schild `NO SNEAKERS IN THE DRYER` mit drei Paar Turnschuhen darunter |
+| `laundromat` | 320x180 | Grünstich, Neonröhren, Dampf | Tür → `gasse` | 8 Trockner in einer Reihe an der rechten Rückwand, der kaputte Trockner 6 mit einem Zettel `OUT OF ORDER`; an der linken Rückwand drei Waschmaschinen (Ines wäscht am Mittwoch) und neben der Tür die Theke, ein schlafender Mann dahinter (entschieden 2026-11-09) | ein Schild `NO SNEAKERS IN THE DRYER` über den Trocknern, und hinter den Glastüren von Trockner 2, 3 und 7 kreist je ein Paar Turnschuhe (entschieden 2026-11-09) |
 
 ### Kameras
 
