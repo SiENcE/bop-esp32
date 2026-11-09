@@ -1,5 +1,5 @@
-// Nagiwa: NETZ, Nagi·wa-Net on the deck, as a small browser (kapitel0-design §2.1; my decisions of 2026-11-08 in
-// NEXT-SESSION.md): the start page of the evening (Nagiwa.netz, filled by the chapters: each entry in its row, `slot`,
+// Nagiwa: NETZ, Nagi·wa-Net on the deck, as a small browser (kapitel0-design §2.1; the user's decisions of 2026-11-08):
+// the start page of the evening (Nagiwa.netz, filled by the chapters: each entry in its row, `slot`,
 // one that opens a page names it, `page`), bookmarks (START, NAGI·WA, BRETT, ARCHIV, SUCHE), list pages, articles
 // and board threads (their text scrolls; links stand only in rows, so every one is a hotspot of the deck), and a
 // search without typing: the terms Juno knows are buttons, and not everything can be found yet. Only the world:
