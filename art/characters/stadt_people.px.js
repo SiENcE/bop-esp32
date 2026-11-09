@@ -116,11 +116,16 @@ const imai = (c, o = {}) => {
   c.rect(11, 9, 2, 32, "4"); c.vline(11, 9, 32, "5"); c.rect(14, 7, 2, 18, "4")
   c.line(11, 9, 15, 7, "6"); c.line(11, 10, 15, 8, "5")
   for (let k = 0; k < 9; k++) { c.px(11 + k, 26 + Math.floor(k / 2), "6"); c.px(11 + k, 27 + Math.floor(k / 2), "3") }   // the seat's near edge
-  c.rect(16, 30, 2, 11, "3")                                                            // its front leg
+  c.rect(16, 30, 2, 11, "3"); c.vline(16, 30, 11, "5")                                   // its front leg
   c.rect(15, im(19), 14, 5, "2"); c.hline(15, im(19), 14, "3"); c.rect(26, im(14), 4, 12, "3"); c.vline(29, im(14), 12, "2"); c.rect(26, im(2), 6, 3, "1"); c.hline(26, im(2), 6, "3"); c.rect(20, im(14), 3, 12, "3"); c.vline(22, im(14), 12, "2"); c.rect(20, im(2), 5, 3, "1"); c.hline(20, im(2), 5, "3")
   // the cardigan: round shoulders, and sagging
   taper(c, im(29), 16, 24, im(15), 13, 27, (x, y, x0, x1, t) => (t > 0.85 ? "d" : x === x1 || x === x0 ? "e" : (x === 21 && t > 0.15) ? "e" : t < 0.1 ? "C" : "C"))
   c.hline(18, im(30), 5, "e")
+  // (the user's corrections, 2026-11-09: the hem a row lower, the thighs without a gap, the seat's edge a band two pixels wide)
+  c.hline(17, 26, 7, "d"); c.rect(17, 27, 5, 3, "3")
+  for (const [x, y] of [[13, 27], [14, 27], [15, 28], [16, 28], [17, 29], [18, 29]]) c.px(x, y, "6")
+  for (const [x, y] of [[15, 27], [16, 27], [17, 28], [18, 28], [19, 29], [13, 26], [14, 26]]) c.px(x, y, "5")
+  for (const [x, y] of [[15, 26], [16, 26], [24, 26], [25, 26]]) c.px(x, y, "3")
   // the table; its foot; the saucer and a cup of cold tea, no steam
   c.rect(36, im(19), 3, 18, "3"); c.vline(38, im(19), 18, "2"); c.ellipse(37, im(1), 6, 1, "3"); c.hline(32, im(0), 11, "2")
   c.ellipse(37, im(23), 11, 3, "5"); c.hline(30, im(25), 14, "6"); c.hline(27, im(22), 21, "4"); c.hline(30, im(21), 15, "3")
@@ -143,9 +148,9 @@ const imai = (c, o = {}) => {
     ".hh%hhhhhh",
     "hhhhhh&hhh",
     "hOoooooooh",
-    "hOookookoo",
+    "hOkkkookko",
     "hOookooko.",
-    ".Ootoooto.",
+    ".Oooooooo.",
     ".OooOOOoo.",
     "..OoooooO.",
     "...OOOO...",
