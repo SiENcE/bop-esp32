@@ -219,7 +219,7 @@ Cutaway.room("gasse", { name: "Die Gasse", background: "gasse_bg", size: /** @ty
       use: [{ goto: "laundromat", at: AW.arrive, face: "se" }] },
     market: { name: "Zum Drain-Markt", rect: AG.marketRect, walkTo: AG.market, face: "nw", look: "Da runter ist der Drain-Markt.", use: "[MOCK] Den bau ich erst noch." },
     statue: { name: "Denkmal", poly: AG.statuePoly, walkTo: AG.statue, face: "ne",
-      look: ["Das Flutdenkmal. Eine Frau, die Hand hoch, als könnte sie das Wasser anhalten.", "Unten die Namen. Der Sockel ist zu klein für alle.", "Jemand hat ihr einen Heiligenschein aus LEDs gebaut. Und jemand zündet jeden Abend die Kerzen an."] },
+      look: ["Das Flutdenkmal. Eine Frau mit gesenktem Kopf, ein kleines Boot in den Händen.", "Unten die Namen. Der Sockel ist zu klein für alle.", "Jemand hat ihr einen Heiligenschein aus LEDs gebaut. Und jemand zündet jeden Abend die Kerzen an."] },
     ad: { name: "Werbung", rect: AG.adRect, walkTo: AG.ad, face: "nw", look: "Kiemen, Schulden, ein Spiel. Alle drei Sekunden was anderes, das ich nicht brauche." },
     niche: { name: "Nische", rect: AG.nicheRect, walkTo: AG.niche, face: "nw", look: "Eine Nische mit einer Matratze und einem Topf. Hier wohnt jemand." },
     // the balcony over the water (the user's wish): only to look at

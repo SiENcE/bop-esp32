@@ -9,7 +9,8 @@
 // one's minus 0.6): the door at its left end under a lamp, the long window, the sign, the dryers' vent puffing steam, a flat's window
 // above. On the left back wall a niche where somebody lives (a mattress, a pot) and the way down to the Drain Market under its sign
 // (kapitel1-design §9: nothing to walk over; the handrails as the user drew them). In the middle an old statue from before the flood,
-// candles at its foot, a light from above on it: the flood's memorial, the names on its plinth. Dark (the user's wish): a few bright neon lights and cones of light, the rest night.
+// candles at its foot, a light from above on it: the flood's memorial, a woman with her head bowed holding a small boat, the names
+// on its plinth. Dark (the user's wish): a few bright neon lights and cones of light, the rest night.
 // Blocks for now (art/kit/gasse.kit.px.js): to be judged before anything is painted.
 "use strict";
 
