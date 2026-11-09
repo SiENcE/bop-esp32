@@ -203,17 +203,22 @@ Nagiwa.camRoom("cam30", { background: "cam30_bg", mic: { at: A30.mic, ...MIC }, 
 
 // ---- the alley and the laundromat, in street mode: both baked from their maps (art/rooms/gasse.map.js, laundromat.map.js)
 const AG = Nagiwa.at.gasse, AW = Nagiwa.at.laundromat;
-Cutaway.room("gasse", { name: "Die Gasse", background: "gasse_bg", size: /** @type {[number, number]} */ ([320, 290]), walk: AG.walk, holes: AG.holes, props: AG.props,
-  light: { ambient: 0.7, lamps: AG.lamps.map((/** @type {any} */ { bake, zone, ...lamp }) => lamp) },
+Cutaway.room("gasse", { name: "Die Gasse", background: "gasse_bg", size: /** @type {[number, number]} */ ([416, 236]), walk: AG.walk, holes: AG.holes, props: AG.props,
+  light: { ambient: 0.5, lamps: AG.lamps.map((/** @type {any} */ { bake, zone, ...lamp }) => lamp) },
   // the rain coming down into the alley, as in Kowalski Street (the steam out of the dryers' vent is in the picture)
-  fx: [{ kind: "rain", rect: [0, 0, 320, 180], count: 50, color: "#41547a", speed: 140, slant: 0.3, length: 3 },
-    { kind: "rain", rect: [0, 0, 320, 180], count: 40, color: "#6c809a", speed: 210, slant: 0.3, length: 5 }],
+  // and the two cones of light hanging in it
+  fx: [{ kind: "rain", rect: [0, 0, 416, 236], count: 80, color: "#41547a", speed: 140, slant: 0.3, length: 3 },
+    { kind: "rain", rect: [0, 0, 416, 236], count: 60, color: "#6c809a", speed: 210, slant: 0.3, length: 5 },
+    { kind: "haze", poly: AG.hazeDoor, color: "#dafcff", alpha: 0.14, fade: 0.3 },
+    { kind: "haze", poly: AG.hazeStatue, color: "#ffd58a", alpha: 0.16, fade: 0.3 }],
   ambience: ["city_far", { sfx: "feed_rain", gain: 0.6 }], music: { theme: "juno", intensity: 0.3 },
   hotspots: {
-    kowalski: { name: "Zur Kowalski-Straße", rect: AG.kowalskiRect, walkTo: AG.kowalski, face: "sw", use: [{ goto: "kowalski", at: Nagiwa.at.kowalski.fromGasse, face: "nw" }] },
+    kowalski: { name: "Zur Kowalski-Straße", rect: AG.kowalskiRect, walkTo: AG.kowalski, face: "nw", use: [{ goto: "kowalski", at: Nagiwa.at.kowalski.fromGasse, face: "nw" }] },
     laundromat: { name: "SUDS & SPIN", rect: AG.laundromatRect, walkTo: AG.laundromat, face: "ne", look: "Der Waschsalon. Ein Viertel weiter, der Gasse nach.",
       use: [{ goto: "laundromat", at: AW.arrive, face: "se" }] },
     market: { name: "Zum Drain-Markt", rect: AG.marketRect, walkTo: AG.market, face: "nw", look: "Da runter ist der Drain-Markt.", use: "[MOCK] Den bau ich erst noch." },
+    statue: { name: "Statue", poly: AG.statuePoly, walkTo: AG.statue, face: "ne",
+      look: ["Die steht hier seit vor der Flut. Eine Frau, die Hand hoch, als könnte sie das Wasser anhalten.", "Jemand hat ihr einen Heiligenschein aus LEDs gebaut. Und jemand zündet jeden Abend die Kerzen an."] },
     niche: { name: "Nische", rect: AG.nicheRect, walkTo: AG.niche, face: "nw", look: "Eine Nische mit einer Matratze und einem Topf. Hier wohnt jemand." },
     // the balcony over the water (the user's wish): only to look at
     water: { name: "Wasser", poly: AG.waterPoly, walkTo: AG.water, face: "se",

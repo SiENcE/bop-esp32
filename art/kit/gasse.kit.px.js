@@ -26,41 +26,43 @@ const KIT_GASSE = (() => {
   Object.assign(ISOKIT.SHADE, { E: "e", F: "E", J: "F", L: "J", K: "L" })
 
   // ---------------------------------------------------------------- floors
-  ISOKIT.floor("p", (u, v) => (near(u % 0.5, 0, 1 / 40) || near(v % 0.5, 0, 1 / 40) ? "e" : (fl(u / 0.5) + fl(v / 0.5)) % 2 ? "z" : "Z"))
-  ISOKIT.floor("w", (u, v) => (near((u + v) % 0.3, 0, 0.02) ? "X" : "f"))
+  ISOKIT.floor("p", (u, v) => (near(u % 0.5, 0, 1 / 40) || near(v % 0.5, 0, 1 / 40) ? "e" : (fl(u / 0.5) + fl(v / 0.5)) % 2 ? "f" : "z"))
+  ISOKIT.floor("w", (u, v) => (near((u + v) % 0.3, 0, 0.02) ? "Z" : "e"))
   ISOKIT.floor("g", (u, v) => (near(u % 0.1, 0, 0.02) ? "4" : "e"))
   ISOKIT.floor("n", (u, v) => (near(u % 0.3, 0, 0.02) ? "a" : "O"))
 
   // ---------------------------------------------------------------- walls
-  ISOKIT.wall("gs_wall", (s, h) => (h < 0.06 ? "1" : near(h % 1.0, 0, 1 / 40) ? "2" : "3"))
-  ISOKIT.wall("gs_facade", (s, h) => (h < 0.06 ? "1" : h < 2.3 ? "4" : h < 2.34 ? "5" : near(h % 1.0, 0, 1 / 40) ? "2" : "3"))
+  ISOKIT.wall("gs_wall", (s, h) => (h < 0.06 ? "e" : near(h % 1.0, 0, 1 / 40) ? "1" : "2"))
+  ISOKIT.wall("gs_facade", (s, h) => (h < 0.06 ? "e" : h < 2.3 ? "3" : h < 2.34 ? "4" : near(h % 1.0, 0, 1 / 40) ? "1" : "2"))
   ISOKIT.wall("gs_niche_wall", () => "2")
 
   /** a picture for an opening, drawn once (W x H in the opening's own pixels, y down from its top) */
   const pic = (o, name, draw) => (o.memo[name] ??= ISOKIT.raster(o.aw, o.ah, (c) => draw(c, o.aw, o.ah), 0, 0))(o.a, o.e)
 
   // ---------------------------------------------------------------- SUDS & SPIN's front
-  ISOKIT.opening("gs_lm_door", { paint(s, h, o) { return pic(o, "door", (c, W, H) => { c.rect(0, 0, W, H, "4"); c.rect(2, 2, W - 4, H - 2, "!L"); c.rect(W - 6, fl(H / 2), 2, 4, "5") }) } })
+  ISOKIT.opening("gs_lm_door", { paint(s, h, o) { return pic(o, "door", (c, W, H) => { c.rect(0, 0, W, H, "3"); c.rect(2, 2, W - 4, H - 2, "!J"); c.rect(W - 6, fl(H / 2), 2, 4, "4") }) } })
   ISOKIT.opening("gs_lm_window", {
     paint(s, h, o) {
       return pic(o, "window", (c, W, H) => {
-        c.rect(0, 0, W, H, "!L")
-        // the dryers inside along their wall, seen through the glass: a row of doors
-        for (let x = 4; x < W - 6; x += 12) { c.rect(x, H - 22, 10, 18, "!J"); c.rect(x + 3, H - 16, 4, 6, "!F") }
-        c.rect(0, 0, W, 2, "5"); c.rect(0, H - 2, W, 2, "5"); c.rect(0, 0, 2, H, "5"); c.rect(W - 2, 0, 2, H, "5")
-        c.rect(fl(W / 3), 0, 2, H, "5"); c.rect(fl((2 * W) / 3), 0, 2, H, "5")
+        c.rect(0, 0, W, H, "!F")
+        // the dryers inside along their wall, seen through the glass: a row of doors, the tube's light on their tops
+        for (let x = 4; x < W - 6; x += 12) { c.rect(x, H - 22, 10, 18, "!J"); c.rect(x + 3, H - 16, 4, 6, "!E"); c.hline(x, H - 22, 10, "!L") }
+        c.rect(0, 0, W, 2, "3"); c.rect(0, H - 2, W, 2, "3"); c.rect(0, 0, 2, H, "3"); c.rect(W - 2, 0, 2, H, "3")
+        c.rect(fl(W / 3), 0, 2, H, "3"); c.rect(fl((2 * W) / 3), 0, 2, H, "3")
       })
     },
   })
   ISOKIT.opening("gs_lm_sign", {
     paint(s, h, o) {
-      return pic(o, "sign", (c, W, H) => { c.rect(0, 0, W, H, "2"); c.rect(1, 1, W - 2, H - 2, "!F"); TXT.draw(c, fl(W / 2), fl((H - 5) / 2), "SUDS & SPIN", "!K", { font: "hud", align: "center" }) })
+      return pic(o, "sign", (c, W, H) => { c.rect(0, 0, W, H, "1"); c.rect(1, 1, W - 2, H - 2, "e"); TXT.draw(c, fl(W / 2), fl((H - 5) / 2), "SUDS & SPIN", "!K", { font: "hud", align: "center" }) })
     },
   })
   ISOKIT.opening("gs_vent", { paint(s, h, o) { return pic(o, "vent", (c, W, H) => { c.rect(0, 0, W, H, "5"); for (let y = 1; y < H - 1; y += 2) c.hline(1, y, W - 2, "2") }) } })
   ISOKIT.opening("gs_flat_window", {
     paint(s, h, o) { return pic(o, "flat", (c, W, H) => { c.rect(0, 0, W, H, "2"); c.rect(1, 1, W - 2, H - 2, "!Q"); c.rect(1, 1, fl(W / 3), H - 2, "!P") }) },
   })
+  // the lamp over the laundromat's door: a steel shade, its bulb
+  ISOKIT.opening("gs_lamp", { paint(s, h, o) { return pic(o, "lamp", (c, W, H) => { c.rect(0, 0, W, H - 2, "4"); c.hline(1, H - 2, W - 2, "!V"); c.hline(2, H - 1, W - 4, "!W") }) } })
   ISOKIT.opening("gs_ac", { paint(s, h, o) { return pic(o, "ac", (c, W, H) => { c.rect(0, 0, W, H, "5"); for (let x = 2; x < W - 2; x += 2) c.vline(x, 2, H - 4, "3") }) } })
 
   // ---------------------------------------------------------------- the left wall
@@ -85,6 +87,18 @@ const KIT_GASSE = (() => {
       })
     },
   })
+  // the passage to Kowalski Street: a dark way through the building, the street's cyan at its far end
+  ISOKIT.opening("gs_passage", {
+    paint(s, h, o) {
+      return pic(o, "passage", (c, W, H) => {
+        c.rect(0, 0, W, H, "k")
+        const ix = fl(W * 0.3), iw = W - 2 * ix, iy = fl(H * 0.3)
+        for (let y = 0; y < iy; y++) { const i = fl((y / iy) * ix); c.hline(i, y, W - 2 * i, "1") }   // the ceiling going back
+        c.rect(ix, iy, iw, H - iy - 1, "!c"); c.rect(ix + 1, iy + 2, iw - 2, H - iy - 4, "!C"); c.hline(ix, H - 2, iw, "!v")
+        c.rect(0, 0, 1, H, "3"); c.rect(W - 1, 0, 1, H, "3"); c.hline(0, H - 1, W, "2")
+      })
+    },
+  })
   ISOKIT.opening("gs_market_sign", {
     paint(s, h, o) {
       return pic(o, "msign", (c, W, H) => { c.rect(0, 0, W, H, "2"); c.rect(1, 1, W - 2, H - 2, "n"); TXT.draw(c, fl(W / 2), fl((H - 5) / 2), "DRAIN MARKET", "!m", { font: "hud", align: "center" }) })
@@ -92,6 +106,32 @@ const KIT_GASSE = (() => {
   })
 
   // ---------------------------------------------------------------- props
+  // the statue from before the flood: a woman on her plinth, one hand up as if to stop the water; someone has fixed a ring of cyan
+  // light behind her head; candles and paper cranes at her foot
+  ISOKIT.prop("gs_statue", {
+    frames: NF,
+    draw(pen, p, f) {
+      const [u, v] = p.at, [du, dv] = p.foot, cu = u + du / 2, cv = v + dv / 2
+      pen.box(u, v, 0, du, dv, 0.5, () => "3", () => "2", () => "2")
+      pen.box(cu - 0.16, cv - 0.14, 0.5, 0.32, 0.28, 1.0, () => "4", () => "3", () => "4")           // the robe
+      pen.box(cu - 0.11, cv - 0.1, 1.5, 0.22, 0.2, 0.32, () => "5", () => "4", () => "4")            // the shoulders
+      pen.box(cu - 0.07, cv - 0.07, 1.82, 0.14, 0.14, 0.2, () => "5", () => "4", () => "5")          // the head
+      pen.box(cu + 0.1, cv - 0.03, 1.6, 0.06, 0.06, 0.6, () => "5", () => "4", () => "4")            // the arm, raised
+      const [hx, hy] = pen.P(cu - 0.05, cv - 0.05, 1.93)
+      pen.at(cu - 0.1, cv - 0.1, 1.95, null)
+      for (let a = 0; a < 24; a++) { const t = (a / 24) * Math.PI * 2; pen.px(Math.round(hx + Math.cos(t) * 6), Math.round(hy + Math.sin(t) * 5), (a + f) % 8 ? "!v" : "!V") }
+      pen.at(null)
+      // the candles and the cranes at her foot, on the floor in front of the plinth
+      for (const [k, du2] of [[0, 0.12], [1, 0.3], [2, 0.5], [3, 0.62]]) {
+        const [x, y] = pen.P(u + du2, v + dv + 0.06, 0)
+        pen.at(u + du2, v + dv + 0.06, 0.1, "v")
+        pen.px(x, y - 1, "H"); pen.px(x, y - 2, "H"); pen.px(x, y - 3, (k + f) % 4 ? "!Q" : "!R")
+        pen.at(null)
+      }
+      const [cx, cy] = pen.P(u + 0.4, v + dv + 0.12, 0)
+      pen.at(u + 0.4, v + dv + 0.12, 0.05, "v"); pen.grid(cx - 2, cy - 2, [".H..", "HHHH"]); pen.at(null)
+    },
+  })
   ISOKIT.prop("gs_mattress", { draw(pen, p) { const [u, v] = p.at, [du, dv] = p.foot; pen.box(u, v, 0, du, dv, p.h, (lu, lv) => (lv > dv * 0.45 ? "U" : "h"), () => "g", () => "g") } })
   ISOKIT.prop("gs_pot", { draw(pen, p) { const [u, v] = p.at, [du, dv] = p.foot; pen.box(u, v, 0, du, dv, p.h, () => "2", () => "5", () => "4") } })
   ISOKIT.prop("gs_bins", {
@@ -104,10 +144,11 @@ const KIT_GASSE = (() => {
   // the balcony's railing: posts every half meter, a top rail and one under it
   ISOKIT.prop("gs_railing", {
     draw(pen, p) {
-      const [u, v] = p.at, [du, dv] = p.foot, H = p.h
-      for (let s = 0; s <= dv + 0.01; s += dv / Math.round(dv / 0.5)) pen.box(u, v + Math.min(s, dv - 0.05), 0, 0.05, 0.05, H, () => "5", () => "4", () => "3")
-      pen.box(u, v, H - 0.05, 0.06, dv, 0.05, () => "6", () => "5", () => "4")
-      pen.box(u, v, 0.5, 0.04, dv, 0.03, () => "5", () => "4", () => "3")
+      const [u, v] = p.at, [du, dv] = p.foot, H = p.h, alongV = dv > du, L = alongV ? dv : du
+      const at = (s) => (alongV ? [u, v + s] : [u + s, v]), size = (a, b) => (alongV ? [a, b] : [b, a])
+      for (let s = 0; s <= L + 0.01; s += L / Math.round(L / 0.5)) pen.box(...at(Math.min(s, L - 0.05)), 0, ...size(0.05, 0.05), H, () => "5", () => "4", () => "3")
+      pen.box(u, v, H - 0.05, ...size(0.06, L), 0.05, () => "6", () => "5", () => "4")
+      pen.box(u, v, 0.5, ...size(0.04, L), 0.03, () => "5", () => "4", () => "3")
     },
   })
   // the cable bundles: from the left wall across to the facade, sagging; a drop falling from the lowest one
@@ -125,6 +166,9 @@ const KIT_GASSE = (() => {
           if (!low || y > low[1]) low = [x, y]
         }
       }
+      // the lamp somebody hung from the cables over the statue
+      const SL = ISO_MAPS.gasse.lights.find((l) => l.id === "statue").at, [lx, ly] = pen.P(...SL)
+      pen.vline(lx, ly - 14, 12, "k"); pen.grid(lx - 3, ly - 2, ["..kk..", ".k44k.", "k4444k", ".RWWR."])
       const dy = (f * 4) % 40
       if (dy < 36) pen.px(low[0], low[1] + 3 + dy, "6")
       pen.at(null)

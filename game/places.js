@@ -83,12 +83,15 @@ Nagiwa.at = {
   cam31: { stairs: [96, 83], top: [92, 67], shadow: [59, 92], edge: [151, 117], meet: [112, 99], asheMeet: [97, 90], tunnel: [284, 111], lantern: [183, 131], mic: [135, 108], tries: [244, 26, 72] },
   // the alley (art/rooms/gasse.map.js, game/rooms/gasse.layout.js): the laundromat's door, the niche and the way down are the map's
   // openings, the cables its prop. The gate to Kowalski Street is the gap at the near left wall's end (a cut wall has no picture of
-  // its own): its hotspot stands over it. The water is all below the balcony's railing and the cut through the deck: from the railing's
-  // top down the picture's right edge, along its bottom, up to where the water meets the cut on the left (the waterline 0.8 m under
-  // the deck, art/rooms/gasse.px.js) and along it to the deck's near corner
+  // its own): the passage to Kowalski Street is an opening too (kowalskiRect). The water is all below the balcony's railing: from its
+  // far end along its top, then out to the picture's right and bottom edges. The two cones of light (the lamp over the laundromat's
+  // door, the one over the statue) as haze, from the map's projection (at [224, 60], 32 px a meter across, 30 up)
   gasse: (() => {
-    const at = fromLayout(Nagiwa.layouts.gasse), r = Nagiwa.layouts.gasse.props.railing.poly, H = 290;
-    return { ...at, kowalskiRect: [0, 104, 46, 56], waterPoly: [r[0], r[1], 320, r[1], 320, H, 0, H, 0, 148, 192, 244, r[10], r[11]] };
+    const at = fromLayout(Nagiwa.layouts.gasse), R = Nagiwa.layouts.gasse.props.railing.poly, W = 416, H = 236;
+    const P = (/** @type {number} */ u, /** @type {number} */ v, h = 0) => [224 + 32 * (u - v), 60 + 16 * (u + v) - 30 * h];
+    const cone = (/** @type {number} */ u, /** @type {number} */ v, /** @type {number} */ h, /** @type {number} */ r) => [...P(u, v, h).map((n, i) => n - (i ? 0 : 2)), ...P(u, v, h).map((n, i) => n + (i ? 0 : 2)), ...P(u + r, v - r), ...P(u - r, v + r)];
+    return { ...at, waterPoly: [R[0], R[1], W, R[1], W, H, R[10], R[11]],
+      hazeDoor: cone(1.08, 0.3, 2.25, 0.45), hazeStatue: cone(2.95, 3.65, 3.15, 0.65) };
   })(),
   // the lane left of Kowalski Street, down its length (art/mock/jade_row.px.js: blocks, z = 1 where Juno walks, 30 px to the metre there). She keeps to the near band: her
   // sprite has one size, right for that depth, so the shop's door and the machine are reached from in front of them
