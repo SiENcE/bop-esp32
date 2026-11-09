@@ -32,3 +32,18 @@ what fits here fits in the game. Design: `docs/kapitel0-design.md` §2.
 - **evi**: her eight states at 1x (neutral, the six faces, asleep) and the six faces at 2x.
 - EVI's lines on the deck sit in the strip under the window, beside her (a window covers the space above
   her).
+
+## Später dazugekommen
+
+Diese Bilder entstanden nach A bis F, jedes für eine einzelne Frage; die Entscheidung steht jeweils im genannten Dokument.
+
+| Datei | Wozu | Quelle | Entschieden |
+|---|---|---|---|
+| `deck_photo_x3.png`, `deck_wallpaper_x3.png` (und `.gif`) | das alte Foto von Juno und Teo als Kinder auf dem Dach, als Bild und als gedimmter Hintergrund des Decks, als ruhige Schleife | `art/ui/deck_wallpaper.px.js` | 2026-11-04, `docs/kapitel0-design.md` §2 |
+| `game_deck_desktop_x3.png`, `game_deck_glas_x3.png`, `game_deck_clip_x3.png`, `game_deck_cut_x3.png`, `game_evi_boot_x3.png` | Aufnahmen aus dem Spiel, nachdem das Deck nach Mockup F gebaut war: Desktop, GLASS, Clip-Editor, der Schnitt, EVIs Start | das Spiel (H2b) | 2026-11-04 |
+| `mock_juno_brackets_x3.png` | die Ecken des Implantats um den Werbeschirm im JUNO.-Moment | Mockup | 2026-11-04 |
+| `nagiwa_logo_x4.png` | wie der Name der Stadt und des Konzerns geschrieben werden kann; entschieden ist Nagi·wa | `art/mockups/nagiwa_logo.px.js` | 2026-11-07, `docs/story.md` §10 |
+| `mock_g_time.png` | der Zeitstempel des Implantats im Straßenmodus, drei Varianten; gewählt ist A, klein und gedämpft oben links | Mockup | 2026-11-08, `docs/style-guide.md` §8a |
+| `mock_g_ringe_a_x3.png`, `mock_g_ringe_b_x3.png` | der Blick vom Dach nach oben zu den Ringen: A genau entlang der Hochachse, B schräg von Junos Platz aus | Mockup | im Spiel steht B, `docs/kapitel1-design.md` („Die Stadt“) |
+| `zh_deck_compare_x2.png` | ein Test, wie das Deck mit chinesischen Zeichen aussähe (links Deutsch, rechts Chinesisch) | `art/test/cjk_deck.px.js` | nur ein Test, `docs/ideas/chinesisch.md` |
+

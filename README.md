@@ -34,7 +34,7 @@ später folgen.
 |---|---|
 | Intro „Die letzte Schicht“ | fertig |
 | Prolog „Nachtschicht“ | spielbar bis zum Ende, geht in Kapitel 1 über |
-| Kapitel 1 „Glass“ | von Anfang bis Ende spielbar, aber großteils noch Platzhalter-Blöcke; das Ende in cam31 ist gemalt |
+| Kapitel 1 „Glass“ | von Anfang bis Ende spielbar. Gemalt sind die Straßen-Räume (Wohnung, Kessel-Block, Kowalski-Straße, Gasse, Waschsalon, LUCKY STATIC, Okonkwos Laden), die Kameras 03, 04, 18 und 31 und die meisten Figuren. Noch Platzhalter-Blöcke sind die Jade Row, der Drain-Markt mit Sables Kabine, der Sims, der Blick vom Dach, die Kameras 15, 21, 22, 24 und 30 und einige Figuren (Teo, Frau Haldane, Ines, Sable, der Schläfer im Waschsalon) |
 | Kapitel 2 bis 6 | nur als Entwurf in der Story-Bibel |
 
 ## Spielen
@@ -78,7 +78,8 @@ Sackgassen und prüft, ob jeder Zustand einen Hinweis hat. Für die Werkzeuge br
 node lib/cutaway/tools/validate.mjs index.html                         # prüft die Spieldaten
 node tools/solve-act.mjs prolog --full --set off_roof                  # sucht im Prolog nach Sackgassen
 node lib/cutaway/tools/play.mjs index.html --path tools/paths/spiel.json   # spielt das ganze Spiel mit echten Klicks durch
-sh tools/check.sh                                                      # alle Prüfungen (etwa zehn Minuten)
+sh tools/check.sh                                                      # alle Prüfungen (etwa 25 Minuten)
+node tools/hotspot-audit.mjs                                           # wo Hotspots sichtbaren Boden oder einander verdecken
 ```
 
 ### Die Zusammenhänge ansehen
