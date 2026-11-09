@@ -115,7 +115,7 @@ Nagiwa.at = {
   // props sort by their baselines, and the long counter's lies further down than theirs, so they are drawn after it
   lucky_static: (() => {
     const at = fromLayout(Nagiwa.layouts.lucky_static), c = Nagiwa.layouts.lucky_static.props.counter;
-    at.props = at.props.map((/** @type {any} */ p) => (p.id.startsWith("stool") ? { ...p, baseline: Math.max(p.baseline ?? p.at[1], c.baseline + 1) } : p));
+    at.props = at.props.map((/** @type {any} */ p) => (p.id.startsWith("stool") || p.id === "lamps" ? { ...p, baseline: Math.max(p.baseline ?? p.at[1], c.baseline + 1) } : p));
     // the street door is the gap at the near wall's left end (a cut wall has no picture of its own): its hotspot stands over it
     return { ...at, barRect: c.box, doorRect: [12, 116, 40, 40] };
   })(),

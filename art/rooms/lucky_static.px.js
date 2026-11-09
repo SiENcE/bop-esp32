@@ -1,4 +1,4 @@
-// LUCKY STATIC baked from its map (art/rooms/lucky_static.map.js) with its kit (art/kit/lucky_static.kit.px.js, blocks for now)
+// LUCKY STATIC baked from its map (art/rooms/lucky_static.map.js) with its kit (art/kit/lucky_static.kit.px.js)
 // and the light (art/lib/isokit.js).
 //
 // Exports (the atlas takes lucky_static_* only): lucky_static_bg (320x180) and a sprite for each prop, outlined, pivot bottom-centre.
@@ -8,7 +8,11 @@ include("../rooms/lucky_static.map.js")
 include("../lib/isokit.js")
 include("../kit/lucky_static.kit.px.js")
 
-const LUCKY_STATIC = ISOKIT.bake(ISO_MAPS.lucky_static, { id: "lucky_static", frames: 12, fps: 10 })
+const LUCKY_STATIC = ISOKIT.bake(ISO_MAPS.lucky_static, {
+  id: "lucky_static", frames: 12, fps: 10,
+  // the style guide's glows (§7): the neon, the screens, the warm bulbs
+  glows: [glow("mN", { r: 5, strength: 0.45 }), glow("vV", { r: 4, strength: 0.3 }), glow("RW", { r: 4, strength: 0.35 })],
+})
 
 // the measured numbers for the game: tools/build_art.sh picks this line up and writes game/rooms/lucky_static.layout.js
 console.log("ISO_LAYOUT " + JSON.stringify({ id: "lucky_static", ...LUCKY_STATIC.layout }))

@@ -32,9 +32,10 @@ ISO_MAPS.lucky_static = {
   openings: [
     { id: "hood", wall: 0, from: 0.1, to: 1.2, h: [1.6, 2.2], kit: "ls_hood" },
     { id: "bottles", wall: 0, from: 1.5, to: 3.7, h: [1.0, 1.75], kit: "ls_bottles" },
-    { id: "tv", wall: 0, from: 2.2, to: 3.1, h: [1.85, 2.35], kit: "ls_tv" },
-    { id: "slate", wall: 0, from: 3.85, to: 4.9, h: [1.1, 1.95], kit: "ls_slate" },
+    { id: "tv", wall: 0, from: 2.1, to: 3.2, h: [1.84, 2.45], kit: "ls_tv" },
+    { id: "slate", wall: 0, from: 3.75, to: 4.95, h: [1.1, 2.0], kit: "ls_slate" },
     { id: "wc", wall: 1, from: 2.3, to: 3.05, h: [0, 2.0], kit: "ls_wc" },
+    { id: "poster", wall: 1, from: 3.2, to: 3.85, h: [1.05, 1.95], kit: "ls_poster" },
   ],
   props: [
     // the noodle kitchen: a range with its pots behind the counter's left end, under the hood
@@ -49,7 +50,11 @@ ISO_MAPS.lucky_static = {
     // the karaoke machine against the left wall, OUT OF ORDER on its screen
     { id: "karaoke", kit: "ls_karaoke", at: [0.05, 1.3], foot: [0.55, 0.65], h: 1.75 },
     // the mat inside the street door
-    { id: "mat", kit: "ls_mat", at: [0.1, 3.45], foot: [0.8, 0.5], h: 0.02, block: false },
+    { id: "mat", kit: "ls_mat", at: [0.1, 3.4], foot: [0.8, 0.5], h: 0.02, block: false },
+    // the steel sill in the door's gap
+    { id: "sill", kit: "ls_sill", at: [0.04, 3.92], foot: [0.9, 0.08], h: 0.02, block: false },
+    // three shades hanging over the counter (game/places.js draws them after the counter)
+    { id: "lamps", kit: "ls_lamps", at: [1.8, 1.0], foot: [2.4, 0.06], h: 2.15, block: false },
   ],
   spots: {
     arrive: [0.5, 3.45, "ne"], door: [0.45, 3.8, "sw"],
