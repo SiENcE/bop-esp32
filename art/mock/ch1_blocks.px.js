@@ -259,7 +259,7 @@ scene("cam07_bg", { w: W, h: H, bg: "0" }, (c) => {
   c.rect(282, 62, 18, 50, "2"); c.rect(284, 66, 14, 18, "9"); c.px(298, 64, "9")
   for (const [x, y] of [[166, 70], [166, 110], [276, 120]]) c.rect(x, y, 4, 22, "9")
 })
-// CAM 07V: the machine's own camera, a fisheye at hip height across the lane: the shop's window big, its counter, the safe under it with its keypad
+// CAM 07V: the machine's own camera, a fisheye at hip height across the lane: the shop's window big, its counter, the register on it
 scene("cam07v_bg", { w: W, h: H, bg: "0" }, (c) => {
   // (the window begins after the cameras' strip). Through it, as from inside (docs/kapitel1-design.md §4): the shelves on the back wall,
   // the counter across, the safe built into its right-hand end with its door and keypad towards the window
@@ -267,29 +267,37 @@ scene("cam07v_bg", { w: W, h: H, bg: "0" }, (c) => {
   c.rect(76, 16, 214, 120, "2"); c.rect(80, 20, 206, 112, "8")
   for (const y of [34, 54]) { c.rect(84, y, 152, 3, "5"); for (let x = 88; x < 232; x += 12) c.rect(x, y - 10, 8, 10, x % 24 ? "6" : "7") }
   c.rect(250, 36, 26, 60, "6"); c.rect(252, 38, 22, 58, "5"); c.px(270, 68, "9")                // the store room's door, behind the counter's end
+  // the floor behind the counter's end, the door standing on it, a worn mat in front of it
+  c.rect(236, 96, 50, 36, "6"); c.hline(236, 96, 50, "5"); c.rect(246, 99, 34, 10, "4"); c.rect(248, 101, 30, 6, "5"); c.hline(248, 104, 30, "4")
   c.rect(80, 96, 156, 36, "5"); c.hline(80, 96, 156, "9")
-  c.rect(196, 104, 40, 26, "2"); c.rect(200, 108, 16, 12, "4"); c.rect(220, 108, 12, 14, "9")
+  // the register on the counter: its keys towards Okonkwo; its customer display on a stalk towards the window, and so towards
+  // this camera (the safe under the counter is wired to it: he types the code here, the old display shows every digit)
+  c.rect(170, 86, 36, 10, "3"); c.hline(170, 86, 36, "5"); c.rect(186, 78, 3, 8, "3"); c.rect(178, 68, 20, 11, "1"); c.rect(180, 70, 16, 7, "6")
   c.rect(0, 136, W, 44, "4"); c.hline(0, 136, W, "6")
   SIGN(c, 110, 4, 100, "OKONKWO", "4", "9")
   // the fisheye's dark corners
   for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) { const dx = (x - 160) / 170, dy = (y - 90) / 105; if (dx * dx + dy * dy > 1) c.px(x, y, "0") }
 })
-// the keypad in close-up: five digits on its little screen, the last ones still lit
+// the counter's front again, as a prop over Okonkwo standing behind it (game/auftrag_tide.js): only his upper half shows over it
+scene("cam07v_counter", { w: 156, h: 36, bg: "5" }, (c) => { c.rect(0, 0, 156, 36, "5"); c.hline(0, 0, 156, "9") })
+// the register's customer display in close-up: it should show the price; it shows every key he types, the whole code
 scene("zoom_keypad", { w: 60, h: 40, bg: "1" }, (c) => {
-  c.rect(0, 0, 60, 40, "2"); c.rect(4, 3, 52, 10, "1"); TXT.draw(c, 30, 5, "4-1-7-0-9", "9", { font: "hud", align: "center" })
-  for (let j = 0; j < 4; j++) for (let i = 0; i < 3; i++) { c.rect(10 + i * 15, 16 + j * 6, 10, 4, "4"); c.rect(13 + i * 15, 17 + j * 6, 4, 2, j === 1 && i === 0 ? "9" : "6") }
+  c.rect(0, 0, 60, 40, "3"); c.rect(0, 0, 60, 2, "5"); c.rect(4, 8, 52, 20, "1"); c.rect(6, 10, 48, 16, "2")
+  TXT.draw(c, 30, 15, "4-1-7-0-9", "9", { font: "hud", align: "center" }); c.rect(26, 30, 8, 10, "3")
 })
 // Okonkwo's shop from inside, looking from the window at the back wall as CAM 07V does across the lane (docs/kapitel1-design.md §4): the
-// shelves of rice and batteries on the back wall, the counter across in front of them with Okonkwo behind it, the safe built into its
-// right-hand end, its door and keypad towards the window; the family's photograph over it, the store room's door beside it. The window
+// shelves of rice and batteries on the back wall, the counter across in front of them with Okonkwo behind it, the register on it (the
+// safe under the counter on his side); the family's photograph, the store room's door beside it. The window
 // and the door to the lane are behind us: the door's edge at the front left, the lane's neon on the floor
 scene("okonkwo_shop_bg", { w: W, h: H, bg: "k" }, (c) => {
   c.rect(0, 0, W, 112, "o"); c.rect(0, 112, W, 68, "a"); c.hline(0, 112, W, "y")
   for (const y of [34, 58, 82]) { c.rect(30, y, 180, 3, "s"); for (let x = 32; x < 208; x += 7) c.rect(x, y - 9, 5, 9, (x + y) % 3 ? "O" : "h") }
   c.rect(262, 36, 38, 76, "s"); c.rect(266, 40, 30, 72, "S"); c.px(291, 78, "O")
   c.rect(220, 40, 30, 24, "k"); c.rect(222, 42, 26, 20, "h"); c.rect(222, 52, 26, 10, "f"); for (const x of [227, 234, 241]) c.rect(x, 46, 3, 8, "S")
-  c.rect(70, 92, 180, 28, "s"); c.hline(70, 92, 180, "O"); c.rect(84, 96, 30, 12, "b"); c.rect(88, 99, 22, 4, "v")
-  c.rect(220, 95, 28, 23, "e"); c.rect(222, 97, 24, 19, "f"); c.rect(238, 100, 6, 8, "h"); c.rect(225, 104, 8, 2, "e")
+  c.rect(70, 92, 180, 28, "s"); c.hline(70, 92, 180, "O")
+  // the register on the counter, its keys towards him; its customer display on a stalk towards the window and us (the safe is under
+  // the counter on his side, wired to it)
+  c.rect(204, 84, 30, 8, "e"); c.hline(204, 84, 30, "f"); c.rect(217, 78, 2, 6, "e"); c.rect(210, 70, 16, 9, "k"); c.rect(211, 71, 14, 7, "a"); c.rect(213, 73, 10, 3, "v")
   c.rect(0, 50, 18, 120, "b"); c.rect(3, 54, 12, 50, "y")
   for (const [x, w, k] of [[120, 90, "f"], [150, 50, "g"]]) c.rect(x, 162 - (w - 50) / 8, w, 4, k)
 })
@@ -303,6 +311,10 @@ anim("mock_okonkwo", { w: 19, h: 48, frames: 1, fps: 1, outline: "k", pivot: "bo
   c.rect(6, 0, 7, 9, "S"); c.rect(6, 0, 7, 2, "k"); c.rect(6, 4, 7, 1, "h"); c.rect(3, 9, 13, 22, "O"); c.rect(5, 10, 9, 20, "o"); c.rect(5, 31, 9, 17, "d")
 })
 anim("mock_okonkwo_feed", { w: 13, h: 23, frames: 1, fps: 1, outline: "1", pivot: "bottom" }, (c) => { c.rect(4, 0, 5, 6, "6"); c.rect(2, 6, 9, 10, "7"); c.rect(3, 16, 3, 7, "4"); c.rect(7, 16, 3, 7, "4") })
+// Okonkwo in CAM 07V: the machine is only across the lane, so he is bigger there than in the far feeds (his legs are behind the counter)
+anim("mock_okonkwo_near", { w: 20, h: 38, frames: 1, fps: 1, outline: "1", pivot: "bottom" }, (c) => {
+  c.rect(6, 0, 8, 9, "6"); c.rect(6, 0, 8, 2, "3"); c.rect(6, 4, 8, 1, "8"); c.rect(2, 9, 16, 17, "7"); c.rect(5, 10, 10, 15, "6"); c.rect(5, 26, 4, 12, "4"); c.rect(11, 26, 4, 12, "4")
+})
 anim("mock_okonkwo_kneel", { w: 15, h: 15, frames: 1, fps: 1, outline: "1", pivot: "bottom" }, (c) => { c.rect(4, 0, 6, 5, "6"); c.rect(2, 5, 10, 7, "7"); c.rect(1, 12, 13, 3, "4") })
 anim("mock_morrow_feed", { w: 13, h: 25, frames: 1, fps: 1, outline: "1", pivot: "bottom" }, (c) => { c.rect(4, 0, 5, 6, "5"); c.rect(2, 6, 9, 15, "7"); c.rect(3, 21, 3, 4, "3"); c.rect(7, 21, 3, 4, "3"); c.rect(8, 10, 4, 3, "9") })
 anim("mock_tide_feed", { w: 12, h: 22, frames: 1, fps: 1, outline: "1", pivot: "bottom" }, (c) => { c.rect(3, 0, 6, 6, "3"); c.rect(4, 6, 4, 1, "9"); c.rect(2, 7, 8, 9, "4"); c.rect(3, 16, 2, 6, "3"); c.rect(7, 16, 2, 6, "3") })
@@ -329,15 +341,21 @@ anim("mock_mei", { w: 17, h: 28, frames: 1, fps: 1, outline: "k", pivot: "bottom
   c.rect(7, 11, 3, 2, "s"); c.rect(2, 13, 13, 15, "Q"); c.rect(6, 15, 5, 13, "d"); c.rect(2, 13, 2, 11, "q"); c.rect(13, 13, 2, 11, "q")
   c.rect(0, 24, 17, 4, "Q"); c.rect(2, 25, 3, 3, "S"); c.rect(12, 25, 3, 3, "S")
 })
-anim("mock_stamm_a", { w: 18, h: 44, frames: 1, fps: 1, outline: "k", pivot: "bottom" }, (c) => {
-  c.rect(4, 26, 12, 3, "e"); c.rect(9, 29, 2, 15, "d"); c.rect(5, 38, 10, 1, "e")
-  c.rect(1, 14, 16, 13, "f"); c.rect(3, 13, 12, 3, "g"); c.rect(5, 9, 8, 6, "o"); c.rect(4, 8, 10, 3, "e"); c.rect(13, 11, 2, 2, "L")
-  c.rect(0, 12, 3, 4, "g"); c.rect(15, 12, 3, 4, "g"); c.rect(3, 27, 4, 11, "d"); c.rect(11, 27, 4, 11, "d")
+// (at Juno's scale, sitting on stools like the room's: the seat 0.75 m up, 23 px; the shoulders of one sitting up at 42)
+anim("mock_stamm_a", { w: 28, h: 44, frames: 1, fps: 1, outline: "k", pivot: "bottom" }, (c) => {
+  const H = 44, seat = H - 23
+  c.rect(8, seat, 13, 3, "m"); c.rect(8, seat + 3, 13, 1, "n"); c.rect(13, seat + 4, 3, 19, "e"); c.rect(9, H - 9, 11, 1, "f"); c.rect(10, H - 1, 9, 1, "e")
+  c.rect(8, seat - 1, 5, 13, "d"); c.rect(16, seat - 1, 5, 13, "d")                                    // his legs to the stool's ring
+  c.rect(4, seat - 17, 17, 18, "f"); c.rect(6, seat - 19, 14, 3, "f"); c.rect(5, seat - 12, 3, 10, "e")    // the jacket, bent forward
+  c.rect(17, seat - 20, 11, 6, "g")                                                                     // his arms on the counter
+  c.rect(16, seat - 23, 9, 7, "o"); c.rect(16, seat - 23, 9, 3, "e"); c.rect(17, seat - 18, 2, 2, "L")      // his head on them, the patch
 })
-anim("mock_stamm_b", { w: 16, h: 48, frames: 1, fps: 1, outline: "k", pivot: "bottom" }, (c) => {
-  c.rect(3, 30, 12, 3, "e"); c.rect(8, 33, 2, 15, "d"); c.rect(4, 42, 10, 1, "e")
-  c.rect(5, 1, 7, 8, "h"); c.rect(7, 0, 3, 2, "h"); c.rect(3, 9, 11, 21, "b"); c.rect(2, 9, 13, 7, "q"); c.rect(5, 15, 7, 2, "q")
-  c.rect(3, 30, 4, 12, "a"); c.rect(10, 30, 4, 12, "a")
+anim("mock_stamm_b", { w: 22, h: 53, frames: 1, fps: 1, outline: "k", pivot: "bottom" }, (c) => {
+  const H = 53, seat = H - 23
+  c.rect(4, seat, 13, 3, "m"); c.rect(4, seat + 3, 13, 1, "n"); c.rect(9, seat + 4, 3, 19, "e"); c.rect(5, H - 9, 11, 1, "f"); c.rect(6, H - 1, 9, 1, "e")
+  c.rect(4, seat - 1, 5, 13, "a"); c.rect(12, seat - 1, 5, 13, "a")                                    // her legs
+  c.rect(3, seat - 20, 16, 21, "b"); c.rect(2, seat - 20, 18, 8, "q"); c.rect(5, seat - 12, 11, 2, "q")     // her dress, the shawl
+  c.rect(6, seat - 30, 10, 10, "h"); c.rect(8, seat - 31, 6, 2, "h"); c.rect(6, seat - 22, 10, 2, "S")     // her grey hair, her neck
 })
 // Bao's broth to go: a white bowl with a lid and a twist of steam
 anim("inv_suppe", { w: 18, h: 13, frames: 1, fps: 1, outline: "k" }, (c) => { c.rect(3, 6, 12, 6, "h"); c.rect(2, 5, 14, 2, "g"); c.rect(7, 3, 4, 2, "g"); c.px(6, 1, "h"); c.px(7, 0, "h"); c.px(11, 1, "h"); c.rect(5, 8, 8, 1, "f") })

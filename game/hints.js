@@ -20,9 +20,9 @@ Cutaway.hints([
   ].map(([when, text]) => ({ if: ["day>1", "day<4", "time>=20:30", "time<22:45", "!off_varga", ...when], text })),
   // job B speaks from a quarter to eleven, when job A has done (Okonkwo opens his safe at one): nothing of it is needed either
   ...[
-    [["!got_tap", "!link_cam07v"], ["Okonkwo macht um eins seinen Tresor auf. TIDE will den Code.", "Von oben sieht man nur seinen Rücken. Der Automat gegenüber schaut auf Augenhöhe.", "Kauf bei Ratz auf dem Drain-Markt einen Abzweiger."]],
+    [["!got_tap", "!link_cam07v"], ["Okonkwo macht um eins seinen Tresor auf. TIDE will den Code.", "Von oben ist das Display seiner Kasse zu klein. Der Automat gegenüber schaut auf Augenhöhe.", "Kauf bei Ratz auf dem Drain-Markt einen Abzweiger."]],
     [["got_tap", "!link_cam07v"], ["Du hast einen Abzweiger! Ich will wissen, wofür.", "Der Automat in der Jade Row hat eine kleine Kamera.", "Benutz den Abzweiger am Automaten gegenüber von Okonkwos Laden."]],
-    [["link_cam07v", "!cache_note_safe_code", "time<01:15"], ["Um eins macht er den Tresor auf.", "CAM 07V sieht das Tastenfeld.", "Öffne CAM 07V, spul vor bis 01:00 und klick ihn an."]],
+    [["link_cam07v", "!cache_note_safe_code", "time<01:15"], ["Um eins macht er den Tresor auf.", "CAM 07V sieht das Display seiner Kasse.", "Öffne CAM 07V, spul vor bis 01:00 und klick ihn an."]],
     [["link_cam07v", "!cache_note_safe_code", "time>=01:15"], ["Er hat den Tresor schon auf- und zugemacht. Ich hab es aber.", "Die Kameras behalten die ganze Nacht.", "Öffne CAM 07V und drück PUFFER."]],
     [["cache_note_safe_code"], ["Du hast den Code. TIDE will ihn auch.", "TIDE ist im CHAT. Okonkwo ist in seinem Laden, bis eins.", "Antworte TIDE, oder geh zu Okonkwo. Was davon, weiß ich nicht. Das weißt du."]],
   ].map(([when, text]) => ({ if: ["day>1", "day<4", "time>=22:45", "!off_tide", "!k1b", ...when], text })),

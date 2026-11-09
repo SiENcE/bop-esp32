@@ -69,7 +69,7 @@ Nagiwa.at = {
   cam24: { door: [160, 96], off: [104, 174], mic: [160, 110], entrance: [124, 24, 72, 66] },
   // job B (game/auftrag_tide.js): Jade Row from Nagi·wa's camera above it, and from the machine's own at hip height
   cam07: { okonkwo: [118, 104], car: [244, 144], morrow: [214, 146], boy: [196, 148], mic: [200, 124], windowRect: [80, 44, 70, 68], machineRect: [280, 60, 22, 54] },
-  cam07v: { counter: [160, 100], safe: [214, 132], mic: [160, 110], safeRect: [196, 104, 40, 26], shelvesRect: [84, 24, 152, 40] },
+  cam07v: { counter: [156, 112], safe: [160, 112], counterTop: [80, 96], mic: [160, 110], safeRect: [176, 66, 24, 16], shelvesRect: [84, 24, 152, 40] },
   cam15: { door: [160, 150], spot: [271, 100], mic: [200, 100], capsules: [84, 28, 229, 52], c23: [258, 28, 26, 25] },
   cam30: { top: [160, 84], water: [160, 146], board: [222, 112], mic: [160, 100], sign: [88, 30, 144, 11], tide: [232, 52, 56, 36] },
   // measured from the camera in art/cams/cam31.px.js (it logs them when built)
