@@ -111,73 +111,47 @@ const IW = 51, IH = 41, im = (h) => IH - 1 - h
 // Nagiwa.lullBeat (game/nagiwa.js) as lengths, from the start of its 3600 ms: on, off, on, off, on, off, on, off. Long, short, short, long, then the pause.
 const LULL = [800, 300, 250, 300, 250, 300, 800, 600]
 const imai = (c, o = {}) => {
-  // the chair under her, in the street's 2:1 like the room round it: its back along the edge behind her (two posts, a rail sloping
-  // with the floor's lines), the seat a rhombus, the legs down from its near corners; her legs under the table
-  c.rect(6, 9, 2, 32, "4"); c.vline(6, 9, 32, "5"); c.rect(13, 6, 2, 16, "4")
-  c.line(6, 9, 14, 5, "6"); c.line(6, 10, 14, 6, "5")
-  const L = [6, 25], T = [14, 21], R = [23, 25], B = [15, 29]
-  const side = (p, q, x, y) => (q[0] - p[0]) * (y - p[1]) - (q[1] - p[1]) * (x - p[0])
-  for (let y = 21; y <= 29; y++) for (let x = 6; x <= 23; x++) {
-    const k = [side(L, T, x, y), side(T, R, x, y), side(R, B, x, y), side(B, L, x, y)]
-    if (k.every((v) => v >= 0) || k.every((v) => v <= 0)) c.px(x, y, y <= 23 ? "6" : "5")
-  }
-  c.line(6, 26, 15, 30, "3"); c.line(15, 30, 23, 26, "3")                               // the seat's front edges, its thickness
-  c.rect(15, 31, 2, 10, "3"); c.rect(22, 27, 2, 14, "3")                                // the near legs
+  // the chair close behind her, as the user drew it: its back a tall frame (two posts, a rail sloping with the floor's lines), the
+  // seat under her running forward, the legs straight down; her legs under the table
+  c.rect(11, 9, 2, 32, "4"); c.vline(11, 9, 32, "5"); c.rect(14, 7, 2, 18, "4")
+  c.line(11, 9, 15, 7, "6"); c.line(11, 10, 15, 8, "5")
+  for (let k = 0; k < 9; k++) { c.px(11 + k, 26 + Math.floor(k / 2), "6"); c.px(11 + k, 27 + Math.floor(k / 2), "3") }   // the seat's near edge
+  c.rect(19, 31, 2, 10, "3")                                                            // its front leg
   c.rect(15, im(19), 14, 5, "2"); c.hline(15, im(19), 14, "3"); c.rect(26, im(14), 4, 12, "3"); c.vline(29, im(14), 12, "2"); c.rect(26, im(2), 6, 3, "1"); c.hline(26, im(2), 6, "3"); c.rect(22, im(11), 3, 10, "2"); c.rect(22, im(1), 5, 2, "1")
   // the cardigan: round shoulders, and sagging
   taper(c, im(29), 16, 24, im(15), 13, 27, (x, y, x0, x1, t) => (t > 0.85 ? "d" : x === x1 || x === x0 ? "e" : (x === 21 && t > 0.15) ? "e" : t < 0.1 ? "C" : "C"))
   c.hline(18, im(30), 5, "e")
-  // the table; its foot; the saucer and the cup, no steam
+  // the table; its foot; the saucer and a cup of cold tea, no steam
   c.rect(36, im(19), 3, 18, "3"); c.vline(38, im(19), 18, "2"); c.ellipse(37, im(1), 6, 1, "3"); c.hline(32, im(0), 11, "2")
   c.ellipse(37, im(23), 11, 3, "5"); c.hline(30, im(25), 14, "6"); c.hline(27, im(22), 21, "4"); c.hline(30, im(21), 15, "3")
-  c.hline(37, im(25), 8, "w"); c.rect(38, im(28), 6, 3, "W"); c.vline(43, im(28), 3, "w"); c.hline(38, im(26), 6, "w"); c.hline(39, im(28), 4, "t"); c.px(44, im(27), "W"); c.px(45, im(27), "w")
-  // the near arm to the cup: she hasn't drunk
-  sleeve(c, 24, im(23), 34, im(25), 3, "C", "C", "e")
-  // three fingers, far too long, round the cup and past it: a claw at the end of each
-  g(c, 34, im(29), [
-    "ooooooooooo=",
-    "OO..........",
-    "oooooooooooo=",
-    "OO..........",
-    "ooooooooooo=",
+  c.hline(36, im(25), 10, "w"); c.rect(38, im(29), 6, 4, "W"); c.vline(43, im(29), 4, "w"); c.hline(39, im(29), 4, "t")
+  c.px(44, im(28), "W"); c.px(45, im(27), "W"); c.px(44, im(26), "w")                    // the cup's handle
+  // the far arm lying on the table behind the near one; the near arm to the cup: she hasn't drunk
+  c.rect(27, im(25), 8, 2, "d")
+  sleeve(c, 24, im(23), 33, im(25), 3, "C", "C", "e")
+  // her hand round the cup: two long sloth's fingers over its front, a claw at the end of each
+  g(c, 33, im(27), [
+    "oooooo=",
+    "oOO....",
+    "oooooo=",
   ])
-  // the far arm: the elbow on the table, the forearm straight up to the hand under her cheek, all of it in the shade of her head
-  c.rect(24, im(29), 5, 5, "d")
-  g(c, 27, im(28), [
-    "CCe...",
-    "eCCe..",
-    ".dCCe.",
-    "..deee",
-  ])
-  // the neck; the head (she looks past whoever talks to her), heavy-lidded, with a sloth's dark stripe back from the eye; moss has got into the hair and the bun
+  // the neck; the head as in her portrait: round, black hair with moss in it and in the bun, the sloth's dark stripe down from each eye,
+  // a small smile (she looks past whoever talks to her)
   c.rect(22, im(31), 4, 3, "O")
   g(c, 20, im(39), [
-    "..%&&%%%..",
-    ".%%+%%&%%.",
-    "%%&ooooo%%",
-    "%%ooooooo.",
-    "%&oOOOoOO.",
-    "%hhhhkohko",
-    "%%oooooOoo",
-    "%%oooooooo",
-    ".%Oooooooo",
-    "..OOOOOOO.",
+    "..hhhh%h..",
+    ".hh%hhhhhh",
+    "hhhhhh&hhh",
+    "hOoooooooh",
+    "hOookookoo",
+    "hOotoooto.",
+    ".Otooooooo",
+    ".OooOOOoo.",
+    "..OoooooO.",
+    "...OOOO...",
   ])
-  g(c, 15, im(40), [".%&&%", "%&+%%", "%%&%%", ".%%%."])
-  if (o.talk) { c.px(26, im(32), "t"); c.px(27, im(32), "t") } else { c.hline(26, im(32), 2, "O") }
-  // the hand she leans on: three long fingers up her cheek, past her eye, each with its claw
-  g(c, 26, im(38), [
-    ".=.=.=",
-    ".o.o.o",
-    ".oOoOo",
-    ".oOoOo",
-    ".oOoOo",
-    "oooooo",
-    "oOoooO",
-    ".OOOO.",
-  ])
-  // the ear, small and plain, where the point sits behind it
-  c.rect(21, im(34), 2, 3, "O")
+  g(c, 16, im(40), [".hh%h", "h%hhh", "hhh&h", ".hhh."])
+  if (o.talk) { c.px(25, im(31), "t"); c.px(26, im(31), "t") }
   // Lull, behind the ear as on everyone: bright on the beat, a dim coal in its pauses
   if (o.lull) g(c, 17, im(35), [".^.", "^~^", "~~~", "^~^", ".^."])
   else g(c, 17, im(35), ["...", ".^.", "^^^", ".^.", "..."])
