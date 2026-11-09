@@ -366,7 +366,7 @@ All OSD elements are in phosphor values, in 3x5 capitals; only the implant parts
 |---|---|
 | top left | camera ID and place (`CAM 07 // LOWER NINTH / KOWALSKI ST`), the owner (`NAGI·WA CIVIC SURVEILLANCE`), the link (`LINK: J.REYES IMPLANT OVERRIDE`, cyan) |
 | top right | the timestamp (`2091-11-06 23:51:07`), a blinking `● REC`, the lens state (`F2.0 WIDE`, `IR OFF`) |
-| bottom left | thumbnails of the linked cameras (`CAM 06`, `CAM 07` marked `LIVE`, `CAM 08`). A click switches cameras; switching is changing rooms. |
+| bottom left | thumbnails of the linked cameras (`CAM 06`, `CAM 07` marked `LIVE`, `CAM 08`). A click switches cameras; switching is changing rooms. A camera whose code Juno knows but hasn't used yet is in the strip too, greyed, and a click links it there as on the deck's map (decided 2026-11-09). |
 | bottom middle | the audio bar: what the camera's mic hears, as `NAME> line` (the speaker's name in their colour, or `???`) |
 | bottom right | `CACHE n/8`: Juno's recorded clips, stills and data, the inventory of feed mode |
 | right, under the buttons | a room's own buttons, only while they can be clicked (the end in `cam31`: `STEUERN`, `CHAT: INES`, `LAUTSPRECHER`, `REVIER 9`, cyan); once tried, the button keeps what came back, dimmed (`KEIN ZUGRIFF`) |

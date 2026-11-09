@@ -54,13 +54,18 @@ Nagiwa.camRoom = function (id, o) {
     enter: [{ unset: "rec_on" }, ...(o.enter ?? [])] });
 };
 
-/** The strip of linked cameras, in every camera's room: once all of them are known (game.js), so a chapter's cameras are in the prologue's rooms too. */
+/** The strip of cameras, in every camera's room: once all of them are known (game.js), so a chapter's cameras are in the prologue's rooms too.
+ *  A linked camera switches to it; one whose code Juno knows but hasn't used yet is in the strip too, greyed, and a click links it
+ *  there as on the deck's map (the user's wish, 2026-11-09: no going back to the deck for it). */
 Nagiwa.buildCamStrip = function () {
   const ids = Object.keys(Nagiwa.cams);
   for (const id of ids) {
     const room = Cutaway.room.get(id);
     ids.forEach((c, i) => {
-      if (c !== id) room.hotspots[`thumb_${c}`] = { name: `CAM ${Nagiwa.cams[c].id}`, rect: Nagiwa.osd.thumb(i), z: 5, if: [`link_${c}`, ...(Nagiwa.cams[c].if ? [Nagiwa.cams[c].if] : []), ...(room.strip ? [room.strip] : [])], use: [{ goto: c }] };
+      const cam = /** @type {any} */ (Nagiwa.cams[c]);
+      if (c !== id) room.hotspots[`thumb_${c}`] = { name: `CAM ${cam.id}`, rect: Nagiwa.osd.thumb(i), z: 5,
+        if: [{ or: [`link_${c}`, `code_${c}`] }, ...(cam.if ? [cam.if] : []), ...(room.strip ? [room.strip] : [])],
+        use: [{ if: `link_${c}`, then: [{ goto: c }], else: [{ set: `link_${c}` }, { sfx: "link" }, ...(cam.linked ?? ["Wartungscode rein. Verbunden."])] }] };
     });
   }
 };

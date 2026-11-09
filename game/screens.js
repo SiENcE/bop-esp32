@@ -65,13 +65,14 @@
     small(ctx, Nagiwa.stamp(), W - 4, 4, C.phosphorBright, "right");
     if (S().flag("rec_on") && blink()) { ctx.fillStyle = C.red; ctx.fillRect(W - 80, 4, 3, 3); }
     // the cameras Juno has linked: a column on the left, under the display's lines (a click switches:
-    // hotspots `thumb_<cam>`; the rects are Nagiwa.osd's)
+    // hotspots `thumb_<cam>`; the rects are Nagiwa.osd's); one whose code she knows but hasn't used yet greyed (a click links it)
     const O = Nagiwa.osd, strip = Cutaway.scene.room?.strip;
     if (!strip || S().test(strip)) Object.keys(Nagiwa.cams).forEach((c, i) => {
-      if (!S().flag(`link_${c}`) || !S().test(Nagiwa.cams[c].if)) return;     // (linked, and known of: as on the map)
+      const linked = !!S().flag(`link_${c}`);
+      if (!(linked || S().flag(`code_${c}`)) || !S().test(Nagiwa.cams[c].if)) return;     // (linked or its code known, and known of: as on the map)
       const [x, y, w, h] = O.thumb(i), live = c === id;
       ctx.fillStyle = live ? C.phosphorDim : C.ink; ctx.fillRect(x, y, w, h);
-      small(ctx, t("CAM {id}", { id: Nagiwa.cams[c].id }), x + w / 2, y + 3, live ? C.phosphorBright : C.phosphor, "center");
+      small(ctx, t("CAM {id}", { id: Nagiwa.cams[c].id }), x + w / 2, y + 3, live ? C.phosphorBright : linked ? C.phosphor : C.steelText, "center");
     });
     // the buttons under the time: buffer (only when it holds something Juno needs), REC, wait, deck
     const buttons = /** @type {[string, number[], boolean][]} */ ([["REC", O.rec, !!S().flag("rec_on")], ["VOR", O.wait, false], ["DECK", O.back, false]]);

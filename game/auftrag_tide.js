@@ -55,7 +55,7 @@ for (const [id, name, color, idle, talk, pitch] of /** @type {[string, string, s
   ["streife", "Streifenwagen", "#a8b8d0", "streife_idle", "streife_idle", 40]]))
   Cutaway.actor(id, { name, color, costume: { idle: every(idle), walk: every(idle), talk: every(talk) }, voice: { pitch, range: 3, wave: "triangle", syllable: 80 },
     look: id === "tide_boy" ? ["Er hat Kiemen am Hals, und an ihnen leuchten die Markierungen wie kleine Lampen.", "Das ist einer von den Tidewater Boys."]
-      : id === "morrow" ? ["Das ist Lieutenant Morrow vom Revier 9.", "Sie trägt einen Trenchcoat und sieht müde aus."] : ["Das ist ein Wagen vom Revier 9, und sein Motor läuft.", "Er hat einen Schnorchel, damit er durchs Wasser kommt, wenn die Pumpen ausfallen."],
+      : id === "morrow" ? ["Das ist Lieutenant Morrow vom Revier 9.", "Sie trägt einen Trenchcoat und sieht müde aus."] : ["Das ist ein Wagen vom Revier 9, und sein Motor läuft.", { evi: "froh" }, { say: "evi", text: "Der hat einen Schnorchel! Fährt er damit durchs Wasser, wenn die Pumpen ausfallen?" }],
     talk: [{ dialog: "morrow_bribe" }] });
 const BRIBE = [{ say: "tide_boy", text: "Wie abgemacht." }, { say: "morrow", text: "Das ist für die ruhige Woche. Freitag fährt keiner die Kowalski." }, "Morrow. Für einen Umschlag."];
 Cutaway.dialog("morrow_bribe", { main: { choices: [
