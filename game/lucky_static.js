@@ -1,5 +1,5 @@
 // Nagiwa: LUCKY STATIC from inside (docs/kapitel1-design.md §7): Mei behind her counter, who lets Juno run a tab and passes on what
-// she hears; the two regulars who have sat there since the flood; Nagi·wa's news on the TV over the counter. On blocks (art/mock/).
+// she hears; the two regulars who have sat there since the flood; Nagi·wa's news on the TV over the counter. Mei is painted (art/characters/lucky_people.px.js), the regulars are blocks (art/mock/).
 // All of it is flavour that reads only the day (a place that changes, dialog-style-guide §4 C): no flag, so it costs the solver nothing
 // and may be asked again. Frau Imai's table is her own thread (game/stadt.js); nothing here reads it.
 "use strict";
@@ -11,7 +11,9 @@ const TV = (/** @type {string} */ text) => ({ say: "fernseher", text });
 const SB = (/** @type {string} */ text) => ({ say: "stamm_b", text });
 
 Cutaway.actor("mei", { name: "Mei", color: "#ff9a7a", room: "lucky_static", at: AI.mei, facing: "sw", walkTo: AI.bar, face: "ne",
-  costume: { idle: "mock_mei", walk: "mock_mei", talk: "mock_mei" }, voice: { pitch: 58, range: 4, wave: "triangle", syllable: 75, speed: 1.05 },
+  // painted (art/characters/lucky_people.px.js); she faces the customers whichever way the engine turns her, behind the counter
+  costume: { idle: { se: "mei_idle_sw", sw: "mei_idle_sw", ne: "mei_idle_sw", nw: "mei_idle_sw" }, walk: { se: "mei_idle_sw", sw: "mei_idle_sw", ne: "mei_idle_sw", nw: "mei_idle_sw" },
+    talk: { se: "mei_talk_sw", sw: "mei_talk_sw", ne: "mei_talk_sw", nw: "mei_talk_sw" } }, voice: { pitch: 58, range: 4, wave: "triangle", syllable: 75, speed: 1.05 },
   look: ["Mei. Die Haare hoch, ein Bleistift drin. Für die Tafel.", "Sie sieht jeden, der reinkommt, und fragt keinen was."],
   talk: [{ if: "day=4", then: [M("Juno. Heute tropft's nicht mal.")], else: [M("Juno. Setz dich irgendwo hin, wo's nicht tropft.")] }, { dialog: "mei" }] });
 Nagiwa.talkTree("mei", [

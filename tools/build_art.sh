@@ -40,10 +40,11 @@ characters() {
     $PXL build art/characters/bao.px.js --out build/art/characters --no-preview | tail -n 1          # Bao (H3)
     $PXL build art/characters/drone.px.js --out build/art/characters --no-preview | tail -n 1        # the patrol drone (the title)
     $PXL build art/characters/stadt_people.px.js --out build/art/characters --no-preview | tail -n 1 # the city's four (Chapter 1)
+    $PXL build art/characters/lucky_people.px.js --out build/art/characters --no-preview | tail -n 1 # LUCKY STATIC's: Mei (Chapter 1)
     # Ines's handover reaches past her on one side: its anchor keeps her feet where her other sprites have them (15 wide, 22 high)
     echo '{"anchor":[7,22]}' > build/art/characters/anims/ines_feed_give.anchor.json
     # build-atlas's --only matches exact names or a trailing *, so the feed people go by prefix
-    $ATLAS build/art/characters assets/characters.js --only "juno_*,kessler_*,varga_*,commuter_*,yuen_*,ines_*,lantern_*,ashe_*,motte_*,bao_*,drone_*,regen_*,imai_*,prediger_*,monteur_*"
+    $ATLAS build/art/characters assets/characters.js --only "juno_*,kessler_*,varga_*,commuter_*,yuen_*,ines_*,lantern_*,ashe_*,motte_*,bao_*,drone_*,regen_*,imai_*,prediger_*,monteur_*,mei_*"
 }
 
 ui() {
@@ -94,8 +95,6 @@ mock() {
     done
     # the roof of today comes from the old photo's code
     $PXL build art/ui/deck_wallpaper.px.js --only dach_bg,dach_heute --out build/art/mock --no-preview | tail -n 1
-    # Mei shows only above her counter: her feet stand on the floor behind it, 35 px below the picture (19x30 with its outline)
-    echo '{"anchor":[9,64]}' > build/art/mock/anims/mock_mei.anchor.json
     # so does Okonkwo in his shop: 32 px from his feet up to the counter's top (21x27 with its outline)
     echo '{"anchor":[10,59]}' > build/art/mock/anims/mock_okonkwo_bust.anchor.json
     $ATLAS build/art/mock assets/mock.js --only "cam*,gasse_*,laundromat_*,lucky_*,drain_*,sable_*,sims_*,dach_*,jade_*,okonkwo_*,mock_*,look_*,inv_*,zoom_keypad"
