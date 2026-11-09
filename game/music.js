@@ -9,6 +9,7 @@
 //          the camera's hiss (ambience) do the rest. With the intensity a slow pulse comes in ("pulse").
 //   opening the intro's float over the sea (below, after memory). descent: the ride down in the lift, after it.
 //   easy, rooftop: two of the radio's stations (game/radio.js); the third, NINTH FM, plays Juno's theme.
+//   glassgirl: NINTH FM's pop song about a Glasser, the karaoke machine's in LUCKY STATIC (game/karaoke.js).
 // Stingers: "clue" (a moment caught), "witness" (the screen says JUNO.: everything else stops for it).
 // Listen: node lib/cutaway/tools/render-music.mjs index.html --out build/music/juno.wav --steps '[...]'
 "use strict";
@@ -227,6 +228,43 @@
         ...LOFI,
         rhodes: bars(slow(["E3", "G3", "D4", "F#4"]), slow(["A2", "G3", "C#4", "F#4"]), slow(["D3", "F#3", "C#4", "E4"]), slow(["B2", "A3", "D4", "F#4"])),
         bass: bars("E2 - - - . . B2 - G2 - - - . . . .", "A1 - - - . . E2 - G2 - - - . . . .", "D2 - - - . . A2 - F#2 - - - . . . .", "B1 - - - . . F#2 - A2 - - - . . . ."),
+      } },
+    },
+  });
+
+  // GLASS GIRL: NINTH FM's song about a Glasser, the karaoke machine's in LUCKY STATIC (game/karaoke.js). A small pop song: E minor,
+  // the four chords everybody knows (Em C G D), a straight beat, a bass in eighths, a pad; a bright lead plays the tune the words go
+  // to, two bars a line: the verse four lines, the chorus two, then round again. 104 bpm.
+  I("glasslead", { type: "sub", wave: "pulse", pulseWidth: 0.35, filter: { cutoff: 1800, env: 1400, decay: 0.18, q: 2 },
+    amp: { a: 0.008, d: 0.25, s: 0.55, r: 0.18 }, vibrato: { rate: 5.5, depth: 6, delay: 0.25 }, gain: 0.075, reverb: 0.35, delay: 0.22, pan: 0.05 });
+  I("popbass", { type: "sub", wave: "saw", filter: { cutoff: 420, env: 500, decay: 0.12, q: 2 }, amp: { a: 0.004, d: 0.2, s: 0.35, r: 0.1 }, gain: 0.16 });
+  const gEm = "E3+G3+B3", gC = "C3+E3+G3", gG = "G2+B2+D3", gD = "D3+F#3+A3";
+  /** the bass in eighths on a root @param {string} n */
+  const eighths = (n) => `${n} . ${n} . ${n} . ${n} . ${n} . ${n} . ${n} . ${n} .`;
+  const POP = { kick: "x . . . x . . . x . . . x . . .", snare: ". . . . X . . . . . . . X . . .", hat: ". . x . . . x . . . x . . . x ." };
+  const popDrums = (/** @type {number} */ n) => Object.fromEntries(Object.entries(POP).map(([k, p]) => [k, bars(...Array(n).fill(p))]));
+  Cutaway.score.theme("glassgirl", {
+    tempo: 104, key: "E",
+    tracks: { lead: { inst: "glasslead" }, pad: { inst: "cs80pad" }, bass: { inst: "popbass" }, kick: { inst: "kick" }, snare: { inst: "snare" }, hat: { inst: "hat" } },
+    sections: {
+      // "Sie sitzt im Dunkeln, zehn Schirme im Raum, / die ganze Stadt ist ihr offener Traum. / Sie sieht dich im Regen, sie sieht dich im Licht, / nur sich selber sieht sie nicht."
+      verse: { bars: 8, next: "chorus", tracks: {
+        lead: bars(
+          ". E4 - E4 G4 - G4 A4 - G4 - E4 - D4 - .", "E4 - G4 - B4 - A4 - G4 - - - . . . .",
+          ". E4 - E4 G4 - G4 A4 - G4 - E4 - D4 - .", "C4 - E4 - G4 - E4 - D4 - - - . . . .",
+          ". D4 - D4 G4 - G4 B4 - A4 - G4 - D4 - .", "D4 - G4 - B4 - D5 - B4 - - - . . . .",
+          ". A4 - A4 B4 - A4 F#4 - D4 - - - . . .", "F#4 - - - A4 - - - D4 - - - . . . ."),
+        pad: bars(hold(gEm), hold(gEm), hold(gC), hold(gC), hold(gG), hold(gG), hold(gD), hold(gD)),
+        bass: bars(eighths("E2"), eighths("E2"), eighths("C2"), eighths("C2"), eighths("G1"), eighths("G1"), eighths("D2"), eighths("D2")),
+        ...popDrums(8),
+      } },
+      // "Glass Girl, Glass Girl, wer schaut dir zu? / Die ganze Stadt schläft, nur nicht du."
+      chorus: { bars: 4, next: "verse", tracks: {
+        lead: bars("B4 - - G4 B4 - - G4 A4 - G4 - E4 - - .", "G4 - A4 - B4 - - - . . . . . . . .",
+          "D5 - B4 - A4 - G4 - A4 - B4 - D5 - - .", "B4 - - - A4 - - - G4 - - - - - - ."),
+        pad: bars(hold(gEm), hold(gC), hold(gG), hold(gD)),
+        bass: bars(eighths("E2"), eighths("C2"), eighths("G1"), eighths("D2")),
+        ...popDrums(4),
       } },
     },
   });

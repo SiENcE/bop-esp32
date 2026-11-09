@@ -1,6 +1,6 @@
 // Nagiwa: the karaoke machine in LUCKY STATIC, a small game of its own (the user's wish, 2026-11-09). It is OUT OF ORDER and works all
 // the same once Juno hits it where Mei says: a menu of three songs, the music plays (the radio's pieces: NAGI·WA EASY for its own
-// jingle, KESSEL ROOFTOP for the flood's ballad, Juno's theme as NINTH FM plays it), the words run over a screen line by line and light
+// jingle, KESSEL ROOFTOP for the flood's ballad, NINTH FM's own song for GLASS GIRL), the words run over a screen line by line and light
 // up as they are sung. At the end of each verse the last word is missing: Juno picks it from three, a rhyme or a joke, and whoever is
 // at the bar answers. No timing (every pick is a dialogue choice: mouse, touch, a controller), no score, no flag: flavour, which the
 // solver plays through once per state and finds nothing new in.
@@ -38,8 +38,8 @@
       { text: "wir bauen uns oben ein neues", gap: { right: "Land", words: ["Pfand", "Land", "Band"],
         then: { Pfand: [M("Flaschen bring ich nicht zurück.")], Band: [SB("Wir hatten eine. Die ist auch weg.")] } } },
     ], after: [SB("Das war unser Lied. Vorher.")] },
-    // NINTH FM's song about a Glasser; it comes close
-    glass: { title: "GLASS GIRL", music: { theme: "juno", intensity: 0.6 }, ms: 6650, lines: [
+    // NINTH FM's song about a Glasser, its own little pop song (game/music.js, glassgirl: two bars of 104 bpm a line); it comes close
+    glass: { title: "GLASS GIRL", music: { theme: "glassgirl" }, ms: 4615, lines: [
       { text: "Sie sitzt im Dunkeln, zehn Schirme im Raum," },
       { text: "die ganze Stadt ist ihr offener Traum." },
       { text: "Sie sieht dich im Regen, sie sieht dich im Licht," },
