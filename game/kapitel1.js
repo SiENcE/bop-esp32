@@ -203,7 +203,7 @@ Nagiwa.camRoom("cam30", { background: "cam30_bg", mic: { at: A30.mic, ...MIC }, 
 
 // ---- the alley and the laundromat, in street mode: both baked from their maps (art/rooms/gasse.map.js, laundromat.map.js)
 const AG = Nagiwa.at.gasse, AW = Nagiwa.at.laundromat;
-Cutaway.room("gasse", { name: "Die Gasse", background: "gasse_bg", walk: AG.walk, holes: AG.holes, props: AG.props,
+Cutaway.room("gasse", { name: "Die Gasse", background: "gasse_bg", size: /** @type {[number, number]} */ ([320, 290]), walk: AG.walk, holes: AG.holes, props: AG.props,
   light: { ambient: 0.7, lamps: AG.lamps.map((/** @type {any} */ { bake, zone, ...lamp }) => lamp) },
   // the rain coming down into the alley, as in Kowalski Street (the steam out of the dryers' vent is in the picture)
   fx: [{ kind: "rain", rect: [0, 0, 320, 180], count: 50, color: "#41547a", speed: 140, slant: 0.3, length: 3 },
@@ -215,6 +215,9 @@ Cutaway.room("gasse", { name: "Die Gasse", background: "gasse_bg", walk: AG.walk
       use: [{ goto: "laundromat", at: AW.arrive, face: "se" }] },
     market: { name: "Zum Drain-Markt", rect: AG.marketRect, walkTo: AG.market, face: "nw", look: "Da runter ist der Drain-Markt.", use: "[MOCK] Den bau ich erst noch." },
     niche: { name: "Nische", rect: AG.nicheRect, walkTo: AG.niche, face: "nw", look: "Eine Nische mit einer Matratze und einem Topf. Hier wohnt jemand." },
+    // the balcony over the water (the user's wish): only to look at
+    water: { name: "Wasser", poly: AG.waterPoly, walkTo: AG.water, face: "se",
+      look: ["Das Wasser. Es spiegelt das Grün vom Waschsalon, als wär's was Schönes.", "Irgendwo da unten liegt die alte Stadt."] },
     cables: { name: "Kabel", rect: AG.cablesRect, walkTo: AG.niche, face: "nw", look: "Kabel, armdick. Alle tropfen. Keiner weiß mehr, wohin sie gehen." },
   } });
 const AT_DRYER = ["!off_main", { or: [["day=3", "time>=20:00"], "day=4"] }];     // it lies there from when she has left it (the clock stands while Juno walks); Lantern only hears of it at the meeting

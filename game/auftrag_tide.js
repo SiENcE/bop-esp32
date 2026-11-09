@@ -69,7 +69,7 @@ Nagiwa.camRoom("cam07", { background: undefined, color: Nagiwa.PHOSPHOR[0], mic:
     ...Cutaway.room.get("jade_row").props.filter((/** @type {any} */ p) => !p.hidden).map((/** @type {any} */ p) => ({ ...p, at: [p.at[0] + A7.shift, p.at[1]] })),
   ],
   hotspots: {
-  shop: { name: "Okonkwos Laden", rect: A7.windowRect, look: ["Okonkwos Laden von oben. Ich seh die Theke, und ihn, wenn er da ist.", "Den Tresor nicht. Der ist unter der Theke."] },
+  shop: { name: "Okonkwos Laden", rect: A7.windowRect, look: ["Okonkwos Laden. Durchs Fenster seh ich nicht viel.", "Den Tresor sowieso nicht. Der ist unter der Theke."] },
   machine: { name: "Automat", rect: A7.machineRect, look: "Der Automat gegenüber. SMILE FOR A COUPON. Der sieht ihm genau ins Fenster." },
 } });
 

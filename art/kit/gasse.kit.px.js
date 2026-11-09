@@ -7,7 +7,7 @@
 //   openings gs_lm_door, gs_lm_window, gs_lm_sign (SUDS & SPIN), gs_vent, gs_flat_window, gs_ac; gs_niche (open);
 //            gs_market (the stairs down, as the blocks the user approved: the ceiling sloping, the handrails dropping, the glow
 //            from below), gs_market_sign (DRAIN MARKET, an arrow down)
-//   props    gs_mattress, gs_pot (in the niche), gs_bins, gs_crates, gs_cables
+//   props    gs_mattress, gs_pot (in the niche), gs_bins, gs_crates, gs_railing (the balcony's, over the water), gs_cables
 include("../lib/text.js")
 
 pal({ E: "#1b2b28", F: "#2a4239", J: "#4c6e5c", L: "#7aa48a", K: "#c4ecd0" })
@@ -101,6 +101,15 @@ const KIT_GASSE = (() => {
     },
   })
   ISOKIT.prop("gs_crates", { draw(pen, p) { const [u, v] = p.at, [du, dv] = p.foot; pen.box(u, v, 0, du, dv, p.h, () => "P", () => "O", () => "a") } })
+  // the balcony's railing: posts every half meter, a top rail and one under it
+  ISOKIT.prop("gs_railing", {
+    draw(pen, p) {
+      const [u, v] = p.at, [du, dv] = p.foot, H = p.h
+      for (let s = 0; s <= dv + 0.01; s += dv / Math.round(dv / 0.5)) pen.box(u, v + Math.min(s, dv - 0.05), 0, 0.05, 0.05, H, () => "5", () => "4", () => "3")
+      pen.box(u, v, H - 0.05, 0.06, dv, 0.05, () => "6", () => "5", () => "4")
+      pen.box(u, v, 0.5, 0.04, dv, 0.03, () => "5", () => "4", () => "3")
+    },
+  })
   // the cable bundles: from the left wall across to the facade, sagging; a drop falling from the lowest one
   ISOKIT.prop("gs_cables", {
     outline: false, footprint: () => [], solid: () => [], frames: NF,

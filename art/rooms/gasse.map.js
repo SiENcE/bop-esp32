@@ -6,12 +6,15 @@
 // the sign over them, the dryers' vent puffing steam, a lit window of a flat above with its AC dripping. On the left back wall a niche
 // where somebody lives (a mattress, a pot) and the way down to the Drain Market: an opening with the stairs going down, DRAIN MARKET
 // over it (kapitel1-design §9, decided 2026-11-09: nothing to walk over; the handrails as the user drew them). Cable bundles across,
-// dripping; bins and crates under the vent; puddles. Blocks for now (art/kit/gasse.kit.px.js): to be judged before anything
-// is painted.
+// dripping; bins and crates under the vent; puddles. The alley is a deck over the water, as the Lower Ninth stands over the drowned
+// city: its near right side is a balcony, a railing at the edge (the user's wish, 2026-11-09), and below it the quay wall and the
+// water with the alley's lights mirrored in it (drawn in art/rooms/gasse.px.js); the picture is taller than the screen and scrolls
+// down with Juno. On the near left the cut through the deck, the water under it too. Blocks for now (art/kit/gasse.kit.px.js): to
+// be judged before anything is painted.
 "use strict";
 
 ISO_MAPS.gasse = {
-  size: [6, 4], cell: 0.5, at: [128, 60], screen: [320, 180], margin: 0.2,
+  size: [6, 4], cell: 0.5, at: [128, 60], screen: [320, 290], margin: 0.2,
   // "p" the alley's old paving, "w" puddles, "g" a drain
   floor: [
     "pppppppppppp",
@@ -28,7 +31,7 @@ ISO_MAPS.gasse = {
     { from: [0, 0], to: [0, 4], h: 6, kit: "gs_wall" },                  // 1: the left back wall (the niche, the way down)
     // the near left wall, cut: the gate to Kowalski Street a gap at its left end
     { from: [1.3, 4], to: [6, 4], h: 6, kit: "gs_wall", stub: true },
-    { from: [6, 0], to: [6, 4], h: 6, kit: "gs_wall", stub: true },
+    // (the near right side has no wall: the balcony's railing, the water below)
   ],
   openings: [
     // SUDS & SPIN: the door, the window, the sign, the dryers' vent; a flat's lit window above and its AC
@@ -51,12 +54,14 @@ ISO_MAPS.gasse = {
     // at the facade's right end, under the vent: the bins, a stack of crates
     { id: "bins", kit: "gs_bins", at: [4.0, 0.08], foot: [1.0, 0.6], h: 1.0 },
     { id: "crates", kit: "gs_crates", at: [5.15, 0.1], foot: [0.55, 0.55], h: 0.7 },
+    // the balcony's railing along the near right edge, over the water
+    { id: "railing", kit: "gs_railing", at: [5.86, 0.12], foot: [0.1, 3.86], h: 1.0 },
     // the cable bundles across the alley, high over everyone
     { id: "cables", kit: "gs_cables", at: [0.05, 0.05], foot: [0.1, 0.1], h: 3.0, block: false },
   ],
   spots: {
     arrive: [0.8, 3.45, "ne"], kowalski: [0.75, 3.85, "sw"],
-    laundromat: [1.1, 0.45, "ne"], market: [0.45, 2.55, "nw"], niche: [0.5, 0.85, "nw"],
+    laundromat: [1.1, 0.45, "ne"], market: [0.45, 2.55, "nw"], niche: [0.5, 0.85, "nw"], water: [5.55, 2.3, "se"],
   },
   lights: [
     // the laundromat's green through its window and door
