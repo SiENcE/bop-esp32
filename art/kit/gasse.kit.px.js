@@ -216,8 +216,9 @@ const KIT_GASSE = (() => {
 
   // ---------------------------------------------------------------- props
   // the flood's memorial: a plinth of dark stone, on its front the bronze plaque with the names (rows of them, more than it holds: the
-  // last rows run on to its edge); on it a woman of dark bronze, her head bowed, a small boat held to her chest; someone has fixed a
-  // ring of cyan light behind her head; candles and paper cranes at her foot
+  // last rows run on to its edge); on it a woman of dark bronze, her head bowed, a small boat held to her chest, the water rising round
+  // her in bronze to her knees; beside her a bronze rod, the flood mark: a wave on its top where the water stood, far over her head;
+  // someone has fixed a ring of cyan light behind her head; at her foot paper boats with candles in them
   ISOKIT.prop("gs_statue", {
     frames: NF,
     draw(pen, p, f) {
@@ -274,15 +275,19 @@ const KIT_GASSE = (() => {
         "JLJJFFFEFFFFEE",
         "JLJJFFFFEFFFEE",
         "JLJJFFFFEFFFEE",
-        "JLJJFFFFEFFFEE",
-        "JLJJFFFFEFFFEE",
-        "JLJJEFFEFFFFEE",
-        "JLJJFFFEFFFFEE",
-        "JLJJFFFEFFFFEE",
-        "JLJJFFFFEFFFEE",
-        "JLJJFFFFEFFFEE",
+        "JLJJFFLFEFFLEE",
+        "JLJLLJFFLLFFEE",
+        "JLLKLJFLKLJFEE",
+        "LLJJLLLLJJLLLE",
+        "JJLLJJJLLJJJLL",
+        "LLLJJLLLJJLLLJ",
+        "JJJJJJJJJJJJJJ",
       ]
       pen.grid(bx - 7, by - FIG.length, FIG)
+      // the flood mark: a bronze rod at the plinth's right corner, a wave on its top where the water stood
+      const [mx, my] = pen.P(u + du - 0.12, v + 0.14, 0.64), top = 76
+      pen.vline(mx, my - top, top, "F"); pen.vline(mx + 1, my - top + 3, top - 3, "E")
+      pen.grid(mx - 3, my - top - 4, ["..LLJ.", ".LK.JJ", "LJ..LJ", "JJJJJJ"])
       // the halo somebody fixed behind her bowed head, its LEDs chasing round
       for (let a = 0; a < 22; a++) { const t = (a / 22) * Math.PI * 2; pen.px(Math.round(bx - 0.5 + Math.cos(t) * 6), Math.round(by - FIG.length + 4 + Math.sin(t) * 5), (a + f * 2) % 8 < 2 ? "!V" : "!v") }
       pen.at(null)
@@ -293,9 +298,13 @@ const KIT_GASSE = (() => {
         pen.px(x, y - 1, "H"); pen.px(x, y - 2, k % 2 ? "H" : "h"); pen.px(x, y - 3, (k + f) % 4 ? "!Q" : "!R"); if ((k + f) % 3 === 0) pen.px(x, y - 4, "!W")
         pen.at(null)
       }
-      for (const [cu2, k] of [[0.32, "H"], [0.5, "N"]]) {
-        const [cx, cy] = pen.P(u + cu2, v + dv + 0.1, 0)
-        pen.at(u + cu2, v + dv + 0.1, 0.05, "v"); pen.px(cx - 1, cy - 2, k); for (let i = -2; i < 2; i++) pen.px(cx + i, cy - 1, k); pen.at(null)
+      // paper boats on the floor before the step, a candle in each
+      for (const [cu2, cv2, k] of [[0.3, 0.12, 0], [0.52, 0.2, 1], [0.12, 0.24, 2]]) {
+        const [cx, cy] = pen.P(u + cu2, v + dv + cv2, 0)
+        pen.at(u + cu2, v + dv + cv2, 0.05, "v")
+        pen.px(cx - 2, cy - 2, "H"); pen.px(cx + 2, cy - 2, "H"); for (let i = -1; i <= 1; i++) pen.px(cx + i, cy - 1, "H"); pen.px(cx, cy - 2, "h")
+        pen.px(cx, cy - 3, (k + f) % 3 ? "!Q" : "!R")
+        pen.at(null)
       }
     },
   })

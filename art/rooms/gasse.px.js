@@ -9,10 +9,11 @@ include("../lib/isokit.js")
 include("../kit/gasse.kit.px.js", { palette: true })
 
 const GS_P = ISOMAP.projector(ISO_MAPS.gasse)
-// the dryers' warm, wet air out of the vent, drifting up into the rain
+// the dryers' warm, wet air out of the vent, drifting up into the rain; and steam out of the drain in the deck (the user's wish)
 const gsSteam = (c) => {
-  const f = c.frame ?? 0, [x, y] = GS_P.P(5.45, 0, 2.42)
+  const f = c.frame ?? 0, [x, y] = GS_P.P(5.45, 0, 2.42), [gx, gy] = GS_P.P(4.75, 1.75, 0)
   c.plume(x, y, "hZz", { every: 3, life: 24, rise: 22, wind: -0.2, size: [1, 4], seed: 5, frame: f })
+  c.plume(gx, gy, "hZz", { every: 2, life: 24, rise: 30, wind: -0.25, size: [2, 5], seed: 9, frame: f })
 }
 // Under the balcony: the quay wall going down from the deck's near right edge, and below it the water at GS_WATER (meters, under the
 // deck), mirroring what stands over it: first the wall itself, dark, as tall in the water as it stands over it, then the picture's
