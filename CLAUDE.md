@@ -145,7 +145,7 @@ code comments English.
   drags on the room's map. The changes go into `game/intro.js` itself (only the steps changed, the comments kept);
   Ctrl+S writes it. The intro's shots the game draws itself (`float`) have no map: their timing is the `float` bar.
 - Art: `sh tools/build_art.sh [test | characters | ui | title | intro | cams | mock | room <id> | rooms]` (no argument:
-  everything).
+  everything). `room kowalski` and `rooms` build the title too: the menu's backdrop is that street, baked from the same map and kit.
 - Sounds: `node tools/render-sounds.mjs` (every sound of `game/sounds.js` into `build/sounds/`, `all.wav`
   in turn).
 - Screenshots (look at both 1x and 3x):

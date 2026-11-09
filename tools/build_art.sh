@@ -18,6 +18,7 @@
 #                                         baked from a map, art/rooms/flat.map.js, prints its measured layout,
 #                                         written to game/rooms/flat.layout.js by tools/iso-layout.mjs)
 #        sh tools/build_art.sh rooms    (every room in art/rooms/, *_review.px.js left out)
+#        (room kowalski and rooms build the title too: the menu's backdrop is that street, from the same map and kit)
 # The raw pxl output goes to build/art/ (not checked in); assets/*.js are checked in, so the game
 # runs without Node.
 set -e
@@ -130,8 +131,9 @@ case "${1:-all}" in
     ui) ui ;;
     deck) deck ;;
     title) title ;;
-    room) room "$2" ;;
-    rooms) rooms ;;
-    all) test_art; characters; cams; mock; ui; deck; title; intro; rooms ;;
+    # the menu's backdrop is Kowalski Street baked from the same map and kit: it is built again with the street, so it never falls behind
+    room) room "$2"; if [ "$2" = kowalski ]; then title; fi ;;
+    rooms) rooms; title ;;
+    all) test_art; characters; cams; mock; ui; deck; intro; rooms; title ;;
     *) echo "unknown group: $1"; exit 2 ;;
 esac
