@@ -65,7 +65,16 @@ Nagiwa.at = {
   })(),
   cam18: { mic: [150, 100], sign: [176, 27, 56, 26], stairs: [100, 70, 120, 90] },
   cam22: { seat: [120, 112], mic: [120, 100], bar: [80, 118, 216, 20] },
-  cam23: { dryer6: [232, 76], counter: [262, 150], mic: [200, 100], dryers: [80, 28, 220, 40], desk: [268, 80, 44, 60] },
+  // CAM 23 is the laundromat's own picture (one place, one picture: kapitel0-design §3), moved right by `shift` so the washers clear
+  // the cameras' strip; Ines stands where Juno would: at a washer on Wednesday, at dryer 6 on Thursday
+  cam23: (() => {
+    const L = Nagiwa.layouts.laundromat, S = 24, sh = (/** @type {number[]} */ p) => [p[0] + S, p[1]];
+    const boxes = [1, 2, 3, 4, 5, 6, 7, 8].map((n) => L.props[`dryer${n}`].box), c = L.props.counter.box;
+    const x0 = Math.min(...boxes.map((b) => b[0])), y0 = Math.min(...boxes.map((b) => b[1]));
+    const x1 = Math.max(...boxes.map((b) => b[0] + b[2])), y1 = Math.max(...boxes.map((b) => b[1] + b[3]));
+    return { shift: S, exposure: 2.2, dryer6: sh(L.spots.dryer6), washer: sh(L.spots.washer), sleeper: sh(L.spots.sleeper), mic: sh(L.spots.dryer6),
+      dryers: [x0 + S, y0, x1 - x0, y1 - y0], desk: [c[0] + S, c[1], c[2], c[3]] };
+  })(),
   cam24: { door: [160, 96], off: [104, 174], mic: [160, 110], entrance: [124, 24, 72, 66] },
   // job B (game/auftrag_tide.js): Jade Row from Nagi·wa's camera above it, and from the machine's own at hip height
   cam07: { okonkwo: [118, 104], car: [244, 144], morrow: [214, 146], boy: [196, 148], mic: [200, 124], windowRect: [80, 44, 70, 68], machineRect: [280, 60, 22, 54] },
@@ -119,10 +128,16 @@ Nagiwa.at = {
     // the street door is the gap at the near wall's left end (a cut wall has no picture of its own): its hotspot stands over it
     return { ...at, barRect: c.box, doorRect: [12, 116, 40, 40] };
   })(),
-  laundromat: {
-    walk: [[12, 108, 308, 108, 316, 176, 4, 176]], arrive: [18, 130], door: [10, 130], dryer6: [168, 110], counter: [270, 128],
-    doorRect: [0, 40, 14, 100], dryer6Rect: [152, 50, 25, 46], dryersRect: [12, 50, 224, 46], counterRect: [252, 90, 58, 34],
-  },
+  // SUDS & SPIN (art/rooms/laundromat.map.js, game/rooms/laundromat.layout.js). The door is the gap in the alley's cut wall (a cut
+  // wall has no picture of its own): its hotspot stands over it. The dryers' rect is the row's; the man asleep behind the counter is a
+  // block of his own (art/mock/ch1_blocks.px.js) standing at the spot `sleeper`
+  laundromat: (() => {
+    const at = fromLayout(Nagiwa.layouts.laundromat), P = Nagiwa.layouts.laundromat.props;
+    const boxes = [1, 2, 3, 4, 5, 6, 7, 8].map((n) => P[`dryer${n}`].box);
+    const x0 = Math.min(...boxes.map((b) => b[0])), y0 = Math.min(...boxes.map((b) => b[1]));
+    const x1 = Math.max(...boxes.map((b) => b[0] + b[2])), y1 = Math.max(...boxes.map((b) => b[1] + b[3]));
+    return { ...at, dryersRect: [x0, y0, x1 - x0, y1 - y0], doorRect: [12, 114, 40, 40] };
+  })(),
   cam04: {
     entrance: [100, 43], seatVarga: [149, 132], seatKessler: [156, 94], counter: [176, 69], cook: [182, 50], cookBust: [186, 30],
     win1: [73, 88], win2: [92, 61], mid: [123, 66],

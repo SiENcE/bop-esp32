@@ -169,7 +169,7 @@ node tools/solve-act.mjs prolog --full --set off_roof  # the prologue's way, the
 node lib/cutaway/tools/play.mjs index.html --act prolog --path tools/paths/prolog.json   # the prologue alone with real clicks (it ends where it would go on): "all passed"
 node lib/cutaway/tools/play.mjs index.html --act prolog --path tools/paths/prolog_dach.json   # the prologue with the roof: "all passed"
 node lib/cutaway/tools/play.mjs index.html --path tools/paths/spiel.json   # the whole game from the title, the prologue into Chapter 1 and to its end: "all passed"
-node tools/solve-act.mjs kapitel1 --full --set off_roof,off_zeitung,off_imai,off_traeger,off_varga   # Chapter 1's main thread: "no soft-locks", every state has a hint
+node tools/solve-act.mjs kapitel1 --full --set off_roof,off_zeitung,off_imai,off_traeger,off_varga,off_tide,off_motte,off_vesper   # Chapter 1's main thread: "no soft-locks", every state has a hint
 # and each side story alone (sh tools/check.sh does all of it): --set off_main,know_meeting and off_<the others>
 node lib/cutaway/tools/play.mjs index.html --act kapitel1 --path tools/paths/kapitel1_main.json   # its main way with real clicks: "all passed"
 ```

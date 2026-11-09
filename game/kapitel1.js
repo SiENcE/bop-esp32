@@ -78,7 +78,8 @@ const A21 = Nagiwa.at.cam21, A22 = Nagiwa.at.cam22, A23 = Nagiwa.at.cam23, A24 =
 Nagiwa.people.ines = { name: "INES CALDER", known: "know_ines", label: "Frau im Kittel", speaker: "Ines" };
 Cutaway.actor("ines", { name: "Frau im Kittel", color: "#f0a0c0",
   costume: { idle: { se: "ines_feed_front", ne: "ines_feed_back" }, walk: { se: "ines_feed_front_walk", ne: "ines_feed_back_walk" }, talk: { se: "ines_feed_front", ne: "ines_feed_back" } }, speed: [14, 10], voice: { pitch: 66, wave: "triangle", syllable: 70 },
-  poses: [{ if: "ines_down", idle: "ines_feed_down", walk: "ines_feed_down", talk: "ines_feed_down" },
+  poses: [{ if: "at:ines=cam23", idle: "mock_ines", walk: "mock_ines", talk: "mock_ines" },     // CAM 23 is the laundromat itself: she is at its scale there
+    { if: "ines_down", idle: "ines_feed_down", walk: "ines_feed_down", talk: "ines_feed_down" },
     { if: "ines_gives", idle: "ines_feed_give", talk: "ines_feed_give" }],
   // what she does shows when Juno looks at her: a moment "seen or not" would double every state after it
   look: [{ if: "at:ines=cam31", then: ["Sie wartet. Sie sieht nur zum Tunnel."] }, { if: "at:ines=cam22", then: [{ if: "day=2", then: ["Sie schreibt was auf eine Serviette. Und legt die Hand drüber."], else: ["Dieselbe Suppe. Aber sie schaut dauernd zur Tür."] }],
@@ -92,8 +93,8 @@ Cutaway.actor("lantern", { name: "Jemand im Rollstuhl", color: "#b0f0a0",
 Cutaway.routine("ines", [
   { day: [2, 3, 4], from: "19:00", to: "19:15", room: "cam21", at: A21.door, path: [A21.door, A21.walkOff] },
   { day: [2, 3], from: "19:15", to: "20:00", room: "cam22", at: A22.seat },
-  { day: 2, from: "20:00", to: "20:30", room: "cam23", at: A23.counter },
-  { day: 3, from: "20:00", to: "20:15", room: "cam23", at: A23.dryer6 },
+  { day: 2, from: "20:00", to: "20:30", room: "cam23", at: A23.washer, face: "nw" },
+  { day: 3, from: "20:00", to: "20:15", room: "cam23", at: A23.dryer6, face: "ne" },
   { day: 3, from: "20:15", to: "20:30", room: "cam30", at: A30.board, face: "ne", path: [A30.top, A30.board] },
   { day: [2, 3], from: "20:30", to: "21:00", room: "cam24", at: A24.off, path: [A24.off, A24.door] },
   { day: 4, from: "22:15", to: "22:30", room: "cam24", at: A24.door, path: [A24.door, A24.off] },
@@ -176,7 +177,17 @@ Nagiwa.camRoom("cam21", { background: "cam21_bg", mic: { at: A21.mic, ...MIC }, 
   clinic: { name: "Klinik", rect: A21.clinic, look: "Lull-Klinik 9-Ost. Weiß und still. Sie haben die Codes nie geändert." },
 } });
 Nagiwa.camRoom("cam22", { background: "cam22_bg", mic: { at: A22.mic, ...MIC }, hotspots: { bar: { name: "Theke", rect: A22.bar, look: "Pho Pump. Suppe für alle, die nach Pumpe riechen." } } });
-Nagiwa.camRoom("cam23", { background: "cam23_bg", mic: { at: A23.mic, ...MIC }, hotspots: {
+// CAM 23 is the laundromat's own picture under the feed's filter, as CAM 14 is the floor's: its bake and props moved right by
+// A23.shift, the camera left out of its own picture, the man asleep behind his counter
+Nagiwa.camRoom("cam23", { background: undefined, color: Nagiwa.PHOSPHOR[0], mic: { at: A23.mic, ...MIC },
+  post: [{ exposure: A23.exposure }, ...Nagiwa.FEED_POST],
+  props: [
+    { id: "room", image: "laundromat_bg", at: [A23.shift, 0], anchor: [0, 0], baseline: -1000 },
+    ...Nagiwa.at.laundromat.props.filter((/** @type {any} */ p) => p.id !== "cam").map((/** @type {any} */ p) => ({ ...p, at: [p.at[0] + A23.shift, p.at[1]],
+      ...(p.front ? { front: p.front.map((/** @type {number} */ v, /** @type {number} */ i) => (i % 2 ? v : v + A23.shift)) } : {}) })),
+    { id: "sleeper", image: "mock_sleeper", at: A23.sleeper },
+  ],
+  hotspots: {
   dryers: { name: "Trockner", rect: A23.dryers, look: "Acht Trockner. Die Sechs ist tot, mit Zettel. Da sieht keiner rein." },
   desk: { name: "Theke", rect: A23.desk, look: "Die Theke. Ein Mann schläft dahinter, seit Jahren." },
   // a look back may repeat: no flag of its own
@@ -203,7 +214,11 @@ Cutaway.room("gasse", { name: "Die Gasse", background: "gasse_bg", walk: AG.walk
     cables: { name: "Kabel", rect: AG.cablesRect, walkTo: AG.niche, face: "ne", look: "Kabel, armdick. Alle tropfen. Keiner weiß mehr, wohin sie gehen." },
   } });
 const AT_DRYER = ["!off_main", { or: [["day=3", "time>=20:00"], "day=4"] }];     // it lies there from when she has left it (the clock stands while Juno walks); Lantern only hears of it at the meeting
-Cutaway.room("laundromat", { name: "SUDS & SPIN", background: "laundromat_bg", walk: AW.walk,
+// baked from its map (art/rooms/laundromat.map.js); the man asleep behind the counter is a figure of his own on his own chair, and
+// the same props make CAM 23 (one place, one picture)
+const SLEEPER = { id: "sleeper", image: "mock_sleeper", at: AW.sleeper };
+Cutaway.room("laundromat", { name: "SUDS & SPIN", background: "laundromat_bg", walk: AW.walk, holes: AW.holes, props: [...AW.props, SLEEPER],
+  light: { ambient: 0.8, lamps: AW.lamps.map((/** @type {any} */ { bake, zone, ...lamp }) => lamp) },
   ambience: ["fridge_hum", "neon_buzz"], music: { theme: "juno", intensity: 0.3 },
   hotspots: {
     door: { name: "Tür", rect: AW.doorRect, walkTo: AW.door, face: "sw", use: [{ goto: "gasse", at: AG.laundromat, face: "sw" }] },

@@ -38,6 +38,14 @@ anim("mock_haldane", { w: 15, h: 46, frames: 1, fps: 1, outline: "k", pivot: "bo
   c.rect(4, 0, 7, 4, "h"); c.rect(4, 4, 7, 7, "g"); c.hline(5, 7, 2, "e"); c.hline(8, 7, 2, "e")
   c.rect(2, 11, 11, 31, "f"); c.rect(6, 11, 3, 31, "e"); c.rect(1, 13, 2, 16, "f"); c.rect(12, 13, 2, 16, "f"); c.rect(3, 42, 4, 4, "h"); c.rect(8, 42, 4, 4, "h")
 })
+// Ines at the laundromat's scale (CAM 23 is the laundromat's own picture), seen from behind as she faces the machines: dark hair
+// tied back, the white coat to her knees, a bag on her shoulder
+anim("mock_ines", { w: 15, h: 50, frames: 1, fps: 1, outline: "k", pivot: "bottom" }, (c) => {
+  c.rect(4, 0, 7, 9, "a"); c.rect(6, 9, 3, 3, "a")                                         // her hair, its knot
+  c.rect(2, 11, 11, 25, "h"); c.vline(7, 20, 16, "g"); c.rect(1, 13, 2, 17, "h"); c.rect(12, 13, 2, 17, "h")   // the coat, its back seam, the arms
+  c.rect(11, 12, 2, 12, "e"); c.rect(10, 22, 4, 6, "e")                                     // the bag's strap and the bag
+  c.rect(4, 36, 3, 11, "d"); c.rect(8, 36, 3, 11, "d"); c.rect(3, 47, 4, 3, "a"); c.rect(8, 47, 4, 3, "a")       // the legs, the shoes
+})
 // a close-up: one page of the stack, every face in it marked with four corners
 scene("look_zeitung", { w: 170, h: 112, bg: "h" }, (c) => {
   c.rect(0, 0, 170, 112, "h"); c.rect(0, 0, 170, 16, "g")
@@ -55,19 +63,6 @@ scene("cam22_bg", { w: W, h: H, bg: "0" }, (c) => {
   c.rect(80, 118, 216, 20, "6"); c.hline(80, 118, 216, "8")
   for (const x of [114, 154, 194, 234]) c.rect(x, 100, 12, 14, "2")
   SIGN(c, 110, 4, 100, "PHO PUMP")
-})
-// the laundromat from its ceiling: the dryers in a row, the dead one with its note, the counter
-scene("cam23_bg", { w: W, h: H, bg: "0" }, (c) => {
-  ROOM(c, "3", "5", 74)
-  // (the left column is the cameras' strip: the row begins after it)
-  for (let i = 0; i < 8; i++) {
-    const x = 80 + i * 28
-    c.rect(x, 28, 24, 40, "4"); c.rect(x + 4, 36, 16, 16, "2"); c.rect(x + 7, 39, 10, 10, i === 5 ? "1" : "3")
-    if (i === 5) c.rect(x + 7, 31, 10, 7, "8")
-    TXT.draw(c, x + 12, 56, String(i + 1), i === 5 ? "9" : "7", { font: "hud", align: "center" })
-  }
-  c.rect(268, 80, 44, 60, "6"); c.hline(268, 80, 44, "8")
-  SIGN(c, 96, 8, 112, "SUDS & SPIN")
 })
 // the door of the Lerche block, through a fisheye (only its corners dark)
 scene("cam24_bg", { w: W, h: H, bg: "0" }, (c) => {
@@ -240,18 +235,14 @@ anim("mock_imai", { w: 19, h: 44, frames: 1, fps: 1, outline: "k", pivot: "botto
 anim("inv_ausweis", { w: 18, h: 13, frames: 1, fps: 1, outline: "k" }, (c) => { c.rect(0, 0, 18, 13, "h"); c.rect(2, 2, 6, 7, "f"); c.rect(10, 3, 6, 1, "f"); c.rect(10, 6, 6, 1, "f"); c.rect(0, 11, 18, 2, "M") })
 anim("inv_haken", { w: 18, h: 13, frames: 1, fps: 1, outline: "k" }, (c) => { c.rect(0, 10, 15, 2, "g"); c.rect(14, 3, 2, 8, "g"); c.rect(10, 2, 5, 2, "h"); c.rect(10, 4, 2, 2, "h") })
 anim("inv_stick", { w: 18, h: 13, frames: 1, fps: 1, outline: "k" }, (c) => { c.rect(2, 3, 12, 7, "f"); c.rect(14, 5, 3, 3, "h"); c.rect(4, 5, 4, 3, "v") })
-// the laundromat from inside: eight dryers, the counter
-scene("laundromat_bg", { w: W, h: H, bg: "k" }, (c) => {
-  c.rect(0, 0, W, 100, "d"); c.rect(0, 100, W, 80, "b")
-  for (let i = 0; i < 8; i++) {
-    const x = 12 + i * 28
-    c.rect(x, 50, 25, 46, "e"); c.rect(x + 4, 58, 17, 17, "a"); c.rect(x + 7, 61, 11, 11, i === 5 ? "a" : "d")
-    if (i === 5) c.rect(x + 7, 52, 11, 8, "g")
-    TXT.draw(c, x + 12, 80, String(i + 1), i === 5 ? "h" : "f", { font: "hud", align: "center" })
-  }
-  c.rect(252, 90, 58, 34, "f"); c.hline(252, 90, 58, "h")
-  c.rect(0, 40, 14, 60, "a")
-  SIGN(c, 96, 22, 128, "NO SNEAKERS IN THE DRYER", "b", "g")
+// the laundromat's man asleep behind his counter, on a chair tipped back against the wall, his head on his shoulder, facing the
+// room (the laundromat itself is a baked map now: art/rooms/laundromat.map.js); his chair is in his figure
+anim("mock_sleeper", { w: 22, h: 40, frames: 1, fps: 1, outline: "k", pivot: "bottom" }, (c) => {
+  c.rect(3, 4, 2, 36, "e"); c.rect(3, 26, 15, 3, "e"); c.rect(15, 29, 2, 11, "e")     // the chair: its back, the seat, a front leg
+  c.rect(5, 12, 9, 15, "f"); c.rect(6, 13, 7, 3, "g")                                // his body, a grey jacket
+  c.rect(10, 26, 9, 4, "d"); c.rect(17, 30, 3, 9, "d"); c.rect(16, 38, 5, 2, "a")    // the legs out to the front, a shoe
+  c.rect(4, 4, 7, 8, "h"); c.rect(4, 4, 7, 3, "a"); c.hline(7, 9, 3, "e")            // the head on its side, hair, mouth open
+  c.rect(12, 20, 2, 8, "g")                                                           // an arm hanging
 })
 
 // ---- job B (game/auftrag_tide.js): Jade Row's cameras, Okonkwo's shop, the people of the night, Ratz
