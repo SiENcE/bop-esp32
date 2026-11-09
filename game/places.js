@@ -77,8 +77,6 @@ Nagiwa.at = {
   })(),
   cam24: { door: [160, 96], off: [104, 174], mic: [160, 110], entrance: [124, 24, 72, 66] },
   // job B (game/auftrag_tide.js): Jade Row from Nagi·wa's camera above it, and from the machine's own at hip height
-  cam07: { okonkwo: [118, 104], car: [244, 144], morrow: [214, 146], boy: [196, 148], mic: [200, 124], windowRect: [80, 44, 70, 68], machineRect: [280, 60, 22, 54] },
-  cam07v: { counter: [156, 112], safe: [160, 112], counterTop: [80, 96], mic: [160, 110], safeRect: [176, 66, 24, 16], shelvesRect: [84, 24, 152, 40] },
   cam15: { door: [160, 150], spot: [271, 100], mic: [200, 100], capsules: [84, 28, 229, 52], c23: [258, 28, 26, 25] },
   cam30: { top: [160, 84], water: [160, 146], board: [222, 112], mic: [160, 100], sign: [88, 30, 144, 11], tide: [232, 52, 56, 36] },
   // measured from the camera in art/cams/cam31.px.js (it logs them when built)
@@ -145,3 +143,18 @@ Nagiwa.at = {
     tv: [238, 8, 33, 45], counterBox: [129, 19, 104, 48], table: [119, 71, 58, 71],
   },
 };
+
+// Job B's two cameras show places Juno walks (one place, one picture: kapitel0-design §3), so their places come from those rooms.
+// CAM 07 is Jade Row's own picture moved right by `shift`, so Okonkwo's shop and the balcony over it clear the cameras' strip: at
+// 00:30 Morrow and the Tidewater boy stand in front of the shop at the lane's scale (as Juno would), the patrol car waits down the lane,
+// at 01:00 Okonkwo's back is in his door. CAM 07V is the shop's own picture: the machine sees it across the lane as the shop view does
+// from the window; Okonkwo stands behind his counter where he stands in the shop, the register's display on it toward the camera.
+Nagiwa.at.cam07 = (() => {
+  const J = Nagiwa.at.jade_row, S = 48, sh = (/** @type {number[]} */ p) => [p[0] + S, p[1]], r = (/** @type {number[]} */ q) => [q[0] + S, q[1], q[2], q[3]];
+  return { shift: S, exposure: 1.3, okonkwo: [J.doorRect[0] + 11 + S, J.doorRect[1] + J.doorRect[3]], morrow: sh([66, 152]), boy: sh([98, 154]), car: sh([142, 112]),
+    mic: sh(J.shop), windowRect: r(J.windowRect), doorRect: r(J.doorRect), machineRect: r(J.machineRect) };
+})();
+Nagiwa.at.cam07v = (() => {
+  const O = Nagiwa.at.okonkwo_shop;
+  return { exposure: 1.3, okonkwo: O.okonkwo, mic: O.front, safeRect: [204, 66, 32, 26], shelvesRect: O.shelvesRect, photoRect: O.photoRect };
+})();

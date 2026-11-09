@@ -42,12 +42,12 @@ Nagiwa.cache.clip_morrow_bribe = { kind: "clip", name: "MORROWS UMSCHLAG", about
 Nagiwa.cams.cam07 = { id: "07", place: "JADE ROW", owner: "NAGI·WA", map: [64, 62], if: ["day>1", "!off_tide"] };
 Nagiwa.cams.cam07v = { id: "07V", place: "JADE ROW, AUTOMAT", owner: "SMILE FOR A COUPON", map: [8, 86], if: ["link_cam07v", "!off_tide"] };
 Cutaway.actor("okonkwo_feed", { name: "Okonkwo", color: "#d8b890",
-  costume: { idle: "mock_okonkwo_feed", walk: "mock_okonkwo_feed", talk: "mock_okonkwo_feed" },
+  costume: { idle: "mock_okonkwo_back", walk: "mock_okonkwo_back", talk: "mock_okonkwo_back" },
   look: ["Okonkwo. Laden zu, und er tippt an der Kasse."],
   talk: ["Er macht den Tresor auf. Über die Kasse.", "Das kleine Display zeigt zum Fenster. Von hier oben seh ich nur einen Strich.", "Falscher Winkel. Ich brauch was auf Augenhöhe."] });
 // the night's other business: a patrol car stops in front of the shop, a Tidewater boy hands Lt. Morrow an envelope
 for (const [id, name, color, image, pitch] of /** @type {[string, string, string, string, number][]} */ ([
-  ["morrow", "Lt. Morrow", "#a8b8d0", "mock_morrow_feed", 50], ["tide_boy", "Tidewater-Junge", "#7ab0c0", "mock_tide_feed", 64], ["streife", "Streifenwagen", "#a8b8d0", "mock_car_feed", 40]]))
+  ["morrow", "Lt. Morrow", "#a8b8d0", "mock_morrow", 50], ["tide_boy", "Tidewater-Junge", "#7ab0c0", "mock_tide", 64], ["streife", "Streifenwagen", "#a8b8d0", "mock_car_feed", 40]]))
   Cutaway.actor(id, { name, color, costume: { idle: image, walk: image, talk: image }, voice: { pitch, range: 3, wave: "triangle", syllable: 80 },
     look: id === "tide_boy" ? ["Kiemen, und am Hals die Markierung, hell wie eine Lampe. Ein Tidewater."] : id === "morrow" ? ["Lieutenant Morrow. Revier 9. Trenchcoat, müde."] : ["Revier 9. Der Motor läuft."],
     talk: [{ dialog: "morrow_bribe" }] });
@@ -60,7 +60,15 @@ Cutaway.routine("okonkwo_feed", [{ day: [2, 3], from: "01:00", to: "01:15", if: 
 Cutaway.routine("morrow", [{ day: [2, 3], from: "00:30", to: "00:45", if: "!off_tide", room: "cam07", at: A7.morrow, face: "se" }]);
 Cutaway.routine("tide_boy", [{ day: [2, 3], from: "00:30", to: "00:45", if: "!off_tide", room: "cam07", at: A7.boy, face: "se" }]);
 Cutaway.routine("streife", [{ day: [2, 3], from: "00:30", to: "00:45", if: "!off_tide", room: "cam07", at: A7.car }]);
-Nagiwa.camRoom("cam07", { background: "cam07_bg", mic: { at: A7.mic, clear: 40, lost: 150 }, hotspots: {
+// CAM 07 is Jade Row's own picture under the feed's filter (one place, one picture), moved right by A7.shift; its steam and the heads
+// along the bottom edge as in the lane
+Nagiwa.camRoom("cam07", { background: undefined, color: Nagiwa.PHOSPHOR[0], mic: { at: A7.mic, clear: 40, lost: 150 },
+  post: [{ exposure: A7.exposure }, ...Nagiwa.FEED_POST],
+  props: [
+    { id: "lane", image: "jade_row_bg", at: [A7.shift, 0], anchor: [0, 0], baseline: -1000 },
+    ...Cutaway.room.get("jade_row").props.filter((/** @type {any} */ p) => !p.hidden).map((/** @type {any} */ p) => ({ ...p, at: [p.at[0] + A7.shift, p.at[1]] })),
+  ],
+  hotspots: {
   shop: { name: "Okonkwos Laden", rect: A7.windowRect, look: ["Okonkwos Laden von oben. Ich seh die Theke, und ihn, wenn er da ist.", "Den Tresor nicht. Der ist unter der Theke."] },
   machine: { name: "Automat", rect: A7.machineRect, look: "Der Automat gegenüber. SMILE FOR A COUPON. Der sieht ihm genau ins Fenster." },
 } });
@@ -68,18 +76,19 @@ Nagiwa.camRoom("cam07", { background: "cam07_bg", mic: { at: A7.mic, clear: 40, 
 // ---- CAM 07V, the machine's own camera, once tapped: hip height, straight into the shop
 const READ = [{ zoom: "zoom_keypad" }, "Das Kundendisplay. Da soll der Preis stehen. Da steht jede Taste.", "Vier. Eins. Sieben. Null. Neun.", "Er tippt, wie man eine Nummer tippt, die man seit Jahren kennt.", { zoom: false }, { cache: "note_safe_code" }, "Tut mir leid, Herr Okonkwo."];
 Cutaway.actor("okonkwo_v", { name: "Okonkwo", color: "#d8b890",
-  costume: { idle: "mock_okonkwo_near", walk: "mock_okonkwo_near", talk: "mock_okonkwo_near" },
+  costume: { idle: "mock_okonkwo_bust", walk: "mock_okonkwo_bust", talk: "mock_okonkwo_bust" },
   look: ["Okonkwo an der Theke, mit der Lesebrille. Der Tresor ist unter ihm."],
   talk: ["Er verkauft Batterien. Den Tresor macht er erst auf, wenn er zu hat. Um eins."] });
 Cutaway.actor("okonkwo_safe", { name: "Okonkwo", color: "#d8b890",
-  costume: { idle: "mock_okonkwo_near", walk: "mock_okonkwo_near", talk: "mock_okonkwo_near" },
+  costume: { idle: "mock_okonkwo_bust", walk: "mock_okonkwo_bust", talk: "mock_okonkwo_bust" },
   look: ["Okonkwo an der Kasse. Von hier sehe ich alles, was er tippt."],
   talk: [{ if: "k1b=warned", then: ["Er tippt einen neuen Code. Gut so."], else: [{ if: "cache_note_safe_code", then: ["Den Code hab ich."], else: READ }] }] });
-Cutaway.routine("okonkwo_v", [{ day: [2, 3, 4], from: "18:00", to: "01:00", if: "!off_tide", room: "cam07v", at: AV.counter }]);
-Cutaway.routine("okonkwo_safe", [{ day: [2, 3], from: "01:00", to: "01:15", if: "!off_tide", room: "cam07v", at: AV.safe }]);
-// Okonkwo stands behind his counter: its front is drawn again over him, so only his upper half shows
-Nagiwa.camRoom("cam07v", { background: "cam07v_bg", mic: { at: AV.mic, clear: 40, lost: 150 },
-  props: [{ id: "counter", image: "cam07v_counter", at: AV.counterTop, anchor: [0, 0], baseline: 300 }], hotspots: {
+Cutaway.routine("okonkwo_v", [{ day: [2, 3, 4], from: "18:00", to: "01:00", if: "!off_tide", room: "cam07v", at: AV.okonkwo }]);
+Cutaway.routine("okonkwo_safe", [{ day: [2, 3], from: "01:00", to: "01:15", if: "!off_tide", room: "cam07v", at: AV.okonkwo }]);
+// CAM 07V is the shop's own picture under the feed's filter (one place, one picture): Okonkwo behind his counter as in the shop
+Nagiwa.camRoom("cam07v", { background: undefined, color: Nagiwa.PHOSPHOR[0], mic: { at: AV.mic, clear: 40, lost: 150 },
+  post: [{ exposure: AV.exposure }, ...Nagiwa.FEED_POST],
+  props: [{ id: "shop", image: "okonkwo_shop_bg", at: [0, 0], anchor: [0, 0], baseline: -1000 }], hotspots: {
   safe: { name: "Kasse", rect: AV.safeRect, look: ["Die Kasse. Der Tresor unter der Theke hängt an ihr.", "Und ihr Kundendisplay zeigt genau zu mir."] },
   shelves: { name: "Regale", rect: AV.shelvesRect, look: "Reis, Batterien, Zigaretten. Und ein Foto, das ich von hier nicht erkenne." },
   rewind: { name: "Puffer", z: 5, if: ["day<4", "time>=01:15", "!cache_note_safe_code", "!k1b"], use: ["Puffer. Zurück auf eins.", ...READ] },
