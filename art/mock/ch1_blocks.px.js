@@ -224,16 +224,10 @@ scene("zoom_keypad", { w: 60, h: 40, bg: "1" }, (c) => {
   TXT.draw(c, 30, 15, "4-1-7-0-9", "9", { font: "hud", align: "center" }); c.rect(26, 30, 8, 10, "3")
 })
 // (Okonkwo's shop is painted now: art/rooms/okonkwo_shop.px.js)
-// the people of job B, not painted yet: Okonkwo in his cardigan (in the shop and from above in the feeds), Lt. Morrow in her trench coat,
+// the people of job B, not painted yet (Okonkwo is painted now: art/characters/okonkwo.px.js): Lt. Morrow in her trench coat,
 // a Tidewater boy with the glowing mark at his neck, the patrol car; Ratz with his parka, headphones and glowing collar
-anim("mock_okonkwo", { w: 19, h: 48, frames: 1, fps: 1, outline: "k", pivot: "bottom" }, (c) => {
-  c.rect(6, 0, 7, 9, "S"); c.rect(6, 0, 7, 2, "k"); c.rect(6, 4, 7, 1, "h"); c.rect(3, 9, 13, 22, "O"); c.rect(5, 10, 9, 20, "o"); c.rect(5, 31, 9, 17, "d")
-})
 // the night in Jade Row seen by CAM 07, which is the lane's own picture (one place, one picture): at the lane's scale, as Juno is there.
-// Okonkwo from behind in his shop's door at one; Lt. Morrow in her trench coat and the Tidewater boy, the mark at his neck lit
-anim("mock_okonkwo_back", { w: 19, h: 48, frames: 1, fps: 1, outline: "k", pivot: "bottom" }, (c) => {
-  c.rect(6, 0, 7, 9, "a"); c.rect(6, 7, 7, 2, "S"); c.rect(3, 9, 13, 22, "O"); c.vline(9, 11, 19, "o"); c.rect(5, 31, 9, 17, "d")
-})
+// Lt. Morrow in her trench coat and the Tidewater boy, the mark at his neck lit
 anim("mock_morrow", { w: 18, h: 52, frames: 1, fps: 1, outline: "k", pivot: "bottom" }, (c) => {
   c.rect(5, 0, 8, 10, "S"); c.rect(5, 0, 8, 3, "a"); c.rect(6, 5, 2, 1, "k"); c.rect(10, 5, 2, 1, "k")       // her face, the hair tied back
   c.rect(2, 10, 14, 30, "f"); c.rect(4, 10, 10, 4, "g"); c.vline(9, 14, 26, "e"); c.rect(3, 24, 12, 2, "e")  // the trench coat, its collar, its belt

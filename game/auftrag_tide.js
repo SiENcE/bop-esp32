@@ -13,6 +13,9 @@ const AJ = Nagiwa.at.jade_row, A7 = Nagiwa.at.cam07, AV = Nagiwa.at.cam07v, AO =
 const O = (/** @type {string} */ text) => ({ say: "okonkwo", text });
 const RZ = (/** @type {string} */ text) => ({ say: "ratz", text });
 const OPEN = "time<01:00";      // the shop is open from the evening until one, every evening
+// Okonkwo's figure (art/characters/okonkwo.px.js): behind his counter he faces the room whichever way the engine turns him; in CAM 07 his back
+const every = (/** @type {string} */ anim) => ({ se: anim, sw: anim, ne: anim, nw: anim });
+const IDLE = every("okonkwo_idle_sw"), TALK = every("okonkwo_talk_sw"), BACK = every("okonkwo_idle_ne");
 
 // ---- the chat: TIDE's message, what Juno can send (the code she has is her only way in: nothing to accept first)
 Object.assign(Nagiwa.contacts, { tide: { name: "TIDE", color: "#7ab0c0", status: "online", if: ["day>1", "!off_tide"], unread: "!read_tide",
@@ -42,7 +45,7 @@ Nagiwa.cache.clip_morrow_bribe = { kind: "clip", name: "MORROWS UMSCHLAG", about
 Nagiwa.cams.cam07 = { id: "07", place: "JADE ROW", owner: "NAGI·WA", map: [64, 62], if: ["day>1", "!off_tide"] };
 Nagiwa.cams.cam07v = { id: "07V", place: "JADE ROW, AUTOMAT", owner: "SMILE FOR A COUPON", map: [8, 86], if: ["link_cam07v", "!off_tide"] };
 Cutaway.actor("okonkwo_feed", { name: "Okonkwo", color: "#d8b890",
-  costume: { idle: "mock_okonkwo_back", walk: "mock_okonkwo_back", talk: "mock_okonkwo_back" },
+  costume: { idle: BACK, walk: BACK, talk: BACK },
   look: ["Okonkwo. Laden zu, und er tippt an der Kasse."],
   talk: ["Er macht den Tresor auf. Über die Kasse.", "Das kleine Display zeigt zum Fenster. Von hier oben seh ich nur einen Strich.", "Falscher Winkel. Ich brauch was auf Augenhöhe."] });
 // the night's other business: a patrol car stops in front of the shop, a Tidewater boy hands Lt. Morrow an envelope
@@ -76,11 +79,11 @@ Nagiwa.camRoom("cam07", { background: undefined, color: Nagiwa.PHOSPHOR[0], mic:
 // ---- CAM 07V, the machine's own camera, once tapped: hip height, straight into the shop
 const READ = [{ zoom: "zoom_keypad" }, "Das Kundendisplay. Da soll der Preis stehen. Da steht jede Taste.", "Vier. Eins. Sieben. Null. Neun.", "Er tippt, wie man eine Nummer tippt, die man seit Jahren kennt.", { zoom: false }, { cache: "note_safe_code" }, "Tut mir leid, Herr Okonkwo."];
 Cutaway.actor("okonkwo_v", { name: "Okonkwo", color: "#d8b890",
-  costume: { idle: "mock_okonkwo", walk: "mock_okonkwo", talk: "mock_okonkwo" },
+  costume: { idle: IDLE, walk: IDLE, talk: TALK },
   look: ["Okonkwo an der Theke, mit der Lesebrille. Der Tresor ist unter ihm."],
   talk: ["Er verkauft Batterien. Den Tresor macht er erst auf, wenn er zu hat. Um eins."] });
 Cutaway.actor("okonkwo_safe", { name: "Okonkwo", color: "#d8b890",
-  costume: { idle: "mock_okonkwo", walk: "mock_okonkwo", talk: "mock_okonkwo" },
+  costume: { idle: IDLE, walk: IDLE, talk: TALK },
   look: ["Okonkwo an der Kasse. Von hier sehe ich alles, was er tippt."],
   talk: [{ if: "k1b=warned", then: ["Er tippt einen neuen Code. Gut so."], else: [{ if: "cache_note_safe_code", then: ["Den Code hab ich."], else: READ }] }] });
 Cutaway.routine("okonkwo_v", [{ day: [2, 3, 4], from: "18:00", to: "01:00", if: "!off_tide", room: "cam07v", at: AV.okonkwo }]);
@@ -116,8 +119,8 @@ jade.hotspots.door = { name: "Okonkwos Laden", rect: AJ.doorRect, walkTo: AJ.sho
 
 // ---- the shop: Okonkwo, who greets her every evening; warning him is telling him
 Cutaway.actor("okonkwo", { name: "Okonkwo", color: "#d8b890", room: "okonkwo_shop", at: AO.okonkwo, facing: "sw", walkTo: AO.front, face: "ne",
-  costume: { idle: "mock_okonkwo", walk: "mock_okonkwo", talk: "mock_okonkwo" }, voice: { pitch: 46, range: 3, wave: "triangle", syllable: 90, speed: 0.85 },
-  look: ["Okonkwo. Strickjacke, Lesebrille. Er rechnet noch auf Papier."],
+  costume: { idle: IDLE, walk: IDLE, talk: TALK }, voice: { pitch: 46, range: 3, wave: "triangle", syllable: 90, speed: 0.85 },
+  look: ["Das ist Okonkwo mit seiner Strickjacke und der Lesebrille. Er rechnet noch auf Papier.", "Unter der Jacke wölbt sich sein Panzer. Den hat er schon, solange ich ihn kenne."],
   talk: [O("Juno. Guten Abend."), { dialog: "okonkwo" }] });
 Nagiwa.talkTree("okonkwo", [
   ["„Wie läuft's?“", [

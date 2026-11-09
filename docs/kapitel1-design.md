@@ -364,7 +364,7 @@ Größen wie in `kapitel0-design` §8: 30 px pro Meter Höhe; im Feed misst ein 
 | Teo | 52 px | orange Weste, Gehörschutz, Kiemenschlitze (Gezeitenmod) | `#ffa040` | Iso |
 | Sable | 53 px | langer magentafarbener Mantel, Glatze, Pfeifenglut | `#ff4fd3` | Iso (sitzend) |
 | Ratz | 26 px (aufrecht) | Kabelratte: Kopfhörer, zu großer Parka, Schwanz, glimmender Sprechkragen | `#90d0a0` | Iso |
-| Herr Okonkwo | 48 px | Strickjacke, Lesebrille | `#d8b890` | Iso + Feed |
+| Herr Okonkwo | 48 px | Strickjacke, Lesebrille; **Schildkröte** (Story §10c, entschieden 2026-11-09): der Panzer wölbt den Rücken unter der Jacke, sein Rand schaut am Saum hervor, der Hals kurz und graugrün; ein Leselicht an der Brille leuchtet cyan; **gemalt** in `art/characters/okonkwo.px.js` (von vorn hinter der Theke, im Laden und in `cam07v`; von hinten in seiner Tür in `cam07`) | `#d8b890` | Iso + Feed |
 | Mei | 47 px | Schürze, hochgesteckte Haare | `#ff9a7a` | Iso |
 | Dr. Ines Calder | 47 px | Kittel (heller als alles), Zopf | `#f0a0c0` | Feed (6 Kameras: `cam21`–`cam24`, `cam30`, `cam31`) |
 | Lantern | im Feed 32 px (Silhouette wie das Rollstuhl-Piktogramm) | bunter Flicken-Poncho, Rollstuhl mit Schwimmer, Antennen; sein Gesicht: grüner Iro, Okular, kleine Laterne am Hals (Story §10c, `docs/portraits/lantern_x4.png`; die Feed-Figur bleibt mit Kapuze) | `#b0f0a0` | Feed |
