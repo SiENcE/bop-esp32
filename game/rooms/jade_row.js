@@ -15,6 +15,9 @@
     props: [
       { id: "steam", image: "jade_steam", at: [108, 40], anchor: [0, 0], baseline: 1 },
       { id: "crowd", image: "jade_crowd", at: [0, 148], anchor: [0, 0], baseline: 300 },
+      // the car parked facing us down the lane (art/mock/jade_row.px.js, JADE_CAR); gone while Revier 9's patrol car waits there in
+      // CAM 07 at 00:30 (game/auftrag_tide.js), the user's wish
+      { id: "car", image: "jade_car", at: [156, 86], anchor: [0, 0], baseline: 107, if: { not: ["day>1", "day<4", "time>=00:30", "time<00:45", "!off_tide"] } },
     ],
     fx: [
       { kind: "rain", rect: [0, 0, 320, 180], count: 60, color: "#41547a", speed: 140, slant: 0.3, length: 3 },
@@ -36,7 +39,7 @@
       balcony: { name: "Balkon", rect: AJ.balconyRect, walkTo: AJ.shop, face: "nw", look: "Über Okonkwo raucht einer und sieht runter. Dasselbe wie ich, nur billiger." },
       night: { name: "NACHTMARKT", rect: AJ.nightRect, walkTo: AJ.pharmacy, face: "ne", look: "Nachtmarkt. Sagt Mei. Einen Markt gibt's hier schon lange nicht mehr. Die Nacht schon." },
       arcade: { name: "Spielautomaten", rect: AJ.arcadeRect, walkTo: AJ.parlour, face: "nw", look: "SUMP RUNNER, als Automat. Der da spielt, seit ich hier wohne. Motte wär längst weiter." },
-      car: { name: "Der Wagen", rect: AJ.carRect, walkTo: AJ.far, face: "ne", look: "Ein Wagen mit laufendem Motor und Licht an. Hier hält nur, wer wartet." },
+      car: { name: "Der Wagen", rect: AJ.carRect, if: { not: ["day>1", "day<4", "time>=00:30", "time<00:45", "!off_tide"] }, walkTo: AJ.far, face: "ne", look: "Ein Wagen mit laufendem Motor und Licht an. Hier hält nur, wer wartet." },
       screen: { name: "Der große Schirm", rect: AJ.screenRect, walkTo: AJ.far, face: "ne", look: "LULL. FREE. Zwei Wochen gratis. Danach kostet's." },
     },
   });

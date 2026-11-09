@@ -12,6 +12,9 @@
 //   morrow_idle_se, morrow_talk_se       a blink; talking: her mouth, a small tilt of the head
 //   tideboy_idle_se, tideboy_talk_se     tapping the envelope against his leg, the marks pulsing; talking: the mouth
 //   ratz_idle_se/sw, ratz_talk_se/sw     the nose twitching, the plug swinging; talking: the collar glowing bright, the snout open
+//   streife_idle                         Revier 9's patrol car from the front (way C of art/test/streife_blocks.px.js, 2026-11-09): the
+//                                        flood car, high on big wheels, a snorkel beside the windscreen, a wading gauge painted on both
+//                                        posts of the push bar, the mud of the last flood across its body; its two red lights glowing in turn
 ;(() => {
 
 pal({
@@ -25,6 +28,8 @@ pal({
   f: "#a8a8b0", g: "#8a8a92", n: "#5e5e66", p: "#e8a8b0", P: "#a06a72", O: "#7e8a4e", o: "#6a7440", q: "#485028", M: "#2a2a30", z: "#9aa0a8", Z: "#d0d4da",
   // technology: cyan, bright; Ratz's collar dim and bright
   v: "#62def0", V: "#dafcff", r: "#90d0a0", R: "#d8ffe0",
+  // the patrol car: light grey for the headlights' rims and the plate, its red lights bright and dim, the gauge's yellow, the mud
+  8: "#c0c8d8", x: "#e83a3a", X: "#ffb0a0", d: "#7a2228", y: "#eec414", u: "#3a3428",
 })
 
 // ================================================================ Lt. Morrow (the blocks' morrow(), way A, at x = 10)
@@ -122,11 +127,42 @@ const ratz = (c, o = {}) => {
   c.rect(x - 4, T + 11, 9, 2, "M"); c.rect(x - 5, T + 10, 2, 3, "M"); c.px(x - 4, T + 11, "v")
 }
 
+// ================================================================ the patrol car (the blocks' carC on tall(), at x = 15, its wheels on row 23)
+const CW = 30, CH = 24
+const car = (c, o = {}) => {
+  const x = 15, lit = o.lit ?? 0
+  // the tyres, big, their tread; the dark under the raised body
+  for (const tx of [x - 12, x + 8]) { c.rect(tx, 17, 5, 7, "k"); for (let y = 18; y < 24; y += 2) c.hline(tx + 1, y, 3, "1"); c.vline(tx, 17, 7, "1") }
+  c.rect(x - 8, 17, 17, 2, "1")
+  // the body: the bonnet's lit edge, the shade at the bottom, lit on the left; the mud of the last flood across it, dribbling
+  c.rect(x - 12, 10, 25, 8, "5"); c.hline(x - 12, 10, 25, "7"); c.hline(x - 12, 10, 12, "8"); c.rect(x - 12, 15, 25, 2, "4")
+  c.vline(x - 12, 11, 4, "6"); c.vline(x + 12, 11, 5, "4")
+  c.hline(x - 12, 14, 25, "u"); for (const dx of [-10, -6, 2, 7, 11]) c.px(x + dx, 15, "u")
+  // the cabin, the dark windscreen with a streak of light across it, two heads behind it
+  c.rect(x - 9, 4, 19, 7, "4"); c.rect(x - 8, 5, 17, 5, "1"); c.hline(x - 9, 4, 19, "6"); c.hline(x - 9, 4, 8, "7")
+  c.rect(x - 6, 6, 3, 4, "2"); c.rect(x + 3, 6, 3, 4, "2"); c.px(x - 5, 6, "3"); c.px(x + 4, 6, "3")
+  c.line(x + 5, 9, x + 7, 5, "4"); c.line(x - 8, 9, x - 7, 7, "3")
+  // the grille, the headlights, the plate with the 9 under the grille
+  c.rect(x - 3, 11, 7, 3, "2"); for (let i = -2; i < 4; i += 2) c.vline(x + i, 11, 3, "3")
+  c.rect(x - 11, 11, 4, 2, "8"); c.hline(x - 10, 11, 2, "W"); c.rect(x + 8, 11, 4, 2, "8"); c.hline(x + 9, 11, 2, "W")
+  c.rect(x - 2, 14, 5, 2, "7"); c.px(x, 14, "2"); c.px(x + 1, 14, "2"); c.px(x + 1, 15, "2")
+  // the roof's rail, the two red lights at its ends, glowing in turn
+  c.hline(x - 9, 3, 19, "6")
+  for (const [lx, on] of [[x - 7, lit === 0], [x + 5, lit === 1]]) { c.rect(lx, 2, 3, 2, on ? "x" : "d"); c.px(lx + 1, 2, on ? "X" : "x") }
+  // the snorkel up beside the windscreen, its clamps, its cap
+  c.vline(x + 11, 1, 12, "7"); c.vline(x + 12, 1, 12, "6"); c.rect(x + 10, 0, 4, 2, "7"); c.hline(x + 10, 0, 4, "8")
+  c.px(x + 11, 5, "7"); c.px(x + 11, 9, "7")
+  // the push bar and its posts, the wading gauge painted on both posts
+  c.hline(x - 13, 16, 27, "7"); c.hline(x - 13, 16, 10, "8")
+  for (const [px, gx] of [[x - 13, x - 14], [x + 13, x + 14]]) { c.vline(px, 12, 5, "6"); for (let i = 0; i < 5; i++) c.px(gx, 12 + i, i % 2 ? "6" : "y") }
+}
+
 const opts = (w, h, more) => ({ w, h, outline: "k", pivot: "bottom", ...more })
 anim("morrow_idle_se", opts(MW, MH, { frames: 4, ms: [1600, 120, 1400, 900] }), (c) => morrow(c, { blink: c.frame === 1 }))
 anim("morrow_talk_se", opts(MW, MH, { frames: 4, ms: [180, 180, 180, 280] }), (c) => morrow(c, { talk: c.frame % 2 === 0, nod: c.frame === 1 ? 1 : 0 }))
 anim("tideboy_idle_se", opts(BW, BH, { frames: 4, ms: [400, 300, 400, 900] }), (c) => boy(c, { tap: c.frame === 1 ? 1 : 0, glow: c.frame === 3 }))
 anim("tideboy_talk_se", opts(BW, BH, { frames: 4, ms: [180, 180, 180, 280] }), (c) => boy(c, { talk: c.frame % 2 === 0, glow: c.frame === 0 }))
+anim("streife_idle", opts(CW, CH, { frames: 2, ms: [700, 700] }), (c) => car(c, { lit: c.frame }))
 const SWAY = [0, 0, 1, 1, 0, 0], TWITCH = [0, 1, 0, 0, 1, 0]
 for (const [dir, flip] of [["se", null], ["sw", "x"]]) {
   const f = flip ? { flip } : {}

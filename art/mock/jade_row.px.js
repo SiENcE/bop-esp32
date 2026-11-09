@@ -227,12 +227,7 @@ const JS = (() => {
       c.rect(x - 1, y - h - 1, w + 3, h + 1, "k"); c.rect(x, y - h, w, h, "3"); c.rect(x + w - 2, y - h + 2, 2, Math.round(h * 0.45), bright); c.rect(x, y - h, w, 2, "M"); c.rect(x + 1, y - Math.round(h * 0.42), w - 4, 2, "2")
     }])
     items.push([1.98, () => { const [x, y] = bP(-2.6, 1.98); person(c, x, y, "4", "s", false, 0.5) }])
-    // the car, parked facing us: body, windscreen, roof, two lamps, a thin line under it
-    items.push([2.6, () => {
-      const [x, y] = bP(1.15, 2.6), w = 24, h = 17
-      c.rect(x - w / 2, y - h + 7, w, h - 7, "k"); c.rect(x - w / 2 + 1, y - h + 8, w - 2, h - 10, "3"); c.rect(x - w / 2 + 4, y - h, w - 8, 7, "k"); c.rect(x - w / 2 + 5, y - h + 1, w - 10, 6, "1")
-      c.hline(x - w / 2 + 1, y - 7, w - 2, "2"); c.rect(x - w / 2 + 1, y - 6, 4, 2, "W"); c.rect(x + w / 2 - 5, y - 6, 4, 2, "W"); c.rect(x - w / 2, y - 1, w, 1, "e")
-    }])
+    // (the car parked facing us is a prop of its own now, jade_car: at 00:30 it is gone, while the patrol car waits in CAM 07)
     // steam off the soup, people at their depths
     items.push([1.65, () => { const [sx, sy] = bP(3.1, 1.65, 1.4); for (let i = 0; i < 5; i++) c.rect(sx - 2 - i, sy - i * 5, 3, 3, i < 2 ? "h" : "H") }])
     for (const [m, z, coat, skin, br] of [[-2.9, 3.2, "3", "s", true], [2.9, 3.1, "4", "O", true], [-1.4, 3.0, "3", "s", false], [-0.5, 3.3, "4", "O", true], [2.95, 1.95, "3", "s", true]]) items.push([z, () => { const [x, y] = bP(m, z); person(c, x, y, coat, skin, br, 0.62 / z * 1.6) }])
@@ -284,7 +279,14 @@ const JS = (() => {
       for (let x = 0; x < W; x++) { const m = (x - VX) * z / 30; if (Math.abs(m) > 2.5) continue; const k = ISO.MIRROR[src[my][(x + wob + W) % W]]; if (k && k !== "2" && k !== "1") c.px(x, y, k) }
     }
   }
-  return { B, KOI, bPaint, bMirror, bFront, koi, steam, crowd }
+  // the car parked facing us, its bottom's middle at (x, y): body, windscreen, roof, two lamps, a thin line under it
+  const car = (c, x, y) => {
+    const w = 24, h = 17
+    c.rect(x - w / 2, y - h + 7, w, h - 7, "k"); c.rect(x - w / 2 + 1, y - h + 8, w - 2, h - 10, "3"); c.rect(x - w / 2 + 4, y - h, w - 8, 7, "k"); c.rect(x - w / 2 + 5, y - h + 1, w - 10, 6, "1")
+    c.hline(x - w / 2 + 1, y - 7, w - 2, "2"); c.rect(x - w / 2 + 1, y - 6, 4, 2, "W"); c.rect(x + w / 2 - 5, y - 6, 4, 2, "W"); c.rect(x - w / 2, y - 1, w, 1, "e")
+  }
+  console.log("JADE_CAR " + JSON.stringify(bP(1.15, 2.6)))
+  return { B, KOI, bPaint, bMirror, bFront, koi, steam, crowd, car }
 })()
 
 scene("jade_row_bg", { w: JS.B.W, h: JS.B.H, bg: "k" }, JS.bPaint, JS.bMirror, JS.bFront,
@@ -292,3 +294,5 @@ scene("jade_row_bg", { w: JS.B.W, h: JS.B.H, bg: "k" }, JS.bPaint, JS.bMirror, J
 // (the koi is out for now, the user's decision 2026-11-07; its drawing stays here for later: JS.koi, shown at alpha 0.5 as prop "jade_koi")
 anim("jade_steam", { w: 48, h: 64, frames: 12, fps: 10 }, JS.steam)
 anim("jade_crowd", { w: 320, h: 32, frames: 1, fps: 1 }, JS.crowd)
+// the parked car as its own prop (game/rooms/jade_row.js puts its top-left at JADE_CAR minus [17, 21]), its lamps' glow inside the margin
+sprite("jade_car", { w: 34, h: 26 }, (c) => JS.car(c, 17, 21), glow("RW", { r: 4, strength: 0.35 }))

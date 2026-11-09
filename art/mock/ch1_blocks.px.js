@@ -224,9 +224,7 @@ scene("zoom_keypad", { w: 60, h: 40, bg: "1" }, (c) => {
   TXT.draw(c, 30, 15, "4-1-7-0-9", "9", { font: "hud", align: "center" }); c.rect(26, 30, 8, 10, "3")
 })
 // (Okonkwo's shop is painted now: art/rooms/okonkwo_shop.px.js)
-// the people of job B are painted now (art/characters/okonkwo.px.js, art/characters/tide_people.px.js); the patrol car is still a block
-// the night in Jade Row seen by CAM 07, which is the lane's own picture (one place, one picture): at the lane's scale, as Juno is there.
-anim("mock_car_feed", { w: 40, h: 18, frames: 1, fps: 1, outline: "1", pivot: "bottom" }, (c) => { c.rect(0, 6, 40, 10, "3"); c.rect(8, 0, 22, 7, "2"); c.rect(10, 1, 18, 5, "5"); c.rect(2, 9, 4, 2, "9"); c.rect(34, 9, 4, 2, "9"); c.rect(16, 0, 6, 1, "9") })
+// the people of job B and the patrol car are painted now (art/characters/okonkwo.px.js, art/characters/tide_people.px.js)
 anim("inv_tap", { w: 18, h: 13, frames: 1, fps: 1, outline: "k" }, (c) => { c.rect(1, 4, 10, 6, "e"); c.rect(11, 6, 6, 2, "h"); c.rect(3, 6, 3, 2, "v"); c.rect(0, 2, 2, 9, "g") })
 anim("inv_reis", { w: 18, h: 13, frames: 1, fps: 1, outline: "k" }, (c) => { c.rect(1, 2, 16, 9, "h"); c.rect(1, 2, 16, 2, "S"); c.rect(5, 5, 8, 3, "O") })
 // Teo, not painted yet: the orange vest, ear defenders round his neck, gills, the Lull patch behind his ear (pale, an oval: always like the title's)

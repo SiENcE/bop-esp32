@@ -167,7 +167,7 @@ Nagiwa.at = {
 // from the window; Okonkwo stands behind his counter where he stands in the shop, the register's display on it toward the camera.
 Nagiwa.at.cam07 = (() => {
   const J = Nagiwa.at.jade_row, S = 48, sh = (/** @type {number[]} */ p) => [p[0] + S, p[1]], r = (/** @type {number[]} */ q) => [q[0] + S, q[1], q[2], q[3]];
-  return { shift: S, exposure: 1.3, okonkwo: [J.doorRect[0] + 11 + S, J.doorRect[1] + J.doorRect[3]], morrow: sh([66, 152]), boy: sh([98, 154]), car: sh([142, 112]),
+  return { shift: S, exposure: 1.3, okonkwo: [J.doorRect[0] + 11 + S, J.doorRect[1] + J.doorRect[3]], morrow: sh([66, 152]), boy: sh([98, 154]), car: sh([173, 107]),
     mic: sh(J.shop), windowRect: r(J.windowRect), doorRect: r(J.doorRect), machineRect: r(J.machineRect) };
 })();
 Nagiwa.at.cam07v = (() => {
