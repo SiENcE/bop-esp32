@@ -150,13 +150,49 @@ scene("dach_blick_b_bg", { w: W, h: H, bg: "k" }, (c) => {
   for (const [x, w, top] of [[6, 22, 112], [40, 16, 118], [70, 30, 104], [116, 14, 116], [150, 26, 110], [190, 14, 120], [250, 24, 108], [290, 26, 116]]) { c.rect(x, top, w, 150 - top, "a"); for (let n = 0; n < 5; n++) c.px(x + 3 + n * 5 % w, top + 4 + n * 7, "y") }
   c.rect(0, 150, W, 30, "k"); c.hline(0, 150, W, "d")
 })
-// the street Frau Imai saw from above: the stairs to the old fish market, the sign, a tilted camera
+// CAM 18 at the old fish market, Frau Imai's view: straight down from the lamp post over the stairs (kapitel1-design, "Die Einstellungen
+// der Kameras"; the user chose variant C of art/mockups/cam18_study.px.js). The wet square on top, the stairs going down to the market's
+// tarps, and over the steps a big fish painted long ago, worn, broken by every step's edge: whole only from up here (from below it is
+// strokes on steps), so whoever saw it saw it from this camera. The lamp's arm out of focus in the corner; rain from the left, the
+// camera hangs crooked. Levels of the phosphor ramp in a buffer, ordered-dithered; the feed's own post adds the rest.
+const CAM18 = { stairs: [118, 32, 84, 116], fish: [160, 96, 150] }
 scene("cam18_bg", { w: W, h: H, bg: "0" }, (c) => {
-  ROOM(c, "4", "5", 60)
-  for (let i = 0; i < 7; i++) c.rect(100 + i * 2, 70 + i * 13, 120 - i * 4, 13, String(8 - i))
-  // (under the display's buttons, which end at y 23)
-  c.rect(176, 27, 56, 26, "2"); c.rect(186, 33, 28, 8, "8"); c.rect(214, 31, 8, 12, "8")
-  TXT.draw(c, 204, 44, "FISH", "9", { font: "hud", align: "center" })
+  const L = Array.from({ length: H }, () => new Float32Array(W))
+  const set = (x, y, v) => { x |= 0; y |= 0; if (x >= 0 && y >= 0 && x < W && y < H) L[y][x] = v }
+  const rect = (x, y, w, h, v) => { for (let j = y; j < y + h; j++) for (let i = x; i < x + w; i++) set(i, j, v) }
+  const each = (f) => { for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) L[y][x] = f(x, y, L[y][x]) }
+  const hash = (a, b, s = 0) => { let h = (a * 374761393 + b * 668265263 + s * 2147483647) | 0; h = (h ^ (h >>> 13)) * 1274126177; return ((h ^ (h >>> 16)) >>> 0) / 4294967296 }
+  // a fish looking left, turned by ang: an ellipse and a forked tail
+  const inFish = (x, y, cx, cy, len, ang) => {
+    const dx = x - cx, dy = y - cy, ca = Math.cos(-ang), sa = Math.sin(-ang), u = dx * ca - dy * sa, v = dx * sa + dy * ca, a = len * 0.36, h = len * 0.16
+    if ((u / a) ** 2 + (v / h) ** 2 < 1) return true
+    const t = u - a * 0.82, T = len * 0.24
+    return t > 0 && t < T && Math.abs(v) < 2 + t * 0.9 && !(t > T * 0.55 && Math.abs(v) < (t - T * 0.55) * 1.3)
+  }
+  const [sx, sy, sw, sh] = CAM18.stairs
+  each((x, y) => 2.6 + ((x % 22 === 0 || y % 16 === 0) ? -0.8 : 0))                                  // the square's wet slabs
+  for (let y = 120; y < H; y++) for (let x = 0; x < W; x++) if (x < 104 || x > 216) set(x, y, 3.2 + (x % 6 < 2 ? 0.9 : 0))   // the tarps
+  for (const x of [104, 216]) rect(x - 2, 120, 4, 60, 1)
+  rect(sx, sy, sw, sh, 2); rect(sx - 6, sy, 6, sh, 5.2); rect(sx + sw, sy, 6, sh, 5.2)                // the well, its walls' coping
+  for (let y = sy + 2; y < sy + sh; y += 4) { set(sx - 3, y, 7); set(sx + sw + 3, y, 7) }            // the railings
+  for (let i = 0; i < 12; i++) { const y = sy + i * 10, lit = 5.4 - i * 0.28; rect(sx, y, sw, 10, lit - 1.2); rect(sx, y, sw, 2, lit); rect(sx, y + 9, sw, 1, 1) }
+  rect(sx, sy + sh, sw, 10, 2.4)                                                                       // the landing
+  const [fx, fy, fl] = CAM18.fish
+  each((x, y, l) => {                                                                                  // the fish, its paint worn, gone on every edge
+    if (x < sx || x >= sx + sw || y < sy || y > sy + sh + 9) return l
+    const edge = (y - sy) % 10 >= 9 || (y - sy) % 10 < 2
+    return inFish(x, y, fx, fy, fl, Math.PI / 2) && !edge && hash(x, y, 7) > 0.15 ? l + 2.6 : l
+  })
+  each((x, y, l) => l + 2.2 * Math.max(0, 1 - Math.hypot(x - 150, (y - 70) * 1.2) / 150) ** 1.6)     // the lamp's pool
+  for (let i = 0; i < 160; i++) {                                                                      // rain from the left
+    const x = hash(i, 1, 3) * W, y = hash(i, 2, 3) * H, n = 3 + hash(i, 3, 3) * 4
+    for (let k = 0; k < n; k++) { const X = (x + k * 1.6) | 0, Y = (y + k * 0.5) | 0; if (X < W && Y < H) L[Y][X] += 1.6 }
+  }
+  for (let i = 0; i < 9; i++) for (let x = -4; x <= 62; x++) set(x, 6 + i + Math.round((x + 4) * 18 / 66), 0.6)   // the lamp's arm, out of focus
+  rect(54, 20, 22, 16, 1.2); rect(56, 34, 18, 3, 9)
+  const B = [[0, 8, 2, 10], [12, 4, 14, 6], [3, 11, 1, 9], [15, 7, 13, 5]]
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) c.px(x, y, String(Math.max(0, Math.min(9, Math.floor(L[y][x] + (B[y % 4][x % 4] + 0.5) / 16)))))
+  TXT.draw(c, fx, sy + sh + 2, "FISH", "8", { font: "hud", align: "center" })                         // under its tail, worn too
 })
 // (LUCKY STATIC is a room baked from its map now: art/rooms/lucky_static.map.js)
 // the Drain Market: a drained flood canal, the stalls along its wall
