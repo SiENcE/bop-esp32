@@ -363,14 +363,14 @@ Größen wie in `kapitel0-design` §8: 30 px pro Meter Höhe; im Feed misst ein 
 |---|---|---|---|---|
 | Teo | 52 px | orange Weste, Gehörschutz, Kiemenschlitze (Gezeitenmod) | `#ffa040` | Iso |
 | Sable | 53 px | langer magentafarbener Mantel, Glatze, Pfeifenglut | `#ff4fd3` | Iso (sitzend) |
-| Ratz | 26 px (aufrecht) | Kabelratte: Kopfhörer, zu großer Parka, Schwanz, glimmender Sprechkragen | `#90d0a0` | Iso |
+| Ratz | 26 px (aufrecht) | Kabelratte: zu großer Parka mit der Kapuze auf, die Ohren durch zwei Löcher darin, die Kopfhörer um den Hals über dem Sprechkragen, der beim Reden hell glimmt; der Schwanz endet in einem alten Stecker (entschieden 2026-11-09 von der Nutzerin aus je zwei Varianten in `docs/characters/tide_people_blocks_x4.png`; **gemalt** in `art/characters/tide_people.px.js`, `docs/characters/tide_people_x5.png`) | `#90d0a0` | Iso |
 | Herr Okonkwo | 48 px | Strickjacke, Lesebrille; **Schildkröte** (Story §10c, entschieden 2026-11-09): der Panzer wölbt den Rücken unter der Jacke, sein Rand schaut am Saum hervor, der Hals kurz und graugrün; ein Leselicht an der Brille leuchtet cyan; **gemalt** in `art/characters/okonkwo.px.js` (von vorn hinter der Theke, im Laden und in `cam07v`; von hinten in seiner Tür in `cam07`) | `#d8b890` | Iso + Feed |
 | Mei | 47 px | Schürze, hochgesteckte Haare | `#ff9a7a` | Iso |
 | Dr. Ines Calder | 47 px | Kittel (heller als alles), Zopf | `#f0a0c0` | Feed (6 Kameras: `cam21`–`cam24`, `cam30`, `cam31`) |
 | Lantern | im Feed 32 px (Silhouette wie das Rollstuhl-Piktogramm) | bunter Flicken-Poncho, Rollstuhl mit Schwimmer, Antennen; sein Gesicht: grüner Iro, Okular, kleine Laterne am Hals (Story §10c, `docs/portraits/lantern_x4.png`; die Feed-Figur bleibt mit Kapuze) | `#b0f0a0` | Feed |
 | Ashe | 55 px | weißer Mantel, Maske (überstrahlt) | `#ff7a6a` | Feed |
-| Lt. Morrow | 50 px | Trenchcoat | `#a8b8d0` | Feed |
-| Tidewater-Junge | 44 px | Gezeitenkind: Kiemen, leuchtende Markierung am Hals, Kapuze | `#7ab0c0` | Feed |
+| Lt. Morrow | 50 px | grauer Trenchcoat offen über einem dunklen Pullover, der Gürtel hängt lose; die Haare zurückgebunden; die Marke leuchtet am Band (entschieden 2026-11-09 von der Nutzerin aus je zwei Varianten in `docs/characters/tide_people_blocks_x4.png`; **gemalt** in `art/characters/tide_people.px.js`, `docs/characters/tide_people_x5.png`) | `#a8b8d0` | Feed |
+| Tidewater-Junge | 44 px | Gezeitenkind: der Hoodie zu groß, die Kapuze unten, der Kopf kahl rasiert; die Kiemen offen am Hals, drei dunkle Schlitze mit je einer leuchtenden Markierung darunter (deutlicher als in der Skizze, auf Wunsch der Nutzerin), bis zur Schläfe; der Umschlag in der Hand (entschieden 2026-11-09 von der Nutzerin aus je zwei Varianten in `docs/characters/tide_people_blocks_x4.png`; **gemalt** in `art/characters/tide_people.px.js`, `docs/characters/tide_people_x5.png`) | `#7ab0c0` | Feed |
 
 ## 11. Rätselkette als Überblick
 

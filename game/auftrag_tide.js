@@ -49,10 +49,13 @@ Cutaway.actor("okonkwo_feed", { name: "Okonkwo", color: "#d8b890",
   look: ["Okonkwo. Laden zu, und er tippt an der Kasse."],
   talk: ["Er macht den Tresor auf. Über die Kasse.", "Das kleine Display zeigt zum Fenster. Von hier oben seh ich nur einen Strich.", "Falscher Winkel. Ich brauch was auf Augenhöhe."] });
 // the night's other business: a patrol car stops in front of the shop, a Tidewater boy hands Lt. Morrow an envelope
-for (const [id, name, color, image, pitch] of /** @type {[string, string, string, string, number][]} */ ([
-  ["morrow", "Lt. Morrow", "#a8b8d0", "mock_morrow", 50], ["tide_boy", "Tidewater-Junge", "#7ab0c0", "mock_tide", 64], ["streife", "Streifenwagen", "#a8b8d0", "mock_car_feed", 40]]))
-  Cutaway.actor(id, { name, color, costume: { idle: image, walk: image, talk: image }, voice: { pitch, range: 3, wave: "triangle", syllable: 80 },
-    look: id === "tide_boy" ? ["Kiemen, und am Hals die Markierung, hell wie eine Lampe. Ein Tidewater."] : id === "morrow" ? ["Lieutenant Morrow. Revier 9. Trenchcoat, müde."] : ["Revier 9. Der Motor läuft."],
+// (Morrow and the boy painted in art/characters/tide_people.px.js; they face the lane whichever way the engine turns them)
+for (const [id, name, color, idle, talk, pitch] of /** @type {[string, string, string, string, string, number][]} */ ([
+  ["morrow", "Lt. Morrow", "#a8b8d0", "morrow_idle_se", "morrow_talk_se", 50], ["tide_boy", "Tidewater-Junge", "#7ab0c0", "tideboy_idle_se", "tideboy_talk_se", 64],
+  ["streife", "Streifenwagen", "#a8b8d0", "mock_car_feed", "mock_car_feed", 40]]))
+  Cutaway.actor(id, { name, color, costume: { idle: every(idle), walk: every(idle), talk: every(talk) }, voice: { pitch, range: 3, wave: "triangle", syllable: 80 },
+    look: id === "tide_boy" ? ["Er hat Kiemen am Hals, und an ihnen leuchten die Markierungen wie kleine Lampen.", "Das ist einer von den Tidewater Boys."]
+      : id === "morrow" ? ["Das ist Lieutenant Morrow vom Revier 9.", "Sie trägt einen Trenchcoat und sieht müde aus."] : ["Das ist ein Wagen vom Revier 9, und sein Motor läuft."],
     talk: [{ dialog: "morrow_bribe" }] });
 const BRIBE = [{ say: "tide_boy", text: "Wie abgemacht." }, { say: "morrow", text: "Das ist für die ruhige Woche. Freitag fährt keiner die Kowalski." }, "Morrow. Für einen Umschlag."];
 Cutaway.dialog("morrow_bribe", { main: { choices: [
@@ -144,8 +147,9 @@ Cutaway.room("okonkwo_shop", { name: "Okonkwos Laden", background: "okonkwo_shop
 
 // ---- Ratz on the Drain Market: a cable rat from the old flood programme, his collar mixes up a word now and then
 Cutaway.actor("ratz", { name: "Ratz", color: "#90d0a0", room: "drain_market", at: AM.ratz, facing: "sw", walkTo: AM.ratzTalk, face: "ne",
-  costume: { idle: "mock_ratz", walk: "mock_ratz", talk: "mock_ratz" }, voice: { pitch: 72, range: 6, wave: "square", syllable: 55, speed: 1.3 },
-  look: ["Ratz. Eine Kabelratte, so groß wie ein kleiner Hund, in einem Parka, der ihm nie passen wird.", "Der Kragen leuchtet, wenn er redet. Er redet viel."],
+  costume: { idle: every("ratz_idle_sw"), walk: every("ratz_idle_sw"), talk: every("ratz_talk_sw") }, voice: { pitch: 72, range: 6, wave: "square", syllable: 55, speed: 1.3 },
+  look: ["Das ist Ratz, eine Kabelratte, so groß wie ein kleiner Hund. Sein Parka wird ihm nie passen.",
+    "Sein Schwanz endet in einem alten Stecker. Der Kragen leuchtet, wenn er redet, und er redet viel."],
   talk: [RZ("Kundschaft! Kauf was, oder kauf was anderes."), { dialog: "ratz" }] });
 Nagiwa.talkTree("ratz", [
   ["„Was hast du da?“", [RZ("Alles, was nicht festgeschraubt ist. Und Schraubenzieher.")], [

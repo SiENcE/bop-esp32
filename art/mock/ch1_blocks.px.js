@@ -224,26 +224,9 @@ scene("zoom_keypad", { w: 60, h: 40, bg: "1" }, (c) => {
   TXT.draw(c, 30, 15, "4-1-7-0-9", "9", { font: "hud", align: "center" }); c.rect(26, 30, 8, 10, "3")
 })
 // (Okonkwo's shop is painted now: art/rooms/okonkwo_shop.px.js)
-// the people of job B, not painted yet (Okonkwo is painted now: art/characters/okonkwo.px.js): Lt. Morrow in her trench coat,
-// a Tidewater boy with the glowing mark at his neck, the patrol car; Ratz with his parka, headphones and glowing collar
+// the people of job B are painted now (art/characters/okonkwo.px.js, art/characters/tide_people.px.js); the patrol car is still a block
 // the night in Jade Row seen by CAM 07, which is the lane's own picture (one place, one picture): at the lane's scale, as Juno is there.
-// Lt. Morrow in her trench coat and the Tidewater boy, the mark at his neck lit
-anim("mock_morrow", { w: 18, h: 52, frames: 1, fps: 1, outline: "k", pivot: "bottom" }, (c) => {
-  c.rect(5, 0, 8, 10, "S"); c.rect(5, 0, 8, 3, "a"); c.rect(6, 5, 2, 1, "k"); c.rect(10, 5, 2, 1, "k")       // her face, the hair tied back
-  c.rect(2, 10, 14, 30, "f"); c.rect(4, 10, 10, 4, "g"); c.vline(9, 14, 26, "e"); c.rect(3, 24, 12, 2, "e")  // the trench coat, its collar, its belt
-  c.rect(5, 40, 3, 10, "a"); c.rect(10, 40, 3, 10, "a"); c.rect(4, 50, 4, 2, "k"); c.rect(10, 50, 4, 2, "k")
-})
-anim("mock_tide", { w: 16, h: 46, frames: 1, fps: 1, outline: "k", pivot: "bottom" }, (c) => {
-  c.rect(4, 0, 8, 9, "S"); c.rect(4, 0, 8, 2, "a"); c.rect(5, 4, 2, 1, "k"); c.rect(9, 4, 2, 1, "k")
-  c.rect(4, 9, 8, 2, "v")                                                                                   // the mark at his neck, lit
-  c.rect(2, 11, 12, 16, "d"); c.rect(3, 12, 10, 3, "e")                                                       // a hooded jacket
-  c.rect(4, 27, 3, 17, "a"); c.rect(9, 27, 3, 17, "a"); c.rect(3, 44, 4, 2, "k"); c.rect(9, 44, 4, 2, "k")
-})
 anim("mock_car_feed", { w: 40, h: 18, frames: 1, fps: 1, outline: "1", pivot: "bottom" }, (c) => { c.rect(0, 6, 40, 10, "3"); c.rect(8, 0, 22, 7, "2"); c.rect(10, 1, 18, 5, "5"); c.rect(2, 9, 4, 2, "9"); c.rect(34, 9, 4, 2, "9"); c.rect(16, 0, 6, 1, "9") })
-anim("mock_ratz", { w: 22, h: 26, frames: 1, fps: 1, outline: "k", pivot: "bottom" }, (c) => {
-  c.rect(7, 2, 9, 8, "g"); c.rect(5, 1, 3, 4, "h"); c.rect(15, 1, 3, 4, "h"); c.rect(6, 4, 12, 2, "k"); c.px(14, 6, "k"); c.rect(16, 7, 3, 2, "h")
-  c.rect(6, 10, 11, 2, "v"); c.rect(4, 12, 14, 11, "e"); c.rect(5, 23, 4, 3, "d"); c.rect(13, 23, 4, 3, "d"); c.rect(0, 20, 5, 2, "h"); c.rect(0, 18, 2, 3, "h")
-})
 anim("inv_tap", { w: 18, h: 13, frames: 1, fps: 1, outline: "k" }, (c) => { c.rect(1, 4, 10, 6, "e"); c.rect(11, 6, 6, 2, "h"); c.rect(3, 6, 3, 2, "v"); c.rect(0, 2, 2, 9, "g") })
 anim("inv_reis", { w: 18, h: 13, frames: 1, fps: 1, outline: "k" }, (c) => { c.rect(1, 2, 16, 9, "h"); c.rect(1, 2, 16, 2, "S"); c.rect(5, 5, 8, 3, "O") })
 // Teo, not painted yet: the orange vest, ear defenders round his neck, gills, the Lull patch behind his ear (pale, an oval: always like the title's)
