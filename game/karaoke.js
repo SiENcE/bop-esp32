@@ -12,8 +12,9 @@
 
   /**
    * The songs: their title, the piece and how long a line lasts (two bars of its tempo), the lines; a line with `gap` misses its
-   * last word, which Juno picks (`right` the song's own, `words` in the order shown, `then` what is said after a word).
-   * @type {Record<string, {title: string, music: any, ms: number, lines: {text: string, gap?: {right: string, words: string[], then?: Record<string, any[]>}}[], after: any[]}>}
+   * last word, which Juno picks (`right` the song's own, `words` in the order shown, `then` what is said after a word, `next` the
+   * section of the song's music that begins with the line after it).
+   * @type {Record<string, {title: string, music: any, ms: number, lines: {text: string, gap?: {right: string, words: string[], then?: Record<string, any[]>, next?: string}}[], after: any[]}>}
    */
   const SONGS = {
     // Nagi·wa's jingle, sung in a bar; its own words say more than it means to
@@ -21,7 +22,7 @@
       { text: "Mach die Augen zu, der Regen singt für dich," },
       { text: "die Stadt da draußen braucht dich nicht." },
       { text: "Vier Stunden Ruhe fühlen sich wie zehn," },
-      { text: "und was du siehst, das hast du nie", gap: { right: "gesehn", words: ["bezahlt", "gesehn", "erzählt"],
+      { text: "und was du siehst, das hast du nie", gap: { next: "a", right: "gesehn", words: ["bezahlt", "gesehn", "erzählt"],
         then: { bezahlt: [M("Stimmt sogar. Ist ja gratis.")], erzählt: [SB("Das reimt sich nicht, Kind.")] } } },
       { text: "Sleep better, sleep better, Nagi·wa hält die Wacht," },
       { text: "sleep better, sleep better, wir passen auf die", gap: { right: "Nacht", words: ["Nacht", "Macht", "Pacht"],
@@ -32,7 +33,7 @@
       { text: "Wir hatten ein Haus am Strand der alten Stadt," },
       { text: "ein Fenster zum Meer, das keiner mehr hat." },
       { text: "Dann kam das Wasser, still und ohne Wort," },
-      { text: "und nahm die Straßen mit und alle", gap: { right: "fort", words: ["Sport", "Ort", "fort"],
+      { text: "und nahm die Straßen mit und alle", gap: { next: "a", right: "fort", words: ["Sport", "Ort", "fort"],
         then: { Sport: [SB("Sport. Am Strand. Das hätt's gegeben.")], Ort: [SB("Fast.")] } } },
       { text: "Wenn das Wasser kommt, dann halt meine Hand," },
       { text: "wir bauen uns oben ein neues", gap: { right: "Land", words: ["Pfand", "Land", "Band"],
@@ -43,7 +44,7 @@
       { text: "Sie sitzt im Dunkeln, zehn Schirme im Raum," },
       { text: "die ganze Stadt ist ihr offener Traum." },
       { text: "Sie sieht dich im Regen, sie sieht dich im Licht," },
-      { text: "nur sich selber sieht sie", gap: { right: "nicht", words: ["nicht", "dicht", "schlicht"],
+      { text: "nur sich selber sieht sie", gap: { next: "chorus", right: "nicht", words: ["nicht", "dicht", "schlicht"],
         then: { dicht: [M("Das bist dann wohl du.")], schlicht: [SB("Schlicht. Schön wär's.")] } } },
       { text: "Glass Girl, Glass Girl, wer schaut dir zu?" },
       { text: "Die ganze Stadt schläft, nur nicht", gap: { right: "du", words: ["Lou", "du", "Schuh"],
@@ -79,12 +80,17 @@
     try {
       for (let i = 0; i < song.lines.length; i++) {
         Object.assign(K, { line: i, since: Cutaway.clock.time });
-        if (song.lines[i].gap) {
-          K.waiting = true;
-          await Cutaway.script.exec([{ wait: Math.round(song.ms * 0.7) }, { dialog: `karaoke_${id}_${i}` }], ctx);
-          Object.assign(K, { waiting: false, since: Cutaway.clock.time - Math.round(song.ms * 0.7) });
-        }
-        await Cutaway.script.exec([{ wait: song.ms }], ctx);
+        const gap = song.lines[i].gap;
+        if (!gap) { await Cutaway.script.exec([{ wait: song.ms }], ctx); continue; }
+        // a gap: the line is sung up to it, then the music fades while Juno picks (however long she takes), the line stands complete
+        // a moment, and the music starts again with the next line, at the section that begins there: words and music together again
+        K.waiting = true;
+        await Cutaway.script.exec([{ wait: Math.round(song.ms * 0.7) }], ctx);
+        Cutaway.events.emit("music", { stop: true, fade: 1.2 });
+        await Cutaway.script.exec([{ dialog: `karaoke_${id}_${i}` }], ctx);
+        Object.assign(K, { waiting: false, since: Cutaway.clock.time - song.ms });
+        await Cutaway.script.exec([{ wait: 900 }], ctx);
+        if (gap.next && i + 1 < song.lines.length) Cutaway.events.emit("music", { ...song.music, section: gap.next });
       }
     } finally {
       K.song = null;
