@@ -76,11 +76,11 @@ Nagiwa.camRoom("cam07", { background: undefined, color: Nagiwa.PHOSPHOR[0], mic:
 // ---- CAM 07V, the machine's own camera, once tapped: hip height, straight into the shop
 const READ = [{ zoom: "zoom_keypad" }, "Das Kundendisplay. Da soll der Preis stehen. Da steht jede Taste.", "Vier. Eins. Sieben. Null. Neun.", "Er tippt, wie man eine Nummer tippt, die man seit Jahren kennt.", { zoom: false }, { cache: "note_safe_code" }, "Tut mir leid, Herr Okonkwo."];
 Cutaway.actor("okonkwo_v", { name: "Okonkwo", color: "#d8b890",
-  costume: { idle: "mock_okonkwo_bust", walk: "mock_okonkwo_bust", talk: "mock_okonkwo_bust" },
+  costume: { idle: "mock_okonkwo", walk: "mock_okonkwo", talk: "mock_okonkwo" },
   look: ["Okonkwo an der Theke, mit der Lesebrille. Der Tresor ist unter ihm."],
   talk: ["Er verkauft Batterien. Den Tresor macht er erst auf, wenn er zu hat. Um eins."] });
 Cutaway.actor("okonkwo_safe", { name: "Okonkwo", color: "#d8b890",
-  costume: { idle: "mock_okonkwo_bust", walk: "mock_okonkwo_bust", talk: "mock_okonkwo_bust" },
+  costume: { idle: "mock_okonkwo", walk: "mock_okonkwo", talk: "mock_okonkwo" },
   look: ["Okonkwo an der Kasse. Von hier sehe ich alles, was er tippt."],
   talk: [{ if: "k1b=warned", then: ["Er tippt einen neuen Code. Gut so."], else: [{ if: "cache_note_safe_code", then: ["Den Code hab ich."], else: READ }] }] });
 Cutaway.routine("okonkwo_v", [{ day: [2, 3, 4], from: "18:00", to: "01:00", if: "!off_tide", room: "cam07v", at: AV.okonkwo }]);
@@ -88,7 +88,7 @@ Cutaway.routine("okonkwo_safe", [{ day: [2, 3], from: "01:00", to: "01:15", if: 
 // CAM 07V is the shop's own picture under the feed's filter (one place, one picture): Okonkwo behind his counter as in the shop
 Nagiwa.camRoom("cam07v", { background: undefined, color: Nagiwa.PHOSPHOR[0], mic: { at: AV.mic, clear: 40, lost: 150 },
   post: [{ exposure: AV.exposure }, ...Nagiwa.FEED_POST],
-  props: [{ id: "shop", image: "okonkwo_shop_bg", at: [0, 0], anchor: [0, 0], baseline: -1000 }], hotspots: {
+  props: [{ id: "shop", image: "okonkwo_shop_bg", at: [0, 0], anchor: [0, 0], baseline: -1000 }, ...AO.props], hotspots: {
   safe: { name: "Kasse", rect: AV.safeRect, look: ["Die Kasse. Der Tresor unter der Theke hängt an ihr.", "Und ihr Kundendisplay zeigt genau zu mir."] },
   shelves: { name: "Regale", rect: AV.shelvesRect, look: "Reis, Batterien, Zigaretten. Und ein Foto, das ich von hier nicht erkenne." },
   rewind: { name: "Puffer", z: 5, if: ["day<4", "time>=01:15", "!cache_note_safe_code", "!k1b"], use: ["Puffer. Zurück auf eins.", ...READ] },
@@ -116,7 +116,7 @@ jade.hotspots.door = { name: "Okonkwos Laden", rect: AJ.doorRect, walkTo: AJ.sho
 
 // ---- the shop: Okonkwo, who greets her every evening; warning him is telling him
 Cutaway.actor("okonkwo", { name: "Okonkwo", color: "#d8b890", room: "okonkwo_shop", at: AO.okonkwo, facing: "sw", walkTo: AO.front, face: "ne",
-  costume: { idle: "mock_okonkwo_bust", walk: "mock_okonkwo_bust", talk: "mock_okonkwo_bust" }, voice: { pitch: 46, range: 3, wave: "triangle", syllable: 90, speed: 0.85 },
+  costume: { idle: "mock_okonkwo", walk: "mock_okonkwo", talk: "mock_okonkwo" }, voice: { pitch: 46, range: 3, wave: "triangle", syllable: 90, speed: 0.85 },
   look: ["Okonkwo. Strickjacke, Lesebrille. Er rechnet noch auf Papier."],
   talk: [O("Juno. Guten Abend."), { dialog: "okonkwo" }] });
 Nagiwa.talkTree("okonkwo", [
@@ -130,7 +130,7 @@ Nagiwa.talkTree("okonkwo", [
     O("Und du kommst zu mir."), O("Ich mach heute Nacht einen neuen."), O("Hier. Eine Stange Reis. Und Batterien."), { give: "reis" }, O("Ich vergesse das nicht."),
     { evi: "verwirrt" }, { say: "evi", text: "Fünfhundert. Gegen Reis?" }, "Gegen Reis."], undefined, ["!k1b", "!off_tide"]],
 ]);
-Cutaway.room("okonkwo_shop", { name: "Okonkwos Laden", background: "okonkwo_shop_bg", walk: AO.walk,
+Cutaway.room("okonkwo_shop", { name: "Okonkwos Laden", background: "okonkwo_shop_bg", walk: AO.walk, props: AO.props,
   ambience: ["fridge_hum"], music: { theme: "juno", intensity: 0.3 },
   hotspots: {
     door: { name: "Tür", rect: AO.doorRect, walkTo: AO.door, face: "sw", use: [{ goto: "jade_row", at: AJ.shop, face: "se" }] },

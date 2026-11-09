@@ -230,25 +230,57 @@ scene("zoom_keypad", { w: 60, h: 40, bg: "1" }, (c) => {
   c.rect(0, 0, 60, 40, "3"); c.rect(0, 0, 60, 2, "5"); c.rect(4, 8, 52, 20, "1"); c.rect(6, 10, 48, 16, "2")
   TXT.draw(c, 30, 15, "4-1-7-0-9", "9", { font: "hud", align: "center" }); c.rect(26, 30, 8, 10, "3")
 })
-// Okonkwo's shop from inside, looking from the window at the back wall as CAM 07V does across the lane (docs/kapitel1-design.md §4): the
-// shelves of rice and batteries on the back wall, the counter across in front of them with Okonkwo behind it, the register on it (the
-// safe under the counter on his side); the family's photograph, the store room's door beside it. The window
-// and the door to the lane are behind us: the door's edge at the front left, the lane's neon on the floor
+// Okonkwo's shop from inside as a stage, seen from its window as CAM 07V sees it across the lane (docs/kapitel1-design.md §4; one place,
+// one picture): the back wall straight on, the two side walls narrow at the edges, Juno walking the floor in front of the counter. On the
+// back wall the drinks fridge, the shelves of rice, batteries and cigarettes, the family's photograph and the store room's door with a
+// worn mat; the door to the lane in the left side wall at the front, the lane's magenta in it; the window behind us, its neon falling in
+// panes on the front of the floor; a bare bulb over the counter. The counter is a prop of its own (okonkwo_shop_counter) so Okonkwo
+// stands behind it and Juno in front of it. Blocks for now: to be judged before anything is painted.
+const SHOP = { back: [40, 280], top: 24, foot: 108, front: 124 }
 scene("okonkwo_shop_bg", { w: W, h: H, bg: "k" }, (c) => {
-  c.rect(0, 0, W, 112, "o"); c.rect(0, 112, W, 68, "a"); c.hline(0, 112, W, "y")
-  for (const y of [34, 58, 82]) { c.rect(30, y, 180, 3, "s"); for (let x = 32; x < 208; x += 7) c.rect(x, y - 9, 5, 9, (x + y) % 3 ? "O" : "h") }
-  c.rect(262, 36, 38, 76, "s"); c.rect(266, 40, 30, 72, "S"); c.px(291, 78, "O")
-  c.rect(220, 40, 30, 24, "k"); c.rect(222, 42, 26, 20, "h"); c.rect(222, 52, 26, 10, "f"); for (const x of [227, 234, 241]) c.rect(x, 46, 3, 8, "S")
-  c.rect(70, 92, 180, 28, "s"); c.hline(70, 92, 180, "O")
-  // the register on the counter, its keys towards him; its customer display on a stalk towards the window and us (the safe is under
-  // the counter on his side, wired to it)
-  c.rect(204, 84, 30, 8, "e"); c.hline(204, 84, 30, "f"); c.rect(217, 78, 2, 6, "e"); c.rect(210, 70, 16, 9, "k"); c.rect(211, 71, 14, 7, "a"); c.rect(213, 73, 10, 3, "v")
-  c.rect(0, 50, 18, 120, "b"); c.rect(3, 54, 12, 50, "y")
-  for (const [x, w, k] of [[120, 90, "f"], [150, 50, "g"]]) c.rect(x, 162 - (w - 50) / 8, w, 4, k)
+  const [L, R] = SHOP.back, T = SHOP.top, F = SHOP.foot
+  c.rect(0, 0, W, H, "a")                                                              // the ceiling
+  c.rect(L, T, R - L, F - T, "o"); c.rect(L, F - 3, R - L, 3, "s")                     // the back wall, its skirting
+  for (let x = 0; x < L; x++) {                                                        // the side walls, narrowing toward the back
+    const d = (L - x) / L, ceil = Math.round(T - 16 * d), floor = Math.round(F + 16 * d)
+    c.vline(x, ceil, floor - ceil, "s"); c.vline(W - 1 - x, ceil, floor - ceil, "s")
+  }
+  for (let y = F; y < H; y++) {                                                        // the floorboards
+    const d = Math.min(1, (y - F) / 16), l = Math.round(L - L * d), r = Math.round(R + (W - R) * d)
+    c.hline(l, y, r - l, y % 6 === 0 ? "d" : "e")
+  }
+  c.hline(L, F, R - L, "k")
+  // the door to the lane in the left side wall, open, the lane's magenta in it
+  for (let x = 6; x < 30; x++) {
+    const d = (L - x) / L, floor = Math.round(F + 16 * d), ceil = Math.round(T - 16 * d), top = Math.round(floor - 0.78 * (floor - ceil))
+    c.vline(x, top, floor - top, x < 8 || x > 27 ? "b" : x % 5 ? "p" : "n")
+  }
+  for (let x = 9; x < 27; x++) c.px(x, 70 + Math.round((x - 9) / 3), "M")             // the lane's neon sign seen through it
+  // the drinks fridge, its cold light; sacks of rice beside it
+  c.rect(46, 50, 30, 58, "e"); c.rect(49, 54, 24, 48, "v"); for (const y of [66, 78, 90]) c.hline(49, y, 24, "g")
+  for (let x = 51; x < 72; x += 5) for (const y of [58, 70, 82, 94]) c.rect(x, y, 3, 7, (x + y) % 3 ? "f" : "y")
+  for (const [x, y] of [[80, 96], [92, 96], [86, 86]]) { c.rect(x, y, 12, 12, "O"); c.hline(x, y, 12, "h") }
+  // the shelves behind the counter: rice, batteries, cigarettes
+  c.rect(102, 32, 112, 66, "s")
+  for (const y of [32, 48, 64, 80]) {
+    c.rect(102, y + 13, 112, 3, "S")
+    for (let x = 104; x < 211; x += 6) c.rect(x, y + 3, 4, 10, (x * 7 + y) % 5 === 0 ? "y" : (x + y) % 3 ? "O" : "h")
+  }
+  // the family's photograph; the store room's door with its mat
+  c.rect(222, 50, 18, 16, "k"); c.rect(224, 52, 14, 7, "g"); c.rect(224, 59, 14, 5, "O"); for (const x of [226, 230, 234]) c.rect(x, 55, 2, 6, "S")
+  c.rect(248, 48, 28, 60, "s"); c.rect(251, 51, 22, 57, "S"); c.px(270, 80, "O"); c.rect(246, 108, 32, 3, "f")
+  // the bare bulb over the counter, warm
+  c.vline(166, 0, 38, "k"); c.rect(164, 38, 5, 2, "k"); c.rect(164, 40, 5, 4, "y")
+  // the window behind us: the lane's neon in panes on the front of the floor
+  for (const [x, w] of [[30, 70], [108, 70], [186, 70], [264, 56]]) c.rect(x, 160, w, 20, "n")
 })
-// Okonkwo behind his counter: only what shows over it (an anchor below the picture keeps his feet behind the counter, tools/build_art.sh)
-anim("mock_okonkwo_bust", { w: 19, h: 25, frames: 1, fps: 1, outline: "k", pivot: "bottom" }, (c) => {
-  c.rect(6, 0, 7, 9, "S"); c.rect(6, 0, 7, 2, "k"); c.rect(6, 4, 7, 1, "h"); c.rect(3, 9, 13, 16, "O"); c.rect(5, 10, 9, 15, "o")
+// the counter across the shop, the register on it (its keys toward him, its customer display on a stalk toward the window and us; the
+// safe under the counter on his side, wired to it). Its foot is the front's: Okonkwo, further back, is drawn behind it
+sprite("okonkwo_shop_counter", { w: 126, h: 55, pivot: "bottom" }, (c) => {
+  c.rect(0, 20, 126, 4, "O"); c.rect(0, 24, 126, 31, "s"); c.hline(0, 24, 126, "S")              // its top, its front
+  for (const x of [30, 62, 94]) c.vline(x, 25, 30, "S")
+  c.rect(92, 12, 28, 8, "e"); c.hline(92, 12, 28, "f")                                            // the register
+  c.rect(104, 8, 2, 4, "e"); c.rect(96, 0, 18, 9, "k"); c.rect(97, 1, 16, 7, "a"); c.rect(99, 3, 12, 3, "v")   // its display
 })
 // the people of job B, not painted yet: Okonkwo in his cardigan (in the shop and from above in the feeds), Lt. Morrow in her trench coat,
 // a Tidewater boy with the glowing mark at his neck, the patrol car; Ratz with his parka, headphones and glowing collar

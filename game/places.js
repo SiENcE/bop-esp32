@@ -125,9 +125,12 @@ Nagiwa.at = {
   },
   // looking from the window at the back wall (as CAM 07V): Okonkwo behind the counter (his bust stands on the walk area's edge, drawn over
   // the counter, as Mei), the safe in its right-hand end; the door to the lane at the front left
+  // Okonkwo's shop as a stage (art/mock/ch1_blocks.px.js): the counter a prop standing on the floor's back edge, Okonkwo behind it (the slit: an actor
+  // stands on walkable floor, as the Rain Reader on the roof)
   okonkwo_shop: {
-    walk: [[12, 124, 308, 124, 316, 176, 4, 176]], arrive: [30, 150], door: [12, 150], front: [142, 146], okonkwo: [178, 124], shelves: [110, 132],
-    doorRect: [0, 50, 18, 120], shelvesRect: [30, 24, 180, 62], counterRect: [70, 92, 180, 28], photoRect: [220, 40, 30, 24],
+    walk: [[10, 130, 164, 130, 164, 114, 168, 114, 168, 130, 310, 130, 316, 176, 4, 176]], arrive: [30, 150], door: [16, 136], front: [158, 140], okonkwo: [166, 116], shelves: [124, 138],
+    doorRect: [4, 32, 28, 90], shelvesRect: [102, 32, 112, 50], counterRect: [108, 90, 126, 34], photoRect: [222, 50, 18, 16],
+    props: [{ id: "counter", image: "okonkwo_shop_counter", at: [171, 125] }],
   },
   // LUCKY STATIC (art/rooms/lucky_static.map.js, game/rooms/lucky_static.layout.js). The stools stand in front of the counter: the
   // props sort by their baselines, and the long counter's lies further down than theirs, so they are drawn after it
@@ -167,5 +170,5 @@ Nagiwa.at.cam07 = (() => {
 })();
 Nagiwa.at.cam07v = (() => {
   const O = Nagiwa.at.okonkwo_shop;
-  return { exposure: 1.3, okonkwo: O.okonkwo, mic: O.front, safeRect: [204, 66, 32, 26], shelvesRect: O.shelvesRect, photoRect: O.photoRect };
+  return { exposure: 1.3, okonkwo: O.okonkwo, mic: O.front, safeRect: [200, 68, 32, 24], shelvesRect: O.shelvesRect, photoRect: O.photoRect };
 })();
