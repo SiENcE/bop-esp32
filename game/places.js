@@ -83,10 +83,10 @@ Nagiwa.at = {
   cam30: { top: [160, 84], water: [160, 146], board: [222, 112], mic: [160, 100], sign: [88, 30, 144, 11], tide: [232, 52, 56, 36] },
   // measured from the camera in art/cams/cam31.px.js (it logs them when built)
   cam31: { stairs: [96, 83], top: [92, 67], shadow: [59, 92], edge: [151, 117], meet: [112, 99], asheMeet: [97, 90], tunnel: [284, 111], lantern: [183, 131], mic: [135, 108], tries: [244, 26, 72] },
-  gasse: {
-    walk: [[10, 112, 310, 112, 318, 176, 2, 176]], arrive: [24, 150], kowalski: [14, 150], laundromat: [260, 116], market: [150, 116], niche: [52, 116],
-    kowalskiRect: [0, 110, 26, 70], laundromatRect: [232, 40, 56, 64], marketRect: [114, 30, 72, 74], nicheRect: [30, 44, 44, 60], cablesRect: [0, 10, 320, 28],
-  },
+  // the alley (art/rooms/gasse.map.js, game/rooms/gasse.layout.js): the laundromat's door, the niche and the way down are the map's
+  // openings, the cables its prop. The gate to Kowalski Street is the gap at the near left wall's end (a cut wall has no picture of
+  // its own): its hotspot stands over it
+  gasse: { ...fromLayout(Nagiwa.layouts.gasse), kowalskiRect: [0, 104, 46, 56] },
   // the lane left of Kowalski Street, down its length (art/mock/jade_row.px.js: blocks, z = 1 where Juno walks, 30 px to the metre there). She keeps to the near band: her
   // sprite has one size, right for that depth, so the shop's door and the machine are reached from in front of them
   jade_row: {

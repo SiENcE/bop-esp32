@@ -201,17 +201,21 @@ Nagiwa.camRoom("cam30", { background: "cam30_bg", mic: { at: A30.mic, ...MIC }, 
     use: [{ if: "day=3", then: ["Puffer. Zurück auf Viertel nach acht.", ...TIDE_READ], else: ["Puffer. Da, die Treppe runter.", ...SIGN_READ] }] },
 } });
 
-// ---- the alley and the laundromat, in street mode
+// ---- the alley and the laundromat, in street mode: both baked from their maps (art/rooms/gasse.map.js, laundromat.map.js)
 const AG = Nagiwa.at.gasse, AW = Nagiwa.at.laundromat;
-Cutaway.room("gasse", { name: "Die Gasse", background: "gasse_bg", walk: AG.walk,
+Cutaway.room("gasse", { name: "Die Gasse", background: "gasse_bg", walk: AG.walk, holes: AG.holes, props: AG.props,
+  light: { ambient: 0.7, lamps: AG.lamps.map((/** @type {any} */ { bake, zone, ...lamp }) => lamp) },
+  // the rain coming down into the alley, as in Kowalski Street (the steam out of the dryers' vent is in the picture)
+  fx: [{ kind: "rain", rect: [0, 0, 320, 180], count: 50, color: "#41547a", speed: 140, slant: 0.3, length: 3 },
+    { kind: "rain", rect: [0, 0, 320, 180], count: 40, color: "#6c809a", speed: 210, slant: 0.3, length: 5 }],
   ambience: ["city_far", { sfx: "feed_rain", gain: 0.6 }], music: { theme: "juno", intensity: 0.3 },
   hotspots: {
     kowalski: { name: "Zur Kowalski-Straße", rect: AG.kowalskiRect, walkTo: AG.kowalski, face: "sw", use: [{ goto: "kowalski", at: Nagiwa.at.kowalski.fromGasse, face: "nw" }] },
     laundromat: { name: "SUDS & SPIN", rect: AG.laundromatRect, walkTo: AG.laundromat, face: "ne", look: "Der Waschsalon. Ein Viertel weiter, der Gasse nach.",
       use: [{ goto: "laundromat", at: AW.arrive, face: "se" }] },
-    market: { name: "Zum Drain-Markt", rect: AG.marketRect, walkTo: AG.market, face: "ne", look: "Da runter ist der Drain-Markt.", use: "[MOCK] Den bau ich erst noch." },
-    niche: { name: "Nische", rect: AG.nicheRect, walkTo: AG.niche, face: "ne", look: "Eine Nische mit einer Matratze und einem Topf. Hier wohnt jemand." },
-    cables: { name: "Kabel", rect: AG.cablesRect, walkTo: AG.niche, face: "ne", look: "Kabel, armdick. Alle tropfen. Keiner weiß mehr, wohin sie gehen." },
+    market: { name: "Zum Drain-Markt", rect: AG.marketRect, walkTo: AG.market, face: "nw", look: "Da runter ist der Drain-Markt.", use: "[MOCK] Den bau ich erst noch." },
+    niche: { name: "Nische", rect: AG.nicheRect, walkTo: AG.niche, face: "nw", look: "Eine Nische mit einer Matratze und einem Topf. Hier wohnt jemand." },
+    cables: { name: "Kabel", rect: AG.cablesRect, walkTo: AG.niche, face: "nw", look: "Kabel, armdick. Alle tropfen. Keiner weiß mehr, wohin sie gehen." },
   } });
 const AT_DRYER = ["!off_main", { or: [["day=3", "time>=20:00"], "day=4"] }];     // it lies there from when she has left it (the clock stands while Juno walks); Lantern only hears of it at the meeting
 // baked from its map (art/rooms/laundromat.map.js); the man asleep behind the counter is a figure of his own on his own chair, and

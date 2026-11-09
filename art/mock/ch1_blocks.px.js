@@ -85,28 +85,6 @@ scene("cam30_bg", { w: W, h: H, bg: "0" }, (c) => {
   for (const y of [66, 70, 81, 85]) c.hline(238, y, 44, "5")
   TXT.draw(c, 260, 73, "FRI 23:00", "9", { font: "hud", align: "center" })
 })
-// the alley behind the gate: cable bundles, doors, the way on to the laundromat and down to the market
-scene("gasse_bg", { w: W, h: H, bg: "k" }, (c) => {
-  c.rect(0, 0, W, 104, "b"); c.rect(0, 104, W, 76, "a")
-  for (const y of [14, 22, 34]) c.hline(0, y, W, "e")
-  c.rect(30, 44, 44, 60, "d"); c.rect(232, 40, 56, 64, "e")
-  SIGN(c, 228, 26, 64, "SUDS & SPIN", "d", "h")
-  c.rect(0, 150, 30, 30, "e")
-  // the way down to the market: an opening in the back wall, its stairs going down into the dark (as the street's sign says, DRAIN MKT
-  // and an arrow down), nothing anyone walks over. Seen from the alley, steps going down and away hide behind the sill: what shows
-  // is the stairwell's ceiling sloping down, the handrails dropping below the sill, and the market's glow coming up from beneath
-  c.rect(118, 50, 64, 54, "k")
-  for (let y = 50; y < 74; y++) { const i = Math.floor((y - 50) * 0.9); c.hline(118 + i, y, 64 - 2 * i, y < 62 ? "a" : "b") }      // the ceiling, lower toward the back
-  for (let y = 84; y < 103; y++) c.hline(124, y, 52, y < 93 ? "p" : y < 101 ? "n" : "m")                                           // the glow from below
-  // the handrails (as the user drew them): from the post's top a short bend, then steeply down past the sill, close to the side walls
-  const RAIL = [[0, 0], [1, 1], [1, 2], [2, 3], [2, 4], [2, 5], [3, 6], [3, 7], [3, 8], [4, 9], [4, 10], [4, 11], [4, 12], [5, 13], [5, 14], [5, 15]]
-  for (const [dx, dy] of RAIL) { c.px(120 + dx, 87 + dy, "g"); c.px(179 - dx, 87 + dy, "g") }
-  c.rect(120, 86, 1, 17, "f"); c.rect(179, 86, 1, 17, "f")                                                                         // their first posts at the sill
-  c.hline(118, 103, 64, "e")                                                                                                       // the sill: the top step's edge
-  c.rect(116, 48, 2, 56, "e"); c.rect(182, 48, 2, 56, "e")
-  SIGN(c, 112, 36, 76, "DRAIN MARKET", "d", "h")
-  for (let i = 0; i < 4; i++) c.hline(147 + i, 58 + i, 7 - 2 * i, "h")                                                            // an arrow down on the ceiling's front
-})
 // the ledge outside the flat: the wall of the block, the window, the ladder hanging too high, the street far below
 scene("sims_bg", { w: W, h: H, bg: "k" }, (c) => {
   c.rect(0, 0, W, 128, "d"); c.rect(0, 128, W, 26, "f"); c.hline(0, 128, W, "h")
