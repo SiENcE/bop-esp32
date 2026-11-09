@@ -208,7 +208,14 @@ const LAYOUT = {
     vending: rectOf(CAM, boxCorners([VEND.x0, 0.15, VEND.z0], [VEND.x1, VEND.h, VEND.z0 + VEND.d]), 1),
     officeDoor: rectOf(CAM, [[XF, 0.15, DOOR[0]], [XF, 2.5, DOOR[0]], [XF, 0.15, DOOR[1]], [XF, 2.5, DOOR[1]]], 1),
   },
+  // the hotspots' shapes in the game (game/places.js cam03): each thing's own outline on the screen, not its bounding rect
+  polys: {
+    mast: hullOf(CAM, boxCorners(HOUSING.a, HOUSING.b), 2),
+    vending: hullOf(CAM, boxCorners([VEND.x0, 0.15, VEND.z0], [VEND.x1, VEND.h, VEND.z0 + VEND.d]), 1),
+    officeDoor: hullOf(CAM, [[XF, 0.15, DOOR[0]], [XF, 2.5, DOOR[0]], [XF, 0.15, DOOR[1]], [XF, 2.5, DOOR[1]]], 1),
+  },
 }
+console.log("CAM03_POLYS " + JSON.stringify(LAYOUT.polys))
 LAYOUT.mic = { at: LAYOUT.spots.awning, clear: 40, lost: 150 }
 LAYOUT.check = Object.fromEntries(Object.entries(LAYOUT.spots).map(([k, [x, y]]) => [k, { dist: Math.round(Math.hypot(x - LAYOUT.mic.at[0], y - LAYOUT.mic.at[1])) }]))
 

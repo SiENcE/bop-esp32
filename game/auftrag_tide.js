@@ -75,7 +75,7 @@ Nagiwa.camRoom("cam07", { background: undefined, color: Nagiwa.PHOSPHOR[0], mic:
     ...Cutaway.room.get("jade_row").props.filter((/** @type {any} */ p) => !p.hidden).map((/** @type {any} */ p) => ({ ...p, at: [p.at[0] + A7.shift, p.at[1]] })),
   ],
   hotspots: {
-  shop: { name: "Okonkwos Laden", rect: A7.windowRect, look: ["Okonkwos Laden. Durchs Fenster seh ich nicht viel.", "Den Tresor sowieso nicht. Der ist unter der Theke."] },
+  shop: { name: "Okonkwos Laden", poly: A7.windowPoly, look: ["Okonkwos Laden. Durchs Fenster seh ich nicht viel.", "Den Tresor sowieso nicht. Der ist unter der Theke."] },
   machine: { name: "Automat", rect: A7.machineRect, look: "Der Automat gegenüber. SMILE FOR A COUPON. Der sieht ihm genau ins Fenster." },
 } });
 
@@ -116,7 +116,7 @@ Object.assign(jade.hotspots.machine, {
   use: [{ if: "link_cam07v", then: ["Der hängt jetzt an meinem Deck. Er weiß es nicht."],
     else: ["Hinten ist eine Wartungsklappe. Ohne Abzweiger komm ich da nicht ran."] }],
   with: { abzweiger: [{ if: "!link_cam07v", then: TAP, else: ["Der hängt schon dran."] }] } });
-jade.hotspots.door = { name: "Okonkwos Laden", rect: AJ.doorRect, walkTo: AJ.shop, face: "nw",
+jade.hotspots.door = { name: "Okonkwos Laden", poly: AJ.doorPoly, walkTo: AJ.shop, face: "nw",
   look: [{ if: OPEN, then: ["Offen. Wie jeden Abend."], else: ["Zu. Okonkwo macht um eins dicht."] }],
   use: [{ if: OPEN, then: [{ goto: "okonkwo_shop", at: AO.arrive, face: "ne" }], else: ["Zu. Okonkwo macht um eins dicht."] }] };
 

@@ -286,6 +286,32 @@ const JS = (() => {
     c.hline(x - w / 2 + 1, y - 7, w - 2, "2"); c.rect(x - w / 2 + 1, y - 6, 4, 2, "W"); c.rect(x + w / 2 - 5, y - 6, 4, 2, "W"); c.rect(x - w / 2, y - 1, w, 1, "e")
   }
   console.log("JADE_CAR " + JSON.stringify(bP(1.15, 2.6)))
+  // the hotspots' shapes for game/places.js (jade_row): what lies on a side wall is a trapezoid in this view, so its own four corners
+  // (a rect only for what is drawn as one: the machine, the arcade, the gate, the screen, the car, the hanging signs); the balcony
+  // round its slab, rail and washing; the arch round its curve; none under 12 px either way (the user's, 2026-11-09)
+  {
+    const atLeast = (f, min = 12) => {
+      const xs = f.filter((_, i) => i % 2 === 0), ys = f.filter((_, i) => i % 2), x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys)
+      const sx = Math.max(1, min / Math.max(1, x1 - x0)), sy = Math.max(1, min / Math.max(1, y1 - y0)), mx = (x0 + x1) / 2, my = (y0 + y1) / 2
+      return f.map((v, i) => Math.round(i % 2 ? my + (v - my) * sy : mx + (v - mx) * sx))
+    }
+    const wall = (side, z0, z1, h0, h1) => atLeast([bP(side * 3.5, z0, h0), bP(side * 3.5, z1, h0), bP(side * 3.5, z1, h1), bP(side * 3.5, z0, h1)].flat())
+    const hull = (pts) => {
+      pts.sort((a, b) => a[0] - b[0] || a[1] - b[1])
+      const cross = (o, a, b) => (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]), lo = [], up = []
+      for (const q of pts) { while (lo.length >= 2 && cross(lo[lo.length - 2], lo[lo.length - 1], q) <= 0) lo.pop(); lo.push(q) }
+      for (const q of pts.reverse()) { while (up.length >= 2 && cross(up[up.length - 2], up[up.length - 1], q) <= 0) up.pop(); up.push(q) }
+      return [...lo.slice(0, -1), ...up.slice(0, -1)].flat()
+    }
+    const balcony = []; for (const m of [-3.5, -2.62]) for (const z of [0.92, 1.32]) for (const h of [2.95, 4.4]) balcony.push(bP(m, z, h))
+    const arch = [bP(3.5, T.z0, 0), bP(3.5, T.z1, 0)]
+    for (let i = 0; i <= 4; i++) { const q = 1 - i / 2, z = (T.z0 + T.z1) / 2 + q * (T.z1 - T.z0) / 2; arch.push(bP(3.5, z, T.side + T.rise * Math.sqrt(Math.max(0, 1 - q * q)) + 0.1)) }
+    console.log("JADE_POLYS " + JSON.stringify({
+      window: wall(-1, 1.0, 1.22, 0.45, 2.1), door: wall(-1, 1.26, 1.7, 0, 2.2), sign: wall(-1, 0.98, 1.52, 2.3, 2.85), parlour: wall(-1, 2.45, 3.2, 0, 2.3),
+      soup: wall(1, 1.28, 2.05, 0.3, 2.2), pharmacy: wall(1, 2.2, 3.0, 0.4, 2.1), night: wall(1, 1.1, 2.0, 3.2, 5.0),
+      balcony: hull(balcony), back: arch.flat(),
+    }))
+  }
   return { B, KOI, bPaint, bMirror, bFront, koi, steam, crowd, car }
 })()
 

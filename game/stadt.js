@@ -106,7 +106,7 @@ Nagiwa.camRoom("cam14", { background: undefined, color: Nagiwa.PHOSPHOR[0], mic:
     { id: "papers", image: "mock_papers", at: [AC.mat[0] + 8, AC.mat[1] - 1], if: "time<02:45" },
   ],
   hotspots: {
-  doors: { name: "Türen", rect: AC.doorsRect, look: ["Der Flur von oben. Genau wie ich's in Erinnerung hab.", "Den hab ich ja mal beobachtet, von Berufs wegen."] },
+  doors: { name: "Türen", poly: AC.doorsPoly, look: ["Der Flur von oben. Genau wie ich's in Erinnerung hab.", "Den hab ich ja mal beobachtet, von Berufs wegen."] },
 } });
 const haldaneUse = floor14.haldane.use;
 // the point behind a sleeper's ear: the beat cam31 waits for (and nobody says why)
@@ -170,8 +170,8 @@ Nagiwa.cache.note_imai_street = { kind: "note", name: "FRAU IMAIS TREPPE", about
 // the rain from the left: the camera hangs crooked
 Nagiwa.camRoom("cam18", { background: "cam18_bg", mic: { at: A18.mic, clear: 40, lost: 150 },
   fx: [{ kind: "rain", rect: [0, 0, 320, 180], count: 45, color: "#8acfae", speed: 170, slant: 0.45, length: 4 }], hotspots: {
-  fish: { name: "Fisch", rect: A18.fish, z: 1, look: ["Jemand hat einen Fisch auf die Stufen gemalt. FISH steht drunter, falls jemand fragt.", "Von unten sieht man nur Striche auf den Stufen. Den Fisch sieht man nur von hier oben."] },
-  stairs: { name: "Treppe", rect: A18.stairs, look: ["Das ist die Treppe zum alten Fischmarkt.", "Der Regen kommt von links, weil die Kamera schief hängt."] },
+  fish: { name: "Fisch", poly: A18.fishPoly, z: 1, look: ["Jemand hat einen Fisch auf die Stufen gemalt. FISH steht drunter, falls jemand fragt.", "Von unten sieht man nur Striche auf den Stufen. Den Fisch sieht man nur von hier oben."] },
+  stairs: { name: "Treppe", poly: A18.stairsPoly, look: ["Das ist die Treppe zum alten Fischmarkt.", "Der Regen kommt von links, weil die Kamera schief hängt."] },
   rewind: { name: "Archiv", z: 5, if: "imai_step=1",
     use: ["Ältere Nächte liegen im Nagi·wa-Archiv. Mein alter Zugang reicht gerade noch.", "Ich such den neunundzwanzigsten Oktober und spul vor und zurück.", "Um drei Uhr zwölf ist es so weit. Einer fällt die Treppe runter, und einer geht weg.",
       "Sie hat es genau von hier oben gesehen, so, wie sie gesagt hat.", "Und den ganzen Fisch sieht man nur von hier oben.", "Um die Zeit lag sie im Bett und schlief.", "Wie sieht jemand im Schlaf, was meine Kamera sieht?", { cache: "note_imai_street" }, { set: "imai_step", value: 2 }] },

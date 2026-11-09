@@ -85,3 +85,5 @@ cam03: {
 ```
 
 (`vending` is both a spot and a hotspot there: rename one, e.g. the rect `vendingBox`.)
+
+**The hotspots' shapes** (2026-11-09: a rect only for a thing that is one): `art/cams/cam03.px.js` prints `CAM03_POLYS` when built, each thing's convex hull on the screen (`hullOf` in `art/lib/feed.js`, at least 12 px either way); `game/places.js` holds them as `<id>Poly` and the hotspots use them.

@@ -90,3 +90,5 @@ cam04: {
   tv: [238, 8, 33, 45], counterBox: [129, 19, 104, 48], table: [119, 71, 58, 71],
 },
 ```
+
+**The hotspots' shapes** (2026-11-09: a rect only for a thing that is one): `art/cams/cam04.px.js` prints `CAM04_POLYS` when built, each thing's convex hull on the screen (`hullOf` in `art/lib/feed.js`, at least 12 px either way); `game/places.js` holds them as `<id>Poly` and the hotspots use them.

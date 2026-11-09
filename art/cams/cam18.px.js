@@ -131,6 +131,17 @@ const CAM18_LAYOUT = {
   mic: spotAt(CAM, [0, YL + 1.0, (Z0 + ZL) / 2]),
   fish: rectOf(CAM, [[-FISH.w, YL, FISH.z - FISH.len * 0.62], [FISH.w, YL, FISH.z - FISH.len * 0.62], [-FISH.w, -0.5, FISH.z + FISH.len * 0.36], [FISH.w, -0.5, FISH.z + FISH.len * 0.36]], 2),
   stairs: rectOf(CAM, [[-SW - WALL, 0, Z0], [SW + WALL, 0, Z0], [-SW - WALL, YL, ZL - 0.4], [SW + WALL, YL, ZL - 0.4]], 0),
+  // the hotspots' shapes in the game (game/places.js cam18): the fish's own outline on the steps, the stairs' between their walls
+  polys: {
+    fish: hullOf(CAM, (() => {
+      const pts = [], stepY = (z) => (z >= Z0 ? 0 : z <= ZL ? YL : -(Math.floor((Z0 - z) / TREAD) + 1) * RISE), a = FISH.len * 0.36
+      for (let k = 0; k < 24; k++) { const t = (k / 24) * 2 * Math.PI, z = FISH.z - a * Math.cos(t), x = FISH.x + FISH.w * Math.sin(t); pts.push([x, stepY(z), z]) }
+      const tail = FISH.z - a * 0.82 - FISH.len * 0.24
+      for (const x of [-0.1 - FISH.len * 0.24 * 0.9, 0.1 + FISH.len * 0.24 * 0.9]) pts.push([FISH.x + x, stepY(tail), tail])
+      return pts
+    })(), 2),
+    stairs: hullOf(CAM, [[-SW - WALL, 0, Z0], [SW + WALL, 0, Z0], [-SW - WALL, YL, ZL - 0.4], [SW + WALL, YL, ZL - 0.4]], 0),
+  },
 }
 console.log("CAM18_LAYOUT " + JSON.stringify(CAM18_LAYOUT))
 

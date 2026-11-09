@@ -218,10 +218,17 @@ const LAYOUT = {
     counter: rectOf(CAM, boxCorners([COUNTER.x0, 0, COUNTER.z0], [COUNTER.x1, COUNTER.y + 0.3, COUNTER.z1]), 0),
     table: rectOf(CAM, boxCorners([near.x - TS - 0.2, 0, near.z - TS - 0.45], [near.x + TS + 0.2, TY, near.z + TS + 0.45]), 0),
   },
+  // the hotspots' shapes in the game (game/places.js cam04): each thing's own outline on the screen, not its bounding rect
+  polys: {
+    tv: hullOf(CAM, boxCorners([TV.x, TV.y0, TV.z0], [XRW, TV.y1, TV.z1]), 1),
+    counter: hullOf(CAM, boxCorners([COUNTER.x0, 0, COUNTER.z0], [COUNTER.x1, COUNTER.y + 0.3, COUNTER.z1]), 0),
+    table: hullOf(CAM, boxCorners([near.x - TS - 0.2, 0, near.z - TS - 0.45], [near.x + TS + 0.2, TY, near.z + TS + 0.45]), 0),
+  },
 }
 // the mic in the ceiling over the near table, toward Varga's side: Varga clear, Kessler muffled
 LAYOUT.mic = { at: spotAt(CAM, [near.x, 0, near.z - 0.45]), clear: 20, lost: 80 }
 LAYOUT.check = Object.fromEntries(Object.entries(LAYOUT.spots).map(([k, [x, y]]) => [k, { dist: Math.round(Math.hypot(x - LAYOUT.mic.at[0], y - LAYOUT.mic.at[1])) }]))
+console.log("CAM04_POLYS " + JSON.stringify(LAYOUT.polys))
 
 // ================================================================ the scenes
 scene("cam04_bg", { w: W, h: H, bg: "0" },

@@ -75,12 +75,12 @@ const A3 = Nagiwa.at.cam03, A4 = Nagiwa.at.cam04;
 Nagiwa.camRoom("cam03", {
   mic: { at: A3.mic, clear: 40, lost: 150 },
   hotspots: {
-    mast: { name: "Kamera am Mast", rect: A3.mast, if: "day=1",
+    mast: { name: "Kamera am Mast", poly: A3.mastPoly, if: "day=1",
       look: "Gegenüber, am Mast: noch eine Kamera. Zeigt auf die Ecke bei Yuen's.",
       use: [{ zoom: "zoom_sticker_cam04" }, "HCS-04. K7-731.", "Der Wartungscode, auf das Gehäuse geklebt. Nagi·wa spart an allem.", { zoom: false }, { set: "code_cam04" }] },
-    vending: { name: "Nudelautomat", rect: A3.vending, z: 1,
+    vending: { name: "Nudelautomat", poly: A3.vendingPoly, z: 1,
       look: "Ein Nudelautomat. Halb die Pumpenverwaltung isst daraus.", use: [{ zoom: "zoom_vending_n7" }, "Nummer 7, Huhn scharf. Die Taste ist abgegriffen.", { zoom: false }] },
-    office: { name: "Pumpenverwaltung Ost", rect: A3.officeDoor, look: "Die Pumpenverwaltung. Um zehn ist Schichtende." },
+    office: { name: "Pumpenverwaltung Ost", poly: A3.officeDoorPoly, look: "Die Pumpenverwaltung. Um zehn ist Schichtende." },
     rewind: { name: "Puffer", z: 5, if: ["call_missed", "!heard_yuens"],
       use: ["Puffer. Zurück auf 22:05.", { tag: "kessler" }, "Da. Heller Schal, unterm Vordach.",
         "Die Klammern macht nicht das Deck, die macht mein Implantat.", "Das durften wir behalten, damals. Sie sagten, das Herausnehmen kostet mehr.", { say: "kessler", text: "Ja, ich bring's mit. Alles. Halb elf, bei Yuen's." }, { set: "heard_yuens" },
@@ -92,8 +92,8 @@ Nagiwa.camRoom("cam04", {
   ambience: ["feed_hiss", "fridge_hum", { sfx: "feed_rain", gain: 0.4 }],      // inside Yuen's: the kitchen, the rain beyond the window
   mic: { at: A4.mic, clear: 20, lost: 80 },
   hotspots: {
-    tv: { name: "Fernseher", rect: A4.tv, look: "Nagi·wa-Werbung. Eine Frau schläft und lächelt dabei. SLEEP BETTER." },
-    counter: { name: "Theke", rect: A4.counterBox, look: "Yuen's. Nudeln, Tee, und keine Fragen." },
+    tv: { name: "Fernseher", poly: A4.tvPoly, look: "Nagi·wa-Werbung. Eine Frau schläft und lächelt dabei. SLEEP BETTER." },
+    counter: { name: "Theke", poly: A4.counterPoly, look: "Yuen's. Nudeln, Tee, und keine Fragen." },
     rewind: { name: "Puffer", z: 5, if: ["moment:kessler_ring", "!cache_clip_kessler_ring"],
       use: ["Puffer. Zurück auf 22:35.", { zoom: "zoom_ring" }, "Da. Er zieht den Ring ab und schiebt ihn rüber.",
         { cache: "clip_kessler_ring" }, { zoom: false }, { set: "saw_varga" }, { cache: "note_kessler_debt" },

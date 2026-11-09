@@ -67,6 +67,9 @@ Nagiwa.at = {
     exitRight: [309, 133], exitFar: [192, 20],
     mic: [108, 145],
     mast: [271, 23, 22, 15], vending: [68, 45, 31, 36], officeDoor: [74, 20, 23, 47],
+    // the hotspots' shapes, measured there too (CAM03_POLYS): each thing's outline, not its rect
+    mastPoly: [271, 32, 274, 24, 288, 25, 292, 30, 289, 38, 275, 36], vendingPoly: [68, 53, 75, 46, 91, 46, 98, 72, 93, 80, 78, 79],
+    officeDoorPoly: [75, 32, 89, 21, 96, 52, 85, 66],
   },
   // Chapter 1's blocks (art/mock/ch1_blocks.px.js)
   // (the left column of every feed is the cameras' strip, x 4 to 74, and the top left its name: nothing that matters lies there)
@@ -76,11 +79,15 @@ Nagiwa.at = {
   cam14: (() => {
     const L = Nagiwa.layouts.kessel_14, S = 56, dh = L.openings.door_haldane, dj = L.openings.door_juno;
     return { shift: S, door: [dh[0] + dh[2] / 2 + S, dh[1] + dh[3] - 2], mat: [L.spots.stairs[0] - 24 + S, L.spots.stairs[1] + 4], mic: [180, 130], exposure: 2.2,
-      doorsRect: [dh[0] + S, dj[1], dj[0] + dj[2] - dh[0], dh[1] + dh[3] - dj[1]] };
+      doorsRect: [dh[0] + S, dj[1], dj[0] + dj[2] - dh[0], dh[1] + dh[3] - dj[1]],
+      // the two doors' own shapes on their wall and the wall between them, as one
+      doorsPoly: hull([...L.openingPolys.door_haldane, ...L.openingPolys.door_juno]).map((v, i) => (i % 2 ? v : v + S)) };
   })(),
   // almost straight down over the stairs (art/cams/cam18.px.js, measured there: CAM18_LAYOUT): the fish painted over the steps lies on
   // them, its hotspot over theirs
-  cam18: { mic: [154, 93], fish: [128, 43, 53, 107], stairs: [113, 32, 88, 117] },
+  cam18: { mic: [154, 93], fish: [128, 43, 53, 107], stairs: [113, 32, 88, 117],
+    fishPoly: [127, 137, 133, 84, 135, 73, 138, 64, 143, 56, 148, 49, 153, 46, 159, 44, 164, 47, 169, 52, 172, 59, 174, 68, 175, 78, 171, 142],
+    stairsPoly: [114, 139, 118, 33, 201, 42, 183, 148] },
   cam22: { seat: [120, 112], mic: [120, 100], bar: [80, 118, 216, 20] },
   // CAM 23 is the laundromat's own picture (one place, one picture: kapitel0-design §3), moved right by `shift` so the washers clear
   // the cameras' strip; Ines stands where Juno would: at a washer on Wednesday, at dryer 6 on Thursday
@@ -90,7 +97,10 @@ Nagiwa.at = {
     const x0 = Math.min(...boxes.map((b) => b[0])), y0 = Math.min(...boxes.map((b) => b[1]));
     const x1 = Math.max(...boxes.map((b) => b[0] + b[2])), y1 = Math.max(...boxes.map((b) => b[1] + b[3]));
     return { shift: S, exposure: 2.2, dryer6: sh(L.spots.dryer6), washer: sh(L.spots.washer), sleeper: sh(L.spots.sleeper), mic: sh(L.spots.dryer6),
-      dryers: [x0 + S, y0, x1 - x0, y1 - y0], desk: [c[0] + S, c[1], c[2], c[3]] };
+      dryers: [x0 + S, y0, x1 - x0, y1 - y0], desk: [c[0] + S, c[1], c[2], c[3]],
+      // the hotspots' shapes: the row of dryers round all eight, the counter's own outline (as in the laundromat)
+      dryersPoly: hull([1, 2, 3, 4, 5, 6, 7, 8].map((n) => L.props[`dryer${n}`].poly).flat()).map((v, i) => (i % 2 ? v : v + S)),
+      deskPoly: (L.props.counter.shape ?? L.props.counter.poly).map((/** @type {number} */ v, /** @type {number} */ i) => (i % 2 ? v : v + S)) };
   })(),
   cam24: { door: [160, 96], off: [104, 174], mic: [160, 110], entrance: [124, 24, 72, 66] },
   // job B (game/auftrag_tide.js): Jade Row from Nagi·wa's camera above it, and from the machine's own at hip height
@@ -119,6 +129,10 @@ Nagiwa.at = {
     walk: [[67, 142, 253, 142, 306, 176, 14, 176]], arrive: [292, 172], back: [292, 172], mid: [186, 158], shop: [78, 146], machine: [232, 146], soup: [214, 144], far: [160, 143], parlour: [112, 143], pharmacy: [196, 143],
     backRect: [278, 54, 42, 122], windowRect: [55, 87, 20, 50], doorRect: [77, 82, 22, 54], signRect: [53, 60, 38, 26], machineRect: [232, 84, 28, 57], soupRect: [212, 82, 20, 50],
     parlourRect: [118, 88, 8, 26], arcadeRect: [100, 90, 16, 32], balconyRect: [44, 20, 58, 46], nightRect: [212, 8, 43, 62], carRect: [168, 92, 24, 17], pharmacyRect: [195, 88, 13, 24], gateRect: [136, 50, 48, 46], screenRect: [136, 4, 48, 44], signsRect: [195, 56, 22, 32],
+    // the hotspots' shapes, measured from the mock's own perspective (art/mock/jade_row.px.js prints JADE_POLYS): what lies on a side
+    // wall is a trapezoid here; the machine, the arcade, the gate, the screen, the car and the hanging signs are drawn as rects
+    windowPoly: [55, 137, 74, 126, 74, 86, 55, 87], doorPoly: [77, 136, 98, 121, 98, 82, 77, 83], signPoly: [53, 81, 91, 81, 91, 70, 53, 64], parlourPoly: [116, 109, 128, 102, 128, 80, 116, 80], soupPoly: [242, 128, 211, 110, 211, 82, 242, 83],
+    pharmacyPoly: [208, 106, 195, 99, 195, 82, 208, 83], nightPoly: [255, 56, 213, 67, 213, 40, 255, 7], balconyPoly: [46, 13, 75, 13, 100, 33, 100, 66, 80, 66, 46, 60], backPoly: [329, 193, 279, 160, 279, 78, 289, 58, 300, 53, 313, 54, 329, 77],
   },
   // outside the flat's window: the ledge (kapitel1-design, "Die Stadt")
   sims: {
@@ -170,6 +184,8 @@ Nagiwa.at = {
     win1: [73, 88], win2: [92, 61], mid: [123, 66],
     mic: [150, 126],
     tv: [238, 8, 33, 45], counterBox: [129, 19, 104, 48], table: [119, 71, 58, 71],
+    // the hotspots' shapes, measured there too (CAM04_POLYS)
+    tvPoly: [239, 30, 249, 8, 252, 9, 270, 28, 255, 52, 252, 52], counterPoly: [130, 27, 134, 20, 229, 28, 233, 35, 219, 67, 135, 58],
   },
 };
 
@@ -181,7 +197,8 @@ Nagiwa.at = {
 Nagiwa.at.cam07 = (() => {
   const J = Nagiwa.at.jade_row, S = 48, sh = (/** @type {number[]} */ p) => [p[0] + S, p[1]], r = (/** @type {number[]} */ q) => [q[0] + S, q[1], q[2], q[3]];
   return { shift: S, exposure: 1.3, okonkwo: [J.doorRect[0] + 11 + S, J.doorRect[1] + J.doorRect[3]], morrow: sh([66, 152]), boy: sh([98, 154]), car: sh([173, 107]),
-    mic: sh(J.shop), windowRect: r(J.windowRect), doorRect: r(J.doorRect), machineRect: r(J.machineRect) };
+    mic: sh(J.shop), windowRect: r(J.windowRect), doorRect: r(J.doorRect), machineRect: r(J.machineRect),
+    windowPoly: J.windowPoly.map((/** @type {number} */ v, /** @type {number} */ i) => (i % 2 ? v : v + S)) };
 })();
 Nagiwa.at.cam07v = (() => {
   const O = Nagiwa.at.okonkwo_shop;

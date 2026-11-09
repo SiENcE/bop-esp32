@@ -74,6 +74,18 @@ function rectOf(cam, pts, pad = 0) {
   const x1 = Math.ceil(Math.max(...p.map((q) => q[0]))) + pad, y1 = Math.ceil(Math.max(...p.map((q) => q[1]))) + pad
   return [x0, y0, x1 - x0, y1 - y0]
 }
+// a hotspot's shape: the convex hull of world points on the screen, flat [x0, y0, ...], pushed out by pad px from its middle and
+// grown to at least min px either way so a small thing stays easy to click (a rect only for a thing that is one: the user, 2026-11-09)
+function hullOf(cam, pts, pad = 0, min = 12) {
+  const p = pts.map((P) => project(cam, P)).map((q) => [q[0], q[1]]).sort((a, b) => a[0] - b[0] || a[1] - b[1])
+  const cross = (o, a, b) => (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]), lo = [], up = []
+  for (const q of p) { while (lo.length >= 2 && cross(lo[lo.length - 2], lo[lo.length - 1], q) <= 0) lo.pop(); lo.push(q) }
+  for (const q of p.reverse()) { while (up.length >= 2 && cross(up[up.length - 2], up[up.length - 1], q) <= 0) up.pop(); up.push(q) }
+  const h = [...lo.slice(0, -1), ...up.slice(0, -1)], xs = h.map((q) => q[0]), ys = h.map((q) => q[1])
+  const mx = (Math.min(...xs) + Math.max(...xs)) / 2, my = (Math.min(...ys) + Math.max(...ys)) / 2
+  const sx = Math.max(1, min / Math.max(1, Math.max(...xs) - Math.min(...xs))), sy = Math.max(1, min / Math.max(1, Math.max(...ys) - Math.min(...ys)))
+  return h.flatMap(([x, y]) => { const d = Math.hypot(x - mx, y - my) || 1; return [Math.round(mx + (x - mx) * sx + ((x - mx) / d) * pad), Math.round(my + (y - my) * sy + ((y - my) / d) * pad)] })
+}
 // the 8 corners of a box [a, b]
 const boxCorners = (a, b) => [0, 1, 2, 3, 4, 5, 6, 7].map((i) => [i & 1 ? b[0] : a[0], i & 2 ? b[1] : a[1], i & 4 ? b[2] : a[2]])
 

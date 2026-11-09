@@ -188,8 +188,8 @@ Nagiwa.camRoom("cam23", { background: undefined, color: Nagiwa.PHOSPHOR[0], mic:
     { id: "sleeper", image: "mock_sleeper", at: A23.sleeper },
   ],
   hotspots: {
-  dryers: { name: "Trockner", rect: A23.dryers, look: "Acht Trockner. Die Sechs ist tot, mit Zettel. Da sieht keiner rein." },
-  desk: { name: "Theke", rect: A23.desk, look: "Die Theke. Ein Mann schläft dahinter, seit Jahren." },
+  dryers: { name: "Trockner", poly: A23.dryersPoly, look: "Acht Trockner. Die Sechs ist tot, mit Zettel. Da sieht keiner rein." },
+  desk: { name: "Theke", poly: A23.deskPoly, look: "Die Theke. Ein Mann schläft dahinter, seit Jahren." },
   // a look back may repeat: no flag of its own
   rewind: { name: "Puffer", z: 5, if: ["day=3", "moment:ines_drop", "!seen:ines_drop"], use: ["Puffer. Zurück auf 20:05.", ...DROP] },
 } });
