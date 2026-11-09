@@ -11,6 +11,14 @@ pal({
   // the pencil's wood and its dark end; the rag; her mouth
   Q: "#ff9a7a", q: "#d0705a", Z: "#8e4640", f: "#d9a47e", F: "#a06c4c", h: "#2a1c26", H: "#4e3448",
   a: "#2a2e3c", A: "#3c4356", p: "#c48a4a", P: "#6e4428", W: "#e6e2d4", w: "#a8a498", r: "#7e3e3c",
+  // the stools: magenta vinyl, its highlight and rim; the chrome post, its shine, the ring
+  m: "#a8238a", M: "#ff4fd3", n: "#3e1240", 5: "#41547a", 6: "#617aa0", 7: "#b9c6d8",
+  // he (#a8b8d0): the jacket lit, middle, shade; his hair; the marmot's pelt and its light tips; his skin; the Lull patch, its rim,
+  // its stripe, and its glow on the beat
+  J: "#7c8aa2", j: "#56637a", K: "#3a4458", d: "#2e2422", T: "#8a6640", t: "#c09a62", s: "#c48c6c", S: "#8a5a44",
+  L: "#c8d8e8", l: "#7890a8", "~": "#eef6ff", "^": "#6ab4ff",
+  // she (#c0b0d0): the shawl lit, middle, shade; her dark dress; the grey hair and its shade; her skin
+  B: "#c0b0d0", b: "#8c7ca0", D: "#5e5070", E: "#352c40", G: "#bcbcc4", g: "#86868f", o: "#d8ae8c",
 })
 
 ;(() => {
@@ -24,6 +32,8 @@ const taper = (c, ya, x0a, x1a, yb, x0b, x1b, tone) => {
     for (let x = x0; x <= x1; x++) c.px(x, y, tone(x, y, x0, x1, t))
   }
 }
+/** a sleeve: a band t pixels thick from (x0, y0) to (x1, y1), lit on top, shaded at the bottom */
+const sleeve = (c, x0, y0, x1, y1, t, lit, mid, shade) => { for (let i = 0; i < t; i++) c.line(x0, y0 + i, x1, y1 + i, i === 0 ? lit : i === t - 1 ? shade : mid) }
 const SETS = [["se", {}], ["sw", { flip: "x" }]]
 
 // ---------------------------------------------------------------- Mei
@@ -69,6 +79,83 @@ const mei = (c, o = {}) => {
 for (const [dir, flip] of SETS) {
   anim(`mei_idle_${dir}`, { w: MW, h: MH, outline: "k", pivot: "bottom", frames: 2, ms: [2800, 140], ...flip }, (c) => mei(c, { blink: c.frame === 1 }))
   anim(`mei_talk_${dir}`, { w: MW, h: MH, outline: "k", pivot: "bottom", frames: 2, ms: [200, 200], ...flip }, (c) => mei(c, { talk: c.frame === 1 }))
+}
+
+// ---------------------------------------------------------------- the regulars
+// a bar stool like the room's: the seat 0.75 m up (23 px), as wide as the room's (0.32 m, 20 px), seen a little from above
+const stool = (c, cx, H) => {
+  const seat = H - 23
+  c.rect(cx - 1, seat + 2, 3, H - seat - 2, "6"); c.vline(cx - 1, seat + 2, H - seat - 2, "7")
+  c.hline(cx - 5, H - 7, 11, "6"); c.hline(cx - 3, H - 8, 7, "6"); c.hline(cx - 3, H - 6, 7, "5")
+  ;[[-5, 5], [-8, 8], [-10, 9], [-10, 9], [-9, 8]].forEach(([a, b], k) => c.hline(cx + a, seat - 4 + k, b - a + 1, "m"))
+  c.hline(cx - 7, seat + 1, 14, "n"); c.hline(cx - 4, seat + 2, 8, "n"); c.rect(cx - 7, seat - 2, 2, 1, "M")
+}
+// he sleeps on his arms on the counter; the pelt of a marmot grown into his nape; the patch behind his ear keeps the beat
+const AW = 29, AH = 44, an = (n) => AH - 1 - n
+const stammA = (c, o = {}) => {
+  const up = o.breath ? 1 : 0
+  stool(c, 14, AH)
+  c.rect(8, an(20), 3, 13, "2"); c.rect(18, an(20), 3, 13, "2"); c.hline(8, an(20), 3, "3"); c.hline(18, an(20), 3, "3")   // his shins to the ring
+  // the jacket, bent forward over the seat, its folds at the waist; his back rises as he breathes
+  taper(c, an(37 + up), 8, 19, an(23), 5, 21, (x, y, x0, x1, t) => (x === x0 ? "K" : x <= x0 + 2 ? "j" : t > 0.8 && x % 3 === 0 ? "j" : "J"))
+  c.hline(9, an(38 + up), 9, "J")
+  // his arms forward onto the counter, the sleeves pushed up
+  sleeve(c, 17, an(35 + up), 27, an(32), 4, "J", "j", "K")
+  // the pelt in his nape: a marmot's, coarse, its light tips, over the collar
+  g(c, 11, an(41 + up), [
+    "..tTt..",
+    ".tTTTt.",
+    "tTTtTTt",
+    "TTtTTTT",
+    ".TTTTT.",
+  ])
+  // his head down on his arms, from behind: dark hair, the ear; behind it the patch, an oval pale disc with its rim and stripe
+  g(c, 17, an(41 + up), [
+    "..dddd..",
+    ".dddddd.",
+    "dddddddd",
+    "dsdddddd",
+    "dSdddddd",
+    ".dddddd.",
+    "..dddd..",
+  ])
+  g(c, 19, an(37 + up), o.lull ? [".l.", "lL~", "l~L", ".l."] : [".l.", "lLL", "lLL", ".l."])
+  if (o.lull) { c.px(18, an(37 + up), "^"); c.px(22, an(36 + up), "^") }
+  // his hands under his head, on the counter's edge
+  g(c, 24, an(34), ["sss", "sSs"])
+}
+// she sits up straight in her shawl, as if somebody were about to take a photograph; talking she turns her head to him, a hand up
+const BW = 23, BH = 53, bn = (n) => BH - 1 - n
+const stammB = (c, o = {}) => {
+  stool(c, 11, BH)
+  c.rect(5, bn(20), 3, 13, "E"); c.rect(15, bn(20), 3, 13, "E")                                  // her shins, dark stockings
+  // the dress straight down to the seat; the shawl over her shoulders, its fringe, its fold down her back
+  taper(c, bn(42), 5, 16, bn(23), 3, 18, () => "E")
+  taper(c, bn(42), 4, 17, bn(32), 2, 19, (x, y, x0, x1) => (x === x0 ? "D" : x <= x0 + 2 || x >= x1 - 1 ? "b" : "B"))
+  for (let x = 2; x <= 19; x += 2) c.px(x, bn(31), "b")
+  c.vline(10, bn(41), 8, "b")
+  // her neck; the grey hair from behind, its bun
+  c.rect(9, bn(44), 4, 2, "o")
+  g(c, 6, bn(52), [
+    "...GGGG...",
+    "..GGggGG..",
+    "...GGGG...",
+    ".GGgGGgGG.",
+    "GGgGGGGgGG",
+    "GgGGGGGGgG",
+    "GgGGGGGGgG",
+    ".GgGGGGgG.",
+    "..gggggg..",
+  ])
+  if (o.talk) { g(c, 5, bn(48), ["oo", "oo", ".o"]); g(c, 1, bn(39), [".o.", "ooo", "BBb"]) }
+  else c.px(6, bn(47), "o")                                                                     // the edge of her ear
+}
+// Nagiwa.lullBeat (game/nagiwa.js) as lengths: long, short, short, long, then the pause; his breath goes over the same cycle
+const LULL = [800, 300, 250, 300, 250, 300, 800, 600], BREATH = [0, 0, 0, 0, 1, 1, 1, 1]
+for (const [dir, flip] of [["ne", {}], ["nw", { flip: "x" }]]) {
+  anim(`stamm_a_idle_${dir}`, { w: AW, h: AH, outline: "k", pivot: "bottom", frames: LULL.length, ms: LULL, ...flip }, (c) => stammA(c, { lull: c.frame % 2 === 0, breath: BREATH[c.frame] }))
+  anim(`stamm_b_idle_${dir}`, { w: BW, h: BH, outline: "k", pivot: "bottom", frames: 1, ...flip }, (c) => stammB(c))
+  anim(`stamm_b_talk_${dir}`, { w: BW, h: BH, outline: "k", pivot: "bottom", frames: 2, ms: [300, 300], ...flip }, (c) => stammB(c, { talk: c.frame === 1 }))
 }
 
 })()

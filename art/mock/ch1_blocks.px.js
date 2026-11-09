@@ -331,34 +331,5 @@ anim("mock_teo", { w: 21, h: 52, frames: 1, fps: 1, outline: "k", pivot: "bottom
   c.rect(7, 0, 8, 4, "k"); c.rect(7, 4, 8, 7, "S"); c.rect(14, 5, 2, 3, "L"); c.rect(8, 9, 2, 1, "s"); c.rect(5, 11, 12, 3, "g")
   c.rect(4, 14, 14, 15, "T"); c.rect(7, 14, 8, 15, "t"); c.rect(4, 22, 14, 1, "h"); c.rect(5, 29, 12, 4, "d"); c.rect(5, 33, 5, 19, "e"); c.rect(12, 33, 5, 19, "e")
 })
-// LUCKY STATIC's regulars, not painted yet (Mei is: art/characters/lucky_people.px.js). On their stools, from behind: he sleeps on
-// his arms, the Lull patch behind his ear
-// (pale, an oval: like the title's); she sits up straight in her shawl.
-pal({ Q: "#ff9a7a", q: "#b0604a" })
-// (at Juno's scale, sitting on stools like the room's (art/kit/lucky_static.kit.px.js: the seat 0.75 m up, 23 px, magenta vinyl
-// with its light top and dark rim, the chrome post, the foot ring at 0.22 m); the shoulders of one sitting up at 42)
-const STOOL = (c, cx, H) => {
-  const seat = H - 23
-  c.rect(cx - 1, seat + 2, 3, H - seat - 2, "g"); c.vline(cx - 1, seat + 2, H - seat - 2, "h")           // the post, chrome
-  c.hline(cx - 5, H - 7, 11, "g"); c.hline(cx - 3, H - 8, 7, "g"); c.hline(cx - 3, H - 6, 7, "f")          // the foot ring
-  // the round seat seen from a little above, as wide as the room's (0.32 m: 20 px): its top, a highlight, the dark rim
-  ;[[-5, 5], [-8, 8], [-10, 9], [-10, 9], [-9, 8]].forEach(([a, b], k) => c.hline(cx + a, seat - 4 + k, b - a + 1, "m"))
-  c.hline(cx - 7, seat + 1, 14, "n"); c.hline(cx - 4, seat + 2, 8, "n"); c.rect(cx - 7, seat - 2, 2, 1, "M")
-}
-anim("mock_stamm_a", { w: 28, h: 44, frames: 1, fps: 1, outline: "k", pivot: "bottom" }, (c) => {
-  const H = 44, seat = H - 23
-  STOOL(c, 14, H)
-  c.rect(8, seat + 3, 3, 12, "d"); c.rect(18, seat + 3, 3, 12, "d")                                    // his shins to the stool's ring
-  c.rect(5, seat - 18, 16, 17, "f"); c.rect(7, seat - 20, 13, 3, "f"); c.rect(6, seat - 13, 3, 10, "e")    // the jacket, bent forward
-  c.rect(17, seat - 21, 11, 6, "g")                                                                     // his arms on the counter
-  c.rect(16, seat - 24, 9, 7, "o"); c.rect(16, seat - 24, 9, 3, "e"); c.rect(17, seat - 19, 2, 2, "L")      // his head on them, the patch
-})
-anim("mock_stamm_b", { w: 22, h: 53, frames: 1, fps: 1, outline: "k", pivot: "bottom" }, (c) => {
-  const H = 53, seat = H - 23
-  STOOL(c, 10, H)
-  c.rect(4, seat + 3, 3, 12, "a"); c.rect(14, seat + 3, 3, 12, "a")                                    // her shins
-  c.rect(3, seat - 21, 16, 20, "b"); c.rect(2, seat - 21, 18, 8, "q"); c.rect(5, seat - 13, 11, 2, "q")     // her dress, the shawl
-  c.rect(6, seat - 31, 10, 10, "h"); c.rect(8, seat - 32, 6, 2, "h"); c.rect(6, seat - 23, 10, 2, "S")     // her grey hair, her neck
-})
 // Bao's broth to go: a white bowl with a lid and a twist of steam
 anim("inv_suppe", { w: 18, h: 13, frames: 1, fps: 1, outline: "k" }, (c) => { c.rect(3, 6, 12, 6, "h"); c.rect(2, 5, 14, 2, "g"); c.rect(7, 3, 4, 2, "g"); c.px(6, 1, "h"); c.px(7, 0, "h"); c.px(11, 1, "h"); c.rect(5, 8, 8, 1, "f") })

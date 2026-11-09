@@ -1,5 +1,5 @@
 // Nagiwa: LUCKY STATIC from inside (docs/kapitel1-design.md §7): Mei behind her counter, who lets Juno run a tab and passes on what
-// she hears; the two regulars who have sat there since the flood; Nagi·wa's news on the TV over the counter. Mei is painted (art/characters/lucky_people.px.js), the regulars are blocks (art/mock/).
+// she hears; the two regulars who have sat there since the flood; Nagi·wa's news on the TV over the counter. Mei and the regulars are painted (art/characters/lucky_people.px.js).
 // All of it is flavour that reads only the day (a place that changes, dialog-style-guide §4 C): no flag, so it costs the solver nothing
 // and may be asked again. Frau Imai's table is her own thread (game/stadt.js); nothing here reads it.
 "use strict";
@@ -40,16 +40,19 @@ const NEWS = [
   { if: "day=4", then: [TV("Das Wetter für den Neunten: Tropfen aus dem Vierten. Später trocken."), "Später trocken. Hier unten? Das gab's noch nie."] },
 ];
 
-// the regulars on their stools: he sleeps on his arms, she tells him things anyway
-Cutaway.actor("stamm_a", { name: "Stammgast", color: "#a8b8d0", room: "lucky_static", at: AI.stammA, facing: "ne", walkTo: AI.regulars, face: "ne",
-  costume: { idle: "mock_stamm_a", walk: "mock_stamm_a", talk: "mock_stamm_a" }, voice: { pitch: 44, range: 3, wave: "triangle", syllable: 90, speed: 0.8 },
+// the regulars on their stools, anonymous (the user's wish: a joke about it): he sleeps on his arms, she tells him things anyway.
+// Painted from behind facing the counter (art/characters/lucky_people.px.js), whichever way the engine turns them
+const BACK = (/** @type {string} */ a) => ({ se: a, sw: a, ne: a, nw: a });
+Cutaway.actor("stamm_a", { name: "Anonymer Stammgast", color: "#a8b8d0", room: "lucky_static", at: AI.stammA, facing: "ne", walkTo: AI.regulars, face: "ne",
+  costume: { idle: BACK("stamm_a_idle_ne"), walk: BACK("stamm_a_idle_ne"), talk: BACK("stamm_a_idle_ne") }, voice: { pitch: 44, range: 3, wave: "triangle", syllable: 90, speed: 0.8 },
   look: ["Er schläft auf seinen Armen. Das Bier daneben ist noch voll.", "Hinter dem Ohr das blasse Pflaster. Es blinkt."],
   talk: ["Er schläft.", SB("Lass ihn. Der schläft hier, seit es gratis ist.")] });
-Cutaway.actor("stamm_b", { name: "Stammgästin", color: "#c0b0d0", room: "lucky_static", at: AI.stammB, facing: "ne", walkTo: AI.regulars, face: "ne",
-  costume: { idle: "mock_stamm_b", walk: "mock_stamm_b", talk: "mock_stamm_b" }, voice: { pitch: 64, range: 4, wave: "triangle", syllable: 85, speed: 0.9 },
+Cutaway.actor("stamm_b", { name: "Anonyme Stammgästin", color: "#c0b0d0", room: "lucky_static", at: AI.stammB, facing: "ne", walkTo: AI.regulars, face: "ne",
+  costume: { idle: BACK("stamm_b_idle_ne"), walk: BACK("stamm_b_idle_ne"), talk: BACK("stamm_b_talk_ne") }, voice: { pitch: 64, range: 4, wave: "triangle", syllable: 85, speed: 0.9 },
   look: ["Sie sitzt gerade, als würde gleich jemand ein Foto machen.", "Seit der Flut auf demselben Hocker, sagt Mei."],
   talk: [
-    { if: "day=2", then: [SB("Er schläft. Ich erzähl's ihm trotzdem."), "Was denn?", SB("Wie's war. Vorher. Er hat's vergessen, ich nicht.")] },
+    { if: "day=2", then: [SB("Wir sind die Anonymen Stammgäste. Wir treffen uns jeden Abend. Hier."), "Und hilft's?", SB("Bisher nicht."),
+      SB("Er schläft. Ich erzähl's ihm trotzdem."), "Was denn?", SB("Wie's war. Vorher. Er hat's vergessen, ich nicht.")] },
     { if: "day=3", then: [SB("Er hat heute im Schlaf gelacht."), SB("Vierzig Jahre kenn ich den. Der lacht nicht.")] },
     { if: "day=4", then: [SB("Heute redet keiner. Nicht mal ich."), "..."] },
   ] });
