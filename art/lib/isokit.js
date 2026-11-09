@@ -13,6 +13,8 @@
 //   ISOKIT.floor(key, fn)        fn(u, v, o) -> palette key: the floor's texture at a floor point, seamless
 //                                across cells (a function of the point, not of the cell); o = { x, y, f, map }
 //   ISOKIT.wall(kit, fn)         fn(s, h, o) -> key: a wall's inner face, s meters along it from its `from`,
+//                                (or { face: fn, cap, stubTop(s, d, o) }: stubTop paints the cut top of the wall as a near
+//                                stub, s along it, d meters into its thickness; null leaves the plain top)
 //                                h up; o = { a, e, len, H, x, y, f, wall }, a/e its px from the wall's
 //                                screen-left end and from its foot (so nothing drawn on it is mirrored)
 //   ISOKIT.opening(kit, { pad, paint, pass, frames })
@@ -553,15 +555,16 @@ const ISOKIT = (() => {
         const cap = kit?.cap ?? ((inner) => (inner ? "5" : "4"))
         if (w.stub) {
           // a near wall cut to a stub: its top, its section down through the floor slab (toward the viewer)
-          const T = thick, hs = stub
+          // a wall kit given as { face, stubTop } paints the stub's cut top itself (a window in the near wall: its glass in section)
+          const T = thick, hs = stub, st = kit?.stubTop
           if (alongU) {
             G.faceV(B, fix + T, a0, a1 + T, -slab, hs, (a, e, o) => (o.h < slab - 0.04 ? "1" : o.h < slab ? "2" : "3"), "v")
             G.faceU(B, a1 + T, fix, fix + T, -slab, hs, (a, e, o) => (o.h < slab ? "1" : "2"), "u")
-            G.top(B, a0, fix, a1 + T, fix + T, hs, (u, v) => (v < fix + 0.06 ? "5" : "4"))
+            G.top(B, a0, fix, a1 + T, fix + T, hs, (u, v) => st?.(u - a0, v - fix, { f }) ?? (v < fix + 0.06 ? "5" : "4"))
           } else {
             G.faceU(B, fix + T, a0, a1 + T, -slab, hs, (a, e, o) => (o.h < slab - 0.04 ? "1" : o.h < slab ? "2" : "2"), "u")
             G.faceV(B, a1 + T, fix, fix + T, -slab, hs, (a, e, o) => (o.h < slab ? "1" : "3"), "v")
-            G.top(B, fix, a0, fix + T, a1 + T, hs, (u, v) => (u < fix + 0.06 ? "5" : "4"))
+            G.top(B, fix, a0, fix + T, a1 + T, hs, (u, v) => st?.(v - a0, u - fix, { f }) ?? (u < fix + 0.06 ? "5" : "4"))
           }
           return
         }

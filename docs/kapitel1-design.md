@@ -343,6 +343,8 @@ Live-Übertragung.“ 750 Chits, die zweite Zeile im Kassenbuch. Es schreibt sic
 | `cam30` | Sumpf-Abgang | eine Treppe ins Wasser, ein Schild „LINE 31 – CLOSED", daneben eine Pegeltafel (`LOW TIDE`, `FRI 23:00`) | Junos alter Zugang |
 | `cam31` | alte Metro, Linie 31 | Bahnsteig unter Wasser, Notlicht | nur über das alte Protokoll; körniger als alle anderen |
 
+**Die Einstellungen der Kameras** (die Richtung entschieden 2026-11-09; jede wird mit ihrem Ort skizziert und erst nach Freigabe gemalt): Keine Kamera schaut mehr frontal und flach. `cam07` hoch und steil die Gasse hinunter, ein Kabelbündel und eine Laterne quer im Vordergrund; `cam07v` ein starkes Fischauge auf Hüfthöhe, der Coupon-Rahmen des Automaten im Bild, Beine von Passanten ganz nah; `cam15` die Zentralperspektive einen langen Gang hinunter, Kapseln zweistöckig, Kessler geht von uns weg; `cam18` gekippt, hoch an der Laterne über der Treppe (Frau Imais „als hinge ich an einer Laterne“); `cam21` über der Klinik-Tür nach draußen, die Schlange kommt auf uns zu; `cam22` hinter der Theke über die Schulter des Kochs, Dampf im Vordergrund, Ines uns gegenüber; `cam23` senkrecht von oben, die Trommeltüren als Kreise; `cam24` eine Türklingel-Kamera, extremes Fischauge auf Augenhöhe; `cam30` tief am Wasser, die Treppe hinauf, Spiegelungen im Vordergrund. `cam14` bleibt das Iso-Bild des Flurs unter dem Filter.
+
 ### Wege und Zeit
 
 | Was | Kostet |

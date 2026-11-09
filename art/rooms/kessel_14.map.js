@@ -1,7 +1,7 @@
 // The 14th floor of the Kessel Block as a map (art/lib/isomap.js has the format): the landing outside
 // Juno's flat. Every length in meters. Juno's door 14B in the left back wall, the note war beside it; in the right
 // one the lift (out of order, at the same place as in the lobby: art/rooms/kessel_lobby.map.js), the bin bags in front of it, a
-// camera in the corner over them; further along the left wall Frau Haldane's door 14C, open, her armchair just inside in the
+// camera high on the right wall over the stairwell; further along the left wall Frau Haldane's door 14C, open, her armchair just inside in the
 // TV's blue light; the
 // stairs down to the lobby along the right wall (the well is kept near the back: the front of the floor
 // falls off the screen), with Motte on his bench in front of them.
@@ -43,8 +43,9 @@ ISO_MAPS.kessel_14 = {
   // the stairs go down along +u from the top step at u 2.5 (they run on under the floor past the well)
   stairs: { id: "stairs", kit: "stairs_concrete", from: [2.5, 0], to: [4.0, 1.0], down: "+u", rise: 0.18, tread: 0.3 },
   props: [
-    // Nagi·wa's camera up in the corner, looking down the landing
-    { id: "corner_cam", kit: "corner_cam", at: [0.03, 0.03], foot: [0.42, 0.2], h: 2.55, block: false },
+    // Nagi·wa's camera high on the right wall over the stairwell, looking across the landing at the doors: from there it sees the
+    // floor as the picture does (CAM 14 is this picture under the feed's filter, game/stadt.js)
+    { id: "corner_cam", kit: "corner_cam", at: [4.0, 0.03], foot: [0.2, 0.42], h: 2.35, face: "v", block: false },
     // the lift's emergency key, a long hook, on the wall beside its doors; a prop of its own, since Juno takes it
     { id: "haken", kit: "emergency_key", at: [1.72, 0.03], foot: [0.2, 0.05], h: 2.3, block: false },
     // the bin bags in front of the lift, which nobody is going to use anyway, waiting for Tuesday

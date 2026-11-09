@@ -13,7 +13,7 @@
 //            (open: the frame, the plate beside it), note_war (two notes, no words: a scrawl and "??",
 //            the answer with its arrow), neon_tube (its left end dying), sign_14 (stencilled)
 //   stairs   stairs_concrete (treads with a steel nosing and a worn amber stripe; the dado follows the flight)
-//   props    emergency_key (the lift's, on the wall), corner_cam (Nagi·wa's, on its arm, its red eye), bin_bags, stair_rail, armchair (Frau Haldane asleep in it, the Lull point behind her ear)
+//   props    emergency_key (the lift's, on the wall), corner_cam (Nagi·wa's, on its arm, its red eye; `face: "v"` looks out of a right-hand wall), bin_bags, stair_rail, armchair (Frau Haldane asleep in it, the Lull point behind her ear)
 // Keys "!k" are never lit. Small organic things are hand grids; the rest boxes and lines.
 include("../lib/text.js")
 
@@ -324,9 +324,11 @@ const K14 = (() => {
     draw(pen, p, f) {
       const [u0, v0] = p.at, L = p.foot[0], W = p.foot[1], H = p.h, h0 = H - 0.34
       pen.box(u0 + 0.04, v0 + 0.04, h0 + 0.16, 0.1, 0.1, H - h0 - 0.16, () => "6", () => "4", () => "5")   // the arm
-      pen.box(u0, v0, h0, L, W, 0.17, () => "G",
-        (a, e, o) => (a >= 2 && a < o.aw - 1 && e >= 1 && e < o.ah - 1 ? (a === 3 && e === 2 ? "!v" : "k") : "4"),   // the hood, the lens
-        (a, e, o) => (a === o.aw - 4 && e === 2 ? (f % 6 < 2 ? "!q" : "!r") : e === 0 ? "3" : e >= o.ah - 1 ? "6" : "5"))
+      // the lens on the face it looks out of: +u (toward the lower right), or +v (`face: "v"`, out of a right-hand wall)
+      const lens = (/** @type {number} */ a, /** @type {number} */ e, /** @type {any} */ o) => (a >= 2 && a < o.aw - 1 && e >= 1 && e < o.ah - 1 ? (a === 3 && e === 2 ? "!v" : "k") : "4")
+      const side = (/** @type {number} */ a, /** @type {number} */ e, /** @type {any} */ o) => (a === o.aw - 4 && e === 2 ? (f % 6 < 2 ? "!q" : "!r") : e === 0 ? "3" : e >= o.ah - 1 ? "6" : "5")
+      if (p.face === "v") pen.box(u0, v0, h0, L, W, 0.17, () => "G", side, lens)
+      else pen.box(u0, v0, h0, L, W, 0.17, () => "G", lens, side)
     },
   })
   // the lift's emergency key on the wall: a steel clip with its screw, an amber grip worn pale at the top, a long rod with

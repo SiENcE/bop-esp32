@@ -4,11 +4,10 @@
 // Keys "!k" are never lit (screens, neon, the hood's lamp).
 //
 //   floors   t  old tiles, b  boards behind the counter
-//   walls    ls_wall  dark plaster over a wainscot
+//   walls    ls_wall  dark plaster over a wainscot; ls_glass  the street window as a cut near wall (its glass in the section)
 //   openings ls_hood (the kitchen's hood, its lamp), ls_bottles (shelves of bottles), ls_tv (Nagi·wa's news, 凪輪),
 //            ls_slate (Mei's slate with the tallies), ls_wc (the toilet's door)
-//   props    ls_range (the noodle kitchen: a range, two pots), ls_counter, ls_stool, ls_karaoke (OUT OF ORDER),
-//            ls_table, ls_chair
+//   props    ls_range (the noodle kitchen: a range, two pots), ls_counter, ls_stool, ls_karaoke (OUT OF ORDER), ls_mat
 include("../lib/text.js")
 include("../lib/kanji.js")
 
@@ -19,6 +18,8 @@ const KIT_LUCKY_STATIC = (() => {
   ISOKIT.floor("t", (u, v) => (near(u % 0.5, 0) || near(v % 0.5, 0) ? "e" : (Math.floor(u * 2) + Math.floor(v * 2)) % 2 ? "z" : "Z"))
   ISOKIT.floor("b", (u, v) => (near(v % 0.25, 0, 1 / 64) ? "e" : "f"))
   ISOKIT.wall("ls_wall", (s, h) => (h < 0.06 ? "1" : h < 1.0 ? (near(h, 0.98, 0.02) ? "5" : "3") : "2"))
+  // the window in the cut: its frame on both sides, the glass between, lit by the sign outside, a mullion every 1.15 m
+  ISOKIT.wall("ls_glass", { face: () => "3", stubTop: (s, d) => (d < 0.05 || d > 0.2 || near(s % 1.15, 0, 0.04) ? "5" : d < 0.1 ? "!N" : "!m") })
 
   // ---------------------------------------------------------------- openings
   ISOKIT.opening("ls_hood", { paint: (s, h, o) => (h < 0.08 ? (s > 0.2 && s < o.w - 0.2 ? "!R" : "5") : "4") })
@@ -78,21 +79,7 @@ const KIT_LUCKY_STATIC = (() => {
         (a, e, o) => (e > o.ah * 0.5 && e < o.ah * 0.85 && a > 2 && a < o.aw - 2 ? (e > o.ah * 0.64 && e < o.ah * 0.72 ? "!m" : "!n") : "3"))
     },
   })
-  ISOKIT.prop("ls_table", {
-    draw(pen, p) {
-      const [u, v] = p.at, [du, dv] = p.foot
-      pen.box(u + du / 2 - 0.04, v + dv / 2 - 0.04, 0, 0.08, 0.08, p.h - 0.04, () => "4", () => "3", () => "4")
-      pen.box(u, v, p.h - 0.04, du, dv, 0.04, () => "5", () => "4", () => "4")
-      pen.box(u + 0.25, v + 0.3, p.h, 0.12, 0.12, 0.1, () => "H", () => "h", () => "h")                       // her glass of tea
-    },
-  })
-  ISOKIT.prop("ls_chair", {
-    draw(pen, p) {
-      const [u, v] = p.at, [du, dv] = p.foot
-      pen.box(u, v, 0, du, dv, 0.45, () => "4", () => "3", () => "3")
-      pen.box(u, v, 0.45, 0.06, dv, p.h - 0.45, () => "4", () => "3", () => "3")
-    },
-  })
+  ISOKIT.prop("ls_mat", { footprint: () => [], draw(pen, p) { const [u, v] = p.at, [du, dv] = p.foot; pen.box(u, v, 0, du, dv, p.h, (lu, lv) => (lu < 0.05 || lu > du - 0.05 || lv < 0.05 || lv > dv - 0.05 ? "3" : "2"), () => "2", () => "2") } })
 
   return {}
 })()

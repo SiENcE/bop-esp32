@@ -111,9 +111,14 @@ Nagiwa.at = {
     walk: [[12, 124, 308, 124, 316, 176, 4, 176]], arrive: [30, 150], door: [12, 150], front: [142, 146], okonkwo: [178, 124], shelves: [110, 132],
     doorRect: [0, 50, 18, 120], shelvesRect: [30, 24, 180, 62], counterRect: [70, 92, 180, 28], photoRect: [220, 40, 30, 24],
   },
-  // LUCKY STATIC (art/rooms/lucky_static.map.js, game/rooms/lucky_static.layout.js): the street is the near left wall, its door the
-  // gap at its left end (a stub has no picture of its own: the hotspot stands over the gap)
-  lucky_static: { ...fromLayout(Nagiwa.layouts.lucky_static), doorRect: [12, 126, 46, 36], barRect: Nagiwa.layouts.lucky_static.props.counter.box },
+  // LUCKY STATIC (art/rooms/lucky_static.map.js, game/rooms/lucky_static.layout.js). The stools stand in front of the counter: the
+  // props sort by their baselines, and the long counter's lies further down than theirs, so they are drawn after it
+  lucky_static: (() => {
+    const at = fromLayout(Nagiwa.layouts.lucky_static), c = Nagiwa.layouts.lucky_static.props.counter;
+    at.props = at.props.map((/** @type {any} */ p) => (p.id.startsWith("stool") ? { ...p, baseline: Math.max(p.baseline ?? p.at[1], c.baseline + 1) } : p));
+    // the street door is the gap at the near wall's left end (a cut wall has no picture of its own): its hotspot stands over it
+    return { ...at, barRect: c.box, doorRect: [12, 116, 40, 40] };
+  })(),
   laundromat: {
     walk: [[12, 108, 308, 108, 316, 176, 4, 176]], arrive: [18, 130], door: [10, 130], dryer6: [168, 110], counter: [270, 128],
     doorRect: [0, 40, 14, 100], dryer6Rect: [152, 50, 25, 46], dryersRect: [12, 50, 224, 46], counterRect: [252, 90, 58, 34],
