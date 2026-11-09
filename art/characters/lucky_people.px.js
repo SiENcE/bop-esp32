@@ -82,20 +82,46 @@ for (const [dir, flip] of SETS) {
 }
 
 // ---------------------------------------------------------------- the regulars
-// a bar stool like the room's: the seat 0.75 m up (23 px), as wide as the room's (0.32 m, 20 px), seen a little from above
-const stool = (c, cx, H) => {
-  const seat = H - 23
-  c.rect(cx - 1, seat + 2, 3, H - seat - 2, "6"); c.vline(cx - 1, seat + 2, H - seat - 2, "7")
-  c.hline(cx - 5, H - 7, 11, "6"); c.hline(cx - 3, H - 8, 7, "6"); c.hline(cx - 3, H - 6, 7, "5")
-  ;[[-5, 5], [-8, 8], [-10, 9], [-10, 9], [-9, 8]].forEach(([a, b], k) => c.hline(cx + a, seat - 4 + k, b - a + 1, "m"))
-  c.hline(cx - 7, seat + 1, 14, "n"); c.hline(cx - 4, seat + 2, 8, "n"); c.rect(cx - 7, seat - 2, 2, 1, "M")
-}
+// a bar stool exactly like the room's: its sprite as the bake draws it (art/kit/lucky_static.kit.px.js, lucky_static_stool3), copied
+// pixel for pixel: the seat's rhombus in magenta vinyl with its highlight and dark rim, the post, the foot ring at 0.22 m
+const STOOL = [
+  "........kkkk........",
+  "......kkmmmmkk......",
+  "....kkmmmmmmmmkk....",
+  "..kkmmmmMMMMmmmmkk..",
+  ".kmmmmmmmMMmmmmmmmk.",
+  ".kmmmmmmmmmmmmmmmmk.",
+  "knmmmmmmmmmmmmmmmmnk",
+  "knnnmmmmmmmmmmmmnnnk",
+  ".knnnnmmmmmmmmnnnnk.",
+  "..kknnnn6mm4nnnnkk..",
+  "....kknnn64nnnkk....",
+  "......kkn64nkk......",
+  ".......k6644k.......",
+  ".......k6644k.......",
+  ".......k6644k.......",
+  ".......k6644k.......",
+  ".......k6554k.......",
+  ".....kk555555kk.....",
+  "...kk5555555555kk...",
+  "..k55555555555555k..",
+  ".k5555555555555544k.",
+  "..kk5555555555544kk..",
+  "....kk55555544kk....",
+  "......kk5544kk......",
+  ".......k6644k.......",
+  ".......k6644k.......",
+  ".......k6644k.......",
+  "........k64k........",
+  ".........kk.........",
+]
+/** the stool, its post under cx, standing on the canvas's bottom row @param {any} c @param {number} cx @param {number} H */
+const stool = (c, cx, H) => g(c, cx - 10, H - STOOL.length, STOOL)
 // he sleeps on his arms on the counter; the pelt of a marmot grown into his nape; the patch behind his ear keeps the beat
 const AW = 29, AH = 44, an = (n) => AH - 1 - n
 const stammA = (c, o = {}) => {
   const up = o.breath ? 1 : 0
   stool(c, 14, AH)
-  c.rect(8, an(20), 3, 13, "2"); c.rect(18, an(20), 3, 13, "2"); c.hline(8, an(20), 3, "3"); c.hline(18, an(20), 3, "3")   // his shins to the ring
   // the jacket, bent forward over the seat, its folds at the waist; his back rises as he breathes
   taper(c, an(37 + up), 8, 19, an(23), 5, 21, (x, y, x0, x1, t) => (x === x0 ? "K" : x <= x0 + 2 ? "j" : t > 0.8 && x % 3 === 0 ? "j" : "J"))
   c.hline(9, an(38 + up), 9, "J")
@@ -128,7 +154,6 @@ const stammA = (c, o = {}) => {
 const BW = 23, BH = 53, bn = (n) => BH - 1 - n
 const stammB = (c, o = {}) => {
   stool(c, 11, BH)
-  c.rect(5, bn(20), 3, 13, "E"); c.rect(15, bn(20), 3, 13, "E")                                  // her shins, dark stockings
   // the dress straight down to the seat; the shawl over her shoulders, its fringe, its fold down her back
   taper(c, bn(42), 5, 16, bn(23), 3, 18, () => "E")
   taper(c, bn(42), 4, 17, bn(32), 2, 19, (x, y, x0, x1) => (x === x0 ? "D" : x <= x0 + 2 || x >= x1 - 1 ? "b" : "B"))

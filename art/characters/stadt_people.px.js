@@ -111,8 +111,18 @@ const IW = 51, IH = 41, im = (h) => IH - 1 - h
 // Nagiwa.lullBeat (game/nagiwa.js) as lengths, from the start of its 3600 ms: on, off, on, off, on, off, on, off. Long, short, short, long, then the pause.
 const LULL = [800, 300, 250, 300, 250, 300, 800, 600]
 const imai = (c, o = {}) => {
-  // the chair behind her; her legs under the table
-  c.rect(10, im(30), 2, 31, "4"); c.hline(10, im(30), 2, "6"); c.rect(10, im(15), 14, 2, "5"); c.hline(10, im(15), 14, "6"); c.rect(21, im(13), 2, 14, "3")
+  // the chair under her, in the street's 2:1 like the room round it: its back along the edge behind her (two posts, a rail sloping
+  // with the floor's lines), the seat a rhombus, the legs down from its near corners; her legs under the table
+  c.rect(6, 9, 2, 32, "4"); c.vline(6, 9, 32, "5"); c.rect(13, 6, 2, 16, "4")
+  c.line(6, 9, 14, 5, "6"); c.line(6, 10, 14, 6, "5")
+  const L = [6, 25], T = [14, 21], R = [23, 25], B = [15, 29]
+  const side = (p, q, x, y) => (q[0] - p[0]) * (y - p[1]) - (q[1] - p[1]) * (x - p[0])
+  for (let y = 21; y <= 29; y++) for (let x = 6; x <= 23; x++) {
+    const k = [side(L, T, x, y), side(T, R, x, y), side(R, B, x, y), side(B, L, x, y)]
+    if (k.every((v) => v >= 0) || k.every((v) => v <= 0)) c.px(x, y, y <= 23 ? "6" : "5")
+  }
+  c.line(6, 26, 15, 30, "3"); c.line(15, 30, 23, 26, "3")                               // the seat's front edges, its thickness
+  c.rect(15, 31, 2, 10, "3"); c.rect(22, 27, 2, 14, "3")                                // the near legs
   c.rect(15, im(19), 14, 5, "2"); c.hline(15, im(19), 14, "3"); c.rect(26, im(14), 4, 12, "3"); c.vline(29, im(14), 12, "2"); c.rect(26, im(2), 6, 3, "1"); c.hline(26, im(2), 6, "3"); c.rect(22, im(11), 3, 10, "2"); c.rect(22, im(1), 5, 2, "1")
   // the cardigan: round shoulders, and sagging
   taper(c, im(29), 16, 24, im(15), 13, 27, (x, y, x0, x1, t) => (t > 0.85 ? "d" : x === x1 || x === x0 ? "e" : (x === 21 && t > 0.15) ? "e" : t < 0.1 ? "C" : "C"))

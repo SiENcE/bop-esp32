@@ -73,7 +73,9 @@
     if (!song) return;
     Object.assign(K, { song: id, line: -1, since: Cutaway.clock.time, picks: {}, waiting: false });
     Cutaway.events.emit("sfx", { sfx: "glitch" });
-    Cutaway.events.emit("music", { ...song.music, fade: 0.5 });
+    // the song starts with its words, not after the bar's music has found a place to change: a stop is at once, and so is what follows
+    Cutaway.events.emit("music", { stop: true, fade: 0.1 });
+    Cutaway.events.emit("music", { ...song.music });
     try {
       for (let i = 0; i < song.lines.length; i++) {
         Object.assign(K, { line: i, since: Cutaway.clock.time });
@@ -87,7 +89,8 @@
     } finally {
       K.song = null;
       const def = Cutaway.room.get("lucky_static")?.music;
-      if (def) Cutaway.events.emit("music", typeof def === "string" ? { theme: def } : def);
+      Cutaway.events.emit("music", { stop: true, fade: 0.6 });
+      if (def) Cutaway.events.emit("music", { ...(typeof def === "string" ? { theme: def } : def), fade: 1 });
     }
     await Cutaway.script.exec(song.after, ctx);
   });
