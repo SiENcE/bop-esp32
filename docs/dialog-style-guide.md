@@ -76,6 +76,7 @@ verkauft, das Kassenbuch rechnet. So darf auch eine schöne Zeile fallen, ohne d
 
 - **Zu viel Slang.** Glass, Shine, Sinker und Chits wirken, wenn sie selbstverständlich und sparsam fallen.
 - **Zu viel Poesie.** Die Stadt darf poetisch aussehen, ihre Leute reden nicht ständig so.
+- **Wortgruppen statt Sätze.** „Eine Treppe. Ein Fisch. Regen von links.“ So redet kein Mensch. Wer spricht, sagt ganze Sätze mit Subjekt und Verb: „Da ist eine Treppe, und auf den Stufen ist ein großer Fisch. Es regnet von links.“ Das gilt für alle Figuren, auch für Junos Blicke und Gedanken. Ein Satz darf abbrechen, wo ein Mensch wirklich abbricht (Zögern, Ausweichen, „...“), aber eine Reihe von Stichworten ist kein Stil (entschieden 2026-11-09 von der Nutzerin; neue Zeilen so, alte beim nächsten Anfassen).
 - **Zu viele Einzeiler.** Niemand ist eine Sprüchemaschine. Ernste Gespräche brauchen auch unspektakuläre Sätze. Die Blicke, die schon im Spiel stehen, bleiben, wie sie sind (entschieden 2026-11-06).
 - **Zu viel Erklärung.** Niemand erzählt seine Biografie oder Nagi·was Geschichte, nur weil ein Gespräch begonnen hat.
 - **Künstliche Coolness.** Juno ist keine unfehlbare Heldin. Sie sieht zu viel, isst zu wenig und weiß nicht immer, was sie tun soll.
@@ -393,7 +394,7 @@ So etwas wird bewusst angelegt, wie Mottes Backup oder der Satz über die Leiter
 1. Würde sie jemand sagen, der hier lebt, oder nur jemand, der es dem Spieler erklären will?
 2. Erkennt man die Figur ohne Namen und Farbe?
 3. Geht es unter der Oberfläche um etwas anderes?
-4. Darf das auch unspektakulär sein? Muss hier wirklich eine Pointe stehen?
+4. Ist es ein ganzer Satz, wie ihn ein Mensch sagt, und keine Reihe von Wortgruppen (§3)? Darf das auch unspektakulär sein? Muss hier wirklich eine Pointe stehen?
 5. Stimmt sie mit der Bibel überein (Fakten, Du und Sie, Lull und Implantat)?
 6. Unter etwa 90 Zeichen? Ist die Haltung einer Wahl vor dem Klick klar?
 7. Geht sie auf Englisch noch?

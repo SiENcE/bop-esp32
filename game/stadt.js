@@ -137,7 +137,7 @@ Nagiwa.cache.note_haldane_marks = { kind: "note", name: "FRAU HALDANES ZEITUNGEN
 // tell her, and has the choice: the truth, which frightens her, or a lie that lets her sleep. She is the UNKNOWN LINK in the clinic's queue.
 const AI = Nagiwa.at.lucky_static, A18 = Nagiwa.at.cam18;
 Object.assign(Nagiwa.contacts, { imai: { name: "R. IMAI", color: "#c8d8b0", status: "schläft", if: ["day>1", "!off_imai"], unread: "!read_imai",
-  open: [{ if: "!read_imai", then: [{ set: "read_imai" }, "Ein Mord, in einer Straße, in der sie nie war. Lull-Nutzerin. Natürlich."] }] } });
+  open: [{ if: "!read_imai", then: [{ set: "read_imai" }, "Sie hat einen Mord gesehen, in einer Straße, in der sie nie war.", "Und sie nimmt Lull. Natürlich nimmt sie Lull."] }] } });
 Cutaway.state.view("read_imai");
 Nagiwa.threads.imai = [
   { from: "imai", at: "18:20", text: "Sie finden Leute, habe ich gehört. Ich habe einen Mord gesehen. In einer Straße, in der ich nie war." },
@@ -146,33 +146,33 @@ Nagiwa.threads.imai = [
 Nagiwa.ledger.imai = { to: "R. IMAI", what: { truth: "die Wahrheit", dream: "ein Traum" } };
 Cutaway.actor("imai", { name: "Frau Imai", color: "#c8d8b0", room: "lucky_static", at: AI.imai, facing: "sw", walkTo: AI.imaiTalk, face: "nw",
   costume: { idle: every("imai_idle_sw"), walk: every("imai_idle_sw"), talk: every("imai_talk_sw") }, voice: { pitch: 60, range: 4, wave: "triangle", syllable: 85, speed: 0.9 },
-  look: ["Eine Frau vor einem Tee, der kalt ist. Hinter dem Ohr der blasse Punkt.", "Drei Finger an jeder Hand, viel zu lang. Sie hat es mit nichts eilig.", "Die kenn ich. Aus der Schlange vor der Klinik."],
+  look: ["Sie sitzt vor einem Tee, der längst kalt ist. Hinter ihrem Ohr leuchtet der blasse Punkt.", "Sie hat drei Finger an jeder Hand, und alle sind viel zu lang.", "Sie hat es mit nichts eilig.", "Die kenn ich. Die stand in der Schlange vor der Klinik."],
   talk: [
     { if: ["imai_step=0", "!off_imai"], then: [
-      "Die kenn ich. Aus der Schlange vor der Klinik.", "Hinter dem Ohr der blasse Punkt.", { say: "imai", text: "Sie sind die Glasserin. Danke. Keiner glaubt mir, nicht mal ich." },
-      { say: "imai", text: "Eine Treppe. Auf den Stufen ein Fisch, ein großer. Regen von links." }, { say: "imai", text: "Ein Mann fällt, und einer geht weg." },
-      { say: "imai", text: "Das Komische: Ich hab von oben draufgeschaut. Als würde ich an einer Laterne hängen." },
-      "Und das war wann?", { say: "imai", text: "Vor einer Woche, im Schlaf. Ich schlafe von drei bis sieben. Vier Stunden Lull, wie alle." },
-      { set: "imai_step", value: 1 }, "Ein Fisch auf einer Treppe. CAM 18, am alten Fischmarkt.", "Das könnte sie sein. Da hab ich noch Zugang."] },
-    { if: "imai_step=1", then: [{ say: "imai", text: "Eine Treppe. Ein Fisch auf den Stufen. Regen von links. Haben Sie sie gefunden?" }] },
-    { if: "imai_step=2", then: [{ say: "imai", text: "Und? Bin ich verrückt?" }, { dialog: "imai_wahl" }] },
+      "Die kenn ich. Die stand in der Schlange vor der Klinik.", "Hinter ihrem Ohr leuchtet der blasse Punkt.", { say: "imai", text: "Sie sind die Glasserin? Danke, dass Sie gekommen sind." }, { say: "imai", text: "Mir glaubt keiner. Ich glaube es ja selbst nicht." },
+      { say: "imai", text: "Da ist eine Treppe, und auf den Stufen ist ein großer Fisch. Es regnet von links." }, { say: "imai", text: "Ein Mann fällt die Treppe hinunter, und ein anderer geht einfach weg." },
+      { say: "imai", text: "Das Komische ist, dass ich von oben draufgeschaut habe." }, { say: "imai", text: "Es war, als würde ich an einer Laterne hängen." },
+      "Und wann war das?", { say: "imai", text: "Das war vor einer Woche, im Schlaf. Ich schlafe von drei bis sieben." }, { say: "imai", text: "Ich nehme vier Stunden Lull, wie alle hier." },
+      { set: "imai_step", value: 1 }, "Eine Treppe mit einem Fisch darauf. Das ist CAM 18 am alten Fischmarkt.", "Das könnte ihre Treppe sein, und zu der Kamera hab ich noch Zugang."] },
+    { if: "imai_step=1", then: [{ say: "imai", text: "Haben Sie die Treppe gefunden? Die mit dem großen Fisch auf den Stufen?" }] },
+    { if: "imai_step=2", then: [{ say: "imai", text: "Und, was ist? Bin ich verrückt?" }, { dialog: "imai_wahl" }] },
     { if: "imai_told=truth", then: [{ say: "imai", text: "Ich hab heute nicht geschlafen. Ich trau mich nicht." }] },
     { if: "imai_told=dream", then: [{ say: "imai", text: "Ich schlafe wieder gut. Danke. Sie glauben gar nicht, wie gut." }] },
   ] });
 Cutaway.dialog("imai_wahl", { main: { choices: [
-  { text: "„Sie sind nicht verrückt.“", goto: "end", then: [{ set: "imai_step", value: 3 }, { set: "imai_told", value: "truth" }, { ledger: "imai", value: "truth" }, "Die Treppe gibt's. Den Mann auch. Neunundzwanzigster Oktober, drei Uhr zwölf.",
-    { say: "imai", text: "Da hab ich geschlafen." }, "Ich weiß.", { say: "imai", text: "Und wie soll ich das gesehen haben?" }, "Weiß ich nicht.", { say: "imai", text: "Dann will ich heute Nacht nicht schlafen." }] },
-  { text: "„Das war ein Traum.“", goto: "end", then: [{ set: "imai_step", value: 3 }, { set: "imai_told", value: "dream" }, { ledger: "imai", value: "dream" }, "Keine Treppe, kein Fisch. Ich hab nachgesehen.",
+  { text: "„Sie sind nicht verrückt.“", goto: "end", then: [{ set: "imai_step", value: 3 }, { set: "imai_told", value: "truth" }, { ledger: "imai", value: "truth" }, "Die Treppe gibt es, und den Mann gibt es auch.", "Es war am neunundzwanzigsten Oktober um drei Uhr zwölf.",
+    { say: "imai", text: "Da hab ich geschlafen." }, "Ich weiß.", { say: "imai", text: "Und wie soll ich das gesehen haben?" }, "Das weiß ich nicht.", { say: "imai", text: "Dann will ich heute Nacht nicht schlafen." }] },
+  { text: "„Das war ein Traum.“", goto: "end", then: [{ set: "imai_step", value: 3 }, { set: "imai_told", value: "dream" }, { ledger: "imai", value: "dream" }, "Ich hab nachgesehen. Da gibt es keine Treppe und keinen Fisch.",
     { say: "imai", text: "Gott sei Dank. Ich dachte schon ..." }, "Schlafen Sie gut, Frau Imai.", { evi: "verwirrt" }, { say: "evi", text: "Die Treppe gibt es aber. Ich hab sie gesehen." }, "Ich weiß."] },
 ] } });
 Nagiwa.cams.cam18 = { id: "18", place: "ALTER FISCHMARKT", owner: "NAGI·WA", map: [120, 14], if: "imai_step>=1" };
 Nagiwa.cache.note_imai_street = { kind: "note", name: "FRAU IMAIS TREPPE", about: "CAM 18, 29.10., 03:12. Es ist passiert. Sie schlief. Sie hat es von hier oben gesehen." };
 Nagiwa.camRoom("cam18", { background: "cam18_bg", mic: { at: A18.mic, clear: 40, lost: 150 }, hotspots: {
-  fish: { name: "Fisch", rect: A18.fish, z: 1, look: ["Ein Fisch, auf die Stufen gemalt. FISH steht drunter, für den Fall, dass jemand fragt.", "Von unten sind das Striche auf Stufen. Ein Fisch ist das nur von hier oben."] },
-  stairs: { name: "Treppe", rect: A18.stairs, look: "Die Treppe zum alten Fischmarkt. Regen von links: Die Kamera hängt schief." },
+  fish: { name: "Fisch", rect: A18.fish, z: 1, look: ["Jemand hat einen Fisch auf die Stufen gemalt. FISH steht drunter, falls jemand fragt.", "Von unten sieht man nur Striche auf den Stufen. Den Fisch sieht man nur von hier oben."] },
+  stairs: { name: "Treppe", rect: A18.stairs, look: ["Das ist die Treppe zum alten Fischmarkt.", "Der Regen kommt von links, weil die Kamera schief hängt."] },
   rewind: { name: "Archiv", z: 5, if: "imai_step=1",
-    use: ["Ältere Nächte liegen im Nagi·wa-Archiv. Mein alter Zugang reicht gerade noch.", "Neunundzwanzigster Oktober. Vor und zurück.", "03:12. Da. Einer fällt die Treppe runter, und einer geht weg.",
-      "Genau von hier oben. Genau, wie sie gesagt hat.", "Und der Fisch. Den ganzen Fisch sieht man nur von hier.", "Um die Zeit lag sie im Bett und schlief.", "Wie sieht jemand im Schlaf, was meine Kamera sieht?", { cache: "note_imai_street" }, { set: "imai_step", value: 2 }] },
+    use: ["Ältere Nächte liegen im Nagi·wa-Archiv. Mein alter Zugang reicht gerade noch.", "Ich such den neunundzwanzigsten Oktober und spul vor und zurück.", "Um drei Uhr zwölf ist es so weit. Einer fällt die Treppe runter, und einer geht weg.",
+      "Sie hat es genau von hier oben gesehen, so, wie sie gesagt hat.", "Und den ganzen Fisch sieht man nur von hier oben.", "Um die Zeit lag sie im Bett und schlief.", "Wie sieht jemand im Schlaf, was meine Kamera sieht?", { cache: "note_imai_street" }, { set: "imai_step", value: 2 }] },
 } });
 Cutaway.room("lucky_static", { name: "LUCKY STATIC", background: "lucky_static_bg", walk: AI.walk, holes: AI.holes, props: AI.props,
   light: { ambient: 0.82, lamps: AI.lamps.map((/** @type {any} */ { bake, zone, ...lamp }) => lamp) },
