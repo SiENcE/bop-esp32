@@ -58,7 +58,7 @@ Cutaway.actor("stamm_b", { name: "Anonyme Stammgästin", color: "#c0b0d0", room:
   ] });
 
 Object.assign(Cutaway.room.get("lucky_static").hotspots, {
-  tv: { name: "Fernseher", rect: AI.tvRect, walkTo: AI.bar, face: "ne", look: "Nagi·wa-Nachrichten. Keiner guckt hin, und keiner macht ihn aus.", use: NEWS },
-  slate: { name: "Tafel", rect: AI.slateRect, walkTo: AI.bar, face: "ne", look: ["Meis Tafel. Striche, keine Namen. Sie weiß trotzdem, welche Reihe wem gehört.", "Meine ist die lange."] },
+  tv: { name: "Fernseher", poly: AI.tvPoly, walkTo: AI.bar, face: "ne", look: "Nagi·wa-Nachrichten. Keiner guckt hin, und keiner macht ihn aus.", use: NEWS },
+  slate: { name: "Tafel", poly: AI.slatePoly, walkTo: AI.bar, face: "ne", look: ["Meis Tafel. Striche, keine Namen. Sie weiß trotzdem, welche Reihe wem gehört.", "Meine ist die lange."] },
 });
 })();

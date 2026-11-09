@@ -4,15 +4,30 @@
 "use strict";
 
 /** A room's places from its measured layout: the spots by name, the walk area and holes, the props (as the
- * engine wants them), each prop's shape (`<id>Poly`) and sprite box (`<id>Rect`), each opening's rect. */
+ * engine wants them), each prop's shape (`<id>Poly`: its outline) and sprite box (`<id>Rect`), each opening's rect (`<id>Rect`) and shape on its wall (`<id>Poly`). */
+/** The convex hull of points given flat [x0, y0, x1, y1, ...], flat again (monotone chain): one shape round a row of things. */
+function hull(/** @type {number[]} */ flat) {
+  const pts = [];
+  for (let i = 0; i < flat.length; i += 2) pts.push([flat[i], flat[i + 1]]);
+  pts.sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+  const cross = (/** @type {number[]} */ o, /** @type {number[]} */ a, /** @type {number[]} */ b) => (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]);
+  /** @type {number[][]} */ const lo = [], up = [];
+  for (const p of pts) { while (lo.length >= 2 && cross(lo[lo.length - 2], lo[lo.length - 1], p) <= 0) lo.pop(); lo.push(p); }
+  for (const p of pts.reverse()) { while (up.length >= 2 && cross(up[up.length - 2], up[up.length - 1], p) <= 0) up.pop(); up.push(p); }
+  return [...lo.slice(0, -1), ...up.slice(0, -1)].flat();
+}
+
 function fromLayout(/** @type {any} */ L) {
   /** @type {Record<string, any>} */
   const at = { ...L.spots, walk: L.walk, holes: L.holes, face: L.face, lamps: L.lamps };
   // props seen through an open door are baked into the picture: no sprite of their own
   at.props = Object.entries(L.props).filter(([, p]) => /** @type {any} */ (p).sprite).map(([id, p]) => ({ id, image: /** @type {any} */ (p).sprite, at: /** @type {any} */ (p).at, front: /** @type {any} */ (p).front, baseline: /** @type {any} */ (p).baseline,
     ...(/** @type {any} */ (p).seeThrough ? { seeThrough: true } : {}) }));
-  for (const [id, p] of Object.entries(L.props)) { at[`${id}Poly`] = /** @type {any} */ (p).poly; at[`${id}Rect`] = /** @type {any} */ (p).box; }
+  // (a prop's shape: the outline of its drawn pixels where the bake measured it, else its box's silhouette)
+  for (const [id, p] of Object.entries(L.props)) { at[`${id}Poly`] = /** @type {any} */ (p).shape ?? /** @type {any} */ (p).poly; at[`${id}Rect`] = /** @type {any} */ (p).box; }
   for (const [id, r] of Object.entries(L.openings ?? {})) at[`${id}Rect`] = r;
+  for (const [id, q] of Object.entries(L.openingPolys ?? {})) at[`${id}Poly`] = q;      // its parallelogram on the wall (a hotspot's shape)
+  for (const [id, q] of Object.entries(L.zonePolys ?? {})) at[`${id}Poly`] = q;         // a zone's box (a door that is only a gap)
   return at;
 }
 
@@ -41,8 +56,8 @@ Nagiwa.at = {
     // the implant's brackets round the ad screen in the JUNO. moment
     adMark: [Nagiwa.layouts.kowalski.openings.ad[0] - 3, Nagiwa.layouts.kowalski.openings.ad[1] + 2,
       Nagiwa.layouts.kowalski.openings.ad[2] + 6, Nagiwa.layouts.kowalski.openings.ad[3] + 1],
-    // Bao's hotspot: his top half over the counter (the cart's own below it)
-    baoRect: [Nagiwa.layouts.kowalski.spots.bao[0] - 15, Nagiwa.layouts.kowalski.spots.bao[1] - 48, 31, 25],
+    // Bao's hotspot: his top half over the counter (the cart's own below it), his head and shoulders' shape, no floor beside him
+    baoPoly: ((x, y) => [x - 6, y - 49, x + 6, y - 49, x + 9, y - 37, x + 11, y - 23, x - 11, y - 23, x - 9, y - 37])(...Nagiwa.layouts.kowalski.spots.bao),
   },
   // measured from the cameras' projections (docs/cams/cam03_layout.md, cam04_layout.md). No depth `scale`: the
   // feed figures stay at their drawn size (scaling 24 px pixel art by 0.7–1.9 would smear it; the seated
@@ -102,7 +117,7 @@ Nagiwa.at = {
   // sprite has one size, right for that depth, so the shop's door and the machine are reached from in front of them
   jade_row: {
     walk: [[67, 142, 253, 142, 306, 176, 14, 176]], arrive: [292, 172], back: [292, 172], mid: [186, 158], shop: [78, 146], machine: [232, 146], soup: [214, 144], far: [160, 143], parlour: [112, 143], pharmacy: [196, 143],
-    backRect: [278, 54, 42, 122], windowRect: [55, 87, 20, 50], doorRect: [77, 82, 22, 54], signRect: [53, 60, 38, 26], machineRect: [232, 84, 28, 58], soupRect: [212, 82, 20, 50],
+    backRect: [278, 54, 42, 122], windowRect: [55, 87, 20, 50], doorRect: [77, 82, 22, 54], signRect: [53, 60, 38, 26], machineRect: [232, 84, 28, 57], soupRect: [212, 82, 20, 50],
     parlourRect: [118, 88, 8, 26], arcadeRect: [100, 90, 16, 32], balconyRect: [44, 20, 58, 46], nightRect: [212, 8, 43, 62], carRect: [168, 92, 24, 17], pharmacyRect: [195, 88, 13, 24], gateRect: [136, 50, 48, 46], screenRect: [136, 4, 48, 44], signsRect: [195, 56, 22, 32],
   },
   // outside the flat's window: the ledge (kapitel1-design, "Die Stadt")
@@ -119,11 +134,11 @@ Nagiwa.at = {
   drain_market: {
     walk: [[12, 118, 308, 118, 316, 176, 4, 176]], arrive: [24, 150], up: [12, 148], preacher: [226, 148], stalls: [110, 124], curtain: [284, 124],
     ratz: [190, 126], ratzTalk: [168, 134],
-    upRect: [0, 50, 18, 120], kidneysRect: [30, 56, 66, 52], jarsRect: [106, 56, 58, 52], stallsRect: [170, 56, 30, 52], curtainRect: [262, 50, 44, 66],
+    upRect: [0, 50, 12, 68], kidneysRect: [30, 56, 66, 52], jarsRect: [106, 56, 58, 52], stallsRect: [170, 56, 30, 52], curtainRect: [262, 50, 44, 66],
   },
   sable_booth: {
     walk: [[12, 118, 308, 118, 316, 176, 4, 176]], arrive: [24, 150], door: [10, 150], front: [150, 128], sable: [176, 118],
-    curtainRect: [0, 50, 16, 126], pricesRect: [224, 14, 86, 36], screensRect: [112, 42, 100, 38], birdRect: [36, 40, 30, 44],
+    curtainRect: [0, 50, 12, 68], pricesRect: [224, 14, 86, 36], screensRect: [112, 42, 100, 38], birdRect: [36, 40, 30, 44],
   },
   // looking from the window at the back wall (as CAM 07V): Okonkwo behind the counter (his bust stands on the walk area's edge, drawn over
   // the counter, as Mei), the safe in its right-hand end; the door to the lane at the front left
@@ -139,18 +154,16 @@ Nagiwa.at = {
   lucky_static: (() => {
     const at = fromLayout(Nagiwa.layouts.lucky_static), c = Nagiwa.layouts.lucky_static.props.counter;
     at.props = at.props.map((/** @type {any} */ p) => (p.id.startsWith("stool") || p.id === "lamps" ? { ...p, baseline: Math.max(p.baseline ?? p.at[1], c.baseline + 1) } : p));
-    // the street door is the gap at the near wall's left end (a cut wall has no picture of its own): its hotspot stands over it
-    return { ...at, barRect: c.box, doorRect: [12, 116, 40, 40] };
+    // the street door is the gap at the near wall's left end (a cut wall has no picture of its own): its hotspot is the map's zone
+    // `door` over the sill and the street beyond it; the bar's is the counter's own shape
+    return { ...at, barPoly: at.counterPoly };
   })(),
   // SUDS & SPIN (art/rooms/laundromat.map.js, game/rooms/laundromat.layout.js). The door is the gap in the alley's cut wall (a cut
-  // wall has no picture of its own): its hotspot stands over it. The dryers' rect is the row's; the man asleep behind the counter is a
-  // block of his own (art/mock/ch1_blocks.px.js) standing at the spot `sleeper`
+  // wall has no picture of its own): its hotspot is the map's zone `door`. The dryers' shape is the row's, round all eight; the man
+  // asleep behind the counter is a block of his own (art/mock/ch1_blocks.px.js) standing at the spot `sleeper`
   laundromat: (() => {
     const at = fromLayout(Nagiwa.layouts.laundromat), P = Nagiwa.layouts.laundromat.props;
-    const boxes = [1, 2, 3, 4, 5, 6, 7, 8].map((n) => P[`dryer${n}`].box);
-    const x0 = Math.min(...boxes.map((b) => b[0])), y0 = Math.min(...boxes.map((b) => b[1]));
-    const x1 = Math.max(...boxes.map((b) => b[0] + b[2])), y1 = Math.max(...boxes.map((b) => b[1] + b[3]));
-    return { ...at, dryersRect: [x0, y0, x1 - x0, y1 - y0], doorRect: [12, 114, 40, 40] };
+    return { ...at, dryersPoly: hull([1, 2, 3, 4, 5, 6, 7, 8].map((n) => P[`dryer${n}`].poly).flat()) };
   })(),
   cam04: {
     entrance: [100, 43], seatVarga: [149, 132], seatKessler: [156, 94], counter: [176, 69], cook: [182, 50], cookBust: [186, 30],

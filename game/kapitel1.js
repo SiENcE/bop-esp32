@@ -214,10 +214,10 @@ Cutaway.room("gasse", { name: "Die Gasse", background: "gasse_bg", size: /** @ty
     { kind: "haze", poly: AG.hazeStatue, color: "#ffd58a", alpha: 0.16, fade: 0.3 }],
   ambience: ["city_far", { sfx: "feed_rain", gain: 0.6 }], music: { theme: "juno", intensity: 0.3 },
   hotspots: {
-    kowalski: { name: "Zur Kowalski-Straße", rect: AG.kowalskiRect, walkTo: AG.kowalski, face: "nw", use: [{ goto: "kowalski", at: Nagiwa.at.kowalski.fromGasse, face: "nw" }] },
-    laundromat: { name: "SUDS & SPIN", rect: AG.laundromatRect, walkTo: AG.laundromat, face: "ne", look: "Der Waschsalon. Ein Viertel weiter, der Gasse nach.",
+    kowalski: { name: "Zur Kowalski-Straße", poly: AG.kowalskiPoly, walkTo: AG.kowalski, face: "nw", use: [{ goto: "kowalski", at: Nagiwa.at.kowalski.fromGasse, face: "nw" }] },
+    laundromat: { name: "SUDS & SPIN", poly: AG.laundromatPoly, walkTo: AG.laundromat, face: "ne", look: "Der Waschsalon. Ein Viertel weiter, der Gasse nach.",
       use: [{ goto: "laundromat", at: AW.arrive, face: "se" }] },
-    market: { name: "Zum Drain-Markt", rect: AG.marketRect, walkTo: AG.market, face: "nw", look: "Da runter ist der Drain-Markt.", use: "[MOCK] Den bau ich erst noch." },
+    market: { name: "Zum Drain-Markt", poly: AG.marketPoly, walkTo: AG.market, face: "nw", look: "Da runter ist der Drain-Markt.", use: "[MOCK] Den bau ich erst noch." },
     statue: { name: "Denkmal", poly: AG.statuePoly, walkTo: AG.statue, face: "ne",
       look: ["Das Flutdenkmal. Eine Frau, das Wasser bis an die Knie, ein kleines Boot in den Händen.", "Die Stange daneben zeigt, wie hoch es stand. Weit über ihrem Kopf.",
         "Unten die Namen. Der Sockel ist zu klein für alle.", "Und jeden Abend setzt jemand Papierboote mit Kerzen davor."] },
@@ -225,12 +225,12 @@ Cutaway.room("gasse", { name: "Die Gasse", background: "gasse_bg", size: /** @ty
     locks: { name: "Schlösser", rect: AG.locksRect, walkTo: AG.water, face: "se", z: 1,
       look: ["Schlösser am Geländer. Auf jedem zwei Namen, mit Edding."],
       use: ["Die Schlüssel liegen da unten. Bei der alten Stadt.", { evi: "verwirrt" }, { say: "evi", text: "Dann kriegt die keiner mehr auf. Ist das der Plan?" }, "Das ist der Plan."] },
-    ad: { name: "Werbung", rect: AG.adRect, walkTo: AG.ad, face: "nw", look: "Kiemen, Schulden, ein Spiel. Alle drei Sekunden was anderes, das ich nicht brauche." },
-    niche: { name: "Nische", rect: AG.nicheRect, walkTo: AG.niche, face: "nw", look: "Eine Nische mit einer Matratze und einem Topf. Hier wohnt jemand." },
+    ad: { name: "Werbung", poly: AG.adPoly, walkTo: AG.ad, face: "nw", look: "Kiemen, Schulden, ein Spiel. Alle drei Sekunden was anderes, das ich nicht brauche." },
+    niche: { name: "Nische", poly: AG.nichePoly, walkTo: AG.niche, face: "nw", look: "Eine Nische mit einer Matratze und einem Topf. Hier wohnt jemand." },
     // the balcony over the water (the user's wish): only to look at
     water: { name: "Wasser", poly: AG.waterPoly, walkTo: AG.water, face: "se",
       look: ["Das Wasser. Es spiegelt das Grün vom Waschsalon, als wär's was Schönes.", "Irgendwo da unten liegt die alte Stadt."] },
-    cables: { name: "Kabel", rect: AG.cablesRect, walkTo: AG.niche, face: "nw", look: "Kabel, armdick. Alle tropfen. Keiner weiß mehr, wohin sie gehen." },
+    cables: { name: "Kabel", poly: AG.cablesPoly, walkTo: AG.niche, face: "nw", look: "Kabel, armdick. Alle tropfen. Keiner weiß mehr, wohin sie gehen." },
   } });
 const AT_DRYER = ["!off_main", { or: [["day=3", "time>=20:00"], "day=4"] }];     // it lies there from when she has left it (the clock stands while Juno walks); Lantern only hears of it at the meeting
 // baked from its map (art/rooms/laundromat.map.js); the man asleep behind the counter is a figure of his own on his own chair, and
@@ -240,12 +240,12 @@ Cutaway.room("laundromat", { name: "SUDS & SPIN", background: "laundromat_bg", w
   light: { ambient: 0.8, lamps: AW.lamps.map((/** @type {any} */ { bake, zone, ...lamp }) => lamp) },
   ambience: ["fridge_hum", "neon_buzz"], music: { theme: "juno", intensity: 0.3 },
   hotspots: {
-    door: { name: "Tür", rect: AW.doorRect, walkTo: AW.door, face: "sw", use: [{ goto: "gasse", at: AG.laundromat, face: "sw" }] },
-    dryers: { name: "Trockner", rect: AW.dryersRect, walkTo: AW.dryer6, face: "ne", look: "Acht Trockner. Drei Paar Turnschuhe drin, trotz des Schilds." },
-    dryer6: { name: "Trockner 6", rect: AW.dryer6Rect, walkTo: AW.dryer6, face: "ne", z: 1, look: "Trockner 6. OUT OF ORDER, und das schon länger.",
+    door: { name: "Tür", poly: AW.doorPoly, walkTo: AW.door, face: "sw", use: [{ goto: "gasse", at: AG.laundromat, face: "sw" }] },
+    dryers: { name: "Trockner", poly: AW.dryersPoly, walkTo: AW.dryer6, face: "ne", look: "Acht Trockner. Drei Paar Turnschuhe drin, trotz des Schilds." },
+    dryer6: { name: "Trockner 6", poly: AW.dryer6Poly, walkTo: AW.dryer6, face: "ne", z: 1, look: "Trockner 6. OUT OF ORDER, und das schon länger.",
       use: [{ if: AT_DRYER, then: [{ if: "stick_ines", then: ["Hier lag er."], else: ["Da liegt was drin. Ein Datenstick.", "Ein Schlüssel drauf. Sonst nichts. Wozu, weiß ich nicht."] }, { dialog: "stick" }],
         else: ["Kalt und leer."] }] },
-    counter: { name: "Theke", rect: AW.counterRect, walkTo: AW.counter, face: "ne", look: "Die Theke. Ein Mann schläft dahinter, seit Jahren.", use: ["Nichts für mich."] },
+    counter: { name: "Theke", poly: AW.counterPoly, walkTo: AW.counter, face: "ne", look: "Die Theke. Ein Mann schläft dahinter, seit Jahren.", use: ["Nichts für mich."] },
   } });
 Cutaway.item("stick", { name: "Ines' Stick", icon: "inv_stick", look: "Ein Datenstick. Ein Schlüssel drauf, sonst nichts. Wozu, weiß ich nicht." });
 Cutaway.dialog("stick", { main: { choices: [

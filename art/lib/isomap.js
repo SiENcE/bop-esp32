@@ -29,6 +29,8 @@
 //                       meters deep, its floor and walls from the kit; props with { behind: <opening id> }
 //                       stand in it (baked into the picture, seen only through the opening)
 //   nowalk: [[u, v, du, dv], ...]  floor that is drawn but not walked (a corner the screen's edge cuts off)
+//   zones: [{ id, at: [u, v], foot: [du, dv], h }]  a place to click that is no thing and no opening (a door that is only a gap in a
+//                       cut wall): its box's silhouette is a hotspot's shape, as a prop's (layout: zonePolys)
 //   spots: { name: [u, v, face, h] }  where people stand and look (the game's places); h: on a step
 //                       above or below the floor (meters, default 0)
 //   lights: [{ id, at: [u, v, h], r, power, color, flicker }]
@@ -117,6 +119,12 @@ const ISOMAP = (function () {
 
   /** The game's numbers, measured from the map: walk area and holes (screen points, clipped to the picture
    * by the engine's walk code), each prop's place, front line and baseline, the spots, the lamps. */
+  // a hotspot's shape grown round its middle to at least 12 px wide and high, so a small thing (a socket, a calendar) stays easy to click
+  function atLeast(f, min = 12) {
+    const xs = f.filter((_, i) => i % 2 === 0), ys = f.filter((_, i) => i % 2), x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys)
+    const sx = Math.max(1, min / Math.max(1, x1 - x0)), sy = Math.max(1, min / Math.max(1, y1 - y0)), mx = (x0 + x1) / 2, my = (y0 + y1) / 2
+    return f.map((v, i) => Math.round(i % 2 ? my + (v - my) * sy : mx + (v - mx) * sx))
+  }
   function layout(map) {
     const { P } = projector(map)
     const loops = walkLoops(map)
@@ -144,19 +152,27 @@ const ISOMAP = (function () {
         ...(p.seeThrough ? { seeThrough: true } : {}),
       }
     }
-    // each opening's screen rect (its corners on the wall, 1 px round): a hotspot's shape
-    const openings = {}
+    // each opening's screen rect (its corners on the wall, 1 px round), and its own shape on the wall, a parallelogram (a hotspot's
+    // shape: in iso a door or a sign on a wall is slanted, and its rect would cover the floor in front of it)
+    const openings = {}, openingPolys = {}
     for (const o of map.openings ?? []) {
       const w = map.walls[o.wall], alongU = w.from[1] === w.to[1]
       const pt = (s, h) => (alongU ? P(w.from[0] + s, w.from[1], h) : P(w.from[0], w.from[1] + s, h))
       const pts = [pt(o.from, o.h[0]), pt(o.to, o.h[0]), pt(o.from, o.h[1]), pt(o.to, o.h[1])], xs = pts.map((q) => q[0]), ys = pts.map((q) => q[1])
       openings[o.id] = [Math.min(...xs) - 1, Math.min(...ys) - 1, Math.max(...xs) - Math.min(...xs) + 3, Math.max(...ys) - Math.min(...ys) + 3]
+      openingPolys[o.id] = atLeast([pt(o.from, o.h[0]), pt(o.to, o.h[0]), pt(o.to, o.h[1]), pt(o.from, o.h[1])].flat())
+    }
+    // the zones' shapes, as a prop's
+    const zonePolys = {}
+    for (const z of map.zones ?? []) {
+      const [u0, v0] = z.at, [du, dv] = z.foot, h = z.h ?? 0
+      zonePolys[z.id] = atLeast([P(u0, v0, h), P(u0 + du, v0, h), P(u0 + du, v0), P(u0 + du, v0 + dv), P(u0, v0 + dv), P(u0, v0 + dv, h)].flat())
     }
     const spots = {}, face = {}
     for (const [k, [u, v, f, h]] of Object.entries(map.spots ?? {})) { spots[k] = P(u, v, h ?? 0); if (f) face[k] = f }
     const lamps = (map.lights ?? []).map((l) => ({ ...l, at: P(...l.at) }))
     return { walk: loops.filter((l) => l.outer).map((l) => clip(l.pts)).filter((l) => l.length >= 6),
-      holes: loops.filter((l) => !l.outer).map((l) => clip(l.pts)).filter((l) => l.length >= 6), props, openings, spots, face, lamps }
+      holes: loops.filter((l) => !l.outer).map((l) => clip(l.pts)).filter((l) => l.length >= 6), props, openings, openingPolys, zonePolys, spots, face, lamps }
   }
 
   return { UPM, VPM, projector, walkLoops, layout }

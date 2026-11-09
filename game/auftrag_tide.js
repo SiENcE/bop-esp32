@@ -95,7 +95,7 @@ Cutaway.routine("okonkwo_safe", [{ day: [2, 3], from: "01:00", to: "01:15", if: 
 Nagiwa.camRoom("cam07v", { background: undefined, color: Nagiwa.PHOSPHOR[0], mic: { at: AV.mic, clear: 40, lost: 150 },
   post: [{ exposure: AV.exposure }, ...Nagiwa.FEED_POST],
   props: [{ id: "shop", image: "okonkwo_shop_bg", at: [0, 0], anchor: [0, 0], baseline: -1000 }, ...AO.props], hotspots: {
-  safe: { name: "Kasse", rect: AV.safeRect, look: ["Die Kasse. Der Tresor unter der Theke hängt an ihr.", "Und ihr Kundendisplay zeigt genau zu mir."] },
+  safe: { name: "Kasse", rect: AV.safeRect, z: 1, look: ["Die Kasse. Der Tresor unter der Theke hängt an ihr.", "Und ihr Kundendisplay zeigt genau zu mir."] },
   shelves: { name: "Regale", rect: AV.shelvesRect, look: "Reis, Batterien, Zigaretten. Und ein Foto, das ich von hier nicht erkenne." },
   rewind: { name: "Puffer", z: 5, if: ["day<4", "time>=01:15", "!cache_note_safe_code", "!k1b"], use: ["Puffer. Zurück auf eins.", ...READ] },
 } });

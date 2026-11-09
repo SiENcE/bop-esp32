@@ -6,7 +6,7 @@
   const AJ = Nagiwa.at.jade_row, AW = Nagiwa.at.kowalski;
   const kowalski = Cutaway.room.get("kowalski");
   // on the street's left end the passage through the building (the street's map: the opening and spot "west")
-  kowalski.hotspots.west = { name: "Jade Row", rect: AW.westRect, walkTo: AW.west, face: "nw",
+  kowalski.hotspots.west = { name: "Jade Row", poly: AW.westPoly, walkTo: AW.west, face: "nw",
     look: "Da durch geht's in die Jade Row. Licht und Suppe bis in die Nacht.",
     use: [{ if: "day=1", then: ["Nicht heute. Heute will ich Bao."], else: [{ goto: "jade_row", at: AJ.arrive, face: "nw" }] }] };
 
@@ -29,7 +29,7 @@
       back: { name: "Zur Kowalski-Straße", rect: AJ.backRect, walkTo: AJ.back, face: "se", look: "Der Durchgang zur Kowalski-Straße. Da hinten das Blau vom Werbeschirm.",
         use: [{ goto: "kowalski", at: AW.west, face: "se" }] },
       window: { name: "Okonkwos Laden", rect: AJ.windowRect, walkTo: AJ.shop, face: "nw", look: ["Reis, Batterien, Zigaretten. Okonkwo hinter der Theke, mit der Lesebrille.", "Er grüßt mich jeden Abend. Ich hab nie gefragt, warum."] },
-      sign: { name: "OKONKWO", rect: AJ.signRect, walkTo: AJ.shop, face: "nw", look: "OKONKWO. Die einzigen Buchstaben hier, die ich lesen kann, ohne zu raten." },
+      sign: { name: "OKONKWO", rect: AJ.signRect, walkTo: AJ.shop, face: "nw", z: 1, look: "OKONKWO. Die einzigen Buchstaben hier, die ich lesen kann, ohne zu raten." },
       machine: { name: "Automat", rect: AJ.machineRect, walkTo: AJ.machine, face: "nw", z: 1, look: "SMILE FOR A COUPON. Ein Automat, der Leute fotografiert. Und die bedanken sich." },
       soup: { name: "Suppenküche", rect: AJ.soupRect, walkTo: AJ.soup, face: "ne", look: "HOT SOUP. Bao sagt, die salzen zu wenig. Bao sagt das über alle." },
       parlour: { name: "MAHJONG", rect: AJ.parlourRect, walkTo: AJ.parlour, face: "nw", look: "Mahjong. Von hier hört man nur die Steine." },

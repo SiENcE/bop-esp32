@@ -56,6 +56,8 @@ ISO_MAPS.lucky_static = {
     // three shades hanging over the counter (game/places.js draws them after the counter)
     { id: "lamps", kit: "ls_lamps", at: [1.8, 1.0], foot: [2.4, 0.06], h: 2.15, block: false },
   ],
+  // the door: only a gap in the cut wall, so its hotspot is a zone over the sill and the street beyond it, low, never over the floor
+  zones: [{ id: "door", at: [0, 3.92], foot: [0.95, 0.6], h: 0.25 }],
   spots: {
     arrive: [0.5, 3.45, "ne"], door: [0.45, 3.8, "sw"],
     bar: [2.78, 1.95, "ne"], mei: [2.78, 0.4, "sw"],

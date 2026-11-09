@@ -29,7 +29,7 @@ flat.window.with = { ausweis: [{ if: "!window_open", then: ["Der Ausweis in den 
 flat.window.look = [...flat.window.look, "Rechts draußen geht die Leiter aufs Dach. Da oben war ich zuletzt mit Teo."];
 
 // ---- the lift never runs; its emergency key hangs on the wall beside the doors all the same, as a thing of its own (art/rooms/kessel_14.map.js)
-floor14.haken = { name: "Notschlüssel", rect: AK.hakenRect, walkTo: AK.haken, face: "ne", z: 1, if: ["!got_haken", "!off_roof"],
+floor14.haken = { name: "Notschlüssel", poly: AK.hakenPoly, walkTo: AK.haken, face: "ne", z: 1, if: ["!got_haken", "!off_roof"],
   look: "Der Notschlüssel vom Aufzug. Ein langer Haken. Hängt da, falls der Aufzug mal fährt.",
   use: ["Der Notschlüssel. Lang genug für alles.", "Stecken bleiben müsste er erst mal fahren. Den nehm ich mit.", { hide: "haken" }, { give: "haken" }, { set: "got_haken" }] };
 const room14 = Cutaway.room.get("kessel_14");
@@ -180,9 +180,9 @@ Cutaway.room("lucky_static", { name: "LUCKY STATIC", background: "lucky_static_b
   light: { ambient: 0.82, lamps: AI.lamps.map((/** @type {any} */ { bake, zone, ...lamp }) => lamp) },
   ambience: ["neon_buzz", "fridge_hum"], music: { theme: "juno", intensity: 0.4 },
   hotspots: {
-    door: { name: "Tür", rect: AI.doorRect, walkTo: AI.door, face: "sw", use: [{ goto: "kowalski", at: Nagiwa.at.kowalski.lucky_door, face: "se" }] },
-    bar: { name: "Theke", rect: AI.barRect, walkTo: AI.bar, face: "ne", look: "Meis Theke. Wer hier anschreiben lässt, weiß, was er tut." },
-    karaoke: { name: "Karaoke", rect: AI.karaokeRect, walkTo: AI.karaoke, face: "nw", look: "OUT OF ORDER. Trotzdem singt hier jeden Abend jemand." },
+    door: { name: "Tür", poly: AI.doorPoly, walkTo: AI.door, face: "sw", use: [{ goto: "kowalski", at: Nagiwa.at.kowalski.lucky_door, face: "se" }] },
+    bar: { name: "Theke", poly: AI.barPoly, walkTo: AI.bar, face: "ne", look: "Meis Theke. Wer hier anschreiben lässt, weiß, was er tut." },
+    karaoke: { name: "Karaoke", poly: AI.karaokePoly, walkTo: AI.karaoke, face: "nw", look: "OUT OF ORDER. Trotzdem singt hier jeden Abend jemand." },
   } });
 Cutaway.room.get("kowalski").hotspots.lucky_door.use = [{ if: "day=1", then: ["Nicht heute. Heute will ich Bao."], else: [{ goto: "lucky_static", at: AI.arrive, face: "ne" }] }];
 

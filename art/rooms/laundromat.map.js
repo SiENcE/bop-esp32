@@ -67,6 +67,8 @@ ISO_MAPS.laundromat = {
     { id: "tubes", kit: "lm_tubes", at: [1.0, 1.6], foot: [3.2, 0.06], h: 2.45, block: false },
     { id: "cam", kit: "lm_cam", at: [3.3, 1.3], foot: [0.16, 0.16], h: 2.2, block: false },
   ],
+  // the door: only a gap in the cut wall, so its hotspot is a zone over the sill and the street beyond it, low, never over the floor
+  zones: [{ id: "door", at: [0, 3.92], foot: [0.95, 0.6], h: 0.25 }],
   spots: {
     arrive: [0.75, 3.65, "ne"], door: [0.5, 3.85, "sw"],
     dryer6: [3.4, 1.3, "ne"], counter: [1.35, 3.0, "nw"], washer: [1.15, 1.8, "nw"],

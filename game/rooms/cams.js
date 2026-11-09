@@ -78,7 +78,7 @@ Nagiwa.camRoom("cam03", {
     mast: { name: "Kamera am Mast", rect: A3.mast, if: "day=1",
       look: "Gegenüber, am Mast: noch eine Kamera. Zeigt auf die Ecke bei Yuen's.",
       use: [{ zoom: "zoom_sticker_cam04" }, "HCS-04. K7-731.", "Der Wartungscode, auf das Gehäuse geklebt. Nagi·wa spart an allem.", { zoom: false }, { set: "code_cam04" }] },
-    vending: { name: "Nudelautomat", rect: A3.vending,
+    vending: { name: "Nudelautomat", rect: A3.vending, z: 1,
       look: "Ein Nudelautomat. Halb die Pumpenverwaltung isst daraus.", use: [{ zoom: "zoom_vending_n7" }, "Nummer 7, Huhn scharf. Die Taste ist abgegriffen.", { zoom: false }] },
     office: { name: "Pumpenverwaltung Ost", rect: A3.officeDoor, look: "Die Pumpenverwaltung. Um zehn ist Schichtende." },
     rewind: { name: "Puffer", z: 5, if: ["call_missed", "!heard_yuens"],
