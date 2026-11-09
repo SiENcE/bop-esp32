@@ -43,7 +43,7 @@ const gsWater = (c) => {
 // the wet deck shines: the puddles mirror the lights, the rest of the paving takes a faint sheen
 const gsCell = (u, v) => ISO_MAPS.gasse.floor[Math.floor(v / 0.5)]?.[Math.floor(u / 0.5)] ?? "."
 const GASSE = ISOKIT.bake(ISO_MAPS.gasse, { id: "gasse", frames: 12, fps: 10, glows: [gsWater, gsSteam],
-  sheen: { reach: 3.0, map: (u, v) => (gsCell(u, v) === "w" ? ISO.MIRROR : ISO.SHEEN), keys: (u, v) => gsCell(u, v) !== "." } })
+  sheen: { reach: 3.0, map: (u, v) => (KIT_GASSE.inPuddle(u, v) ? ISO.MIRROR : ISO.SHEEN), keys: (u, v) => gsCell(u, v) !== "." } })
 
 // The ad screen on the left wall: three ads of the Lower Ninth (no Lull: tide mods, buying up the flood debt, an arcade game), each
 // for ten frames at 3 fps, a glitch where one changes to the next; drawn flat and laid onto the wall's slope pixel by pixel as the bake

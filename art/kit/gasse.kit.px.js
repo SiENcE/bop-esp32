@@ -6,8 +6,9 @@
 // Its small stories: the man who lives in the niche (his blanket, his stove, a photo taped up), the memorial's names and the candles
 // somebody lights every evening, padlocks on the railing over the water, a tag on the wall, a bag holding a bin's lid open.
 //
-//   floors   p  old concrete slabs, wet: their joints, cracks, one sunk, moss along the walls' feet; w  puddles (the bake's sheen
-//               mirrors the lights in them); g  a drain; n  the niche's cardboard; q  the arch's passage (the street's cyan)
+//   floors   p  old concrete slabs, wet: their joints, cracks, one sunk, moss along the walls' feet, puddles where the deck sags
+//               (KIT_GASSE.PUDDLES: the bake's sheen mirrors the lights in them, rain rings); w  the same (the map marks where
+//               they lie); g  a drain; n  the niche's cardboard; q  the arch's passage (the street's cyan)
 //   walls    gs_wall  poured concrete in panels, the bolts' rust run down, the damp coming up from the water, a tag
 //            gs_facade  SUDS & SPIN's front: enamel panels to 2.3 m, the building's concrete above, a downpipe
 //            gs_niche_wall  inside the niche; gs_tunnel  the arch's passage
@@ -38,16 +39,33 @@ const KIT_GASSE = (() => {
   // ---------------------------------------------------------------- floors
   // old concrete slabs, 50 cm, wet: the joints, a crack across one now and then, one slab sunk (darker, water standing on it), moss in
   // the joints along the walls' feet where nobody walks
-  ISOKIT.floor("p", (u, v) => {
+  const slabs = (u, v) => {
     const T = 0.5, iu = fl(u / T), iv = fl(v / T), lu = u - iu * T, lv = v - iv * T
     const joint = lu < 0.02 || lv < 0.02
     if (joint) return (u < 0.35 || v < 0.3) && ih(fl(u * 20), fl(v * 20)) < 0.5 ? "E" : "e"
     if (ih(iu + 5, iv + 2) > 0.93 && near(lu - lv * 0.8, 0.08, 0.012)) return "e"            // a crack
     if (iu === 7 && iv === 9) return lu > 0.05 && lv > 0.05 ? "e" : "f"                         // a sunk slab, water on it
     return (iu + iv) % 2 ? "f" : ih(iu, iv) < 0.3 ? "Z" : "z"
-  })
-  // puddles: dark water, the bake's sheen puts the lights in them; rings where the rain falls in
-  ISOKIT.floor("w", (u, v, o) => (fl((u * 7 + v * 11) * 3 + (o.f ?? 0)) % 37 === 0 ? "Z" : "e"))
+  }
+  // puddles where the deck sags, as in Kowalski Street: ellipses of dark water over the slabs (one before the memorial, to hold its
+  // cone of light), the bake's sheen putting the lights in them; rings spreading where the rain falls in, frame by frame
+  const PUDDLES = [[3.5, 1.0, 0.46, 0.36], [1.6, 2.05, 0.44, 0.3], [4.95, 2.85, 0.46, 0.3], [2.75, 4.3, 0.5, 0.24], [4.6, 5.35, 0.52, 0.34], [1.55, 6.9, 0.42, 0.34]]
+  const inPuddle = (u, v) => PUDDLES.some(([pu, pv, ru, rv]) => Math.hypot((u - pu) / ru, (v - pv) / rv) + 0.12 * Math.sin(u * 23 + v * 17) < 1)
+  const RINGS = [[3.35, 0.95, 0], [3.7, 1.1, 6], [1.5, 2.0, 3], [4.9, 2.8, 8], [2.6, 4.28, 1], [2.95, 4.32, 7], [4.45, 5.3, 4], [4.8, 5.45, 10], [1.5, 6.85, 5]]
+  const puddle = (u, v, o) => {
+    // the far rim catches the light: a thin bright edge where the water meets the slabs behind it
+    for (const [pu, pv, ru, rv] of PUDDLES) {
+      const d = Math.hypot((u - pu) / ru, (v - pv) / rv) + 0.12 * Math.sin(u * 23 + v * 17)
+      if (d < 1 && d > 0.86 && u + v < pu + pv) return "X"
+    }
+    for (const [ru, rv, t0] of RINGS) {
+      const t = ((o.f ?? 0) - t0 + 12) % 12
+      if (t < 4 && near(Math.hypot(u - ru, v - rv), 0.04 + t * 0.045, 0.012)) return t < 2 ? "Z" : "z"
+    }
+    return "e"
+  }
+  ISOKIT.floor("p", (u, v, o) => (inPuddle(u, v) ? puddle(u, v, o) : slabs(u, v)))
+  ISOKIT.floor("w", (u, v, o) => (inPuddle(u, v) ? puddle(u, v, o) : slabs(u, v)))
   // the drain: a steel frame, bars across a dark pit
   ISOKIT.floor("g", (u, v) => { const lu = u % 0.5, lv = v % 0.5; return lu < 0.04 || lv < 0.04 || lu > 0.46 || lv > 0.46 ? "4" : near(lu % 0.08, 0, 0.012) ? "3" : "k" })
   // the niche's floor: flattened cardboard, its folds
@@ -394,5 +412,5 @@ const KIT_GASSE = (() => {
     },
   })
 
-  return {}
+  return { inPuddle, PUDDLES }
 })()
