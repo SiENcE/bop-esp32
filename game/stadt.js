@@ -17,21 +17,21 @@ const every = (anim) => ({ se: anim, sw: anim, ne: anim, nw: anim });
 const flat = Cutaway.room.get("flat").hotspots, floor14 = Cutaway.room.get("kessel_14").hotspots;
 
 // ---- the window of the flat: it sticks, and only something flat gets at the latch
-Cutaway.item("ausweis", { name: "Nagi·wa-Ausweis", icon: "inv_ausweis", look: "CIVIC MONITOR, J. REYES. UNGÜLTIG. Flach und hart." });
-Cutaway.item("haken", { name: "Notschlüssel", icon: "inv_haken", look: "Der Notschlüssel vom Aufzug. Ein langer Haken." });
-flat.box_old.look = ["Ein Karton von damals.", { if: "!got_ausweis", then: ["Mein Nagi·wa-Ausweis. CIVIC MONITOR, J. REYES. UNGÜLTIG."] }, "Und der Kaktus. Vertrocknet. Wie alles aus der Zeit."];
-flat.box_old.use = [{ if: ["!got_ausweis", "!off_roof"], then: ["Der Ausweis. CIVIC MONITOR, J. REYES. UNGÜLTIG.", "Flach und hart. Den steck ich ein.", { give: "ausweis" }, { set: "got_ausweis" }],
-  else: ["Der Karton von damals. Mehr brauch ich daraus nicht."] }];
+Cutaway.item("ausweis", { name: "Nagi·wa-Ausweis", icon: "inv_ausweis", look: "CIVIC MONITOR, J. REYES. UNGÜLTIG. Er ist flach und hart." });
+Cutaway.item("haken", { name: "Notschlüssel", icon: "inv_haken", look: "Der Notschlüssel vom Aufzug ist ein langer Haken." });
+flat.box_old.look = ["Das ist ein Karton von damals.", { if: "!got_ausweis", then: ["Da ist mein Nagi·wa-Ausweis drin: CIVIC MONITOR, J. REYES. UNGÜLTIG."] }, "Und der Kaktus ist vertrocknet, wie alles aus der Zeit."];
+flat.box_old.use = [{ if: ["!got_ausweis", "!off_roof"], then: ["Da ist der Ausweis: CIVIC MONITOR, J. REYES. UNGÜLTIG.", "Er ist flach und hart. Den steck ich ein.", { give: "ausweis" }, { set: "got_ausweis" }],
+  else: ["Mehr brauch ich aus dem Karton nicht."] }];
 flat.window.use = [{ if: "window_open", then: [{ goto: "sims", at: AS.window, face: "se" }],
-  else: ["Klemmt. Der Riegel sitzt im Rahmen. Da kommt man nur mit was Flachem ran."] }];
-flat.window.with = { ausweis: [{ if: "!window_open", then: ["Der Ausweis in den Spalt. Hoch. Noch mal.", "Klick.", "Das erste Mal, dass das Ding was aufmacht.", { set: "window_open" }, { goto: "sims", at: AS.window, face: "se" }],
+  else: ["Es klemmt, der Riegel sitzt im Rahmen. Da kommt man nur mit was Flachem ran."] }];
+flat.window.with = { ausweis: [{ if: "!window_open", then: ["Ich schieb den Ausweis in den Spalt und hebel ihn hoch. Noch mal.", "Klick.", "Das ist das erste Mal, dass das Ding was aufmacht.", { set: "window_open" }, { goto: "sims", at: AS.window, face: "se" }],
   else: ["Das Fenster ist offen."] }] };
 flat.window.look = [...flat.window.look, "Rechts draußen geht die Leiter aufs Dach. Da oben war ich zuletzt mit Teo."];
 
 // ---- the lift never runs; its emergency key hangs on the wall beside the doors all the same, as a thing of its own (art/rooms/kessel_14.map.js)
 floor14.haken = { name: "Notschlüssel", poly: AK.hakenPoly, walkTo: AK.haken, face: "ne", z: 1, if: ["!got_haken", "!off_roof"],
-  look: "Der Notschlüssel vom Aufzug. Ein langer Haken. Hängt da, falls der Aufzug mal fährt.",
-  use: ["Der Notschlüssel. Lang genug für alles.", "Stecken bleiben müsste er erst mal fahren. Den nehm ich mit.", { hide: "haken" }, { give: "haken" }, { set: "got_haken" }] };
+  look: ["Der Notschlüssel vom Aufzug ist ein langer Haken.", "Er hängt da, falls der Aufzug mal fährt."],
+  use: ["Der Notschlüssel ist lang genug für alles.", "Um stecken zu bleiben, müsste der Aufzug erst mal fahren. Den nehm ich mit.", { hide: "haken" }, { give: "haken" }, { set: "got_haken" }] };
 const room14 = Cutaway.room.get("kessel_14");
 room14.enter = [{ if: "got_haken", then: [{ hide: "haken" }] }, ...(room14.enter ?? [])];
 
@@ -42,29 +42,30 @@ Cutaway.room("sims", { name: "Der Sims", background: "sims_bg", walk: AS.walk,
   hotspots: {
     window: { name: "Mein Fenster", rect: AS.windowRect, walkTo: AS.window, face: "nw", look: "Mein Fenster. Von außen sieht meine Wohnung fast nett aus.",
       use: [{ goto: "flat", at: AF.window, face: "sw" }] },
-    below: { name: "Die Straße", rect: AS.belowRect, walkTo: AS.window, face: "se", look: ["Vierzehn Stockwerke. Nicht runterschauen.", "Ich hab runtergeschaut."] },
+    below: { name: "Die Straße", rect: AS.belowRect, walkTo: AS.window, face: "se", look: ["Es sind vierzehn Stockwerke. Nicht runterschauen.", "Ich hab runtergeschaut."] },
     ladder: { name: "Leiter", rect: AS.ladderRect, walkTo: AS.ladder, face: "ne",
-      look: [{ if: "ladder_down", then: ["Die Leiter. Sie hängt jetzt da, wo sie hingehört."], else: ["Die Leiter aufs Dach. Sie hängt zwei Meter zu hoch.", "Teo kam da früher mit irgendwas Langem ran."] }],
-      use: [{ if: "!ladder_down", then: ["Zwei Meter zu hoch. Teo kam da mit irgendwas Langem ran. Ich nicht.", "Nicht heute. Nicht ohne was mit Haken."],
+      look: [{ if: "ladder_down", then: ["Die Leiter hängt jetzt da, wo sie hingehört."], else: ["Die Leiter aufs Dach hängt zwei Meter zu hoch.", "Teo kam da früher mit irgendwas Langem ran."] }],
+      use: [{ if: "!ladder_down", then: ["Sie hängt zwei Meter zu hoch. Teo kam da mit irgendwas Langem ran, ich nicht.", "Ohne was mit Haken wird das nichts."],
         else: ["Nicht runterschauen.", { goto: "dach", at: AD.hatch, face: "ne" }] }],
-      with: { haken: ["Der Haken greift. Ziehen.", "Sie kommt runter, mit allem Rost der letzten zwanzig Jahre.", { remove: "haken" }, { set: "ladder_down" }, "Nicht runterschauen.", { goto: "dach", at: AD.hatch, face: "ne" }] } },
+      with: { haken: ["Der Haken greift, und ich zieh.", "Sie kommt runter, mit allem Rost der letzten zwanzig Jahre.", { remove: "haken" }, { set: "ladder_down" }, "Nicht runterschauen.", { goto: "dach", at: AD.hatch, face: "ne" }] } },
   } });
 
 // ---- the roof. Above it, where other people have a sky, the underside of the next Ring
 Cutaway.actor("regenleserin", { name: "Regenleserin", color: "#a8c8e8", room: "dach", at: AD.reader, facing: "sw", walkTo: AD.readerTalk, face: "sw",
   // the same view for every facing, as Bao: she stays on her bucket
   costume: { idle: every("regen_idle_sw"), walk: every("regen_idle_sw"), talk: every("regen_talk_sw") }, voice: { pitch: 58, range: 4, wave: "triangle", syllable: 90, speed: 0.8 },
-  look: ["Eine alte Frau auf einem Eimer. Sie hält einen zweiten Eimer unter das Tropfen und kostet.", "So sicher, wie andere die Zeitung lesen.", "Nicht mit der Zunge. Mit den Barteln. Billiger Umbau, noch aus der Flut."],
+  look: ["Eine alte Frau sitzt auf einem Eimer und hält einen zweiten unter das Tropfen.", "Sie kostet das Wasser so sicher, wie andere die Zeitung lesen.",
+    "Sie nimmt dafür nicht die Zunge, sondern ihre Barteln.", "Das ist ein billiger Umbau, noch aus der Flut."],
   talk: [{ dialog: "regenleserin" }] });   // game/regenleserin.js
 Cutaway.room("dach", { name: "Das Dach", background: "dach_bg", walk: AD.walk,
   ambience: ["city_far", { sfx: "feed_rain", gain: 0.5 }], music: { theme: "juno", intensity: 0.2 },
   hotspots: {
-    hatch: { name: "Leiter nach unten", rect: AD.hatchRect, walkTo: AD.hatch, face: "sw", look: "Die Leiter. Runter ist schlimmer als rauf.", use: [{ goto: "sims", at: AS.ladder, face: "sw" }] },
+    hatch: { name: "Leiter nach unten", rect: AD.hatchRect, walkTo: AD.hatch, face: "sw", look: "Runter ist die Leiter schlimmer als rauf.", use: [{ goto: "sims", at: AS.ladder, face: "sw" }] },
     rings: { name: "Die Ringe", rect: AD.ringsRect, walkTo: AD.edge, face: "ne", look: "Da oben ist nicht der Himmel. Da oben ist der Boden von jemand anderem.", use: [{ goto: "dach_blick" }] },
     screen: { name: "Der große Schirm", rect: AD.screenRect, walkTo: AD.edge, face: "ne", look: ["NAGI·WA. SLEEP BETTER.", "Früher stand da RISE ABOVE. Das hier ist wenigstens ehrlicher."] },
-    noodles: { name: "NOODLES", rect: AD.noodlesRect, walkTo: AD.edge, face: "ne", look: "N, D, L, E, S. Zwei Buchstaben haben's nicht geschafft." },
-    drone: { name: "Drohne", rect: AD.droneRect, walkTo: AD.edge, face: "ne", look: "Eine Kameradrohne. Die hingen damals schon hier oben rum. Uns hat das nie gestört." },
-    place: { name: "Unser Platz", rect: AD.placeRect, walkTo: AD.edge, face: "ne", look: "Da haben wir gesessen. Ich vierzehn, Teo sechs. Eine Schale Nudeln für zwei.", use: [{ goto: "dach_sitzen" }] },
+    noodles: { name: "NOODLES", rect: AD.noodlesRect, walkTo: AD.edge, face: "ne", look: "Da steht N, D, L, E, S. Zwei Buchstaben haben's nicht geschafft." },
+    drone: { name: "Drohne", rect: AD.droneRect, walkTo: AD.edge, face: "ne", look: ["Da hängt eine Kameradrohne. Die hingen damals schon hier oben rum.", "Uns hat das nie gestört."] },
+    place: { name: "Unser Platz", rect: AD.placeRect, walkTo: AD.edge, face: "ne", look: ["Da haben wir gesessen, ich mit vierzehn und Teo mit sechs.", "Wir hatten eine Schale Nudeln für zwei."], use: [{ goto: "dach_sitzen" }] },
   } });
 
 // sitting where they sat, the old photo's picture twenty years on
@@ -79,7 +80,7 @@ Cutaway.room("dach_sitzen", { name: "Unser Platz", background: "dach_heute", obs
 const AC = Nagiwa.at.cam14;
 const notesLook = floor14.notes.look;
 floor14.notes.look = [{ if: ["news_who", "news_stack"], then: [...notesLook, "Und drunter, von mir: ES IST NIEMAND. 14B."], else: notesLook }];
-floor14.notes.use = [{ if: "day>1", then: ["Wer klaut die? Seit Wochen geht das so.", "Über mir hängt Nagi·was Kamera. Ich müsste nur reinschauen."], else: ["Krieg auf dem vierzehnten."] }];
+floor14.notes.use = [{ if: "day>1", then: ["Wer klaut die? Seit Wochen geht das so.", "Über mir hängt Nagi·was Kamera. Ich müsste nur reinschauen."], else: ["Auf dem vierzehnten ist Krieg."] }];
 floor14.corner_cam.use = [{ if: ["day>1", "!link_cam14", "!off_zeitung"], then: ["Mein alter Zugang geht auch hier.", "Den eigenen Block glasst man nicht. Das sag ich Motte auch.", { dialog: "zeitung_cam" }],
   else: [{ if: "link_cam14", then: ["Bin schon drauf. Schöner wird's nicht."], else: ["Den eigenen Block glasst man nicht."] }] }];
 Cutaway.dialog("zeitung_cam", { main: { choices: [
@@ -184,7 +185,7 @@ Cutaway.room("lucky_static", { name: "LUCKY STATIC", background: "lucky_static_b
     bar: { name: "Theke", poly: AI.barPoly, walkTo: AI.bar, face: "ne", look: "Meis Theke. Wer hier anschreiben lässt, weiß, was er tut." },
     karaoke: { name: "Karaoke", poly: AI.karaokePoly, walkTo: AI.karaoke, face: "nw", look: "OUT OF ORDER. Trotzdem singt hier jeden Abend jemand." },
   } });
-Cutaway.room.get("kowalski").hotspots.lucky_door.use = [{ if: "day=1", then: ["Nicht heute. Heute will ich Bao."], else: [{ goto: "lucky_static", at: AI.arrive, face: "ne" }] }];
+Cutaway.room.get("kowalski").hotspots.lucky_door.use = [{ if: "day=1", then: ["Heute nicht. Heute will ich zu Bao."], else: [{ goto: "lucky_static", at: AI.arrive, face: "ne" }] }];
 
 // ---- the white carriers (kapitel1-design): Thursday night a white van stops on Kowalski Street, two kind people carry a sleeper out
 // of the house opposite and his daughter stands in the door. What happens to Sinkers, long before it happens to Teo. Time only moves when
@@ -245,5 +246,5 @@ Cutaway.room("dach_blick", { name: "Die Ringe", background: "dach_blick_b_bg", o
   ambience: ["city_far", { sfx: "feed_rain", gain: 0.5 }], music: { theme: "juno", intensity: 0.2 },
   fx: [{ kind: "rain", rect: [0, 0, 320, 180], count: 30, color: "#a8b8d0", speed: 90, slant: 0, length: 3 }],
   hotspots: { back: { name: "Zurück", rect: [0, 0, 320, 180], exit: { to: "dach", at: AD.edge, face: "sw" } } },
-  enter: ["Acht Ringe über mir. Der helle Punkt da oben ist die Krone.", "Alles, was hier tropft, war schon mal bei jemandem im Glas."] });
+  enter: ["Über mir hängen acht Ringe. Der helle Punkt da oben ist die Krone.", "Alles, was hier tropft, war schon mal bei jemandem im Glas."] });
 })();

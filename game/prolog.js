@@ -44,17 +44,17 @@ const exits = [A3.exitRight, A3.exitFar, A3.exitRight, A3.exitFar];
 // 22:00 on cam03: the shift ends, the crowd comes out; Juno says what to look for (once)
 Cutaway.moment("shift_end", {
   room: "cam03", day: 1, from: "22:00", to: "22:15",
-  play: ["Schichtende. Da kommen sie.", "Einer davon ist Kessler. Frau Kesslers Foto: ein heller Schal.", "Den markier ich. Einmal draufzeigen reicht."],
+  play: ["Es ist zehn, die Schicht ist aus. Da kommen sie.", "Einer davon ist Kessler. Auf Frau Kesslers Foto trägt er einen hellen Schal.", "Den markier ich. Einmal draufzeigen reicht."],
 });
 Cutaway.moment("kessler_call", {
   room: "cam03", day: 1, from: "22:00", to: "22:15", if: "tag_kessler",
   play: [
     { say: "kessler", text: "Ja ... ja, ich bring's mit. Alles. Halb elf, bei Yuen's." },
-    "Zu weit weg. Komm schon, stell dich unter.",
+    "Er ist zu weit weg. Komm schon, stell dich unter.",
     { walk: "kessler", to: A3.awning, free: true },
     { say: "kessler", text: "Ja, ich bring's mit. Alles. Halb elf, bei Yuen's." },
     { set: "heard_yuens" },
-    "Yuen's. Der Imbiss an der Ecke. Da hängt 'ne Kamera. Hab ich bloß nicht.",
+    "Yuen's ist der Imbiss an der Ecke. Da hängt 'ne Kamera, aber die hab ich nicht.",
   ],
   unseen: [{ if: "day=1", then: [{ set: "call_missed" }, "Mist. Kessler ist weg. Aber die Kamera hat alles im Puffer."] }],   // (not when a later act begins)
 });
@@ -63,7 +63,7 @@ Cutaway.moment("kessler_call", {
 Cutaway.moment("kessler_ring", {
   room: "cam04", day: 1, from: "22:30", to: "22:50",
   play: [
-    { if: "!rec_on", then: ["Da sitzt er. Und gegenüber einer im grauen Mantel. REC, schnell."] },
+    { if: "!rec_on", then: ["Da sitzt er, und ihm gegenüber sitzt einer im grauen Mantel. REC, schnell."] },
     { say: "varga", text: "Das ist nicht alles, Kessler." },
     { say: "kessler", text: "Mehr hab ich nicht. Ehrlich." },
     { say: "varga", text: "Dann gib mir, was du hast." },
@@ -72,10 +72,10 @@ Cutaway.moment("kessler_ring", {
     "Und schiebt ihn rüber.",
     { zoom: false },
     { say: "varga", text: "Bis Freitag, Kessler. Sonst holen wir uns mehr als einen Ring." },
-    { if: "rec_on", then: [{ cache: "clip_kessler_ring" }, "Hab's. Alles drauf."],
+    { if: "rec_on", then: [{ cache: "clip_kessler_ring" }, "Ich hab's. Es ist alles drauf."],
       else: ["Mist. REC war aus. Der Puffer hat es noch."] },
     { set: "saw_varga" }, { cache: "note_kessler_debt" },
-    "Gus Varga. Kein Liebhaber. Ein Kredithai.",
+    "Das ist Gus Varga. Er ist kein Liebhaber, er ist ein Kredithai.",
   ],
 });
 
@@ -113,7 +113,7 @@ Nagiwa.deckEnter = [{ unset: "rec_on" }, { if: "day=1", then: [{ once: [
   { evi_point: "chat" },
 ] }], else: [{ if: "!read_wren", then: [
   { deck_boot: true }, { evi: "neugierig" },
-  { say: "evi", text: "Guten Abend, Juno! Eine neue Nachricht. Sie hat keinen Absender. Nur WREN." },
+  { say: "evi", text: "Guten Abend, Juno! Eine neue Nachricht. Sie hat keinen Absender, da steht nur WREN." },
   { evi_point: "chat" },
 ] }] }];
 
@@ -160,7 +160,7 @@ Object.assign(Nagiwa.threads, {
 Object.assign(Nagiwa.replies, {
   kessler: [
     { id: "full", text: "Den ganzen Clip schicken.", if: ["cache_clip_kessler_ring", "!p1"],
-      use: [{ set: "p1", value: "full" }, { ledger: "kessler", value: "full" }, "Die Wahrheit. Für zweihundert.",
+      use: [{ set: "p1", value: "full" }, { ledger: "kessler", value: "full" }, "Das war die Wahrheit, für zweihundert Chits.",
         { evi: "verwirrt" }, { say: "evi", text: "Sie schreibt nichts mehr. Ist sie jetzt froh?" }, { notify: "sable" }] },
     { id: "cut", text: "Nur den Ring schicken.", if: ["cache_clip_kessler_cut", "!p1"],                 // the cut clip (the editor)
       use: [{ set: "p1", value: "cut" }, { ledger: "kessler", value: "cut" }, "Sie hat bekommen, was sie bestellt hat.",
@@ -180,8 +180,8 @@ Object.assign(Nagiwa.replies, {
 // last match wins, so the big shapes come first
 const AF = Nagiwa.at.flat;
 // Bao's broth to go (step 16): Juno eats it at home, and then the bed takes her into Chapter 1
-Cutaway.item("suppe", { name: "Baos Brühe", icon: "inv_suppe", look: "Brühe zum Mitnehmen, Deckel drauf. Noch warm." });
-const EAT_HOME = [{ walk: AF.deck }, { face: "ne" }, "Baos Brühe. Noch warm. Fast.", "...", "Salzig. Genau richtig.", { remove: "suppe" }, { set: "soup_eaten" },
+Cutaway.item("suppe", { name: "Baos Brühe", icon: "inv_suppe", look: "Baos Brühe zum Mitnehmen, mit Deckel. Sie ist noch warm." });
+const EAT_HOME = [{ walk: AF.deck }, { face: "ne" }, "Baos Brühe ist noch warm. Fast.", "...", "Sie ist zu salzig, und genau so muss sie sein.", { remove: "suppe" }, { set: "soup_eaten" },
   { evi: "froh" }, { say: "evi", text: "Du hast doch was mitgebracht. Eins Abendessen!" }, "Und jetzt ins Bett."];
 const PROLOGUE_SLEEP = ["Genug für heute.", { say: "evi", text: "Gute Nacht, Juno." }, { fade: "out", ms: 900 }, { act: "next" }];
 // the evening's card for Chapter 1's first evening, once, after the chapter's own card (a view: it costs the solver nothing)
@@ -194,37 +194,37 @@ Cutaway.room("flat", {
   light: { ambient: 0.38, color: "#8a9cff", lamps: AF.lamps.map((/** @type {any} */ { bake, ...lamp }) => lamp) },
   hotspots: {
     bed: { name: "Bett", poly: AF.bedPoly, walkTo: AF.bed, face: "nw",
-      look: "Eine Matratze auf einer Palette. Schlafen kann ich später. Oder nie.",
+      look: "Meine Matratze liegt auf einer Palette. Schlafen kann ich später. Oder nie.",
       // the prologue's night ends when Juno has eaten and goes to bed: sleeping goes on into Chapter 1, with its card and then the new evening's
       use: [{ if: "day>1", then: Nagiwa.sleep, else: [{ if: "soup_eaten", then: PROLOGUE_SLEEP, else: ["Schlafen kann ich später. Oder nie."] }] }] },
     fridge: { name: "Kühlschrank", poly: AF.fridgePoly, walkTo: AF.fridge, face: "ne",
-      look: "Der Kühlschrank. Er brummt, als hätte er was zu sagen.", use: [{ set: "fridge_empty" }, "Licht. Sonst nichts."] },
+      look: "Der Kühlschrank. Er brummt, als hätte er was zu sagen.", use: [{ set: "fridge_empty" }, "Drin ist Licht, sonst nichts."] },
     deck: { name: "Deck", poly: AF.deckPoly, walkTo: AF.deck, face: "ne",
-      look: "Mein Deck. Drei Bildschirme, die nicht zusammenpassen, und ein Feed, der nie schläft.",
+      look: ["Das ist mein Deck. Keiner der drei Bildschirme passt zum anderen.", "Und der Feed darauf schläft nie."],
       use: [{ goto: "deck" }] },
     window: { name: "Fenster", poly: AF.windowPoly, walkTo: AF.window, face: "ne",
-      look: ["Regen. Gegenüber das Hotel, und dahinter der große Bildschirm.", "NAGI·WA: SLEEP BETTER. Ich schlafe schlecht, danke."] },
+      look: ["Es regnet. Gegenüber ist das Hotel, und dahinter hängt der große Bildschirm.", "NAGI·WA: SLEEP BETTER. Ich schlafe schlecht, danke."] },
     door: { name: "Tür", poly: AF.doorPoly, walkTo: AF.door, face: "nw",
-      look: "Die Tür zum Flur.",
-      use: [{ if: "!p1", then: ["Erst der Auftrag. Dann Essen."],
-        else: [{ if: "!fridge_empty", then: ["Hunger. Mal sehen, was der Kühlschrank sagt."],
+      look: "Die Tür geht raus auf den Flur.",
+      use: [{ if: "!p1", then: ["Erst kommt der Auftrag, dann das Essen."],
+        else: [{ if: "!fridge_empty", then: ["Ich hab Hunger. Mal sehen, was der Kühlschrank sagt."],
           else: [{ goto: "kessel_14", at: Nagiwa.at.kessel_14.arrive, face: "se" }] }] }] },
     laundry: { name: "Wäsche", poly: AF.laundryPoly, walkTo: AF.laundry, face: "ne",
-      look: "Wäsche. Sauber oder nicht, das weiß inzwischen niemand mehr." },
+      look: "Ob die Wäsche sauber ist, weiß inzwischen niemand mehr." },
     noodles: { name: "Nudelbecher", poly: AF.noodlesPoly, walkTo: AF.noodles, face: "ne",
-      look: "Ein Turm aus leeren Nudelbechern. Mein einziges Bauwerk." },
+      look: "Da steht ein Turm aus leeren Nudelbechern. Das ist mein einziges Bauwerk." },
     pinboard: { name: "Pinnwand", poly: AF.pinboardPoly, walkTo: AF.pinboard, face: "nw",
-      look: "Fotos, Fäden, Zettel. Leute, die ich kenne, ohne dass sie mich kennen." },
+      look: ["An der Pinnwand hängen Fotos, Fäden und Zettel.", "Das sind Leute, die ich kenne, ohne dass sie mich kennen."] },
     box_old: { name: "Karton", poly: AF.boxPoly, walkTo: AF.box, face: "nw",
-      look: ["Ein Karton von damals.", "Mein Nagi·wa-Ausweis. CIVIC MONITOR, J. REYES. UNGÜLTIG.", "Und der Kaktus. Vertrocknet. Wie alles aus der Zeit."] },
+      look: ["Das ist ein Karton von damals.", "Da ist mein Nagi·wa-Ausweis drin: CIVIC MONITOR, J. REYES. UNGÜLTIG.", "Und der Kaktus ist vertrocknet, wie alles aus der Zeit."] },
   },
   enter: [{ unset: "deck_app" },
     { if: ["day=1", "has:suppe"], then: EAT_HOME },
     { if: ["day=2", "evening_shown<2"], then: [{ set: "evening_shown", value: 2 }, { evening_card: true }] },
     { if: "day=1", then: [
       { if: "p1", then: [{ once: [{ say: "evi", text: "Bringst du mir was mit?" }, "Du isst nicht.", { say: "evi", text: "Ich weiß. Bringst du mir was mit?" }] }] },
-      { once: ["Halb zehn. Frau Kesslers Mann hat um zehn Schichtende.", "Erst mal ans Deck."] }],
-    else: [{ once: ["Mittwoch. Bis Freitag brauch ich neunhundert Chits."] }] }],
+      { once: ["Es ist halb zehn. Frau Kesslers Mann hat um zehn Schichtende.", "Ich setz mich erst mal ans Deck."] }],
+    else: [{ once: ["Heute ist Mittwoch. Bis Freitag brauch ich neunhundert Chits."] }] }],
 });
 
 // ---- the act

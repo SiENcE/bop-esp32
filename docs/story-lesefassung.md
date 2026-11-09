@@ -112,7 +112,7 @@ einer viel zu großen weißen Mütze. „Was machst du eigentlich? Den ganzen Ta
 abweisend, merkt er sich.
 
 Vierzehn Stockwerke zu Fuß, denn der Aufzug fährt nie, angeblich nur dienstags. Im Briefkasten liegt eine Mietmahnung: fällig in drei Tagen, 900
-Chits, davon Hüllenabgabe 310. „Dreihundertzehn für die Ringe über meinem Kopf. Die ich nie bestellt hab.“
+Chits, davon Hüllenabgabe 310. „Dreihundertzehn zahl ich für die Ringe über meinem Kopf, und bestellt hab ich die nie.“
 
 **JUNO.** Draußen die Kowalski-Straße, Magenta und Bernstein, Regen. Vor dem LUCKY STATIC steht Baos Garküche, Bao ist über
 siebzig und schreibt an. „Mein Alter sagt, ich salz zu viel. Lou isst seit vierzig Jahren hier.“ – „Und hat er recht?“ – „Er hat

@@ -222,9 +222,9 @@ Die Abende sollen nach Leben in der Stadt schmecken, nicht nach Warten aufs Bett
 | # | Wo | Was | 
 |---|---|---|
 | 1 | `flat`, Fenster | Es klemmt: „Der Riegel sitzt im Rahmen. Da kommt man nur mit was Flachem ran.“ |
-| 2 | `flat`, Karton | Der alte Nagi·wa-Ausweis, `UNGÜLTIG`. Am Fenster: „Das erste Mal, dass das Ding was aufmacht.“ |
+| 2 | `flat`, Karton | Der alte Nagi·wa-Ausweis, `UNGÜLTIG`. Am Fenster: „Das ist das erste Mal, dass das Ding was aufmacht.“ |
 | 3 | `sims` | Die Leiter hängt zwei Meter zu hoch. „Teo kam da früher mit irgendwas Langem ran.“ |
-| 4 | `kessel_14`, Aufzug | Neben der Tür hängt der Notschlüssel, ein langer Haken: „Stecken bleiben müsste er erst mal fahren.“ |
+| 4 | `kessel_14`, Aufzug | Neben der Tür hängt der Notschlüssel, ein langer Haken: „Um stecken zu bleiben, müsste der Aufzug erst mal fahren.“ |
 | 5 | `sims`, Leiter | Haken, die Leiter kommt runter, hoch aufs Dach. |
 
 Ausweis, Notschlüssel und der Weg aufs Dach sind schon im Prolog offen (entschieden 2026-11-06): Es gibt keinen Grund in der Welt, sie zu sperren, und die Regenleserin verrät nichts, was Vorwissen braucht. Kapitel 1 übernimmt beide Gegenstände. Der Notschlüssel hängt sichtbar neben der Aufzugtür, über der Tür sind schon Anzeige und Lampe.
@@ -261,7 +261,7 @@ Ausweis, Notschlüssel und der Weg aufs Dach sind schon im Prolog offen (entschi
 
 **In der Tasche** (entschieden): Was Juno wirklich in der Hand hält, ist ein Gegenstand: der Ausweis, der Haken, Ines' Stick (dazu später der Abzweiger und der Reis). Clips und Notizen bleiben im CACHE. **EVI** sitzt immer in der Tasche, fest: Ein Klick lässt sie reden, benutzen kann man sie nicht.
 
-**Drei merkwürdige Leute:** die **Regenleserin** auf dem Dach (kostet das Tropfwasser und sagt, von welchem Ring es kommt: „Der Vierte. Die gießen ihre Orchideen.“; ihre Wettervorhersagen sind eigentlich Klatsch), der **Prediger** der Wachen Kirche auf dem Drain-Markt (seit neun Tagen wach, zittert vor Kaffee und schenkt Juno einen ein) und **die halbe Reparatur** auf dem Gerüst am Werbebildschirm (wohnt dort und repariert nur die linke Hälfte, die rechte gehört zu einem anderen Vertrag).
+**Drei merkwürdige Leute:** die **Regenleserin** auf dem Dach (kostet das Tropfwasser und sagt, von welchem Ring es kommt: „Das ist vom Vierten. Die gießen da oben ihre Orchideen.“; ihre Wettervorhersagen sind eigentlich Klatsch), der **Prediger** der Wachen Kirche auf dem Drain-Markt (seit neun Tagen wach, zittert vor Kaffee und schenkt Juno einen ein) und **die halbe Reparatur** auf dem Gerüst am Werbebildschirm (wohnt dort und repariert nur die linke Hälfte, die rechte gehört zu einem anderen Vertrag).
 
 **Was die Regenleserin sagt** (`game/regenleserin.js`; die Texte sind beim Durchspielen im Mock zu prüfen): Über sie erklärt sich die Welt, und nebenbei fallen Dinge, an die man sich später erinnert. Kein Flag, alles darf man wieder fragen. Verschachtelt, nie mehr als vier Optionen (`dialog-design` §4).
 

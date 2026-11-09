@@ -108,7 +108,7 @@
         name: `CAM ${cam.id}`, rect: [x - 4, y - 4, D.camBox, 18], if: [app("glas"), ...(cam.if ? [cam.if] : [])], z: 4,
         look: `CAM ${cam.id}, ${cam.place}.`,
         use: [{ if: `link_${id}`, then: [{ goto: id }],
-          else: [{ if: `code_${id}`, then: [{ set: `link_${id}` }, { sfx: "link" }, ...(/** @type {any} */ (cam).linked ?? ["Wartungscode rein. Verbunden."])],
+          else: [{ if: `code_${id}`, then: [{ set: `link_${id}` }, { sfx: "link" }, ...(/** @type {any} */ (cam).linked ?? ["Ich geb den Wartungscode ein. Sie ist verbunden."])],
             else: /** @type {any} */ (cam).tryIt ?? ["Kein Zugang. Ich brauch den Wartungscode der Kamera."] }] }],
       };
     }
@@ -141,7 +141,7 @@
     }
     // the old photo: a click on the wallpaper shows it whole, with its music; a click anywhere closes it
     hs.photo = { name: "Das alte Foto", rect: [80, 14, 206, 104], if: "!deck_app", z: 1,
-      look: Nagiwa.photo.look ?? "Das Foto von Teo und mir.",
+      look: Nagiwa.photo.look ?? "Das ist das Foto von Teo und mir.",
       use: [{ set: "deck_app", value: "photo" }, { music: Nagiwa.photo.music }] };
     hs.photo_close = { name: "Zurück", rect: [0, 0, W, H], if: "deck_app=photo", z: 9,
       use: [{ unset: "deck_app" }, { radio_resume: Nagiwa.photo.back }] };
@@ -179,7 +179,7 @@
     hs.file_steuer = { name: "steuer_2089_NICHT_ÖFFNEN.txt", rect: D.files.steuer, if: "!deck_app",
       look: "Die Steuer von 2089. Solange ich sie nicht öffne, gibt es sie nicht.", use: "Nein." };
     hs.file_essen = { name: "ESSEN!!.txt", rect: D.files.essen, if: "!deck_app",
-      look: "Eine Datei, die ESSEN!! heißt. Von mir. An mich.", use: "Sie ist leer. Wie der Kühlschrank, vermutlich." };
+      look: "Die Datei heißt ESSEN!!, und ich hab sie mir selbst geschickt.", use: "Sie ist leer. Wie der Kühlschrank, vermutlich." };
     // EVI: on the deck she is the hint button
     hs.evi = { name: "EVI", rect: D.evi, z: 6, use: [{ hint: true }],
       look: "EVI. Sie wohnt auf meinem Deck und liest Kameras besser als Menschen." };

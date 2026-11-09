@@ -1,6 +1,6 @@
 # Dialoge: Style Guide
 
-Stand: 2026-11-05. Dieses Dokument regelt, **wie die Texte klingen**; nach ihm wird jeder Text geschrieben und geprüft.
+Stand: 2026-11-10. Dieses Dokument regelt, **wie die Texte klingen**; nach ihm wird jeder Text geschrieben und geprüft.
 Wie ein Gespräch gebaut ist (Stimmenwerte, Prüfungen, Nabe und Speichen, Protokoll-Modus), steht in `docs/dialog-design.md`.
 Die Fakten stehen in `docs/story.md`, EVIs Wesen in `docs/kapitel0-design.md` §2.2.
 
@@ -24,7 +24,7 @@ Eine gute Zeile tut drei Dinge zugleich, ohne dass man es merkt:
 | Bereich | Regel |
 |---|---|
 | Ton | ruhig, erwachsen, trocken, warm |
-| Satzbau | natürliche Umgangssprache, kurze bis mittlere Sätze |
+| Satzbau | natürliche Umgangssprache in ganzen Sätzen, kurz bis mittel (§3) |
 | Humor | beiläufig, aus Figur und Lage, nie Pointe um der Pointe willen |
 | Gefühle | zeigen, selten aussprechen |
 | Welt | durch Alltag, Gespräche und Beobachtungen, nie als Vortrag |
@@ -70,14 +70,22 @@ Ausweichen und kurzen, unerwartet ehrlichen Sätzen. Nicht jede Zeile sitzt: Wen
 **Bilder kommen aus der Hand.** Eine Figur vergleicht nur mit dem, was sie täglich anfasst: Die Regenleserin schmeckt, Bao kocht, Ratz
 verkauft, das Kassenbuch rechnet. So darf auch eine schöne Zeile fallen, ohne dass jemand dichtet.
 
-> Regenleserin: Der Vierte. Die gießen ihre Orchideen.
+> Regenleserin: Das ist vom Vierten. Die gießen da oben ihre Orchideen.
 
 ## 3. Was wir vermeiden
 
 - **Zu viel Slang.** Glass, Shine, Sinker und Chits wirken, wenn sie selbstverständlich und sparsam fallen.
 - **Zu viel Poesie.** Die Stadt darf poetisch aussehen, ihre Leute reden nicht ständig so.
-- **Wortgruppen statt Sätze.** „Eine Treppe. Ein Fisch. Regen von links.“ So redet kein Mensch. Wer spricht, sagt ganze Sätze mit Subjekt und Verb: „Da ist eine Treppe, und auf den Stufen ist ein großer Fisch. Es regnet von links.“ Das gilt für alle Figuren, auch für Junos Blicke und Gedanken. Ein Satz darf abbrechen, wo ein Mensch wirklich abbricht (Zögern, Ausweichen, „...“), aber eine Reihe von Stichworten ist kein Stil (entschieden 2026-11-09 von der Nutzerin; neue Zeilen so, alte beim nächsten Anfassen).
-- **Zu viele Einzeiler.** Niemand ist eine Sprüchemaschine. Ernste Gespräche brauchen auch unspektakuläre Sätze. Die Blicke, die schon im Spiel stehen, bleiben, wie sie sind (entschieden 2026-11-06).
+- **Wortgruppen statt Sätze.** „Eine Treppe. Ein Fisch. Regen von links.“ So redet kein Mensch. Wer spricht, sagt ganze Sätze mit Subjekt und Verb: „Da ist eine Treppe, und auf den Stufen ist ein großer Fisch. Es regnet von links.“ Das gilt für alle Figuren, auch für Junos Blicke und Gedanken. Ein Satz darf abbrechen, wo ein Mensch wirklich abbricht (Zögern, Ausweichen, „...“), aber eine Reihe von Stichworten ist kein Stil (entschieden 2026-11-09 von der Nutzerin).
+  Die alten Zeilen werden gezielt umgeschrieben, nicht erst beim nächsten Anfassen: zuerst der Prolog (2026-11-10), dann Kapitel 1 Strang für Strang, jede Zeile der Nutzerin als Vorher und Nachher gezeigt (entschieden 2026-11-10).
+  **Kurz darf es trotzdem sein,** und manchmal ist das gerade witzig. Der Telegrammstil bleibt an diesen Stellen (entschieden 2026-11-10):
+  - **Geschriebenes:** Chat, Notizen im CACHE, das Kassenbuch, Schlagzeilen und Werbung (§4 F). So tippt man, so steht es auf Schildern.
+  - **Echtes Zögern und Abbrechen:** „Bao. Hast du ...“, „...“.
+  - **Kurze Antworten im Gespräch:** „Dann schon.“, „Ich weiß.“, „Nein.“, und eine trockene Antwort wie Baos „Brühe. Wie gestern. Morgen auch.“ auf „Was gibt's heute?“.
+  - **Eile im Feed,** wenn gerade etwas passiert: „REC, schnell.“, „Mist.“
+  - **Als Stilmittel einiger Figuren,** die so reden, weil es zu ihnen gehört. Wer das ist, entscheidet die Nutzerin; der Vorschlag: Morrow (dienstlich), Tinte (langsam, sehr kurz), Sable im Geschäft („Nett. 120.“), DER HUNGER (Befehle) und DIE BEOBACHTERIN (wie ein Bericht).
+  Nie im Telegrammstil stehen Junos Blicke, ihre Gedanken in Ruhe und Beschreibungen: Die sagt sie in ganzen Sätzen, und ihre Pointe bleibt dabei („Das ist Gus Varga. Er ist kein Liebhaber, er ist ein Kredithai.“).
+- **Zu viele Einzeiler.** Niemand ist eine Sprüchemaschine. Ernste Gespräche brauchen auch unspektakuläre Sätze. (Die Entscheidung vom 2026-11-06, dass die vorhandenen Blicke bleiben, wie sie sind, ist am 2026-11-10 aufgehoben: Sie werden in ganze Sätze umgeschrieben, und ihre Pointen bleiben.)
 - **Zu viel Erklärung.** Niemand erzählt seine Biografie oder Nagi·was Geschichte, nur weil ein Gespräch begonnen hat.
 - **Künstliche Coolness.** Juno ist keine unfehlbare Heldin. Sie sieht zu viel, isst zu wenig und weiß nicht immer, was sie tun soll.
 - **Melodram.** Wer ständig von Verrat, Schicksal, Dunkelheit und der Wahrheit redet, verliert das Menschliche.
@@ -92,7 +100,7 @@ verändertes Gefühl) und einen natürlichen Ausstieg. Nicht jedes muss eine Ges
 **B. Ansehen** (Rechtsklick, langes Drücken). Das spricht Juno selbst, und sie liefert eine Beobachtung, keine Gegenstandsbeschreibung.
 Sie ist Glasserin: Sie sieht, was andere übersehen. Nichts, was das Spiel braucht, darf hier hängen (`CLAUDE.md`).
 
-> Juno: Frau Haldane. Doppelschicht. Sie schläft, wie andere Leute blinzeln.
+> Juno: Frau Haldane hat Doppelschicht. Sie schläft, wie andere Leute blinzeln.
 
 **C. Der Ort, der sich ändert.** Dasselbe Ding bekommt je nach Tag und Kapitel einen anderen Satz, und so erzählt ein einziges Objekt
 eine Geschichte. Das passt zu einer Stadt, die ohne Juno weiterlebt, und es kostet nichts: Es liest vorhandene Flags (`day`) und setzt
@@ -113,7 +121,7 @@ dahinter. Gesagtes steht in „…“. Eine Handlung steht ohne Anführungszeich
 > „Sie sind nicht verrückt.“\
 > „Das war ein Traum.“
 
-**F. Geschriebenes.** Chat, Notizen und Kassenbuch sind noch knapper als Gesprochenes. Im Chat schreibt jeder, wie er tippt: Teo
+**F. Geschriebenes.** Chat, Notizen und Kassenbuch sind noch knapper als Gesprochenes, und hier darf der Telegrammstil stehen (§3). Im Chat schreibt jeder, wie er tippt: Teo
 nennt sie Ju, Sable unterschreibt mit S., WREN bleibt beim Sie und ohne Gruß. Das Kassenbuch ist ein Protokoll: was, an wen, für wie
 viel, später was daraus wurde. Es urteilt nie.
 
@@ -143,6 +151,7 @@ viel, später was daraus wurde. Es urteilt nie.
 
 - Eine gesprochene Zeile bleibt **unter etwa 90 Zeichen** (im Spiel heute: die Hälfte unter 45, neun von zehn unter 85). Ein längerer
   Gedanke wird auf mehrere Zeilen verteilt, und sein Umbruch ist eine Pause.
+- Kurz heißt wenige Wörter, nicht ohne Verb: „Meine Matratze liegt auf einer Palette.“ hat 40 Zeichen (§3).
 - Der geplante Protokoll-Modus hat etwa 21 Zeichen je Zeile (`dialog-design` §5): noch ein Grund für kurze Sätze.
 
 **Bau** (technisch, `CLAUDE.md` und `dialog-design` §4)
@@ -183,7 +192,7 @@ Man soll eine Figur an wenigen Worten erkennen. Jede Karte sagt, wie die Figur k
 
 ### Juno Reyes: die Beobachterin
 
-Trocken, knapp, aufmerksam. Stellt präzise Fragen, oft Gegenfragen, und vertraut Worten nicht besonders. Lieber konkret als poetisch,
+Trocken, knapp, aufmerksam. Knapp heißt: Sie sagt wenig, aber in ganzen Sätzen (§3). Stellt präzise Fragen, oft Gegenfragen, und vertraut Worten nicht besonders. Lieber konkret als poetisch,
 selten große Gefühle. Sagt nie, was sie fühlt, solange sie es umgehen kann, und spielt nie die Coole. Am Anfang hält sie Menschen auf
 Abstand; später darf sie mehr sagen, ohne eine andere zu werden.
 
@@ -394,7 +403,7 @@ So etwas wird bewusst angelegt, wie Mottes Backup oder der Satz über die Leiter
 1. Würde sie jemand sagen, der hier lebt, oder nur jemand, der es dem Spieler erklären will?
 2. Erkennt man die Figur ohne Namen und Farbe?
 3. Geht es unter der Oberfläche um etwas anderes?
-4. Ist es ein ganzer Satz, wie ihn ein Mensch sagt, und keine Reihe von Wortgruppen (§3)? Darf das auch unspektakulär sein? Muss hier wirklich eine Pointe stehen?
+4. Ist es ein ganzer Satz, wie ihn ein Mensch sagt, und keine Reihe von Wortgruppen? Oder ist es eine der Stellen, an denen der Telegrammstil bleiben darf (§3)? Darf das auch unspektakulär sein? Muss hier wirklich eine Pointe stehen?
 5. Stimmt sie mit der Bibel überein (Fakten, Du und Sie, Lull und Implantat)?
 6. Unter etwa 90 Zeichen? Ist die Haltung einer Wahl vor dem Klick klar?
 7. Geht sie auf Englisch noch?

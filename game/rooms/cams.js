@@ -41,7 +41,7 @@ Nagiwa.camRoom = function (id, o) {
   const hotspots = {
     // (only where something can be recorded, `rec`: else every state in a camera would come twice, REC on and off)
     rec: { name: "REC", rect: O.rec, z: 5, if: o.rec ?? "day=1",
-      use: [{ sfx: "rec" }, { if: "rec_on", then: [{ unset: "rec_on" }, "Aufnahme aus."], else: [{ set: "rec_on" }, "Aufnahme läuft."] }] },
+      use: [{ sfx: "rec" }, { if: "rec_on", then: [{ unset: "rec_on" }, "Die Aufnahme ist aus."], else: [{ set: "rec_on" }, "Die Aufnahme läuft."] }] },
     wait: { name: "Vorspulen", rect: O.wait, z: 5, use: [{ forward: true }] },
     back: { name: "Deck", rect: O.back, z: 5, exit: { to: "deck" } },
     ...o.hotspots,
@@ -65,7 +65,7 @@ Nagiwa.buildCamStrip = function () {
       const cam = /** @type {any} */ (Nagiwa.cams[c]);
       if (c !== id) room.hotspots[`thumb_${c}`] = { name: `CAM ${cam.id}`, rect: Nagiwa.osd.thumb(i), z: 5,
         if: [{ or: [`link_${c}`, `code_${c}`] }, ...(cam.if ? [cam.if] : []), ...(room.strip ? [room.strip] : [])],
-        use: [{ if: `link_${c}`, then: [{ goto: c }], else: [{ set: `link_${c}` }, { sfx: "link" }, ...(cam.linked ?? ["Wartungscode rein. Verbunden."])] }] };
+        use: [{ if: `link_${c}`, then: [{ goto: c }], else: [{ set: `link_${c}` }, { sfx: "link" }, ...(cam.linked ?? ["Ich geb den Wartungscode ein. Sie ist verbunden."])] }] };
     });
   }
 };
@@ -76,15 +76,15 @@ Nagiwa.camRoom("cam03", {
   mic: { at: A3.mic, clear: 40, lost: 150 },
   hotspots: {
     mast: { name: "Kamera am Mast", poly: A3.mastPoly, if: "day=1",
-      look: "Gegenüber, am Mast: noch eine Kamera. Zeigt auf die Ecke bei Yuen's.",
-      use: [{ zoom: "zoom_sticker_cam04" }, "HCS-04. K7-731.", "Der Wartungscode, auf das Gehäuse geklebt. Nagi·wa spart an allem.", { zoom: false }, { set: "code_cam04" }] },
+      look: "Gegenüber am Mast hängt noch eine Kamera. Sie zeigt auf die Ecke bei Yuen's.",
+      use: [{ zoom: "zoom_sticker_cam04" }, "HCS-04. K7-731.", "Den Wartungscode haben sie aufs Gehäuse geklebt. Nagi·wa spart an allem.", { zoom: false }, { set: "code_cam04" }] },
     vending: { name: "Nudelautomat", poly: A3.vendingPoly, z: 1,
-      look: "Ein Nudelautomat. Halb die Pumpenverwaltung isst daraus.", use: [{ zoom: "zoom_vending_n7" }, "Nummer 7, Huhn scharf. Die Taste ist abgegriffen.", { zoom: false }] },
-    office: { name: "Pumpenverwaltung Ost", poly: A3.officeDoorPoly, look: "Die Pumpenverwaltung. Um zehn ist Schichtende." },
+      look: "Aus dem Nudelautomaten isst die halbe Pumpenverwaltung.", use: [{ zoom: "zoom_vending_n7" }, "Die Nummer 7 ist Huhn scharf, und ihre Taste ist abgegriffen.", { zoom: false }] },
+    office: { name: "Pumpenverwaltung Ost", poly: A3.officeDoorPoly, look: "Das ist die Pumpenverwaltung. Um zehn ist Schichtende." },
     rewind: { name: "Puffer", z: 5, if: ["call_missed", "!heard_yuens"],
-      use: ["Puffer. Zurück auf 22:05.", { tag: "kessler" }, "Da. Heller Schal, unterm Vordach.",
+      use: ["Ich spul den Puffer zurück auf 22:05.", { tag: "kessler" }, "Da ist er, mit dem hellen Schal unterm Vordach.",
         "Die Klammern macht nicht das Deck, die macht mein Implantat.", "Das durften wir behalten, damals. Sie sagten, das Herausnehmen kostet mehr.", { say: "kessler", text: "Ja, ich bring's mit. Alles. Halb elf, bei Yuen's." }, { set: "heard_yuens" },
-        "Yuen's. Der Imbiss an der Ecke."] },
+        "Yuen's ist der Imbiss an der Ecke."] },
   },
 });
 
@@ -92,12 +92,12 @@ Nagiwa.camRoom("cam04", {
   ambience: ["feed_hiss", "fridge_hum", { sfx: "feed_rain", gain: 0.4 }],      // inside Yuen's: the kitchen, the rain beyond the window
   mic: { at: A4.mic, clear: 20, lost: 80 },
   hotspots: {
-    tv: { name: "Fernseher", poly: A4.tvPoly, look: "Nagi·wa-Werbung. Eine Frau schläft und lächelt dabei. SLEEP BETTER." },
-    counter: { name: "Theke", poly: A4.counterPoly, look: "Yuen's. Nudeln, Tee, und keine Fragen." },
+    tv: { name: "Fernseher", poly: A4.tvPoly, look: "Eine Frau schläft im Fernsehen und lächelt dabei. SLEEP BETTER, sagt Nagi·wa." },
+    counter: { name: "Theke", poly: A4.counterPoly, look: "Bei Yuen's gibt's Nudeln und Tee, und keiner stellt Fragen." },
     rewind: { name: "Puffer", z: 5, if: ["moment:kessler_ring", "!cache_clip_kessler_ring"],
-      use: ["Puffer. Zurück auf 22:35.", { zoom: "zoom_ring" }, "Da. Er zieht den Ring ab und schiebt ihn rüber.",
+      use: ["Ich spul den Puffer zurück auf 22:35.", { zoom: "zoom_ring" }, "Da, er zieht den Ring ab und schiebt ihn rüber.",
         { cache: "clip_kessler_ring" }, { zoom: false }, { set: "saw_varga" }, { cache: "note_kessler_debt" },
-        "Hab's. Und der im grauen Mantel ist kein Liebhaber. Das ist Gus Varga. Geld gegen Zeit."] },
+        "Ich hab's. Und der im grauen Mantel ist kein Liebhaber.", "Das ist Gus Varga, der Kredithai."] },
   },
 });
 })();

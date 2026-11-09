@@ -9,7 +9,7 @@ const R = (/** @type {string} */ text) => ({ say: "regenleserin", text });
 Nagiwa.talkTree("regenleserin", [
   ["„Was schmeckst du heute?“", [
     { if: "day=1", then: [R("Der Siebte. Waschmittel, viel zu viel davon."), "Und?", R("Da hat einer was rauszuwaschen.")] },
-    { if: "day=2", then: [R("Der Vierte. Die gießen ihre Orchideen."), "Das schmeckt man?", R("Dünger, Kind. Teurer als deine Miete.")] },
+    { if: "day=2", then: [R("Das ist vom Vierten. Die gießen da oben ihre Orchideen."), "Das schmeckt man?", R("Dünger, Kind. Teurer als deine Miete.")] },
     { if: "day=3", then: [R("Der Sechste. Champagner, verdünnt. Jemand feiert, dass ein anderer schläft."), "Sagt das der Regen?", R("Alles kommt runter. Früher oder später.")] },
     { if: "day=4", then: [R("Heute schmeckt's nach gar nichts."), "Ist das gut?", R("Das hatte ich noch nie."),
       R("Da oben dreht keiner ohne Grund den Hahn zu. Wenn's so still wird, räumt jemand auf."), "Was denn?", R("Frag mich morgen. Morgen schmeckt man's.")] },
