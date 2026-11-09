@@ -174,12 +174,13 @@ Nagiwa.camRoom("cam18", { background: "cam18_bg", mic: { at: A18.mic, clear: 40,
     use: ["Ältere Nächte liegen im Nagi·wa-Archiv. Mein alter Zugang reicht gerade noch.", "Neunundzwanzigster Oktober. Vor und zurück.", "03:12. Da. Einer fällt die Treppe runter, und einer geht weg.",
       "Genau von hier oben. Genau, wie sie gesagt hat.", "Um die Zeit lag sie im Bett und schlief.", "Wie sieht jemand im Schlaf, was meine Kamera sieht?", { cache: "note_imai_street" }, { set: "imai_step", value: 2 }] },
 } });
-Cutaway.room("lucky_static", { name: "LUCKY STATIC", background: "lucky_static_bg", walk: AI.walk,
+Cutaway.room("lucky_static", { name: "LUCKY STATIC", background: "lucky_static_bg", walk: AI.walk, holes: AI.holes, props: AI.props,
+  light: { ambient: 0.82, lamps: AI.lamps.map((/** @type {any} */ { bake, zone, ...lamp }) => lamp) },
   ambience: ["neon_buzz", "fridge_hum"], music: { theme: "juno", intensity: 0.4 },
   hotspots: {
     door: { name: "Tür", rect: AI.doorRect, walkTo: AI.door, face: "sw", use: [{ goto: "kowalski", at: Nagiwa.at.kowalski.lucky_door, face: "se" }] },
     bar: { name: "Theke", rect: AI.barRect, walkTo: AI.bar, face: "ne", look: "Meis Theke. Wer hier anschreiben lässt, weiß, was er tut." },
-    karaoke: { name: "Karaoke", rect: AI.karaokeRect, walkTo: AI.bar, face: "ne", look: "OUT OF ORDER. Trotzdem singt hier jeden Abend jemand." },
+    karaoke: { name: "Karaoke", rect: AI.karaokeRect, walkTo: AI.karaoke, face: "nw", look: "OUT OF ORDER. Trotzdem singt hier jeden Abend jemand." },
   } });
 Cutaway.room.get("kowalski").hotspots.lucky_door.use = [{ if: "day=1", then: ["Nicht heute. Heute will ich Bao."], else: [{ goto: "lucky_static", at: AI.arrive, face: "ne" }] }];
 

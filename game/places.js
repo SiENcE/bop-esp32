@@ -111,11 +111,9 @@ Nagiwa.at = {
     walk: [[12, 124, 308, 124, 316, 176, 4, 176]], arrive: [30, 150], door: [12, 150], front: [142, 146], okonkwo: [178, 124], shelves: [110, 132],
     doorRect: [0, 50, 18, 120], shelvesRect: [30, 24, 180, 62], counterRect: [70, 92, 180, 28], photoRect: [220, 40, 30, 24],
   },
-  lucky_static: {
-    walk: [[12, 118, 308, 118, 316, 176, 4, 176]], arrive: [24, 150], door: [10, 150], bar: [174, 124], imai: [110, 134],
-    mei: [200, 119], stammA: [262, 126], stammB: [290, 126], regulars: [240, 134],
-    doorRect: [0, 60, 14, 116], barRect: [150, 84, 160, 28], karaokeRect: [40, 56, 34, 56], tvRect: [160, 24, 56, 32], slateRect: [236, 26, 66, 42],
-  },
+  // LUCKY STATIC (art/rooms/lucky_static.map.js, game/rooms/lucky_static.layout.js): the street is the near left wall, its door the
+  // gap at its left end (a stub has no picture of its own: the hotspot stands over the gap)
+  lucky_static: { ...fromLayout(Nagiwa.layouts.lucky_static), doorRect: [12, 126, 46, 36], barRect: Nagiwa.layouts.lucky_static.props.counter.box },
   laundromat: {
     walk: [[12, 108, 308, 108, 316, 176, 4, 176]], arrive: [18, 130], door: [10, 130], dryer6: [168, 110], counter: [270, 128],
     doorRect: [0, 40, 14, 100], dryer6Rect: [152, 50, 25, 46], dryersRect: [12, 50, 224, 46], counterRect: [252, 90, 58, 34],

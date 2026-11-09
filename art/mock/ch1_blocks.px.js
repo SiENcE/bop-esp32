@@ -176,26 +176,7 @@ scene("cam18_bg", { w: W, h: H, bg: "0" }, (c) => {
   c.rect(176, 27, 56, 26, "2"); c.rect(186, 33, 28, 8, "8"); c.rect(214, 31, 8, 12, "8")
   TXT.draw(c, 204, 44, "FISH", "9", { font: "hud", align: "center" })
 })
-// LUCKY STATIC from inside: the bar, the karaoke machine, a table
-scene("lucky_static_bg", { w: W, h: H, bg: "k" }, (c) => {
-  c.rect(0, 0, W, 112, "b"); c.rect(0, 112, W, 68, "a"); c.hline(0, 112, W, "e")
-  // the counter, low enough that Mei shows behind it; shelves of bottles; Nagi·wa's news over it; Mei's slate with the tabs
-  c.rect(150, 84, 160, 28, "f"); c.hline(150, 84, 160, "h")
-  for (const [x0, x1] of [[152, 228], [236, 306]]) {
-    c.rect(x0, 80, x1 - x0, 2, "e")
-    for (let x = x0 + 2, i = 0; x < x1 - 3; x += 6, i++) c.rect(x, 72 + (i % 2), 3, 8 - (i % 2), ["g", "h", "e", "v", "g", "f"][i % 6])
-  }
-  c.rect(160, 24, 56, 32, "d"); c.rect(163, 27, 50, 26, "a"); KANJI.draw(c, 174, 29, "v"); c.rect(168, 44, 40, 2, "v"); c.rect(168, 48, 28, 2, "f")
-  c.rect(236, 26, 66, 42, "d"); c.rect(238, 28, 62, 38, "a")
-  for (const [row, n] of [[0, 7], [1, 3], [2, 13], [3, 5]]) for (let i = 0; i < n; i++) {
-    const y = 31 + row * 9, x = 242 + i * 4 + Math.floor(i / 5) * 2
-    if (i % 5 === 4) c.line(x - 16, y + 5, x - 1, y + 1, "h"); else c.rect(x, y, 1, 6, "h")
-  }
-  c.rect(40, 56, 34, 56, "d"); c.rect(46, 62, 22, 16, "m")
-  SIGN(c, 28, 40, 58, "OUT OF ORDER", "b", "y")
-  c.rect(0, 60, 14, 116, "e")
-  SIGN(c, 110, 6, 100, "LUCKY STATIC", "m", "M")
-})
+// (LUCKY STATIC is a room baked from its map now: art/rooms/lucky_static.map.js)
 // the Drain Market: a drained flood canal, the stalls along its wall
 scene("drain_market_bg", { w: W, h: H, bg: "k" }, (c) => {
   c.rect(0, 0, W, 112, "b"); c.rect(0, 112, W, 68, "a"); c.hline(0, 112, W, "y")
