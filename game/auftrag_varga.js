@@ -74,15 +74,15 @@ Cutaway.dialog("sable", {
   ],
 });
 const AK = Cutaway.room.get("drain_market").hotspots;
-AK.curtain = { name: "Vorhang", rect: AM.curtainRect, walkTo: AM.curtain, face: "ne", look: "Hinter dem Vorhang riecht's nach Pfeife. Da sitzt Sable.", use: [{ goto: "sable_booth", at: AB.arrive, face: "ne" }] };
+AK.curtain = { name: "Vorhang", rect: AM.curtainRect, walkTo: AM.curtain, face: "ne", look: "Hinter dem Vorhang riecht's nach Pfeife. Da sitzt Sable.", use: [{ goto: "sable_booth", at: AB.arrive, face: "se" }] };
 AK.stalls.look = "[MOCK] Hier kommt noch Ratz.";
-Cutaway.room("sable_booth", { name: "Sables Bude", background: "sable_booth_bg", walk: AB.walk,
+Cutaway.room("sable_booth", { name: "Sables Bude", background: "sable_booth_bg", walk: AB.walk, props: AB.props,
   ambience: ["neon_buzz"], music: { theme: "juno", intensity: 0.4 },
   hotspots: {
-    curtain: { name: "Vorhang", rect: AB.curtainRect, walkTo: AB.door, face: "sw", use: [{ goto: "drain_market", at: AM.curtain, face: "sw" }] },
+    curtain: { name: "Vorhang", poly: AB.curtainPoly, walkTo: AB.door, face: "nw", use: [{ goto: "drain_market", at: AM.curtain, face: "sw" }] },
     prices: { name: "Preisliste", rect: AB.pricesRect, walkTo: AB.front, face: "ne", look: ["NAMES 50. ADDRESSES 80. SECRETS: ASK.", "Ich hab schon teurer gekauft. Und schon billiger verkauft."] },
-    screens: { name: "Bildschirme", rect: AB.screensRect, walkTo: AB.front, face: "ne", look: "Sables Bildschirme. Ich schau nicht genauer hin. Das kostet bestimmt auch." },
-    bird: { name: "Vogel", rect: AB.birdRect, walkTo: AB.front, face: "ne", look: "Im Käfig sitzt ein Vogel aus Draht. Er singt nicht, und Sable sagt, das ist der Preis." },
+    screens: { name: "Bildschirme", rect: AB.screensRect, walkTo: AB.front, face: "nw", look: "Sables Bildschirme. Ich schau nicht genauer hin. Das kostet bestimmt auch." },
+    bird: { name: "Vogel", rect: AB.birdRect, walkTo: AB.cage, face: "ne", look: "Im Käfig sitzt ein Vogel aus Draht. Er singt nicht, und Sable sagt, das ist der Preis." },
   } });
 
 // ---- the chat: what Varga wrote, what Juno can send (the place she found is her only way in: nothing to accept first)

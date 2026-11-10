@@ -161,16 +161,6 @@ scene("drain_market_bg", { w: W, h: H, bg: "k" }, (c) => {
   c.rect(170, 66, 30, 42, "e"); c.rect(0, 50, 18, 120, "e"); for (let y = 56; y < 170; y += 9) c.hline(2, y, Math.min(14, 4 + (170 - y) / 9), "g")
   c.rect(262, 50, 44, 66, "n"); for (let x = 266; x < 306; x += 8) c.rect(x, 50, 2, 66, "m")
 })
-// Sable's booth behind the curtain: violet and amber, a table full of screens, the price list, a wire bird in its cage
-scene("sable_booth_bg", { w: W, h: H, bg: "k" }, (c) => {
-  c.rect(0, 0, W, 112, "p"); c.rect(0, 112, W, 68, "a"); c.hline(0, 112, W, "y")
-  c.rect(0, 50, 16, 126, "n"); for (let y = 54; y < 170; y += 8) c.hline(2, y, 12, "m")
-  c.rect(100, 84, 124, 30, "n"); c.hline(100, 84, 124, "y")
-  for (const x of [114, 148, 182]) { c.rect(x, 46, 28, 32, "d"); c.rect(x + 2, 48, 24, 28, "a"); c.rect(x + 8, 58, 12, 3, "v") }
-  c.rect(224, 14, 86, 36, "b")
-  TXT.draw(c, 267, 17, "NAMES 50.", "y", { font: "hud", align: "center" }); TXT.draw(c, 267, 27, "ADDRESSES 80.", "y", { font: "hud", align: "center" }); TXT.draw(c, 267, 37, "SECRETS: ASK.", "y", { font: "hud", align: "center" })
-  c.rect(36, 40, 30, 44, "b"); for (let x = 38; x < 66; x += 5) c.rect(x, 40, 1, 44, "g"); c.rect(46, 60, 10, 6, "h"); c.rect(44, 58, 3, 3, "h")
-})
 // the Morpheus from its corridor's ceiling: two rows of capsules with their numbers, each with a small screen
 scene("cam15_bg", { w: W, h: H, bg: "0" }, (c) => {
   ROOM(c, "4", "7", 84)

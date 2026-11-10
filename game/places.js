@@ -157,9 +157,12 @@ Nagiwa.at = {
     ratz: [190, 126], ratzTalk: [168, 134],
     upRect: [0, 50, 12, 68], kidneysRect: [30, 56, 66, 52], jarsRect: [106, 56, 58, 52], stallsRect: [170, 56, 30, 52], curtainRect: [262, 50, 44, 66],
   },
+  // Sable's booth as a stage from the front (art/mock/sable_booth.px.js): Sable sits behind the desk (the slit in the walk area: an actor
+  // stands on walkable floor), the desk a prop drawn over Sable; the curtain is on the left side wall, so its shape is the wall's trapezoid
   sable_booth: {
-    walk: [[12, 118, 308, 118, 316, 176, 4, 176]], arrive: [24, 150], door: [10, 150], front: [150, 128], sable: [176, 118],
-    curtainRect: [0, 50, 12, 68], pricesRect: [224, 14, 86, 36], screensRect: [112, 42, 100, 38], birdRect: [36, 40, 30, 44],
+    walk: [[16, 142, 156, 142, 156, 130, 164, 130, 164, 142, 300, 142, 316, 178, 4, 178]], arrive: [38, 160], door: [20, 150], front: [118, 158], sable: [160, 130], cage: [270, 152],
+    curtainPoly: [6, 69, 28, 71, 28, 128, 6, 136], pricesRect: [196, 62, 74, 25], screensRect: [120, 79, 28, 34], birdRect: [272, 70, 28, 36],
+    props: [{ id: "desk", image: "sable_booth_desk", at: [112, 76], anchor: [0, 0], baseline: 141 }],
   },
   // looking from the window at the back wall (as CAM 07V): Okonkwo behind the counter (his bust stands on the walk area's edge, drawn over
   // the counter, as Mei), the safe in its right-hand end; the door to the lane at the front left
