@@ -28,7 +28,7 @@ else {
   if (out) { writeFileSync(out, JSON.stringify(r.path, null, 1)); console.log("wrote " + out); }
 }
 if (args.includes("--full")) {
-  if (!r.complete) console.log("soft-lock check incomplete: raise --max");
+  if (!r.complete) { console.log("soft-lock check incomplete: raise --max"); process.exitCode = 1; }   // nothing is proved then
   else if (r.softlocks.length) {
     console.log(`SOFT-LOCKS: ${r.softlocks.length} states can't reach the end. Shortest ways into one:`);
     for (const p of r.softlocks.slice(0, 5)) console.log("  " + p.map(describe).join(" > "));
