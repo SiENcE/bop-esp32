@@ -190,24 +190,41 @@ const K14 = (() => {
       return o.memo.sign(o.a, o.e)
     },
   })
-  // NINTH LIVE in neon (a block before it is painted, 10.11.2026): a dark board on two brackets, NINTH in magenta tube, LIVE in
-  // cyan under it with the red dot of a live feed; one letter of NINTH out on the frames the light stutters
+  // NINTH LIVE in neon (approved as a block on 10.11.2026, painted): a dark steel board screwed to the wall, its rim catching the
+  // light; the letters bent tube, a pale core in a coloured glow, NINTH in magenta, LIVE in cyan under it with the red dot of a live
+  // feed that blinks; the H of NINTH stutters on the frame its light drops out (the map's lamp "ninth", off: [5])
   ISOKIT.opening("neon_ninth", {
     pad: 0.03,
     halo: [{ color: "#ff4fd3", reach: 0.45, power: 1.2 }],
     paint(s, h, o) {
-      const { aw, ah, f } = o
-      o.memo.ninth ??= ISOKIT.raster(aw + 2, ah + 2, (c) => {
-        c.rect(0, 0, aw + 2, ah + 2, "1"); c.rect(1, 1, aw, ah, "k")
-        c.rect(4, ah + 1, 2, 1, "5"); c.rect(aw - 4, ah + 1, 2, 1, "5")
-        TXT.draw(c, Math.floor((aw + 2) / 2), 2, "NINTH", "!m", { font: "hud", align: "center" })
-        TXT.draw(c, Math.floor((aw + 2) / 2) + 3, 10, "LIVE", "!v", { font: "hud", align: "center" })
-        c.rect(Math.floor((aw + 2) / 2) - 12, 11, 3, 3, "!q")
+      const { aw, ah, f } = o, W = aw + 2, H = ah + 2, mid = Math.floor(W / 2)
+      o.memo.ninth ??= ISOKIT.raster(W, H, (c) => {
+        c.rect(0, 0, W, H, "2"); c.hline(1, 0, W - 2, "4"); c.rect(1, 1, W - 2, H - 2, "1")
+        for (const [x, y] of [[1, 1], [W - 2, 1], [1, H - 2], [W - 2, H - 2]]) c.px(x, y, "5")             // its screws
+        // the glow the tubes throw on the board behind them, dithered off
+        for (let y = 2; y < H - 2; y++) for (let x = 2; x < W - 2; x++) if ((x + y) % 2 === 0) c.px(x, y, y < 9 ? "n" : "c")
+        TXT.draw(c, mid, 2, "NINTH", "!N", { font: "hud", align: "center", outline: "!M" })
+        TXT.draw(c, mid + 3, 10, "LIVE", "!V", { font: "hud", align: "center", outline: "!C" })
+        const dx = mid - TXT.measure("LIVE", "hud") / 2 + 3 - 5
+        c.rect(dx, 11, 3, 3, "!r"); c.px(dx + 1, 12, "!q")                                            // the live dot
       }, -1, -1)
       const k = o.memo.ninth(o.a, o.e)
-      // the H stutters: its tube dark on the light's off frames
-      if (k === "!m" && f === 5 && o.a > aw * 0.62 && o.a < aw * 0.8 && o.e > ah - 9) return "M"
+      if (!k) return k
+      // the H stutters: its tube dark on the frame its light drops out
+      const hx = mid + TXT.measure("NINTH", "hud") / 2 - TXT.measure("H", "hud") - 1, a = o.a + 1, y = H - 1 - (o.e + 1)
+      if (f === 5 && y <= 8 && a >= hx - 1 && a <= hx + TXT.measure("H", "hud") + 1 && (k === "!N" || k === "!M")) return k === "!N" ? "M" : "n"
+      // the dot blinks: dark on the loop's last three frames
+      if (f >= 9 && (k === "!r" || k === "!q")) return "r"
       return k
+    },
+  })
+  // the sign's cable, taped down the wall to a socket near the floor
+  ISOKIT.opening("neon_cable", {
+    paint(s, h, o) {
+      const { a, e, aw } = o
+      if (e < 4) return a >= 0 && a < aw ? (e === 3 ? "5" : e === 0 ? "2" : "4") : null                    // the socket
+      if (a === 1) return e % 9 === 4 ? "6" : "k"                                                        // the cable, its tape
+      return null
     },
   })
 

@@ -5,7 +5,7 @@
 // inside in the TV's blue light (her flat lies behind the right wall, next to the lift's shaft; Juno's behind the left one: the
 // user's decision of 10.11.2026, the two can't share a wall); further along the right wall the sign "14", a camera high over the
 // stairwell, and the stairs down to the lobby along it, with Motte on his bench in front of them. Along the left wall in front, where
-// nobody lives, the bin bags and a neon sign for NINTH LIVE (a block for now). The landing is 6 m along the
+// nobody lives, the bin bags and a neon sign for NINTH LIVE. The landing is 6 m along the
 // right wall (one more than the flat: it scrolls a little), the picture moved up so its front stays on the screen (352 wide).
 "use strict";
 
@@ -37,8 +37,9 @@ ISO_MAPS.kessel_14 = {
     { id: "floor_sign", wall: 0, from: 3.6, to: 4.1, h: [1.55, 1.95], kit: "sign_14" },
     { id: "door_juno", wall: 1, from: 1.4, to: 2.3, h: [0, 2.05], kit: "door_14b" },
     { id: "notes", wall: 1, from: 0.45, to: 1.15, h: [1.05, 1.65], kit: "note_war" },
-    // NINTH LIVE in neon over the bags (the block before it is painted: the user's wish of 10.11.2026)
+    // NINTH LIVE in neon over the bags (the user's wish of 10.11.2026), its cable down to a socket by the floor
     { id: "neon_ninth", wall: 1, from: 2.75, to: 4.15, h: [1.35, 1.9], kit: "neon_ninth" },
+    { id: "neon_cable", wall: 1, from: 4.0, to: 4.14, h: [0.25, 1.32], kit: "neon_cable" },
   ],
   // the corner right of the stairwell: the picture's bottom edge cuts it off from the rest of the floor
   // and the floor in front of the bench round Motte's feet (a notch is left where they stand: an actor
