@@ -16,7 +16,7 @@ Befund nur gelesen wurde, steht es dabei. Zeilennummern gelten für `b877f26` un
 | F1 | Der Solver sagt die Wahrheit | erledigt am 10.11.2026 (Engine `171d01d`, Spiel `1aa86c7`) |
 | F2 | Ein laufendes Skript endet, wenn das Spiel ersetzt wird | erledigt am 10.11.2026 (Engine `56a34c5`, `bc436d3`) |
 | F3 | Ein Spielstand hält kein halbes Skript | erledigt am 10.11.2026 (Engine `56a34c5`) |
-| F4 | Eine Regel für „der Spieler darf jetzt handeln“ | offen; die Ankunftsprüfung in `approach` ist mit F2 gebaut |
+| F4 | Eine Regel für „der Spieler darf jetzt handeln“ | erledigt am 10.11.2026 (Engine `b01d233`) |
 | F5 | Ein Prop mit `if` ist überall dasselbe | offen |
 | F6 | Der Editor verliert keine Arbeit | offen |
 | F7 | Die Tools scheitern laut, validate sieht mehr | offen |
@@ -226,6 +226,38 @@ angenommen; zwei Finger geben einen Klick und kein „Ansehen“.
 **Im Spiel danach:** `validate`, `play.mjs … spiel.json` und `node tools/check-hover.mjs`.
 
 **Fertig, wenn** es die Regel einmal gibt und der Tasten-Handler der Party sie fragt.
+
+**Erledigt.** `Cutaway.ui.canAct()` ist die Regel: jemand wird gespielt, kein Skript, kein Menü und keine Karte,
+nicht das Titelbild oder sein Splash, keine Zwischensequenz. Die Tasche, die Porträts, die Knöpfe neben der
+Tasche, der Hinweis (H) und die Tasten 1 bis 9 der Party fragen sie und fügen nur das Eigene hinzu; die Tasten 1
+bis 9 eines Dialogs fragen `canAct({ script: true })` (ein Skript darf laufen, das Pausenmenü nicht offen sein).
+Die Taste `1` auf dem Titelbild von Glass Sister lässt jetzt Titel und Autosave stehen (im echten Spiel in Chrome
+geprüft). Anders als geplant:
+
+- **`switchTo` weigert sich nicht ohne aktiven Akteur.** Die Eingaben fragen `canAct`, das einen aktiven
+  Akteur verlangt; Skripte (`{ switch }`, etwa am Anfang eines Akts) dürfen weiter wechseln. Die Taste des
+  Akteurs, der schon gespielt wird, tut nichts mehr (sie hielt vorher seinen Gang an).
+- **Ein Halt von außen zählt nicht `clickSeq` hoch, sondern `walkTo` sagt es:** Der Gang löst mit `true` auf,
+  wenn der Akteur ankam, und mit `false`, wenn er weggenommen wurde (`stop()`, `place()`, ein neuer Gang,
+  eine Animation: alles, was `settle()` ruft). Das ist eine Regel für jeden Halt statt einer Zählung an jeder
+  Stelle, die anhält. `Cutaway.ui.cancelClick()` lässt den Klick, der gerade läuft, ins Leere gehen; der
+  Figurenwechsel, das Laden eines Spielstands und `acts.reset` rufen es. Ohne das lief beim Wechsel zu einem
+  Akteur in einem anderen Raum das Skript des Hotspots für den zurückgelassenen, weil der Wechsel erst nach dem
+  Ausblenden den aktiven Akteur setzt.
+- **Ein Skript, das bei der Ankunft läuft, geht vor:** Das Skript des Hotspots wartet auf sein Ende
+  (`Cutaway.script.idle()`), prüft danach noch einmal Raum, Akteur und Klick und läuft dann. Ein Laden
+  währenddessen lässt es fallen.
+- **Tasche und Porträts verschwinden auch unter dem Pausenmenü und unter einer Karte** (vorher fragten sie nur
+  `script.busy`). In Glass Sister ändert sich dadurch nichts Sichtbares: Unter dem Pausenmenü war schon vorher
+  nichts davon zu sehen (`build/shots/f4_menu.png` gegen `f2_menu.png`).
+- Tab fragt `Cutaway.input.isDown("Tab")`; `Cutaway.ui.marking` sagt, ob die Markierungen gerade an sind.
+- Die Tests, die Gänge mit echter Zeit brauchen, stehen in `tests/replace.test.mjs` (dort ist der Aufbau dafür),
+  die Tasten auf dem Titel und unter dem Pausenmenü in `party.test.mjs`, zwei Finger und Tab in
+  `input.test.mjs`. 13 neue Tests, alle scheiterten vor der Korrektur.
+
+**Im Spiel:** validate 0 errors, 17 bekannte Warnungen; `play.mjs … spiel.json`, beide Touch-Läufe (Prolog und
+Kapitel 1, in denen EVI ihren Hinweis zum Halten sagt, während Juno zum Deck geht) und `check-hover.mjs`: all
+passed.
 
 ## F5 · Ein Prop mit `if` ist überall dasselbe
 
