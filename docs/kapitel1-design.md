@@ -267,12 +267,12 @@ Ausweis, Notschlüssel und der Weg aufs Dach sind schon im Prolog offen (entschi
 
 | Was sie sagt | Was es später heißt |
 |---|---|
-| Der Fünfte schmeckt seit Jahren nach Kochsalz, jede Nacht eimerweise: „Wer wäscht da oben so viele?“ | die Schlafstation in den mittleren Ringen (Kap. 3, 4) |
+| Der Fünfte schmeckt seit Jahren nach Kochsalz, jede Nacht eimerweise: „Ich frag mich, wer da oben jede Nacht so viele wäscht.“ | die Schlafstation in den mittleren Ringen (Kap. 3, 4) |
 | Sie wartet seit drei Jahren auf den ersten warmen Tropfen der Maschine | die automatische Auswertung hat es nie gegeben (Kap. 2) |
 | Das halbe Haus holt um drei zur selben Zeit Luft | die Schlafenden sind verbunden, Tintes „wie ein Schwarm“ (Kap. 3) |
-| Lull und Junos Implantat: „Dieselbe Stelle. Sparsam, die Leute da oben.“ | Lull ist das Beobachter-Implantat in billig (§10a) |
+| Lull und Junos Implantat: „Das ist dieselbe Stelle. Sparsam sind sie, die Leute da oben.“ | Lull ist das Beobachter-Implantat in billig (§10a) |
 | Weiß hält hier unten keinen Tag: Wer so herumläuft, kommt nicht von hier | die weißen Träger, Ashes weißer Regenmantel am Freitag |
-| Freitag: Das Wasser schmeckt nach nichts, „wenn's so still wird, räumt jemand auf“, „Frag mich morgen“ | der Mord am selben Abend, die Quiet |
+| Freitag: Das Wasser schmeckt nach nichts, „Wenn der Regen so still wird, dann räumt jemand auf“, „Frag mich morgen“ | der Mord am selben Abend, die Quiet |
 | Teo soll raufkommen, „solange er die Leiter noch findet“ | Teo wird ein Sinker (Ende Kap. 2) |
 | Licht im Wasser, einer, der mithört; zehn Sekunden Wahrheit auf dem großen Schirm | Lantern, die Sümpfe |
 | Tinte „zählt mit“, wer fehlt | die Knoten im Kabel (Kap. 3) |
