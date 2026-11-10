@@ -551,8 +551,11 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
 - **EVI ist immer in der Tasche dabei:** Das erklärt, warum sie in jeder Szene da ist; unten rechts steht sie abstrakt für die Hilfe. Ihr
   „Bringst du mir was mit?“ bleibt, wie es ist.
 - **Der Aufzug fährt nie.** „Angeblich dienstags“ bleibt als Witz.
-- **Der 14. Stock:** Frau Haldanes Tür sitzt in der linken Wand vorn, die Fahrräder sind weg, die Müllsäcke stehen vor dem Aufzug, oben in
-  der Ecke hängt Nagi·was Kamera. Das Post-it in der Wohnung ist gestrichen.
+- **Der 14. Stock:** Frau Haldanes Tür sitzt in der rechten Wand gleich neben dem Aufzug (entschieden am 10.11.2026: in der linken Wand
+  hätten ihre und Junos Wohnung dieselbe Wand), die Fahrräder sind weg, die Müllsäcke stehen vorn an der linken Wand, wo niemand wohnt,
+  unter einer Neonreklame für NINTH LIVE, Nagi·was Kamera hängt oben über dem Treppenschacht. In der Lobby dreht die Treppe auf einem
+  Absatz in der Ecke und kommt ins Zimmer herunter. Der Flur und die Lobby sind entlang der Aufzugswand 6 m lang, das Bild scrollt ein Stück. Das Post-it in der
+  Wohnung ist gestrichen.
 - **Ein Haus, ein Grundriss:** Aufzug und Treppe stehen auf jedem Stockwerk an derselben Stelle (`kessel_14`, `kessel_lobby`).
 - **Schilder in Grafik sind englisch**, auch geplante: `GLASSER LIES`, `SUDS & SPIN` (der Waschsalon), `NO SNEAKERS IN THE DRYER`, `OUT OF ORDER`,
   `KIDNEYS ONLY`, Sables Preisliste `NAMES 50. ADDRESSES 80. SECRETS: ASK.`

@@ -182,6 +182,52 @@ const KLOBBY = (() => {
       }
     },
   })
+  // the flight up with a turn (the user's decision of 10.11.2026: the straight flight's foot lay in the room's far corner): from the
+  // floor it comes up along the right stub wall towards the back (-v), `lower` meters long, to a landing in the corner (`landing`:
+  // its size), and from there on along the right back wall towards the back (-u) to the top at u0, where the landing's stairs begin
+  // on every floor above (u 3.5, art/rooms/kessel_14.map.js). `at`/`foot` are the upper flight's; `steps` count both flights and
+  // the landing's rise. Drawn from the top down, each step in front of the one above it
+  ISOKIT.prop("stairs_up_turn", {
+    footprint: (p) => [[p.at[0], p.at[1], p.foot[0], p.foot[1]], [p.at[0] + p.foot[0], p.at[1], p.landing[0], p.landing[1]],
+      [p.at[0] + p.foot[0], p.at[1] + p.landing[1], p.landing[0], p.lower]],
+    draw(pen, p) {
+      const [u0, v0] = p.at, L = p.foot[0], W = p.foot[1], H = p.h, n = p.steps, rise = H / n
+      const n1 = Math.round(n / 2), n2 = n - n1 - 1, t1 = L / n1, u1 = u0 + L, [LW, LD] = p.landing, HL = H - n1 * rise, v1 = v0 + LD, t2 = p.lower / n2
+      const nosing = (lu, lv, t, across) => (lu > t - 0.05 ? "5" : near(lv, across, 0.06) ? "2" : "3")
+      const seams = (h) => (a, e, o) => (e >= o.ah - 1 ? "4" : near((h - e / 30) % 0.8, 0, 1 / 40) ? "1" : "2")
+      const riser = (a, e, o) => (e >= o.ah - 2 ? "4" : "2")
+      // the upper flight, along the back wall: its risers face +u
+      for (let i = 0; i < n1; i++) {
+        const u = u0 + i * t1, h = H - i * rise
+        pen.box(u, v0, 0, t1, W, h, (lu, lv) => nosing(lu, lv, t1, W * 0.62), riser, seams(h))
+      }
+      // the landing in the corner: its edge to the lower flight lit, the worn path turning on it
+      pen.box(u1, v0, 0, LW, LD, HL, (lu, lv) => (lv > LD - 0.05 ? "5" : Math.hypot(lu - 0.25, lv - LD * 0.62) < 0.08 ? "2" : "3"), seams(HL), riser)
+      // the lower flight, along the stub wall: its risers face +v
+      for (let j = 0; j < n2; j++) {
+        const v = v1 + j * t2, h = HL - (j + 1) * rise
+        pen.box(u1, v, 0, LW, t2, h, (lu, lv) => nosing(lv, lu, t2, LW * 0.38), seams(h), riser)
+      }
+      // the rails on the open sides, posts and one straight handrail each, pixel by pixel so that it stays a clean line
+      const post = (u, v, z, top) => pen.box(u, v, z, 0.04, 0.04, top - z, () => "6", () => "4", () => "5")
+      const line = (A, B) => {
+        const [, yA] = pen.P(...A), [, yB] = pen.P(...B)
+        for (let y = yA; y <= yB; y++) {
+          const k = (y - yA) / Math.max(1, yB - yA), q = [A[0] + k * (B[0] - A[0]), A[1] + k * (B[1] - A[1]), A[2] + k * (B[2] - A[2])], [x] = pen.P(...q)
+          pen.at(q[0], q[1], q[2], "up"); pen.px(x, y, "G"); pen.px(x, y + 1, "5"); pen.px(x + 1, y + 1, "G"); pen.px(x + 1, y + 2, "5")
+        }
+      }
+      const V = v0 + W - 0.03, rail1 = (u) => H - ((u - u0) / L) * (H - HL) + 0.82
+      for (let i = 0; i < n1; i += 3) { const u = u0 + (i + 0.4) * t1; post(u, V, H - i * rise, rail1(u)) }
+      post(u1 - 0.04, V, HL, HL + 0.82)
+      line([u0 + 0.02, V, rail1(u0 + 0.02)], [u1 - 0.02, V, HL + 0.82])
+      const U = u1 + 0.01, rail2 = (v) => HL - ((v - v1) / p.lower) * HL + 0.82
+      post(U, v1 - 0.04, HL, HL + 0.82)
+      for (let j = 2; j < n2; j += 3) { const v = v1 + (j + 0.4) * t2; post(U, v, HL - (j + 1) * rise, rail2(v)) }
+      { const v = v1 + (n2 - 0.6) * t2; post(U, v, rise, rail2(v)) }
+      line([U, v1 - 0.02, HL + 0.82], [U, v1 + p.lower - 0.6 * t2, rail2(v1 + p.lower - 0.6 * t2)])
+    },
+  })
   // the wet-floor sign: a yellow A-frame, a figure slipping on it (no words)
   const SLIP = ["..k..", ".kk..", "..kkk", ".k.k.", "k...k", "kkkkk"]
   ISOKIT.prop("wet_sign", {

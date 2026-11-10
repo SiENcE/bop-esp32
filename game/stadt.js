@@ -94,8 +94,8 @@ Cutaway.actor("haldane_feed", { name: "Jemand im Morgenmantel", color: "#ffa8d8"
   talk: [{ if: "!news_who", then: ["Es ist halb drei, und sie trägt einen Morgenmantel. Sie geht langsam, die Augen ...", "Die Augen sind zu.", "Das ist Frau Haldane aus 14C. Sie holt sich die Zeitung, ihre eigene und die von 14A.", "Und der Zettel ist ihr eigener: WER KLAUT MEINE ZEITUNG.", { set: "news_who" }, { evi: "verwirrt" }, { say: "evi", text: "Sie schläft. Darf man das?" }],
     else: ["Das ist Frau Haldane. Sie schläft und holt die Zeitung. Die markier ich nicht."] }] });
 Cutaway.routine("haldane_feed", [{ day: [2, 3], from: "02:30", to: "02:45", room: "cam14", at: AC.door, path: [AC.door, AC.mat, AC.door] }]);
-// CAM 14 is the floor's own picture (the user's wish, 2026-11-09): its bake and props under the feed's filter, moved right by AC.shift
-// so Frau Haldane's door clears the cameras' strip. The camera itself is left out of its own picture; the hook only while it hangs
+// CAM 14 is the floor's own picture (the user's wish, 2026-11-09): its bake and props under the feed's filter, moved by AC.shift so
+// its right edge is the feed's. The camera itself is left out of its own picture; the hook only while it hangs
 const K14 = Nagiwa.at.kessel_14, SH = AC.shift;
 const shiftX = (/** @type {number[]} */ xs) => xs.map((v, i) => (i % 2 ? v : v + SH));
 Nagiwa.camRoom("cam14", { background: undefined, color: Nagiwa.PHOSPHOR[0], mic: { at: AC.mic, clear: 40, lost: 150 },
@@ -107,7 +107,7 @@ Nagiwa.camRoom("cam14", { background: undefined, color: Nagiwa.PHOSPHOR[0], mic:
     { id: "papers", image: "mock_papers", at: [AC.mat[0] + 8, AC.mat[1] - 1], if: "time<02:45" },
   ],
   hotspots: {
-  doors: { name: "Türen", poly: AC.doorsPoly, look: ["Das ist der Flur von oben, genau wie ich ihn in Erinnerung hab.", "Den hab ich ja mal beobachtet, von Berufs wegen."] },
+  doors: { name: "Tür", poly: AC.doorPoly, look: ["Das ist der Flur von oben, genau wie ich ihn in Erinnerung hab.", "Den hab ich ja mal beobachtet, von Berufs wegen."] },
 } });
 const haldaneUse = floor14.haldane.use;
 // the point behind a sleeper's ear: the beat cam31 waits for (and nobody says why)

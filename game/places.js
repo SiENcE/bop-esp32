@@ -79,14 +79,16 @@ Nagiwa.at = {
   // Chapter 1's blocks (art/mock/ch1_blocks.px.js)
   // (the left column of every feed is the cameras' strip, x 4 to 74, and the top left its name: nothing that matters lies there)
   cam21: { door: [152, 80], walkOff: [300, 110], queue: [[86, 96], [102, 100], [118, 104], [134, 108]], menu: [238, 134, 28, 28], clinic: [130, 26, 44, 50], mic: [152, 90] },
-  // the 14th floor's own picture and props (game/rooms/kessel.js), moved right by `shift` so Frau Haldane's door clears the strip: she
-  // comes out of it and walks to the papers at the head of the stairs
+  // the 14th floor's own picture and props (game/rooms/kessel.js), 352 wide, moved left by 32 (`shift`) so its right edge is the
+  // feed's: Frau Haldane comes out of her door beside the lift and walks to the papers at the head of the stairs (the cameras' strip
+  // covers Juno's door)
   cam14: (() => {
-    const L = Nagiwa.layouts.kessel_14, S = 56, dh = L.openings.door_haldane, dj = L.openings.door_juno;
-    return { shift: S, door: [dh[0] + dh[2] / 2 + S, dh[1] + dh[3] - 2], mat: [L.spots.stairs[0] - 24 + S, L.spots.stairs[1] + 4], mic: [180, 130], exposure: 2.2,
-      doorsRect: [dh[0] + S, dj[1], dj[0] + dj[2] - dh[0], dh[1] + dh[3] - dj[1]],
-      // the two doors' own shapes on their wall and the wall between them, as one
-      doorsPoly: hull([...L.openingPolys.door_haldane, ...L.openingPolys.door_juno]).map((v, i) => (i % 2 ? v : v + S)) };
+    const L = Nagiwa.layouts.kessel_14, S = -32, q = L.openingPolys.door_haldane;
+    const foot = [[q[0], q[1]], [q[2], q[3]], [q[4], q[5]], [q[6], q[7]]].sort((a, b) => b[1] - a[1]).slice(0, 2);
+    return { shift: S, door: [Math.round((foot[0][0] + foot[1][0]) / 2) + S, Math.round((foot[0][1] + foot[1][1]) / 2) - 2],
+      mat: [L.spots.stairs[0] - 24 + S, L.spots.stairs[1] + 4], mic: [180, 130], exposure: 2.2,
+      // her door's own shape on its wall
+      doorPoly: q.map((v, i) => (i % 2 ? v : v + S)) };
   })(),
   // almost straight down over the stairs (art/cams/cam18.px.js, measured there: CAM18_LAYOUT): the fish painted over the steps lies on
   // them, its hotspot over theirs

@@ -190,6 +190,26 @@ const K14 = (() => {
       return o.memo.sign(o.a, o.e)
     },
   })
+  // NINTH LIVE in neon (a block before it is painted, 10.11.2026): a dark board on two brackets, NINTH in magenta tube, LIVE in
+  // cyan under it with the red dot of a live feed; one letter of NINTH out on the frames the light stutters
+  ISOKIT.opening("neon_ninth", {
+    pad: 0.03,
+    halo: [{ color: "#ff4fd3", reach: 0.45, power: 1.2 }],
+    paint(s, h, o) {
+      const { aw, ah, f } = o
+      o.memo.ninth ??= ISOKIT.raster(aw + 2, ah + 2, (c) => {
+        c.rect(0, 0, aw + 2, ah + 2, "1"); c.rect(1, 1, aw, ah, "k")
+        c.rect(4, ah + 1, 2, 1, "5"); c.rect(aw - 4, ah + 1, 2, 1, "5")
+        TXT.draw(c, Math.floor((aw + 2) / 2), 2, "NINTH", "!m", { font: "hud", align: "center" })
+        TXT.draw(c, Math.floor((aw + 2) / 2) + 3, 10, "LIVE", "!v", { font: "hud", align: "center" })
+        c.rect(Math.floor((aw + 2) / 2) - 12, 11, 3, 3, "!q")
+      }, -1, -1)
+      const k = o.memo.ninth(o.a, o.e)
+      // the H stutters: its tube dark on the light's off frames
+      if (k === "!m" && f === 5 && o.a > aw * 0.62 && o.a < aw * 0.8 && o.e > ah - 9) return "M"
+      return k
+    },
+  })
 
   // ---------------------------------------------------------------- the stairs
   ISOKIT.stairs("stairs_concrete", {

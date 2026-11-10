@@ -26,7 +26,7 @@
     else: [{ sfx: "steps_metal" }, { goto: "kessel_14", at: AK.stairs, face: "sw" }] }];
 
   Cutaway.room("kessel_14", {
-    name: "Vierzehnter Stock", background: "kessel_14_bg",
+    name: "Vierzehnter Stock", background: "kessel_14_bg", size: /** @type {[number, number]} */ ([352, 180]),
     ambience: ["neon_buzz", "city_far"], music: { theme: "juno", intensity: 0.3 },
     walk: AK.walk, holes: AK.holes, props: AK.props,
     // the map's lamps (the bake's): the tube's green, the TV's blue from Frau Haldane's door
@@ -37,7 +37,7 @@
       door_juno: { name: "Meine Tür", poly: AK.door_junoPoly, walkTo: AK.door_juno, face: "nw",
         look: "Meine Tür hat drei Schlösser, und zwei davon sind von mir. Die Kamera drüber auch.",
         use: [{ goto: "flat", at: AF.arrive, face: "se" }] },
-      haldane: { name: "Frau Haldane", poly: AK.door_haldanePoly, walkTo: AK.haldane, face: "nw",
+      haldane: { name: "Frau Haldane", poly: AK.door_haldanePoly, walkTo: AK.haldane, face: "ne",
         look: ["Frau Haldane hat Doppelschicht. Sie schläft, wie andere Leute blinzeln.", "Hinter ihrem Ohr klebt das Lull-Pflaster. Vier Stunden wie zehn, sagt die Werbung."],
         use: "Ich lass sie schlafen.", talk: "Sie schläft. Und ihr Fernseher redet für zwei." },
       notes: { name: "Zettel", poly: AK.notesPoly, walkTo: AK.notes, face: "nw",
@@ -50,7 +50,7 @@
       tube: { name: "Neonröhre", poly: AK.tubePoly, walkTo: AK.haldane, face: "ne",
         look: "Die Röhre stirbt seit Monaten. Zuständig ist keiner." },
       bags: { name: "Müllsäcke", poly: AK.bagsPoly, walkTo: AK.bags, face: "ne",
-        look: "Der Müll steht vor dem Aufzug, da stört er keinen. Abgeholt wird dienstags. Theoretisch." },
+        look: "Der Müll steht an der Wand, hinter der keiner wohnt. Da stört er keinen. Abgeholt wird dienstags. Theoretisch." },
       corner_cam: { name: "Kamera", poly: AK.corner_camPoly, walkTo: AK.stairs, face: "ne",
         look: "Nagi·was Kamera, oben über der Treppe. Ich weiß genau, wie der Flur von da oben aussieht." },
       bench: { name: "Bank", poly: AK.benchPoly, walkTo: AK.motte, face: "ne", z: -1,
@@ -65,7 +65,7 @@
   });
 
   Cutaway.room("kessel_lobby", {
-    name: "Eingang", background: "kessel_lobby_bg",
+    name: "Eingang", background: "kessel_lobby_bg", size: /** @type {[number, number]} */ ([352, 216]),
     ambience: ["city_far", { sfx: "rain_glass", gain: 0.5 }], music: { theme: "juno", intensity: 0.3 },
     walk: AL.walk, holes: AL.holes, props: AL.props,
     light: { ambient: 0.74, color: "#dce4f4", lamps: AL.lamps.map((/** @type {any} */ { bake, zone, ...lamp }) => lamp) },
