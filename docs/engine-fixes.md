@@ -17,7 +17,7 @@ Befund nur gelesen wurde, steht es dabei. Zeilennummern gelten für `b877f26` un
 | F2 | Ein laufendes Skript endet, wenn das Spiel ersetzt wird | erledigt am 10.11.2026 (Engine `56a34c5`, `bc436d3`) |
 | F3 | Ein Spielstand hält kein halbes Skript | erledigt am 10.11.2026 (Engine `56a34c5`) |
 | F4 | Eine Regel für „der Spieler darf jetzt handeln“ | erledigt am 10.11.2026 (Engine `b01d233`) |
-| F5 | Ein Prop mit `if` ist überall dasselbe | offen |
+| F5 | Ein Prop mit `if` ist überall dasselbe | erledigt am 10.11.2026 (Engine `5ca641e`) |
 | F6 | Der Editor verliert keine Arbeit | offen |
 | F7 | Die Tools scheitern laut, validate sieht mehr | offen |
 | F8 | Kleine Fehler der Laufzeitlogik | offen |
@@ -278,6 +278,26 @@ Der letzte Commit der Engine gab Props eine Bedingung. Ob ein Prop da ist, wird 
 Voraussetzungen im Graphen ändern können.
 
 **Fertig, wenn** `isHidden` für Props nur noch in `propThere` vorkommt.
+
+**Erledigt** wie geplant. `Cutaway.scene.propThere(p)`: für die Szene gezeigt (`showProp`) ist ein Prop da, sonst
+nicht, solange es versteckt ist, und nur, solange sein `if` gilt. Das Bild, die Hotspots, die ihre Fläche von
+einem Prop nehmen, Things, State und der Tracer fragen sie; `isHidden` kommt für Props nur noch dort vor. Dazu:
+
+- **Das Feld `if` hat Things bei Props und bei Hotspots** (beiden fehlte es), als Bedingung so geschrieben, wie
+  sie im Code steht (`door_open`, `!has:key`), eine Liste oder `{ or }` als JSON.
+- **State** zeigt die Bedingung neben dem Ding und hält das Häkchen aus und gesperrt, solange sie nicht gilt,
+  auch bei einem Hotspot mit `if`. Im Spiel ist das `alley_open` in der Kowalski Street (`if: "day>=2"`):
+  am ersten Tag gesperrt (`build/shots/f5_state.png`).
+- Der Test für einen Hotspot, der mit seinem Prop kommt und geht, braucht einen Hotspot mit einer anderen id als
+  das Prop (`prop: "plant"`): Hotspot und Prop mit derselben id teilen sich ihren versteckten Zustand, ein
+  verstecktes Prop nimmt seinen gleichnamigen Hotspot also ohnehin mit.
+- Acht neue Tests (`cinema`, `tools`, `editor-blocks`), alle scheiterten vor der Korrektur.
+
+Glass Sister hat nur dieses eine Prop mit `if`, und kein Hotspot nimmt seine Fläche; validate warnt deshalb nicht
+neu, und die Voraussetzungen im Graphen bleiben, wie sie waren.
+
+**Im Spiel:** validate 0 errors, 17 bekannte Warnungen; `play.mjs … spiel.json`: all passed; `sh tools/graph.sh main`:
+38 704 Zustände wie bisher, der Graph geschrieben (`build/graph/kapitel1_main.js`).
 
 ## F6 · Der Editor verliert keine Arbeit
 
