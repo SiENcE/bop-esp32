@@ -361,13 +361,13 @@ Ungespeicherte stehen. Ein Raum aus `?edit` heraus geöffnet: kein Autosave, nic
 Wohnung: ein Prop verschoben, im Quelltext-Editor sichtbar, dort getippt, im Tab angekommen, beides gespeichert.
 Die geänderten Dateien wurden danach zurückgesetzt.
 
-**Im Spiel:** validate 0 errors, 17 bekannte Warnungen. Das ganze `sh tools/check.sh` lief mit diesem Stand an
-(gestartet nach dem Sync auf `25be7d0`); beim Commit war es noch nicht zu Ende. Bis dahin bestanden: validate, der
-Solver für Prolog und alle neun Fäden von Kapitel 1 (keine Soft-Locks, jeder Zustand hat einen Hinweis, dieselben
-Zustandszahlen wie unter F1: 78 612, 38 704, 17 608, 13 984, 12 488, 7 064, 36 387, 47 542, 11 182, 11 458), die
-Klickläufe `prolog`, `prolog_dach`, `spiel` und die Kapitel-1-Pfade `dach`, `imai`, `imai_traum`, `main`,
-`motte`, `tide_lied`, `tide_sold`, `tide_warned`, `traeger`, `varga_lied`, `varga_sold`, `varga_warned`. Noch ausstehend: die
-übrigen Klickpfade, die Touch-Läufe und `check-hover.mjs`; ihr Ergebnis wird hier nachgetragen.
+**Im Spiel:** validate 0 errors, 17 bekannte Warnungen. Das ganze `sh tools/check.sh` mit der Engine auf `25be7d0`
+(und damit auch über dem ganzen Umbau des Kessel-Blocks: Müllsäcke, Neon, die Treppe mit Absatz in der Lobby):
+**ALL PASSED.** Der Solver für Prolog und alle neun Fäden von Kapitel 1: keine Soft-Locks, jeder Zustand hat einen
+Hinweis, dieselben Zustandszahlen wie unter F1 (78 612, 38 704, 17 608, 13 984, 12 488, 7 064, 36 387, 47 542,
+11 182, 11 458); die Klickläufe `prolog`, `prolog_dach`, `spiel` und alle 14 Pfade von Kapitel 1 (`dach`, `imai`,
+`imai_traum`, `main`, `motte`, `tide_lied`, `tide_sold`, `tide_warned`, `traeger`, `varga_lied`, `varga_sold`,
+`varga_warned`, `vesper`, `zeitung`), die Touch-Läufe (Prolog, Kapitel 1 Hauptfaden) und `check-hover.mjs`: all passed.
 
 ## F7 · Die Tools scheitern laut, validate sieht mehr
 
