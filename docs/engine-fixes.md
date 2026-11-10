@@ -13,10 +13,10 @@ Befund nur gelesen wurde, steht es dabei. Zeilennummern gelten für `b877f26` un
 
 | Schritt | Inhalt | Stand |
 |---|---|---|
-| F1 | Der Solver sagt die Wahrheit | offen |
-| F2 | Ein laufendes Skript endet, wenn das Spiel ersetzt wird | offen |
-| F3 | Ein Spielstand hält kein halbes Skript | offen |
-| F4 | Eine Regel für „der Spieler darf jetzt handeln“ | offen |
+| F1 | Der Solver sagt die Wahrheit | erledigt am 10.11.2026 (Engine `171d01d`, Spiel `1aa86c7`) |
+| F2 | Ein laufendes Skript endet, wenn das Spiel ersetzt wird | erledigt am 10.11.2026 (Engine `56a34c5`, `bc436d3`) |
+| F3 | Ein Spielstand hält kein halbes Skript | erledigt am 10.11.2026 (Engine `56a34c5`) |
+| F4 | Eine Regel für „der Spieler darf jetzt handeln“ | offen; die Ankunftsprüfung in `approach` ist mit F2 gebaut |
 | F5 | Ein Prop mit `if` ist überall dasselbe | offen |
 | F6 | Der Editor verliert keine Arbeit | offen |
 | F7 | Die Tools scheitern laut, validate sieht mehr | offen |
@@ -77,6 +77,38 @@ des Spiels. Neue Soft-Locks und Zustände ohne Hinweis werden im Spiel behoben, 
 
 **Fertig, wenn** die neuen Tests bestehen und `check.sh` hier wieder durchläuft.
 
+**Erledigt.** Gebaut wie geplant, mit zwei Dingen mehr:
+
+- Ein Auswahlpunkt wird auch nach den Dialogen unterschieden, die gerade laufen (`ChoicePoint.stack` in
+  `dialog.js`: jeder mit dem Pfad des Schritts, der ihn begann). Ohne das galt derselbe Dialog, zweimal in einem
+  Skript, beim zweiten Mal als schon gesehen, und alles danach ging verloren. Das war kein Befund der Review; der
+  Test dafür hat es gezeigt.
+- Mehr als 40 Wahlen in Folge sind ein Fehler mit dem Namen des Zugs. Vorher schnitt der Solver dort still ab.
+
+Die Regeln der Tasche stehen als `Cutaway.inventory.available` und `holdable(id)` in `inventory.js`; der Solver
+fragt sie. Die Demo der Engine hat dadurch 896 statt 1792 Zustände: Der Solver hatte den festen Sticker an den
+zweiten Roboter weitergegeben, was kein Spieler kann. Zwölf neue Tests in `tests/tools.test.mjs` und
+`tests/time.test.mjs`; neun davon scheiterten vor der Korrektur.
+
+**Im Spiel:** `sh tools/check.sh`: ALL PASSED. Zum Vergleich lief der alte Solver (Engine `b877f26`) über alle
+Fäden: Er findet in jedem dieselbe Zahl von Zuständen wie der neue.
+
+| Faden | Zustände, alter und neuer Solver |
+|---|---|
+| Prolog | 78 612 |
+| Kapitel 1, Hauptfaden | 38 704 |
+| Dach | 17 608 |
+| Zeitung | 13 984 |
+| Imai | 12 488 |
+| Träger | 7 064 |
+| Varga | 36 387 |
+| Tide | 47 542 |
+| Motte | 11 182 |
+| Vesper | 11 458 |
+
+In Glass Sister hat die Lücke also keine Zustände verschluckt, auch nicht in Mottes Faden; die bisherigen
+„no soft-locks“ waren richtig. Kein Lösungsweg brauchte einen Item-Zug im Deck oder EVI in der Hand.
+
 ## F2 · Ein laufendes Skript endet, wenn das Spiel ersetzt wird
 
 Esc öffnet das Pausenmenü während jedes Skripts. Wird von dort geladen, zum Titel gegangen oder ein neues Spiel
@@ -103,6 +135,30 @@ anderen Raum (endet), Gang nach `{ anim, wait: false }` (endet).
 
 **Fertig, wenn** kein Weg aus dem Pausenmenü ein Skript überleben lässt und `script.busy` danach immer falsch ist.
 
+**Erledigt**, in drei Punkten anders als oben geplant:
+
+- **Wer `abort()` ruft.** `save.apply` ruft es als Erstes, dazu die Zeilen „Laden“ und „Zum Titelbild“ des
+  Pausenmenüs, bevor der Schirm dunkel wird. `acts.reset` ruft es nicht: Dorthin kommt auch ein Skript selbst, mit
+  `{ act: "next" }` in einen frischen Akt und mit `{ end }` zurück zum Titel, und es würde auf sich selbst warten.
+  „Neues Spiel“ gibt es nur auf dem Titelbild, und dorthin führt aus dem Spiel nur das Pausenmenü (das abbricht)
+  oder das Ende.
+- **Akteure in einem Raum, der nicht gezeigt wird**, kommen nicht sofort an, sondern werden dort mitgeführt
+  (`scene.update` führt jeden, der einen Weg oder eine einmalige Animation hat). So spielt ein Gang, den ein
+  Skript beginnt, bevor es in den Raum geht, weiter wie bisher, und der wartende Fall endet trotzdem.
+- **Die Ankunftsprüfung aus F4 ist vorgezogen.** Weil `place()` jetzt wartende Gänge auflöst, würde ein Gang zu
+  einem Hotspot, der durch einen Raumwechsel weggenommen wird, sofort als Ankunft gelten. `approach` prüft deshalb
+  nach dem Gang, ob Raum und Akteur noch dieselben sind und der Akteur noch im Raum ist.
+
+Dabei gefunden: Die erste Fassung dieser Prüfung verwarf den Klick auch, wenn unterwegs ein Skript begann. Im
+Touch-Modus sagt EVI beim zweiten Tipp ihren Hinweis zum Halten (`evi.hold`), während Juno zum Deck geht; das Deck
+ging dann nicht mehr auf, und beide Touch-Läufe scheiterten am zweiten Zug. Die Bedingung ist wieder heraus
+(Engine `bc436d3`), ein Test hält den Fall fest. Für F4 heißt das: Ein Hotspot-Skript, das auf ein anderes
+trifft, muss warten, bis es zu Ende ist, und darf nicht verworfen werden.
+
+Ein Dialog endet beim Abbruch von selbst (`dialog.js` fragt `script.stopping`), und ein Raum, der währenddessen
+noch betreten wird, schreibt keinen Autosave. `tests/replace.test.mjs` spielt jeden Fall auf der Demo mit echten
+Zeilen, Gängen und Wartezeiten.
+
 ## F3 · Ein Spielstand hält kein halbes Skript
 
 Die Regel „ein Skript kann nicht halb gespeichert werden“ gilt heute nur für Momente (`save.hold`) und den
@@ -127,6 +183,27 @@ speichern und laden.
 
 **Fertig, wenn** jeder gespeicherte Stand einer ist, den der Solver kennt.
 
+**Erledigt.** `script.js` hält den Spielstand, solange ein Skript läuft (`save.hold` mit dem Stand von vor dem
+äußersten Skript); der Autosave eines Raumwechsels im Skript wird geschrieben, wenn `script.busy` falsch wird;
+der Autosave auf dem Weg zum Titel wird immer geschrieben. Die Zeile „Hinweis“ fragt `script.busy` und nicht
+`hints.ready()`, das auch „kein Menü offen“ verlangt und die Zeile beim Zurückkommen aus den Einstellungen
+verschwinden ließe.
+
+- **Was es kostet:** nichts Messbares. Der Stand von vor dem Skript wird bei jedem Klick einmal gefasst; die
+  Solver-Läufe von Kapitel 1 sind gleich schnell (Tide 231 s nach 253 s, Motte 56 s nach 57 s, Vesper 61 s nach
+  60 s), die Demo der Engine 555 ms nach 551 ms. Das Protokoll der Änderungen braucht es nicht.
+- **Ein Moment in einem Skript gehört jetzt zu diesem Skript.** Bisher hielt jeder Moment den Stand von
+  unmittelbar vor sich und spielte nach dem Laden von selbst noch einmal (Engine `72e33ff`, für das Ende in
+  cam31). Das gilt weiter für einen Moment, der als eigenes Skript spielt (sein Raum wird betreten, wenn seine
+  Zeit da ist). Spielt er aber in einem Skript (dem, das gewartet hat oder in den Raum gegangen ist), dann ist
+  ein Speichern mittendrin der Stand von vor diesem Skript, und der Spieler macht den Klick noch einmal. Sonst
+  gingen die Schritte verloren, die im Skript nach dem Moment kommen. Hängen bleibt das Spiel in keinem der
+  beiden Fälle.
+
+Im echten Spiel in Chrome geprüft (Prolog, Junos Wohnung): Speichern mitten in einer Zeile hält den Stand von
+davor; Laden mitten in einer Zeile nimmt die Zeile weg, kein Skript läuft mehr, sein späterer Schritt kommt nicht
+an; das Pausenmenü zeigt währenddessen keinen Hinweis.
+
 ## F4 · Eine Regel für „der Spieler darf jetzt handeln“
 
 Ob der Spieler gerade handeln darf, wird an fünf Stellen einzeln berechnet (`inventory.shown()`,
@@ -137,7 +214,7 @@ und dem Skript, das er auslöst, hält nichts die Eingabe fest.
 |---|---|---|
 | Eine Zifferntaste auf dem Titelbild lädt den Raum des Akteurs hinter dem Menü und überschreibt den Autosave mit einem leeren Spiel. In Glass Sister reicht die Taste `1`. | `src/party.js:131-134` | Eine Abfrage `Cutaway.ui.canAct()`: ein aktiver Akteur, kein Skript, kein Menü, kein Titel, keine Sequenz. Alle fünf Stellen fragen sie und fügen nur das Eigene hinzu. Der Tasten-Handler wechselt außerdem nicht zum schon aktiven Akteur, und `switchTo` weigert sich ohne aktiven Akteur. |
 | Zifferntasten wählen eine Dialogoption unter dem offenen Pausenmenü (nur gelesen). | `src/dialog.js:150-153` | Dieselbe Abfrage, hier ohne die Bedingung „kein Skript“. |
-| Nach dem Gang zum Hotspot startet dessen Skript, auch wenn inzwischen der Akteur gewechselt wurde oder ein anderes Skript läuft. `approach` nimmt `stop()` als Ankunft. | `src/ui.js:213-233`, `:258-288`, `src/party.js:46` | `switchTo` und ein Halt von außen zählen `clickSeq` hoch. Nach `approach` bricht `interact` ab, wenn ein Skript läuft oder Raum oder aktiver Akteur andere sind als beim Klick. |
+| Nach dem Gang zum Hotspot startet dessen Skript, auch wenn inzwischen der Akteur gewechselt wurde oder ein anderes Skript läuft. `approach` nimmt `stop()` als Ankunft. | `src/ui.js:213-233`, `:258-288`, `src/party.js:46` | Mit F2 gebaut: Nach dem Gang bricht `approach` ab, wenn Raum oder aktiver Akteur andere sind als beim Klick oder der Akteur nicht mehr im Raum ist. Noch offen: `switchTo` und ein Halt von außen zählen `clickSeq` hoch; läuft bei der Ankunft ein anderes Skript, wartet das Skript des Hotspots, bis es zu Ende ist (es wird nicht verworfen: EVIs Tipp im Touch-Modus beginnt genau dann). |
 | In den 260 ms einer offenen Tür ist `script.busy` falsch; ein zweiter Klick wird angenommen und sein Skript läuft im nächsten Raum. | `src/ui.js:279-283` | Tür zeigen, warten und `goto` laufen als ein Skript, sodass `busy` vom Öffnen an gilt. |
 | Ein Zwei-Finger-Tipp löst 450 ms später ein „Ansehen“ aus, weil der Halte-Timer des ersten Fingers weiterläuft. | `src/input.js:53-78` | Solange ein Zeiger unten ist, werden weitere ignoriert. |
 | Die Markierungen bleiben an, wenn das Fenster den Fokus verliert, während Tab gehalten wird (nur gelesen). | `src/ui.js:540-541` | `Cutaway.input.isDown("Tab")` fragen, das bei `blur` geleert wird. |
@@ -301,6 +378,10 @@ Das sind technische Entscheidungen; sie gelten, solange der Nutzer nichts andere
 
 - **Speichern während eines Skripts schreibt den Stand von vor dem Skript** (F3). Die Alternative, erst nach dem
   Skript zu schreiben, verliert den Stand, wenn der Spieler gleich danach das Fenster schließt.
+- **Ein Moment, der in einem Skript spielt, gehört zu diesem Skript** (F3, beim Bauen entschieden): Ein Speichern
+  mittendrin ist der Stand von vor dem Skript, nicht von unmittelbar vor dem Moment.
+- **Ein Skript, das während des Gangs zu einem Hotspot beginnt, nimmt den Klick nicht weg** (F2, beim Bauen
+  entschieden), weil ein Spiel unterwegs eine Zeile sagen darf.
 - **Die `once`-Kollision wird von validate gemeldet, die Engine bleibt** (F7), damit kein alter Spielstand seine
   `once`-Marken verliert.
 - **Der Editor weigert sich zu schreiben, wenn die Datei auf der Platte anders ist, und fragt** (F6), statt
@@ -309,9 +390,11 @@ Das sind technische Entscheidungen; sie gelten, solange der Nutzer nichts andere
 
 ## Was offen bleibt
 
-- Ob in Mottes Faden Zustände fehlten, zeigt erst der Lauf nach F1.
 - Die Pixelgenauigkeit bei 125 % und 150 % ist nur mit emuliertem dpr gemessen; F9 braucht einen echten Bildschirm.
 - `node tests/run.mjs` lief während der Review nicht; alle Befunde stehen gegen `b877f26`, wie es eingecheckt ist.
+- Die Zeilennummern in F4 bis F11 gelten für `b877f26`; seit F1 bis F3 sind sie in `script.js`, `save.js`,
+  `actor.js`, `dialog.js`, `ui.js`, `menu.js` und `solver.mjs` verschoben.
+- In F8 ruft `save.apply()` schon `script.abort()`; `Cutaway.time.reset()` kommt dort dazu.
 
 ## Was ohne Befund blieb
 
