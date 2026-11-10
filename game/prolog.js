@@ -189,7 +189,9 @@ Cutaway.state.view("evening_shown");
 Cutaway.room("flat", {
   name: "Junos Wohnung", background: "flat_bg",
   ambience: ["rain_glass", "city_far", "neon_buzz", "fridge_hum"], music: { theme: "juno", intensity: 0.4 },
-  walk: AF.walk, holes: AF.holes, props: AF.props,
+  walk: AF.walk, holes: AF.holes,
+  // the door standing open (Teo's visit: { open: "door_open" }, for the scene only), on the wall behind everyone
+  props: [...AF.props, { id: "door_open", image: "mock_flat_door_open", at: AF.doorOpen, anchor: [0, 0], baseline: 0, hidden: true }],
   // the lamps of the map (the same that baked the art's light): they tint Juno where she stands
   light: { ambient: 0.38, color: "#8a9cff", lamps: AF.lamps.map((/** @type {any} */ { bake, ...lamp }) => lamp) },
   hotspots: {

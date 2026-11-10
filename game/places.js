@@ -33,7 +33,9 @@ function fromLayout(/** @type {any} */ L) {
 
 Nagiwa.at = {
   // measured from the flat's map and its bake (art/rooms/flat.map.js, game/rooms/flat.layout.js)
-  flat: fromLayout(Nagiwa.layouts.flat),
+  // Teo's visit (game/kapitel1_leben.js): the open door's block over the door's opening, Teo's place on the threshold (in the gap, off
+  // the floor: he walks in free), where he stands, and where Juno steps back to
+  flat: { ...fromLayout(Nagiwa.layouts.flat), doorOpen: Nagiwa.layouts.flat.openings.door.slice(0, 2), doorway: [28, 150], visitTeo: [47, 157], visitJuno: [74, 166] },
   // the 14th floor's landing (art/rooms/kessel_14.map.js, game/rooms/kessel_14.layout.js)
   kessel_14: fromLayout(Nagiwa.layouts.kessel_14),
   // the lobby (art/rooms/kessel_lobby.map.js, game/rooms/kessel_lobby.layout.js)

@@ -1,6 +1,7 @@
 // Nagiwa: the life around Chapter 1's jobs (docs/kapitel1-design.md §7): Teo's visit on Wednesday at 18:30, Motte's lessons, Bao, the stuttering ad screen.
 // Teo comes by on Wednesday evening with soup from Bao. The visit can't be missed: at 18:30 there is a knock wherever Juno is waiting,
-// she opens the door, and afterwards she is back where she was. A scene without choices, so it costs the solver nothing but its moment;
+// she opens the door, Teo comes in, they talk, he goes, the door shuts, and afterwards she is back where she was. A scene without choices,
+// so it costs the solver nothing but its moment;
 // what Juno learns there (Teo is on Lull) other talks read from `moment:teo_visit`.
 "use strict";
 
@@ -13,24 +14,48 @@ Cutaway.actor("teo", { name: "Teo", color: "#ffa040",
   look: ["Teo trägt die orange Weste und den Gehörschutz um den Hals.", "Seine Kiemen sind rot vom Salzwasser.", "Hinter seinem Ohr klebt das Lull-Pflaster, und es blinkt."],
   talk: [T("Iss, Ju.")] });
 
-const VISIT = [
-  T("Ju! Mach auf, die Brühe wird kalt."),
-  T("Von Bao. Er sagt, du hast seit Dienstag nichts gegessen. Er zählt mit."), "Er zählt falsch.", T("Er zählt nie falsch. Nur zu deinen Gunsten."),
-  "Hinter seinem Ohr klebt ein blasses Pflaster, und es blinkt.", "Seit wann?", T("Seit es gratis ist."), T("Vier Stunden Lull, und ich bin wie neu."),
-  "Du hast Doppelschichten.", T("Deswegen ja. Vier Stunden, Ju. Fühlt sich an wie zehn."),
-  T("Und du? Immer noch die Kameras?"), "Immer noch.", T("Du redest noch immer, als hätten sie dich gefeuert, weil du schlecht warst."), "...",
-  T("Iss. Ich muss los, meine Schicht fängt um acht an."), T("Schlaf du auch mal, Ju."),
-];
-// { teo_visit: true } the knock: to the flat's door, the scene, and back to where Juno was (a camera, the deck)
-Cutaway.script.action("teo_visit", async (s, ctx) => {
-  const back = Cutaway.scene.room?.id, app = Cutaway.state.flag("deck_app");      // where she was, and the deck's open window (a view)
-  await Cutaway.script.exec(["Es klopft. Um die Zeit klopft nur einer.",
-    { goto: "flat", at: AF.door, face: "se" }, { place: "teo", room: "flat", at: [80, 166], face: "nw" }, ...VISIT,
-    { place: "teo", room: null }, "Er ist weg. Die Brühe ist noch warm.", { evi: "froh" }, { say: "evi", text: "Sein Licht hinterm Ohr blinkt. Ist das schön?" }, "Weiß ich nicht.",
-    ...(back && back !== "flat" ? [{ goto: back }] : []), ...(app ? [{ set: "deck_app", value: app }] : [])], ctx);
-}, { sets: () => [] });
-// never watched: it happens as its window ends, wherever Juno is (the window begins with the evening, so 18:30 is the only new stop of the clock)
-Cutaway.moment("teo_visit", { room: "deck", day: 2, from: "18:00", to: "18:30", if: "~never", unseen: [{ teo_visit: true }] });
+// never watched: it happens as its window ends, wherever Juno is (the window begins with the evening, so 18:30 is the only new stop of
+// the clock). The knock, Juno to her door, the door open (a prop shown for the scene), Teo in from the hallway, the talk, Teo out, the
+// door shut, and back where she was ({ remember_place } and { return_place }: a camera, or the deck with its window open).
+// Plain steps, so the editor's Schedule tab opens the scene as blocks and writes it back here.
+Cutaway.moment("teo_visit", { room: "deck", day: 2, from: "18:00", to: "18:30", if: "~never", unseen: [
+  { remember_place: true },
+  "Es klopft. Um die Zeit klopft nur einer.",
+  { goto: "flat", at: AF.deck, face: "ne" },
+  { sfx: "knock" },
+  { say: "teo", text: "Ju! Mach auf, die Brühe wird kalt." },
+  { walk: AF.door },
+  { face: "nw" },
+  { open: "flat/door_open", sfx: "door_open", ms: 400 },
+  { place: "teo", room: "flat", at: AF.doorway, face: "se" },
+  { walk: "teo", to: AF.visitTeo, free: true, wait: false },
+  { walk: "juno", to: AF.visitJuno },
+  { face: "nw" },
+  { face: "teo", to: "se" },
+  { say: "teo", text: "Von Bao. Er sagt, du hast seit Dienstag nichts gegessen. Er zählt mit." },
+  "Er zählt falsch.",
+  { say: "teo", text: "Er zählt nie falsch. Nur zu deinen Gunsten." },
+  "Hinter seinem Ohr klebt ein blasses Pflaster, und es blinkt.",
+  "Seit wann?",
+  { say: "teo", text: "Seit es gratis ist." },
+  { say: "teo", text: "Vier Stunden Lull, und ich bin wie neu." },
+  "Du hast Doppelschichten.",
+  { say: "teo", text: "Deswegen ja. Vier Stunden, Ju. Fühlt sich an wie zehn." },
+  { say: "teo", text: "Und du? Immer noch die Kameras?" },
+  "Immer noch.",
+  { say: "teo", text: "Du redest noch immer, als hätten sie dich gefeuert, weil du schlecht warst." },
+  "...",
+  { say: "teo", text: "Iss. Ich muss los, meine Schicht fängt um acht an." },
+  { say: "teo", text: "Schlaf du auch mal, Ju." },
+  { walk: "teo", to: AF.doorway, free: true },
+  { place: "teo", room: null },
+  { close: "flat/door_open", sfx: "door_shut" },
+  "Er ist weg. Die Brühe ist noch warm.",
+  { evi: "froh" },
+  { say: "evi", text: "Sein Licht hinterm Ohr blinkt. Ist das schön?" },
+  "Weiß ich nicht.",
+  { return_place: true },
+] });
 
 // ---- Motte's lessons (if Juno was kind to him in the prologue): one an evening, three in all. After the second he builds her a tap out of
 // his old handheld (a second way to job B's machine, the same item as Ratz's); after the third he is her student, which Chapter 3 asks.

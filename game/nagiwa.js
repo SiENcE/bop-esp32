@@ -81,6 +81,19 @@ Cutaway.script.action("solo", () => {}, { sets: () => ["off_main", "off_roof", "
 // { been_to: ["flat", ...] } rooms Juno knows already, when a chapter begins (nobody asks; each one left open would double the solver's states)
 Cutaway.script.action("been_to", (s) => { for (const room of s.been_to) Cutaway.state.visit(room); });
 
+// { remember_place: true } ... { return_place: true }: a scene somewhere else (a knock at the flat's door) takes Juno back where she was:
+// a camera, or the deck with its window open. Held only for the script under way (a save in its middle is the game before it).
+/** @type {{room: string | undefined, app: any} | null} */
+let placeBefore = null;
+Cutaway.script.action("remember_place", () => { placeBefore = { room: Cutaway.scene.room?.id, app: Cutaway.state.flag("deck_app") }; });
+Cutaway.script.action("return_place", (s, ctx) => {
+  const p = placeBefore;
+  placeBefore = null;
+  if (!p) return;
+  const back = [...(p.room && p.room !== Cutaway.scene.room?.id ? [{ goto: p.room }] : []), ...(p.app ? [{ set: "deck_app", value: p.app }] : [])];
+  return Cutaway.script.exec(back, ctx);
+});
+
 // { zoom: "zoom_ring" } opens the zoom window over the feed; { zoom: false } closes it (the window is the
 // feed layer's; nothing here waits, so the lines that follow are read while it shows). A street close-up
 // ({ zoom: "look_shaft" }) covers the speaker, so while it shows the room's lines go to the bottom bar.

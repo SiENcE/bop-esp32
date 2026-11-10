@@ -19,6 +19,15 @@
   // two feet on a steel flight: a dull step and the landing's ring
   S("steps_metal", { tone: [{ wave: "sine", from: 120, to: 70, ms: 45, gain: 0.3 }, { wave: "sine", from: 105, to: 62, ms: 45, gain: 0.24, at: 110 }, { wave: "triangle", from: 880, ms: 40, gain: 0.015, at: 8 }],
     noise: { filter: "lowpass", from: 500, ms: 30, gain: 0.08 } });
+  // the flat's steel door: three knocks of a fist; its three locks and the heavy leaf; shut, and the latch
+  S("knock", { tone: [0, 230, 430].map((at) => ({ wave: "sine", from: 140, to: 75, ms: 70, gain: 0.32, at })),
+    noise: [0, 230, 430].map((at) => ({ filter: "lowpass", from: 420, ms: 40, gain: 0.14, at })) });
+  S("door_open", { tone: [{ wave: "square", from: 1800, ms: 12, gain: 0.05 }, { wave: "square", from: 1500, ms: 12, gain: 0.05, at: 90 },
+    { wave: "square", from: 1650, ms: 12, gain: 0.05, at: 180 }, { wave: "sawtooth", from: 95, to: 70, ms: 380, attack: 60, gain: 0.03, at: 260 }],
+    noise: [{ filter: "bandpass", from: 3000, q: 3, ms: 15, gain: 0.1 }, { filter: "bandpass", from: 2600, q: 3, ms: 15, gain: 0.1, at: 90 },
+      { filter: "bandpass", from: 2800, q: 3, ms: 15, gain: 0.1, at: 180 }, { filter: "lowpass", from: 300, ms: 400, attack: 80, gain: 0.06, at: 260 }] });
+  S("door_shut", { tone: [{ wave: "sine", from: 90, to: 50, ms: 160, gain: 0.34 }, { wave: "square", from: 1400, ms: 14, gain: 0.05, at: 170 }],
+    noise: [{ filter: "lowpass", from: 500, ms: 90, gain: 0.2 }, { filter: "bandpass", from: 2800, q: 3, ms: 15, gain: 0.1, at: 170 }] });
 
   // ---------------------------------------------------------------- the implant and the feeds
   // the overlay locks on: two quick high pips and a tick of static
