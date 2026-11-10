@@ -35,20 +35,21 @@ Cutaway.time.hold((/** @type {number} */ to) => {
 });
 
 // ---- Friday's times. These moments are never watched: each happens as its window ends, wherever Juno is. The
-// window is the 15-minute tick before it, so the clock stops there too and Juno sees it coming
-const AT = (/** @type {string} */ id, /** @type {number} */ day, /** @type {string} */ from, /** @type {string} */ to, /** @type {any[]} */ unseen) =>
-  Cutaway.moment(id, { room: "deck", day, from, to, if: "~never", unseen });
+// window is the 15-minute tick before it, so the clock stops there too and Juno sees it coming. Each is written out (room "deck" and
+// if "~never" alike), so the editor's Schedule tab changes each one's times and steps on its own
 
 // the bed opens at 01:00: the clock stops there
-AT("one_wed", 2, "00:45", "01:00", []);
-AT("one_thu", 3, "00:45", "01:00", []);
-AT("wren_deadline", 4, "21:45", "22:00", [{ if: "!e1", then: [{ set: "e1", value: "refused" }, { ledger: "wren", value: "refused" }, { notify: "wren" }] }]);
-AT("rent_due", 4, "22:15", "22:30", [{
-  if: "chits>=900",
-  then: [{ inc: "chits", by: -900 }, { set: "rent", value: "paid" }, "Neunhundert Chits sind weg. Die Miete ist abgebucht."],
-  else: [{ set: "chits", value: 0 }, { set: "rent", value: "teo" }, { notify: "teo" }, "Das Konto ist leer. Und die Miete ist trotzdem bezahlt.", "Teo."],
-}]);
-AT("friday_stop", 4, "22:30", "22:45", []);
+Cutaway.moment("one_wed", { room: "deck", day: 2, from: "00:45", to: "01:00", if: "~never", unseen: [] });
+Cutaway.moment("one_thu", { room: "deck", day: 3, from: "00:45", to: "01:00", if: "~never", unseen: [] });
+Cutaway.moment("wren_deadline", { room: "deck", day: 4, from: "21:45", to: "22:00", if: "~never", unseen: [
+  { if: "!e1", then: [{ set: "e1", value: "refused" }, { ledger: "wren", value: "refused" }, { notify: "wren" }] },
+] });
+Cutaway.moment("rent_due", { room: "deck", day: 4, from: "22:15", to: "22:30", if: "~never", unseen: [
+  { if: "chits>=900",
+    then: [{ inc: "chits", by: -900 }, { set: "rent", value: "paid" }, "Neunhundert Chits sind weg. Die Miete ist abgebucht."],
+    else: [{ set: "chits", value: 0 }, { set: "rent", value: "teo" }, { notify: "teo" }, "Das Konto ist leer. Und die Miete ist trotzdem bezahlt.", "Teo."] },
+] });
+Cutaway.moment("friday_stop", { room: "deck", day: 4, from: "22:30", to: "22:45", if: "~never", unseen: [] });
 
 Nagiwa.cams.cam21 = { id: "21", place: "LULL-KLINIK 9-OST", owner: "NAGI·WA", map: [8, 38], if: "day>1" };
 Nagiwa.cams.cam22 = { id: "22", place: "PHO PUMP", owner: "PRIVAT", map: [64, 38], if: ["day>1", "day<4", "!off_main"] };
@@ -114,15 +115,30 @@ Nagiwa.links = [{ actor: "commuter_c", if: ["day<4", "at:commuter_c=cam21"] },
   { actor: "ines", if: ["day=4", "!tag_ines"], label: "INES CALDER", color: "implant" }];
 
 // ---- the moments of job C
-const DROP = ["Sie hat keine Wäsche dabei. Was macht sie hier ohne Wäsche?", "Sie legt was in Trockner 6. In den kaputten.", "Und jetzt ist sie weg, aber nicht nach Hause.", "Die Richtung geht's nur noch zum Sumpf-Abgang."];
-Cutaway.moment("ines_drop", { room: "cam23", day: 3, from: "20:00", to: "20:15", play: DROP });
+// (the camera's buffer plays each of them again: { replay } in the rewind hotspots below, so the lines are written once, here)
+Cutaway.moment("ines_drop", { room: "cam23", day: 3, from: "20:00", to: "20:15", play: [
+  "Sie hat keine Wäsche dabei. Was macht sie hier ohne Wäsche?",
+  "Sie legt was in Trockner 6. In den kaputten.",
+  "Und jetzt ist sie weg, aber nicht nach Hause.",
+  "Die Richtung geht's nur noch zum Sumpf-Abgang.",
+] });
 // Why she goes to the stairs on Thursday: she has to know when the way down can be walked. Juno reads the same board and adds it up (story §10b)
-const TIDE_READ = ["Sie geht nicht nach Hause. Was will die hier?", "Der Abgang ist seit der Flut zu. Unten ist nur noch die alte Metro.", "Sie liest die Pegeltafel und sieht auf die Uhr.",
-  "Freitag, 23:00: Niedrigwasser. Dann kommt man zu Fuß runter.", "Wer will da runter? Keiner will da runter.", "Außer man trifft da wen. Wo keiner hinsieht.", { set: "know_meeting" }];
-const SIGN_READ = [{ set: "know_meeting" }, "LINE 31, CLOSED. Das ist die alte Metro. Was will die da unten?", "Um elf ist Niedrigwasser. Da trifft sie wen."];
-Cutaway.moment("ines_tide", { room: "cam30", day: 3, from: "20:15", to: "20:30", if: "!know_meeting", play: TIDE_READ });
-Cutaway.moment("ines_sign", { room: "cam30", day: 4, from: "22:30", to: "22:45", if: "!know_meeting",
-  play: ["Da ist sie, mit einer Tasche. Sie geht die Treppe runter, ins Wasser.", ...SIGN_READ] });
+Cutaway.moment("ines_tide", { room: "cam30", day: 3, from: "20:15", to: "20:30", if: "!know_meeting", play: [
+  "Sie geht nicht nach Hause. Was will die hier?",
+  "Der Abgang ist seit der Flut zu. Unten ist nur noch die alte Metro.",
+  "Sie liest die Pegeltafel und sieht auf die Uhr.",
+  "Freitag, 23:00: Niedrigwasser. Dann kommt man zu Fuß runter.",
+  "Wer will da runter? Keiner will da runter.",
+  "Außer man trifft da wen. Wo keiner hinsieht.",
+  { set: "know_meeting" },
+] });
+// (the buffer's replay leaves out the first line: { replay: "ines_sign", from: 1 })
+Cutaway.moment("ines_sign", { room: "cam30", day: 4, from: "22:30", to: "22:45", if: "!know_meeting", play: [
+  "Da ist sie, mit einer Tasche. Sie geht die Treppe runter, ins Wasser.",
+  { set: "know_meeting" },
+  "LINE 31, CLOSED. Das ist die alte Metro. Was will die da unten?",
+  "Um elf ist Niedrigwasser. Da trifft sie wen.",
+] });
 
 // ---- WREN and the rest of the chat
 // the handbook (story §10a): in the cache from the first evening; it has the word C7 needs
@@ -191,14 +207,15 @@ Nagiwa.camRoom("cam23", { background: undefined, color: Nagiwa.PHOSPHOR[0], mic:
   dryers: { name: "Trockner", poly: A23.dryersPoly, look: "Da sind acht Trockner, und die Sechs ist tot, mit Zettel dran. Da sieht keiner rein." },
   desk: { name: "Theke", poly: A23.deskPoly, look: "Hinter der Theke schläft ein Mann, seit Jahren." },
   // a look back may repeat: no flag of its own
-  rewind: { name: "Puffer", z: 5, if: ["day=3", "moment:ines_drop", "!seen:ines_drop"], use: ["Ich spul den Puffer zurück auf 20:05.", ...DROP] },
+  rewind: { name: "Puffer", z: 5, if: ["day=3", "moment:ines_drop", "!seen:ines_drop"], use: ["Ich spul den Puffer zurück auf 20:05.", { replay: "ines_drop" }] },
 } });
 Nagiwa.camRoom("cam24", { background: "cam24_bg", mic: { at: A24.mic, ...MIC }, hotspots: { entrance: { name: "Haustür", rect: A24.entrance, look: "Das ist der Wohnblock Lerche. Da wohnt sie." } } });
 Nagiwa.camRoom("cam30", { background: "cam30_bg", mic: { at: A30.mic, ...MIC }, hotspots: {
   sign: { name: "Schild", rect: A30.sign, look: "LINE 31, CLOSED. Das ist sie seit der Flut, schätze ich." },
   tide: { name: "Pegeltafel", rect: A30.tide, look: "Auf der Pegeltafel steht: Freitag, 23:00, Niedrigwasser." },
   rewind: { name: "Puffer", z: 5, if: { or: [["day=3", "moment:ines_tide", "!know_meeting"], ["day=4", "moment:ines_sign", "!know_meeting"]] },
-    use: [{ if: "day=3", then: ["Ich spul den Puffer zurück auf Viertel nach acht.", ...TIDE_READ], else: ["Im Puffer ist es. Da, die Treppe runter.", ...SIGN_READ] }] },
+    use: [{ if: "day=3", then: ["Ich spul den Puffer zurück auf Viertel nach acht.", { replay: "ines_tide" }],
+      else: ["Im Puffer ist es. Da, die Treppe runter.", { replay: "ines_sign", from: 1 }] }] },
 } });
 
 // ---- the alley and the laundromat, in street mode: both baked from their maps (art/rooms/gasse.map.js, laundromat.map.js)

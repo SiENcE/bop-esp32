@@ -81,6 +81,14 @@ Cutaway.script.action("solo", () => {}, { sets: () => ["off_main", "off_roof", "
 // { been_to: ["flat", ...] } rooms Juno knows already, when a chapter begins (nobody asks; each one left open would double the solver's states)
 Cutaway.script.action("been_to", (s) => { for (const room of s.been_to) Cutaway.state.visit(room); });
 
+// { replay: "ines_drop", from: 1 } plays a moment's scene again from its step `from` (a camera's buffer, rewound): its lines are
+// written once, in the moment, where the editor's Schedule tab edits them
+Cutaway.script.action("replay", (s, ctx) => {
+  const play = Cutaway.time.moments.get(String(s.replay))?.play;
+  if (!play) throw new Error(`replay: no moment "${s.replay}" with a play`);
+  return Cutaway.script.exec((Array.isArray(play) ? play : [play]).slice(Number(s.from) || 0), ctx);
+});
+
 // { remember_place: true } ... { return_place: true }: a scene somewhere else (a knock at the flat's door) takes Juno back where she was:
 // a camera, or the deck with its window open. Held only for the script under way (a save in its middle is the game before it).
 /** @type {{room: string | undefined, app: any} | null} */

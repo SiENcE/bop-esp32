@@ -139,7 +139,9 @@ code comments English.
   (`Nagiwa.at.<room>.<spot>`): rename one in the map and the game together.
 - The tab Schedule (engine; it was called Time): routines and moments over the game day; their times change by dragging, and a picked moment's
   `play` and `unseen` open as blocks, written into the game's file (only the steps that changed; what the code computes,
-  as `A.stairs` or the `AT(...)` stops, is left to the file).
+  as `A.stairs`, is left to the file). So a moment's scene is written as plain steps in its `play` or `unseen`, never built by a
+  helper or an action in code: a scene played again elsewhere is `{ replay: "<moment>", from }`, a scene elsewhere and back is
+  `{ remember_place }` ... `{ return_place }` (`game/nagiwa.js`).
 - The tab Sequences (engine) puts a sequence (the intro) on a timeline under the picture: its shots, rooms, camera drives,
   `float`s, captions and music in lanes; the playhead shows any moment (Space plays from it); a bar's end drags its
   length, a step that goes on at once drags between the waits, steps are added at the playhead; a camera step's frame

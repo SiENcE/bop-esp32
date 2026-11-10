@@ -164,8 +164,7 @@ Cutaway.clock.onUpdate(() => {
 
 // ---- 23:03: he stands in her way. The quarrel is hers alone: he has no line in this chapter, all he says here is the look into the camera (dialog-style-guide). The clicks
 // stop answering, and Juno says nothing more
-const BARS = [{ cam31_fx: { bars: 1 }, ms: 700 }, { sfx: "static" }, { wait: 500 }, { sfx: "body_fall" }, { set: "ines_down" }, { wait: 1600 }, { cam31_fx: { bars: 0 }, ms: 900 }];
-const SHOWN = [{ cam31_fx: { tear: 0.9 }, ms: 200 }, { sfx: "static" }, { sfx: "body_fall" }, { set: "ines_down" }, { wait: 300 }, { cam31_fx: { tear: 0 }, ms: 800 }, { wait: 900 }];
+// The blow has two variants (CLAUDE.md): black bars, the default, or shown; both written out in the step, so the Schedule tab edits them
 Cutaway.moment("ines_death", { room: "cam31", day: 4, from: "23:03", to: "23:30", if: "end_beat=threat", play: [
   { set: "end_beat", value: "kill" }, { music: { stop: true, fade: 300 } },
   { set: "ashe_lit" },
@@ -177,7 +176,9 @@ Cutaway.moment("ines_death", { room: "cam31", day: 4, from: "23:03", to: "23:30"
   { wait: 1200 },
   { say: "ines", text: "Lassen Sie mich vorbei." },
   { wait: 800 },
-  { if: "setting:violence=shown", then: SHOWN, else: BARS },
+  { if: "setting:violence=shown",
+    then: [{ cam31_fx: { tear: 0.9 }, ms: 200 }, { sfx: "static" }, { sfx: "body_fall" }, { set: "ines_down" }, { wait: 300 }, { cam31_fx: { tear: 0 }, ms: 800 }, { wait: 900 }],
+    else: [{ cam31_fx: { bars: 1 }, ms: 700 }, { sfx: "static" }, { wait: 500 }, { sfx: "body_fall" }, { set: "ines_down" }, { wait: 1600 }, { cam31_fx: { bars: 0 }, ms: 900 }] },
   { set: "cache_clip_ines_death" },
   { time: "23:04" },
   { wait: 1500 },
