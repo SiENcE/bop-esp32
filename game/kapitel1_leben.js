@@ -10,23 +10,23 @@ const T = (/** @type {string} */ text) => ({ say: "teo", text });
 
 Cutaway.actor("teo", { name: "Teo", color: "#ffa040",
   costume: { idle: "mock_teo", walk: "mock_teo", talk: "mock_teo" }, voice: { pitch: 52, range: 5, wave: "triangle", syllable: 70, speed: 1.15 },
-  look: ["Orange Weste, Gehörschutz um den Hals. Die Kiemen sind rot vom Salzwasser.", "Hinter dem Ohr das Lull-Pflaster. Es blinkt."],
+  look: ["Teo trägt die orange Weste und den Gehörschutz um den Hals.", "Seine Kiemen sind rot vom Salzwasser.", "Hinter seinem Ohr klebt das Lull-Pflaster, und es blinkt."],
   talk: [T("Iss, Ju.")] });
 
 const VISIT = [
   T("Ju! Mach auf, die Brühe wird kalt."),
   T("Von Bao. Er sagt, du hast seit Dienstag nichts gegessen. Er zählt mit."), "Er zählt falsch.", T("Er zählt nie falsch. Nur zu deinen Gunsten."),
-  "Hinter seinem Ohr: ein blasses Pflaster. Es blinkt.", "Seit wann?", T("Seit es gratis ist."), T("Vier Stunden Lull, und ich bin wie neu."),
+  "Hinter seinem Ohr klebt ein blasses Pflaster, und es blinkt.", "Seit wann?", T("Seit es gratis ist."), T("Vier Stunden Lull, und ich bin wie neu."),
   "Du hast Doppelschichten.", T("Deswegen ja. Vier Stunden, Ju. Fühlt sich an wie zehn."),
   T("Und du? Immer noch die Kameras?"), "Immer noch.", T("Du redest noch immer, als hätten sie dich gefeuert, weil du schlecht warst."), "...",
-  T("Iss. Ich muss los, Schicht um acht."), T("Schlaf du auch mal, Ju."),
+  T("Iss. Ich muss los, meine Schicht fängt um acht an."), T("Schlaf du auch mal, Ju."),
 ];
 // { teo_visit: true } the knock: to the flat's door, the scene, and back to where Juno was (a camera, the deck)
 Cutaway.script.action("teo_visit", async (s, ctx) => {
   const back = Cutaway.scene.room?.id, app = Cutaway.state.flag("deck_app");      // where she was, and the deck's open window (a view)
   await Cutaway.script.exec(["Es klopft. Um die Zeit klopft nur einer.",
     { goto: "flat", at: AF.door, face: "se" }, { place: "teo", room: "flat", at: [80, 166], face: "nw" }, ...VISIT,
-    { place: "teo", room: null }, "Weg. Die Brühe ist noch warm.", { evi: "froh" }, { say: "evi", text: "Sein Licht hinterm Ohr blinkt. Ist das schön?" }, "Weiß ich nicht.",
+    { place: "teo", room: null }, "Er ist weg. Die Brühe ist noch warm.", { evi: "froh" }, { say: "evi", text: "Sein Licht hinterm Ohr blinkt. Ist das schön?" }, "Weiß ich nicht.",
     ...(back && back !== "flat" ? [{ goto: back }] : []), ...(app ? [{ set: "deck_app", value: app }] : [])], ctx);
 }, { sets: () => [] });
 // never watched: it happens as its window ends, wherever Juno is (the window begins with the evening, so 18:30 is the only new stop of the clock)
@@ -38,8 +38,8 @@ Cutaway.moment("teo_visit", { room: "deck", day: 2, from: "18:00", to: "18:30", 
 // A thread of its own (off_motte); what it shares with job B is the tap (got_tap), which only saves job B a purchase.
 const M = (/** @type {string} */ text) => ({ say: "motte", text });
 const LESSON = [
-  [M("Ein Auge an der Wand."), "Ein Auge, das nichts vergisst. Was es sieht, liegt irgendwo. Im Puffer, im Archiv. Für immer.", M("Ich auch?"), "Du auch. Mit Mütze.", M("Gut.")],
-  ["Die meisten stehen drauf. Auf dem Gehäuse, auf der Speisekarte, auf einem Zettel. Leute sind faul.", M("Und wenn nicht?"), "Dann zapft man an. Mit einem Abzweiger.",
+  [M("Das ist ein Auge an der Wand."), "Ein Auge, das nichts vergisst. Was es sieht, liegt irgendwo. Im Puffer, im Archiv. Für immer.", M("Ich auch?"), "Du auch. Mit Mütze.", M("Gut.")],
+  ["Die meisten stehen drauf. Auf dem Gehäuse, auf der Speisekarte, auf einem Zettel. Leute sind faul.", M("Und wenn nicht?"), "Dann zapft man sie mit einem Abzweiger an.",
     { if: ["!got_tap", "!off_tide"], then: [M("So einen?"), "Er schraubt zwei Kabel aus seinem Tideboy und eine Klemme vom Geländer.", M("Der Akku war eh hin."), { give: "abzweiger" }, { set: "got_tap" }, "Der ist besser als der von Ratz. Sag's ihm nicht."],
       else: [M("Bau ich dir mal einen. Aus dem Tideboy.")] }],
   [M("Warum glasst du nie unser Haus?"), "Weil man dann weiß, was die Nachbarn nachts machen.", "Und das kriegt man nicht mehr weg.", M("Ich weiß schon, was Frau Haldane nachts macht."), "Siehst du.", { set: "moth_student" }, M("Jetzt bin ich Glasser."), "Jetzt weißt du Bescheid. Das ist schlimmer."],
@@ -49,7 +49,7 @@ const QUESTION = ["„Was ist eine Kamera?“", "„Wie findet man einen Code?�
 Cutaway.dialog("motte_lektion", { main: {
   enter: [M("Zeigst du mir heute was?")],
   choices: [
-    ...[0, 1, 2].map((n) => ({ text: QUESTION[n], if: [`moth_lesson>=${n}`, `moth_lesson<${n + 1}`], goto: "end", then: [...(n ? [] : ["Eine Sache pro Abend. Heute: Was ist eine Kamera?"]), ...LESSON[n], { set: "moth_lesson", value: n + 1 }, { set: "moth_today" }] })),
+    ...[0, 1, 2].map((n) => ({ text: QUESTION[n], if: [`moth_lesson>=${n}`, `moth_lesson<${n + 1}`], goto: "end", then: [...(n ? [] : ["Ich zeig dir eine Sache pro Abend. Heute: Was ist eine Kamera?"]), ...LESSON[n], { set: "moth_lesson", value: n + 1 }, { set: "moth_today" }] })),
     { text: "„Heute nicht.“", goto: "end", then: [M("Morgen dann.")] },
   ] } });
 for (const night of [3, 4]) (Nagiwa.nights[night].passes ??= []).push({ unset: "moth_today" });
@@ -80,7 +80,7 @@ const B = (/** @type {string} */ text) => ({ say: "bao", text });
 const street = Cutaway.room.get("kowalski").hotspots;
 const BAO = [
   { if: "day=2", then: [{ if: "bao_paid", then: [B("Juno! Bar, am Dienstag. Mein Alter glaubt es immer noch nicht.")], else: [B("Juno! Steht noch an, von Dienstag. Eilt nicht.")] },
-    B("Wie immer?"), "Wie immer.", "Heiß. Salzig.", B("Du guckst, als hättest du was gesehen."), "Ich guck immer so.", B("Eben.")] },
+    B("Wie immer?"), "Wie immer.", "Sie ist heiß und salzig.", B("Du guckst, als hättest du was gesehen."), "Ich guck immer so.", B("Eben.")] },
   { if: "day=3", then: [B("Lou fragt, ob du krank bist. Du isst so schnell."), "Ich hab zu tun.", B("Zu tun hat man. Essen muss man.")] },
   { if: "day=4", then: [B("Brühe."), "Danke.", "...", B("Heute ist es still. Iss langsam.")] },
 ];
@@ -91,7 +91,7 @@ for (const id of ["bao", "cart"]) {
 // the ad screen stutters as Juno passes (the repair man noticed it too): on Thursday a second of CAM 03, Kessler under the awning,
 // two nights old; on Friday only the eye, and Juno can't say whether it was on the screen or in her own eye. A look: it costs nothing.
 const adLook = street.ad.look;
-street.ad.look = [{ if: "day=3", then: ["NAGI·WA. SLEEP BETTER.", "Eben hat er gestottert. Eine Sekunde lang: CAM 03, Kessler unterm Vordach.", "Von Dienstag. Das war mein Bild."] },
+street.ad.look = [{ if: "day=3", then: ["NAGI·WA. SLEEP BETTER.", "Eben hat er gestottert, und eine Sekunde lang war da CAM 03 mit Kessler unterm Vordach.", "Das Bild war von Dienstag. Das war mein Bild."] },
   { if: "day=4", then: ["Er stottert. Und eine Sekunde lang ist da nur das Auge.", "Auf dem Schirm? Oder bei mir?"] },
   { if: "day<3", then: adLook }];
 })();

@@ -14,18 +14,18 @@ Cutaway.actor("mei", { name: "Mei", color: "#ff9a7a", room: "lucky_static", at: 
   // painted (art/characters/lucky_people.px.js); she faces the customers whichever way the engine turns her, behind the counter
   costume: { idle: { se: "mei_idle_sw", sw: "mei_idle_sw", ne: "mei_idle_sw", nw: "mei_idle_sw" }, walk: { se: "mei_idle_sw", sw: "mei_idle_sw", ne: "mei_idle_sw", nw: "mei_idle_sw" },
     talk: { se: "mei_talk_sw", sw: "mei_talk_sw", ne: "mei_talk_sw", nw: "mei_talk_sw" } }, voice: { pitch: 58, range: 4, wave: "triangle", syllable: 75, speed: 1.05 },
-  look: ["Mei. Die Haare hoch, ein Bleistift drin. Für die Tafel.", "Sie sieht jeden, der reinkommt, und fragt keinen was."],
+  look: ["Mei trägt die Haare hoch und einen Bleistift drin, für die Tafel.", "Sie sieht jeden, der reinkommt, und fragt keinen was."],
   talk: [{ if: "day=4", then: [M("Juno. Heute tropft's nicht mal.")], else: [M("Juno. Setz dich irgendwo hin, wo's nicht tropft.")] }, { dialog: "mei" }] });
 Nagiwa.talkTree("mei", [
-  ["„Ein Bier. Schreib's an.“", [M("Schreib ich."), "Ein Strich an der Tafel. Unter meinem stehen schon ein paar.", M("Die laufen nicht weg. Du ja auch nicht.")], [
+  ["„Ein Bier. Schreib's an.“", [M("Schreib ich."), "Sie macht einen Strich an die Tafel. In meiner Reihe stehen schon ein paar.", M("Die laufen nicht weg. Du ja auch nicht.")], [
     ["„Warum lässt du mich eigentlich anschreiben?“", [M("Wer anschreibt, kommt wieder."), M("Die bar zahlen, seh ich nie wieder.")]],
     ["„Ich zahl's dir zurück. Bald.“", [M("Hat keiner gefragt.")]],
   ]],
   ["„Was hört man so?“", [
-    { if: "day=2", then: [M("Seit Lull gratis ist, trinken sie weniger."), M("Schlafen geht schneller als Saufen. Und billiger."), "Und dein Laden?", M("Läuft. Für die, die noch wach sein wollen.")] },
+    { if: "day=2", then: [M("Seit Lull gratis ist, trinken sie weniger."), M("Schlafen geht schneller als Saufen. Und billiger."), "Und dein Laden?", M("Der läuft. Für die, die noch wach sein wollen.")] },
     { if: "day=3", then: [M("Der Sohn vom Fischmann ist nicht aufgewacht."), "Sinker?", M("Ruhe-Erschöpfung, sagen die von Nagi·wa. Seit Sonntag liegt er da und lächelt."),
       M("Der Fischmann steht trotzdem am Stand. Was soll er sonst machen.")] },
-    { if: "day=4", then: [M("Nichts. Heute hört man gar nichts."), M("Keine Streife, keine Sirene. Sogar die zwei da reden nicht."), "Ist das gut?", M("Weiß ich nicht. Das Y flackert jedenfalls noch.")] },
+    { if: "day=4", then: [M("Nichts. Heute hört man gar nichts."), M("Man hört keine Streife und keine Sirene. Sogar die zwei da reden nicht."), "Ist das gut?", M("Das weiß ich nicht. Das Y flackert jedenfalls noch.")] },
   ]],
   ["„Läuft der Fernseher eigentlich immer?“", [M("Immer. Einmal hab ich ihn ausgemacht."), M("Zehn Minuten später kam einer und hat gefragt, ob was kaputt ist."), "Wer?", M("Freundlich war er. Die sind immer freundlich.")]],
 ]);
@@ -45,20 +45,20 @@ const NEWS = [
 const BACK = (/** @type {string} */ a) => ({ se: a, sw: a, ne: a, nw: a });
 Cutaway.actor("stamm_a", { name: "Anonymer Stammgast", color: "#a8b8d0", room: "lucky_static", at: AI.stammA, facing: "ne", walkTo: AI.regulars, face: "ne",
   costume: { idle: BACK("stamm_a_idle_ne"), walk: BACK("stamm_a_idle_ne"), talk: BACK("stamm_a_idle_ne") }, voice: { pitch: 44, range: 3, wave: "triangle", syllable: 90, speed: 0.8 },
-  look: ["Er schläft auf seinen Armen. Das Bier daneben ist noch voll.", "Hinter dem Ohr das blasse Pflaster. Es blinkt."],
+  look: ["Er schläft auf seinen Armen. Das Bier daneben ist noch voll.", "Hinter seinem Ohr klebt das blasse Pflaster, und es blinkt."],
   talk: ["Er schläft.", SB("Lass ihn. Der schläft hier, seit es gratis ist.")] });
 Cutaway.actor("stamm_b", { name: "Anonyme Stammgästin", color: "#c0b0d0", room: "lucky_static", at: AI.stammB, facing: "ne", walkTo: AI.regulars, face: "ne",
   costume: { idle: BACK("stamm_b_idle_ne"), walk: BACK("stamm_b_idle_ne"), talk: BACK("stamm_b_talk_ne") }, voice: { pitch: 64, range: 4, wave: "triangle", syllable: 85, speed: 0.9 },
-  look: ["Sie sitzt gerade, als würde gleich jemand ein Foto machen.", "Seit der Flut auf demselben Hocker, sagt Mei."],
+  look: ["Sie sitzt gerade, als würde gleich jemand ein Foto machen.", "Sie sitzt seit der Flut auf demselben Hocker, sagt Mei."],
   talk: [
     { if: "day=2", then: [SB("Wir sind die Anonymen Stammgäste. Wir treffen uns jeden Abend. Hier."), "Und hilft's?", SB("Bisher nicht."),
-      SB("Er schläft. Ich erzähl's ihm trotzdem."), "Was denn?", SB("Wie's war. Vorher. Er hat's vergessen, ich nicht.")] },
+      SB("Er schläft. Ich erzähl's ihm trotzdem."), "Was denn?", SB("Wie's war, vorher. Er hat's vergessen, ich nicht.")] },
     { if: "day=3", then: [SB("Er hat heute im Schlaf gelacht."), SB("Vierzig Jahre kenn ich den. Der lacht nicht.")] },
     { if: "day=4", then: [SB("Heute redet keiner. Nicht mal ich."), "..."] },
   ] });
 
 Object.assign(Cutaway.room.get("lucky_static").hotspots, {
-  tv: { name: "Fernseher", poly: AI.tvPoly, walkTo: AI.bar, face: "ne", look: "Nagi·wa-Nachrichten. Keiner guckt hin, und keiner macht ihn aus.", use: NEWS },
-  slate: { name: "Tafel", poly: AI.slatePoly, walkTo: AI.bar, face: "ne", look: ["Meis Tafel. Striche, keine Namen. Sie weiß trotzdem, welche Reihe wem gehört.", "Meine ist die lange."] },
+  tv: { name: "Fernseher", poly: AI.tvPoly, walkTo: AI.bar, face: "ne", look: "Da laufen Nagi·wa-Nachrichten. Keiner guckt hin, und keiner macht ihn aus.", use: NEWS },
+  slate: { name: "Tafel", poly: AI.slatePoly, walkTo: AI.bar, face: "ne", look: ["Auf Meis Tafel stehen Striche und keine Namen.", "Sie weiß trotzdem, welche Reihe wem gehört.", "Meine ist die lange."] },
 });
 })();

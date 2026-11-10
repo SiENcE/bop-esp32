@@ -13,17 +13,17 @@ const SOLD = (/** @type {string} */ id) => `ledger_vesper_${id}`;
 /** @type {[string, string, string, string, number, string, string, any[]][]} */
 const CLIPS = [
   ["ring", "clip_kessler_ring", "Kesslers Ring senden.", "Kesslers Ring", 240, "31.200", "Ring",
-    ["Zweihundertvierzig. Für einen Mann, der seinen Ring hergibt.", { evi: "neugierig" }, { say: "evi", text: "Wer guckt sich das an?" }, "Die oben. Zum Abendessen."]],
+    ["Das sind zweihundertvierzig für einen Mann, der seinen Ring hergibt.", { evi: "neugierig" }, { say: "evi", text: "Wer guckt sich das an?" }, "Die oben, beim Abendessen."]],
   ["morrow", "clip_morrow_bribe", "Morrows Umschlag senden.", "Morrows Umschlag", 300, "88.400", "Morrow",
-    ["Dreihundert. Und Morrow weiß nicht mal, dass er oben läuft.", { evi: "neugierig" }, { say: "evi", text: "Ist er jetzt berühmt?" }, "So ähnlich."]],
+    ["Das sind dreihundert. Und Morrow weiß nicht mal, dass sie oben läuft.", { evi: "neugierig" }, { say: "evi", text: "Ist sie jetzt berühmt?" }, "So ähnlich."]],
   ["traeger", "clip_traeger", "Die weißen Träger senden.", "Die weißen Träger", 400, "412.000", "Träger",
-    ["Vierhundert.", "...", { evi: "besorgt" }, { say: "evi", text: "Das Mädchen weiß das nicht, oder?" }, "Nein."]],
+    ["Das sind vierhundert.", "...", { evi: "besorgt" }, { say: "evi", text: "Das Mädchen weiß das nicht, oder?" }, "Nein."]],
 ];
-const THANKS = { ring: "Wie er den Ring abzieht! Und dieser Blick. 240.", morrow: "Ein Polizist, der nimmt! Oben glaubt uns das keiner. 300.",
+const THANKS = { ring: "Wie er den Ring abzieht! Und dieser Blick. 240.", morrow: "Eine Polizistin, die nimmt! Oben glaubt uns das keiner. 300.",
   traeger: "Das Mädchen in der Tür. Ich musste kurz rausgehen. 400." };
 
 Object.assign(Nagiwa.contacts, { vesper: { name: "VESPER", color: "#d0c0f8", status: "online", if: ["day>2", "!off_vesper"], unread: "!read_vesper",
-  open: [{ if: "!read_vesper", then: [{ set: "read_vesper" }, "NINTH LIVE. Die zeigen uns da oben im Abendprogramm.",
+  open: [{ if: "!read_vesper", then: [{ set: "read_vesper" }, "Das ist NINTH LIVE. Die zeigen uns da oben im Abendprogramm.",
     { evi: "froh" }, { say: "evi", text: "Ich kann Gesichter wegmachen! Im Clip-Editor." }, "Dann kauft er's nicht.", { evi: "verwirrt" }, { say: "evi", text: "Oh." }] }] } });
 Cutaway.state.view("read_vesper");
 Nagiwa.threads.vesper = [
@@ -44,7 +44,7 @@ for (const [id, , , what, pay, viewers, short] of CLIPS) {
 
 // ---- anonymising (kapitel0-design §2.4): the tool wakes in Chapter 1, and only while Vesper's thread is open, so that the main thread's
 // states don't double with every clip. Every clip Vesper would buy can be blurred; then he won't.
-const ANON = { if: ["day>1", "!off_vesper"], then: ["Gesichter weg. Jetzt sind es nur noch Leute.", { evi: "froh" }, { say: "evi", text: "Jetzt erkennt sie keiner!" }] };
+const ANON = { if: ["day>1", "!off_vesper"], then: ["Die Gesichter sind weg. Jetzt sind es nur noch Leute.", { evi: "froh" }, { say: "evi", text: "Jetzt erkennt sie keiner!" }] };
 Nagiwa.clips.clip_kessler_ring.anon = ANON;
 Object.assign(Nagiwa.people, { morrow: { name: "MORROW" }, tide_boy: { name: "TIDEWATER" }, traeger_weiss: { name: "IN WEISS" }, traeger_kind: { name: "MÄDCHEN" } });
 Nagiwa.clips.clip_morrow_bribe = { cam: "cam07", hour: 0, from: 30, to: 31.5, anon: ANON,

@@ -21,7 +21,7 @@ Cutaway.actor("ashe", { name: "???", color: "#ff7a6a", speed: [5, 2.5], voice: {
   poses: [{ if: "end_beat=look", idle: "ashe_feed_look", walk: "ashe_feed_look", talk: "ashe_feed_look" },
     // in the stairs' shadow only the mask is there, until he steps out of it (see the threat below)
     { if: "!ashe_lit", idle: "ashe_feed_dim", walk: "ashe_feed_dim_walk", talk: "ashe_feed_dim" }],
-  look: ["Kein Gesicht. Da, wo eins sein müsste, brennt mir das Bild durch."],
+  look: ["Er hat kein Gesicht. Da, wo eins sein müsste, brennt mir das Bild durch."],
   talk: ["Die Markierung rutscht ab. Da ist nichts, woran sie hängen bleibt."] });
 Cutaway.routine("ashe", [{ day: 4, from: "23:02", to: "23:30", room: "cam31", at: A.shadow, face: "se" }]);
 // only how he looks while he walks, and only a real clock walks him: no state for the solver
@@ -83,14 +83,14 @@ Cutaway.moment("ines_meeting", { room: "cam31", day: 4, from: "22:45", to: "23:3
   { time: "22:55" },
   { walk: "ines", to: A.stairs, free: true },
   { walk: "ines", to: A.edge, face: "se", free: true },
-  { if: "e1=refused", then: ["Ines. Geh nach Hause.", { sfx: "static", gain: 0.4 }, { narrate: "NICHT ZUGESTELLT" }], else: ["Da ist sie. Pünktlich."] },
+  { if: "e1=refused", then: ["Ines. Geh nach Hause.", { sfx: "static", gain: 0.4 }, { narrate: "NICHT ZUGESTELLT" }], else: ["Da ist sie, pünktlich."] },
   { time: "23:00" },
   { walk: "lantern", to: A.lantern, face: "nw", free: true },
   { say: "ines", text: "Es ist alles drauf. Die Protokolle passen auf die Sekunde." },
   { say: "lantern", text: "Wenn das stimmt ..." },
   { say: "ines", text: "Es stimmt. Sie schlafen nicht. Sie arbeiten." },
   { set: "ines_gives" },
-  "Sie gibt ihm was. Eine Wallet.",
+  "Sie gibt ihm was, eine Wallet.",
   { unset: "ines_gives" },
   // the key is never said aloud: the mic hangs beside her, the man in the shadow is too far off to hear a whisper, and WREN's live feed is picture only (story §10b)
   { say: "lantern", text: "Und der Schlüssel ...?" },

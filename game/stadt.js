@@ -79,10 +79,10 @@ Cutaway.room("dach_sitzen", { name: "Unser Platz", background: "dach_heute", obs
 // with four corners, the way an observer marks one (story §6: the sleepers mark what looks wrong). Nobody explains it.
 const AC = Nagiwa.at.cam14;
 const notesLook = floor14.notes.look;
-floor14.notes.look = [{ if: ["news_who", "news_stack"], then: [...notesLook, "Und drunter, von mir: ES IST NIEMAND. 14B."], else: notesLook }];
+floor14.notes.look = [{ if: ["news_who", "news_stack"], then: [...notesLook, "Und drunter steht von mir: ES IST NIEMAND. 14B."], else: notesLook }];
 floor14.notes.use = [{ if: "day>1", then: ["Wer klaut die? Seit Wochen geht das so.", "Über mir hängt Nagi·was Kamera. Ich müsste nur reinschauen."], else: ["Auf dem vierzehnten ist Krieg."] }];
 floor14.corner_cam.use = [{ if: ["day>1", "!link_cam14", "!off_zeitung"], then: ["Mein alter Zugang geht auch hier.", "Den eigenen Block glasst man nicht. Das sag ich Motte auch.", { dialog: "zeitung_cam" }],
-  else: [{ if: "link_cam14", then: ["Bin schon drauf. Schöner wird's nicht."], else: ["Den eigenen Block glasst man nicht."] }] }];
+  else: [{ if: "link_cam14", then: ["Ich bin schon drauf. Schöner wird's nicht."], else: ["Den eigenen Block glasst man nicht."] }] }];
 Cutaway.dialog("zeitung_cam", { main: { choices: [
   { text: "„Nur dieses eine Mal.“", goto: "end", then: [{ set: "code_cam14" }, { set: "link_cam14" }, { sfx: "link" }, "Das sagen alle. CAM 14 ist auf dem Deck."] },
   { text: "„Nein.“", goto: "end", then: ["Soll die Zeitung halt weg sein."] },
@@ -90,9 +90,9 @@ Cutaway.dialog("zeitung_cam", { main: { choices: [
 Nagiwa.cams.cam14 = { id: "14", place: "KESSEL-BLOCK, 14. STOCK", owner: "NAGI·WA", map: [8, 14], if: "link_cam14" };
 Cutaway.actor("haldane_feed", { name: "Jemand im Morgenmantel", color: "#ffa8d8",
   costume: { idle: "mock_haldane", walk: "mock_haldane", talk: "mock_haldane" }, speed: [8, 4],
-  look: ["Jemand im Morgenmantel. Sehr langsam.", "Die Hände hängen einfach runter."],
-  talk: [{ if: "!news_who", then: ["Halb drei. Morgenmantel. Die geht langsam, die Augen ...", "Die Augen sind zu.", "Frau Haldane. Aus 14C. Sie holt sich die Zeitung, ihre eigene und die von 14A.", "Ihr eigener Zettel. WER KLAUT MEINE ZEITUNG.", { set: "news_who" }, { evi: "verwirrt" }, { say: "evi", text: "Sie schläft. Darf man das?" }],
-    else: ["Frau Haldane. Sie schläft und holt die Zeitung. Die markier ich nicht."] }] });
+  look: ["Da geht jemand im Morgenmantel, sehr langsam.", "Die Hände hängen einfach runter."],
+  talk: [{ if: "!news_who", then: ["Es ist halb drei, und sie trägt einen Morgenmantel. Sie geht langsam, die Augen ...", "Die Augen sind zu.", "Das ist Frau Haldane aus 14C. Sie holt sich die Zeitung, ihre eigene und die von 14A.", "Und der Zettel ist ihr eigener: WER KLAUT MEINE ZEITUNG.", { set: "news_who" }, { evi: "verwirrt" }, { say: "evi", text: "Sie schläft. Darf man das?" }],
+    else: ["Das ist Frau Haldane. Sie schläft und holt die Zeitung. Die markier ich nicht."] }] });
 Cutaway.routine("haldane_feed", [{ day: [2, 3], from: "02:30", to: "02:45", room: "cam14", at: AC.door, path: [AC.door, AC.mat, AC.door] }]);
 // CAM 14 is the floor's own picture (the user's wish, 2026-11-09): its bake and props under the feed's filter, moved right by AC.shift
 // so Frau Haldane's door clears the cameras' strip. The camera itself is left out of its own picture; the hook only while it hangs
@@ -107,13 +107,13 @@ Nagiwa.camRoom("cam14", { background: undefined, color: Nagiwa.PHOSPHOR[0], mic:
     { id: "papers", image: "mock_papers", at: [AC.mat[0] + 8, AC.mat[1] - 1], if: "time<02:45" },
   ],
   hotspots: {
-  doors: { name: "Türen", poly: AC.doorsPoly, look: ["Der Flur von oben. Genau wie ich's in Erinnerung hab.", "Den hab ich ja mal beobachtet, von Berufs wegen."] },
+  doors: { name: "Türen", poly: AC.doorsPoly, look: ["Das ist der Flur von oben, genau wie ich ihn in Erinnerung hab.", "Den hab ich ja mal beobachtet, von Berufs wegen."] },
 } });
 const haldaneUse = floor14.haldane.use;
 // the point behind a sleeper's ear: the beat cam31 waits for (and nobody says why)
-const PUNKT = ["Der Punkt hinter ihrem Ohr. Immer gleich.", "Woher kenn ich das?"];
-floor14.haldane.use = [{ if: ["day>1", "!news_stack", "!off_zeitung"], then: ["Die Tür steht offen. Sie schläft wirklich.", "Hinter dem Sessel. Ein Stapel Zeitungen, so hoch wie Motte.", { zoom: "look_zeitung" }, "Jede Seite. Gesichter, angestrichen.", "Nicht angestrichen. Vier Ecken. Um jedes Gesicht vier kleine Ecken.", "So markier ich.", { zoom: false }, { set: "news_stack" }, { cache: "note_haldane_marks" }, ...PUNKT,
-    { evi: "besorgt" }, { say: "evi", text: "Warum macht sie das?" }, "Weiß ich nicht. Sie auch nicht."],
+const PUNKT = ["Der Punkt hinter ihrem Ohr blinkt immer gleich.", "Woher kenn ich das?"];
+floor14.haldane.use = [{ if: ["day>1", "!news_stack", "!off_zeitung"], then: ["Die Tür steht offen. Sie schläft wirklich.", "Hinter dem Sessel liegt ein Stapel Zeitungen, so hoch wie Motte.", { zoom: "look_zeitung" }, "Auf jeder Seite sind Gesichter angestrichen.", "Nein, nicht angestrichen. Um jedes Gesicht sind vier kleine Ecken.", "So markier ich.", { zoom: false }, { set: "news_stack" }, { cache: "note_haldane_marks" }, ...PUNKT,
+    { evi: "besorgt" }, { say: "evi", text: "Warum macht sie das?" }, "Ich weiß es nicht, und sie weiß es auch nicht."],
   else: [{ if: "day>1", then: PUNKT, else: [haldaneUse] }] }];
 // a click does a hotspot's first action, and her door's is talking: from Wednesday on that is the newspaper war's
 const haldaneTalk = floor14.haldane.talk;
@@ -130,7 +130,7 @@ floor14.haldane.talk = [{ if: [AWAKE, BEFORE_SHIFT], then: [
   H("Mein Junge schreibt jeden Sonntag. Aus dem Fünften, er hat da Arbeit."), H("Seit drei Sonntagen nichts."), "Vielleicht hat er viel zu tun.",
   H("Das sag ich mir auch. Jeden Abend, bevor ich mein Licht anmach."), H("Dann schlaf ich, und morgens ist es nicht mehr so schlimm."), "..."],
   else: floor14.haldane.talk }];
-floor14.haldane.look = [{ if: [AWAKE, BEFORE_SHIFT], then: ["Frau Haldane. Wach, im Sessel, mit Tee. Das seh ich selten.", "Hinter dem Ohr ihr Licht. Aus, für zwei Stunden."], else: floor14.haldane.look }];
+floor14.haldane.look = [{ if: [AWAKE, BEFORE_SHIFT], then: ["Frau Haldane sitzt wach im Sessel und trinkt Tee. Das seh ich selten.", "Das Licht hinter ihrem Ohr ist aus, für zwei Stunden."], else: floor14.haldane.look }];
 Nagiwa.cache.note_haldane_marks = { kind: "note", name: "FRAU HALDANES ZEITUNGEN", about: "Ein Stapel hinter ihrem Sessel. Jedes Gesicht darin: vier Ecken. Wie meine." };
 
 // ---- the woman who remembers (story §9): a Lull user is sure she saw a murder in a street she has never been to, from above, as
@@ -183,7 +183,7 @@ Cutaway.room("lucky_static", { name: "LUCKY STATIC", background: "lucky_static_b
   hotspots: {
     door: { name: "Tür", poly: AI.doorPoly, walkTo: AI.door, face: "sw", use: [{ goto: "kowalski", at: Nagiwa.at.kowalski.lucky_door, face: "se" }] },
     bar: { name: "Theke", poly: AI.barPoly, walkTo: AI.bar, face: "ne", look: "Meis Theke. Wer hier anschreiben lässt, weiß, was er tut." },
-    karaoke: { name: "Karaoke", poly: AI.karaokePoly, walkTo: AI.karaoke, face: "nw", look: "OUT OF ORDER. Trotzdem singt hier jeden Abend jemand." },
+    karaoke: { name: "Karaoke", poly: AI.karaokePoly, walkTo: AI.karaoke, face: "nw", look: "Da steht OUT OF ORDER. Trotzdem singt hier jeden Abend jemand." },
   } });
 Cutaway.room.get("kowalski").hotspots.lucky_door.use = [{ if: "day=1", then: ["Heute nicht. Heute will ich zu Bao."], else: [{ goto: "lucky_static", at: AI.arrive, face: "ne" }] }];
 
@@ -191,12 +191,12 @@ Cutaway.room.get("kowalski").hotspots.lucky_door.use = [{ if: "day=1", then: ["H
 // of the house opposite and his daughter stands in the door. What happens to Sinkers, long before it happens to Teo. Time only moves when
 // Juno waits: at 23:30 she hears it from wherever she is, and it waits for her in the street.
 Cutaway.moment("traeger_ruf", { room: "deck", day: 3, from: "23:15", to: "23:30", if: "~never",
-  unseen: [{ if: "!off_traeger", then: ["Von unten: ein Wagen, der nicht hupt. So was gibt's im Neunten nicht."] }] });
+  unseen: [{ if: "!off_traeger", then: ["Von unten hör ich einen Wagen, der nicht hupt. So was gibt's im Neunten nicht."] }] });
 for (const [id, name, pitch] of /** @type {[string, string, number][]} */ ([["traeger_weiss", "Jemand in Weiß", 56], ["traeger_kind", "Das Mädchen", 74]]))
   Cutaway.actor(id, { name, color: "#a8b8d0", costume: { idle: "mock_imai", walk: "mock_imai", talk: "mock_imai" }, voice: { pitch, range: 4, wave: "triangle", syllable: 80 } });
 Cutaway.moment("traeger", { room: "kowalski", day: 3, from: "23:30", to: "00:45", if: "!off_traeger",
-  play: ["Ein Wagen vor dem Haus gegenüber. Weiß, ohne Schild.", { zoom: "look_traeger" }, "Zwei in Weiß. Freundlich. Sie tragen jemanden raus, und der schläft.",
-    { say: "traeger_weiss", text: "Ruhe-Erschöpfung." }, { say: "traeger_weiss", text: "Er hat es jetzt gut." }, "Oben gehen die Rollos runter. Einer nach dem anderen.", { zoom: false }, { dialog: "traeger_wahl" }] });
+  play: ["Vor dem Haus gegenüber steht ein weißer Wagen ohne Schild.", { zoom: "look_traeger" }, "Zwei Leute in Weiß, sehr freundlich, tragen jemanden raus, und der schläft.",
+    { say: "traeger_weiss", text: "Ruhe-Erschöpfung." }, { say: "traeger_weiss", text: "Er hat es jetzt gut." }, "Oben gehen die Rollos runter, eins nach dem anderen.", { zoom: false }, { dialog: "traeger_wahl" }] });
 Nagiwa.cache.clip_traeger = { kind: "clip", name: "DIE WEISSEN TRÄGER", about: "Kowalski-Straße, Do 23:30. Ein Sinker, zwei in Weiß, ein Mädchen in der Tür." };
 Cutaway.dialog("traeger_wahl", { main: { choices: [
   { text: "Zusehen.", silent: true, goto: "end", then: [{ set: "traeger", value: "watched" }, "Ich schau zu. Das kann ich.", "Die Türen gehen zu. Der Wagen fährt, und er hupt immer noch nicht."] },
@@ -208,10 +208,10 @@ Cutaway.dialog("traeger_wahl", { main: { choices: [
 // (at work he has his back to the street whichever way he is turned, so 9-A reads; to talk he turns round, se or sw, towards Juno)
 Cutaway.actor("reparatur", { name: "Der Monteur", color: "#b0c0b0", at: Nagiwa.at.kowalski.reparatur, facing: "ne", walkTo: Nagiwa.at.kowalski.scaffold, face: "ne",
   costume: { idle: every("monteur_idle_ne"), walk: every("monteur_idle_ne"), talk: { se: "monteur_talk_se", sw: "monteur_talk_sw", ne: "monteur_talk_se", nw: "monteur_talk_sw" } }, voice: { pitch: 48, range: 4, wave: "square", syllable: 80 },
-  look: ["Ein Mann auf einem Gerüst, mit Kocher, Wäscheleine und Schlafsack. Er wohnt da.", "Er schraubt an der linken Hälfte. Nur an der linken.", "Pfoten wie ein Maulwurf, die Augen fast zu. Die Lampe sieht für ihn."],
+  look: ["Ein Mann auf einem Gerüst, mit Kocher, Wäscheleine und Schlafsack. Er wohnt da.", "Er schraubt an der linken Hälfte. Nur an der linken.", "Er hat Pfoten wie ein Maulwurf und die Augen fast zu. Die Lampe sieht für ihn."],
   talk: [
-    { if: "day=2", then: [{ say: "reparatur", text: "Links ist mein Vertrag. Rechts ist Vertrag 9-B. Der Kollege kommt seit 2087." }, "Und wenn links fertig ist?", { say: "reparatur", text: "Fertig? Junge Frau. Dann bin ich arbeitslos." }] },
-    { if: "day=3", then: [{ say: "reparatur", text: "Der stottert nur, wenn du vorbeigehst. Ist dir das schon aufgefallen?" }, "Woran liegt das?", { say: "reparatur", text: "Weiß ich nicht. Das ist die rechte Hälfte." }] },
+    { if: "day=2", then: [{ say: "reparatur", text: "Links ist mein Vertrag. Rechts ist Vertrag 9-B. Der Kollege kommt seit 2087." }, "Und wenn links fertig ist?", { say: "reparatur", text: "Fertig? Junge Frau, dann bin ich arbeitslos." }] },
+    { if: "day=3", then: [{ say: "reparatur", text: "Der stottert nur, wenn du vorbeigehst. Ist dir das schon aufgefallen?" }, "Woran liegt das?", { say: "reparatur", text: "Das weiß ich nicht. Das ist die rechte Hälfte." }] },
     { if: "day=4", then: [{ say: "reparatur", text: "Heute läuft sie gut, die Linke. Heute Abend ist was mit der Stadt." }, "Was denn?", { say: "reparatur", text: "Keine Ahnung. Ist nicht mein Vertrag." }] },
   ] });
 // (no `at`: a routine's place must be walkable floor, and he stands up on his deck, where the actor starts)
@@ -225,7 +225,7 @@ Cutaway.actor("prediger", { name: "Der Prediger", color: "#d8c8a0", room: "drain
   poses: [{ if: "day=3", idle: every("prediger_idle_10_sw"), walk: every("prediger_idle_10_sw"), talk: every("prediger_talk_10_sw") },
     { if: "day=4", idle: every("prediger_idle_11_sw"), walk: every("prediger_idle_11_sw"), talk: every("prediger_talk_11_sw") }],
   voice: { pitch: 54, range: 8, wave: "sawtooth", syllable: 60, speed: 1.3 },
-  look: ["Ein dürrer Mann auf einer Kiste, eine Thermoskanne in jeder Hand. Die Wache Kirche.", "Er blinzelt nicht. Ich hab gezählt.", "Keine Lider mehr. Die Zunge macht das."],
+  look: ["Ein dürrer Mann steht auf einer Kiste, mit einer Thermoskanne in jeder Hand.", "Er predigt für die Wache Kirche.", "Er blinzelt nicht. Ich hab gezählt.", "Er hat keine Lider mehr. Die Zunge macht das."],
   talk: [
     { if: "day=2", then: [{ say: "prediger", text: "Neun Tage! Neun Tage wach, und ich sehe klarer als ihr alle! Kaffee?" }, "Was ist da drin?", { say: "prediger", text: "Alles, was nicht schläft." }] },
     { if: "day=3", then: [{ say: "prediger", text: "Zehn Tage. Sie sagen, wer schläft, sieht nichts. Falsch! Wer schläft, sieht was anderes!" }, "Woher willst du das wissen?", { say: "prediger", text: "Ich weiß es nicht. Ich glaube es. Das ist billiger. Kaffee?" }] },
@@ -236,7 +236,7 @@ Cutaway.room("drain_market", { name: "Drain-Markt", background: "drain_market_bg
   hotspots: {
     up: { name: "Zur Gasse", rect: AM.upRect, walkTo: AM.up, face: "sw", use: [{ goto: "gasse", at: Nagiwa.at.gasse.market, face: "se" }] },
     kidneys: { name: "Stand", rect: AM.kidneysRect, walkTo: AM.stalls, face: "ne", look: "KIDNEYS ONLY. Der Mann dahinter sieht gesund aus. Das ist das Unheimliche." },
-    jars: { name: "Implantate", rect: AM.jarsRect, walkTo: AM.stalls, face: "ne", look: "Gebrauchte Implantate, in Gläsern. Eins davon sieht aus wie meins." },
+    jars: { name: "Implantate", rect: AM.jarsRect, walkTo: AM.stalls, face: "ne", look: "In den Gläsern liegen gebrauchte Implantate. Eins davon sieht aus wie meins." },
     stalls: { name: "Stände", rect: AM.stallsRect, walkTo: AM.stalls, face: "ne", look: "[MOCK] Hier kommen noch Ratz und Sables Vorhang." },
   } });
 Cutaway.room.get("gasse").hotspots.market.use = [{ goto: "drain_market", at: AM.arrive, face: "se" }];

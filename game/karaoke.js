@@ -49,7 +49,7 @@
       { text: "Glass Girl, Glass Girl, wer schaut dir zu?" },
       { text: "Die ganze Stadt schläft, nur nicht", gap: { right: "du", words: ["Lou", "du", "Schuh"],
         then: { Lou: [M("Bao's Lou? Die schläft um acht.")], Schuh: [SB("Der schläft auch nicht. Der ist kaputt.")] } } },
-    ], after: ["Wer schreibt so was?", M("Ein Glasser. Sagt man.")] },
+    ], after: ["Wer schreibt so was?", M("Ein Glasser, sagt man.")] },
   };
   Nagiwa.karaokeSongs = SONGS;
   Cutaway.i18n.declare("karaoke", ["KARAOKE", ...Object.values(SONGS).flatMap((s) => [s.title, ...s.lines.map((l) => l.text)])]);
@@ -105,7 +105,7 @@
 
   // the machine: OUT OF ORDER, until it is hit where Mei says
   Cutaway.room.get("lucky_static").hotspots.karaoke.use = [
-    "OUT OF ORDER. Seit Jahren.", M("Oben links. Fester."), { sfx: "glitch" }, "Er geht an. Natürlich geht er an.", { dialog: "karaoke" },
+    "Da steht OUT OF ORDER, seit Jahren.", M("Hau oben links drauf. Fester."), { sfx: "glitch" }, "Er geht an. Natürlich geht er an.", { dialog: "karaoke" },
   ];
 
   // ---------------------------------------------------------------- the screen: over the bar while a song runs
