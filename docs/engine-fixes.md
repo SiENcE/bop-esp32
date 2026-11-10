@@ -18,8 +18,8 @@ Befund nur gelesen wurde, steht es dabei. Zeilennummern gelten für `b877f26` un
 | F3 | Ein Spielstand hält kein halbes Skript | erledigt am 10.11.2026 (Engine `56a34c5`) |
 | F4 | Eine Regel für „der Spieler darf jetzt handeln“ | erledigt am 10.11.2026 (Engine `b01d233`) |
 | F5 | Ein Prop mit `if` ist überall dasselbe | erledigt am 10.11.2026 (Engine `5ca641e`) |
-| F6 | Der Editor verliert keine Arbeit | offen |
-| F7 | Die Tools scheitern laut, validate sieht mehr | offen |
+| F6 | Der Editor verliert keine Arbeit | erledigt am 10.11.2026 (Engine `f2a9c0c`, `25be7d0`) |
+| F7 | Die Tools scheitern laut, validate sieht mehr | in Arbeit: in der Engine gebaut, nicht committet (siehe unten) |
 | F8 | Kleine Fehler der Laufzeitlogik | offen |
 | F9 | Bild und Ton | offen |
 | F10 | Der Editor trifft die richtige Stelle, Undo ist vollständig | offen |
@@ -320,6 +320,55 @@ ob er den gemeinsamen Dateispeicher nehmen kann, und wenn ja, als eigener Commit
 
 **Fertig, wenn** keine Datei des Spiels mehr an zwei Stellen im Editor gehalten wird.
 
+**Erledigt** (Engine `f2a9c0c` und `25be7d0`, Spiel: Sync und Iso-Editor). `Cutaway.editor.files` (`E.files`) hält einen
+Text je Pfad für jeden Tab, mit dem Stand der Platte beim Lesen: `read` (der Text des Editors, solange etwas
+ungespeichert ist, sonst neu von der Platte), `set`, `unsaved`, `save` und `on` (ein Tab hört, wenn ein anderer
+den Text ändert, wenn er neu gelesen oder gespeichert wird). Schedule, Sequences und der Quelltext-Editor in Art
+halten keine eigene Kopie mehr; ein Tab merkt sich nur, welche Dateien er geändert hat. `save` schreibt nur, solange
+die Platte noch sagt, was gelesen wurde; sonst fragt ein Kasten über der Seite: **Reload**, **Overwrite** oder
+**Leave it**. Anders oder mehr als geplant:
+
+- **Undo nach einem Neuladen.** Ein Undo-Schritt hält den Text, auf dem er gemacht wurde. Ist der Text der Datei
+  inzwischen ein anderer (ein anderer Tab, neu von der Platte), tut er nichts, leert die Stapel und sagt es in der
+  Statuszeile, statt den alten Text über den neuen zu legen.
+- **Das Spiel behält nach „Reload“ die Änderung des Tabs**, bis die Seite neu geladen wird (der Moment im Spiel
+  ist schon geändert). Die Statuszeile sagt es; eine weitere Änderung prüft wie bisher, ob die Datei sagt, was das
+  Spiel hält, und lehnt sonst ab.
+- **Zeilenenden.** Die Textarea des Quelltext-Editors kennt nur LF; der erste Tastendruck in einer Datei mit CRLF
+  schrieb alle Zeilenenden um, und „an Zeile n öffnen“ markierte bei CRLF zwei Zeichen je Zeile daneben. Beides
+  ist behoben (Engine `25be7d0`). Gefunden beim Umstellen des Iso-Editors: Die Karten (`art/rooms/*.map.js`)
+  haben auf der Platte CRLF.
+- **`E.saveFile`** gibt `null` zurück, wenn nichts geschrieben wurde (der Dateidialog abgebrochen). Things, Texts,
+  Sound, Voices, Paint und ein Import in Art behalten dann ihr „ungespeichert“; Sound unterscheidet die beiden
+  Dateien (synthetisch, aufgenommen).
+- **Ein Raum, im Editor geöffnet,** lädt mit `scene.load(id, { enter: false, peek: true })`: kein Enter-Skript,
+  kein Besuch, und `room.entered` trägt `peek`, bei dem `save.js` keinen Autosave schreibt.
+- **Dialogue:** Der Baum trägt die id seines Dialogs (`modelOf`); ein anderer Dialog in der Liste gewählt oder die
+  Ansicht geschlossen leert die Stapel.
+- Die Tests stehen in `tests/editor-map.test.mjs` (dort sind Schedule und Quelltext-Editor schon zusammen, nicht in
+  `editor-studio.test.mjs`), `editor-sequences`, `editor` und `editor-blocks`: 13 neue, alle scheiterten vorher.
+
+**Der Iso-Editor des Spiels** (`game/editor/iso.js`) hielt die Karte ebenfalls selbst, und „Where from?“ öffnet
+dieselbe Datei im Quelltext-Editor. Er nimmt jetzt `E.files`: Eine Änderung im Tab steht sofort im
+Quelltext-Editor, Getipptes dort zeigt der Tab (sein Undo beginnt dann neu; solange der Text keine Karte ist,
+ändert der Tab nichts), Save in einem der beiden schreibt beides, und Bake baut nichts, solange nicht gespeichert
+ist. `docs/editor-iso.md` sagt es.
+
+**Im Spiel geprüft** mit dem Studio (`studio.mjs --no-open --port 7461`, headless Chrome): `teo_visit.unseen` im
+Schedule-Tab geöffnet (38 Schritte als Blöcke), eine Zeile geändert, dieselbe Datei auf der Platte geändert,
+Save: Der Editor schrieb nicht, fragte (`build/shots/f6_teo_ask.png`), „Leave it“ ließ die Platte und das
+Ungespeicherte stehen. Ein Raum aus `?edit` heraus geöffnet: kein Autosave, nicht besucht. Der Iso-Editor in der
+Wohnung: ein Prop verschoben, im Quelltext-Editor sichtbar, dort getippt, im Tab angekommen, beides gespeichert.
+Die geänderten Dateien wurden danach zurückgesetzt.
+
+**Im Spiel:** validate 0 errors, 17 bekannte Warnungen. Das ganze `sh tools/check.sh` lief mit diesem Stand an
+(gestartet nach dem Sync auf `25be7d0`); beim Commit war es noch nicht zu Ende. Bis dahin bestanden: validate, der
+Solver für Prolog und alle neun Fäden von Kapitel 1 (keine Soft-Locks, jeder Zustand hat einen Hinweis, dieselben
+Zustandszahlen wie unter F1: 78 612, 38 704, 17 608, 13 984, 12 488, 7 064, 36 387, 47 542, 11 182, 11 458), die
+Klickläufe `prolog`, `prolog_dach`, `spiel` und die Kapitel-1-Pfade `dach`, `imai`, `imai_traum`, `main`,
+`motte`, `tide_lied`, `tide_sold`, `tide_warned`, `traeger`, `varga_lied`, `varga_sold`, `varga_warned`. Noch ausstehend: die
+übrigen Klickpfade, die Touch-Läufe und `check-hover.mjs`; ihr Ergebnis wird hier nachgetragen.
+
 ## F7 · Die Tools scheitern laut, validate sieht mehr
 
 | Befund | Stelle | Korrektur |
@@ -338,6 +387,26 @@ ob er den gemeinsamen Dateispeicher nehmen kann, und wenn ja, als eigener Commit
 `play.mjs` strenger wird.
 
 **Fertig, wenn** jedes Tool bei einem Fehlschlag einen Exit-Code ungleich 0 gibt.
+
+**Stand (in Arbeit).** In der Engine gebaut, noch nicht committet und noch nicht ins Spiel synchronisiert:
+
+- `play.mjs`: Ein Ende vor dem Ende des Pfads gilt nur, wenn es das Ende einer Demo ist (`game.end` trägt `demo`;
+  ein Akt allein mit `--act` endet so); sonst scheitert der Pfad.
+- `tools/lib/chrome.mjs`: `open()` wirft, wenn die Seite nicht lädt oder nach 10 s kein `Cutaway` hat (so endet
+  `shot.mjs` mit 1 und schreibt kein Bild). Jeder Befehl endet mit einem Fehler, wenn die Seite abstürzt
+  (`Inspector.targetCrashed`), die Verbindung schließt, Chrome beendet wird oder 5 Minuten vergehen. Statt eines
+  zufälligen Ports nimmt Chrome seinen eigenen (`--remote-debugging-port=0`, gelesen aus `DevToolsActivePort`), mit
+  zwei weiteren Versuchen, wenn es nicht startet.
+- validate: Ein Schritt mit `if` trägt nur `if`, `then`, `else`, einer mit `once` nur `once`, `else` (strenger als
+  oben geplant, weil die Engine ein `once` neben einem `if` nicht liest); `null` in einem Skript ist ein Fehler;
+  zwei `once`, die sich eine Marke teilen, sind ein Fehler; ein `prologue` ohne Sequenz und das `act` eines
+  Hinweises ohne Akt sind Fehler; `"time>=22"` ist eine Warnung.
+- `tests/tools.test.mjs`: 13 neue Tests, davon scheiterten 11 vor der Korrektur (die anderen beiden halten fest,
+  was gehen soll: ein Akt allein darf vor dem Pfad enden, vier Browser starten zugleich). `npm run check`: nichts.
+- Das neue validate über Glass Sister (aus dem Engine-Repo, ohne Sync): 0 errors, dieselben 17 Warnungen.
+
+Noch zu tun: der ganze `node tests/run.mjs` und die Demo-Prüfungen, der Commit in der Engine, der Sync hier,
+validate und alle Klickpfade des Spiels (weil `play.mjs` strenger wird).
 
 ## F8 · Kleine Fehler der Laufzeitlogik
 
