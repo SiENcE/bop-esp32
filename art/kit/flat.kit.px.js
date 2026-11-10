@@ -18,6 +18,38 @@ include("../lib/text.js")
 pal({ 0: "#0c221f", 7: "#266252", 8: "#55a585", 9: "#8acfae" })   // the phosphor feed on the CRT
 ramps("0789")
 
+// the flat's door, its face as the room sees it (the shut door in the wall here, and the leaf standing open in Teo's visit,
+// art/rooms/flat.px.js): a y-down drawing aw x ah on an ISOKIT.raster canvas; its deadbolt's LED is drawn by who uses it
+const FLAT_DOOR_FACE = (c, aw, ah) => {
+  const Y = (e) => ah - 1 - e                                                               // e up -> y down
+  c.rect(0, 0, aw, ah, "4")
+  c.vline(0, 0, ah, "5"); c.hline(0, 0, aw, "5"); c.vline(aw - 1, 0, ah, "3")
+  // two pressed panels: their upper and left inner edges in shadow, the lower lit by the strip
+  for (const [e0, e1] of [[6, 26], [33, 56]]) {
+    c.rect(4, Y(e1), aw - 8, e1 - e0, "3")
+    c.hline(4, Y(e1), aw - 8, "2"); c.vline(4, Y(e1), e1 - e0, "2")
+    c.hline(4, Y(e0) - 0, aw - 8, "5")
+  }
+  // a kick scuff at the foot (shut with full hands)
+  c.hline(9, Y(3), 3, "3"); c.px(14, Y(2), "3"); c.hline(16, Y(4), 2, "3")
+  // (x 0 is the front jamb, the left on the screen, where the hinges are; the handle, the locks and the chain are at the free edge)
+  // the handle: a lever on its rose, the cylinder under it
+  c.rect(aw - 6, Y(30), 2, 3, "g"); c.hline(aw - 9, Y(29), 5, "G"); c.hline(aw - 9, Y(28), 5, "g"); c.px(aw - 9, Y(29), "6")
+  c.px(aw - 5, Y(25), "1"); c.px(aw - 5, Y(24), "6")
+  // the deadbolt's panel (its LED at aw - 6 and aw - 5, e 38), a third bolt above, the chain on its slider
+  c.rect(aw - 7, Y(40), 4, 4, "2"); c.hline(aw - 7, Y(41), 4, "5")
+  c.rect(aw - 6, Y(47), 3, 2, "g"); c.px(aw - 6, Y(47), "G")
+  c.hline(aw - 12, Y(44), 3, "G")
+  for (const [x, e] of [[aw - 9, 44], [aw - 8, 43], [aw - 7, 43], [aw - 6, 43], [aw - 5, 43], [aw - 4, 44], [aw - 3, 44], [aw - 2, 45], [aw - 1, 45]]) c.px(x, Y(e), (x % 2) ? "G" : "g")
+  // the peephole, the flat's number on its plate
+  c.px(14, Y(50), "k"); c.px(13, Y(50), "6"); c.px(15, Y(50), "6"); c.px(14, Y(51), "6")
+  c.rect(10, Y(58), 9, 7, "6"); c.hline(10, Y(52), 9, "5")
+  TXT.draw(c, 12, Y(57), "14", "2", { font: "hud" })
+}
+
+/** the door's face in pixels as the bake measured it (set when it paints the door) */
+const FLAT_DOOR_SIZE = { aw: 0, ah: 0 }
+
 const FLATKIT = (() => {
   const fl = Math.floor, ih = ISO.ihash, NF = 12
   const near = (x, c, w = 1 / 64) => Math.abs(x - c) < w
@@ -176,31 +208,8 @@ const FLATKIT = (() => {
         return a === -2 || a === aw + 1 || e === ah + 1 ? "4" : "5"                       // the steel frame
       }
       if (e === 0) return "!x"                                                              // the gap: the hallway's light
-      o.memo.door ??= ISOKIT.raster(aw, ah, (c) => {
-        const Y = (e) => ah - 1 - e                                                         // e up -> y down
-        c.rect(0, 0, aw, ah, "4")
-        c.vline(0, 0, ah, "5"); c.hline(0, 0, aw, "5"); c.vline(aw - 1, 0, ah, "3")
-        // two pressed panels: their upper and left inner edges in shadow, the lower lit by the strip
-        for (const [e0, e1] of [[6, 26], [33, 56]]) {
-          c.rect(4, Y(e1), aw - 8, e1 - e0, "3")
-          c.hline(4, Y(e1), aw - 8, "2"); c.vline(4, Y(e1), e1 - e0, "2")
-          c.hline(4, Y(e0) - 0, aw - 8, "5")
-        }
-        // a kick scuff at the foot (shut with full hands)
-        c.hline(9, Y(3), 3, "3"); c.px(14, Y(2), "3"); c.hline(16, Y(4), 2, "3")
-        // the handle: a lever on its rose, the cylinder under it
-        c.rect(aw - 6, Y(30), 2, 3, "g"); c.hline(aw - 9, Y(29), 5, "G"); c.hline(aw - 9, Y(28), 5, "g"); c.px(aw - 9, Y(29), "6")
-        c.px(aw - 5, Y(25), "1"); c.px(aw - 5, Y(24), "6")
-        // the deadbolt's panel (its LED drawn per frame), a third bolt above, the chain on its slider
-        c.rect(aw - 7, Y(40), 4, 4, "2"); c.hline(aw - 7, Y(41), 4, "5")
-        c.rect(aw - 6, Y(47), 3, 2, "g"); c.px(aw - 6, Y(47), "G")
-        c.hline(aw - 12, Y(44), 3, "G")
-        for (const [x, e] of [[aw - 9, 44], [aw - 8, 43], [aw - 7, 43], [aw - 6, 43], [aw - 5, 43], [aw - 4, 44], [aw - 3, 44], [aw - 2, 45], [aw - 1, 45]]) c.px(x, Y(e), (x % 2) ? "G" : "g")
-        // the peephole, the flat's number on its plate
-        c.px(14, Y(50), "k"); c.px(13, Y(50), "6"); c.px(15, Y(50), "6"); c.px(14, Y(51), "6")
-        c.rect(10, Y(58), 9, 7, "6"); c.hline(10, Y(52), 9, "5")
-        TXT.draw(c, 12, Y(57), "14", "2", { font: "hud" })
-      })
+      o.memo.door ??= ISOKIT.raster(aw, ah, (c) => FLAT_DOOR_FACE(c, aw, ah))
+      o.memo.doorSize ??= (FLAT_DOOR_SIZE.aw = aw, FLAT_DOOR_SIZE.ah = ah, true)          // (the open leaf draws the same face)
       // the deadbolt's red LED: armed, a blink at the turn of the loop
       if (a >= aw - 6 && a <= aw - 5 && e === 38) return f === 0 || f === 6 ? "!r" : "!q"
       return o.memo.door(a, e)

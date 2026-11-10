@@ -233,27 +233,6 @@ anim("mock_teo", { w: 21, h: 52, frames: 1, fps: 1, outline: "k", pivot: "bottom
   c.rect(7, 0, 8, 4, "k"); c.rect(7, 4, 8, 7, "S"); c.rect(14, 5, 2, 3, "L"); c.rect(8, 9, 2, 1, "s"); c.rect(5, 11, 12, 3, "g")
   c.rect(4, 14, 14, 15, "T"); c.rect(7, 14, 8, 15, "t"); c.rect(4, 22, 14, 1, "h"); c.rect(5, 29, 12, 4, "d"); c.rect(5, 33, 5, 19, "e"); c.rect(12, 33, 5, 19, "e")
 })
-// the flat's door standing open (Teo's visit), a block over the door's opening (game/rooms/flat.layout.js: openings.door, its
-// parallelogram [43,140, 14,155, 14,93, 43,79] at [13, 78]): the hallway's dark, its far wall, its lit floor. The steel leaf swung
-// into the room to the left, on its hinge at the front jamb (map: wall 1 at 4.3 m), standing across the room's front: from (14,155)
-// to (43,170) on the floor, 2.05 m high, over the gap's front half; its inner face, a frame round a panel, the three locks and the
-// red LED by its free edge
-pal({ r: "#ff3a3a" })
-anim("mock_flat_door_open", { w: 32, h: 94, frames: 1, fps: 1 }, (c) => {
-  for (let x = 2; x <= 29; x++) {
-    const top = Math.round(15 - ((x - 1) * 14) / 29) + 1, bottom = Math.round(77 - ((x - 1) * 15) / 29) - 1
-    c.rect(x, top, 1, bottom - top, "a")
-    c.rect(x, top + 10, 1, bottom - top - 22, "b")
-    c.rect(x, bottom - 9, 1, 9, "f")
-    c.rect(x, bottom - 3, 1, 3, "g")
-  }
-  for (let x = 1; x <= 30; x++) {
-    const top = 15 + Math.round(((x - 1) * 15) / 29), bottom = 77 + Math.round(((x - 1) * 15) / 29)
-    c.rect(x, top, 1, bottom - top, x <= 2 || x >= 29 ? "d" : "e")
-    if (x >= 5 && x <= 26) { c.rect(x, top + 5, 1, bottom - top - 10, "f"); c.px(x, top + 4, "d"); c.px(x, bottom - 5, "d") }
-    if (x === 25 || x === 26) for (const dy of [24, 30, 36]) c.px(x, top + dy, "h")
-    if (x === 26) c.px(x, top + 20, "r")
-  }
-})
+// (the flat's open door is painted now: flat_door_gap and flat_door_leaf, art/rooms/flat.px.js)
 // Bao's broth to go: a white bowl with a lid and a twist of steam
 anim("inv_suppe", { w: 18, h: 13, frames: 1, fps: 1, outline: "k" }, (c) => { c.rect(3, 6, 12, 6, "h"); c.rect(2, 5, 14, 2, "g"); c.rect(7, 3, 4, 2, "g"); c.px(6, 1, "h"); c.px(7, 0, "h"); c.px(11, 1, "h"); c.rect(5, 8, 8, 1, "f") })

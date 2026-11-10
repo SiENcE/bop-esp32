@@ -190,9 +190,12 @@ Cutaway.room("flat", {
   name: "Junos Wohnung", background: "flat_bg",
   ambience: ["rain_glass", "city_far", "neon_buzz", "fridge_hum"], music: { theme: "juno", intensity: 0.4 },
   walk: AF.walk, holes: AF.holes,
-  // the door standing open (Teo's visit: { open: "door_open" }, for the scene only): the gap on the wall and the leaf swung in to the left,
-  // over the gap's front half (actors below its front line are in front of it)
-  props: [...AF.props, { id: "door_open", image: "mock_flat_door_open", at: AF.doorOpen, anchor: [0, 0], baseline: 170, front: AF.doorLeafFront, hidden: true }],
+  // the door standing open (Teo's visit: { open: "flat/door_gap" } and "flat/door_leaf", for the scene only): the landing seen through
+  // the gap, on the wall behind everyone, and the leaf swung in to the left over the gap's front half (who stands below its front line
+  // is in front of it; who stands in the gap is behind it, but in front of the gap)
+  props: [...AF.props,
+    { id: "door_gap", image: "flat_door_gap", at: AF.doorOpen, anchor: [0, 0], baseline: 0, hidden: true },
+    { id: "door_leaf", image: "flat_door_leaf", at: AF.doorOpen, anchor: [0, 0], baseline: 170, front: AF.doorLeafFront, hidden: true }],
   // the lamps of the map (the same that baked the art's light): they tint Juno where she stands
   light: { ambient: 0.38, color: "#8a9cff", lamps: AF.lamps.map((/** @type {any} */ { bake, ...lamp }) => lamp) },
   hotspots: {
