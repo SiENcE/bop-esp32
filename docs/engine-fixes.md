@@ -19,7 +19,7 @@ Befund nur gelesen wurde, steht es dabei. Zeilennummern gelten für `b877f26` un
 | F4 | Eine Regel für „der Spieler darf jetzt handeln“ | erledigt am 10.11.2026 (Engine `b01d233`) |
 | F5 | Ein Prop mit `if` ist überall dasselbe | erledigt am 10.11.2026 (Engine `5ca641e`) |
 | F6 | Der Editor verliert keine Arbeit | erledigt am 10.11.2026 (Engine `f2a9c0c`, `25be7d0`) |
-| F7 | Die Tools scheitern laut, validate sieht mehr | in Arbeit: in der Engine gebaut, nicht committet (siehe unten) |
+| F7 | Die Tools scheitern laut, validate sieht mehr | erledigt am 10.11.2026 (Engine `4ea7c8f`) |
 | F8 | Kleine Fehler der Laufzeitlogik | offen |
 | F9 | Bild und Ton | offen |
 | F10 | Der Editor trifft die richtige Stelle, Undo ist vollständig | offen |
@@ -388,7 +388,7 @@ Hinweis, dieselben Zustandszahlen wie unter F1 (78 612, 38 704, 17 608, 13 984, 
 
 **Fertig, wenn** jedes Tool bei einem Fehlschlag einen Exit-Code ungleich 0 gibt.
 
-**Stand (in Arbeit).** In der Engine gebaut, noch nicht committet und noch nicht ins Spiel synchronisiert:
+**Erledigt** (Engine `4ea7c8f`). Gebaut:
 
 - `play.mjs`: Ein Ende vor dem Ende des Pfads gilt nur, wenn es das Ende einer Demo ist (`game.end` trägt `demo`;
   ein Akt allein mit `--act` endet so); sonst scheitert der Pfad.
@@ -405,8 +405,12 @@ Hinweis, dieselben Zustandszahlen wie unter F1 (78 612, 38 704, 17 608, 13 984, 
   was gehen soll: ein Akt allein darf vor dem Pfad enden, vier Browser starten zugleich). `npm run check`: nichts.
 - Das neue validate über Glass Sister (aus dem Engine-Repo, ohne Sync): 0 errors, dieselben 17 Warnungen.
 
-Noch zu tun: der ganze `node tests/run.mjs` und die Demo-Prüfungen, der Commit in der Engine, der Sync hier,
-validate und alle Klickpfade des Spiels (weil `play.mjs` strenger wird).
+**In der Engine geprüft:** `npm run check` nichts; `node tests/run.mjs` all passed (716); auf der Demo validate 0 errors,
+`solve --full` keine Soft-Locks und jeder Zustand mit Hinweis, `play.mjs`, `--touch`, `--intro` all passed, das Bild der Testkarte geschrieben.
+
+**Im Spiel** nach dem Sync: validate 0 errors, dieselben 17 Warnungen (das strengere validate fand in Glass Sister nichts); die Klickpfade
+`prolog`, `prolog_dach`, `spiel` und alle 14 von Kapitel 1, die Touch-Läufe (Prolog, Kapitel 1 Hauptfaden) und `check-hover.mjs`: all passed,
+auch mit dem strengeren `play.mjs` (kein Pfad endete vor seinem Ende). Der Solver blieb unberührt: Es änderten sich nur die Tools.
 
 ## F8 · Kleine Fehler der Laufzeitlogik
 
