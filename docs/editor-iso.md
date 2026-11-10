@@ -110,6 +110,12 @@ gemacht hat). Auf der Kommandozeile geht dasselbe ohne Editor: `node tools/new-r
 - **Reload game**: Gehfläche, Spots und die Plätze der Requisiten kommen erst nach einem Neuladen ins Spiel
   (sie stehen im Layout, das das Spiel beim Start liest).
 - Strg+Z und Strg+Y machen rückgängig und wieder her, Esc hebt die Auswahl auf.
+- Die Karte ist im ganzen Editor **ein Text**: Öffnet „Where from?“ sie im Reiter Art, steht dort, was hier noch
+  nicht gespeichert ist, und was man dort tippt, zeigt dieser Reiter sofort (sein Rückgängig fängt dann neu an;
+  solange der Text dort keine Karte ist, ändert dieser Reiter nichts). Save in einem der beiden schreibt beides.
+- Wurde die Datei **außerhalb des Editors geändert**, während hier etwas ungespeichert ist, schreibt Save nicht,
+  sondern fragt: **Reload** (der Stand der Platte, die Änderungen hier gehen), **Overwrite** oder **Leave it**.
+  Ist nichts ungespeichert, liest der Editor die Datei vor der nächsten Änderung neu.
 
 ## Was man wissen sollte
 

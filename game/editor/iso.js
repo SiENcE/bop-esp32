@@ -175,10 +175,14 @@
   /** @type {{type: string, name: string, file: string, line: number}[]} */ let kitIndex = [];
   /** @type {string[]} */ let maps = [];
   /**
-   * The map being edited: its file, its text and its literal tree, the value it evaluates to.
-   * @type {{id: string, path: string, src: string, saved: string, root: Lit, map: any, undo: string[], redo: string[]} | null}
+   * The map being edited: its file, its text (the editor's one, E.files, which the source editor shares) and its literal
+   * tree, the value it evaluates to; the text as on the disk (what the bake built); `broken`: why the text, changed in the
+   * source editor, isn't a map now (nothing is changed here until it is again).
+   * @type {{id: string, path: string, src: string, saved: string, root: Lit, map: any, undo: string[], redo: string[], broken: string} | null}
    */
   let cur = null;
+  /** the map's text is changed here (its own change, heard back from E.files) */
+  let mine = false;
   /** @type {{w: number, h: number, picks: any[], who: Int16Array} | null} */ let picks = null;
   let tool = "select", floorKey = "", loading = false;
   /** what the Add tool places (a prop, an opening on a wall, a spot, a lamp, a wall, the stairs, a no-walk rect) and with which kit piece */
@@ -219,8 +223,8 @@
   async function open(id) {
     const path = `art/rooms/${id}.map.js`;
     try {
-      const src = await E.studio.read(path);
-      cur = { id, path, src, saved: src, root: rootOf(src, id), map: evalMap(src, id), undo: [], redo: [] };
+      const src = await E.files.read(path), saved = E.files.unsaved(path) ? await E.studio.read(path) : src;
+      cur = { id, path, src, saved, root: rootOf(src, id), map: evalMap(src, id), undo: [], redo: [], broken: "" };
       kitsHere = new Set();
       try { for (const m of (await E.studio.read(`art/rooms/${id}.px.js`)).matchAll(/include\(\s*["'`]\.\.\/kit\/([^"'`]+)["'`]/g)) kitsHere.add(`art/kit/${m[1]}`); } catch { /* no bake file */ }
       sel = null; origin = ""; originAt = null; picks = null;
@@ -253,12 +257,42 @@
   /** Change the text (one step of undo) and read it again. @param {string} src */
   function change(src) {
     if (!cur || src === cur.src) return;
+    if (cur.broken) { E.setStatus(`iso: the map's text isn't a map now (${cur.broken}): mend it in the source editor first`); return; }
     let map;
     try { map = evalMap(src, cur.id); } catch (e) { E.setStatus(`iso: the change broke the map (${/** @type {any} */ (e).message})`); return; }
     cur.undo.push(cur.src); cur.redo = [];
-    cur.src = src; cur.root = rootOf(src, cur.id); cur.map = map;
+    setText(src);
+    cur.root = rootOf(src, cur.id); cur.map = map;
     E.refresh();
   }
+  /** The map's text into E.files (the source editor shows it). @param {string} src */
+  function setText(src) {
+    if (!cur) return;
+    mine = true;
+    try { E.files.set(cur.path, src); } finally { mine = false; }
+    cur.src = src;
+  }
+  /** Undo or redo: the text from one stack, the one now onto the other. @param {string[]} from @param {string[]} to */
+  function step(from, to) {
+    if (!cur || !from.length || cur.broken) return;
+    to.push(cur.src);
+    const s = /** @type {string} */ (from.pop());
+    setText(s);
+    cur.root = rootOf(s, cur.id); cur.map = evalMap(s, cur.id);
+    E.refresh();
+  }
+  // the map's text changed elsewhere (the source editor, read again from the disk) or saved: the tab follows; its undo was
+  // made on the text before, so it goes
+  E.files.on((path, why) => {
+    if (mine || !cur || path !== cur.path) return;
+    const t = E.files.text(path) ?? cur.src;
+    if (why === "saved" || why === "reload") cur.saved = t;
+    if (t !== cur.src) {
+      cur.src = t; cur.undo = []; cur.redo = [];
+      try { cur.root = rootOf(t, cur.id); cur.map = evalMap(t, cur.id); cur.broken = ""; } catch (e) { cur.broken = String(/** @type {any} */ (e).message); }
+    }
+    E.refresh();
+  });
   /** Replace a node's text. @param {Lit} n @param {string} text */
   const put = (n, text) => cur && change(cur.src.slice(0, n.s) + text + cur.src.slice(n.e));
   /** Set a key of an object node (added before its closing brace if it has none). @param {Lit} o @param {string} key @param {string} text */
@@ -715,7 +749,7 @@
     if (making) box.append(newMapBox());
     if (made) box.append(el("div", { className: "cw-sec" }, [`${made} is made. `, button("Reload game", () => location.reload(), "the game loads the new room (its map opens here)")]));
     if (!cur) { box.append(el("div", { className: "cw-dim" }, ["This room has no map (art/rooms/<id>.map.js). Pick one above."])); return; }
-    const dirty = cur.src !== cur.saved;
+    const dirty = E.files.unsaved(cur.path);
     box.append(el("div", { style: { margin: "4px 0" } }, [
       button(`Save${dirty ? " *" : ""}`, () => { save(); }, `write ${cur.path} (only the values changed)`),
       button("Bake", () => { bake(); }, 'build the room\'s art from the map (the task "art: room") and load it'),
@@ -1040,16 +1074,18 @@
     E.refresh();
   }
 
+  /** Write the map (only while the disk still says what was read: else the editor asks). */
   async function save() {
     if (!cur) return;
-    E.setStatus(await E.saveFile(cur.path, cur.src));
-    cur.saved = cur.src;
+    const path = cur.path;
+    E.setStatus(await E.files.save(path) ? `saved ${path}` : E.files.unsaved(path) ? `${path}: not saved` : `${path}: nothing to save`);
     E.refresh();
   }
 
   async function bake() {
     if (!cur) return;
-    if (cur.src !== cur.saved) await save();
+    if (E.files.unsaved(cur.path)) await save();
+    if (E.files.unsaved(cur.path)) return;                    // not saved: the bake would build what the disk has
     const id = cur.id, r = await E.runTask("art: room", { room: id });
     if (r.code !== 0) return;
     await E.modules.art?.reloadArt().catch((/** @type {any} */ e) => E.setStatus(String(e.message)));
@@ -1102,11 +1138,11 @@
 
   E.tab({ id: "iso", label: "Iso-Editor", build, render, drag, hover, key, browse, del: () => deleteSel(),
     save: () => save(),
-    undo: () => { if (cur?.undo.length) { cur.redo.push(cur.src); const s = /** @type {string} */ (cur.undo.pop()); cur.src = s; cur.root = rootOf(s, cur.id); cur.map = evalMap(s, cur.id); E.refresh(); } },
-    redo: () => { if (cur?.redo.length) { cur.undo.push(cur.src); const s = /** @type {string} */ (cur.redo.pop()); cur.src = s; cur.root = rootOf(s, cur.id); cur.map = evalMap(s, cur.id); E.refresh(); } },
+    undo: () => { if (cur) step(cur.undo, cur.redo); },
+    redo: () => { if (cur) step(cur.redo, cur.undo); },
     selectNone: () => { sel = null; origin = ""; E.refresh(); },
-    onRoom: () => { const id = Cutaway.scene.room?.id; if (ISOMAP && id && maps.includes(id) && id !== cur?.id && (!cur || cur.src === cur.saved)) open(id); },
-    get unsaved() { return cur && cur.src !== cur.saved ? 1 : 0; } });
+    onRoom: () => { const id = Cutaway.scene.room?.id; if (ISOMAP && id && maps.includes(id) && id !== cur?.id && (!cur || !E.files.unsaved(cur.path))) open(id); },
+    get unsaved() { return cur && E.files.unsaved(cur.path) ? 1 : 0; } });
   // the Room tab of a baked room: its shapes come from the bake's layout, so a change there is undone or stays stale
   E.roomNote((id) => (maps.includes(id) ? `Baked from its map (art/rooms/${id}.map.js): the walk area, the props' places and the openings' rects come from game/rooms/${id}.layout.js, which the bake writes. Change them in the Iso tab and bake; shapes saved here (rooms/${id}.geo.js) would stay over every later bake.` : null));
   boot();
