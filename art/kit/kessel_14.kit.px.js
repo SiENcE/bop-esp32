@@ -13,7 +13,7 @@
 //            (open: the frame, the plate beside it), note_war (two notes, no words: a scrawl and "??",
 //            the answer with its arrow), neon_tube (its left end dying), sign_14 (stencilled)
 //   stairs   stairs_concrete (treads with a steel nosing and a worn amber stripe; the dado follows the flight)
-//   props    emergency_key (the lift's, on the wall), corner_cam (Nagi·wa's, on its arm, its red eye; `face: "v"` looks out of a right-hand wall), bin_bags, stair_rail, armchair (Frau Haldane asleep in it, the Lull point behind her ear)
+//   props    emergency_key (the lift's, on the wall), corner_cam (Nagi·wa's, on its arm, its red eye; `face: "v"` looks out of a right-hand wall), bin_bags, stair_rail, armchair (Frau Haldane asleep in it, seen from the side, the Lull patch behind her ear)
 // Keys "!k" are never lit. Small organic things are hand grids; the rest boxes and lines.
 include("../lib/text.js")
 
@@ -384,29 +384,57 @@ const K14 = (() => {
       ])
     },
   })
+  // its back against the lift's shaft (-u), she faces +u toward her TV, out of sight right of the door: through the door
+  // one sees her from the side, her head against the back, the Lull patch behind her ear
   ISOKIT.prop("armchair", {
     frames: 12,
     draw(pen, p, f) {
-      const [u0, v0] = p.at, du = p.foot[0], dv = p.foot[1], back = v0 + dv - 0.16
-      pen.box(u0, v0, 0, du, dv - 0.16, 0.42, () => "u", () => "u", () => "u")                       // the seat
-      // her head, drawn before the back, which hides it below the ears; greys that stay grey in the TV's
-      // light (no glow), the curlers in a row of bumps on top
-      const [hx, hy] = pen.P(u0 + du * 0.58, back - 0.1, 1.0)
-      pen.at(u0 + du * 0.58, back - 0.1, 1.02, "up")
-      pen.grid(hx - 3, hy - 3, [".G.G.G.", "GgGgGgG", "gGgGgGg", "1ggggg1", ".1ggg1s", "..111.."])
-      pen.box(u0, back, 0, du, 0.16, 0.92, () => "U", () => "u", () => "u")                         // the back
-      pen.box(u0, back, 0.92, 0.14, 0.16, 0.14, () => "U", () => "u", () => "u")                     // the wings
-      pen.box(u0 + du - 0.14, back, 0.92, 0.14, 0.16, 0.14, () => "U", () => "u", () => "u")
-      pen.box(u0 + du - 0.12, v0, 0, 0.12, dv - 0.16, 0.6, () => "U", () => "u", () => "u")          // the near arm
-      // her arm over it, the hand hanging down its side
-      const [ax, ay] = pen.P(u0 + du, v0 + dv * 0.45, 0.62)
-      pen.at(u0 + du, v0 + dv * 0.45, 0.55, "u")
-      pen.grid(ax - 2, ay - 1, ["ppp", ".pS", "..S", "..S"])
+      const [u0, v0] = p.at, du = p.foot[0], dv = p.foot[1], B = 0.16, A = 0.12, sit = u0 + B
+      pen.box(u0, v0, 0, B, dv, 0.92, () => "U", () => "u", () => "u")                                // the back
+      pen.box(u0, v0, 0.92, B, 0.14, 0.14, () => "U", () => "u", () => "u")                           // the wings
+      pen.box(u0, v0 + dv - 0.14, 0.92, B, 0.14, 0.14, () => "U", () => "u", () => "u")
+      pen.box(sit, v0, 0, du - B, A, 0.6, () => "U", () => "u", () => "u")                            // the far arm
+      pen.box(sit, v0 + A, 0, du - B, dv - 2 * A, 0.42, () => "u", () => "u", () => "u")             // the seat
+      const hu = sit + 0.06, hv = v0 + dv / 2 + 0.04
+      const [hx, hy] = pen.P(hu, hv, 1.0)
+      pen.box(u0 + du - 0.02, v0 + A + 0.08, 0.06, 0.1, dv - 2 * A - 0.16, 0.42, () => "o", () => "o", () => "o")   // the shins
+      pen.box(sit, v0 + dv - A, 0, du - B, A, 0.6, () => "U", () => "u", () => "u")                  // the near arm
+      // her in the pink robe, from the side and filling the chair (the user's sketch of 10.11.2026): a round body
+      // against the back, the lap rising over the near arm and going on to the right (+u), the near arm hanging
+      // over the armrest, the hand down its side
+      pen.at(sit + 0.12, v0 + dv, 0.7, "v")
+      pen.grid(hx - 6, hy + 3, [
+        ".....oopppppo.....",
+        "...oopppppppppo...",
+        "..ooppppppppppppo.",
+        ".opppoppppppppppo.",
+        ".opppopppppppppppo",
+        ".opppopppppppppppo",
+        ".opppopppppppppppo",
+        ".opppopppppppppppo",
+        ".opppoooppppppppo.",
+        ".opppooopppppppppo",
+        ".opppooopppppppppp",
+        ".opppoooopppppppppp",
+        "..ppo...oooppppppo",
+        "..ppo.....oooooooo",
+        "..ppo.............",
+        "...SS.............",
+        "...SS.............",
+        "...S..............",
+        "...S..............",
+      ])
+      // her head against the back, fallen a little toward us: curlers on top, the face to the right (+u), eyes
+      // shut; greys that stay grey in the TV's light (no glow)
+      pen.at(hu, hv, 1.02, "up")
+      pen.grid(hx - 3, hy - 4, [".G.G.G.", "GgGgGgG", "ggggsSS", "gggsS1S", "gg1sSSs", ".g1sSs.", "..1ss.."])
+      // the Lull patch behind her ear: an oval pale disc with its rim (as Teo's), bright on the beat, dim between
+      const lull = f % 6 < 3
+      pen.grid(hx - 3, hy - 2, [".^.", lull ? "^~^" : "^^^", ".^."], { "~": "!~", "^": "!^" })
       // the slipper, fallen off
-      const [sx, sy] = pen.P(u0 + du + 0.18, v0 + dv * 0.3, 0)
-      pen.at(u0 + du + 0.18, v0 + dv * 0.3, 0.03, "up")
+      const [sx, sy] = pen.P(u0 + du + 0.12, v0 + dv * 0.4, 0)
+      pen.at(u0 + du + 0.12, v0 + dv * 0.4, 0.03, "up")
       pen.grid(sx - 2, sy - 1, ["NNM", ".MM"])
-      pen.px(hx + 2, hy + 1, f % 6 < 3 ? "!~" : "!^"); pen.px(hx + 2, hy, f % 6 < 3 ? "!^" : "!g")                                                // the Lull point
     },
   })
   return {}

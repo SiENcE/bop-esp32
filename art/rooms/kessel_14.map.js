@@ -59,14 +59,14 @@ ISO_MAPS.kessel_14 = {
     // where Motte waits
     { id: "rail", kit: "stair_rail", at: [3.5, 1.0], foot: [1.5, 0.06], h: 0.95 },
     { id: "bench", kit: "bench", at: [3.65, 1.2], foot: [1.2, 0.42], h: 0.45 },
-    // behind Frau Haldane's open door: her armchair with its back to us (her TV is deeper in the room, out of
-    // sight: only its light), against the shaft's wall on her side
-    { id: "armchair", kit: "armchair", at: [1.55, -1.25], foot: [0.65, 0.7], h: 1.06, behind: "door_haldane" },
+    // behind Frau Haldane's open door: her armchair with its back to the lift's shaft, so one sees her from the side
+    // through the door (her TV is in front of her, right of the door, out of sight: only its light)
+    { id: "armchair", kit: "armchair", at: [1.66, -0.95], foot: [0.7, 0.65], h: 1.06, behind: "door_haldane" },
   ],
   spots: {
     arrive: [0.6, 1.85, "se"], door_juno: [0.4, 1.85, "nw"], notes: [0.45, 1.1, "nw"], haldane: [2.05, 0.6, "ne"], lift: [0.85, 0.95, "ne"], haken: [0.3, 1.0, "ne"],
     motte: [3.2, 1.95, "se"], stairs: [3.2, 0.35, "se"],
-    motte_feet: [4.3, 1.86, "sw"], haldane_sits: [1.9, -0.85, "ne", 0.4],
+    motte_feet: [4.3, 1.86, "sw"], haldane_sits: [1.88, -0.58, "se", 0.4],
   },
   // `bake` is read by the bake only (art/lib/isokit.js): the tube lights along its length and stutters with
   // its dying end; the TV and the Lull light are in Frau Haldane's room (zone: they reach the landing only
@@ -74,9 +74,9 @@ ISO_MAPS.kessel_14 = {
   lights: [
     { id: "tube", at: [1.6, 0.1, 2.45], r: 200, power: 1.1, color: "#c8f5d0", flicker: 0.15,
       bake: { line: [[0.32, 0.05, 2.42], [2.98, 0.05, 2.42]], reach: 4.6, power: 1.5, floor: 1.4, wrap: 0.6, off: [3, 4, 9] } },
-    { id: "tv", zone: "door_haldane", at: [2.1, -1.95, 0.78], r: 60, power: 0.9, color: "#5a8cff", flicker: 0.2,
+    { id: "tv", zone: "door_haldane", at: [3.1, -0.6, 0.78], r: 60, power: 0.9, color: "#5a8cff", flicker: 0.2,
       bake: { reach: 2.8, power: 1.8, wrap: 0.4, off: [2, 7] } },
-    { id: "lull", zone: "door_haldane", at: [1.9, -0.75, 1.1], r: 10, power: 0.6, color: "#6ab4ff",
+    { id: "lull", zone: "door_haldane", at: [1.81, -0.53, 1.0], r: 10, power: 0.6, color: "#6ab4ff",
       bake: { reach: 0.3, power: 1.2 } },
     { id: "ninth", at: [0.08, 3.45, 1.62], r: 60, power: 0.8, color: "#ff4fd3", flicker: 0.08,
       bake: { reach: 1.4, power: 1.6, wrap: 0.5, off: [5] } },
