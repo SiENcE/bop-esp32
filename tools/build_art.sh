@@ -113,7 +113,11 @@ room() {
     fi
     # where each pixel comes from (the editor's Iso tab asks): scratch, not checked in
     grep "^ISO_PICK " "build/art/rooms/$id.log" | cut -c10- > "build/art/rooms/$id.pick.json" || true
-    $ATLAS "build/art/rooms/$id" "assets/room_$id.js" --only "${id}_*"
+    # the parts a painted room lays over its picture, as the game places them (a line PARTS {json} in the log)
+    if grep -q "^PARTS " "build/art/rooms/$id.log"; then grep "^PARTS " "build/art/rooms/$id.log" | cut -c7- > "art/rooms/$id.parts.json"; fi
+    # pages are 1024 px unless a still picture is wider (the Drain Market from above is 1280x720; animations go frame by frame)
+    max=$(node -e 'const fs=require("fs"),p=require("path");let m=0;const w=(d)=>{for(const f of fs.readdirSync(d)){const q=p.join(d,f);if(fs.statSync(q).isDirectory())w(q);else if(f.endsWith(".png")){const b=fs.readFileSync(q);m=Math.max(m,b.readUInt32BE(16),b.readUInt32BE(20))}}};if(fs.existsSync(process.argv[1]))w(process.argv[1]);console.log(m>1000?2048:1024)' "build/art/rooms/$id/sprites")
+    $ATLAS "build/art/rooms/$id" "assets/room_$id.js" --only "${id}_*" --max "$max"
 }
 
 rooms() {
