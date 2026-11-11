@@ -17,6 +17,7 @@
 // windows of the painted market (art/rooms/drain_market.px.js) with the figures placed (the preacher's ring of 1.5 m kept free).
 include("juno_oben_blocks.px.js", { palette: true })
 include("../characters/juno_top.px.js")
+include("../characters/markt_people.px.js")                     // the painted people, for the probes markt_people_probe_*
 // the painted market as built (sh tools/build_art.sh room drain_market first): its own file can't be included beside the drafts
 sprite("_mfb_bg", { png: "../../build/art/rooms/drain_market/sprites/drain_market_bg.png" })
 sprite("_mfb_over", { png: "../../build/art/rooms/drain_market/sprites/drain_market_over.png" })
@@ -233,6 +234,46 @@ const MFP = (() => {
       const x = Math.round(pc.x + Math.cos(a) * 62), y = Math.round(pc.y + Math.sin(a) * 40), k = DMF.ground(x / 2, y / 2).k
       if (k !== "terr" && k !== "bed") continue
       MFB.person(c, x - vx, y - vy, d, { ...MFB.look(Math.round(a * 10)), idle: (T >> 3) % 4 })
+    }
+  })
+  // the same windows with the PAINTED figures (art/characters/markt_people.px.js), stamped by name, each frame's centre on its ground
+  // point (top-left = centre - (size - 1) / 2); the preacher stands on the crate the market's background already has
+  const put = (c, name, x, y, frame, size) => c.stamp(name, x - (size - 1) / 2, y - (size - 1) / 2, { frame })
+  const painted = (name, vx, vy, extra) => scene(name, { w: 320, h: 180, frames: 24, fps: 10, bg: "k" }, (c) => {
+    c.stamp("_mfb_bg", -vx, -vy)
+    const T = c.frame, people = crowd(vx, vy, 320, 180, 26, vx * 7 + vy, [[pc.x, pc.y, 64], [ratzSeat.x, ratzSeat.y + 18, 22]])
+    const list = people.map(([x, y, s]) => {
+      const walking = MFB.hs(s, 9) < 0.3, dir = ["down", "up", "right", "left"][Math.floor(MFB.hs(s, 8) * 4)]
+      let px = x, py = y
+      const vert = dir === "up" || dir === "down"
+      if (walking) {
+        const ph = (T + Math.floor(MFB.hs(s, 10) * 24)) % 24, d = ph < 12 ? ph - 6 : 18 - ph, sg = dir === "left" || dir === "up" ? -1 : 1
+        const nx = vert ? x : x + sg * d, ny = vert ? y + sg * Math.round(d / 2) : y, k = DMF.ground(nx / S, ny / S).k
+        if (k === "bed" || k === "terr" || k === "deck") { px = nx; py = ny }
+      }
+      // the painted look that carries what the block look carries, so the mix of umbrellas, bags, bowls and crates stays the blocks'
+      const BY = { umbrella: [6, 12], backpack: [3, 10, 16], bowl: [7, 15], crate: [8, 14], none: [1, 2, 4, 5, 9, 11, 13] }[MFB.look(s).carry ?? "none"]
+      return [px, py, dir, BY[Math.floor(MFB.hs(s, 11) * BY.length)], walking]
+    })
+    for (const [x, y, dir, n, walking] of list.sort((a, b) => a[1] - b[1])) {
+      const nn = String(n).padStart(2, "0"), size = n === 6 || n === 12 ? 23 : 21
+      const idle = Math.floor(T / 6 + MFB.hs(x, y) * 4) % 4
+      put(c, `statist_${nn}_${walking ? "walk" : "idle"}_${dir}`, x - vx, y - vy, walking ? T % 8 : MFB.hs(x, 3) < 0.5 ? idle : 0, size)
+    }
+    extra(c, T, vx, vy)
+    c.stamp("_mfb_over", -vx, -vy)
+  })
+  painted("markt_people_probe_ratz", 300, 160, (c, T, vx, vy) => {
+    put(c, T < 12 ? "ratz_top_idle_down" : "ratz_top_talk_down", ratzSeat.x - vx, ratzSeat.y - vy, T < 12 ? T % 6 : T % 4, 31)
+    c.stamp("juno_top_talk_up", ratzSeat.x - vx - 10, ratzSeat.y + 30 - vy - 10, { t: (T % 2) * 200 })
+  })
+  painted("markt_people_probe_prediger", 90, 60, (c, T, vx, vy) => {
+    put(c, T < 16 ? "prediger_top_idle_down" : "prediger_top_talk_down", pc.x - vx, pc.y - vy - 1, T < 16 ? T % 8 : T % 2, 27)
+    for (const [a, d] of [[0.15, "left"], [6.05, "down"], [2.95, "right"], [3.4, "up"]]) {
+      const x = Math.round(pc.x + Math.cos(a) * 62), y = Math.round(pc.y + Math.sin(a) * 40), k = DMF.ground(x / 2, y / 2).k
+      if (k !== "terr" && k !== "bed") continue
+      const n = 1 + Math.round(a * 10) % 16, nn = String(n).padStart(2, "0")
+      put(c, `statist_${nn}_idle_${d}`, x - vx, y - vy, (T >> 3) % 4, n === 6 || n === 12 ? 23 : 21)
     }
   })
   return {}
