@@ -152,11 +152,17 @@ Nagiwa.at = {
     walk: [[6, 156, 52, 156, 52, 170, 91, 170, 91, 163, 93, 163, 93, 170, 118, 170, 118, 156, 314, 156, 318, 176, 2, 176]], hatch: [22, 166], edge: [222, 162], reader: [92, 164], readerTalk: [124, 165],
     hatchRect: [4, 114, 28, 40], ringsRect: [0, 0, 320, 22], placeRect: [192, 100, 58, 50], screenRect: [110, 33, 50, 31], noodlesRect: [96, 49, 9, 57], droneRect: [284, 98, 26, 18],
   },
-  drain_market: {
-    walk: [[12, 118, 308, 118, 316, 176, 4, 176]], arrive: [24, 150], up: [12, 148], preacher: [226, 148], stalls: [110, 124], curtain: [284, 124],
-    ratz: [190, 126], ratzTalk: [168, 134],
-    upRect: [0, 50, 12, 68], kidneysRect: [30, 56, 66, 52], jarsRect: [106, 56, 58, 52], stallsRect: [170, 56, 30, 52], curtainRect: [262, 50, 44, 66],
-  },
+  // the Drain Market seen straight down (art/rooms/drain_market.px.js, kapitel1-design §9): its walk area, places and shapes measured
+  // from the approved layout and the painting's parts (game/rooms/drain_market.layout.js, tools/market-layout.mjs). The moving parts lie
+  // on the picture behind everyone (an "under" part is its own rect of the floor with the moving thing on it); the steam, then the
+  // cables, string lights and lanterns hang over the people. The runtime lamps are the painting's own, so Juno takes on its light
+  drain_market: (() => {
+    const L = Nagiwa.layouts.drain_market, part = (/** @type {any} */ p) => p.name.slice("drain_market_".length);
+    return { ...L.spots, ...L.rects, walk: L.walk, holes: L.holes, size: L.size,
+      props: L.parts.filter((/** @type {any} */ p) => p.layer === "under").map((/** @type {any} */ p) => ({ id: part(p), image: p.name, at: p.at, anchor: [0, 0], baseline: 0 })),
+      foreground: [...L.parts.filter((/** @type {any} */ p) => p.layer === "over").map((/** @type {any} */ p) => ({ image: p.name, at: p.at })), { image: "drain_market_over", at: [0, 0] }],
+      lamps: L.lamps.map((/** @type {any} */ [x, y, color, r], /** @type {number} */ i) => ({ id: `lamp${i}`, at: [x, y], r, color, power: 1 })) };
+  })(),
   // Sable's booth as a stage from the front (art/mock/sable_booth.px.js): Sable sits behind the desk (the slit in the walk area: an actor
   // stands on walkable floor), the desk a prop drawn over Sable; the curtain is on the left side wall, so its shape is the wall's trapezoid
   sable_booth: {

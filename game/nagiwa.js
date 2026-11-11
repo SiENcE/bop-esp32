@@ -58,6 +58,14 @@ Nagiwa.lullBeat = function (ms) {
   return t < 800 || (t >= 1100 && t < 1350) || (t >= 1650 && t < 1900) || (t >= 2200 && t < 3000);
 };
 
+/**
+ * A figure's four views seen straight down (the Drain Market: art/characters/juno_top.px.js, markt_people.px.js), as a costume
+ * entry: each drawn once and turned, so its left is its own, not a mirror. @param {string} name e.g. "ratz_top_idle"
+ */
+Nagiwa.top = function (name) {
+  return { down: `${name}_down`, up: `${name}_up`, right: `${name}_right`, left: `${name}_left` };
+};
+
 /** The date and time as the camera's display shows it: "2091-11-06 22:15". */
 Nagiwa.stamp = function () {
   const n = Cutaway.time.now, [y, m, d] = Nagiwa.day1, date = new Date(Date.UTC(y, m - 1, d + n.day - 1 + (n.minutes >= 1440 ? 1 : 0)));

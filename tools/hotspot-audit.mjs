@@ -3,7 +3,8 @@
 // box), how much of the floor one can SEE it covers (floor not hidden behind a drawn prop: a click there should walk), and how much of
 // it lies under another hotspot. A picture per room with the overlay: hotspots outlined orange, floor taken from clicks red, two
 // hotspots over each other yellow.
-//   node tools/hotspot-audit.mjs [room ...]      -> build/hotspots/report.txt, build/hotspots/<room>.png (3x)
+//   node tools/hotspot-audit.mjs [room ...]      -> build/hotspots/report.txt, build/hotspots/<room>.png (3x; a room bigger than the
+//                                                   screen whole, as big as fits 960 px)
 // The game is at Chapter 1's second evening, 22:00; a hotspot with an `if` shows as that state has it.
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
@@ -16,7 +17,8 @@ const chrome = await launch({ width: 960, height: 540 });
 
 /** Runs in the page: the numbers for the room that is loaded, and its picture with the overlay as a data URL. */
 const MEASURE = () => {
-  const r = Cutaway.scene.room, W = r.width ?? 320, H = r.height ?? 180, map = Cutaway.scene.walkMap, cam = Cutaway.scene.camera;
+  // the whole room, not only the screen: a room with a size scrolls (the gasse, the Drain Market from above)
+  const r = Cutaway.scene.room, [W, H] = r.size ?? [320, 180], map = Cutaway.scene.walkMap, cam = Cutaway.scene.camera;
   const skip = /^(thumb_|rec$|wait$|back$|rewind$|win_|app_|close$)/;
   const hs = Cutaway.scene.hotspots().filter((h) => !h.actor && !skip.test(h.id));
   // what the props hide: their drawn pixels, frame 0, in a mask the size of the room
@@ -42,14 +44,16 @@ const MEASURE = () => {
     const top = inside.reduce((a, b) => (b[1] > a[1] ? b : a), [null, -Infinity])[0];
     for (const [h] of inside) { const s = stat[h.id]; s.area++; if (floor) s.floor++; if (h !== top) s.under++; }
   }
-  // the picture: the screen as drawn, the marks over it, the hotspots' outlines
-  const c = document.createElement("canvas"); c.width = 320; c.height = 180;
-  const g = c.getContext("2d"); g.drawImage(Cutaway.display.buffer, 0, 0);
-  for (const [x, y, k] of marks) { g.fillStyle = k ? "rgba(255,230,60,0.45)" : "rgba(255,40,40,0.55)"; g.fillRect(x - cam.x, y - cam.y, 1, 1); }
+  // the picture: the screen as drawn (a bigger room: its background whole), the marks over it, the hotspots' outlines; as big as fits 960 px
+  const big = W > 320 || H > 180, o = big ? { x: 0, y: 0 } : cam;
+  const c = document.createElement("canvas"); c.width = big ? W : 320; c.height = big ? H : 180;
+  const g = c.getContext("2d");
+  if (big) Cutaway.assets.draw(g, r.background, 0, 0, { anchor: [0, 0], frame: 0 }); else g.drawImage(Cutaway.display.buffer, 0, 0);
+  for (const [x, y, k] of marks) { g.fillStyle = k ? "rgba(255,230,60,0.45)" : "rgba(255,40,40,0.55)"; g.fillRect(x - o.x, y - o.y, 1, 1); }
   g.strokeStyle = "#ffa03a"; g.lineWidth = 1;
-  for (const h of hs) { g.beginPath(); h.poly.forEach((q, i) => g[i ? "lineTo" : "moveTo"](q.x - cam.x + 0.5, q.y - cam.y + 0.5)); g.closePath(); g.stroke(); }
-  const c3 = document.createElement("canvas"); c3.width = 960; c3.height = 540;
-  const g3 = c3.getContext("2d"); g3.imageSmoothingEnabled = false; g3.drawImage(c, 0, 0, 960, 540);
+  for (const h of hs) { g.beginPath(); h.poly.forEach((q, i) => g[i ? "lineTo" : "moveTo"](q.x - o.x + 0.5, q.y - o.y + 0.5)); g.closePath(); g.stroke(); }
+  const k = Math.max(1, Math.floor(960 / c.width)), c3 = document.createElement("canvas"); c3.width = c.width * k; c3.height = c.height * k;
+  const g3 = c3.getContext("2d"); g3.imageSmoothingEnabled = false; g3.drawImage(c, 0, 0, c3.width, c3.height);
   return { id: r.id, seen, taken, hs: stat, png: c3.toDataURL("image/png") };
 };
 

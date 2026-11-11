@@ -217,13 +217,11 @@ Cutaway.actor("reparatur", { name: "Der Monteur", color: "#b0c0b0", at: Nagiwa.a
 // (no `at`: a routine's place must be walkable floor, and he stands up on his deck, where the actor starts)
 Cutaway.routine("reparatur", [{ day: [2, 3, 4], from: "18:00", to: "04:00", room: "kowalski", face: "ne" }]);
 
-// ---- the Drain Market, as far as it stands: the alley's way down, the preacher of the Waking Church (awake nine days on Wednesday)
+// ---- the Drain Market seen straight down (kapitel1-design §9): the alley's way down, the preacher of the Waking Church (awake nine
+// days on Wednesday: from above his counter isn't seen, the days come from what he says), the stairs further down (Chapter 2)
 const AM = Nagiwa.at.drain_market;
-Cutaway.actor("prediger", { name: "Der Prediger", color: "#d8c8a0", room: "drain_market", at: AM.preacher, facing: "sw",
-  // his counter shows the days he has been awake: 9 on Wednesday, 10, 11 (the _sw sets are flipped with the digits kept the right way round)
-  costume: { idle: every("prediger_idle_9_sw"), walk: every("prediger_idle_9_sw"), talk: every("prediger_talk_9_sw") },
-  poses: [{ if: "day=3", idle: every("prediger_idle_10_sw"), walk: every("prediger_idle_10_sw"), talk: every("prediger_talk_10_sw") },
-    { if: "day=4", idle: every("prediger_idle_11_sw"), walk: every("prediger_idle_11_sw"), talk: every("prediger_talk_11_sw") }],
+Cutaway.actor("prediger", { name: "Der Prediger", color: "#d8c8a0", room: "drain_market", at: AM.preacher, facing: "down", walkTo: AM.preacherTalk, face: "up",
+  costume: { idle: Nagiwa.top("prediger_top_idle"), walk: Nagiwa.top("prediger_top_idle"), talk: Nagiwa.top("prediger_top_talk") },
   voice: { pitch: 54, range: 8, wave: "sawtooth", syllable: 60, speed: 1.3 },
   look: ["Ein dürrer Mann steht auf einer Kiste, mit einer Thermoskanne in jeder Hand.", "Er predigt für die Wache Kirche.", "Er blinzelt nicht. Ich hab gezählt.", "Er hat keine Lider mehr. Die Zunge macht das."],
   talk: [
@@ -231,13 +229,18 @@ Cutaway.actor("prediger", { name: "Der Prediger", color: "#d8c8a0", room: "drain
     { if: "day=3", then: [{ say: "prediger", text: "Zehn Tage. Sie sagen, wer schläft, sieht nichts. Falsch! Wer schläft, sieht was anderes!" }, "Woher willst du das wissen?", { say: "prediger", text: "Ich weiß es nicht. Ich glaube es. Das ist billiger. Kaffee?" }] },
     { if: "day=4", then: [{ say: "prediger", text: "Elf Tage. Da hinten steht jemand, und der kichert." }, "Da steht niemand.", { say: "prediger", text: "Das sagt er auch." }] },
   ] });
-Cutaway.room("drain_market", { name: "Drain-Markt", background: "drain_market_bg", walk: AM.walk,
+// every hotspot here is a stall, a counter, a flight of stairs or a curtain seen from above: a box, so a rect is its shape
+Cutaway.room("drain_market", { name: "Drain-Markt", background: "drain_market_bg", size: AM.size, walk: AM.walk, holes: AM.holes,
+  props: AM.props, foreground: AM.foreground, light: { ambient: 0.85, lamps: AM.lamps },
   ambience: ["city_far", "neon_buzz"], music: { theme: "juno", intensity: 0.4 },
   hotspots: {
-    up: { name: "Zur Gasse", rect: AM.upRect, walkTo: AM.up, face: "sw", use: [{ goto: "gasse", at: Nagiwa.at.gasse.market, face: "se" }] },
-    kidneys: { name: "Stand", rect: AM.kidneysRect, walkTo: AM.stalls, face: "ne", look: "KIDNEYS ONLY. Der Mann dahinter sieht gesund aus. Das ist das Unheimliche." },
-    jars: { name: "Implantate", rect: AM.jarsRect, walkTo: AM.stalls, face: "ne", look: "In den Gläsern liegen gebrauchte Implantate. Eins davon sieht aus wie meins." },
-    stalls: { name: "Stände", rect: AM.stallsRect, walkTo: AM.stalls, face: "ne", look: "[MOCK] Hier kommen noch Ratz und Sables Vorhang." },
+    up: { name: "Zur Gasse", rect: AM.upRect, walkTo: AM.up, face: "up", use: [{ goto: "gasse", at: Nagiwa.at.gasse.market, face: "se" }] },
+    kidneys: { name: "Stand", rect: AM.kidneysRect, walkTo: AM.kidneys, face: "up", look: "KIDNEYS ONLY. Der Mann dahinter sieht gesund aus. Das ist das Unheimliche." },
+    jars: { name: "Implantate", rect: AM.jarsRect, walkTo: AM.jars, face: "up", look: "In den Gläsern liegen gebrauchte Implantate. Eins davon sieht aus wie meins." },
+    stalls: { name: "Elektroschrott", rect: AM.ratzRect, walkTo: AM.ratzTalk, face: "up", look: "Da liegt Elektroschrott, nach nichts sortiert. Dahinter sitzt Ratz." },
+    wok: { name: "Garküche", rect: AM.wokRect, walkTo: AM.wok, face: "left", look: "Bei HOT WOK zischt das Öl. Das Radio daneben spielt ein Lied, das älter ist als ich." },
+    down: { name: "Treppe hinab", rect: AM.downRect, walkTo: AM.down, face: "down",
+      look: "Da geht eine Treppe noch tiefer hinunter. Davor hängt eine Kette, und das Schloss daran blinkt rot.", use: ["Die Kette ist zu, und das Schloss sieht neu aus."] },
   } });
 // the arrival (kapitel1-design §9, decided 2026-11-11): every time Juno takes the stairs down from the alley, first the view from the
 // top of them: the market's bustle two and a half seconds, then the camera tilting slowly down to the crowd on the canal; then the
@@ -274,7 +277,7 @@ Cutaway.sequence("drain_arrival_first", {
 });
 // the market itself after the shot (a goto inside a sequence is only a shot: Juno would stay in the alley)
 Cutaway.room.get("gasse").hotspots.market.use = [{ if: "markt_gesehen", then: [{ sequence: "drain_arrival" }], else: [{ sequence: "drain_arrival_first" }] },
-  { goto: "drain_market", at: AM.arrive, face: "se" }];
+  { goto: "drain_market", at: AM.arrive, face: "down" }];
 
 // the big look upwards (a shot of its own: the block for what will be painted as large as the intro's)
 Cutaway.room("dach_blick", { name: "Die Ringe", background: "dach_blick_b_bg", observe: true, lines: "bottom", buttons: false,

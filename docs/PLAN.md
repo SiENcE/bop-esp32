@@ -142,7 +142,7 @@ From the engine (`docs/reference.md` there):
 |---|---|
 | polygon walk areas with holes, A* | they follow the 2:1 lines, so iso works |
 | props sorted by baseline | iso depth sorting |
-| rooms wider or taller than the screen | the Drain Market (480 px) |
+| rooms wider or taller than the screen | Kowalski Street (416 px), the alley (416x236), the Drain Market from above (1280x720, 4x4 screens; its walk map with 24 stalls as holes builds quickly since Cutaway 4c6142c) |
 | runtime light (lamps, flicker, glow) with the same numbers as pxl | neon, screens |
 | fx | rain, steam, drips |
 | `scale far/near` (depth scaling) | the feed cameras |

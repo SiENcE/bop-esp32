@@ -146,8 +146,9 @@ Cutaway.room("okonkwo_shop", { name: "Okonkwos Laden", background: "okonkwo_shop
   } });
 
 // ---- Ratz on the Drain Market: a cable rat from the old flood programme, his collar mixes up a word now and then
-Cutaway.actor("ratz", { name: "Ratz", color: "#90d0a0", room: "drain_market", at: AM.ratz, facing: "sw", walkTo: AM.ratzTalk, face: "ne",
-  costume: { idle: every("ratz_idle_sw"), walk: every("ratz_idle_sw"), talk: every("ratz_talk_sw") }, voice: { pitch: 72, range: 6, wave: "square", syllable: 55, speed: 1.3 },
+// (seen straight down on his crate behind the junk, art/characters/markt_people.px.js; Juno talks to him from before his stall)
+Cutaway.actor("ratz", { name: "Ratz", color: "#90d0a0", room: "drain_market", at: AM.ratz, facing: "down", walkTo: AM.ratzTalk, face: "up",
+  costume: { idle: Nagiwa.top("ratz_top_idle"), walk: Nagiwa.top("ratz_top_idle"), talk: Nagiwa.top("ratz_top_talk") }, voice: { pitch: 72, range: 6, wave: "square", syllable: 55, speed: 1.3 },
   look: ["Das ist Ratz, eine Kabelratte, so groß wie ein kleiner Hund. Sein Parka wird ihm nie passen.",
     "Sein Schwanz endet in einem alten Stecker. Der Kragen leuchtet, wenn er redet, und er redet viel."],
   talk: [RZ("Kundschaft! Kauf was, oder kauf was anderes."), { dialog: "ratz" }] });
@@ -162,5 +163,4 @@ Nagiwa.talkTree("ratz", [
   ["„Woher hast du den Kragen?“", [RZ("Vom Flutprogramm. Das ist ein Sprechkragen, Modell zwei."), "Und Modell eins?", RZ("Hat gebissen."), "Wer?", RZ("Der Kragen.")]],
   ["„Was willst du wissen?“", [RZ("Hast du Ratten gesehen? In den Rohren, unter der Krone. Große."), "Nur dich.", RZ("Dann sag's keinem. Die zählen auf mich.")]],
 ]);
-Cutaway.room.get("drain_market").hotspots.stalls.look = "Da liegt Elektroschrott, nach nichts sortiert. Davor steht Ratz.";
 })();
