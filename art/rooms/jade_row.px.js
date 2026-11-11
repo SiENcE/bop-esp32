@@ -1,6 +1,7 @@
 // Jade Row painted, on the lines of its approved blocks (art/old/jade_row_blocks.px.js, formerly art/mock; the user approved them as
 // the base on 2026-11-11: "ja, darauf malen"), but for one change the user asked for once it was painted: Okonkwo's shop needs more
-// space, so it takes the whole near left-hand wall (SHOP0), its window three panes wide and its sign over the whole front. The lane seen down its length, one vanishing point at (160, 80), 30 px to the metre where Juno walks (z = 1).
+// space, so it takes the whole near left-hand wall (SHOP0 to SHOP1), a window of one pane, the door, a window of three panes, and
+// its sign over the whole front. The lane seen down its length, one vanishing point at (160, 80), 30 px to the metre where Juno walks (z = 1).
 // The projection bP, the constants and the place and size of everything are the mock's; game/places.js (jade_row) measured its
 // hotspots and the walk area from there, so nothing here moves. The painting adds material, light and detail:
 //
@@ -124,8 +125,8 @@ const JR = (() => {
   const ph = (name) => F % PARTS.find((p) => p.name === name).frames
 
   // ---------------------------------------------------------------- the lamps (the painted sources; the runtime lamps are the big ones)
-  lamp(-3.2, 0.82, 1.4, "w", 0.85, 1.8); lamp(-3.2, 1.11, 1.4, "w", 0.85, 1.8)   // Okonkwo's window, the whole front
-  lamp(-3.1, 1.48, 1.0, "w", 1.15, 2.3)                          // his open door
+  lamp(-3.2, 0.74, 1.4, "w", 0.85, 1.8); lamp(-3.2, 1.38, 1.4, "w", 0.85, 1.8)   // Okonkwo's windows, either side of his door
+  lamp(-3.1, 0.95, 1.0, "w", 1.15, 2.3)                          // his open door
   lamp(-3.3, 1.08, 3.9, "w", 0.7, 1.7)                           // the balcony door over it
   lamp(-3.3, 0.86, 2.95, "w", 0.5, 1.2); lamp(-3.3, 1.3, 2.95, "w", 0.5, 1.2)   // the two small lamps over his sign
   lamp(3.15, 1.66, 1.35, "w", 1.1, 2.8)                          // HOT SOUP
@@ -279,7 +280,7 @@ const JR = (() => {
           const joint = jm < 0.07 * z || jz < 0.06 * z * 1.4
           const slab = ih(fl(sm), fl(sz) + (m < 0 ? 0 : 50))
           let v0 = joint ? 1.2 : 2.3 + (slab < 0.3 ? -0.25 : slab > 0.85 ? 0.2 : 0)
-          if (m < -3.05 && z > 1.34 && z < 1.6) v0 = Math.abs(m + 3.05) < 0.03 * z || fl(z * 40) % 3 === 0 ? 0.7 : 1.2   // his doormat
+          if (m < -3.05 && z > 0.88 && z < 1.02) v0 = Math.abs(m + 3.05) < 0.03 * z || fl(z * 40) % 3 === 0 ? 0.7 : 1.2   // his doormat
           if (m > 0 && fl(sm) === 6 && fl(sz) === 6 && Math.abs(jm - (0.3 + jz * 0.4)) < 0.03 * z * 2) v0 = 0.8   // the crack
           put(x, y, surf(v0, o, x, y, FLOOR, 2.1))
           if (puddleAt(m, z)) WET[i] = 2
@@ -322,7 +323,10 @@ const JR = (() => {
   const box = (z, h, z0, z1, h0, h1) => z >= z0 && z < z1 && h >= h0 && h < h1
   // Okonkwo's shop takes the whole near left-hand wall, from the picture's edge to its door (the user's wish, 2026-11-11: it needs
   // more space): the window in three panes, the sign board over the whole front; the door stays where it was
-  const SHOP0 = 0.64, PANES = [SHOP0, 0.85, 1.03, 1.22]
+  // The door is between the two windows (the user's wish, 2026-11-11): a window of one pane from the near edge, the door, then a
+  // window of three panes where the door was before, up to the arcade
+  const SHOP0 = 0.64, SHOP1 = 1.7, DOOR = [0.85, 1.05]
+  const PANES = [[SHOP0, DOOR[0]], [DOOR[1], 1.27], [1.27, 1.49], [1.49, SHOP1]]
   // OKONKWO painted on the board, big where the board is near and small where it runs away, between two lines parallel to its edges
   // (the user's wish, 2026-11-11). Their height follows the board exactly; across, a wall foreshortens twice as fast as it does up,
   // which would squeeze the far letters past reading, so the letters are laid two thirds by the screen and a third by the metre
@@ -403,19 +407,35 @@ const JR = (() => {
         if (z > 1.085 && z < 1.095 && h < 5.05 && h > 4.86) return surf(1.4, o, x, y)
         return surf(f < 0.08 ? 3.2 : f > 0.94 ? 1.5 : 2.25, o, x, y)
       }
-      if (box(z, h, SHOP0, 1.52, 2.3, 2.85)) {                                                // the sign board along the whole front: old wood, its top edge lit
+      if (box(z, h, SHOP0, SHOP1, 2.3, 2.85)) {                                               // the sign board along the whole front: old wood, its top edge lit
         if (h > 2.8) return "p"
         if (h < 2.34) return "k"
         const g = signAt(x, y)
         if (g) return g
         return tone(["o", "o", "p", "O"], 1.2 + (h - 2.3) * 2 + lightAt(-3.4, z, h, 1, 0).w * 0.8, x, y)
       }
-      if (box(z, h, SHOP0, 1.22, 0.45, 2.1)) {                                                // the shop window onto his shelves, three panes wide
+      if (box(z, h, DOOR[0], DOOR[1], 0, 2.2)) {                                              // the open door: a bead curtain, the shop deep inside, the leaf folded back
+        const a = DOOR[0], b = DOOR[1], d = (b - a) / 0.44                                   // (its parts in the old door's proportions)
+        if (z < a + 0.03 * d || z >= b - 0.03 * d || h > 2.14) return "o"
+        if (z < a + 0.05 * d || h > 2.1) return "p"
+        const u = (z - a - 0.05 * d) / (b - a - 0.08 * d)
+        if (u > 0.8) return h > 1.0 && h < 1.08 && u < 0.85 ? "5" : fl(h * 6) % 3 === 0 ? "o" : "p"
+        if (h < 0.05) return "P"                                                              // the step, worn pale
+        if (fl(u * 13) % 2 === 0 && fl(h * 28) % 2 === 0 && h > 0.35) return h > 1.6 ? "P" : "O"   // the beads
+        if (h < 0.32) return fl((u + h * 0.6) * 10) % 2 ? "A" : "b"                           // his floorboards running in
+        if (u > 0.08 && u < 0.62 && h > 0.32 && h < 0.95) return h > 0.9 ? "P" : fl(u * 20) % 4 === 0 ? "a" : "A"   // the counter's end
+        const shelf = (h - 0.95) % 0.3
+        if (u > 0.2 && u < 0.78 && shelf < 0.035) return "O"
+        if (u > 0.2 && u < 0.78 && shelf < 0.14) return ["H", "P", "K", "c", "P"][fl(u * 14 + h * 3) % 5]
+        return tone(WARM_IN, 3.0 + (h - 0.95) * 0.9 - Math.abs(u - 0.45) * 1.4, x, y)       // the bulb's light, brightest high in the middle
+      }
+      if (box(z, h, SHOP0, SHOP1, 0.45, 2.1)) {                                               // the shop windows onto his shelves, either side of the door
         // kept calm (the user's wish, 2026-11-11): the bulb's light in two flat steps, the goods in blocks, one row of sacks
-        const pane = PANES.findIndex((b, i) => z >= b && z < PANES[i + 1]), u = (z - PANES[pane]) / (PANES[pane + 1] - PANES[pane]), w = (h - 0.45) / 1.65
+        const pane = PANES.findIndex(([a, b]) => z >= a && z < b), u = (z - PANES[pane][0]) / (PANES[pane][1] - PANES[pane][0]), w = (h - 0.45) / 1.65
         if (u < 0.05 || u > 0.95 || w > 0.97 || Math.abs(h - 1.0) < 0.022) return "o"
         if (u < 0.09 || w > 0.94 || (h > 1.0 && h < 1.04)) return "p"
         if (pane === 0 && u > 0.18 && u < 0.62 && w > 0.62 && w < 0.78) return w > 0.75 ? "h" : "K"   // OPEN, a card in the corner
+        if (pane === 3 && u > 0.6 && u < 0.86 && w > 0.74 && w < 0.86) return w > 0.83 ? "h" : "K"    // the price list taped on inside
         if (h < 1.0) {
           if (pane === 1) return h > 0.94 ? "P" : "A"                                           // the counter's front behind the glass
           const sv = (z * 17) % 1, sack = Math.hypot((sv - 0.5) * 2.3, (h - 0.6) / 0.11) < 1   // a row of rice sacks, jute
@@ -426,23 +446,9 @@ const JR = (() => {
         if (shelf > 0.05 && shelf < 0.15) return fl(z * 26 + row * 3) % 4 === 0 ? "A" : ["H", "c", "K", "P"][row % 4]   // rice, batteries, cigarettes, noodle cups
         return h > 1.62 ? "P" : "b"
       }
-      if (box(z, h, SHOP0, 1.26, 0, 0.45)) {                                                  // the base under it, plain
+      if (box(z, h, SHOP0, SHOP1, 0, 0.45)) {                                                 // the base under them, plain
         if (h > 0.42) return surf(3.5, o, x, y)
         return surf(h < 0.04 ? 1.6 : 2.1, o, x, y)
-      }
-      if (box(z, h, 1.26, 1.7, 0, 2.2)) {                                                     // the open door: a bead curtain, the shop deep inside, the leaf folded back
-        if (box(z, h, 1.26, 1.29, 0, 2.2) || box(z, h, 1.67, 1.7, 0, 2.2) || h > 2.14) return "o"
-        if (box(z, h, 1.29, 1.31, 0, 2.14) || h > 2.1) return "p"
-        const u = (z - 1.31) / 0.36
-        if (u > 0.8) return h > 1.0 && h < 1.08 && u < 0.85 ? "5" : fl(h * 6) % 3 === 0 ? "o" : "p"
-        if (h < 0.05) return "P"                                                              // the step, worn pale
-        if (fl(u * 13) % 2 === 0 && fl(h * 28) % 2 === 0 && h > 0.35) return h > 1.6 ? "P" : "O"   // the beads
-        if (h < 0.32) return fl((u + h * 0.6) * 10) % 2 ? "A" : "b"                           // his floorboards running in
-        if (u > 0.08 && u < 0.62 && h > 0.32 && h < 0.95) return h > 0.9 ? "P" : fl(u * 20) % 4 === 0 ? "a" : "A"   // the counter's end
-        const shelf = (h - 0.95) % 0.3
-        if (u > 0.2 && u < 0.78 && shelf < 0.035) return "O"
-        if (u > 0.2 && u < 0.78 && shelf < 0.14) return ["H", "P", "K", "c", "P"][fl(u * 14 + h * 3) % 5]
-        return tone(WARM_IN, 3.0 + (h - 0.95) * 0.9 - Math.abs(u - 0.45) * 1.4, x, y)       // the bulb's light, brightest high in the middle
       }
       if (box(z, h, 2.45, 3.2, 0, 2.3)) {                                                     // MAHJONG: a strip curtain, the tiles on the board over it
         const u = (z - 2.45) / 0.75

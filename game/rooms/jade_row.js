@@ -5,6 +5,7 @@
 
 (function () {
   const AJ = Nagiwa.at.jade_row, AW = Nagiwa.at.kowalski, P = Nagiwa.parts.jade_row;
+  const SHOP_LOOK = ["Okonkwo verkauft Reis, Batterien und Zigaretten.", "Er steht mit der Lesebrille hinter der Theke.", "Er grüßt mich jeden Abend. Ich hab nie gefragt, warum."];
   const kowalski = Cutaway.room.get("kowalski");
   // on the street's left end the passage through the building (the street's map: the opening and spot "west")
   kowalski.hotspots.west = { name: "Jade Row", poly: AW.westPoly, walkTo: AW.west, face: "nw",
@@ -36,7 +37,9 @@
       // the arch in the near right-hand wall: the passage back to Kowalski Street
       back: { name: "Zur Kowalski-Straße", poly: AJ.backPoly, walkTo: AJ.back, face: "se", look: "Der Durchgang führt zur Kowalski-Straße. Da hinten leuchtet das Blau vom Werbeschirm.",
         use: [{ goto: "kowalski", at: AW.west, face: "se" }] },
-      window: { name: "Okonkwos Laden", poly: AJ.windowPoly, walkTo: AJ.shop, face: "nw", look: ["Okonkwo verkauft Reis, Batterien und Zigaretten.", "Er steht mit der Lesebrille hinter der Theke.", "Er grüßt mich jeden Abend. Ich hab nie gefragt, warum."] },
+      // (the two windows either side of his door, the near one its own hotspot with the same look)
+      window_near: { name: "Okonkwos Laden", poly: AJ.windowNearPoly, walkTo: AJ.shop, face: "nw", look: SHOP_LOOK },
+      window: { name: "Okonkwos Laden", poly: AJ.windowPoly, walkTo: AJ.shop, face: "nw", look: SHOP_LOOK },
       sign: { name: "OKONKWO", poly: AJ.signPoly, walkTo: AJ.shop, face: "nw", z: 1, look: "Da steht OKONKWO. Das sind die einzigen Buchstaben hier, die ich ohne Raten lesen kann." },
       machine: { name: "Automat", rect: AJ.machineRect, walkTo: AJ.machine, face: "nw", z: 1, look: "SMILE FOR A COUPON. Der Automat fotografiert Leute, und die bedanken sich." },
       soup: { name: "Suppenküche", poly: AJ.soupPoly, walkTo: AJ.soup, face: "ne", look: "HOT SOUP. Bao sagt, die salzen zu wenig. Bao sagt das über alle." },

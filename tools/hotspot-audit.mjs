@@ -26,6 +26,7 @@ const MEASURE = () => {
   const m = mask.getContext("2d");
   for (const p of r.props ?? []) {
     if (Cutaway.state.isHidden(p.id ?? "", !!p.hidden) || !Cutaway.state.test(p.if) || (p.alpha ?? 1) < 0.5) continue;
+    if ((p.baseline ?? 1) <= 0) continue;                // a part of the picture behind everyone (a painted room's moving bits): it hides nothing
     const box = Cutaway.scene.propBox(p); if (!box) continue;
     Cutaway.assets.draw(m, p.image, box[0] + (p.flip ? box[2] - 1 : 0), box[1], { anchor: [p.flip ? box[2] - 1 : 0, 0], frame: 0, flip: p.flip });
   }

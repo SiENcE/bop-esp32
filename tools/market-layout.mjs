@@ -114,7 +114,7 @@ const rects = {
   kidneysRect: box(kid),
   jarsRect: box(jar),
   wokRect: box(WK),
-  curtainRect: [curtainPart.at[0], R(curtainTop * S), curtainPart.size[0], curtainPart.at[1] + curtainPart.size[1] - R(curtainTop * S)],
+  curtainRect: [curtainPart.at[0], R(curtainTop * S) + 2, curtainPart.size[0], curtainPart.at[1] + curtainPart.size[1] - R(curtainTop * S) - 2],
   downRect: [F.SHAFT[0] * S + 2, Math.ceil(shaftTop * S) + 1, (F.SHAFT[1] - F.SHAFT[0]) * S - 4, R((shaftEnd - shaftTop) * S) - 3],
 };
 
