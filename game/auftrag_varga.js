@@ -57,7 +57,7 @@ Cutaway.dialog("k1a_warn", { main: { choices: [
 // ---- Sable sells access. The booth is behind a curtain on the Drain Market. Only a hotel Juno knows of can be asked for.
 Nagiwa.ledger.sable_kessler.what.swap = "Kesslers Schulden, gegen einen Code";
 Cutaway.actor("sable", { name: "Sable", color: "#ff4fd3", room: "sable_booth", at: AB.sable, facing: "sw",
-  costume: { idle: "mock_sable", walk: "mock_sable", talk: "mock_sable" }, voice: { pitch: 56, range: 3, wave: "triangle", syllable: 80, speed: 0.95 },
+  costume: { idle: "sable_sit", walk: "sable_sit", talk: "sable_talk" }, voice: { pitch: 56, range: 3, wave: "triangle", syllable: 80, speed: 0.95 },
   look: ["Sable hat einen Mantel, eine Pfeife und eine Preisliste.", "Bei Sable hat alles einen Preis. Das ist das Ehrliche daran."],
   talk: [S("Juno. Kaufst du, oder verkaufst du?"), { dialog: "sable" }] });
 Cutaway.dialog("sable", {

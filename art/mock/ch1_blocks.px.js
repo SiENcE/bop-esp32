@@ -176,10 +176,6 @@ scene("cam15_bg", { w: W, h: H, bg: "0" }, (c) => {
 anim("mock_kessler_hood", { w: 13, h: 24, frames: 1, fps: 1, outline: "1", pivot: "bottom" }, (c) => {
   c.rect(4, 0, 5, 7, "5"); c.rect(5, 3, 3, 3, "2"); c.rect(2, 7, 9, 10, "6"); c.rect(3, 17, 3, 7, "4"); c.rect(7, 17, 3, 7, "4")
 })
-// Sable, sitting behind the table: magenta to the floor, a bald head, the pipe's ember
-anim("mock_sable", { w: 21, h: 42, frames: 1, fps: 1, outline: "k", pivot: "bottom" }, (c) => {
-  c.rect(7, 0, 7, 8, "h"); c.rect(4, 8, 13, 34, "M"); c.rect(9, 10, 3, 30, "m"); c.rect(14, 5, 5, 1, "d"); c.rect(18, 3, 2, 2, "y")
-})
 // a close-up: the white van, two in white carrying a stretcher, a girl in a door
 scene("look_traeger", { w: 170, h: 112, bg: "a" }, (c) => {
   c.rect(0, 0, 170, 112, "a"); c.rect(0, 86, 170, 26, "b")
