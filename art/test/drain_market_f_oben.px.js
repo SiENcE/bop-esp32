@@ -684,7 +684,8 @@ const DMF = (() => {
     kidneys: [462, Math.round(yc(462) + NW + 12)], jars: [543, Math.round(yc(543) + NW + 8)], curtain: [(NICHE[0] + NICHE[1]) / 2, Math.round(yc(578) + SW + 2)],
     down: [(SHAFT[0] + SHAFT[1]) / 2, Math.round(yc(465) + SB - 15)], bridges: BRIDGES,
   }))
-  return { W, H, paint, JUNO, yc, nTer }
+  // (its layout, for the 4x4 blocks: art/test/drain_market_oben_blocks.px.js)
+  return { W, H, paint, JUNO, yc, nTer, yw, ground, STALLS, OCC, RATZ, PREACH, WOK, TABLES, RAFTS, SHAFT, NICHE, ARR, STAIRS, DECK, BRIDGES, PIL, AD, CW }
 })()
 
 scene("drain_market_f", { w: DMF.W, h: DMF.H, bg: "k" }, (c) => DMF.paint(c),
