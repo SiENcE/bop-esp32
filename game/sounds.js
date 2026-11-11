@@ -93,6 +93,14 @@
   S("kanal_wasser", { loop: { noise: { filter: "lowpass", freq: 520, q: 0.7 }, gain: 0.05, wobble: [0.09, 0.55] } });    // the canal lapping
   S("dach_luefter", { loop: { noise: { filter: "bandpass", freq: 210, q: 2.2 }, tone: { wave: "triangle", freq: 61 }, gain: 0.03, wobble: [0.6, 0.15] } });   // the ACs on the roofs
   S("pfeiler_brummen", { loop: { tone: { wave: "sine", freq: 55 }, gain: 0.04 } });                                       // the city's pillar
+  // the market's other tunes (tunes at a place: a theme of game/music.js with a player of its own, beside the wok's radio):
+  // PACHINKO's jingle and its balls rattling, the busker's erhu, the noodle raft's radio on NAGI·WA EASY, the data raft's
+  // boombox on NINTH FM (Juno's theme)
+  S("pachinko_jingle", { loop: { theme: "pachinko", speaker: 0.8, gain: 2.4 } });
+  S("pachinko_kugeln", { loop: { noise: { filter: "bandpass", freq: 3600, q: 1.4 }, gain: 0.015, crackle: 0.5 } });
+  S("strassenmusik", { loop: { theme: "strassenmusik", speaker: 0.15, gain: 0.9 } });
+  S("radio_nudelfloss", { loop: { theme: "easy", speaker: 1, intensity: 0.5, gain: 0.7 } });
+  S("radio_datenfloss", { loop: { theme: "juno", speaker: 1, intensity: 0.7, gain: 0.7 } });
   /** gibberish from far off, a voice as tones: n syllables round a pitch, a contour (up for a question, down for a price) @param {number} seed @param {number} base Hz @param {number} n @param {number} bend */
   const babble = (seed, base, n, bend) => {
     let r = seed;

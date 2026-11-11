@@ -180,7 +180,9 @@ const keepOff = (p, r) => ways.some((w) => lineDist(p, w) < r) || walkers.some((
   Object.values(spots).some((s) => Math.hypot(p[0] - s[0], p[1] - s[1]) < 28) || Math.hypot(p[0] - spots.preacher[0], p[1] - spots.preacher[1]) < 64 ||
   F.BRIDGES.some((bx) => Math.abs(p[0] - bx * S) < 26 && Math.abs(p[1] - F.yw(bx) * S) < 60) ||
   [[0, 0], [-16, 0], [16, 0], [0, -24], [0, 24]].some(([dx, dy]) => F.ground((p[0] + dx) / S, (p[1] + dy) / S).k === "stair");      // the stairs' feet
-const taken = [...walkers.map((w) => w.at)];
+// the busker by the middle bridge's south end, beside it (the walkers keep the bridge), playing up towards the market
+const busker = [F.BRIDGES[1] * S + 26, R((F.yw(F.BRIDGES[1]) + F.CW + 8) * S)];
+const taken = [...walkers.map((w) => w.at), busker];
 const roomFor = (p, dx = 20, dy = 15) => !taken.some((q) => Math.abs(q[0] - p[0]) < dx && Math.abs(q[1] - p[1]) < dy);
 
 // a few groups standing together, facing each other: obstacles, so only where there is room all round them
@@ -201,7 +203,7 @@ for (let t = 0; t < 20000 && stand.length < 64; t++) {
   stand.push([p[0], p[1], look(400 + t), DIRS[Math.floor(hash(t, 13) * 4)]]);
   taken.push(p);
 }
-const crowd = { vendors, walkers, groups, stand };
+const crowd = { vendors, walkers, groups, stand, busker: [...busker, "08", "up"] };
 
 // ---- where the market sounds (kapitel1-design §9, game/sounds.js): the crowd's murmur in three places, the wok's fire, the radio, the
 // canal, the roofs' ACs along the top and the bottom, the pillar; the one-shots from the open stalls' fronts (haggling) and from the
@@ -215,6 +217,8 @@ const sounds = {
   roofs: [200, 640, 1080].flatMap((x) => [[x, 30], [x, 700]]),
   haggle: F.STALLS.filter((s) => s.open).map(front),
   cleaver: ["NOODLE", "DUMPLING", "EEL"].map((n) => front(stall(n))),
+  // the other tunes: PACHINKO's jingle from its sign on the roof, the busker, the rafts' radios
+  pachinko: middle("sign_pachinko"), busker, noodleRaft: middle("raft_noodle"), dataRaft: middle("raft_screens"),
 };
 
 // ---- every place someone stands or walks to must be walkable

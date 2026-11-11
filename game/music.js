@@ -12,6 +12,7 @@
 //   glassgirl: NINTH FM's pop song about a Glasser, the karaoke machine's in LUCKY STATIC (game/karaoke.js).
 //   wokradio: the old song on the radio at HOT WOK in the Drain Market, heard at its place through a small speaker;
 //   markt_ankunft: the view down into the market from the stairs as one arrives, its pentatonic, ending on the market whole.
+//   pachinko, strassenmusik: two of the market's other tunes at their places (a machine's jingle, a busker's erhu).
 // Stingers: "clue" (a moment caught), "witness" (the screen says JUNO.: everything else stops for it).
 // Listen: node lib/cutaway/tools/render-music.mjs index.html --out build/music/juno.wav --steps '[...]'
 "use strict";
@@ -335,6 +336,29 @@
         bells: bars(". . . . . . . . E6 . . . . . . .", empty),
       } },
     },
+  });
+
+  // THE MARKET'S OTHER TUNES, each at its place in the Drain Market (game/stadt.js: sound loops with a theme, beside the wok's radio;
+  // the user's wish, 2026-11-11). PACHINKO on the roof: a machine's jingle, bright and cheap, round and round in C, a square arpeggio
+  // climbing and a bell on the win, 144 bpm, two bars. THE BUSKER by the middle bridge: an erhu alone over a plucked drone, slow and
+  // sad in E minor pentatonic, 66 bpm, eight bars with breaths in them. (The rafts play the radio's stations: game/stadt.js.)
+  Cutaway.score.theme("pachinko", {
+    tempo: 144, key: "C",
+    tracks: { arp: { inst: "arp" }, bell: { inst: "glassbell" } },
+    sections: { a: { bars: 2, tracks: {
+      arp: bars("C5 E5 G5 C6 E5 G5 C6 E6 G5 C6 E6 G6 E6 C6 G5 E5", "D5 F5 A5 D6 F5 A5 D6 F6 G5 B5 D6 G6 D6 B5 G5 D5"),
+      bell: bars("C7 . . . . . . . . . . . . . . .", ". . . . . . . . G6 . . . C7 . . ."),
+    } } },
+  });
+  Cutaway.score.theme("strassenmusik", {
+    tempo: 66, key: "E",
+    tracks: { lead: { inst: "erhu" }, drone: { inst: "pluckbass" } },
+    sections: { a: { bars: 8, tracks: {
+      lead: bars("E5 - - - - - G5 - A5 - - - B5 - - -", "A5 - - - G5 - E5 - - - - - . . . .", "D5 - - - E5 - G5 - E5 - D5 - B4 - - -", "E5 - - - - - - - - - - - . . . .",
+        "B5 - - - D6 - B5 - A5 - - - G5 - - -", "A5 - G5 - E5 - - - D5 - - - . . . .", "E5 - - - G5 - A5 - G5 - E5 - D5 - B4 -", "E5 - - - - - - - - - - - - - . ."),
+      drone: bars("E2 . . . . . . . B2 . . . . . . .", "E2 . . . . . . . B2 . . . . . . .", "D2 . . . . . . . A2 . . . . . . .", "E2 . . . . . . . B2 . . . . . . .",
+        "G2 . . . . . . . D3 . . . . . . .", "A2 . . . . . . . E2 . . . . . . .", "D2 . . . . . . . A2 . . . . . . .", "E2 . . . . . . . B2 . . . E2 . . ."),
+    } } },
   });
 
   Cutaway.score.stinger("clue", { inst: "glassbell", notes: "D6 A6 D7 - - -", key: "D" });

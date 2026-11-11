@@ -240,7 +240,12 @@ Cutaway.room("drain_market", { name: "Drain-Markt", background: "drain_market_bg
     { sfx: "wok_zischen", at: AM.sounds.wok, reach: 220, near: 40 },
     ...AM.sounds.canal.map((/** @type {[number, number]} */ at) => ({ sfx: "kanal_wasser", at, reach: 320, near: 80 })),
     ...AM.sounds.roofs.map((/** @type {[number, number]} */ at) => ({ sfx: "dach_luefter", at, reach: 280, near: 90 })),
-    { sfx: "pfeiler_brummen", at: AM.sounds.pillar, reach: 240, near: 50 }],
+    { sfx: "pfeiler_brummen", at: AM.sounds.pillar, reach: 240, near: 50 },
+    // the other tunes, each at its place (the user's wish, 2026-11-11): PACHINKO on the roof, the busker by the middle bridge,
+    // the rafts' radios on two of the city's stations
+    { sfx: "pachinko_jingle", at: AM.sounds.pachinko, reach: 260, near: 50 }, { sfx: "pachinko_kugeln", at: AM.sounds.pachinko, reach: 200, near: 40 },
+    { sfx: "strassenmusik", at: AM.sounds.busker, reach: 300, near: 50 },
+    { sfx: "radio_nudelfloss", at: AM.sounds.noodleRaft, reach: 240, near: 40 }, { sfx: "radio_datenfloss", at: AM.sounds.dataRaft, reach: 240, near: 40 }],
   music: { theme: "wokradio", speaker: 1, at: AM.sounds.radio, reach: 380, near: 60 },
   hotspots: {
     up: { name: "Zur Gasse", rect: AM.upRect, walkTo: AM.up, face: "up", use: [{ goto: "gasse", at: Nagiwa.at.gasse.market, face: "se" }] },
@@ -262,8 +267,10 @@ Cutaway.state.view("markt_gesehen");
 Cutaway.room("drain_arrival", { name: "Drain-Markt", background: "drain_arrival_bg", size: [320, 432], observe: true, lines: "bottom", buttons: false, leave: "fade",
   ambience: ["city_far", { sfx: "markt_stimmen_a", at: [110, 420], reach: 330, near: 70 }, { sfx: "markt_stimmen_b", at: [220, 420], reach: 330, near: 70 }],
   music: { theme: "markt_ankunft" } });
+// (both begin with the arrival's music at once, the alley's crossfading out: it is there as the view comes up, not at the next bar)
 Cutaway.sequence("drain_arrival", {
   steps: [
+    { music: { stop: true, fade: 0.6 } }, { music: { theme: "markt_ankunft", fade: 0.6 } },
     { goto: "drain_arrival" },
     { camera: [0, 0], ms: 0 },
     { wait: 2500 },
@@ -274,6 +281,7 @@ Cutaway.sequence("drain_arrival", {
 Cutaway.sequence("drain_arrival_first", {
   steps: [
     { set: "markt_gesehen" },
+    { music: { stop: true, fade: 0.6 } }, { music: { theme: "markt_ankunft", fade: 0.6 } },
     { goto: "drain_arrival" },
     { camera: [0, 0], ms: 0 },
     { wait: 2500 },

@@ -171,6 +171,8 @@ Nagiwa.at = {
           at: w.at, path: w.path, loop: "back", speed: w.speed, pause: w.pause })),
         ...L.crowd.groups.map((/** @type {any} */ [x, y, nn, dir]) => ({ costume: { idle: Nagiwa.top(`statist_${nn}_idle`) }, at: [x, y], facing: dir, block: true, turns: false })),
         ...L.crowd.stand.map((/** @type {any} */ [x, y, nn, dir]) => ({ costume: { idle: Nagiwa.top(`statist_${nn}_idle`) }, at: [x, y], facing: dir })),
+        // the busker by the middle bridge (his tune: the ambience strassenmusik), facing the market, never turning away from it
+        ((/** @type {any} */ [x, y, nn, dir]) => ({ costume: { idle: Nagiwa.top(`statist_${nn}_idle`) }, at: [x, y], facing: dir, turns: false }))(L.crowd.busker),
       ] };
   })(),
   // Sable's booth as a stage from the front (art/mock/sable_booth.px.js): Sable sits behind the desk (the slit in the walk area: an actor
