@@ -310,7 +310,8 @@ const JR = (() => {
     if (h >= top + 0.12) return null
     if (Math.abs(q) > 1 || h >= top) return Math.abs(q) > 1.06 || h >= top + 0.07 ? "4" : "5"
     const kWall = T.z1 / z, kFloor = h < T.eye ? T.eye / (T.eye - h) : Infinity, kCeil = h > T.eye ? (T.ceil - T.eye) / (h - T.eye) : Infinity
-    const k = Math.min(kWall, kFloor, kCeil), d = 3.5 * k - 3.5, lit = Math.min(1, d / 1.1)
+    // (kept dark, the user's wish 2026-11-11: the street's light only a glow at the passage's far end, not a bright wall of it)
+    const k = Math.min(kWall, kFloor, kCeil), d = 3.5 * k - 3.5, lit = Math.min(1, d / 1.1) * 0.55
     const b = ISO.bay(R(z * 400), R(h * 40))
     if (k === kCeil) return lit > 0.6 && b < 0.3 ? "c" : Math.floor(d * 6) % 3 === 0 ? "2" : "1"
     if (k === kFloor) return d < 0.08 ? "1" : (b < lit * 0.9 ? (lit > 0.7 ? "C" : "c") : Math.floor(d * 14) % 3 === 0 ? "f" : "t")
@@ -319,7 +320,7 @@ const JR = (() => {
     if (Math.abs(hh - 1.95) < 0.05) return "2"
     if (hh < 0.08) return "1"
     // the street's ad screen at the end throws its cyan in: brightest where the passage opens
-    return b < lit * lit ? (lit > 0.75 ? "v" : "C") : b < lit ? "c" : Math.floor(hh / 0.45) % 2 ? "2" : "3"
+    return b < lit * lit ? "c" : b < lit ? "t" : Math.floor(hh / 0.45) % 2 ? "1" : "2"
   }
   const box = (z, h, z0, z1, h0, h1) => z >= z0 && z < z1 && h >= h0 && h < h1
   // Okonkwo's shop takes the whole near left-hand wall, from the picture's edge to its door (the user's wish, 2026-11-11: it needs
@@ -844,13 +845,26 @@ const JR = (() => {
     KB.fill("k"); ZB.fill(99); WET.fill(0); CZ = 99
     sky(); endBlock(); floor(); walls(); nightSign(); shopLetters(); bFront()
   }
-  const GLOWS = [["m", 5, 0.45], ["vV", 4, 0.3], ["RW", 4, 0.35]]
+  // the lights' halos (in fog they grow: the wet air takes their light)
+  const HALO = 1
+  const GLOWS = [["m", 5 * HALO, 0.45 * Math.sqrt(HALO)], ["vV", 4 * HALO, 0.3 * Math.sqrt(HALO)], ["RW", 4 * HALO, 0.35 * Math.sqrt(HALO)]]
   // the scene a fifth darker than its palette, all but the lights themselves (neon, lanterns, screens, the bulbs), so they stand out
   // (the user's wish, 2026-11-11)
   const LIT = "mNvVRWQ", DIM = 0.8
+  // depth fog: everything drowns a little in the wet air the further off it is (by the depth of each pixel), the lights less; k 0 is
+  // none, the colour the night's mist
+  const FOG = { k: 0, color: [27, 34, 53] }
+  const fogAt = (i, lit) => {
+    if (!FOG.k) return 0
+    const z = ZB[i] >= 90 ? END : ZB[i], f = 1 - Math.exp(-Math.max(0, z - 0.85) * FOG.k)
+    return lit ? f * 0.35 : f
+  }
   const glow = (keys) => {
     const out = new Float32Array(W * H * 3)
-    for (let i = 0; i < W * H; i++) { const c3 = RGB[keys[i]] ?? RGB.k, d = LIT.includes(keys[i]) ? 1 : DIM; out[i * 3] = c3[0] * d; out[i * 3 + 1] = c3[1] * d; out[i * 3 + 2] = c3[2] * d }
+    for (let i = 0; i < W * H; i++) {
+      const c3 = RGB[keys[i]] ?? RGB.k, lit = LIT.includes(keys[i]), d = lit ? 1 : DIM, f = fogAt(i, lit)
+      for (let ch = 0; ch < 3; ch++) out[i * 3 + ch] = c3[ch] * d * (1 - f) + FOG.color[ch] * f
+    }
     for (const [src, r, strength] of GLOWS) {
       const wt = new Float32Array(W * H), acc = new Float32Array(W * H * 3), Rr = Math.ceil(r)
       for (let sy = 0; sy < H; sy++) for (let sx = 0; sx < W; sx++) {
