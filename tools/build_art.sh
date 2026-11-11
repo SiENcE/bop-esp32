@@ -118,7 +118,11 @@ room() {
     # where each pixel comes from (the editor's Iso tab asks): scratch, not checked in
     grep "^ISO_PICK " "build/art/rooms/$id.log" | cut -c10- > "build/art/rooms/$id.pick.json" || true
     # the parts a painted room lays over its picture, as the game places them (a line PARTS {json} in the log)
-    if grep -q "^PARTS " "build/art/rooms/$id.log"; then grep "^PARTS " "build/art/rooms/$id.log" | cut -c7- > "art/rooms/$id.parts.json"; fi
+    if grep -q "^PARTS " "build/art/rooms/$id.log"; then
+        grep "^PARTS " "build/art/rooms/$id.log" | cut -c7- > "art/rooms/$id.parts.json"
+        # ... and as a script the game loads (no fetch): game/rooms/<id>.parts.js (the Drain Market's go into its layout, below)
+        if [ "$id" != drain_market ]; then node tools/room-parts.mjs "$id"; fi
+    fi
     # the Drain Market from above is painted, not baked: its numbers come from its approved layout and these parts
     if [ "$id" = drain_market ]; then node tools/market-layout.mjs --out game/rooms/drain_market.layout.js; fi
     # pages are 1024 px unless a still picture is wider (the Drain Market from above is 1280x720; animations go frame by frame)
