@@ -6,7 +6,6 @@
 // same view (as Bao and Motte); the _sw sets are the flipped ones, painted so that what is written on them still reads.
 //   regen_idle_*, regen_talk_*                       the Rain Reader, a catfish: 38 px on her bucket; a drop falls on the counter, a barbel twitches
 //   imai_idle_*, imai_talk_*                         Frau Imai, a sloth: 41 px at her table; the Lull point keeps Nagiwa.lullBeat
-//   prediger_idle_<day>_*, prediger_talk_<day>_*     the Preacher, a gecko: 54 px on a 12 px crate, 67 with the thermos; 9, 10, 11 on his counter; he licks his eye
 //   monteur_idle_ne, monteur_talk_*                  the Fitter, a mole: 52 px, 58 with the arm raised; from behind at work, his arm going; turned round to talk
 // Every frame of a figure has one canvas, odd in width, pivot bottom-centre under the feet: nothing jumps.
 pal({
@@ -20,9 +19,6 @@ pal({
   // Frau Imai (#c8d8b0): the cardigan, its shade and deep; her hair, its grey; her skin; moss in the hair, dark, lit, bright; Lull bright and dim; cold tea
   C: "#c8d8b0", e: "#92a47e", d: "#667858", h: "#2c2e38", A: "#6a6e7a", o: "#d8c2aa", O: "#a68c78",
   "%": "#34482a", "&": "#55703a", "+": "#8aa852", "~": "#cfe6ff", "^": "#6ab4ff", t: "#552b1c",
-  // the Preacher (#d8c8a0): the coat, its shade, its seam; the thermoses; amber caps and eyes, their light and dark; gecko skin, its scales; a rust crest; the tongue
-  D: "#d8c8a0", i: "#a69670", x: "#6e6244", T: "#a8b4c4", X: "#6c7888", Q: "#eea040", P: "#b0602a", R: "#ffd58a",
-  s: "#a89a5e", S: "#5c5430", q: "#b8682c", Z: "#7c4220", p: "#e888a8", r: "#a84e6c",
   // the Fitter (#b0c0b0): the coat, its shade, where it is wet; the hard hat; his belt, its pouch; the pelt, its light; pink hands and snout; claws
   M: "#b0c0b0", m: "#7c8c84", N: "#4e5e5a", z: "#dce0d4", "|": "#a0a89c", ",": "#552b1c", ";": "#8a5a34",
   "@": "#2a2630", "!": "#4a4452", "?": "#e0a49c", ":": "#a46c70", "=": "#e4d8b4",
@@ -168,93 +164,6 @@ const TALK_MS = cuts.map((t, i) => (cuts[i + 1] ?? 3600) - t)
 for (const [dir, flip] of SETS) {
   anim(`imai_idle_${dir}`, { w: IW, h: IH, outline: "k", pivot: "bottom", frames: LULL.length, ms: LULL, ...flip }, (c) => imai(c, { lull: c.frame % 2 === 0 }))
   anim(`imai_talk_${dir}`, { w: IW, h: IH, outline: "k", pivot: "bottom", frames: cuts.length, ms: TALK_MS, ...flip }, (c) => imai(c, { lull: beatAt(cuts[c.frame]), talk: Math.floor(cuts[c.frame] / 200) % 2 === 1 }))
-}
-
-// ---------------------------------------------------------------- The Preacher of the Waking Church, on his crate
-const PW = 47, PH = 69, pn = (h) => PH - 1 - h
-const prediger = (c, o = {}) => {
-  const up = o.jerk ?? 0
-  // the crate: a plastic milk crate, its top catching the light
-  c.rect(14, pn(11), 19, 12, "5"); c.hline(14, pn(11), 19, "6"); c.hline(14, pn(0), 19, "4"); for (const x of [17, 22, 27]) c.rect(x, pn(8), 3, 6, "2")
-  // his thin legs and his shoes
-  c.rect(19, pn(30), 3, 17, "3"); c.rect(25, pn(30), 3, 17, "4"); c.vline(21, pn(30), 17, "2"); c.vline(27, pn(30), 17, "3"); c.rect(18, pn(13), 5, 2, "2"); c.rect(25, pn(13), 6, 2, "2"); c.hline(25, pn(13), 6, "4"); c.hline(18, pn(13), 5, "3")
-  // the long coat, hanging straight off his shoulders; the seam of its opening towards the side he faces
-  taper(c, pn(53), 17, 29, pn(25), 16, 31, (x, y, x0, x1, t) => (t > 0.93 ? "x" : x === 27 ? "x" : x === x1 || x === x0 ? "i" : (x === 20 && t > 0.3) ? "i" : "D"))
-  c.hline(19, pn(54), 9, "D")
-  // the arm with the hanging thermos
-  sleeve(c, 17, pn(53), 11, pn(42), 3, "D", "i", "x"); g(c, 9, pn(42), ["sss", "sSs"])
-  c.rect(8, pn(40), 5, 11, "T"); c.vline(12, pn(40), 11, "X"); c.hline(8, pn(30), 5, "X"); c.rect(8, pn(40), 5, 2, "Q"); c.hline(8, pn(39), 5, "P")
-  // the other, up with the thermos he offers
-  sleeve(c, 29, pn(53), 40, pn(49), 3, "D", "i", "x"); sleeve(c, 40, pn(49), 42, pn(55 + up), 3, "D", "i", "x"); g(c, 43, pn(58 + up), ["ss", "sS", "ss"])
-  c.rect(42, pn(66 + up), 5, 9, "T"); c.vline(46, pn(66 + up), 9, "X"); c.hline(42, pn(58 + up), 5, "X"); c.rect(42, pn(66 + up), 5, 2, "Q"); c.hline(42, pn(65 + up), 5, "P")
-  // the counter on its cord: the days he has been awake, in the only colour technology has
-  c.line(20, pn(54), 21, pn(51), "x"); c.line(26, pn(54), 25, pn(51), "x")
-  c.rect(19, pn(50), 9, 7, "3"); c.rect(20, pn(49), 7, 5, "1")
-  write(c, o.days < 10 ? 22 : 20, pn(49), String(o.days), "v", o.mirrored)
-  // the neck, thin; the skull, flat and wide
-  c.rect(21, pn(55), 5, 2, "S")
-  g(c, 13, pn(64), [
-    "...ssssssssssss....",
-    "..ssssssssssssss...",
-    ".sssssssssssssssss.",
-    ".sSssssssssssssssss",
-    ".sssssssssssssssss.",
-    ".sssssssssssssssss.",
-    ".sSssssssssssssssss",
-    ".sssssssssssssssss.",
-    "..ssssssssssssssss.",
-    "..ssSkkkkkkkkkkkkk.",
-    "...ssssssssssSsss..",
-    ".....ssSssssssss...",
-  ])
-  // the crest instead of hair: flaps of skin along the skull, soft, falling back
-  g(c, 8, pn(66), [
-    ".......q.q.q.",
-    ".....qZqZqZq.",
-    "...qqZZZZZZq.",
-    ".qqZZZZqqqq..",
-    "qZZZqqq......",
-    ".qZq.........",
-    "..q..........",
-  ])
-  // the eyes: enormous, lidless, standing out of the skull, raw along their lower rims; slit pupils that have stopped moving
-  g(c, 17, pn(67), [
-    "..qqqqq..",
-    ".qQRRRQq.",
-    "qQRRkRQQq",
-    "qQQQkQQQq",
-    "qQQQkQQQq",
-    "qQQQkQQQq",
-    "qPQQkQQPq",
-    ".rPPkPPr.",
-    "..rrrrr..",
-  ])
-  g(c, 27, pn(66), [
-    ".qqqq.",
-    "qQRRQq",
-    "qQkQQq",
-    "qQkQQq",
-    "qQkQQq",
-    "qPkQPq",
-    ".rPPr.",
-    "..rr..",
-  ])
-  if (o.talk) { c.hline(18, pn(54), 12, "k"); c.hline(19, pn(53), 9, "r") }
-  // the tongue: out of the mouth's corner, up round the far eye
-  const tn = o.tongue ?? 0
-  if (tn >= 1) { c.rect(31, pn(56), 2, 2, "p"); c.px(32, pn(55), "r") }
-  if (tn >= 2) { c.rect(32, pn(60), 2, 5, "p"); c.vline(33, pn(60), 5, "r") }
-  if (tn >= 3) { c.rect(32, pn(64), 2, 4, "p"); c.vline(33, pn(64), 4, "r"); c.px(31, pn(64), "p") }
-  if (tn === 4) { c.rect(28, pn(64), 4, 2, "p"); c.hline(28, pn(63), 4, "r") }
-  if (o.wet) { c.px(28, pn(64), "W"); c.px(29, pn(64), "W") }
-}
-// he stares; now and then, once in the loop, he wets an eye
-const LICK = [0, 1, 2, 3, 4, 2, 0], LICK_MS = [3400, 90, 90, 120, 160, 90, 1500]
-const DAYS = [9, 10, 11]
-for (const days of DAYS) for (const [dir, flip] of SETS) {
-  const mirrored = dir === "sw"
-  anim(`prediger_idle_${days}_${dir}`, { w: PW, h: PH, outline: "k", pivot: "bottom", frames: LICK.length, ms: LICK_MS, ...flip }, (c) => prediger(c, { days, mirrored, tongue: LICK[c.frame], wet: c.frame === 6 }))
-  anim(`prediger_talk_${days}_${dir}`, { w: PW, h: PH, outline: "k", pivot: "bottom", frames: 2, ms: [200, 200], ...flip }, (c) => prediger(c, { days, mirrored, talk: c.frame === 1, jerk: c.frame === 1 ? 1 : 0 }))
 }
 
 // ---------------------------------------------------------------- The Fitter, a mole: he works by touch, the lamp sees for him
