@@ -240,19 +240,17 @@ Cutaway.room("drain_market", { name: "Drain-Markt", background: "drain_market_bg
     stalls: { name: "Stände", rect: AM.stallsRect, walkTo: AM.stalls, face: "ne", look: "[MOCK] Hier kommen noch Ratz und Sables Vorhang." },
   } });
 // the arrival (kapitel1-design §9, decided 2026-11-11): every time Juno takes the stairs down from the alley, first the view from the
-// top of them: the market's bustle a few seconds, the vendors' drone platform rising out of the picture, the camera tilting slowly
-// down to the crowd on the canal; then the market from above. Later visits: one click skips it. The first time, Juno and EVI talk once
-// it has all moved (a click takes each line on); whether they have is a view flag (it changes what is said, never what happens)
+// top of them: the market's bustle two and a half seconds, then the camera tilting slowly down to the crowd on the canal; then the
+// market from above. Later visits: one click skips it. The first time, Juno and EVI talk once the camera has come to rest (a click
+// takes each line on); whether they have is a view flag (it changes what is said, never what happens)
 Cutaway.state.view("markt_gesehen");
 Cutaway.room("drain_arrival", { name: "Drain-Markt", background: "drain_arrival_bg", size: [320, 432], observe: true, lines: "bottom", buttons: false,
-  props: [{ id: "drone", image: "drain_arrival_drone", at: [136, 130] }],
   ambience: ["city_far", "neon_buzz"], music: { theme: "juno", intensity: 0.4 } });
 Cutaway.sequence("drain_arrival", {
   steps: [
     { goto: "drain_arrival" },
     { camera: [0, 0], ms: 0 },
-    { wait: 4500 },
-    { move: "drone", to: [160, 0], ms: 3500, ease: "in" },
+    { wait: 2500 },
     { camera: [0, 252], ms: 9000, ease: "inOut" },
     { shot: "markt" },
   ],
@@ -262,8 +260,7 @@ Cutaway.sequence("drain_arrival_first", {
     { set: "markt_gesehen" },
     { goto: "drain_arrival" },
     { camera: [0, 0], ms: 0 },
-    { wait: 4500 },
-    { move: "drone", to: [160, 0], ms: 3500, ease: "in" },
+    { wait: 2500 },
     { camera: [0, 252], ms: 9000, ease: "inOut" },
     // a shot mark before each line: a click takes one line on, not the whole talk
     { shot: "l1" }, "Jedes Mal ist der Markt heller, als ich ihn in Erinnerung habe.",

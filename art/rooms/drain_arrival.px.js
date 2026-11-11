@@ -21,16 +21,12 @@
 //                     walking, the floor showing between; its people 22-26 px with hoods, caps, bags, a few umbrellas (some with an
 //                     LED edge), bowls of food, crates on shoulders, faces turned up to the lanterns; gaps where a story thing has
 //                     to read, and an open ring of bare floor round the preacher (nobody listens). Juno is not in the picture.
-//   drain_arrival_drone  75x33, 12 frames: the vendors' drone platform, a sprite of its own so the game draws it over the picture
-//                     (in front of every lantern string) and lifts it at the start of the shot. Anchor bottom-centre; where it
-//                     hovers, the anchor is at [136, 130] (its hull at P(-2.8, 12.2, 40)), its pod just above the sign; a good end of
-//                     its rise is [160, 90], over the lanterns under the slit, clear of the sign and the hanging signs.
 // Light (style guide §5, §7): amber is the key (the lanterns, the food), magenta for commerce and Sable's lure, cyan only for tech
-// (screens, jars, the platform, the sign's frame, the door up), red only on the chain. The smoke between us and a thing is laid on in
+// (screens, jars, the sign's frame, the door up), red only on the chain. The smoke between us and a thing is laid on in
 // flat bands by distance (haze); dither only at a light's falloff (the pools on the bed, the lanterns on the walls).
 // The bed is wet: lights mirror on it in broken streaks, strongest in the puddles along the canal's lip.
 // Moving: lanterns breathing, a few swaying on their strings (their reflections with them), the sign's K and a few hanging signs
-// stuttering, the gallery screens scrolling, the wok's fire and steam, the platform's ring, rotors and pod light, the canal's
+// stuttering, the gallery screens scrolling, the wok's fire and steam, the canal's
 // glints, the crowd (heads turning, a few stepping in place, the bowls' steam, the preacher's hand), Sable's curtain leaking light,
 // smoke drifting.
 include("../lib/iso.js", { palette: true })
@@ -858,44 +854,7 @@ const DA = (() => {
 
     for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) c.px(x, y, col[y * W + x])
   }
-  /**
-   * The vendors' drone platform, its own sprite so the game draws it over the picture (in front of every lantern string) and lifts
-   * it: seen nearly level from up here, a dark hull with its top edge lit, the underside unlit, the ring of cyan lights chasing round
-   * it, two crates lashed on its deck, two rotors on outriggers, a cargo pod on a cable with its light blinking. No scan cone: drawn
-   * over the picture it would fall across the DRAIN MARKET sign (which is nearer), and it could not reach the floor once the platform
-   * rises. Drawn at its size where it hovers (P(-2.8, 12.2, 40), 8.5 px a metre); its pod ends just above the sign.
-   */
-  const DR = (() => { const p = P(-2.8, 12.2, 40), hw = R(p.s * 3.2), hh = Math.max(4, R(p.s * 0.9)); return { s: p.s, hw, hh, w: 2 * (hw + 10) + 1, h: 6 + hh + R(p.s * 1.6) + 5, x: R(p.x), y: R(p.y), top: 6 } })()
-  const drone = (c) => {
-    FR = c.frame ?? 0; PH = FR / 12
-    const { s, hw, hh, h: DH } = DR, x0 = hw + 10, y0 = DR.top, py = y0 + hh + R(s * 1.6)
-    const px = (x, y, k) => { if (x >= 0 && y >= 0 && x < DR.w && y < DH) c.px(x, y, k) }
-    const rc = (x, y, w, h, k) => { for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) px(x + i, y + j, k) }
-    // the pod on its cable
-    for (let y = y0 + hh + 1; y < py; y++) px(x0, y, K.k)
-    rc(x0 - 3, py - 1, 7, 6, K.k); rc(x0 - 2, py, 5, 4, K[3]); rc(x0 - 2, py, 5, 1, K[5]); px(x0, py + 2, FR % 4 < 2 ? K.V : K.C)
-    // the outriggers and their rotors, the blades a blur: long one frame, short the next
-    for (const sd of [-1, 1]) {
-      const rx = x0 + sd * (hw + 4), spin = (FR + (sd > 0 ? 1 : 0)) % 2
-      for (let i = 0; i <= 4; i++) px(x0 + sd * (hw + i), y0 + 1 - (i >> 1), K[3])
-      rc(rx - 2, y0 - 3, 5, 5, K.k); rc(rx - 1, y0 - 2, 3, 3, K[2]); px(rx, y0 - 2, K[5])
-      if (spin) { rc(rx - 6, y0 - 3, 13, 1, K[6]); rc(rx - 5, y0 - 2, 2, 1, K[5]); rc(rx + 4, y0 - 2, 2, 1, K[5]) }
-      else { rc(rx - 4, y0 - 3, 9, 1, K[5]); px(rx - 6, y0 - 3, K[4]); px(rx + 6, y0 - 3, K[4]) }
-    }
-    // two crates lashed on the deck, the strap across them
-    for (const [cx, cw] of [[x0 - 15, 7], [x0 + 6, 6]]) { rc(cx - 1, y0 - 4, cw + 2, 4, K.k); rc(cx, y0 - 3, cw, 2, K.w2); rc(cx, y0 - 3, cw, 1, K.w3); px(cx + 2, y0 - 2, K.w1) }
-    // the hull: its outline, its top edge lit, the body dark, the underside unlit
-    rc(x0 - hw - 1, y0 - 1, 2 * hw + 3, hh + 3, K.k)
-    rc(x0 - hw, y0, 2 * hw + 1, hh, K[2]); rc(x0 - hw, y0, 2 * hw + 1, 1, K[4])
-    rc(x0 - hw, y0 + hh - 2, 2 * hw + 1, 2, K[1])
-    for (let x = -hw + 6; x < hw - 4; x += 9) rc(x0 + x, y0 + 1, 1, hh - 3, K[1])               // the hull's plates
-    // the ring of lights chases round the hull; the bridge window, its pilot light; the riding lights at the ends
-    for (let x = -hw + 1, n = 0; x < hw; x += 3, n++) px(x0 + x, y0 + hh - 1, (n + FR) % 4 === 0 ? K.V : K.v)
-    rc(x0 - 3, y0 + 1, 7, Math.max(1, hh - 4), K.c); px(x0, y0 + 1, K.V); px(x0 - 2 + (FR % 6 < 3 ? 0 : 4), y0 + 2, K.v)
-    px(x0 - hw, y0 + 1, FR % 6 === 0 ? K.V : K.C); px(x0 + hw, y0 + 1, FR % 6 === 3 ? K.V : K.C)
-  }
-  return { W, H, paint, P, drone, DR }
+  return { W, H, paint, P }
 })()
 
 anim("drain_arrival_bg", { w: DA.W, h: DA.H, frames: 12, fps: 10 }, DA.paint)
-anim("drain_arrival_drone", { w: DA.DR.w, h: DA.DR.h, frames: 12, fps: 10 }, DA.drone)
