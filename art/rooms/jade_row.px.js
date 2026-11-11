@@ -336,7 +336,7 @@ const JR = (() => {
   // how the letters lie on the board: metre 0 lays them by the screen, 1 by the metre (true perspective: across, a wall foreshortens
   // twice as fast as up); aa their edge softened in two steps; shadow a painter's dark shadow down and right; z0..z1, h0..h1 their box
   // (the user chose the sign painter's style from seven tried, 2026-11-11: docs/rooms/jade_row_schrift_vergleich.png, number 5)
-  const SIGN_STYLE = { metre: 0.6, aa: true, shadow: true, bold: false, z0: 0.7, z1: 1.55, h0: 2.39, h1: 2.77 }
+  const SIGN_STYLE = { metre: 0.6, aa: true, shadow: true, bold: false, z0: 0.68, z1: 1.58, h0: 2.36, h1: 2.88 }
   // (bold: every stroke a glyph column wider, so the far letters keep strokes of more than a pixel)
   const SIGN = signGlyphs(SIGN_STYLE.bold)
   const signInk = (z, h) => {
@@ -422,8 +422,8 @@ const JR = (() => {
         if (z > 1.085 && z < 1.095 && h < 5.05 && h > 4.86) return surf(1.4, o, x, y)
         return surf(f < 0.08 ? 3.2 : f > 0.94 ? 1.5 : 2.25, o, x, y)
       }
-      if (box(z, h, SHOP0, SHOP1, 2.3, 2.85)) {                                               // the sign board along the whole front: old wood, its top edge lit
-        if (h > 2.8) return "p"
+      if (box(z, h, SHOP0, SHOP1, 2.3, 2.93)) {                                               // the sign board along the whole front, up under the balcony: old wood, its top edge lit
+        if (h > 2.9) return "p"
         if (h < 2.34) return "k"
         const g = signAt(x, y)
         if (g) return g
@@ -709,7 +709,7 @@ const JR = (() => {
     items.push([1.16, () => across(1.16, 5.0, 3, "Vvk")])                                       // the network's duct, its cyan line
     // the balcony over the shop: its slab from below, warm from the shop's light; the rail; the smoker; his washing on the rail
     items.push([1.1, () => {
-      const P = (m, z, h) => bP(m, z, h), z0 = 0.92, z1 = 1.32, h0 = 2.95, h1 = 3.75, m0 = -3.5, m1 = -2.62, T = 0.2
+      const P = (m, z, h) => bP(m, z, h), z0 = 0.92, z1 = 1.32, h0 = 2.95, h1 = 3.75, m0 = -3.5, m1 = -2.62, T = 0.06
       // its floor (the user's wish, 2026-11-11): a concrete slab T thick, seen from below, its two edges toward us, a warm wash from
       // the shop's light on its underside; filled as the quads they are
       const quad = (q, key) => {

@@ -134,7 +134,7 @@ Nagiwa.at = {
   // sprite has one size, right for that depth, so the shop's door and the machine are reached from in front of them
   jade_row: {
     walk: [[67, 142, 253, 142, 306, 176, 14, 176]], arrive: [292, 172], back: [292, 172], mid: [186, 158], shop: [56, 158], machine: [232, 146], soup: [214, 144], far: [160, 143], parlour: [112, 143], pharmacy: [196, 143],
-    backRect: [278, 54, 42, 122], windowRect: [60, 84, 38, 50], doorRect: [36, 84, 24, 78], signRect: [0, 56, 98, 26], machineRect: [232, 84, 28, 57], soupRect: [212, 82, 20, 50],
+    backRect: [278, 54, 42, 122], windowRect: [60, 84, 38, 50], doorRect: [36, 84, 24, 78], signRect: [0, 52, 98, 30], machineRect: [232, 84, 28, 57], soupRect: [212, 82, 20, 50],
     parlourRect: [118, 88, 8, 26], arcadeRect: [100, 90, 16, 32], balconyRect: [44, 20, 58, 46], nightRect: [212, 8, 43, 62], carRect: [168, 92, 24, 17], pharmacyRect: [195, 88, 13, 24], gateRect: [136, 50, 48, 46], screenRect: [136, 4, 48, 44], signsRect: [195, 56, 22, 32],
     // the hotspots' shapes, measured from the blocks' own perspective (art/old/jade_row_blocks.px.js prints JADE_POLYS): what lies on a side
     // wall is a trapezoid here; the machine, the arcade, the gate, the screen, the car and the hanging signs are drawn as rects
@@ -142,7 +142,7 @@ Nagiwa.at = {
     // 2026-11-11): a window of one pane from the picture's edge (windowNear), the door between, a window of three panes (window) up
     // to the arcade, the sign over the whole front; Juno stands at "shop" before the door
     windowPoly: [60, 134, 98, 113, 98, 84, 60, 87], windowNearPoly: [0, 168, 36, 146, 36, 88, 0, 91], doorPoly: [36, 160, 60, 145, 60, 84, 36, 85],
-    signPoly: [0, 82, 98, 81, 98, 71, 0, 56], parlourPoly: [116, 109, 128, 102, 128, 80, 116, 80], soupPoly: [242, 128, 211, 110, 211, 82, 242, 83],
+    signPoly: [0, 82, 98, 81, 98, 69, 0, 52], parlourPoly: [116, 109, 128, 102, 128, 80, 116, 80], soupPoly: [242, 128, 211, 110, 211, 82, 242, 83],
     pharmacyPoly: [208, 106, 195, 99, 195, 82, 208, 83], nightPoly: [255, 56, 213, 67, 213, 40, 255, 7], balconyPoly: [46, 13, 75, 13, 100, 33, 100, 66, 80, 66, 46, 60], backPoly: [329, 193, 279, 160, 279, 78, 289, 58, 300, 53, 313, 54, 329, 77],
   },
   // outside the flat's window: the ledge (kapitel1-design, "Die Stadt")
