@@ -152,15 +152,7 @@ scene("dach_blick_b_bg", { w: W, h: H, bg: "k" }, (c) => {
 })
 // (CAM 18 is painted now: art/cams/cam18.px.js)
 // (LUCKY STATIC is a room baked from its map now: art/rooms/lucky_static.map.js)
-// the Drain Market: a drained flood canal, the stalls along its wall
-scene("drain_market_bg", { w: W, h: H, bg: "k" }, (c) => {
-  c.rect(0, 0, W, 112, "b"); c.rect(0, 112, W, 68, "a"); c.hline(0, 112, W, "y")
-  c.rect(30, 66, 66, 42, "d"); SIGN(c, 30, 54, 66, "KIDNEYS ONLY", "m", "M")
-  c.rect(106, 66, 58, 42, "d"); for (let i = 0; i < 5; i++) c.rect(112 + i * 10, 78, 6, 12, "g")
-  // the stairs up to the alley at the left (it comes down out of the alley's back wall)
-  c.rect(170, 66, 30, 42, "e"); c.rect(0, 50, 18, 120, "e"); for (let y = 56; y < 170; y += 9) c.hline(2, y, Math.min(14, 4 + (170 - y) / 9), "g")
-  c.rect(262, 50, 44, 66, "n"); for (let x = 266; x < 306; x += 8) c.rect(x, 50, 2, 66, "m")
-})
+// (the Drain Market is painted now, seen from above: art/rooms/drain_market.px.js)
 // the Morpheus from its corridor's ceiling: two rows of capsules with their numbers, each with a small screen
 scene("cam15_bg", { w: W, h: H, bg: "0" }, (c) => {
   ROOM(c, "4", "7", 84)

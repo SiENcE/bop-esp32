@@ -2,8 +2,8 @@
 # Build the pxl art and pack it into atlas scripts the game loads (assets/<group>.js).
 # Usage: sh tools/build_art.sh          (everything)
 #        sh tools/build_art.sh test     (phase H0's test street: art/test/street.px.js -> assets/test.js)
-#        sh tools/build_art.sh characters (Juno, Motte and the feed people: art/characters/{juno,motte,feed_people}.px.js
-#                                          -> assets/characters.js)
+#        sh tools/build_art.sh characters (Juno, Motte, the feed people and the city's: art/characters/*.px.js, Juno and the
+#                                          Drain Market's people from above with their anchor in the middle -> assets/characters.js)
 #        sh tools/build_art.sh ui       (the feed's zoom windows, street mode's close-ups and the interface's sprites:
 #                                         art/ui/zooms.px.js, art/ui/looks.px.js, art/ui/hud.px.js -> assets/ui.js)
 #        sh tools/build_art.sh title    (the title screen, art/ui/splash.px.js; the menu screen's logo, art/ui/logo.px.js,
@@ -45,10 +45,14 @@ characters() {
     $PXL build art/characters/okonkwo.px.js --out build/art/characters --no-preview | tail -n 1      # Okonkwo, job B (Chapter 1)
     $PXL build art/characters/tide_people.px.js --out build/art/characters --no-preview | tail -n 1  # Morrow, the Tidewater boy, Ratz, the patrol car (job B)
     $PXL build art/characters/sable.px.js --out build/art/characters --no-preview | tail -n 1        # Sable, behind the desk in the booth (job A)
+    $PXL build art/characters/juno_top.px.js --out build/art/characters --no-preview | tail -n 1     # Juno from above (the Drain Market)
+    $PXL build art/characters/markt_people.px.js --out build/art/characters --no-preview | tail -n 1 # the Drain Market's people from above
     # Ines's handover reaches past her on one side: its anchor keeps her feet where her other sprites have them (15 wide, 22 high)
     echo '{"anchor":[7,22]}' > build/art/characters/anims/ines_feed_give.anchor.json
+    # seen from above the ground point is under the figure, in the middle of its frame, not at its foot
+    node -e 'const fs=require("fs"),d=process.argv[1];for(const f of fs.readdirSync(d)){const m=/^((?:juno|ratz|prediger|haendler)_top_.*|statist_.*)\.json$/.exec(f);if(!m)continue;const s=Object.values(JSON.parse(fs.readFileSync(d+"/"+f,"utf8")).frames)[0].sourceSize;fs.writeFileSync(d+"/"+m[1]+".anchor.json",JSON.stringify({anchor:[s.w>>1,s.h>>1]}))}' build/art/characters/anims
     # build-atlas's --only matches exact names or a trailing *, so the feed people go by prefix
-    $ATLAS build/art/characters assets/characters.js --only "juno_*,kessler_*,varga_*,commuter_*,yuen_*,ines_*,lantern_*,ashe_*,motte_*,bao_*,drone_*,regen_*,imai_*,prediger_*,monteur_*,mei_*,stamm_*,okonkwo_*,morrow_*,tideboy_*,ratz_*,streife_*,sable_*"
+    $ATLAS build/art/characters assets/characters.js --only "juno_*,kessler_*,varga_*,commuter_*,yuen_*,ines_*,lantern_*,ashe_*,motte_*,bao_*,drone_*,regen_*,imai_*,prediger_*,monteur_*,mei_*,stamm_*,okonkwo_*,morrow_*,tideboy_*,ratz_*,streife_*,sable_*,haendler_top_*,statist_*"
 }
 
 ui() {
