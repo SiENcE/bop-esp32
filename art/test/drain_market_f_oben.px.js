@@ -632,8 +632,9 @@ const DMF = (() => {
     }
     return best
   }
-  const crowd = (c) => {
-    const placed = [[JUNO.x, JUNO.y]]
+  // o.keep: a rect [x0, y0, x1, y1] left free (a probe walks there); o.crowd(c, list): draws the people instead (list of [x, y, seed])
+  const crowd = (c, o = {}) => {
+    const placed = [[JUNO.x, JUNO.y]], list = []
     let n = 0
     for (let t = 0; t < 6000 && n < 230; t++) {
       const x = 4 + Math.floor(hs(t, 11) * (W - 8)), y = 4 + Math.floor(hs(t, 12) * (H - 8))
@@ -647,14 +648,18 @@ const DMF = (() => {
       if (Math.hypot(x - (NICHE[0] + NICHE[1]) / 2, y - (yc(578) + SW)) < 18) continue
       if (nearRoute(x, y) < 9 && hs(t, 14) > 0.25) continue
       if (placed.some(([px, py]) => Math.abs(px - x) < 12 && Math.abs(py - y) < 8)) continue
+      if (o.keep && x > o.keep[0] - 6 && x < o.keep[2] + 6 && y > o.keep[1] - 6 && y < o.keep[3] + 6) continue
       placed.push([x, y]); n++
+      if (o.crowd) { list.push([x, y, t]); continue }
       if (hs(t, 15) < 0.022) umbrella(c, x, y)
       else person(c, x, y, t)
     }
+    if (o.crowd) o.crowd(c, list)
     return n
   }
 
-  const paint = (c) => {
+  // o.juno(c, x, y) draws Juno instead (false: none), o.crowd and o.keep as in crowd(): the probes of Juno from above use them
+  const paint = (c, o = {}) => {
     floor(c)
     roofs(c, true); roofs(c, false)
     drawStairs(c); drawArrival(c)
@@ -665,8 +670,8 @@ const DMF = (() => {
     c.rect(DECK[0], DECK[3], DECK[1] - DECK[0] + 1, 1, "F")                                       // the deck's lit edge
     drawWok(c); drawTables(c)
     drawRatz(c); drawPreacher(c)
-    crowd(c)
-    drawJuno(c, JUNO.x, JUNO.y)
+    crowd(c, o)
+    if (o.juno !== false) (o.juno || drawJuno)(c, JUNO.x, JUNO.y)
     drawPillar(c)
     drawSteam(c)
     drawStrings(c)
@@ -679,8 +684,8 @@ const DMF = (() => {
     kidneys: [462, Math.round(yc(462) + NW + 12)], jars: [543, Math.round(yc(543) + NW + 8)], curtain: [(NICHE[0] + NICHE[1]) / 2, Math.round(yc(578) + SW + 2)],
     down: [(SHAFT[0] + SHAFT[1]) / 2, Math.round(yc(465) + SB - 15)], bridges: BRIDGES,
   }))
-  return { W, H, paint, JUNO }
+  return { W, H, paint, JUNO, yc, nTer }
 })()
 
-scene("drain_market_f", { w: DMF.W, h: DMF.H, bg: "k" }, DMF.paint,
+scene("drain_market_f", { w: DMF.W, h: DMF.H, bg: "k" }, (c) => DMF.paint(c),
   glow("m", { r: 5, strength: 0.45 }), glow("vV", { r: 4, strength: 0.3 }), glow("RW", { r: 4, strength: 0.35 }), glow("q", { r: 3, strength: 0.6 }))
