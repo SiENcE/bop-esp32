@@ -10,6 +10,7 @@
 //   opening the intro's float over the sea (below, after memory). descent: the ride down in the lift, after it.
 //   easy, rooftop: two of the radio's stations (game/radio.js); the third, NINTH FM, plays Juno's theme.
 //   glassgirl: NINTH FM's pop song about a Glasser, the karaoke machine's in LUCKY STATIC (game/karaoke.js).
+//   wokradio: the old song on the radio at HOT WOK in the Drain Market, heard at its place through a small speaker.
 // Stingers: "clue" (a moment caught), "witness" (the screen says JUNO.: everything else stops for it).
 // Listen: node lib/cutaway/tools/render-music.mjs index.html --out build/music/juno.wav --steps '[...]'
 "use strict";
@@ -265,6 +266,41 @@
         pad: bars(hold(gEm), hold(gC), hold(gG), hold(gD)),
         bass: bars(eighths("E2"), eighths("C2"), eighths("G1"), eighths("D2")),
         ...popDrums(4),
+      } },
+    },
+  });
+
+  // WOK RADIO: the radio on HOT WOK's counter in the Drain Market (kapitel1-design §9: the market has no music of its own, only this,
+  // heard at its place). An old pop song off a worn tape, a little crooked: A minor pentatonic, a bowed lead like an erhu with a wide
+  // vibrato, a cheap organ on the off-beats, a plucked bass, a rhythm box; everything sways a few cents (the tape), and the lead lands
+  // a hair sharp on its long notes. 96 bpm. The room plays it through a small speaker (speaker: 1).
+  I("erhu", { type: "sub", wave: "saw", voices: 2, detune: 22, filter: { cutoff: 1500, env: 900, a: 0.08, decay: 0.5, sustain: 0.6, q: 3 },
+    amp: { a: 0.06, d: 0.3, s: 0.75, r: 0.25 }, vibrato: { rate: 6.2, depth: 28, delay: 0.18, rise: 0.3 }, bend: { from: -60, time: 0.12 }, gain: 0.07, reverb: 0.3, pan: -0.05 });
+  I("cheaporgan", { type: "sub", wave: "square", voices: 2, detune: 18, filter: { cutoff: 1100, q: 1 }, amp: { a: 0.005, d: 0.12, s: 0.3, r: 0.08 },
+    vibrato: { rate: 0.7, depth: 12 }, gain: 0.035, pan: 0.15 });
+  I("pluckbass", { type: "pluck", gain: 0.3, decay: 0.985, bright: 0.35 });
+  I("rimshot", { type: "drum", kind: "snare", gate: 0.08, gain: 0.12 });
+  I("boxkick", { type: "drum", kind: "kick", decay: 0.25, gain: 0.4 });
+  const WOKBEAT = { kick: "x . . x . . x . x . . x . . x .", rim: ". . . . x . . . . . . . x . . x", shaker: "x x . x x x . x x x . x x x . x" }
+  const wokBeat = (/** @type {number} */ n) => ({ kick: bars(...Array(n).fill(WOKBEAT.kick)), rim: bars(...Array(n).fill(WOKBEAT.rim)), shaker: bars(...Array(n).fill(WOKBEAT.shaker)) });
+  const offs = (/** @type {string} */ c) => `. . ${c} . . . ${c} . . . ${c} . . . ${c} .`;
+  Cutaway.score.theme("wokradio", {
+    tempo: 96, key: "A",
+    tracks: { lead: { inst: "erhu" }, organ: { inst: "cheaporgan" }, bass: { inst: "pluckbass" }, kick: { inst: "boxkick" }, rim: { inst: "rimshot" }, shaker: { inst: "shaker" } },
+    sections: {
+      a: { bars: 8, next: "b", tracks: {
+        lead: bars("A4 - - - C5 - D5 - E5 - - - - - . .", "G5 - E5 - D5 - C5 - D5 - - - - - . .", "E5 - - - G5 - A5 - G5 - E5 - D5 - - -", "E5 - - - - - - - - - - - . . . .",
+          "A4 - - - C5 - D5 - E5 - - - G5 - . .", "A5 - G5 - E5 - D5 - C5 - - - D5 - . .", "E5 - D5 - C5 - A4 - G4 - - - A4 - - -", "A4 - - - - - - - - - - - . . . ."),
+        organ: bars(offs("A3+C4+E4"), offs("G3+C4+E4"), offs("C4+E4+G4"), offs("E3+G3+B3"), offs("A3+C4+E4"), offs("F3+A3+C4"), offs("G3+B3+D4"), offs("A3+C4+E4")),
+        bass: bars("A2 . . A2 . . E2 . A2 . . A2 . . G2 .", "G2 . . G2 . . D2 . G2 . . G2 . . A2 .", "C3 . . C3 . . G2 . C3 . . C3 . . D3 .", "E2 . . E2 . . B2 . E2 . . E2 . . G2 .",
+          "A2 . . A2 . . E2 . A2 . . A2 . . G2 .", "F2 . . F2 . . C3 . F2 . . F2 . . E2 .", "G2 . . G2 . . D2 . G2 . . G2 . . E2 .", "A2 . . A2 . . E2 . A2 . . . . . . ."),
+        ...wokBeat(8),
+      } },
+      b: { bars: 4, next: "a", tracks: {
+        lead: bars("C5 - - - D5 - E5 - G5 - - - A5 - - -", "G5 - E5 - D5 - E5 - - - - - . . . .", "D5 - - - E5 - G5 - E5 - D5 - C5 - - -", "D5 - - - - - - - . . . . . . . ."),
+        organ: bars(offs("F3+A3+C4"), offs("C4+E4+G4"), offs("D3+F3+A3"), offs("E3+G#3+B3")),
+        bass: bars("F2 . . F2 . . C3 . F2 . . F2 . . E2 .", "C3 . . C3 . . G2 . C3 . . C3 . . B2 .", "D2 . . D2 . . A2 . D2 . . D2 . . F2 .", "E2 . . E2 . . B2 . E2 . . G#2 . E2 . . ."),
+        ...wokBeat(4),
       } },
     },
   });

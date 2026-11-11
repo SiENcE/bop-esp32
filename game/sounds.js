@@ -6,6 +6,8 @@
 //   room changes                jack_in, jack_out, static, glitch (here, by the kind in transitions.js)
 //   the deck                    mail, boot, type (the cards' letters: skin.js), evi (the hint button, here)
 //   ambience (rooms' loops)     rain_glass, city_far, neon_buzz, fridge_hum, deck_fans, feed_hiss, feed_rain
+//   the Drain Market            its loops at their places (the crowd, the wok, the canal, the roofs' ACs, the pillar) and
+//                               one-shots from its stalls (haggling, cleavers, the wok tossed, the loudspeaker)
 // Hear them all at once: node tools/render-sounds.mjs (writes build/sounds/).
 "use strict";
 
@@ -80,6 +82,49 @@
   S("deck_fans", { loop: { noise: { filter: "bandpass", freq: 900, q: 0.8 }, gain: 0.02, wobble: [0.07, 0.2] } });
   S("feed_hiss", { loop: { noise: { filter: "highpass", freq: 5500, q: 0.3 }, gain: 0.018 } });                     // the camera's mic
   S("feed_rain", { loop: { noise: { filter: "lowpass", freq: 1800, q: 0.4 }, gain: 0.04, crackle: 0.15 } });         // rain, through it
+
+  // ---------------------------------------------------------------- the Drain Market (kapitel1-design §9: as loud as a real market)
+  // Its loops play at their places in the room (ambience with at and reach, game/markt_klang.js), several of the crowd's murmur
+  // at once with different swells, so it never pulses in step; the one-shots come at random from their stalls.
+  S("markt_stimmen_a", { loop: { noise: { filter: "bandpass", freq: 620, q: 0.9 }, gain: 0.07, wobble: [0.31, 0.45] } });    // the crowd's murmur
+  S("markt_stimmen_b", { loop: { noise: { filter: "bandpass", freq: 840, q: 1.1 }, gain: 0.06, wobble: [0.47, 0.5] } });
+  S("markt_stimmen_c", { loop: { noise: { filter: "bandpass", freq: 480, q: 0.8 }, gain: 0.07, wobble: [0.23, 0.4] } });
+  S("wok_zischen", { loop: { noise: { filter: "highpass", freq: 2600, q: 0.6 }, gain: 0.05, wobble: [0.9, 0.3], crackle: 0.35 } });   // oil spitting
+  S("kanal_wasser", { loop: { noise: { filter: "lowpass", freq: 520, q: 0.7 }, gain: 0.05, wobble: [0.09, 0.55] } });    // the canal lapping
+  S("dach_luefter", { loop: { noise: { filter: "bandpass", freq: 210, q: 2.2 }, tone: { wave: "triangle", freq: 61 }, gain: 0.03, wobble: [0.6, 0.15] } });   // the ACs on the roofs
+  S("pfeiler_brummen", { loop: { tone: { wave: "sine", freq: 55 }, gain: 0.04 } });                                       // the city's pillar
+  /** gibberish from far off, a voice as tones: n syllables round a pitch, a contour (up for a question, down for a price) @param {number} seed @param {number} base Hz @param {number} n @param {number} bend */
+  const babble = (seed, base, n, bend) => {
+    let r = seed;
+    const rnd = () => { r = (r * 1103515245 + 12345) & 0x7fffffff; return r / 0x7fffffff; };
+    const tone = [], noise = [];
+    let at = 0;
+    for (let i = 0; i < n; i++) {
+      const ms = 60 + Math.round(rnd() * 70), f = base * (1 + bend * i / n) * (0.92 + rnd() * 0.16);
+      tone.push({ wave: "sawtooth", from: Math.round(f), to: Math.round(f * (0.94 + rnd() * 0.1)), ms, attack: 10, gain: 0.05, at });
+      if (rnd() < 0.5) noise.push({ filter: "bandpass", from: 3200 + Math.round(rnd() * 1800), q: 2, ms: 25, gain: 0.05, at });
+      at += ms + Math.round(rnd() * 40) + (rnd() < 0.15 ? 120 : 0);
+    }
+    return { tone, noise: [...noise, { filter: "bandpass", from: 900, q: 1.2, ms: at, gain: 0.02 }] };
+  };
+  // haggling at the stalls: a price called out (falling), a question (rising), a laugh, an offer turned down
+  S("feilschen_1", babble(11, 190, 7, -0.25));
+  S("feilschen_2", babble(23, 240, 5, 0.35));
+  S("feilschen_3", babble(37, 150, 9, -0.1));
+  S("feilschen_4", { tone: [0, 140, 260, 370].map((at, i) => ({ wave: "sawtooth", from: 300 - i * 18, to: 260 - i * 18, ms: 90, attack: 8, gain: 0.05, at })),
+    noise: { filter: "bandpass", from: 1100, q: 1, ms: 480, gain: 0.02 } });                                            // a laugh
+  // a cleaver on a block: a dull chop with its click (one, or two, three in a row)
+  const chop = (at) => ({ wave: "sine", from: 180, to: 70, ms: 70, gain: 0.32, at });
+  const click = (at) => ({ filter: "bandpass", from: 2400, q: 3, ms: 18, gain: 0.14, at });
+  S("hackbeil_1", { tone: [chop(0)], noise: [click(0), { filter: "lowpass", from: 800, ms: 50, gain: 0.1 }] });
+  S("hackbeil_3", { tone: [chop(0), chop(260), chop(520)], noise: [click(0), click(260), click(520)] });
+  // the wok tossed: a whoosh of steam and a rattle of the pan on the ring
+  S("wok_schwenk", { noise: [{ filter: "bandpass", from: 900, to: 3800, q: 1, ms: 420, attack: 60, gain: 0.12 }, { filter: "highpass", from: 5000, ms: 300, gain: 0.05, at: 80 }],
+    tone: [{ wave: "triangle", from: 420, to: 380, ms: 60, gain: 0.05, at: 380 }, { wave: "triangle", from: 410, to: 370, ms: 60, gain: 0.04, at: 470 }] });
+  // the market's loudspeaker on the pillar: a two-tone chime, then a voice through a horn (Nagi·wa's notices, nobody listens)
+  S("durchsage", { tone: [{ wave: "sine", from: "E5", ms: 420, gain: 0.12 }, { wave: "sine", from: "C5", ms: 620, gain: 0.12, at: 380 },
+    ...babble(5, 210, 14, -0.05).tone.map((t) => ({ ...t, wave: /** @type {OscillatorType} */ ("square"), gain: 0.03, at: t.at + 1150 }))],
+    noise: { filter: "bandpass", from: 1400, q: 3, ms: 2600, gain: 0.03, at: 1100 } });
 
   // ---------------------------------------------------------------- when they play
   // a room change: by its kind (transitions.js); only where the change is shown (not in the tools)
