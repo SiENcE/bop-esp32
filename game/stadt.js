@@ -239,7 +239,25 @@ Cutaway.room("drain_market", { name: "Drain-Markt", background: "drain_market_bg
     jars: { name: "Implantate", rect: AM.jarsRect, walkTo: AM.stalls, face: "ne", look: "In den Gläsern liegen gebrauchte Implantate. Eins davon sieht aus wie meins." },
     stalls: { name: "Stände", rect: AM.stallsRect, walkTo: AM.stalls, face: "ne", look: "[MOCK] Hier kommen noch Ratz und Sables Vorhang." },
   } });
-Cutaway.room.get("gasse").hotspots.market.use = [{ goto: "drain_market", at: AM.arrive, face: "se" }];
+// the arrival (kapitel1-design §9, decided 2026-11-11): every time Juno takes the stairs down from the alley, first the view from the
+// top of them, tilting from the sign down to the crowd on the canal, then the market from above. A click skips the tilt. Only the
+// first time she says something: whether she has said it is a view flag (it changes what is said, never what happens)
+Cutaway.state.view("markt_gesehen");
+Cutaway.room("drain_arrival", { name: "Drain-Markt", background: "drain_arrival_bg", size: [320, 432], observe: true, lines: "bottom", buttons: false,
+  ambience: ["city_far", "neon_buzz"], music: { theme: "juno", intensity: 0.4 } });
+Cutaway.sequence("drain_arrival", {
+  steps: [
+    { goto: "drain_arrival" },
+    { camera: [0, 0], ms: 0 },
+    { camera: [0, 252], ms: 5000, ease: "inOut" },
+    { shot: "satz" },
+    { if: "!markt_gesehen", then: [{ set: "markt_gesehen" }, "Jedes Mal ist der Markt heller, als ich ihn in Erinnerung habe."] },
+    { shot: "markt" },
+  ],
+  after: [{ set: "markt_gesehen" }],
+});
+// the market itself after the shot (a goto inside a sequence is only a shot: Juno would stay in the alley)
+Cutaway.room.get("gasse").hotspots.market.use = [{ sequence: "drain_arrival" }, { goto: "drain_market", at: AM.arrive, face: "se" }];
 
 // the big look upwards (a shot of its own: the block for what will be painted as large as the intro's)
 Cutaway.room("dach_blick", { name: "Die Ringe", background: "dach_blick_b_bg", observe: true, lines: "bottom", buttons: false,
