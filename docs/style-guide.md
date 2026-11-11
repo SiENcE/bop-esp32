@@ -84,8 +84,12 @@ These points from the premise shape the art (the story isn't written yet):
   the light and the interface of street mode; each needs its own walk views for Juno (side: left and
   right).
   The Drain Market is top-down as a room (decided 2026-11-11, `docs/kapitel1-design.md` §9): Dreamweb's way, a big market seen
-  from above, 2x2 screens scrolling every way, the people (Juno too) drawn for it from above; its arrival is a shot of its own,
-  the canyon seen from the stairs, before the view switches to the top.
+  from above, scrolling every way, the people (Juno too) drawn for it from above; its arrival is a shot of its own,
+  the canyon seen from the stairs, before the view switches to the top. The people are seen **straight down** (decided
+  2026-11-11, way A of `docs/characters/juno_oben_a_blatt_x3.png`, over B, steep from above): Juno 13 px across, her shoulders
+  13x7, the hood a disc with a dark sliver at its front, the boots stepping out in front and behind; drawn once in her own
+  frame and turned, so all four directions are one figure. The market is drawn bigger against its people than in draft F, the
+  people keeping their size (proposed: 4x4 screens, 1280x720, about 40 px a meter; `docs/characters/juno_oben_probe_4x4_1x.png`).
   The first top-down view (2026-11-04): the Kessel Block's stairwell from the 14th floor's rail, a
   close-up (`look_shaft`, `art/ui/looks.px.js`): street mode's close-ups (`look_*`) show at their own size
   in the interface's frame over the room, the lines in the bottom bar while they show; its depth is

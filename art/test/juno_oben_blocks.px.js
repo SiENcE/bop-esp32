@@ -288,3 +288,11 @@ for (const v of ["a", "b"]) {
     else JOB.drawB(c, x, y + 6, p.dir, "walk", c.frame % 8)
   }, glow("m", { r: 5, strength: 0.45 }), glow("vV", { r: 4, strength: 0.3 }), glow("RW", { r: 4, strength: 0.35 }), glow("q", { r: 3, strength: 0.6 }))
 }
+
+// ---------------------------------------------------------------- the market with nobody in it, for the 4x4 scale probe
+// (art/test/juno_oben_4x4.px.js shows it twice as big under people at their own size; the crowd's places are kept in CROWD_AT)
+const CROWD_AT = []
+const marktLeer = (c) => DMF.paint(c, { juno: false, keep, crowd: (c2, list) => { CROWD_AT.length = 0; CROWD_AT.push(...list) } })
+scene("juno_oben_markt_leer", { w: 640, h: 360, bg: "k" }, marktLeer,
+  glow("m", { r: 5, strength: 0.45 }), glow("vV", { r: 4, strength: 0.3 }), glow("RW", { r: 4, strength: 0.35 }), glow("q", { r: 3, strength: 0.6 }))
+sprite("_jtop_crowd_cap", { w: 640, h: 360 }, marktLeer)
