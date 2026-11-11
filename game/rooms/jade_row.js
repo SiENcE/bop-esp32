@@ -24,14 +24,28 @@
       // CAM 07 at 00:30 (game/auftrag_tide.js), the user's wish
       { id: "car", image: "jade_row_car", at: [156, 86], anchor: [0, 0], baseline: 107, if: { not: ["day>1", "day<4", "time>=00:30", "time<00:45", "!off_tide"] } },
     ],
+    // the atmosphere the user chose (2026-11-11, docs/rooms/jade_row_stimmung_vergleich.png, f; the mist through the picture and the
+    // lights' halos are painted, art/rooms/jade_row.px.js): rain in three layers, fine and far, mid, a few long near streaks; a cyan
+    // haze round the big screen; the picture's edges darker (post: vignette)
     fx: [
-      { kind: "rain", rect: [0, 0, 320, 180], count: 60, color: "#41547a", speed: 140, slant: 0.3, length: 3 },
-      { kind: "rain", rect: [0, 0, 320, 180], count: 45, color: "#6c809a", speed: 210, slant: 0.3, length: 5 },
+      { kind: "rain", rect: [0, 0, 320, 180], count: 110, color: "#2f3e5a", speed: 120, slant: 0.3, length: 2 },
+      { kind: "rain", rect: [0, 0, 320, 180], count: 80, color: "#41547a", speed: 190, slant: 0.3, length: 4 },
+      { kind: "rain", rect: [0, 0, 320, 180], count: 28, color: "#8e9ab0", speed: 300, slant: 0.32, length: 8 },
+      { kind: "haze", poly: [96, 0, 224, 0, 224, 112, 96, 112], color: "#62def0", alpha: 0.07, fade: 0.5 },
+      // the mist drifting (the user's wish, 2026-11-11: it must move): two bands sliding past each other down the lane, kept off the
+      // walls beside it (clipped to the lane's opening), and one over the ground
+      { kind: "mist", image: "jade_row_mist_far_a", poly: [118, 26, 202, 26, 218, 118, 102, 118], at: [0, 34], drift: [-4, 0], alpha: 0.2, bob: 2 },
+      { kind: "mist", image: "jade_row_mist_far_b", poly: [118, 26, 202, 26, 218, 118, 102, 118], at: [0, 58], drift: [2.5, 0], alpha: 0.16, bob: 3 },
+      { kind: "mist", image: "jade_row_mist_near", poly: [102, 118, 218, 118, 320, 168, 320, 180, 0, 180, 0, 168], at: [0, 128], drift: [-6, 0], alpha: 0.18, bob: 2 },
     ],
-    // the painting's lamps as the runtime light: Juno takes on the shop's warm light, the machine's cyan, the neon's magenta; the paper
-    // lanterns (their pale amber) flicker, and the picture round them with them (the user's wish, 2026-11-11)
-    light: { ambient: 0.8, lamps: P.lamps.map((/** @type {any} */ [x, y, color, r], /** @type {number} */ i) =>
-      ({ id: `lamp${i}`, at: [x, y], r, color, power: 1, ...(color === "#ffd58a" ? { flicker: 0.12, rate: 8 } : {}) })) },
+    post: [{ vignette: 0.4 }],
+    // the painting's lamps as the runtime light: Juno takes on the shop's warm light, the machine's cyan, the neon's magenta; and every
+    // paper lantern, big or small, a lamp of its own that flickers in its own time and glows (the user's wish, 2026-11-11)
+    light: { ambient: 0.8, lamps: [
+      ...P.lamps.map((/** @type {any} */ [x, y, color, r], /** @type {number} */ i) => ({ id: `lamp${i}`, at: [x, y], r, color, power: 1 })),
+      ...P.lanterns.map((/** @type {any} */ [x, y, r], /** @type {number} */ i) => ({ id: `lantern${i}`, at: [x, y], r: Math.max(16, r * 3), color: "#ffd58a", power: 0.9,
+        flicker: 0.14, rate: 6 + (i % 4), glow: { r: Math.max(4, Math.round(r * 1.4)), strength: 0.35 } })),
+    ] },
     ambience: ["city_far", "neon_buzz", { sfx: "feed_rain", gain: 0.6 }], music: { theme: "juno", intensity: 0.4 },
     hotspots: {
       // the arch in the near right-hand wall: the passage back to Kowalski Street

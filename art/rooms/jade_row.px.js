@@ -111,7 +111,7 @@ const JR = (() => {
   // ---------------------------------------------------------------- the parts: what moves, each its own rect (never overlapping)
   const PARTS = [
     { name: "screen", x: 136, y: 2, w: 49, h: 49, frames: 36 },
-    { name: "gate", x: 130, y: 51, w: 60, h: 16, frames: 12 },
+    { name: "gate", x: 130, y: 51, w: 60, h: 30, frames: 12 },
     { name: "night", x: 206, y: 0, w: 56, h: 74, frames: 24 },
     { name: "lantern", x: 0, y: 0, w: 46, h: 50, frames: 12 },
     { name: "smoke", x: 76, y: 4, w: 20, h: 30, frames: 12 },
@@ -573,7 +573,10 @@ const JR = (() => {
     const behind = get(x, y), bright = !!behind && "QRWvVCmMNc".includes(behind)
     return base === "rib" ? (bright ? "Q" : "P") : base === "skin" ? (bright ? "R" : "P") : bright ? "W" : ((x + y) & 3) ? "R" : "Q"
   }
+  // every lantern's middle and size, as painted (the game gives each a flickering lamp with a glow: game/rooms/jade_row.js)
+  const LANTERNS = new Map()
   const lantern = (x, y) => {
+    LANTERNS.set(x + "," + y, [x + 2, y + 3, 3])
     c.vline(x + 2, y - 3, 3, "k")
     for (let b = 0; b < 7; b++) for (let a = 0; a < 5; a++) put(x + a, y + b, paper(x + a, y + b, a && a < 4 && b && b < 6 ? "core" : "skin"))
     c.hline(x + 1, y - 1, 3, "k"); c.hline(x + 1, y + 7, 3, "k"); put(x + 2, y + 8, "O")              // the caps, the tassel
@@ -581,6 +584,7 @@ const JR = (() => {
   }
   /** a big paper lantern: its ribs, the light strongest at the middle, a glyph on it; flick (0..1) dims the flame */
   const bigLantern = (x, y, r, word, n = 1, flick = 0) => {
+    LANTERNS.set(x + "," + y, [x, y, r])
     const ry = R(r * 1.25), ribs = Math.max(3, R(r / 3))
     c.vline(x, Math.max(0, y - ry - 6), 6, "k"); c.rect(x - R(r / 2), y - ry - 1, r + 1, 2, "k"); c.rect(x - R(r / 2), y + ry, r + 1, 2, "k")
     c.hline(x - R(r / 2) + 1, y - ry - 1, r - 1, "o"); c.hline(x - R(r / 2) + 1, y + ry + 1, r - 1, "o")
@@ -846,14 +850,16 @@ const JR = (() => {
     sky(); endBlock(); floor(); walls(); nightSign(); shopLetters(); bFront()
   }
   // the lights' halos (in fog they grow: the wet air takes their light)
-  const HALO = 1
-  const GLOWS = [["m", 5 * HALO, 0.45 * Math.sqrt(HALO)], ["vV", 4 * HALO, 0.3 * Math.sqrt(HALO)], ["RW", 4 * HALO, 0.35 * Math.sqrt(HALO)]]
+  // (the user chose the light mist with bigger halos, 2026-11-11: docs/rooms/jade_row_stimmung_vergleich.png, f; the screen's cyan halo
+  // grows less, so LULL FREE keeps its edge)
+  const HALO = 1.7, HALO_SCREEN = 1.2
+  const GLOWS = [["m", 5 * HALO, 0.45 * Math.sqrt(HALO)], ["vV", 4 * HALO_SCREEN, 0.3 * Math.sqrt(HALO_SCREEN)], ["RW", 4 * HALO, 0.35 * Math.sqrt(HALO)]]
   // the scene a fifth darker than its palette, all but the lights themselves (neon, lanterns, screens, the bulbs), so they stand out
   // (the user's wish, 2026-11-11)
   const LIT = "mNvVRWQ", DIM = 0.8
   // depth fog: everything drowns a little in the wet air the further off it is (by the depth of each pixel), the lights less; k 0 is
   // none, the colour the night's mist
-  const FOG = { k: 0, color: [27, 34, 53] }
+  const FOG = { k: 0.45, color: [52, 58, 92] }
   const fogAt = (i, lit) => {
     if (!FOG.k) return 0
     const z = ZB[i] >= 90 ? END : ZB[i], f = 1 - Math.exp(-Math.max(0, z - 0.85) * FOG.k)
@@ -925,9 +931,11 @@ const JR = (() => {
   console.log("PARTS " + JSON.stringify({
     room: "jade_row", size: [W, H],
     parts: PARTS.map((p) => ({ name: "jade_row_" + p.name, at: [p.x, p.y], size: [p.w, p.h], frames: p.frames, fps: 10, layer: "under" })),
-    lamps: [[89, 105, "#eea040", 60], [65, 108, "#eea040", 44], [63, 37, "#eea040", 34], [18, 14, "#ffd58a", 70], [302, 10, "#ffd58a", 54],
-      [225, 100, "#eea040", 54], [234, 110, "#62def0", 40], [300, 125, "#62def0", 70], [234, 40, "#ff4fd3", 60], [160, 26, "#62def0", 70],
-      [160, 62, "#ff4fd3", 44], [200, 93, "#62def0", 26], [122, 96, "#ff4fd3", 26], [160, 26, "#ff4fd3", 50], [86, 82, "#ffd58a", 34], [234, 82, "#ffd58a", 34]],
+    // (the shop's lamps where its two windows and its door are; the lanterns are their own list, each to flicker with a glow)
+    lamps: [[90, 100, "#eea040", 60], [30, 118, "#eea040", 50], [62, 122, "#eea040", 44], [63, 37, "#eea040", 34],
+      [225, 100, "#eea040", 54], [234, 110, "#62def0", 40], [300, 125, "#62def0", 50], [234, 40, "#ff4fd3", 60], [160, 26, "#62def0", 70],
+      [160, 62, "#ff4fd3", 44], [200, 93, "#62def0", 26], [122, 96, "#ff4fd3", 26], [160, 26, "#ff4fd3", 50]],
+    lanterns: [...LANTERNS.values()],
   }))
 
   // ---------------------------------------------------------------- the sprites drawn over the room by the game
@@ -970,7 +978,25 @@ const JR = (() => {
     // the lamps on the wet road under it, broken into rows
     for (const lx of [x - w / 2 + 2, x + w / 2 - 3]) for (let j = 1; j < 5; j++) if (j % 2) { cv.px(lx, y + j, j < 3 ? "Q" : "P"); cv.px(lx + 1, y + j, j < 2 ? "Q" : "A") }
   }
-  return { W, H, PARTS, frame, blit, steam, crowd, car }
+  // ---------------------------------------------------------------- the drifting mist (the user's wish, 2026-11-11: it must move)
+  // Bands of mist, seamless across their 320 px, that the game slides slowly past each other at a low alpha (props with scroll), so
+  // the wet air drifts and churns: value noise that repeats every 320 px, its thick parts the mist's pale blue, thinning in a
+  // dithered fringe (dither only where it falls off), the band fading to nothing at its top and bottom.
+  const mist = (c, h, seed, cell, thick) => {
+    const P = W / cell
+    const hv = (a, b) => ih(((a % P) + P) % P + seed * 101, b + seed * 37)
+    const noise = (x, y) => {
+      const xi = fl(x), yi = fl(y), fx = x - xi, fy = y - yi, sx = fx * fx * (3 - 2 * fx), sy = fy * fy * (3 - 2 * fy)
+      const a0 = hv(xi, yi), b0 = hv(xi + 1, yi), c0 = hv(xi, yi + 1), d0 = hv(xi + 1, yi + 1)
+      return a0 + (b0 - a0) * sx + (c0 - a0) * sy + (a0 - b0 - c0 + d0) * sx * sy
+    }
+    for (let y = 0; y < h; y++) for (let x = 0; x < W; x++) {
+      const v = (noise(x / cell, y / (cell * 0.35)) * 0.65 + noise(x / (cell / 2), y / (cell * 0.18) + 9) * 0.35) * Math.pow(Math.sin(Math.PI * (y + 0.5) / h), 0.8)
+      if (v > thick) c.px(x, y, "6")
+      else if (v > thick - 0.09 && bay(x, y) < (v - thick + 0.09) / 0.09) c.px(x, y, "5")
+    }
+  }
+  return { W, H, PARTS, frame, blit, steam, crowd, car, mist }
 })()
 
 sprite("jade_row_bg", { w: JR.W, h: JR.H }, (c) => JR.blit(c, JR.frame(0).hex, 0, 0, JR.W, JR.H))
@@ -979,3 +1005,7 @@ anim("jade_row_steam", { w: 48, h: 64, frames: 12, fps: 10 }, JR.steam)
 anim("jade_row_crowd", { w: 320, h: 32, frames: 1, fps: 1 }, JR.crowd)
 // the parked car (game/rooms/jade_row.js puts its top left at [156, 86]), its lamps' glow inside the margin
 sprite("jade_row_car", { w: 34, h: 26 }, (c) => JR.car(c, 17, 21), glow("RW", { r: 4, strength: 0.35 }))
+// the drifting mist (game/rooms/jade_row.js slides them past each other): two bands down the lane behind everyone, one on the ground
+sprite("jade_row_mist_far_a", { w: 320, h: 70 }, (c) => JR.mist(c, 70, 1, 40, 0.5))
+sprite("jade_row_mist_far_b", { w: 320, h: 60 }, (c) => JR.mist(c, 60, 2, 32, 0.52))
+sprite("jade_row_mist_near", { w: 320, h: 56 }, (c) => JR.mist(c, 56, 3, 48, 0.46))
