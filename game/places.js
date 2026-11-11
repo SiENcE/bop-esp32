@@ -158,10 +158,20 @@ Nagiwa.at = {
   // cables, string lights and lanterns hang over the people. The runtime lamps are the painting's own, so Juno takes on its light
   drain_market: (() => {
     const L = Nagiwa.layouts.drain_market, part = (/** @type {any} */ p) => p.name.slice("drain_market_".length);
-    return { ...L.spots, ...L.rects, walk: L.walk, holes: L.holes, size: L.size,
+    return { ...L.spots, ...L.rects, walk: L.walk, holes: L.holes, size: L.size, sounds: L.sounds,
       props: L.parts.filter((/** @type {any} */ p) => p.layer === "under").map((/** @type {any} */ p) => ({ id: part(p), image: p.name, at: p.at, anchor: [0, 0], baseline: 0 })),
       foreground: [...L.parts.filter((/** @type {any} */ p) => p.layer === "over").map((/** @type {any} */ p) => ({ image: p.name, at: p.at })), { image: "drain_market_over", at: [0, 0] }],
-      lamps: L.lamps.map((/** @type {any} */ [x, y, color, r], /** @type {number} */ i) => ({ id: `lamp${i}`, at: [x, y], r, color, power: 1 })) };
+      lamps: L.lamps.map((/** @type {any} */ [x, y, color, r], /** @type {number} */ i) => ({ id: `lamp${i}`, at: [x, y], r, color, power: 1 })),
+      // the crowd (generated with the layout, seeded): the vendors at their stools behind the counters (apart: where nobody walks), turned
+      // to their counters; people walking the lanes along the channel and over the bridges and back; groups standing together in the
+      // way (block); people standing about, turning now and then, looking at Juno when she comes near. From above every way is its own
+      extras: [
+        ...L.crowd.vendors.map((/** @type {any} */ [x, y, n, dir]) => ({ costume: { idle: Nagiwa.top(`haendler_top_${n}_idle`) }, at: [x, y], facing: dir, apart: true, turns: false })),
+        ...L.crowd.walkers.map((/** @type {any} */ w) => ({ costume: { idle: Nagiwa.top(`statist_${w.look}_idle`), walk: Nagiwa.top(`statist_${w.look}_walk`) },
+          at: w.at, path: w.path, loop: "back", speed: w.speed, pause: w.pause })),
+        ...L.crowd.groups.map((/** @type {any} */ [x, y, nn, dir]) => ({ costume: { idle: Nagiwa.top(`statist_${nn}_idle`) }, at: [x, y], facing: dir, block: true, turns: false })),
+        ...L.crowd.stand.map((/** @type {any} */ [x, y, nn, dir]) => ({ costume: { idle: Nagiwa.top(`statist_${nn}_idle`) }, at: [x, y], facing: dir })),
+      ] };
   })(),
   // Sable's booth as a stage from the front (art/mock/sable_booth.px.js): Sable sits behind the desk (the slit in the walk area: an actor
   // stands on walkable floor), the desk a prop drawn over Sable; the curtain is on the left side wall, so its shape is the wall's trapezoid

@@ -231,8 +231,17 @@ Cutaway.actor("prediger", { name: "Der Prediger", color: "#d8c8a0", room: "drain
   ] });
 // every hotspot here is a stall, a counter, a flight of stairs or a curtain seen from above: a box, so a rect is its shape
 Cutaway.room("drain_market", { name: "Drain-Markt", background: "drain_market_bg", size: AM.size, walk: AM.walk, holes: AM.holes,
-  props: AM.props, foreground: AM.foreground, light: { ambient: 0.85, lamps: AM.lamps },
-  ambience: ["city_far", "neon_buzz"], music: { theme: "juno", intensity: 0.4 },
+  props: AM.props, foreground: AM.foreground, extras: AM.extras, light: { ambient: 0.85, lamps: AM.lamps },
+  // as loud as a real market, each sound at its place (game/sounds.js): the crowd's murmur in three places with their own swells, the
+  // wok's oil, the canal, the roofs' ACs, the pillar's hum; the only music is the old song on HOT WOK's radio, through its small speaker
+  // (game/music.js); the one-shots from the stalls: game/markt_klang.js
+  ambience: ["city_far",
+    ...AM.sounds.murmur.map((/** @type {[number, number]} */ at, /** @type {number} */ i) => ({ sfx: `markt_stimmen_${"abc"[i]}`, at, reach: 560, near: 180 })),
+    { sfx: "wok_zischen", at: AM.sounds.wok, reach: 220, near: 40 },
+    ...AM.sounds.canal.map((/** @type {[number, number]} */ at) => ({ sfx: "kanal_wasser", at, reach: 320, near: 80 })),
+    ...AM.sounds.roofs.map((/** @type {[number, number]} */ at) => ({ sfx: "dach_luefter", at, reach: 280, near: 90 })),
+    { sfx: "pfeiler_brummen", at: AM.sounds.pillar, reach: 240, near: 50 }],
+  music: { theme: "wokradio", speaker: 1, at: AM.sounds.radio, reach: 380, near: 60 },
   hotspots: {
     up: { name: "Zur Gasse", rect: AM.upRect, walkTo: AM.up, face: "up", use: [{ goto: "gasse", at: Nagiwa.at.gasse.market, face: "se" }] },
     kidneys: { name: "Stand", rect: AM.kidneysRect, walkTo: AM.kidneys, face: "up", look: "KIDNEYS ONLY. Der Mann dahinter sieht gesund aus. Das ist das Unheimliche." },

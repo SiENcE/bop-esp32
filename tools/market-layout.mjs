@@ -118,10 +118,109 @@ const rects = {
   downRect: [F.SHAFT[0] * S + 2, Math.ceil(shaftTop * S) + 1, (F.SHAFT[1] - F.SHAFT[0]) * S - 4, R((shaftEnd - shaftTop) * S) - 3],
 };
 
+// ---- the crowd (kapitel1-design §9): the extras of the room, seeded so they come out the same every build. The vendors at their
+// stools behind the counters (where the painting leaves the seller's place), people walking up and down lanes that follow the
+// channel and across the bridges, and people standing about on the free floor, kept off Juno's ways, the lanes, the bridges and
+// stairs, the places she walks to and the preacher's ring (1.5 m); a few groups that stand together are obstacles (block)
+globalThis.Cutaway = {};
+vm.runInThisContext(readFileSync("lib/cutaway/walk.js", "utf8"), { filename: "walk.js" });
+const map = globalThis.Cutaway.walk.create({ walk, holes });
+const hash = (a, b) => { let h = (a * 374761393 + b * 668265263) | 0; h = (h ^ (h >>> 13)) * 1274126177; return ((h ^ (h >>> 16)) >>> 0) / 4294967296; };
+const at = (x, d) => [R(x), R((F.yc(x / S) + d) * S)];                                  // a point d (draft units) off the channel's axis
+const clear = (x, y, rx, ry) => { for (let dy = -ry; dy <= ry; dy++) for (let dx = -rx; dx <= rx; dx++) if (!walkable(x + dx, y + dy)) return false; return true; };
+const segDist = (p, a, b) => { const q = globalThis.Cutaway.walk.project({ x: p[0], y: p[1] }, { x: a[0], y: a[1] }, { x: b[0], y: b[1] }); return Math.hypot(q.x - p[0], q.y - p[1]); };
+const lineDist = (p, pts) => pts.slice(1).reduce((m, q, i) => Math.min(m, segDist(p, pts[i], q)), Infinity);
+// statist_01 .. statist_16; the two with umbrellas (06, 12) rare, as in the probes: the market is under the city, out of most of the rain
+const PLAIN = [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 13, 14, 15, 16];
+const look = (n) => String(hash(n, 8) < 0.05 ? (hash(n, 9) < 0.5 ? 6 : 12) : PLAIN[Math.floor(hash(n, 7) * PLAIN.length)]).padStart(2, "0");
+const DIRS = ["down", "up", "right", "left"];
+
+// the vendors: each open stall's seller's place (the painting's stool), facing the counter; the cook in HOT WOK's aisle, at the stove
+const vendors = F.STALLS.filter((s) => s.open).map((s, i) => {
+  const X = s.x * S, Y = s.y * S, Wd = s.w * S, Hd = s.h * S, south = s.face === "s";
+  const th = Hd >= 50 ? 20 : Hd >= 44 ? 16 : 11, cy = south ? Y + Hd - 10 : Y;
+  const ay0 = south ? Y + th + 3 : Y + 11, ay1 = south ? cy - 1 : Y + Hd - th - 3;
+  return [X + R(Wd * (s.goods === "clinic" ? 0.78 : 0.62)), R((ay0 + ay1) / 2), 1 + (i % 3), south ? "down" : "up"];
+});
+vendors.push([WK.x * S + 30, WK.y * S + 34, 1, "up"]);
+
+// the lanes along the channel (draft units off its axis): the north terrace, the north bank, the south bank, the south terrace;
+// each cut into the runs one can walk straight along (a stall, the ad on the floor, the deck's tables break them)
+const lanes = [];
+for (const d of [-88, -40, 28, 79]) {
+  let run = [];
+  for (let x = 8; x <= W - 8; x += 16) {
+    const p = at(x, d), ok = clear(p[0], p[1], 8, 6) && (!run.length || map.visible({ x: run.at(-1)[0], y: run.at(-1)[1] }, { x: p[0], y: p[1] }));
+    if (ok) run.push(p);
+    if (!ok || x + 16 > W - 8) { if (run.length >= 8) lanes.push(run); run = ok ? [] : []; }
+  }
+}
+const walkers = [];
+lanes.forEach((run, li) => {
+  const n = Math.max(1, Math.floor(run.length / 14));
+  for (let k = 0; k < n; k++) {
+    const len = 8 + Math.floor(hash(li, k * 3 + 1) * 10), i0 = Math.floor(hash(li, k * 3 + 2) * Math.max(1, run.length - len));
+    const pts = run.slice(i0, i0 + len).filter((_, j, a) => j % 2 === 0 || j === a.length - 1);
+    const sp = 20 + Math.floor(hash(li, k * 3 + 3) * 10);
+    walkers.push({ at: pts[0], path: pts.slice(1), look: look(li * 31 + k), pause: 400 + Math.floor(hash(li, k + 50) * 1600), speed: [sp, sp] });
+  }
+});
+// across the bridges, from bank to bank and back
+for (const [i, bx] of F.BRIDGES.entries()) {
+  const a = at(bx * S, -40), b = at(bx * S, 28);
+  if (walkable(...a) && walkable(...b) && map.visible({ x: a[0], y: a[1] }, { x: b[0], y: b[1] })) walkers.push({ at: a, path: [b], look: look(90 + i), pause: 1200, speed: [22, 22] });
+}
+
+// Juno's ways: from the foot of the stairs to every place she is sent, and on round them, as she walks them
+const order = ["arrive", "preacherTalk", "ratzTalk", "wok", "down", "curtain", "jars", "kidneys"];
+const ways = [];
+for (const k of order) ways.push(map.path({ x: spots.arrive[0], y: spots.arrive[1] }, { x: spots[k][0], y: spots[k][1] }).reduce((a, q) => [...a, [q.x, q.y]], [spots.arrive]));
+for (let i = 1; i < order.length - 1; i++) ways.push(map.path({ x: spots[order[i]][0], y: spots[order[i]][1] }, { x: spots[order[i + 1]][0], y: spots[order[i + 1]][1] }).reduce((a, q) => [...a, [q.x, q.y]], [spots[order[i]]]));
+const keepOff = (p, r) => ways.some((w) => lineDist(p, w) < r) || walkers.some((w) => lineDist(p, [w.at, ...w.path]) < r * 0.6) ||
+  Object.values(spots).some((s) => Math.hypot(p[0] - s[0], p[1] - s[1]) < 28) || Math.hypot(p[0] - spots.preacher[0], p[1] - spots.preacher[1]) < 64 ||
+  F.BRIDGES.some((bx) => Math.abs(p[0] - bx * S) < 26 && Math.abs(p[1] - F.yw(bx) * S) < 60) ||
+  [[0, 0], [-16, 0], [16, 0], [0, -24], [0, 24]].some(([dx, dy]) => F.ground((p[0] + dx) / S, (p[1] + dy) / S).k === "stair");      // the stairs' feet
+const taken = [...walkers.map((w) => w.at)];
+const roomFor = (p, dx = 20, dy = 15) => !taken.some((q) => Math.abs(q[0] - p[0]) < dx && Math.abs(q[1] - p[1]) < dy);
+
+// a few groups standing together, facing each other: obstacles, so only where there is room all round them
+const groups = [];
+for (let t = 0; t < 4000 && groups.length < 6; t++) {
+  const c = [16 + Math.floor(hash(t, 21) * (W - 32)), 16 + Math.floor(hash(t, 22) * (H - 32))];
+  if (!["bed", "terr"].includes(F.ground(c[0] / S, c[1] / S).k) || !clear(c[0], c[1], 34, 24) || keepOff(c, 46) || !roomFor(c, 60, 44)) continue;
+  const three = hash(t, 23) < 0.5, n = groups.length;
+  const members = [[c[0] - 8, c[1] - (three ? 3 : 0), "right"], [c[0] + 8, c[1] - (three ? 3 : 0), "left"], ...(three ? [[c[0], c[1] + 8, "up"]] : [])];
+  members.forEach(([x, y, dir], j) => groups.push([x, y, look(200 + n * 3 + j), dir]));
+  taken.push(c);
+}
+// people standing about: the banks lively, not full
+const stand = [];
+for (let t = 0; t < 20000 && stand.length < 64; t++) {
+  const p = [12 + Math.floor(hash(t, 11) * (W - 24)), 12 + Math.floor(hash(t, 12) * (H - 24))];
+  if (!["bed", "terr", "deck"].includes(F.ground(p[0] / S, p[1] / S).k) || !clear(p[0], p[1], 8, 6) || keepOff(p, 22) || !roomFor(p)) continue;
+  stand.push([p[0], p[1], look(400 + t), DIRS[Math.floor(hash(t, 13) * 4)]]);
+  taken.push(p);
+}
+const crowd = { vendors, walkers, groups, stand };
+
+// ---- where the market sounds (kapitel1-design §9, game/sounds.js): the crowd's murmur in three places, the wok's fire, the radio, the
+// canal, the roofs' ACs along the top and the bottom, the pillar; the one-shots from the open stalls' fronts (haggling) and from the
+// stalls that chop (NOODLE, DUMPLING, EEL)
+const middle = (name) => { const q = parts.parts.find((p) => p.name === `drain_market_${name}`); return [q.at[0] + (q.size[0] >> 1), q.at[1] + (q.size[1] >> 1)]; };
+const front = (s) => [R((s.x + s.w / 2) * S), s.face === "s" ? (s.y + s.h) * S + 6 : s.y * S - 6];
+const sounds = {
+  murmur: [at(360, -45), at(660, 40), at(1000, -30)],
+  wok: middle("wok"), radio: middle("radio"), pillar: middle("pillar"),
+  canal: [420, 900].map((x) => [x, R(F.yw(x / S) * S)]),
+  roofs: [200, 640, 1080].flatMap((x) => [[x, 30], [x, 700]]),
+  haggle: F.STALLS.filter((s) => s.open).map(front),
+  cleaver: ["NOODLE", "DUMPLING", "EEL"].map((n) => front(stall(n))),
+};
+
 // ---- every place someone stands or walks to must be walkable
 const bad = Object.entries(spots).filter(([, [x, y]]) => !walkable(x, y)).map(([k, p]) => `${k} ${p}`);
 const corners = [...walk, ...holes].reduce((n, p) => n + p.length / 2, 0);
-const json = { size: [W, H], walk, holes, spots, rects, parts: parts.parts, lamps: parts.lamps };
+const json = { size: [W, H], walk, holes, spots, rects, parts: parts.parts, lamps: parts.lamps, crowd, sounds };
 
 const outFile = process.argv.includes("--out") ? process.argv[process.argv.indexOf("--out") + 1] : null;
 if (outFile) {
@@ -129,5 +228,6 @@ if (outFile) {
     "// size) and art/rooms/drain_market.parts.json: never edit by hand; change the layout or the painting and build again\n\"use strict\";\n\n" +
     `Nagiwa.layouts = Nagiwa.layouts || {};\nNagiwa.layouts.drain_market = ${JSON.stringify(json)};\n`);
 }
-console.log(`drain_market: ${walk.length} walk area(s), ${holes.length} holes, ${corners} corners; ${Object.keys(spots).length} places, ${parts.parts.length} parts, ${parts.lamps.length} lamps`);
+console.log(`drain_market: ${walk.length} walk area(s), ${holes.length} holes, ${corners} corners; ${Object.keys(spots).length} places, ${parts.parts.length} parts, ${parts.lamps.length} lamps; ` +
+  `the crowd: ${vendors.length} vendors, ${walkers.length} walking, ${groups.length} in groups, ${stand.length} standing`);
 if (bad.length) { console.log("not on walkable floor: " + bad.join("; ")); process.exitCode = 1; }
