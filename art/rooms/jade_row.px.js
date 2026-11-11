@@ -33,6 +33,7 @@ pal({
   l: "#1f5e74",                       // in strong cyan light
   o: "#2e2019", p: "#4e3526",         // old wood, lacquer in shadow: frames, the shop's sign, the counter, the gate's roof
   K: "#c8b48c",                       // paper: posters, the coupon
+  "¦": "#8c7a62", "¬": "#5f4c3b",     // the sign's paint where it only half covers the board (its letters' soft edge)
 })
 
 const JR = (() => {
@@ -50,7 +51,7 @@ const JR = (() => {
     c: "#123c4e", C: "#1f88a4", v: "#62def0", V: "#dafcff", r: "#7e1420", q: "#ff3a3a", j: "#9a7406", y: "#eec414", Y: "#fff070",
     s: "#93583f", S: "#d79676", g: "#565e70", G: "#8e96a8", u: "#30264c", U: "#4d3f78", h: "#7d8ca4", H: "#b9c6d8",
     a: "#2c2026", A: "#4a3026", i: "#2a1636", I: "#46204e", t: "#11303d", T: "#1b495a", w: "#3a4c64", x: "#6c809a",
-    b: "#6e4630", d: "#64265e", l: "#1f5e74", o: "#2e2019", p: "#4e3526", K: "#c8b48c",
+    b: "#6e4630", d: "#64265e", l: "#1f5e74", o: "#2e2019", p: "#4e3526", K: "#c8b48c", "¦": "#8c7a62", "¬": "#5f4c3b",
   }
   const RGB = Object.fromEntries(Object.entries(HEX).map(([k, h]) => [k, [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)]]))
 
@@ -331,22 +332,36 @@ const JR = (() => {
   // (the user's wish, 2026-11-11). Their height follows the board exactly; across, a wall foreshortens twice as fast as it does up,
   // which would squeeze the far letters past reading, so the letters are laid two thirds by the screen and a third by the metre
   // (in the game's own letters, 5 by 7: the hud's 3 by 5 has no diagonal in its N, and the near letters are big enough to show one)
-  const SIGN = (() => { const g = new Set(), px = textPx("OKONKWO", "nagiwa"); for (const [a, b] of px) g.add(a + "," + b); return { g, w: Math.max(...px.map(([a]) => a)) + 1, h: Math.max(...px.map(([, b]) => b)) + 1 } })()
+  const signGlyphs = (bold) => { const g = new Set(), px = textPx("OKONKWO", "nagiwa"); for (const [a, b] of px) { g.add(a + "," + b); if (bold) g.add(a + 1 + "," + b) } return { g, w: Math.max(...px.map(([a]) => a)) + 1 + (bold ? 1 : 0), h: Math.max(...px.map(([, b]) => b)) + 1 } }
+  // how the letters lie on the board: metre 0 lays them by the screen, 1 by the metre (true perspective: across, a wall foreshortens
+  // twice as fast as up); aa their edge softened in two steps; shadow a painter's dark shadow down and right; z0..z1, h0..h1 their box
+  // (the user chose the sign painter's style from seven tried, 2026-11-11: docs/rooms/jade_row_schrift_vergleich.png, number 5)
+  const SIGN_STYLE = { metre: 0.6, aa: true, shadow: true, bold: false, z0: 0.7, z1: 1.55, h0: 2.39, h1: 2.77 }
+  // (bold: every stroke a glyph column wider, so the far letters keep strokes of more than a pixel)
+  const SIGN = signGlyphs(SIGN_STYLE.bold)
   const signInk = (z, h) => {
-    const z0 = 0.71, z1 = 1.47, h0 = 2.41, h1 = 2.75
+    const { z0, z1, h0, h1, metre } = SIGN_STYLE
     if (z < z0 || z >= z1 || h < h0 || h >= h1) return false
-    const byScreen = (1 / z0 - 1 / z) / (1 / z0 - 1 / z1), byMetre = (z - z0) / (z1 - z0), t = byScreen * 0.65 + byMetre * 0.35
+    const byScreen = (1 / z0 - 1 / z) / (1 / z0 - 1 / z1), byMetre = (z - z0) / (z1 - z0), t = byScreen * (1 - metre) + byMetre * metre
     return SIGN.g.has(fl(t * SIGN.w) + "," + fl((h1 - h) / (h1 - h0) * SIGN.h))
   }
   // a pixel of the board is paint where the letters cover enough of it: nine samples across it, back on the wall (so the far, thin
   // letters keep their diagonals)
-  const signAt = (x, y) => {
+  const cover = (x, y) => {
     let n = 0
     for (const dy of [0.17, 0.5, 0.83]) for (const dx of [0.17, 0.5, 0.83]) {
       const z = (3.5 * 30) / (VX - (x + dx)), h = (VY + EYE / z - (y + dy)) * z / 30
       if (signInk(z, h)) n++
     }
-    return n >= 4 ? "K" : null
+    return n
+  }
+  const signAt = (x, y) => {
+    const n = cover(x, y)
+    if (!SIGN_STYLE.aa) return n >= 4 ? "K" : SIGN_STYLE.shadow && cover(x - 1, y - 1) >= 4 ? "o" : null
+    if (n >= 7) return "K"
+    if (n >= 4) return "¦"
+    if (n >= 2) return "¬"
+    return SIGN_STYLE.shadow && cover(x - 1, y - 1) >= 4 ? "o" : null
   }
   const WARM_IN = ["a", "A", "b", "P", "Q", "R"]
   /** the storeys over the shops: slabs, windows (lit, a television, magenta, dark), air conditioners and what drips from them */
