@@ -5,6 +5,8 @@
 //   street to a screen      the screen jacks in: the picture folds into a bright line, the line opens on
 //   (the deck, a camera)    the new picture through snow; leaving a screen folds it the same way
 //   screen to screen        static: the picture drowns in snow and the next one comes up out of it
+//   out of a shot           fade: a room with `leave: "fade"` (the view down into the Drain Market, drain_arrival) goes slowly
+//                           to black, and the next picture comes slowly up out of it (the user's wish, 2026-11-11)
 // A "screen" is the deck (`deck: true`) or a camera's room (`feed`).
 "use strict";
 
@@ -13,9 +15,10 @@
 
   /** @param {string | undefined} id */
   const screen = (id) => { const r = id ? Cutaway.room.get(id) : null; return !!(r && (r.deck || r.feed)); };
-  /** @param {{from: string | undefined, to: string}} t @returns {"glitch" | "jack" | "static"} */
-  const kind = (t) => (screen(t.from) && screen(t.to) ? "static" : screen(t.from) || screen(t.to) ? "jack" : "glitch");
-  const LENGTHS = { glitch: { out: 240, in: 280 }, jack: { out: 260, in: 420 }, static: { out: 150, in: 260 } };
+  /** @param {{from: string | undefined, to: string}} t @returns {"glitch" | "jack" | "static" | "fade"} */
+  const kind = (t) => (t.from && /** @type {any} */ (Cutaway.room.get(t.from))?.leave === "fade" ? "fade"
+    : screen(t.from) && screen(t.to) ? "static" : screen(t.from) || screen(t.to) ? "jack" : "glitch");
+  const LENGTHS = { glitch: { out: 240, in: 280 }, jack: { out: 260, in: 420 }, static: { out: 150, in: 260 }, fade: { out: 550, in: 650 } };
 
   /** A repeatable number in 0..1. @param {number} a @param {number} b */
   function hash(a, b) { let h = (a * 374761393 + b * 668265263) | 0; h = (h ^ (h >>> 13)) * 1274126177; return ((h ^ (h >>> 16)) >>> 0) / 4294967296; }
@@ -87,7 +90,12 @@
   Nagiwa.isScreen = screen;
 
   Cutaway.fx.setTransition({
-    draw: (ctx, t) => { const k = kind(t); if (k === "jack") jack(ctx, t); else if (k === "static") staticNoise(ctx, t); else glitch(ctx, t); },
+    draw: (ctx, t) => {
+      const k = kind(t);
+      if (k === "jack") jack(ctx, t); else if (k === "static") staticNoise(ctx, t);
+      else if (k === "fade") { ctx.fillStyle = C.night; ctx.globalAlpha = t.level; ctx.fillRect(0, 0, Cutaway.display.width, Cutaway.display.height); ctx.globalAlpha = 1; }
+      else glitch(ctx, t);
+    },
     ms: (t) => LENGTHS[kind(t)],
   });
 })();

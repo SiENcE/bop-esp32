@@ -256,8 +256,12 @@ Cutaway.room("drain_market", { name: "Drain-Markt", background: "drain_market_bg
 // market from above. Later visits: one click skips it. The first time, Juno and EVI talk once the camera has come to rest (a click
 // takes each line on); whether they have is a view flag (it changes what is said, never what happens)
 Cutaway.state.view("markt_gesehen");
-Cutaway.room("drain_arrival", { name: "Drain-Markt", background: "drain_arrival_bg", size: [320, 432], observe: true, lines: "bottom", buttons: false,
-  ambience: ["city_far", "neon_buzz"], music: { theme: "juno", intensity: 0.4 } });
+// Its music is the arrival's own (game/music.js markt_ankunft: it opens out as the camera comes to rest); the market's murmur sits at
+// the picture's foot, so it rises as the camera tilts down (an observe room is heard from the middle of the view). Leaving it, the
+// picture fades slowly to black and the market comes up out of it (game/transitions.js, leave: "fade")
+Cutaway.room("drain_arrival", { name: "Drain-Markt", background: "drain_arrival_bg", size: [320, 432], observe: true, lines: "bottom", buttons: false, leave: "fade",
+  ambience: ["city_far", { sfx: "markt_stimmen_a", at: [110, 420], reach: 330, near: 70 }, { sfx: "markt_stimmen_b", at: [220, 420], reach: 330, near: 70 }],
+  music: { theme: "markt_ankunft" } });
 Cutaway.sequence("drain_arrival", {
   steps: [
     { goto: "drain_arrival" },
@@ -284,8 +288,9 @@ Cutaway.sequence("drain_arrival_first", {
   ],
   after: [{ set: "markt_gesehen" }],
 });
-// the market itself after the shot (a goto inside a sequence is only a shot: Juno would stay in the alley)
-Cutaway.room.get("gasse").hotspots.market.use = [{ if: "markt_gesehen", then: [{ sequence: "drain_arrival" }], else: [{ sequence: "drain_arrival_first" }] },
+// the market itself after the shot (a goto inside a sequence is only a shot: Juno would stay in the alley). The sequence leaves the
+// scene on its last shot (restore: false), so the goto leaves from the view down: it fades out and the market fades in (leave: "fade")
+Cutaway.room.get("gasse").hotspots.market.use = [{ if: "markt_gesehen", then: [{ sequence: "drain_arrival", restore: false }], else: [{ sequence: "drain_arrival_first", restore: false }] },
   { goto: "drain_market", at: AM.arrive, face: "down" }];
 
 // the big look upwards (a shot of its own: the block for what will be painted as large as the intro's)

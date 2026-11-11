@@ -131,6 +131,7 @@
   Cutaway.events.on("room.leave", (/** @type {{id?: string, to: string}} */ e) => {
     if (!Cutaway.fx.active || Cutaway.script.fast || !e.id || e.id === e.to) return;
     const k = Nagiwa.transitionKind({ from: e.id, to: e.to });
+    if (k === "fade") return;                                       // a quiet fade: the music and the market carry it
     Cutaway.events.emit("sfx", { sfx: k === "jack" ? (Nagiwa.isScreen(e.to) ? "jack_in" : "jack_out") : k });
   });
   // EVI answers the hint button

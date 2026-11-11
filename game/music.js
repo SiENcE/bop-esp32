@@ -10,7 +10,8 @@
 //   opening the intro's float over the sea (below, after memory). descent: the ride down in the lift, after it.
 //   easy, rooftop: two of the radio's stations (game/radio.js); the third, NINTH FM, plays Juno's theme.
 //   glassgirl: NINTH FM's pop song about a Glasser, the karaoke machine's in LUCKY STATIC (game/karaoke.js).
-//   wokradio: the old song on the radio at HOT WOK in the Drain Market, heard at its place through a small speaker.
+//   wokradio: the old song on the radio at HOT WOK in the Drain Market, heard at its place through a small speaker;
+//   markt_ankunft: the view down into the market from the stairs as one arrives, its pentatonic, ending on the market whole.
 // Stingers: "clue" (a moment caught), "witness" (the screen says JUNO.: everything else stops for it).
 // Listen: node lib/cutaway/tools/render-music.mjs index.html --out build/music/juno.wav --steps '[...]'
 "use strict";
@@ -301,6 +302,37 @@
         organ: bars(offs("F3+A3+C4"), offs("C4+E4+G4"), offs("D3+F3+A3"), offs("E3+G#3+B3")),
         bass: bars("F2 . . F2 . . C3 . F2 . . F2 . . E2 .", "C3 . . C3 . . G2 . C3 . . C3 . . B2 .", "D2 . . D2 . . A2 . D2 . . D2 . . F2 .", "E2 . . E2 . . B2 . E2 . . G#2 . E2 . . ."),
         ...wokBeat(4),
+      } },
+    },
+  });
+
+  // THE MARKET'S ARRIVAL: Juno at the top of the stairs from the alley, the view down into the channel (the room drain_arrival,
+  // kapitel1-design §9): two and a half seconds still, then the camera tilting down for nine. Four bars at 84 bpm are those eleven
+  // and a half seconds: a low pedal on A and a wide pad under it all, glass bells like the neon coming on; from the second bar the
+  // erhu of the wok's radio falls through the market's pentatonic, and as the camera comes to rest the chord opens out wide over a
+  // deep boom (the market below, all of it). Then a quiet bar that holds while Juno and EVI talk, the first time. The market's
+  // murmur rises under it as the camera comes down (the room's ambience, placed at the picture's foot); in the market the wok's radio
+  // takes over at its place.
+  const TIE = "- - - - - - - - - - - - - - - -";                      // the note before held on through a whole bar
+  Cutaway.score.theme("markt_ankunft", {
+    tempo: 84, key: "A",
+    tracks: { pad: { inst: "br_brass" }, wide: { inst: "cs80pad" }, lead: { inst: "erhu" }, bells: { inst: "br_bells" }, pedal: { inst: "br_pedal" }, boom: { inst: "br_thunder" } },
+    start: "reveal",
+    sections: {
+      // the still view: only the pedal and the bells; the tilt: the pad comes in under the erhu; the rest: everything opens out
+      reveal: { bars: 4, next: "rest", tracks: {
+        pedal: bars(hold("A1"), TIE, TIE, TIE),
+        pad: bars(empty, hold("F2+C3+A3"), hold("G2+D3+B3"), hold("A2+E3+A3+C4+E4")),
+        wide: bars(empty, empty, ". . . . . . . . G3+D4 - - - - - - -", hold("A3+C4+E4+G4+B4")),
+        lead: bars(empty, "E5 - - - - - - - D5 - - - C5 - - -", "D5 - - - - - - - E5 - - - G5 - - -", "A5 - - - - - - - - - - - - - - -"),
+        bells: bars(". . . . . . . . E6 . . . . . . .", ". . . . A6 . . . . . . . . . E6 .", ". . . . . . . . G6 . . . . . . .", "A6 . . . . . . . E6 . . . C7 . . ."),
+        boom: bars(empty, empty, empty, "x . . . . . . . . . . . . . . ."),
+      } },
+      // then quiet, while Juno and EVI talk (the first time)
+      rest: { bars: 2, next: "rest", tracks: {
+        pedal: bars(hold("A1"), TIE),
+        wide: bars(hold("A3+C4+E4"), hold("F3+A3+C4")),
+        bells: bars(". . . . . . . . E6 . . . . . . .", empty),
       } },
     },
   });
