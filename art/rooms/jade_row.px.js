@@ -116,6 +116,10 @@ const JR = (() => {
     { name: "arcade", x: 106, y: 82, w: 25, h: 30, frames: 12 },
     { name: "machine", x: 226, y: 82, w: 16, h: 60, frames: 12 },
     { name: "soup", x: 204, y: 74, w: 22, h: 30, frames: 12 },
+    // the lane's wet floor, its mirrored light trembling (the user's wish, 2026-11-11): the open road and the right-hand kerb below
+    // the machine, 20 frames (two seconds)
+    { name: "wet", x: 40, y: 113, w: 186, h: 67, frames: 20 },
+    { name: "wet_kerb", x: 226, y: 143, w: 78, h: 37, frames: 20 },
   ]
   const ph = (name) => F % PARTS.find((p) => p.name === name).frames
 
@@ -319,6 +323,27 @@ const JR = (() => {
   // Okonkwo's shop takes the whole near left-hand wall, from the picture's edge to its door (the user's wish, 2026-11-11: it needs
   // more space): the window in three panes, the sign board over the whole front; the door stays where it was
   const SHOP0 = 0.64, PANES = [SHOP0, 0.85, 1.03, 1.22]
+  // OKONKWO painted on the board, big where the board is near and small where it runs away, between two lines parallel to its edges
+  // (the user's wish, 2026-11-11). Their height follows the board exactly; across, a wall foreshortens twice as fast as it does up,
+  // which would squeeze the far letters past reading, so the letters are laid two thirds by the screen and a third by the metre
+  // (in the game's own letters, 5 by 7: the hud's 3 by 5 has no diagonal in its N, and the near letters are big enough to show one)
+  const SIGN = (() => { const g = new Set(), px = textPx("OKONKWO", "nagiwa"); for (const [a, b] of px) g.add(a + "," + b); return { g, w: Math.max(...px.map(([a]) => a)) + 1, h: Math.max(...px.map(([, b]) => b)) + 1 } })()
+  const signInk = (z, h) => {
+    const z0 = 0.71, z1 = 1.47, h0 = 2.41, h1 = 2.75
+    if (z < z0 || z >= z1 || h < h0 || h >= h1) return false
+    const byScreen = (1 / z0 - 1 / z) / (1 / z0 - 1 / z1), byMetre = (z - z0) / (z1 - z0), t = byScreen * 0.65 + byMetre * 0.35
+    return SIGN.g.has(fl(t * SIGN.w) + "," + fl((h1 - h) / (h1 - h0) * SIGN.h))
+  }
+  // a pixel of the board is paint where the letters cover enough of it: nine samples across it, back on the wall (so the far, thin
+  // letters keep their diagonals)
+  const signAt = (x, y) => {
+    let n = 0
+    for (const dy of [0.17, 0.5, 0.83]) for (const dx of [0.17, 0.5, 0.83]) {
+      const z = (3.5 * 30) / (VX - (x + dx)), h = (VY + EYE / z - (y + dy)) * z / 30
+      if (signInk(z, h)) n++
+    }
+    return n >= 4 ? "K" : null
+  }
   const WARM_IN = ["a", "A", "b", "P", "Q", "R"]
   /** the storeys over the shops: slabs, windows (lit, a television, magenta, dark), air conditioners and what drips from them */
   const storeys = (side, z, h, x, y, o) => {
@@ -381,35 +406,29 @@ const JR = (() => {
       if (box(z, h, SHOP0, 1.52, 2.3, 2.85)) {                                                // the sign board along the whole front: old wood, its top edge lit
         if (h > 2.8) return "p"
         if (h < 2.34) return "k"
+        const g = signAt(x, y)
+        if (g) return g
         return tone(["o", "o", "p", "O"], 1.2 + (h - 2.3) * 2 + lightAt(-3.4, z, h, 1, 0).w * 0.8, x, y)
       }
       if (box(z, h, SHOP0, 1.22, 0.45, 2.1)) {                                                // the shop window onto his shelves, three panes wide
+        // kept calm (the user's wish, 2026-11-11): the bulb's light in two flat steps, the goods in blocks, one row of sacks
         const pane = PANES.findIndex((b, i) => z >= b && z < PANES[i + 1]), u = (z - PANES[pane]) / (PANES[pane + 1] - PANES[pane]), w = (h - 0.45) / 1.65
         if (u < 0.05 || u > 0.95 || w > 0.97 || Math.abs(h - 1.0) < 0.022) return "o"
         if (u < 0.09 || w > 0.94 || (h > 1.0 && h < 1.04)) return "p"
-        const streak = Math.abs(u * 0.9 - w * 1.1 + 0.25) < 0.06                               // the lanterns over the lane, in the glass
-        if (pane === 2 && u > 0.66 && u < 0.88 && w > 0.74 && w < 0.86) return w > 0.83 ? "h" : fl(w * 60) % 2 ? "K" : "h"   // a price list taped on inside
-        if (pane === 0 && u > 0.18 && u < 0.62 && w > 0.62 && w < 0.78) return w > 0.75 ? "h" : fl(u * 40) % 3 ? "K" : "h"   // OPEN, a card in the corner
-        if (pane === 1 && u > 0.1 && u < 0.9 && h > 1.0 && h < 1.32) {                        // the counter inside, the old register on it
-          if (h > 1.28) return u > 0.55 && u < 0.8 ? "5" : "P"
-          if (u > 0.58 && u < 0.78 && h > 1.18) return fl(u * 30) % 2 ? "4" : "3"
-          return fl(u * 18) % 4 === 0 ? "a" : "A"
-        }
-        if (h < 1.0) {                                                                        // sacks of rice stacked in the window
-          // (sacks of the same size all along the window, in metres: two rows, jute, lit from above by the shop's bulb)
-          const s = (z * 11) % 1, row2 = h > 0.72, sv = (row2 ? (z * 11 + 0.5) % 1 : s), cy = row2 ? 0.86 : 0.6
-          const sack = Math.hypot((sv - 0.5) * 2.3, (h - cy) / 0.14) < 1
-          if (sack) return h > cy + 0.07 ? "K" : sv < 0.3 ? "A" : "b"
-          return tone(WARM_IN, 1.4 + (h - 0.45) * 2, x, y)
+        if (pane === 0 && u > 0.18 && u < 0.62 && w > 0.62 && w < 0.78) return w > 0.75 ? "h" : "K"   // OPEN, a card in the corner
+        if (h < 1.0) {
+          if (pane === 1) return h > 0.94 ? "P" : "A"                                           // the counter's front behind the glass
+          const sv = (z * 17) % 1, sack = Math.hypot((sv - 0.5) * 2.3, (h - 0.6) / 0.11) < 1   // a row of rice sacks, jute
+          return sack ? (h > 0.65 ? "K" : "b") : "a"
         }
         const shelf = (h - 1.04) % 0.3, row = fl((h - 1.04) / 0.3)
         if (shelf < 0.035) return "O"
-        if (shelf > 0.05 && shelf < 0.15 && fl(u * 8 + row) % 5 !== 0) return ["H", "c", "K", "P"][row % 4]   // goods: rice, batteries, cigarettes, noodle cups
-        return tone(WARM_IN, (streak ? 3.9 : 2.9) + w * 1.2, x, y)
+        if (shelf > 0.05 && shelf < 0.15) return fl(z * 26 + row * 3) % 4 === 0 ? "A" : ["H", "c", "K", "P"][row % 4]   // rice, batteries, cigarettes, noodle cups
+        return h > 1.62 ? "P" : "b"
       }
-      if (box(z, h, SHOP0, 1.26, 0, 0.45)) {                                                  // the tiled base under it
+      if (box(z, h, SHOP0, 1.26, 0, 0.45)) {                                                  // the base under it, plain
         if (h > 0.42) return surf(3.5, o, x, y)
-        return surf((fl(z * 40) % 2 === 0) || fl(h * 12) % 3 === 0 ? 1.7 : 2.5, o, x, y)
+        return surf(h < 0.04 ? 1.6 : 2.1, o, x, y)
       }
       if (box(z, h, 1.26, 1.7, 0, 2.2)) {                                                     // the open door: a bead curtain, the shop deep inside, the leaf folded back
         if (box(z, h, 1.26, 1.29, 0, 2.2) || box(z, h, 1.67, 1.7, 0, 2.2) || h > 2.14) return "o"
@@ -518,16 +537,6 @@ const JR = (() => {
   // OKONKWO, flat on the board (as the mock), cream paint under the little lamp; HOT SOUP in neon along its band
   const shopLetters = () => {
     at(1.2)
-    // OKONKWO in letters twice the hud's, painted on the board: each letter on the board's middle line where it stands (the board
-    // runs away from us, so the letters step up towards us), the word in the middle of the board
-    const word = "OKONKWO", px = textPx(word), gw = Math.max(...px.map(([x]) => x)) + 1, [bx0] = bP(-3.5, SHOP0, 2.3), [bx1] = bP(-3.5, 1.52, 2.3)
-    const left = R((Math.max(0, bx0) + bx1) / 2 - gw)
-    const zAt = (x) => 3.5 * 30 / (VX - x)                                                    // the wall's depth under a column
-    for (const [gx, gy] of px) {
-      // (a letter is 4 px and a space: the whole letter keeps the line at its middle, so it doesn't shear)
-      const cx = left + gx * 2, zl = zAt(left + fl(gx / 5) * 10 + 4), y0 = R((bP(-3.5, zl, 2.3)[1] + bP(-3.5, zl, 2.85)[1]) / 2) - 5
-      c.rect(cx, y0 + gy * 2, 2, 2, "K")
-    }
     // the lamps over the sign: shades on bent arms, their bulbs
     for (const zl of [0.86, 1.3]) {
       const [lx, ly] = bP(-3.5, zl, 3.0)
@@ -679,16 +688,25 @@ const JR = (() => {
     items.push([1.16, () => across(1.16, 5.0, 3, "Vvk")])                                       // the network's duct, its cyan line
     // the balcony over the shop: its slab from below, warm from the shop's light; the rail; the smoker; his washing on the rail
     items.push([1.1, () => {
-      const P = (m, z, h) => bP(m, z, h), z0 = 0.92, z1 = 1.32, h0 = 2.95, h1 = 3.75, m0 = -3.5, m1 = -2.62
-      for (let x = P(m0, z0, 0)[0]; x <= P(m1, z1, 0)[0]; x++) {
-        const zf = (30 * m1) / (x - 160), front = zf >= z0 && zf <= z1
-        const [, yNear] = P(m0, z0, h0), yFar = front ? P(m1, zf, h0)[1] : yNear, yb = Math.max(yNear, yFar) + 2
-        for (let y = Math.min(yNear, yFar); y < yb; y++) {
-          if (y >= yb - 2) { put(x, y, y === yb - 2 ? "5" : "4"); continue }
-          const o = lightAt(-3.0, 1.1, 2.9, 0, -1)
-          put(x, y, surf(1.8, o, x, y))
+      const P = (m, z, h) => bP(m, z, h), z0 = 0.92, z1 = 1.32, h0 = 2.95, h1 = 3.75, m0 = -3.5, m1 = -2.62, T = 0.2
+      // its floor (the user's wish, 2026-11-11): a concrete slab T thick, seen from below, its two edges toward us, a warm wash from
+      // the shop's light on its underside; filled as the quads they are
+      const quad = (q, key) => {
+        const ys = q.map(([, y]) => y), xs = q.map(([x]) => x)
+        for (let y = Math.min(...ys); y <= Math.max(...ys); y++) for (let x = Math.min(...xs); x <= Math.max(...xs); x++) {
+          let inside = false
+          for (let i = 0, j = q.length - 1; i < q.length; j = i++) if ((q[i][1] > y + 0.5) !== (q[j][1] > y + 0.5) && x + 0.5 < (q[j][0] - q[i][0]) * (y + 0.5 - q[i][1]) / (q[j][1] - q[i][1]) + q[i][0]) inside = !inside
+          if (inside) put(x, y, key(x, y))
         }
-        if (front) { const yt = P(m1, zf, h1)[1], yf = P(m1, zf, h0)[1]; put(x, yt, "5"); put(x, yt + 1, "k"); if (x % 4 === 0) c.vline(x, yt + 1, yf - yt - 1, "k") }
+      }
+      const under = lightAt(-3.0, 1.1, 2.8, 0, -1)
+      quad([P(m0, z0, h0 - T), P(m1, z0, h0 - T), P(m1, z1, h0 - T), P(m0, z1, h0 - T)], (x, y) => surf(1.0, under, x, y))       // the underside
+      quad([P(m0, z0, h0), P(m1, z0, h0), P(m1, z0, h0 - T), P(m0, z0, h0 - T)], (x, y) => surf(1.6, under, x, y))             // the near edge
+      quad([P(m1, z0, h0), P(m1, z1, h0), P(m1, z1, h0 - T), P(m1, z0, h0 - T)], (x, y) => surf(1.3, under, x, y))             // the edge toward the lane
+      for (const [a, b] of [[P(m0, z0, h0), P(m1, z0, h0)], [P(m1, z0, h0), P(m1, z1, h0)]]) c.line(a[0], a[1], b[0], b[1], "4") // its top edges catch the lane's light
+      for (let x = P(m1, z0, 0)[0]; x <= P(m1, z1, 0)[0]; x++) {
+        const zf = (30 * m1) / (x - 160)
+        if (zf >= z0 && zf <= z1) { const yt = P(m1, zf, h1)[1], yf = P(m1, zf, h0)[1]; put(x, yt, "5"); put(x, yt + 1, "k"); if (x % 4 === 0) c.vline(x, yt + 1, yf - yt - 1, "k") }
       }
       // the smoker behind the front rail (drawn under the near rail's bars, over the slab)
       const [px, pf] = P(-3.05, 1.14, h0)
@@ -770,14 +788,18 @@ const JR = (() => {
     o: "e", p: "o", n: "i", i: "e", t: "e", X: "Z", Z: "z", z: "f", f: "e", e: "e", g: "2", G: "g", x: "w", w: "2" }
   const SHEEN = { m: "d", N: "M", M: "I", v: "l", V: "C", C: "T", Q: "A", R: "b", W: "P", P: "A", d: "i" }
   let SNAP = null
+  // inside the wet parts the mirrored light trembles with the frame (outside them it keeps frame 0's, so the picture stays whole)
+  const WETPARTS = PARTS.filter((q) => q.name.startsWith("wet"))
+  const moving = (x, y) => WETPARTS.some((q) => x >= q.x && x < q.x + q.w && y >= q.y && y < q.y + q.h)
   const mirror = () => {
     const [SK, SZ] = SNAP
     for (let y = VY + 1; y < H; y++) {
-      const zf = EYE / (y - VY), wob = R(Math.sin(y * 0.9) * 1.2)
+      const zf = EYE / (y - VY)
       for (let x = 0; x < W; x++) {
         const i = y * W + x, wet = WET[i]
         if (!wet) continue
-        const sx = wet === 2 ? clamp(x + wob, 0, W - 1) : x
+        const t = moving(x, y) ? F / 20 * Math.PI * 2 : 0, wob = R(Math.sin(y * 0.9 + t) * 1.2 + Math.sin(y * 0.37 - t) * 0.6)
+        const sx = clamp(x + (wet === 2 ? wob : R(Math.sin(y * 0.6 + t) * 0.8)), 0, W - 1)
         let best = -1, bestD = 1e9
         for (let yy = y - 1; yy >= 0; yy--) {
           const d = SZ[yy * W + sx]
@@ -787,9 +809,10 @@ const JR = (() => {
         }
         if (best < 0) continue
         const src = SK[best * W + sx]
-        if (wet === 2) { put(x, y, WET[i - W] !== 2 ? "Z" : WET[i + W] !== 2 ? "e" : MIRROR[src] || "e"); continue }   // its far edge catches the light, the near one is dark
+        // a step weaker than before (the user's wish): a puddle mirrors two steps darker along each ramp
+        if (wet === 2) { put(x, y, WET[i - W] !== 2 ? "Z" : WET[i + W] !== 2 ? "e" : MIRROR[MIRROR[src]] || "e"); continue }   // its far edge catches the light, the near one is dark
         // the open road: only what is bright, in rows (rain breaks it up), dying off with the distance it travels
-        if (y % 2 === 0 && SHEEN[src]) put(x, y, SHEEN[src])
+        if (y % 2 === 0 && (x + y + (moving(x, y) ? fl(F / 5) : 0)) % 3 !== 0 && SHEEN[src]) put(x, y, SHEEN[src])
       }
     }
   }
@@ -801,9 +824,12 @@ const JR = (() => {
     sky(); endBlock(); floor(); walls(); nightSign(); shopLetters(); bFront()
   }
   const GLOWS = [["m", 5, 0.45], ["vV", 4, 0.3], ["RW", 4, 0.35]]
+  // the scene a fifth darker than its palette, all but the lights themselves (neon, lanterns, screens, the bulbs), so they stand out
+  // (the user's wish, 2026-11-11)
+  const LIT = "mNvVRWQ", DIM = 0.8
   const glow = (keys) => {
     const out = new Float32Array(W * H * 3)
-    for (let i = 0; i < W * H; i++) { const c3 = RGB[keys[i]] ?? RGB.k; out[i * 3] = c3[0]; out[i * 3 + 1] = c3[1]; out[i * 3 + 2] = c3[2] }
+    for (let i = 0; i < W * H; i++) { const c3 = RGB[keys[i]] ?? RGB.k, d = LIT.includes(keys[i]) ? 1 : DIM; out[i * 3] = c3[0] * d; out[i * 3 + 1] = c3[1] * d; out[i * 3 + 2] = c3[2] * d }
     for (const [src, r, strength] of GLOWS) {
       const wt = new Float32Array(W * H), acc = new Float32Array(W * H * 3), Rr = Math.ceil(r)
       for (let sy = 0; sy < H; sy++) for (let sx = 0; sx < W; sx++) {

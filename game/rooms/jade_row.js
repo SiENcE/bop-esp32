@@ -27,8 +27,10 @@
       { kind: "rain", rect: [0, 0, 320, 180], count: 60, color: "#41547a", speed: 140, slant: 0.3, length: 3 },
       { kind: "rain", rect: [0, 0, 320, 180], count: 45, color: "#6c809a", speed: 210, slant: 0.3, length: 5 },
     ],
-    // the painting's lamps as the runtime light: Juno takes on the shop's warm light, the machine's cyan, the neon's magenta
-    light: { ambient: 0.85, lamps: P.lamps.map((/** @type {any} */ [x, y, color, r], /** @type {number} */ i) => ({ id: `lamp${i}`, at: [x, y], r, color, power: 1 })) },
+    // the painting's lamps as the runtime light: Juno takes on the shop's warm light, the machine's cyan, the neon's magenta; the paper
+    // lanterns (their pale amber) flicker, and the picture round them with them (the user's wish, 2026-11-11)
+    light: { ambient: 0.8, lamps: P.lamps.map((/** @type {any} */ [x, y, color, r], /** @type {number} */ i) =>
+      ({ id: `lamp${i}`, at: [x, y], r, color, power: 1, ...(color === "#ffd58a" ? { flicker: 0.12, rate: 8 } : {}) })) },
     ambience: ["city_far", "neon_buzz", { sfx: "feed_rain", gain: 0.6 }], music: { theme: "juno", intensity: 0.4 },
     hotspots: {
       // the arch in the near right-hand wall: the passage back to Kowalski Street
