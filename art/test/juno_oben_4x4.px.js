@@ -42,3 +42,24 @@ scene("juno_oben_probe_4x4", { w: 320, h: 180, frames: J4.FRAMES, fps: 10, bg: "
     else JOB.drawA(c, x, y, dir, walk ? "walk" : "idle", walk ? T % 8 : 0, JOB.stranger(s))
   }
 })
+
+// The same with Juno as painted (art/characters/juno_top.px.js), its own palette, the anchor in the frame's middle
+include("../characters/juno_top.px.js")
+scene("juno_top_probe_4x4", { w: 320, h: 180, frames: J4.FRAMES, fps: 10, bg: "k" }, (c) => {
+  c.stamp("_jtop_crowd_cap", 4000, 4000)
+  c.stamp("_jtop_markt_x2", -J4.VIEW.x, -J4.VIEW.y)
+  const T = c.frame, people = []
+  for (const [x, y, seed] of CROWD_AT) for (const [dx, dy, k] of [[-6, -3, 0], [6, 3, 1]]) {
+    const s = seed * 2 + k, h = J4.hs(s), walk = h < 0.18
+    let px = x * 2 + dx, dir = ["down", "up", "right", "left"][Math.floor(J4.hs(s + 9) * 4)]
+    if (walk) { const ph = (T + Math.floor(h * 400)) % 60; dir = ph < 30 ? "right" : "left"; px += ph < 30 ? ph - 15 : 45 - ph }
+    people.push([px - J4.VIEW.x, y * 2 + dy - J4.VIEW.y, dir, walk, s])
+  }
+  const j = J4.at(T)
+  people.push([j.x - J4.VIEW.x, j.y - J4.VIEW.y, j.dir, true, -1])
+  for (const [x, y, dir, walk, s] of people.sort((a, b) => a[1] - b[1])) {
+    if (x < -12 || y < -12 || x > 332 || y > 192) continue
+    if (s < 0) c.stamp(`juno_top_walk_${dir}`, x - 10, y - 10, { t: (T % 8) * 100 })
+    else JOB.drawA(c, x, y, dir, walk ? "walk" : "idle", walk ? T % 8 : 0, JOB.stranger(s))
+  }
+})
