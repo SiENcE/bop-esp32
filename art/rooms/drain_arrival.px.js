@@ -12,20 +12,25 @@
 //                     From the top: the underside's deck with its slit of pink smog and light falling through; the galleries' shop
 //                     fronts (amber shops, magenta curtains, cyan screens, rolled shutters), their neon edges, rails, hanging signs;
 //                     lantern strings and bare power cables across, birds on the nearest; the footbridge with DRAIN MARKET / NO
-//                     QUESTIONS (magenta neon in a cyan frame); the drone platform over the crowd; the bed: stalls under rust, faded
+//                     QUESTIONS (magenta neon in a cyan frame); the bed: stalls under rust, faded
 //                     green, plum and blue tarps along both walls, the canal with its planks, the crowd; near us the story's places:
 //                     the stairs up along the left wall, HOT WOK's cart, the preacher on his crate with his two thermos flasks,
 //                     Sable's curtain in a pier, KIDNEYS ONLY with its cooler, the CHROME jars, Ratz on his crate by the JUNK
 //                     blanket, the stairs down as a fenced hole with the red chain. The near bed (the bottom window, where the
-//                     camera stops) is the busiest part: packed on both banks as a night market is, its people 22-26 px with hoods,
-//                     caps, bags, a few umbrellas (some with an LED edge), bowls of food, crates on shoulders, faces turned up to
-//                     the lanterns; gaps only where a story thing has to read. Juno is not in the picture (she does not walk it).
+//                     camera stops) is busy but not a wall: loose clusters on both banks, two or three talking, some alone, a few
+//                     walking, the floor showing between; its people 22-26 px with hoods, caps, bags, a few umbrellas (some with an
+//                     LED edge), bowls of food, crates on shoulders, faces turned up to the lanterns; gaps where a story thing has
+//                     to read, and an open ring of bare floor round the preacher (nobody listens). Juno is not in the picture.
+//   drain_arrival_drone  75x33, 12 frames: the vendors' drone platform, a sprite of its own so the game draws it over the picture
+//                     (in front of every lantern string) and lifts it at the start of the shot. Anchor bottom-centre; where it
+//                     hovers, the anchor is at [136, 130] (its hull at P(-2.8, 12.2, 40)), its pod just above the sign; a good end of
+//                     its rise is [160, 90], over the lanterns under the slit, clear of the sign and the hanging signs.
 // Light (style guide §5, §7): amber is the key (the lanterns, the food), magenta for commerce and Sable's lure, cyan only for tech
 // (screens, jars, the platform, the sign's frame, the door up), red only on the chain. The smoke between us and a thing is laid on in
-// flat bands by distance (haze); dither only at a light's falloff (the pools on the bed, the lanterns on the walls, the scan cone).
+// flat bands by distance (haze); dither only at a light's falloff (the pools on the bed, the lanterns on the walls).
 // The bed is wet: lights mirror on it in broken streaks, strongest in the puddles along the canal's lip.
 // Moving: lanterns breathing, a few swaying on their strings (their reflections with them), the sign's K and a few hanging signs
-// stuttering, the gallery screens scrolling, the wok's fire and steam, the platform's ring and rotors and its scan, the canal's
+// stuttering, the gallery screens scrolling, the wok's fire and steam, the platform's ring, rotors and pod light, the canal's
 // glints, the crowd (heads turning, a few stepping in place, the bowls' steam, the preacher's hand), Sable's curtain leaking light,
 // smoke drifting.
 include("../lib/iso.js", { palette: true })
@@ -352,7 +357,7 @@ const DA = (() => {
     if (body >= 3) box(x0, by, wpx, 1, kz(mix(cc, K.R, 0.28)))
     if (wpx >= 4 && body >= 3) box(x0 + wpx - 1, by + 1, 1, body - 1 + long, kz(mix(cc, K.k, 0.45)))
     // an open coat shows what is under it
-    if (wpx >= 7 && body >= 7 && q3 < 0.35) box(x0 + R(wpx / 2) - 1, by + 1, 2, body - 2 + long, kz(q4 < 0.5 ? K[1] : mix(K.H, K[4], 0.5)))
+    if (wpx >= 7 && body >= 7 && q3 < 0.35 && !o.back) box(x0 + R(wpx / 2) - 1, by + 1, 2, body - 2 + long, kz(q4 < 0.5 ? K[1] : mix(K.H, K[4], 0.5)))
     if (wpx >= 6 && body >= 6) {
       const arm = R(body * 0.75)
       for (const ax of [x0 + 1, x0 + wpx - 2]) box(ax, by + 2, 1, arm - 1, kz(mix(cc, K.k, 0.3)))
@@ -365,15 +370,16 @@ const DA = (() => {
     }
     if (o.raise) { const up = (FR % 6 < 3) ? 0 : 1; box(x0 + wpx, by - R(hpx * 0.15) + up, Math.max(1, R(wpx / 3)), R(hpx * 0.45) - up, kz(cc)); dot(x0 + wpx, by - R(hpx * 0.15) + up - 1, kz(o.skin ?? K.s)) }
     // what a near one carries or does: an umbrella, a bowl of food, a crate on the shoulder, or the head turned up to the lanterns
-    const ex = o.extra ?? (hpx >= 12 && !o.still ? hash(id, 75) : 1)
+    const ex = o.extra ?? (hpx >= 12 && !o.still && !o.back ? hash(id, 75) : 1)
     const act = ex < 0.05 ? "umbrella" : ex < 0.16 && body >= 5 ? "bowl" : ex < 0.25 ? "crate" : ex < 0.36 ? "up" : null
-    // the head, turned aside for a few frames
-    const turn = turner && act !== "up" && wpx >= 3 && ph >= 3 && ph < 6 ? (q4 < 0.5 ? -1 : 1) : 0
+    // the head: toward whoever they talk to (looking off for two frames), or turned aside now and then
+    const turn = wpx < 3 ? 0 : o.face ? (ph >= 6 && ph < 8 ? 0 : o.face) : turner && act !== "up" && ph >= 3 && ph < 6 ? (q4 < 0.5 ? -1 : 1) : 0
     const hw = Math.max(1, wpx - 2), hx = x0 + R((wpx - hw) / 2) + turn, hy = by - head
     const skin = kz(o.skin ?? (q4 < 0.5 ? K.s : K.S)), hair = kz(o.hair ?? HAIR[R(q3 * 6)]), kind = o.kind ?? (q2 < 0.22 ? "hood" : q2 < 0.36 ? "cap" : "bare")
     // from up here the top of the head shows more than the face, more so the steeper we look
     const top = head >= 2 ? Math.max(1, R(head * (0.25 + 0.35 * Math.sin(p.a)))) : 0
-    if (kind === "hood") { box(hx, hy, hw, head, kz(mix(cc, K.k, 0.2))); if (head >= 2 && hw >= 2) box(hx + R(hw / 2 - 0.5) - turn, hy + head - 1, Math.max(1, hw - 2), 1, skin) }
+    if (o.back) box(hx, hy, hw, head, kind === "hood" ? kz(mix(cc, K.k, 0.2)) : hair)                // seen from behind: no face
+    else if (kind === "hood") { box(hx, hy, hw, head, kz(mix(cc, K.k, 0.2))); if (head >= 2 && hw >= 2) box(hx + R(hw / 2 - 0.5) - turn, hy + head - 1, Math.max(1, hw - 2), 1, skin) }
     else if (act === "up" && head >= 3 && hw >= 3) {                                     // the face turned up: it shows whole, lit warm
       box(hx, hy, hw, head, kz(mix(o.skin ?? (q4 < 0.5 ? K.s : K.S), K.R, 0.15))); box(hx, hy, hw, 1, hair)
       dot(hx + (hw >= 5 ? 1 : 0), hy + R(head / 2), kz(K.k)); dot(hx + hw - 1 - (hw >= 5 ? 1 : 0), hy + R(head / 2), kz(K.k))
@@ -601,30 +607,6 @@ const DA = (() => {
       for (let x = x0 + 2; x < x1 - 2; x++) blend(x, y1 + 3, K.m, 0.18, d - 1)
     }
 
-    // the drone platform over the crowd beyond the bridge, seen nearly level from up here: a hull with a ring of cyan lights, two rotors
-    // on outriggers, a cargo pod hanging under it on a cable, its scan falling on the people in a dithered cone (light falloff) that sweeps
-    {
-      const p = P(-2.8, 12.2, 40), s = p.s, hw = R(s * 3.2), hh = Math.max(4, R(s * 0.9)), d = p.r, x0 = R(p.x), y0 = R(p.y)
-      const f = P(-2.8, 0, 40), sw = R(wave(1) * 3)
-      for (let y = y0 + hh; y < R(f.y); y++) { const u = (y - y0) / (f.y - y0), w = R(hw * (0.3 + u * 0.8)); for (let x = -w; x <= w; x++) if (bay(x + 400, y) < 0.42 - u * 0.25) blend(x0 + x + R(sw * u), y, K.v, 0.4, d + 0.5) }
-      line(x0, y0 + hh, x0, y0 + hh + R(s * 1.6), K.k, d - 0.1); rect(x0 - 2, y0 + hh + R(s * 1.6), 5, 4, K[4], d - 0.1); rect(x0 - 2, y0 + hh + R(s * 1.6), 5, 1, K[5], d - 0.1)
-      put(x0, y0 + hh + R(s * 1.6) + 2, FR % 4 < 2 ? K.V : K.C, d - 0.11)
-      for (const sd of [-1, 1]) {
-        const rx = x0 + sd * (hw + 4), spin = (FR + (sd > 0 ? 1 : 0)) % 2
-        line(x0 + sd * hw, y0 + 1, rx, y0 - 1, K[3], d - 0.05)
-        rect(rx - 1, y0 - 2, 3, 3, K[2], d - 0.06); put(rx, y0 - 2, K[5], d - 0.07)
-        // the blades as a blur: long one frame, short and faint the next
-        if (spin) { rect(rx - 6, y0 - 3, 13, 1, K[6], d - 0.06); rect(rx - 5, y0 - 2, 2, 1, K[5], d - 0.06); rect(rx + 4, y0 - 2, 2, 1, K[5], d - 0.06) }
-        else { rect(rx - 4, y0 - 3, 9, 1, K[5], d - 0.06); put(rx - 6, y0 - 3, K[4], d - 0.06); put(rx + 6, y0 - 3, K[4], d - 0.06) }
-      }
-      rect(x0 - hw - 1, y0 - 1, 2 * hw + 3, hh + 3, K.k, d); rect(x0 - hw, y0, 2 * hw + 1, hh, K[2], d - 0.01); rect(x0 - hw, y0, 2 * hw + 1, 1, K[4], d - 0.01)
-      rect(x0 - hw, y0 + hh - 2, 2 * hw + 1, 2, K[1], d - 0.01)                           // the underside, unlit
-      // the ring of lights chases round the hull
-      for (let x = -hw + 1, n = 0; x < hw; x += 3, n++) put(x0 + x, y0 + hh - 1, (n + FR) % 4 === 0 ? K.V : K.v, d - 0.02)
-      rect(x0 - 3, y0 + 1, 7, Math.max(1, hh - 3), K.c, d - 0.02); put(x0, y0 + 1, K.V, d - 0.03); put(x0 - 2 + (FR % 6 < 3 ? 0 : 4), y0 + 2, K.v, d - 0.03)
-      put(x0 - hw, y0 + 1, FR % 6 === 0 ? K.V : K.C, d - 0.02); put(x0 + hw, y0 + 1, FR % 6 === 3 ? K.V : K.C, d - 0.02)
-    }
-
     // the crowd beyond the bridge: a river on the bed (its loop starts at 9 m only so its people stay the ones the blocks had)
     let n = 0
     for (let Z = 9; Z < ZEND - 8; Z += Z < 28 ? 0.9 : Z < 50 ? 0.36 : 0.24) for (const side of [-1, 1]) {
@@ -632,25 +614,47 @@ const DA = (() => {
       if (Z < 28) continue
       person(X, Z, 0, COATS[R(hash(n, 3) * (COATS.length - 1))], { id: n, accent: ACC[R(hash(n, 4) * 7)], skin: hash(n, 6) < 0.5 ? K.s : K.S })
     }
-    // the near bed, from under the picture's bottom edge to the bridge: packed as a night market is, both banks, three abreast every
-    // 0.5 m, so it is the busiest part of the picture where the camera stops. Gaps only where a story thing has to read: a person
-    // hides what lies up to 1.5 m behind them, so each gap reaches that far in front of its thing.
+    // the near bed, from under the picture's bottom edge to the bridge: busy, not a wall. People stand in loose clusters, two or
+    // three talking (their heads to each other), some alone (one with a bowl), a few walking; the floor shows between the groups.
+    // Gaps where a story thing has to read: a person hides what lies up to 1.5 m behind them, so each gap reaches that far in front.
     const KEEP = [
       [1.5, 4.2, 0, 11.3],          // the stairs down, the red chain on its fence
       [2.9, 9, 11.2, 15.7],         // Ratz on his crate, the JUNK blanket and its sign
       [3.3, 9, 15.6, 19.0],         // the CHROME table
       [3.6, 9, 19.0, 22.0],         // the cooler under KIDNEYS ONLY
       [-9, -3.3, 17.3, 21.4],       // HOT WOK's cart, its stools, the two eating
-      [-4.0, -1.4, 19.6, 24.2],     // the preacher on his crate, his flasks, WAKE, a little floor behind him
+      [-4.6, -1.5, 19.3, 21.9],     // in front of the preacher and his WAKE placard: whoever stood here would cover them
+      [-3.3, -1.7, 22.4, 26.6],     // behind him: his head and WAKE stand against bare floor
       [-9, -5.1, 0, 16.6],          // the stairs up: their foot and their edge, all the way up
       [-9, -5, 26, 30],             // Sable's curtain
     ]
-    let nn = 0
-    for (let Z = 8.4; Z < 28; Z += 0.5) for (const side of [-1, 1]) for (let k = 0; k < 3; k++) {
-      const id = 20000 + nn++, X = side * (CAN + 0.3 + (k + 0.05 + hash(id, 17) * 0.9) * 1.17), z = Z + hash(id, 18) * 0.4
-      if (KEEP.some(([x0, x1, z0, z1]) => X > x0 && X < x1 && z > z0 && z < z1)) continue
-      const bright = hash(id, 19) < 0.1, coat = bright ? COATS_NEAR[COATS.length + 3 + R(hash(id, 3) * 3)] : COATS_NEAR[R(hash(id, 3) * (COATS.length + 2))]
-      person(X, z, 0, coat, { id, h: 1.55 + hash(id, 7) * 0.32, w: 0.46 + hash(id, 8) * 0.1, accent: ACC[R(hash(id, 4) * 7)], skin: hash(id, 6) < 0.5 ? K.s : K.S })
+    const PRE = [-2.5, 22.4]                                                       // the preacher's crate
+    const nearCoat = (id) => hash(id, 19) < 0.1 ? COATS_NEAR[COATS.length + 3 + R(hash(id, 3) * 3)] : COATS_NEAR[R(hash(id, 3) * (COATS.length + 2))]
+    const nearLook = (id) => ({ h: 1.55 + hash(id, 7) * 0.32, w: 0.46 + hash(id, 8) * 0.1, accent: ACC[R(hash(id, 4) * 7)], skin: hash(id, 6) < 0.5 ? K.s : K.S })
+    let ci = 0
+    const kept = (X, z) => KEEP.some(([x0, x1, z0, z1]) => X > x0 && X < x1 && z > z0 && z < z1)
+    for (let Z = 8.6; Z < 27.6; Z += 0.72) for (const side of [-1, 1]) {
+      const cid = 40000 + ci++, cz = Z + hash(cid, 1) * 0.6
+      // a group stands where there is floor: a centre in a story thing's gap tries again elsewhere on the bank
+      let cx = 0
+      for (let t = 0; t < 4; t++) { cx = side * (CAN + 0.55 + hash(cid, 2 + t * 10) * 2.8); if (!kept(cx, cz)) break }
+      const size = [1, 2, 2, 3, 1, 2, 3, 2][R(hash(cid, 3) * 7)]
+      for (let m = 0; m < size; m++) {
+        const id = cid * 4 + m, ang = hash(id, 4) * TAU + m * 2.1, rr = size === 1 ? 0 : 0.32 + hash(id, 5) * 0.25
+        const X = cx + Math.cos(ang) * rr, z = cz + Math.sin(ang) * rr * 0.8
+        if (Math.abs(X) < CAN + 0.25 || Math.abs(X) > 5.6) continue
+        if (kept(X, z)) continue
+        if (Math.hypot(X - PRE[0], z - PRE[1]) < 2.5) continue                    // the open ring round the preacher
+        const face = size > 1 ? (Math.sign(cx - X) || (m % 2 ? 1 : -1)) : 0
+        person(X, z, 0, nearCoat(id), { id, ...nearLook(id), face, extra: size === 1 && hash(cid, 6) < 0.4 ? 0.12 : undefined })
+      }
+    }
+    // the ring round the preacher: at the edge of his bare circle (its other half is the canal), one facing him, the rest passing or
+    // with their backs to him; nobody listens. Behind him they face away from him, so from up here we see their backs. The placard
+    // stands at his left, so the ring keeps clear of its front.
+    for (const [deg, r, o] of [[118, 2.0, { back: true }], [140, 2.2, { back: true }], [170, 2.2, { face: 1 }], [200, 2.3, { face: -1 }]]) {
+      const a = deg * Math.PI / 180, X = PRE[0] + Math.cos(a) * r, z = PRE[1] + Math.sin(a) * r, id = 50000 + deg
+      person(X, z, 0, nearCoat(id), { id, ...nearLook(id), extra: 1, ...o })
     }
     // a few crossing on the near planks: the canal stays the way through
     for (const [z, xs] of [[12.4, [-1.1, 0.9]], [19.4, [-0.4]]]) xs.forEach((x, i) => person(x, z + 0.55, 0.02, COATS_NEAR[R(hash(z * 10, i) * 18)], { id: 30000 + R(z * 10) + i }))
@@ -854,7 +858,44 @@ const DA = (() => {
 
     for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) c.px(x, y, col[y * W + x])
   }
-  return { W, H, paint, P }
+  /**
+   * The vendors' drone platform, its own sprite so the game draws it over the picture (in front of every lantern string) and lifts
+   * it: seen nearly level from up here, a dark hull with its top edge lit, the underside unlit, the ring of cyan lights chasing round
+   * it, two crates lashed on its deck, two rotors on outriggers, a cargo pod on a cable with its light blinking. No scan cone: drawn
+   * over the picture it would fall across the DRAIN MARKET sign (which is nearer), and it could not reach the floor once the platform
+   * rises. Drawn at its size where it hovers (P(-2.8, 12.2, 40), 8.5 px a metre); its pod ends just above the sign.
+   */
+  const DR = (() => { const p = P(-2.8, 12.2, 40), hw = R(p.s * 3.2), hh = Math.max(4, R(p.s * 0.9)); return { s: p.s, hw, hh, w: 2 * (hw + 10) + 1, h: 6 + hh + R(p.s * 1.6) + 5, x: R(p.x), y: R(p.y), top: 6 } })()
+  const drone = (c) => {
+    FR = c.frame ?? 0; PH = FR / 12
+    const { s, hw, hh, h: DH } = DR, x0 = hw + 10, y0 = DR.top, py = y0 + hh + R(s * 1.6)
+    const px = (x, y, k) => { if (x >= 0 && y >= 0 && x < DR.w && y < DH) c.px(x, y, k) }
+    const rc = (x, y, w, h, k) => { for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) px(x + i, y + j, k) }
+    // the pod on its cable
+    for (let y = y0 + hh + 1; y < py; y++) px(x0, y, K.k)
+    rc(x0 - 3, py - 1, 7, 6, K.k); rc(x0 - 2, py, 5, 4, K[3]); rc(x0 - 2, py, 5, 1, K[5]); px(x0, py + 2, FR % 4 < 2 ? K.V : K.C)
+    // the outriggers and their rotors, the blades a blur: long one frame, short the next
+    for (const sd of [-1, 1]) {
+      const rx = x0 + sd * (hw + 4), spin = (FR + (sd > 0 ? 1 : 0)) % 2
+      for (let i = 0; i <= 4; i++) px(x0 + sd * (hw + i), y0 + 1 - (i >> 1), K[3])
+      rc(rx - 2, y0 - 3, 5, 5, K.k); rc(rx - 1, y0 - 2, 3, 3, K[2]); px(rx, y0 - 2, K[5])
+      if (spin) { rc(rx - 6, y0 - 3, 13, 1, K[6]); rc(rx - 5, y0 - 2, 2, 1, K[5]); rc(rx + 4, y0 - 2, 2, 1, K[5]) }
+      else { rc(rx - 4, y0 - 3, 9, 1, K[5]); px(rx - 6, y0 - 3, K[4]); px(rx + 6, y0 - 3, K[4]) }
+    }
+    // two crates lashed on the deck, the strap across them
+    for (const [cx, cw] of [[x0 - 15, 7], [x0 + 6, 6]]) { rc(cx - 1, y0 - 4, cw + 2, 4, K.k); rc(cx, y0 - 3, cw, 2, K.w2); rc(cx, y0 - 3, cw, 1, K.w3); px(cx + 2, y0 - 2, K.w1) }
+    // the hull: its outline, its top edge lit, the body dark, the underside unlit
+    rc(x0 - hw - 1, y0 - 1, 2 * hw + 3, hh + 3, K.k)
+    rc(x0 - hw, y0, 2 * hw + 1, hh, K[2]); rc(x0 - hw, y0, 2 * hw + 1, 1, K[4])
+    rc(x0 - hw, y0 + hh - 2, 2 * hw + 1, 2, K[1])
+    for (let x = -hw + 6; x < hw - 4; x += 9) rc(x0 + x, y0 + 1, 1, hh - 3, K[1])               // the hull's plates
+    // the ring of lights chases round the hull; the bridge window, its pilot light; the riding lights at the ends
+    for (let x = -hw + 1, n = 0; x < hw; x += 3, n++) px(x0 + x, y0 + hh - 1, (n + FR) % 4 === 0 ? K.V : K.v)
+    rc(x0 - 3, y0 + 1, 7, Math.max(1, hh - 4), K.c); px(x0, y0 + 1, K.V); px(x0 - 2 + (FR % 6 < 3 ? 0 : 4), y0 + 2, K.v)
+    px(x0 - hw, y0 + 1, FR % 6 === 0 ? K.V : K.C); px(x0 + hw, y0 + 1, FR % 6 === 3 ? K.V : K.C)
+  }
+  return { W, H, paint, P, drone, DR }
 })()
 
 anim("drain_arrival_bg", { w: DA.W, h: DA.H, frames: 12, fps: 10 }, DA.paint)
+anim("drain_arrival_drone", { w: DA.DR.w, h: DA.DR.h, frames: 12, fps: 10 }, DA.drone)

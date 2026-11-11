@@ -240,24 +240,44 @@ Cutaway.room("drain_market", { name: "Drain-Markt", background: "drain_market_bg
     stalls: { name: "Stände", rect: AM.stallsRect, walkTo: AM.stalls, face: "ne", look: "[MOCK] Hier kommen noch Ratz und Sables Vorhang." },
   } });
 // the arrival (kapitel1-design §9, decided 2026-11-11): every time Juno takes the stairs down from the alley, first the view from the
-// top of them, tilting from the sign down to the crowd on the canal, then the market from above. A click skips the tilt. Only the
-// first time she says something: whether she has said it is a view flag (it changes what is said, never what happens)
+// top of them: the market's bustle a few seconds, the vendors' drone platform rising out of the picture, the camera tilting slowly
+// down to the crowd on the canal; then the market from above. Later visits: one click skips it. The first time, Juno and EVI talk once
+// it has all moved (a click takes each line on); whether they have is a view flag (it changes what is said, never what happens)
 Cutaway.state.view("markt_gesehen");
 Cutaway.room("drain_arrival", { name: "Drain-Markt", background: "drain_arrival_bg", size: [320, 432], observe: true, lines: "bottom", buttons: false,
+  props: [{ id: "drone", image: "drain_arrival_drone", at: [136, 130] }],
   ambience: ["city_far", "neon_buzz"], music: { theme: "juno", intensity: 0.4 } });
 Cutaway.sequence("drain_arrival", {
   steps: [
     { goto: "drain_arrival" },
     { camera: [0, 0], ms: 0 },
-    { camera: [0, 252], ms: 5000, ease: "inOut" },
-    { shot: "satz" },
-    { if: "!markt_gesehen", then: [{ set: "markt_gesehen" }, "Jedes Mal ist der Markt heller, als ich ihn in Erinnerung habe."] },
+    { wait: 4500 },
+    { move: "drone", to: [160, 0], ms: 3500, ease: "in" },
+    { camera: [0, 252], ms: 9000, ease: "inOut" },
+    { shot: "markt" },
+  ],
+});
+Cutaway.sequence("drain_arrival_first", {
+  steps: [
+    { set: "markt_gesehen" },
+    { goto: "drain_arrival" },
+    { camera: [0, 0], ms: 0 },
+    { wait: 4500 },
+    { move: "drone", to: [160, 0], ms: 3500, ease: "in" },
+    { camera: [0, 252], ms: 9000, ease: "inOut" },
+    // a shot mark before each line: a click takes one line on, not the whole talk
+    { shot: "l1" }, "Jedes Mal ist der Markt heller, als ich ihn in Erinnerung habe.",
+    { shot: "l2" }, { say: "evi", text: "Finden wir hier, was wir brauchen?" },
+    { shot: "l3" }, "Hier unten findet man fast alles. Man muss nur wissen, wen man fragt.",
+    { shot: "l4" }, { say: "evi", text: "Und wen fragen wir zuerst?" },
+    { shot: "l5" }, "Zuerst niemanden. Zuerst schauen wir uns um.",
     { shot: "markt" },
   ],
   after: [{ set: "markt_gesehen" }],
 });
 // the market itself after the shot (a goto inside a sequence is only a shot: Juno would stay in the alley)
-Cutaway.room.get("gasse").hotspots.market.use = [{ sequence: "drain_arrival" }, { goto: "drain_market", at: AM.arrive, face: "se" }];
+Cutaway.room.get("gasse").hotspots.market.use = [{ if: "markt_gesehen", then: [{ sequence: "drain_arrival" }], else: [{ sequence: "drain_arrival_first" }] },
+  { goto: "drain_market", at: AM.arrive, face: "se" }];
 
 // the big look upwards (a shot of its own: the block for what will be painted as large as the intro's)
 Cutaway.room("dach_blick", { name: "Die Ringe", background: "dach_blick_b_bg", observe: true, lines: "bottom", buttons: false,
