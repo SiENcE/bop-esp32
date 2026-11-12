@@ -22,8 +22,7 @@
     "art: test street": ["sh", "tools/build_art.sh", "test"],
     "art: room": ["sh", "tools/build_art.sh", "room", "{room}"],
     "room: new": ["node", "tools/new-room.mjs", "{room}", "{u}", "{v}"],
-    "plan: pictures": ["node", "tools/stadtplan.mjs"],
-    "plan: ways": ["node", "tools/stadtplan-links.mjs"]
+    "plan: pictures": ["node", "tools/stadtplan.mjs"]
   },
   "editor": ["game/editor/iso.js", "game/editor/plan.js"]
 }

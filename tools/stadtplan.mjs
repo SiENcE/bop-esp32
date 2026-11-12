@@ -1,6 +1,5 @@
-// The city's plan as pictures, one a level: docs/plan/index.html (the data docs/plan/stadtplan.js, the ways from the game
-// docs/plan/uebergaenge.js, drawn by docs/plan/plan.js) in a headless Chrome, its canvas saved as docs/plan/stadtplan_<level>.png.
-// Run tools/stadtplan-links.mjs first when the game's ways have changed.
+// The city's plan as pictures, one a level: docs/plan/index.html (the data docs/plan/stadtplan.js,
+// drawn by docs/plan/plan.js) in a headless Chrome, its canvas saved as docs/plan/stadtplan_<level>.png.
 //   node tools/stadtplan.mjs [--scale 1]
 import { writeFileSync } from "node:fs";
 import { resolve } from "node:path";
