@@ -1,37 +1,28 @@
-// CAM 22, Pho Pump: the bar's camera on the back wall over the stove, 2.5 m up, looking across the counter. Feed mode, 320x180, the
-// phosphor ramp only (style guide §9). The user chose the blocks A of two (art/mockups/cam22_blocks.px.js,
-// docs/cams/cam22_blocks_vergleich_x3.png, 2026-11-12); this paints on their lines: the same place in meters, the same camera.
-// Pho Pump is a standing noodle bar. In front, big and near, the cook from behind (his cap, his shoulders, the apron's strings, the
-// ladle in his hand) and the steam of the big stock pot rising on the right; then the counter across the room with its bowls,
-// chopsticks and bottles; across it Ines, standing to eat, facing us (her sprite at this scale, game/kapitel1.js); behind her the
-// room's tiles, a calendar, the lamps over the counter, and the front window onto the cross street, the menu board and the sign
-// seen from behind, the door; across the street the clinic's white front with its ring.
-// The cook stands at the counter, 1 m out from the wall: of two distances tried the user chose this one (docs/cams/cam22_koch_test_x3.png,
-// 2026-11-12), a little to the left so he never covers Ines. Ines is the game's actor, at this camera's scale her own sprite (her upper
-// body over the counter, art/mock/ch1_blocks.px.js mock_ines_bar, on blocks until approved). Where: CAM22_LAYOUT at the end of this
-// file (printed when built), copied into game/places.js (cam22).
+// CAM 22, Pho Pump: the bar's camera on the back wall at head height, looking straight across the counter. Feed mode, 320x180, the
+// phosphor ramp only (style guide §9). Frontal: the user's choice of 2026-11-12 after a painting in perspective looked odd to them
+// (docs/cams/cam22_ansichten_x2.png: the perspective painting, F frontal, I iso; art/mockups/cam22_blocks2.px.js), and with it the
+// rule that each camera gets the view that fits it best (kapitel1-design). This paints on the lines of F, built in meters with a
+// long lens so the room stays flat and square.
+// Pho Pump is a standing noodle bar. In front, big, the cook's back (his cap, his shoulders, the apron's strings, his arm out with
+// the ladle) on the left, the big pot on its stove on the right with its steam; then the counter across the picture with its
+// bowls, chopsticks and bottles; across it Ines, standing to eat, facing us (her own sprite at this scale, game/kapitel1.js);
+// behind her the tiles, a calendar, the lamps over the counter, and the front window onto the cross street with the menu board
+// and the sign seen from behind, the door; across the street the clinic's white front with its ring. Where: CAM22_LAYOUT at the
+// end of this file (printed when built), copied into game/places.js (cam22).
 include("../lib/feed.js")
 include("../lib/text.js")
 pal({ ...PHOSPHOR })
 ramps(PH)
 
 const W = 320, H = 180
-const CAM = makeCam({ pos: [-0.5, 2.5, -0.5], yaw: 6, pitch: 27, F: 64, w: W, h: H, k: 0.14 })
+const CAM = makeCam({ pos: [0.2, 1.6, -0.5], yaw: 0, pitch: 6, F: 128, w: W, h: H, k: 0.05 })
 
 // ================================================================ the place, in meters (x right, y up, z away from the cook's wall)
 const ROOM = { x0: -3.2, x1: 3.6, back: -0.6, front: 5.8, h: 2.9 }
 const COUNTER = { z0: 1.1, z1: 1.65, top: 1.08 }
 const INES = [0.2, 2.1]
-const GUESTS = [[-1.6, 2.3], [2.0, 2.2]]
 const WIN = { x0: -2.6, x1: 1.9, y0: 0.7, y1: 2.4 }, DOOR = { x0: 2.3, x1: 3.2 }
-const POT = [0.35, -0.25, 0.27]                                            // the big stock pot (x, z, r), its steam in front
-
-// the cook from behind: a body, shoulders, his head and cap; at (x, z), facing the counter
-const cook = ([x, z]) => [
-  cyl(x, z, 0.23, 0, 1.38, "cook"), block([x - 0.27, 1.22, z - 0.12], [x + 0.27, 1.42, z + 0.12], "cook"),
-  cyl(x, z + 0.02, 0.11, 1.42, 1.5, "neck"), cyl(x, z + 0.02, 0.13, 1.5, 1.72, "hair"), cyl(x, z + 0.02, 0.14, 1.66, 1.78, "cap"),
-  block([x + 0.2, 1.05, z], [x + 0.3, 1.32, z + 0.45], "cook"),            // his right arm, reaching to the counter
-]
+const POT = [1.3, 0.6, 0.24]                                              // the big stock pot (x, z, r) on its stove in front, its steam
 
 function world(cookAt) {
   const PRIMS = [
@@ -53,23 +44,19 @@ function world(cookAt) {
     cyl(INES[0], COUNTER.z1 - 0.2, 0.11, COUNTER.top, COUNTER.top + 0.09, "bowl"),
     block([INES[0] + 0.15, COUNTER.top, COUNTER.z1 - 0.32], [INES[0] + 0.33, COUNTER.top + 0.005, COUNTER.z1 - 0.12], "napkin"),
     ...[-2.4, -0.9, 1.0].flatMap((x) => [cyl(x, COUNTER.z0 + 0.25, 0.035, COUNTER.top, COUNTER.top + 0.2, "bottle"), cyl(x + 0.1, COUNTER.z0 + 0.25, 0.04, COUNTER.top, COUNTER.top + 0.14, "sticks")]),
-    ...GUESTS.map(([x]) => cyl(x, COUNTER.z1 - 0.2, 0.11, COUNTER.top, COUNTER.top + 0.09, "bowl")),
-    // the stove along the back wall, the pots, a shelf of bowls on the left
-    block([ROOM.x0, 0, ROOM.back], [ROOM.x1, 0.9, 0.05], "stove"),
-    cyl(-0.9, -0.28, 0.24, 0.9, 1.3, "pot"), cyl(POT[0], POT[1], POT[2], 0.9, 1.38, "pot"), cyl(2.3, -0.25, 0.25, 0.9, 1.34, "pot"),
-    block([ROOM.x0, 1.85, ROOM.back], [-1.0, 1.9, ROOM.back + 0.3], "shelf"),
+    // the stove in front on the right with the big pot; a shelf of bowls on the left wall
+    block([0.55, 0, 0.05], [2.4, 0.9, 0.75], "stove"),
+    cyl(POT[0], POT[1], POT[2], 0.9, 1.3, "pot"), cyl(1.95, 0.55, 0.18, 0.9, 1.15, "pot"),
+    block([ROOM.x0, 1.6, 1.8], [ROOM.x0 + 0.3, 1.64, 4.2], "shelf"),
     // the lamps over the counter: their shades on their cords
-    ...[-1.0, 1.2].flatMap((x) => [cyl(x, 1.35, 0.17, 2.18, 2.32, "shade"), cyl(x, 1.35, 0.01, 2.32, ROOM.h, "cord")]),
-    // the cook, the two others at the counter (stand-ins: the game draws no one else here)
-    ...GUESTS.flatMap(([x, z]) => [cyl(x, z, 0.24, 0, 1.45, "person"), cyl(x, z, 0.13, 1.45, 1.75, "head")]),
+    ...[-1.1, 1.5].flatMap((x) => [cyl(x, 1.7, 0.17, 2.18, 2.32, "shade"), cyl(x, 1.7, 0.01, 2.32, ROOM.h, "cord")]),
     // outside: the cross street, the clinic's white front across it
     block([-12, -0.2, ROOM.front + 0.2], [12, 0.01, 20], "street"),
     block([-12, 0, 16], [12, 9, 17], "clinic"),
   ]
   const LIGHTS = [
-    { p: [-1.0, 2.15, 1.35], I: 0.9, R: 2.8, shadow: true }, { p: [1.2, 2.15, 1.35], I: 0.9, R: 2.8, shadow: true },
-    { p: [0.4, 1.6, 0.2], I: 0.45, R: 1.6 },
-    { p: [-1.1, 2.3, -0.1], I: 0.7, R: 1.8 },                                         // the hood's lamp over the stove, on the cook's back
+    { p: [-1.1, 2.15, 1.4], I: 0.9, R: 2.8, shadow: true }, { p: [1.5, 2.15, 1.4], I: 0.9, R: 2.8, shadow: true },
+    { p: [1.3, 1.5, 0.6], I: 0.4, R: 1.4 },                                           // the stove's glow on the pots
     { p: [-0.4, 1.5, ROOM.front - 0.3], I: 0.45, R: 2.2 },
     { p: [0, 4, 15], I: 2.0, R: 9 },
   ]
@@ -81,7 +68,7 @@ const MATS = {
   // the walls: white tiles to shoulder height, a calendar on the left wall, a poster by the window
   wall: (P, n, f, hit) => {
     const [x, y, z] = P, low = y < 1.5
-    if (hit.prim.side === -1 && y > 1.3 && y < 1.9 && Math.abs(z - 3.2) < 0.3) return { a: y > 1.75 ? 0.3 : 0.62, e: 0 }   // the calendar
+    if (n[2] < 0 && z > ROOM.front - 0.01 && x > -3.05 && x < -2.75 && y > 1.2 && y < 1.75) return { a: y > 1.62 ? 0.3 : 0.62, e: 0 }   // the calendar
     if (n[2] < 0 && z > ROOM.front - 0.01 && x > DOOR.x1 + 0.05 && x < DOOR.x1 + 0.35 && y > 1.2 && y < 1.9) return { a: 0.55, e: 0.05 }   // a notice by the door
     if (low) { const t = ((y / 0.15) % 1 + 1) % 1 < 0.1 || (((x + z) / 0.15) % 1 + 1) % 1 < 0.1; return { a: t ? 0.26 : 0.36, e: 0 } }
     return { a: 0.3, e: 0 }
@@ -111,53 +98,51 @@ const MATS = {
   clinic: (P, n) => { const r = Math.hypot(P[0] + 0.6, P[1] - 3.2); return { a: 0.75, e: r < 0.9 && r > 0.6 ? 0.9 : 0.15 } },
 }
 
-const COOK = [-1.25, 0.5]
+const COOK = [-0.45, 0.85]
 const WORLD = world(COOK)
 const BAKE = () => bakeFeed(CAM, WORLD, { exposure: 1.2, key: "cam22" })
 
 // ---------------------------------------------------------------- hand drawing on top
-// the cook, painted by hand where the blockout puts him (measured: head top at 1.78 m, feet on the floor, leaning with the lens):
-// his white cap, dark hair, the back of his white jacket lit by the hood's lamp, the apron's strings crossed, his right arm out to
+// the cook's back, painted by hand where the blockout puts him, in units of a 52-unit-tall figure scaled to his size there: his
+// white cap, dark hair, the back of his white jacket, the apron's strings crossed, the bow, his left arm hanging, his right arm out to
 // the counter with the ladle; a dark edge round him so he reads in front of the counter
 const cookFig = (c) => {
-  const top = at(CAM, [COOK[0], 1.8, COOK[1]]), foot = at(CAM, [COOK[0], 0, COOK[1]])
-  const lean = (foot[0] - top[0]) / (foot[1] - top[1]), V = foot[1] - top[1]
-  const fig = new Map(), put = (u, v, k) => fig.set(Math.round(u) + "," + Math.round(v), k)
-  const ell = (cu, cv, ru, rv, f) => { for (let v = Math.floor(cv - rv); v <= cv + rv; v++) for (let u = Math.floor(cu - ru); u <= cu + ru; u++) { const q = ((u - cu) / ru) ** 2 + ((v - cv) / rv) ** 2; if (q <= 1) { const k = f(u, v, q); if (k) put(u, v, k) } } }
-  // the body: shoulders rounded, the back of the jacket lit from the hood's lamp on the left, its seam; the apron below
-  for (let v = 12; v < V - 4; v++) {
-    const hw = v < 17 ? 6 + Math.sqrt(Math.max(0, 1 - ((17 - v) / 5) ** 2)) * 8 : v < 30 ? 14 - (v - 17) * 0.18 : 11.6 - (v - 30) * 0.06
-    for (let u = -Math.round(hw); u <= Math.round(hw); u++) {
-      const apron = v >= 30, side = u / hw
-      put(u, v, apron ? (side > 0.6 ? "1" : "2") : side > 0.7 ? "5" : side > 0.35 ? "6" : u === 0 && v > 18 ? "6" : "7")
+  const top = at(CAM, [COOK[0], 1.82, COOK[1]]), foot = at(CAM, [COOK[0], 0, COOK[1]]), S = (foot[1] - top[1]) / 52
+  const hw = (v) => v < 17 ? 6 + Math.sqrt(Math.max(0, 1 - ((17 - v) / 5) ** 2)) * 8 : v < 30 ? 14 - (v - 17) * 0.18 : 11.6 - (v - 30) * 0.06
+  const e = (u, v, cu, cv, ru, rv) => ((u - cu) / ru) ** 2 + ((v - cv) / rv) ** 2 <= 1
+  const key = (u, v) => {
+    if (e(u, v, 0, 3, 6.5, 3.4)) return v < 1.5 ? (u < 1 ? "9" : "8") : v < 4.5 ? (u < 3 ? "8" : "7") : "6"   // the cap
+    if (e(u, v, 0, 8, 5.2, 3.2)) return u < -2.5 ? "2" : "1"                                          // the hair
+    if (v >= 10 && v < 13 && Math.abs(u) <= 2) return "3"                                               // the neck
+    if (e(u, v, 25, 25.5, 1.8, 1.8)) return "4"                                                        // his right hand
+    { const t = (u - 12) / 12, along = 15 + t * 9.6; if (t >= 0 && t <= 1 && v >= along && v < along + 3.2) return v > along + 2.2 ? "5" : "7" }   // his right arm
+    if (v >= 15 && v < 31 && u >= -16.5 && u < -13) return u < -15.5 ? "5" : "6"                        // his left arm
+    if (v >= 12 && v < 48) {
+      const h = hw(v); if (Math.abs(u) > h) return null
+      if (v >= 14 && v <= 30) { const f = (v - 14) / 16; if (Math.abs(u - (-8 + 15 * f)) < 0.7 || Math.abs(u - (8 - 15 * f)) < 0.7) return "1" }   // the strings
+      if (v >= 29.5 && v < 31.5 && Math.abs(u) < 2.5) return "2"                                       // the bow
+      const side = u / h
+      return v >= 30 ? (side > 0.6 ? "1" : "2") : side > 0.7 ? "5" : side > 0.35 ? "6" : Math.abs(u) < 0.5 && v > 18 ? "6" : "7"
     }
+    if (v >= 48 && Math.abs(u) >= 3 && Math.abs(u) <= 7) return "1"                                   // his legs
+    return null
   }
-  // his left arm hanging, his right arm out to the counter with the ladle
-  for (let v = 15; v < 31; v++) for (let u = -16; u <= -13; u++) put(u - (v - 15) * 0.05, v, u === -16 ? "5" : "6")
-  for (let i = 0; i < 12; i++) for (let w = 0; w < 3; w++) put(13 + i * 0.95, 15 + i * 0.8 + w, w === 2 ? "5" : "7")
-  ell(25, 25.5, 1.6, 1.6, () => "4")
-  // the apron's strings crossed on his back, the bow at his waist
-  for (let v = 14; v <= 30; v++) { const f = (v - 14) / 16; put(-8 + 15 * f, v, "1"); put(8 - 15 * f, v, "1") }
-  put(-2, 30, "1"); put(-1, 31, "2"); put(1, 31, "2"); put(2, 30, "1"); put(0, 30, "1")
-  // his legs under the apron
-  for (let v = V - 4; v <= V; v++) for (const u of [-6, -5, -4, -3, 3, 4, 5, 6]) put(u, v, "1")
-  // the neck, the back of his head (dark hair), the white cap on top
-  for (let v = 10; v < 13; v++) for (let u = -2; u <= 2; u++) put(u, v, "3")
-  ell(0, 8, 5.2, 3.2, (u) => (u < -2 ? "2" : "1"))
-  ell(0, 3, 6.5, 3.4, (u, v) => (v < 2 ? (u < 1 ? "9" : "8") : v < 5 ? (u < 3 ? "8" : "7") : "6"))
-  // drawn in place, leaning with the lens; a dark edge where he meets what is behind him
-  const at2 = (u, v) => [Math.round(top[0] + u + v * lean), top[1] + v]
-  for (const [key] of fig) { const [u, v] = key.split(",").map(Number); for (const [du, dv] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) if (!fig.has((u + du) + "," + (v + dv))) { const [x, y] = at2(u + du, v + dv); c.px(x, y, "0") } }
-  for (const [key, k] of fig) { const [u, v] = key.split(",").map(Number), [x, y] = at2(u, v); c.px(x, y, k) }
+  const ux = (x) => (x - top[0]) / S, vy = (y) => (y - top[1]) / S
+  for (let y = Math.max(0, top[1] - 1); y < H; y++) for (let x = Math.max(0, Math.floor(top[0] - 18 * S)); x < Math.min(W, top[0] + 28 * S); x++) {
+    const k = key(ux(x + 0.5), vy(y + 0.5))
+    if (k) { c.px(x, y, k); continue }
+    for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) if (key(ux(x + 0.5 + dx), vy(y + 0.5 + dy))) { c.px(x, y, "0"); break }
+  }
   // the ladle: its handle up from his hand, its bowl over the counter
-  const [hx, hy] = at2(25, 25); c.line(hx + 1, hy - 1, hx + 6, hy - 11, "8"); c.rect(hx + 5, hy - 14, 4, 3, "8"); c.hline(hx + 5, hy - 12, 4, "6")
+  const hx = Math.round(top[0] + 25 * S), hy = Math.round(top[1] + 25.5 * S)
+  c.line(hx + 2, hy - 2, hx + 10, hy - 18, "8"); c.rect(hx + 8, hy - 23, 7, 4, "8"); c.hline(hx + 8, hy - 20, 7, "6")
 }
 // the steam off the big pot: soft wisps rising and leaning toward the window's draught, wider and thinner as they rise, dithered
 const steam = (c) => {
-  for (let i = 0; i < 6; i++) for (let t = 0; t < 1; t += 0.035) {
-    const sway = Math.sin(t * 6 + i * 1.7) * 0.07 + t * 0.2
-    const [x, y] = at(CAM, [POT[0] + (ih(i, 1) - 0.5) * 0.3 + sway, 1.4 + t * 1.0, POT[1] + 0.05 + (ih(i, 2) - 0.5) * 0.25])
-    const r = 3 + t * 9, dens = (1 - t) * 0.9
+  for (let i = 0; i < 5; i++) for (let t = 0; t < 1; t += 0.03) {
+    const sway = Math.sin(t * 6 + i * 1.7) * 0.07 - t * 0.15
+    const [x, y] = at(CAM, [POT[0] + (ih(i, 1) - 0.5) * 0.35 + sway, 1.32 + t * 1.3, POT[1] + (ih(i, 2) - 0.5) * 0.25])
+    const r = 2 + t * 9, dens = (1 - t) * 0.7
     for (let dy = -r; dy <= r; dy++) for (let dx = -r; dx <= r; dx++) {
       const q = Math.hypot(dx, dy) / r; if (q > 1) continue
       const X = Math.round(x + dx), Y = Math.round(y + dy)

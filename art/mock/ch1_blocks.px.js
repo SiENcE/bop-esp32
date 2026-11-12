@@ -50,12 +50,14 @@ scene("look_zeitung", { w: 170, h: 112, bg: "h" }, (c) => {
 // (CAM 22 is painted now: art/cams/cam22.px.js.) Ines there at its scale, on blocks until approved: her upper body over the counter,
 // facing us, the white coat, the dark hair, her right hand flat on the napkin by her bowl (the counter hides the rest; the sprite's
 // foot is the counter's far edge, game/places.js cam22.seat)
-anim("mock_ines_bar", { w: 15, h: 21, frames: 1, fps: 1, outline: "k", pivot: "bottom" }, (c) => {
-  c.rect(5, 0, 5, 3, "a"); c.rect(4, 2, 7, 4, "a"); c.rect(5, 3, 5, 3, "g"); c.px(6, 4, "a"); c.px(8, 4, "a")   // her hair, her face
-  c.rect(6, 6, 3, 1, "g")                                                                         // the neck
-  c.rect(2, 7, 11, 14, "h"); c.vline(7, 8, 13, "g")                                               // the coat, open at the front
-  c.rect(1, 9, 2, 9, "h"); c.rect(12, 9, 2, 8, "h")                                               // her arms down to the counter
-  c.rect(11, 17, 4, 2, "g"); c.rect(0, 18, 3, 2, "g")                                             // her right hand on the napkin, the left at the bowl
+anim("mock_ines_bar", { w: 26, h: 38, frames: 1, fps: 1, outline: "k", pivot: "bottom" }, (c) => {
+  c.rect(8, 0, 10, 4, "a"); c.rect(7, 2, 12, 9, "a"); c.rect(18, 6, 3, 10, "a")                  // her hair, the braid over her shoulder
+  c.rect(9, 4, 8, 9, "g"); c.rect(10, 7, 2, 1, "a"); c.rect(14, 7, 2, 1, "a"); c.hline(11, 11, 4, "e")   // her face: eyes, mouth
+  c.rect(11, 13, 4, 2, "g")                                                                       // the neck
+  c.rect(3, 15, 20, 23, "h"); c.vline(12, 16, 22, "g"); c.vline(13, 16, 22, "g")                 // the coat, open at the front
+  c.rect(10, 15, 6, 4, "e")                                                                       // what she wears under it
+  c.rect(0, 18, 4, 16, "h"); c.rect(22, 18, 4, 14, "h")                                           // her arms down to the counter
+  c.rect(21, 32, 5, 4, "g"); c.rect(0, 34, 5, 3, "g")                                             // her right hand flat on the napkin, the left at the bowl
 })
 // the door of the Lerche block, through a fisheye (only its corners dark)
 scene("cam24_bg", { w: W, h: H, bg: "0" }, (c) => {
