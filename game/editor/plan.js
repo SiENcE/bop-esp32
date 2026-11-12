@@ -2,12 +2,14 @@
 // edited, level by level, drawn by docs/plan/plan.js as the plan's page draws it: the rooms Juno walks from their iso maps, the
 // cameras, the ways between the rooms, what doesn't fit. The ways come from the running game itself (every hotspot's exit and
 // goto between the rooms Juno walks), so they are always the game's own.
-//   pick      a click (on the picked level); the left panel lists everything on it
-//   move      drag it (water only with Shift); the arrows nudge it (Shift: ten units)
+//   pick      a click (on the picked level); Ctrl+click takes one in or out; a frame dragged on the ground picks all whose
+//             middle lies in it (not the water; Shift adds them); Ctrl+A all on the level; Esc none. The left panel lists them
+//   move      drag one of the picked: all of them go (the water only with Shift); the arrows nudge them (Shift: ten units)
+//   view      the wheel zooms; the right or middle button, or Space held, drags the view; a double click on the ground fits it
 //   shape     a rect's corner handle sizes it, a shape's points drag one by one (Alt+click on an edge adds one, on a point takes it)
-//   turn      the handle at the end of a camera's or a room's arrow turns it ([ and ] by 15°, Shift by 90°)
-//   new       the inspector's kinds put one in the middle of the view; Ctrl+D doubles the picked one; Del takes it out
-// Save writes the file back, only the values changed (its comments and layout stay); undo and redo as everywhere.
+//   turn      the handle at the end of a camera's or a room's arrow turns it ([ and ] by 15°, Shift by 90°: all the picked)
+//   new       the inspector's kinds put one in the middle of the view; Ctrl+D doubles the picked; Del takes them out
+// Save writes the file back, only the values changed (its comments and layout stay); Ctrl+Z undoes, Ctrl+Y does again.
 "use strict";
 
 (function () {
@@ -21,10 +23,12 @@
   /** @type {any} */ let lib = null;                // { ISOMAP, ISO_MAPS, drawSrc }
   /** @type {any} */ let plan = null;               // the plan as the tab holds it now
   let level = "strasse", sel = "", broken = "", loading = false;
+  /** @type {Set<string>} every picked item's id (sel, the one the inspector shows, among them) */
+  const many = new Set();
   /** @type {string[]} */ let undoStack = [], redoStack = [];
   let saved = "";                                    // the plan as the file holds it (JSON), to tell what is unsaved
   const zoom = { x: 20, y: 20, k: 0.6 };
-  let fitted = false;
+  let fitted = false, space = false;
 
   // ---------------------------------------------------------------- loading
   async function boot() {
@@ -46,6 +50,7 @@
     const text = await E.files.read(PATH);
     plan = parse(text); saved = JSON.stringify(plan); undoStack = []; redoStack = [];
     if (!plan.levels.some((/** @type {any} */ l) => l.id === level)) level = plan.levels[0].id;
+    pickNone();
     remake();
   }
   /** the ways between the rooms Juno walks, from the game's own rooms (as tools/stadtplan-links.mjs reads them) */
@@ -84,17 +89,27 @@
     PD = new Function("ISOMAP", "ISO_MAPS", "STADTPLAN_LINKS", "STADTPLAN_ROOMS", `${lib.drawSrc}\n;return PlanDraw;`)(lib.ISOMAP, lib.ISO_MAPS, w.links, w.rooms);
   }
 
-  // ---------------------------------------------------------------- the plan's items
+  // ---------------------------------------------------------------- the plan's items and what is picked
   const items = () => /** @type {any[]} */ (plan?.items ?? []);
   const picked = () => items().find((i) => i.id === sel) ?? null;
+  const chosen = () => items().filter((i) => many.has(i.id));
   const onLevel = (/** @type {any} */ it) => (it.level ?? "strasse") === level || it.kind === "water";
+  function pickNone() { sel = ""; many.clear(); }
+  /** pick one: "only" it, "add" it to the picked, "toggle" it in or out @param {string} id @param {"only" | "add" | "toggle"} how */
+  function pick(id, how = "only") {
+    if (how === "only") { many.clear(); many.add(id); sel = id; }
+    else if (how === "add") { many.add(id); sel = id; }
+    else if (many.has(id)) { many.delete(id); sel = sel === id ? [...many].at(-1) ?? "" : sel; }
+    else { many.add(id); sel = id; }
+  }
+  /** keep only what is still there (after an undo) */
+  function prune() { const ids = new Set(items().map((i) => i.id)); for (const id of [...many]) if (!ids.has(id)) many.delete(id); if (!ids.has(sel)) sel = [...many].at(-1) ?? ""; }
   /** a change: what was before goes on the undo stack */
-  function change(/** @type {() => void} */ fn) { undoStack.push(JSON.stringify(plan)); redoStack = []; fn(); E.refresh(); draw(); }
+  function change(/** @type {() => void} */ fn) { undoStack.push(JSON.stringify(plan)); redoStack = []; fn(); prune(); E.refresh(); draw(); }
   function step(/** @type {string[]} */ from, /** @type {string[]} */ to) {
-    const s = from.pop(); if (!s) return;
+    const s = from.pop(); if (!s) { E.setStatus(from === undoStack ? "nothing to undo" : "nothing to do again"); return; }
     to.push(JSON.stringify(plan)); plan = JSON.parse(s);
-    if (!picked()) sel = "";
-    E.refresh(); draw();
+    prune(); E.refresh(); draw();
   }
   const round = (/** @type {number} */ v) => Math.round(v * 2) / 2;
   /** move an item by dx, dy: its shape, its label, its doors, its camera */
@@ -120,6 +135,8 @@
     const o = k === "view" ? it.view.at : it.at, a = angleOf(it) * Math.PI / 180, r = 46 / Math.max(zoom.k, 0.4);
     return { o, p: [o[0] + Math.cos(a) * r, o[1] + Math.sin(a) * r] };
   }
+  /** a free id: base, else base_2, base_3 ... @param {string} base */
+  const freeId = (base) => { if (!items().some((i) => i.id === base)) return base; let n = 2; while (items().some((i) => i.id === `${base}_${n}`)) n++; return `${base}_${n}`; };
   /** a new item of a kind, in the middle of the view, on this level */
   function addNew(/** @type {string} */ kind) {
     const r = box.getBoundingClientRect(), cx = round((r.width / 2 - zoom.x) / zoom.k), cy = round((r.height / 2 - zoom.y) / zoom.k);
@@ -131,17 +148,20 @@
       : kind === "place" ? { ...base, at: [cx, cy], status: "idee" }
       : kind === "free" || kind === "water" ? { ...base, rect: [cx - 60, cy - 40, 120, 80] }
       : { ...base, rect: [cx - 50, cy - 30, 100, 60], status: "idee" };
-    change(() => { plan.items.push(it); sel = id; });
+    change(() => { plan.items.push(it); pick(id); });
   }
+  /** the picked doubled, a little aside; the copies are picked then */
   function duplicate() {
-    const it = picked(); if (!it) return;
-    let n = 2; while (items().some((i) => i.id === `${it.id}_${n}`)) n++;
-    const copy = JSON.parse(JSON.stringify(it)); copy.id = `${it.id}_${n}`; moveBy(copy, 20, 20);
-    change(() => { plan.items.push(copy); sel = copy.id; });
+    const list = chosen(); if (!list.length) return;
+    change(() => {
+      const ids = [];
+      for (const it of list) { const copy = JSON.parse(JSON.stringify(it)); copy.id = freeId(it.id); moveBy(copy, 20, 20); plan.items.push(copy); ids.push(copy.id); }
+      many.clear(); for (const id of ids) many.add(id); sel = ids.at(-1) ?? "";
+    });
   }
   function deleteSel() {
-    const it = picked(); if (!it) return;
-    change(() => { plan.items = plan.items.filter((/** @type {any} */ i) => i !== it); sel = ""; });
+    const list = chosen(); if (!list.length) return;
+    change(() => { plan.items = plan.items.filter((/** @type {any} */ i) => !list.includes(i)); pickNone(); });
   }
 
   // ---------------------------------------------------------------- the view
@@ -157,6 +177,7 @@
     zoom.x = (r.width - W * zoom.k) / 2; zoom.y = (r.height - H * zoom.k) / 2;
     fitted = true; draw();
   }
+  /** @type {any} */ let press = null;
   function draw() {
     const r = box.getBoundingClientRect(), dpr = devicePixelRatio || 1;
     if (!r.width) return;
@@ -166,24 +187,35 @@
     if (!PD || !plan) { ctx.fillStyle = "#8a96b0"; ctx.font = "14px sans-serif"; ctx.fillText(broken ? `plan: ${broken}` : E.studio.available ? "loading the plan …" : "the Plan tab needs the studio (node lib/cutaway/tools/studio.mjs)", 20, 30); return; }
     ctx.setTransform(dpr * zoom.k, 0, 0, dpr * zoom.k, dpr * zoom.x, dpr * zoom.y);
     try { PD.drawMap(ctx, plan, level); } catch (e) { broken = /** @type {any} */ (e).message; }
-    // the picked one: its outline, its handles
-    const it = picked(); if (!it) return;
     const lw = 1 / zoom.k, hs = 5 * lw;
-    ctx.strokeStyle = SEL; ctx.lineWidth = 2.5 * lw; ctx.setLineDash([6 * lw, 4 * lw]);
-    const pts = PD.points(it, plan.scale);
-    if (pts) { ctx.beginPath(); pts.forEach(([x, y], i) => (i ? ctx.lineTo(x, y) : ctx.moveTo(x, y))); ctx.closePath(); ctx.stroke(); }
-    else if (it.at) { ctx.beginPath(); ctx.arc(it.at[0], it.at[1], 12, 0, Math.PI * 2); ctx.stroke(); }
-    ctx.setLineDash([]); ctx.fillStyle = SEL;
-    if (it.rect && !it.iso && !it.topdown) { const [x, y, w, h] = it.rect; ctx.fillRect(x + w - hs, y + h - hs, hs * 2, hs * 2); }
-    if (it.poly) for (let i = 0; i < it.poly.length; i += 2) ctx.fillRect(it.poly[i] - hs, it.poly[i + 1] - hs, hs * 2, hs * 2);
-    const t = turnHandle(it);
-    if (t) { ctx.strokeStyle = SEL; ctx.lineWidth = 1.5 * lw; ctx.beginPath(); ctx.moveTo(t.o[0], t.o[1]); ctx.lineTo(t.p[0], t.p[1]); ctx.stroke(); ctx.beginPath(); ctx.arc(t.p[0], t.p[1], hs * 1.2, 0, Math.PI * 2); ctx.fill(); }
+    // the picked ones: their outlines; the one the inspector shows its handles too
+    for (const it of chosen()) {
+      ctx.strokeStyle = SEL; ctx.lineWidth = (it.id === sel ? 2.5 : 1.8) * lw; ctx.setLineDash([6 * lw, 4 * lw]);
+      const pts = PD.points(it, plan.scale);
+      if (pts) { ctx.beginPath(); pts.forEach(([x, y], i) => (i ? ctx.lineTo(x, y) : ctx.moveTo(x, y))); ctx.closePath(); ctx.stroke(); }
+      else if (it.at) { ctx.beginPath(); ctx.arc(it.at[0], it.at[1], 12, 0, Math.PI * 2); ctx.stroke(); }
+      ctx.setLineDash([]);
+    }
+    const it = picked();
+    if (it && many.size === 1) {
+      ctx.fillStyle = SEL;
+      if (it.rect && !it.iso && !it.topdown) { const [x, y, w, h] = it.rect; ctx.fillRect(x + w - hs, y + h - hs, hs * 2, hs * 2); }
+      if (it.poly) for (let i = 0; i < it.poly.length; i += 2) ctx.fillRect(it.poly[i] - hs, it.poly[i + 1] - hs, hs * 2, hs * 2);
+      const t = turnHandle(it);
+      if (t) { ctx.strokeStyle = SEL; ctx.lineWidth = 1.5 * lw; ctx.beginPath(); ctx.moveTo(t.o[0], t.o[1]); ctx.lineTo(t.p[0], t.p[1]); ctx.stroke(); ctx.beginPath(); ctx.arc(t.p[0], t.p[1], hs * 1.2, 0, Math.PI * 2); ctx.fill(); }
+    }
+    // the frame being dragged
+    if (press?.frame && press.moved) {
+      const [x0, y0] = press.frame, [x1, y1] = press.to;
+      ctx.fillStyle = "rgba(255,225,74,0.08)"; ctx.fillRect(Math.min(x0, x1), Math.min(y0, y1), Math.abs(x1 - x0), Math.abs(y1 - y0));
+      ctx.strokeStyle = SEL; ctx.lineWidth = lw; ctx.setLineDash([4 * lw, 3 * lw]); ctx.strokeRect(Math.min(x0, x1), Math.min(y0, y1), Math.abs(x1 - x0), Math.abs(y1 - y0)); ctx.setLineDash([]);
+    }
   }
 
-  /** what a press at a plan point grabs: a handle of the picked one first, then an item @param {number} x @param {number} y */
+  /** what a press at a plan point grabs: a handle of the picked one first (when it is the only one), then an item @param {number} x @param {number} y */
   function grab(x, y) {
     const it = picked(), near = (/** @type {number[]} */ p) => Math.hypot(p[0] - x, p[1] - y) < 9 / zoom.k;
-    if (it) {
+    if (it && many.size === 1) {
       const t = turnHandle(it); if (t && near(t.p)) return { what: "turn", it };
       if (it.rect && !it.iso && !it.topdown && near([it.rect[0] + it.rect[2], it.rect[1] + it.rect[3]])) return { what: "size", it };
       if (it.poly) for (let i = 0; i < it.poly.length; i += 2) if (near([it.poly[i], it.poly[i + 1]])) return { what: "point", it, i };
@@ -191,11 +223,19 @@
     const hit = PD.itemAt(plan, level, x, y);
     return hit ? { what: "move", it: hit } : null;
   }
-  /** @type {any} */ let press = null;
+  /** everything on this level whose middle lies in a frame (not the water) @param {number[]} a @param {number[]} b */
+  function inFrame(a, b) {
+    const [x0, x1] = [Math.min(a[0], b[0]), Math.max(a[0], b[0])], [y0, y1] = [Math.min(a[1], b[1]), Math.max(a[1], b[1])];
+    return items().filter((i) => onLevel(i) && i.kind !== "water").filter((i) => { const c = PD.centre(i, plan.scale); return c && c[0] >= x0 && c[0] <= x1 && c[1] >= y0 && c[1] <= y1; });
+  }
+  canvas.addEventListener("contextmenu", (e) => e.preventDefault());
   canvas.addEventListener("pointerdown", (/** @type {PointerEvent} */ e) => {
     if (!PD || !plan) return;
     const r = canvas.getBoundingClientRect(), [x, y] = toPlan(e.clientX - r.left, e.clientY - r.top);
-    const g = e.button === 0 ? grab(x, y) : null;
+    canvas.setPointerCapture(e.pointerId);
+    // the view: the right or middle button, or Space held
+    if (e.button !== 0 || space) { press = { pan: true, x0: e.clientX, y0: e.clientY, zx: zoom.x, zy: zoom.y, moved: false }; canvas.style.cursor = "grabbing"; return; }
+    const g = grab(x, y);
     // Alt on a shape: a point taken out, or one put into the edge under the pointer
     if (g && e.altKey && g.it.poly) {
       const it = g.it;
@@ -209,21 +249,26 @@
       if (best >= 0) change(() => { it.poly.splice(best + 2, 0, round(x), round(y)); });
       return;
     }
-    if (g && g.it.kind === "water" && g.what === "move" && !e.shiftKey && sel !== g.it.id) { sel = g.it.id; E.refresh(); draw(); press = null; return; }
-    if (g) { sel = g.it.id; E.refresh(); }
-    press = { g, x0: e.clientX, y0: e.clientY, px: x, py: y, zx: zoom.x, zy: zoom.y, moved: false, before: JSON.stringify(plan) };
-    canvas.setPointerCapture(e.pointerId);
+    // Ctrl+click: one in or out of the picked
+    if (g && (e.ctrlKey || e.metaKey)) { pick(g.it.id, "toggle"); E.refresh(); draw(); return; }
+    if (!g) { press = { frame: [x, y], to: [x, y], add: e.shiftKey, x0: e.clientX, y0: e.clientY, moved: false }; return; }
+    // the water is picked by a click, moved only with Shift (it is under everything)
+    if (g.it.kind === "water" && g.what === "move" && !e.shiftKey && !many.has(g.it.id)) { pick(g.it.id); E.refresh(); draw(); return; }
+    if (g.what === "move" && !many.has(g.it.id)) pick(g.it.id, e.shiftKey ? "add" : "only");
+    else if (g.what === "move") sel = g.it.id;
+    E.refresh();
+    press = { g, x0: e.clientX, y0: e.clientY, px: x, py: y, moved: false, before: JSON.stringify(plan) };
     draw();
   });
   canvas.addEventListener("pointermove", (/** @type {PointerEvent} */ e) => {
     const r = canvas.getBoundingClientRect(), [x, y] = toPlan(e.clientX - r.left, e.clientY - r.top);
-    if (!press) { const g = PD && plan ? grab(x, y) : null; canvas.style.cursor = !g ? "default" : g.what === "move" ? "move" : "crosshair"; return; }
+    if (!press) { const g = PD && plan && !space ? grab(x, y) : null; canvas.style.cursor = space ? "grab" : !g ? "crosshair" : g.what === "move" ? "move" : "pointer"; return; }
     if (Math.abs(e.clientX - press.x0) + Math.abs(e.clientY - press.y0) > 3) press.moved = true;
     if (!press.moved) return;
-    const g = press.g;
-    if (!g) { zoom.x = press.zx + e.clientX - press.x0; zoom.y = press.zy + e.clientY - press.y0; draw(); return; }
-    const it = g.it;
-    if (g.what === "move") { moveBy(it, x - press.px, y - press.py); press.px = x; press.py = y; }
+    if (press.pan) { zoom.x = press.zx + e.clientX - press.x0; zoom.y = press.zy + e.clientY - press.y0; draw(); return; }
+    if (press.frame) { press.to = [x, y]; draw(); return; }
+    const g = press.g, it = g.it;
+    if (g.what === "move") { for (const c of chosen()) if (c.kind !== "water" || e.shiftKey || many.size === 1) moveBy(c, x - press.px, y - press.py); press.px = x; press.py = y; }
     else if (g.what === "size") it.rect = [it.rect[0], it.rect[1], Math.max(8, round(x - it.rect[0])), Math.max(8, round(y - it.rect[1]))];
     else if (g.what === "point") { it.poly[g.i] = round(x); it.poly[g.i + 1] = round(y); }
     else if (g.what === "turn") { const t = turnHandle(it), a = Math.atan2(y - t.o[1], x - t.o[0]) * 180 / Math.PI; setAngle(it, e.shiftKey ? a : Math.round(a / 15) * 15); }
@@ -231,9 +276,17 @@
   });
   canvas.addEventListener("pointerup", () => {
     if (!press) return;
-    if (press.g && press.moved) { undoStack.push(press.before); redoStack = []; E.refresh(); }
-    if (!press.g && !press.moved && sel) { sel = ""; E.refresh(); }
-    press = null; draw();
+    if (press.frame) {
+      if (press.moved) {
+        const hit = inFrame(press.frame, press.to);
+        if (!press.add) many.clear();
+        for (const it of hit) many.add(it.id);
+        sel = hit.at(-1)?.id ?? (press.add ? sel : "");
+        E.setStatus(`${many.size} picked`);
+      } else if (!press.add) pickNone();
+      E.refresh();
+    } else if (press.g && press.moved) { undoStack.push(press.before); redoStack = []; E.refresh(); }
+    press = null; canvas.style.cursor = space ? "grab" : "default"; draw();
   });
   canvas.addEventListener("dblclick", (/** @type {MouseEvent} */ e) => {
     const r = canvas.getBoundingClientRect(), [x, y] = toPlan(e.clientX - r.left, e.clientY - r.top), hit = PD?.itemAt(plan, level, x, y);
@@ -245,18 +298,24 @@
     const r = canvas.getBoundingClientRect(), mx = e.clientX - r.left, my = e.clientY - r.top, f = Math.exp(-e.deltaY * 0.0015);
     zoom.x = mx - (mx - zoom.x) * f; zoom.y = my - (my - zoom.y) * f; zoom.k *= f; draw();
   }, { passive: false });
+  // Space held: the left button drags the view
+  window.addEventListener("keydown", (e) => { if (e.code === "Space" && box.isConnected && !/INPUT|TEXTAREA|SELECT/.test(/** @type {any} */ (e.target)?.tagName ?? "")) { if (!space) { space = true; canvas.style.cursor = "grab"; } e.preventDefault(); } }, true);
+  window.addEventListener("keyup", (e) => { if (e.code === "Space" && space) { space = false; canvas.style.cursor = "default"; } }, true);
   new ResizeObserver(() => draw()).observe(box);
-  const view = { el: box, shown() { boot(); if (PD && plan) { remake(); requestAnimationFrame(() => (fitted ? draw() : fit())); } }, selectNone() { sel = ""; E.refresh(); draw(); } };
+  const view = { el: box, shown() { boot(); if (PD && plan) { remake(); requestAnimationFrame(() => (fitted ? draw() : fit())); } }, selectNone() { pickNone(); E.refresh(); draw(); } };
 
   /** @param {KeyboardEvent} e */
   function key(e) {
     if (!plan) return false;
     if ((e.ctrlKey || e.metaKey) && e.code === "KeyD") { duplicate(); return true; }
+    if ((e.ctrlKey || e.metaKey) && e.code === "KeyA") { many.clear(); for (const i of items().filter((x) => onLevel(x) && x.kind !== "water")) many.add(i.id); sel = [...many].at(-1) ?? ""; E.setStatus(`${many.size} picked`); E.refresh(); draw(); return true; }
+    // (Ctrl+Z and Ctrl+Y: the editor hands them to the tab's undo and redo)
     if (e.ctrlKey || e.metaKey || e.altKey) return false;
-    const it = picked();
-    if (it && (e.key === "[" || e.key === "]")) { change(() => setAngle(it, angleOf(it) + (e.key === "]" ? 1 : -1) * (e.shiftKey ? 90 : 15))); return true; }
+    if (e.key === "Escape" && many.size) { pickNone(); E.refresh(); draw(); return true; }
+    const list = chosen();
+    if (list.length && (e.key === "[" || e.key === "]")) { change(() => { for (const it of list) setAngle(it, angleOf(it) + (e.key === "]" ? 1 : -1) * (e.shiftKey ? 90 : 15)); }); return true; }
     const d = /** @type {Record<string, number[]>} */ ({ ArrowRight: [1, 0], ArrowLeft: [-1, 0], ArrowDown: [0, 1], ArrowUp: [0, -1] })[e.key];
-    if (it && d) { const k = e.shiftKey ? 10 : 1; change(() => moveBy(it, d[0] * k, d[1] * k)); return true; }
+    if (list.length && d) { const k = e.shiftKey ? 10 : 1; change(() => { for (const it of list) moveBy(it, d[0] * k, d[1] * k); }); return true; }
     return false;
   }
 
@@ -296,11 +355,13 @@
   /** a text field of the picked item; empty takes the key out @param {any} it @param {string} k @param {boolean} [num] */
   function textField(it, k, num = false) {
     return el("input", { value: it[k] ?? "", style: { flex: "1", minWidth: "0" },
-      onchange: (/** @type {any} */ e) => change(() => { const v = e.target.value.trim(); if (v === "") delete it[k]; else it[k] = num ? Number(v) : v; }) });
+      onchange: (/** @type {any} */ e) => change(() => { const v = e.target.value.trim(); if (k === "id") { if (v && v !== it.id && !items().some((i) => i.id === v)) { many.delete(it.id); many.add(v); if (sel === it.id) sel = v; it.id = v; } return; } if (v === "") delete it[k]; else it[k] = num ? Number(v) : v; }) });
   }
-  function choice(/** @type {any} */ it, /** @type {string} */ k, /** @type {string[]} */ opts, /** @type {string} */ none) {
-    return el("select", { style: { flex: "1" }, onchange: (/** @type {any} */ e) => change(() => { if (e.target.value === "") delete it[k]; else it[k] = e.target.value; }) },
-      [el("option", { value: "" }, [none]), ...opts.map((o) => el("option", { value: o, selected: (it[k] ?? "") === o }, [o]))]);
+  /** a choice for the picked (or, given a list, for all of them) @param {any[]} list @param {string} k @param {string[]} opts @param {string} none */
+  function choice(list, k, opts, none) {
+    const same = list.every((i) => (i[k] ?? "") === (list[0][k] ?? ""));
+    return el("select", { style: { flex: "1" }, onchange: (/** @type {any} */ e) => change(() => { for (const it of list) { if (e.target.value === "") delete it[k]; else it[k] = e.target.value; } }) },
+      [...(same ? [] : [el("option", { value: "", selected: true, disabled: true }, ["(mixed)"])]), el("option", { value: "" }, [none]), ...opts.map((o) => el("option", { value: o, selected: same && (list[0][k] ?? "") === o }, [o]))]);
   }
 
   function build(/** @type {HTMLElement} */ panel) {
@@ -314,21 +375,29 @@
         button("Pictures", () => E.runTask("plan: pictures"), "write docs/plan/stadtplan_<level>.png (the task in studio.json)")])]));
     // the levels
     panel.append(el("div", { className: "cw-sec" }, [el("div", { className: "cw-dim" }, ["Level"]),
-      el("div", {}, plan.levels.map((/** @type {any} */ l) => el("button", { onclick: () => { level = l.id; if (picked() && !onLevel(picked())) sel = ""; E.refresh(); draw(); },
+      el("div", {}, plan.levels.map((/** @type {any} */ l) => el("button", { onclick: () => { level = l.id; for (const it of chosen()) if (!onLevel(it)) many.delete(it.id); prune(); E.refresh(); draw(); },
         style: l.id === level ? { background: "#3a2f55", borderColor: SEL, color: SEL } : {} }, [l.name])))]));
     // new
     const kindSel = /** @type {HTMLSelectElement} */ (el("select", {}, KINDS.map((k) => el("option", { value: k }, [k]))));
     panel.append(el("div", { className: "cw-sec" }, [el("div", { className: "cw-dim" }, ["New on this level, in the middle of the view"]),
       el("div", { style: { display: "flex", gap: "4px" } }, [kindSel, button("Add", () => addNew(kindSel.value), "a new item of that kind")])]));
-    // the picked one
-    const it = picked();
-    if (it) {
+    // the picked
+    const list = chosen(), it = picked();
+    if (list.length > 1) {
+      panel.append(el("div", { className: "cw-sec" }, [
+        el("div", { style: { fontWeight: "bold", color: SEL } }, [`${list.length} picked`]),
+        el("div", { className: "cw-dim", style: { margin: "2px 0 4px" } }, ["Drag one of them, or the arrows: they all go. Ctrl+click takes one in or out, Esc none."]),
+        row("level", choice(list, "level", plan.levels.map((/** @type {any} */ l) => l.id), "strasse")),
+        row("status", choice(list, "status", STATUSES, "—")),
+        el("div", { style: { maxHeight: "160px", overflow: "auto", margin: "4px 0" } }, list.map((i) => el("div", { style: { cursor: "pointer", color: i.id === sel ? SEL : "" }, onclick: () => { sel = i.id; E.refresh(); draw(); } }, [`${i.name ?? i.id}  `, el("span", { className: "cw-dim" }, [i.kind])]))),
+        el("div", {}, [button("Double", duplicate, "Ctrl+D"), button("Delete", deleteSel, "Del"), button("Only this one", () => { if (sel) pick(sel); E.refresh(); draw(); }, "keep only the one in yellow")])]));
+    } else if (it) {
       const fields = [
         row("id", textField(it, "id")), row("name", textField(it, "name")),
-        row("kind", choice(it, "kind", KINDS, "—")), row("level", choice(it, "level", plan.levels.map((/** @type {any} */ l) => l.id), "strasse")),
-        row("status", choice(it, "status", STATUSES, "—")), row("room", textField(it, "room")), row("chapter", textField(it, "chapter", true)),
+        row("kind", choice([it], "kind", KINDS, "—")), row("level", choice([it], "level", plan.levels.map((/** @type {any} */ l) => l.id), "strasse")),
+        row("status", choice([it], "status", STATUSES, "—")), row("room", textField(it, "room")), row("chapter", textField(it, "chapter", true)),
       ];
-      if (it.iso !== undefined) fields.push(row("iso map", choice(it, "iso", Object.keys(lib.ISO_MAPS).sort(), "—")));
+      if (it.iso !== undefined) fields.push(row("iso map", choice([it], "iso", Object.keys(lib.ISO_MAPS).sort(), "—")));
       if (angleKey(it)) fields.push(row(angleKey(it) === "view" ? "camera" : angleKey(it), el("input", { type: "number", step: 15, value: angleOf(it), style: { width: "70px" },
         onchange: (/** @type {any} */ e) => change(() => setAngle(it, Number(e.target.value))) })));
       if (it.kind === "room") fields.push(row("outdoor", el("input", { type: "checkbox", checked: !!it.outdoor, onchange: (/** @type {any} */ e) => change(() => { if (e.target.checked) it.outdoor = true; else delete it.outdoor; }) })));
@@ -337,7 +406,7 @@
       if (it.label) fields.push(el("div", {}, [button("Name in the middle", () => change(() => { delete it.label; }), "the name back in the middle of its shape")]));
       fields.push(el("div", { style: { marginTop: "4px" } }, [button("Double", duplicate, "Ctrl+D"), button("Delete", deleteSel, "Del")]));
       panel.append(el("div", { className: "cw-sec" }, [el("div", { style: { fontWeight: "bold", color: SEL } }, [it.name ?? it.id]), ...fields]));
-    } else panel.append(el("div", { className: "cw-sec cw-dim" }, ["Click a place to pick it; drag it, its corner or its points; [ and ] turn it. A double click opens its room."]));
+    } else panel.append(el("div", { className: "cw-sec cw-dim" }, ["Click a place to pick it, or drag a frame on the ground round several; drag them, a corner or a shape's points; [ and ] turn. The right button (or Space) moves the view. A double click opens a room."]));
     // what doesn't fit
     const probs = PD ? PD.problems(plan) : [];
     panel.append(el("div", { className: "cw-sec" }, [E.fold("plan.problems", "doesn't fit", () => probs.length ? probs.map((/** @type {any} */ p) => {
@@ -355,14 +424,15 @@
   /** the left panel: everything on this level by kind */
   function browse(/** @type {HTMLElement} */ boxEl) {
     if (!plan) return;
-    const list = items().filter(onLevel).map((i) => ({ key: i.id, label: `${i.name ?? i.id}${i.room ? `  · ${i.room}` : ""}`, group: i.kind }));
+    const list = items().filter(onLevel).map((i) => ({ key: i.id, label: `${many.has(i.id) && many.size > 1 ? "● " : ""}${i.name ?? i.id}${i.room ? `  · ${i.room}` : ""}`, group: i.kind }));
     boxEl.append(E.fold("left.plan", `PLAN · ${(plan.levels.find((/** @type {any} */ l) => l.id === level)?.name ?? level).toUpperCase()}`, () => [E.list({ id: "plan.items", items: list, filter: list.length > 15, foldOver: 12, selected: sel || undefined,
-      pick: (/** @type {string} */ k) => { sel = k; const it = picked(), c = it && PD.centre(it, plan.scale), r = box.getBoundingClientRect(); if (c) { zoom.x = r.width / 2 - c[0] * zoom.k; zoom.y = r.height / 2 - c[1] * zoom.k; } E.refresh(); draw(); } })], { note: String(list.length) }));
+      pick: (/** @type {string} */ k) => { pick(k); const it = picked(), c = it && PD.centre(it, plan.scale), r = box.getBoundingClientRect(); if (c) { zoom.x = r.width / 2 - c[0] * zoom.k; zoom.y = r.height / 2 - c[1] * zoom.k; } E.refresh(); draw(); } })], { note: String(list.length) }));
   }
 
   E.tab({ id: "plan", label: "Plan", build, browse, view: () => view, key, save: () => save(), del: () => deleteSel(),
     undo: () => step(undoStack, redoStack), redo: () => step(redoStack, undoStack),
-    selectNone: () => { sel = ""; E.refresh(); draw(); },
+    selectNone: () => { pickNone(); E.refresh(); draw(); },
     get unsaved() { return plan && JSON.stringify(plan) !== saved ? 1 : 0; } });
-  E.modules.plan = { get plan() { return plan; }, get level() { return level; }, set level(v) { level = v; E.refresh(); draw(); }, select(/** @type {string} */ id) { sel = id; E.refresh(); draw(); }, save, textNow, boot, fit };
+  E.modules.plan = { get plan() { return plan; }, get picked() { return [...many]; }, get level() { return level; }, set level(v) { level = v; E.refresh(); draw(); },
+    select(/** @type {string} */ id) { pick(id); E.refresh(); draw(); }, save, textNow, boot, fit };
 })();
