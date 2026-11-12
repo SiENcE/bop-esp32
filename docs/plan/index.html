@@ -6,6 +6,9 @@
 <style>
   html, body { margin: 0; background: #0b0e18; color: #dfe6f0; font: 14px "Segoe UI", Arial, sans-serif; }
   canvas { display: block; }
+  #levels { position: fixed; left: 10px; top: 10px; display: flex; gap: 6px; }
+  #levels button { background: #181d33; color: #dfe6f0; border: 1px solid #3a4466; padding: 5px 10px; font: inherit; cursor: pointer; }
+  #levels button.on { border-color: #62def0; color: #62def0; background: #2a3550; }
   #tip { position: fixed; pointer-events: none; max-width: 360px; background: #10142aee; border: 1px solid #3a4466;
     padding: 8px 10px; border-radius: 4px; display: none; line-height: 1.35; }
   #tip b { color: #62def0; }
@@ -14,18 +17,38 @@
 </head>
 <body>
 <canvas id="plan"></canvas>
+<div id="levels"></div>
 <div id="tip"></div>
+<!-- the iso maps, so the rooms Juno walks are drawn from them -->
+<script src="../../art/lib/isomap.js"></script>
+<script src="../../art/rooms/kowalski.map.js"></script>
+<script src="../../art/rooms/kessel_lobby.map.js"></script>
+<script src="../../art/rooms/kessel_14.map.js"></script>
+<script src="../../art/rooms/flat.map.js"></script>
+<script src="../../art/rooms/lucky_static.map.js"></script>
+<script src="../../art/rooms/gasse.map.js"></script>
+<script src="../../art/rooms/laundromat.map.js"></script>
 <script src="stadtplan.js"></script>
+<script src="uebergaenge.js"></script>
 <script src="plan.js"></script>
 <script>
 "use strict";
-// the plan, and what each place is when the pointer rests on it (?scale=1.5 draws it larger)
-const scale = Number(new URLSearchParams(location.search).get("scale") || 1);
-const canvas = document.getElementById("plan"), tip = document.getElementById("tip");
-PlanDraw.draw(canvas, STADTPLAN, scale);
+// the plan, one level at a time (?level=k14, ?scale=1.5); what each place is when the pointer rests on it
+const q = new URLSearchParams(location.search), scale = Number(q.get("scale") || 1);
+let level = q.get("level") || "strasse";
+const canvas = document.getElementById("plan"), tip = document.getElementById("tip"), bar = document.getElementById("levels");
+function show() {
+  PlanDraw.draw(canvas, STADTPLAN, { level, scale });
+  bar.replaceChildren(...STADTPLAN.levels.map((l) => {
+    const b = document.createElement("button"); b.textContent = l.name; b.className = l.id === level ? "on" : "";
+    b.onclick = () => { level = l.id; show(); };
+    return b;
+  }));
+}
+show();
 canvas.addEventListener("mousemove", (e) => {
-  const r = canvas.getBoundingClientRect(), it = PlanDraw.itemAt(STADTPLAN, (e.clientX - r.left) / scale, (e.clientY - r.top) / scale);
-  if (!it || it.kind === "water" && !it.note) { tip.style.display = "none"; return; }
+  const r = canvas.getBoundingClientRect(), it = PlanDraw.itemAt(STADTPLAN, level, (e.clientX - r.left) / scale, (e.clientY - r.top) / scale);
+  if (!it || (it.kind === "water" && !it.note)) { tip.style.display = "none"; return; }
   const st = PlanDraw.STATUS[it.status];
   tip.innerHTML = `<b>${it.name}</b>` + (st ? ` <i>· ${st.label}</i>` : "") + (it.room ? `<br><i>Raum: ${it.room}</i>` : "") +
     (it.chapter !== undefined ? `<br><i>${it.chapter === 0 ? "Prolog" : "Kapitel " + it.chapter}</i>` : "") + (it.note ? `<br>${it.note}` : "");
