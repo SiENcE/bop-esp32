@@ -4,7 +4,8 @@
 // goto between the rooms Juno walks), so they are always the game's own.
 //   pick      a click (on the picked level); Ctrl+click takes one in or out; a frame dragged on the ground picks all whose
 //             middle lies in it (not the water; Shift adds them); Ctrl+A all on the level; Esc none. The left panel lists them
-//   move      drag one of the picked: all of them go (the water only with Shift); the arrows nudge them (Shift: ten units)
+//   move      drag one of the picked, or anywhere in the box round them: all of them go (the water only with Shift, when it
+//             is the one picked); the arrows nudge them (Shift: ten units)
 //   view      the wheel zooms; the right or middle button, or Space held, drags the view; a double click on the ground fits it
 //   shape     a rect's corner handle sizes it, a shape's points drag one by one (Alt+click on an edge adds one, on a point takes it)
 //   turn      the handle at the end of a camera's or a room's arrow turns it ([ and ] by 15°, Shift by 90°: all the picked)
@@ -196,6 +197,8 @@
       else if (it.at) { ctx.beginPath(); ctx.arc(it.at[0], it.at[1], 12, 0, Math.PI * 2); ctx.stroke(); }
       ctx.setLineDash([]);
     }
+    const bx = pickedBox();
+    if (bx) { ctx.fillStyle = "rgba(255,225,74,0.05)"; ctx.fillRect(bx[0], bx[1], bx[2] - bx[0], bx[3] - bx[1]); ctx.strokeStyle = SEL; ctx.lineWidth = lw; ctx.setLineDash([2 * lw, 4 * lw]); ctx.strokeRect(bx[0], bx[1], bx[2] - bx[0], bx[3] - bx[1]); ctx.setLineDash([]); }
     const it = picked();
     if (it && many.size === 1) {
       ctx.fillStyle = SEL;
@@ -221,7 +224,21 @@
       if (it.poly) for (let i = 0; i < it.poly.length; i += 2) if (near([it.poly[i], it.poly[i + 1]])) return { what: "point", it, i };
     }
     const hit = PD.itemAt(plan, level, x, y);
+    // in the box round several picked: a picked one, or the ground (or the water) between them, moves them all
+    const bx = pickedBox(), inBox = bx && x >= bx[0] && x <= bx[2] && y >= bx[1] && y <= bx[3];
+    if (inBox && (!hit || many.has(hit.id) || hit.kind === "water")) return { what: "move", it: many.has(hit?.id) ? hit : picked() ?? chosen()[0], group: true };
     return hit ? { what: "move", it: hit } : null;
+  }
+  /** the box round everything picked (several of them), a little out from them: drag anywhere in it to move them all */
+  function pickedBox() {
+    if (many.size < 2) return null;
+    let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+    for (const it of chosen()) {
+      const pts = PD.points(it, plan.scale) ?? (it.at ? [[it.at[0] - 12, it.at[1] - 12], [it.at[0] + 12, it.at[1] + 12]] : []);
+      for (const [x, y] of pts) { x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x); y1 = Math.max(y1, y); }
+    }
+    const m = 8 / zoom.k;
+    return isFinite(x0) ? [x0 - m, y0 - m, x1 + m, y1 + m] : null;
   }
   /** everything on this level whose middle lies in a frame (not the water) @param {number[]} a @param {number[]} b */
   function inFrame(a, b) {
@@ -250,12 +267,13 @@
       return;
     }
     // Ctrl+click: one in or out of the picked
-    if (g && (e.ctrlKey || e.metaKey)) { pick(g.it.id, "toggle"); E.refresh(); draw(); return; }
+    if (g && !g.group && (e.ctrlKey || e.metaKey)) { pick(g.it.id, "toggle"); E.refresh(); draw(); return; }
+    if (g?.group && (e.ctrlKey || e.metaKey || e.shiftKey)) { const hit = PD.itemAt(plan, level, x, y); if (hit && hit.kind !== "water") { pick(hit.id, e.shiftKey ? "add" : "toggle"); E.refresh(); draw(); return; } }
     if (!g) { press = { frame: [x, y], to: [x, y], add: e.shiftKey, x0: e.clientX, y0: e.clientY, moved: false }; return; }
     // the water is picked by a click, moved only with Shift (it is under everything)
-    if (g.it.kind === "water" && g.what === "move" && !e.shiftKey && !many.has(g.it.id)) { pick(g.it.id); E.refresh(); draw(); return; }
-    if (g.what === "move" && !many.has(g.it.id)) pick(g.it.id, e.shiftKey ? "add" : "only");
-    else if (g.what === "move") sel = g.it.id;
+    if (g.it.kind === "water" && g.what === "move" && !g.group && !e.shiftKey && !many.has(g.it.id)) { pick(g.it.id); E.refresh(); draw(); return; }
+    if (g.what === "move" && !g.group && !many.has(g.it.id)) pick(g.it.id, e.shiftKey ? "add" : "only");
+    else if (g.what === "move" && !g.group) sel = g.it.id;
     E.refresh();
     press = { g, x0: e.clientX, y0: e.clientY, px: x, py: y, moved: false, before: JSON.stringify(plan) };
     draw();
@@ -386,7 +404,7 @@
     if (list.length > 1) {
       panel.append(el("div", { className: "cw-sec" }, [
         el("div", { style: { fontWeight: "bold", color: SEL } }, [`${list.length} picked`]),
-        el("div", { className: "cw-dim", style: { margin: "2px 0 4px" } }, ["Drag one of them, or the arrows: they all go. Ctrl+click takes one in or out, Esc none."]),
+        el("div", { className: "cw-dim", style: { margin: "2px 0 4px" } }, ["Drag one of them, or anywhere in the box round them, or the arrows: they all go. Ctrl+click takes one in or out, Esc none."]),
         row("level", choice(list, "level", plan.levels.map((/** @type {any} */ l) => l.id), "strasse")),
         row("status", choice(list, "status", STATUSES, "—")),
         el("div", { style: { maxHeight: "160px", overflow: "auto", margin: "4px 0" } }, list.map((i) => el("div", { style: { cursor: "pointer", color: i.id === sel ? SEL : "" }, onclick: () => { sel = i.id; E.refresh(); draw(); } }, [`${i.name ?? i.id}  `, el("span", { className: "cw-dim" }, [i.kind])]))),
