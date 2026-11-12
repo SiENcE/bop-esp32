@@ -38,6 +38,7 @@ code comments English.
 | `docs/style-guide.md` | **all art and UI** (decided). §8a "Everything is cyberpunk" lists every part of the screen and its state |
 | `docs/PLAN.md` | the build plan: engine work C1–C13, phases H0–H10 with "done when"; status at the top |
 | `docs/engine-fixes.md` | the plan to fix what the engine's code review of 2026-11-10 found (German): steps F1–F11 in order (the solver first), each with its findings, the fix, its tests and "fertig, wenn"; status at the top |
+| `docs/plan/` | the city's plan (German): where everything lies, what is built, where new things fit; its data `stadtplan.js` (one entry a place: kind, shape, level, status, room, chapter, note), drawn by `plan.js` in `index.html` (open it: hover a place for its note), the picture `stadtplan.png` (`node tools/stadtplan.mjs`) |
 | `docs/mockups/` | the decided looks: street mode `mock_c_iso_x3.png`, feed mode `mock_e_cctv_x3.png`; the deck `mock_f_deck_*.png`; new mockups go here |
 | `docs/rooms/`, `docs/cams/`, `docs/characters/` | review sheets of finished art; the cameras' layout notes (their positions go into `game/places.js`) |
 | `docs/portraits/` | the character index and marketing portraits (`figuren_index_x3.png`, Teo and Juno from both sides `juno_teo_seite_front_x3.png`, `README.md`), from `art/portraits/portraits.px.js`; not in the game |
