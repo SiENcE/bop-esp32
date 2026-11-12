@@ -9,7 +9,12 @@
 //   view      the wheel zooms; the right or middle button, or Space held, drags the view; a double click on the ground fits it
 //   shape     a rect's corner handle sizes it, a shape's points drag one by one (Alt+click on an edge adds one, on a point takes it)
 //   turn      the handle at the end of a camera's or a room's arrow turns it ([ and ] by 15°, Shift by 90°: all the picked)
-//   new       the inspector's kinds put one in the middle of the view; Ctrl+D doubles the picked; Del takes them out
+//   new       the inspector's kinds put one in the middle of the view; Ctrl+D doubles the picked; Del takes them out (of the
+//             plan: a room's map and the room in the game stay)
+//   rooms     a room is drawn from an iso map (art/rooms/<id>.map.js) or, without one, as a painted room's rect; the inspector
+//             links it to a map and to a room of the game; an iso room's size is its map's: the handle at its near corner (or U
+//             and V) changes the map itself (its floor and its walls, through the Iso-Editor), Save writes it with the plan,
+//             Bake builds its picture; "New iso room" makes a map and its room in the game (the task "room: new") and puts it here
 // Save writes the file back, only the values changed (its comments and layout stay); Ctrl+Z undoes, Ctrl+Y does again.
 "use strict";
 
@@ -84,6 +89,54 @@
       }
     }
     return { links, rooms: [...walked].sort() };
+  }
+  const mapPath = (/** @type {string} */ id) => `art/rooms/${id}.map.js`;
+  /** @type {Set<string>} the maps the plan changed (saved with it) */
+  const touched = new Set();
+  /** a map read again from the editor's text (after the Iso-Editor or the plan changed it) @param {string} id */
+  function reloadMap(id) {
+    const text = E.files.text(mapPath(id)); if (!text || !lib) return;
+    try { new Function("ISO_MAPS", text)(lib.ISO_MAPS); } catch { /* a text half typed: keep the last */ }
+  }
+  E.files.on((path) => { const m = /^art\/rooms\/([a-z0-9_]+)\.map\.js$/.exec(path); if (m && lib) { reloadMap(m[1]); draw(); } });
+  /**
+   * An iso room's map made U x V meters, in its text as one change (the Iso-Editor shows it, not saved yet): its size; its floor,
+   * a new cell taking the key of the cell at the edge it grows from (a new row the last row's), so the room's floor grows with it;
+   * its walls, an end at the old far edge going to the new one (the back walls grow or shrink with the room, the near stubs move
+   * with its edge). Openings and props stay where they are.
+   * @param {string} id @param {number} U @param {number} V
+   */
+  async function resizeMap(id, U, V) {
+    const path = mapPath(id);
+    let text;
+    try { text = await E.files.read(path); } catch (e) { E.setStatus(`plan: ${path}: ${/** @type {any} */ (e).message}`); return; }
+    const at = text.indexOf(`ISO_MAPS.${id}`), root = at < 0 ? null : L.value(text, text.indexOf("=", at) + 1);
+    const sizeN = root && L.field(root, "size"), floorN = root && L.field(root, "floor"), wallsN = root && L.field(root, "walls");
+    if (!sizeN || floorN?.t !== "arr" || wallsN?.t !== "arr" || L.hasCode(sizeN) || L.hasCode(floorN)) { E.setStatus(`plan: ${id}'s size, floor or walls are computed in code: change them in the file`); return; }
+    const m = new Function("ISO_MAPS", `${text}\n;return ISO_MAPS[${JSON.stringify(id)}];`)({}), cell = m.cell ?? 0.5, [U0, V0] = m.size;
+    U = Math.max(cell * 2, Math.round(U / cell) * cell); V = Math.max(cell * 2, Math.round(V / cell) * cell);
+    if (U === U0 && V === V0) return;
+    const nu = Math.round(U / cell), nv = Math.round(V / cell), last = m.floor[m.floor.length - 1] ?? "";
+    const rows = Array.from({ length: nv }, (_, j) => { const r = m.floor[j] ?? last; return r.length >= nu ? r.slice(0, nu) : r + (r.at(-1) ?? "p").repeat(nu - r.length); });
+    const first = floorN.items?.[0], ls = first ? text.lastIndexOf("\n", first.s) + 1 : floorN.s;
+    const indent = first ? /^\s*/.exec(text.slice(ls))?.[0] ?? "    " : "    ";
+    const n = (/** @type {number} */ x) => String(Math.round(x * 1000) / 1000);
+    /** @type {{s: number, e: number, text: string}[]} */
+    const edits = [{ s: sizeN.s, e: sizeN.e, text: `[${n(U)}, ${n(V)}]` }, { s: floorN.s, e: floorN.e, text: `[\n${rows.map((r) => `${indent}${JSON.stringify(r)},`).join("\n")}\n${indent.slice(2)}]` }];
+    const near = (/** @type {number} */ a, /** @type {number} */ b) => Math.abs(a - b) < 1e-6;
+    (wallsN.items ?? []).forEach((/** @type {any} */ w) => {
+      for (const k of ["from", "to"]) {
+        const f = L.field(w, k); if (!f || f.t !== "arr" || L.hasCode(f)) continue;
+        const [u, v] = L.valueOf(text, f), q = [near(u, U0) ? U : u, near(v, V0) ? V : v];
+        if (q[0] !== u || q[1] !== v) edits.push({ s: f.s, e: f.e, text: `[${n(q[0])}, ${n(q[1])}]` });
+      }
+    });
+    const next = L.applyEdits(text, edits);
+    if (next === null) { E.setStatus(`plan: ${id}: the changes meet`); return; }
+    E.files.set(path, sameEnds(text, next));
+    touched.add(id); reloadMap(id);
+    E.setStatus(`${id}: ${n(U)} x ${n(V)} m (its map: size, floor, walls; not saved yet). Save, then Bake.`);
+    E.refresh(); draw();
   }
   function remake() {
     const w = gameWays();
@@ -203,6 +256,12 @@
     if (it && many.size === 1) {
       ctx.fillStyle = SEL;
       if (it.rect && !it.iso && !it.topdown) { const [x, y, w, h] = it.rect; ctx.fillRect(x + w - hs, y + h - hs, hs * 2, hs * 2); }
+      const ih = isoHandle(it); if (ih) { ctx.fillRect(ih[0] - hs, ih[1] - hs, hs * 2, hs * 2); }
+      if (press?.g?.what === "isosize" && press.size) {
+        const P = PD.frame(it, plan.scale), [U, V] = press.size, q = [P(0, 0), P(U, 0), P(U, V), P(0, V)];
+        ctx.strokeStyle = SEL; ctx.lineWidth = 2 * lw; ctx.beginPath(); q.forEach(([x, y], i) => (i ? ctx.lineTo(x, y) : ctx.moveTo(x, y))); ctx.closePath(); ctx.stroke();
+        ctx.fillStyle = SEL; ctx.font = `${12 * lw}px sans-serif`; ctx.fillText(`${U} x ${V} m`, q[2][0] + 8 * lw, q[2][1]);
+      }
       if (it.poly) for (let i = 0; i < it.poly.length; i += 2) ctx.fillRect(it.poly[i] - hs, it.poly[i + 1] - hs, hs * 2, hs * 2);
       const t = turnHandle(it);
       if (t) { ctx.strokeStyle = SEL; ctx.lineWidth = 1.5 * lw; ctx.beginPath(); ctx.moveTo(t.o[0], t.o[1]); ctx.lineTo(t.p[0], t.p[1]); ctx.stroke(); ctx.beginPath(); ctx.arc(t.p[0], t.p[1], hs * 1.2, 0, Math.PI * 2); ctx.fill(); }
@@ -215,12 +274,24 @@
     }
   }
 
+  /** an iso room's size handle: its near corner (u = U, v = V) @param {any} it */
+  function isoHandle(it) {
+    const m = it?.iso && lib?.ISO_MAPS[it.iso]; if (!m) return null;
+    return PD.frame(it, plan.scale)(m.size[0], m.size[1]);
+  }
+  /** the room's U, V under a plan point (the near corner dragged there) @param {any} it @param {number} x @param {number} y */
+  function isoSizeAt(it, x, y) {
+    const m = lib.ISO_MAPS[it.iso], cell = m.cell ?? 0.5, S = plan.scale, a = (it.rot ?? 0) * Math.PI / 180, dx = x - it.at[0], dy = y - it.at[1];
+    const u = (dx * Math.cos(a) + dy * Math.sin(a)) / S, v = (-dx * Math.sin(a) + dy * Math.cos(a)) / S;
+    return [Math.max(cell * 2, Math.round(u / cell) * cell), Math.max(cell * 2, Math.round(v / cell) * cell)];
+  }
   /** what a press at a plan point grabs: a handle of the picked one first (when it is the only one), then an item @param {number} x @param {number} y */
   function grab(x, y) {
     const it = picked(), near = (/** @type {number[]} */ p) => Math.hypot(p[0] - x, p[1] - y) < 9 / zoom.k;
     if (it && many.size === 1) {
       const t = turnHandle(it); if (t && near(t.p)) return { what: "turn", it };
       if (it.rect && !it.iso && !it.topdown && near([it.rect[0] + it.rect[2], it.rect[1] + it.rect[3]])) return { what: "size", it };
+      const ih = isoHandle(it); if (ih && near(ih)) return { what: "isosize", it };
       if (it.poly) for (let i = 0; i < it.poly.length; i += 2) if (near([it.poly[i], it.poly[i + 1]])) return { what: "point", it, i };
     }
     const hit = PD.itemAt(plan, level, x, y);
@@ -280,7 +351,7 @@
   });
   canvas.addEventListener("pointermove", (/** @type {PointerEvent} */ e) => {
     const r = canvas.getBoundingClientRect(), [x, y] = toPlan(e.clientX - r.left, e.clientY - r.top);
-    if (!press) { const g = PD && plan && !space ? grab(x, y) : null; canvas.style.cursor = space ? "grab" : !g ? "crosshair" : g.what === "move" ? "move" : "pointer"; return; }
+    if (!press) { const g = PD && plan && !space ? grab(x, y) : null; canvas.style.cursor = space ? "grab" : !g ? "crosshair" : g.what === "move" ? "move" : g.what === "isosize" || g.what === "size" ? "nwse-resize" : "pointer"; return; }
     if (Math.abs(e.clientX - press.x0) + Math.abs(e.clientY - press.y0) > 3) press.moved = true;
     if (!press.moved) return;
     if (press.pan) { zoom.x = press.zx + e.clientX - press.x0; zoom.y = press.zy + e.clientY - press.y0; draw(); return; }
@@ -289,6 +360,7 @@
     if (g.what === "move") { for (const c of chosen()) if (c.kind !== "water" || e.shiftKey || many.size === 1) moveBy(c, x - press.px, y - press.py); press.px = x; press.py = y; }
     else if (g.what === "size") it.rect = [it.rect[0], it.rect[1], Math.max(8, round(x - it.rect[0])), Math.max(8, round(y - it.rect[1]))];
     else if (g.what === "point") { it.poly[g.i] = round(x); it.poly[g.i + 1] = round(y); }
+    else if (g.what === "isosize") press.size = isoSizeAt(it, x, y);
     else if (g.what === "turn") { const t = turnHandle(it), a = Math.atan2(y - t.o[1], x - t.o[0]) * 180 / Math.PI; setAngle(it, e.shiftKey ? a : Math.round(a / 15) * 15); }
     draw();
   });
@@ -303,7 +375,8 @@
         E.setStatus(`${many.size} picked`);
       } else if (!press.add) pickNone();
       E.refresh();
-    } else if (press.g && press.moved) { undoStack.push(press.before); redoStack = []; E.refresh(); }
+    } else if (press.g?.what === "isosize") { if (press.moved && press.size) resizeMap(press.g.it.iso, press.size[0], press.size[1]); }
+    else if (press.g && press.moved) { undoStack.push(press.before); redoStack = []; E.refresh(); }
     press = null; canvas.style.cursor = space ? "grab" : "default"; draw();
   });
   canvas.addEventListener("dblclick", (/** @type {MouseEvent} */ e) => {
@@ -338,6 +411,8 @@
   }
 
   // ---------------------------------------------------------------- saving
+  /** a changed text with the line ends its file had (a file written with CRLF keeps them on the lines put in) @param {string} was @param {string} text */
+  const sameEnds = (was, text) => (was.includes("\r\n") ? text.replace(/\r?\n/g, "\r\n") : text);
   /** the file's root object node in a text @param {string} text */
   const rootOf = (text) => { const i = text.indexOf("var STADTPLAN"); return i < 0 ? null : L.value(text, text.indexOf("=", i) + 1); };
   /** the file's text with the plan as the tab holds it: the items list patched (what is unchanged stays as written), the accept list */
@@ -353,14 +428,18 @@
       const ind = "    ", body = Object.entries(plan.accept ?? {}).map(([k, v]) => `${ind}${JSON.stringify(k)}: ${JSON.stringify(v)},`).join("\n");
       text = L.put(text, acc, body ? `{\n${body}\n  }` : "{}");
     }
-    return text;
+    return sameEnds(/** @type {string} */ (E.files.text(PATH)), text);
   }
   async function save() {
     if (!plan) return;
     try {
       const text = textNow();
       E.files.set(PATH, text);
-      E.setStatus(await E.files.save(PATH) ? `saved ${PATH}` : `${PATH}: nothing to save`);
+      const wrote = [];
+      if (await E.files.save(PATH)) wrote.push(PATH);
+      for (const id of touched) if (E.files.unsaved(mapPath(id)) && await E.files.save(mapPath(id))) wrote.push(mapPath(id));
+      touched.clear();
+      E.setStatus(wrote.length ? `saved ${wrote.join(", ")}` : `${PATH}: nothing to save`);
       saved = JSON.stringify(plan);
     } catch (e) { E.setStatus(`${PATH}: not saved: ${/** @type {any} */ (e).message}`); }
     E.refresh();
@@ -382,6 +461,61 @@
       [...(same ? [] : [el("option", { value: "", selected: true, disabled: true }, ["(mixed)"])]), el("option", { value: "" }, [none]), ...opts.map((o) => el("option", { value: o, selected: same && (list[0][k] ?? "") === o }, [o]))]);
   }
 
+  /** the room of the game an item stands for: typed, or picked from the game's rooms (several: a comma between) @param {any} it */
+  function roomField(it) {
+    const id = "plan-rooms", input = textField(it, "room");
+    input.setAttribute("list", id);
+    return el("span", { style: { display: "flex", flex: "1", minWidth: "0" } }, [input, el("datalist", { id }, Cutaway.room.ids().sort().map((r) => el("option", { value: r })))]);
+  }
+  /** a room's own fields: its iso map (or none: a painted room's rect), its size, Bake, the Iso-Editor @param {any} it */
+  function roomFields(it) {
+    const maps = Object.keys(lib.ISO_MAPS).sort(), m = it.iso ? lib.ISO_MAPS[it.iso] : null;
+    const mapSel = el("select", { style: { flex: "1" }, onchange: (/** @type {any} */ e) => change(() => linkMap(it, e.target.value)) },
+      [el("option", { value: "" }, ["— painted (a rect)"]), ...maps.map((k) => el("option", { value: k, selected: it.iso === k }, [k]))]);
+    const out = [row("iso map", mapSel)];
+    if (m) {
+      const num = (/** @type {number} */ v, /** @type {(x: number) => void} */ fn) => el("input", { type: "number", step: m.cell ?? 0.5, min: 1, value: v, style: { width: "60px" }, onchange: (/** @type {any} */ e) => fn(Number(e.target.value)) });
+      out.push(row("size", el("span", {}, ["U ", num(m.size[0], (x) => resizeMap(it.iso, x, m.size[1])), " V ", num(m.size[1], (x) => resizeMap(it.iso, m.size[0], x)), " m"])),
+        el("div", { className: "cw-dim" }, [`The map's own size: changing it changes ${mapPath(it.iso)} (or drag the handle at the room's near corner).${touched.has(it.iso) ? " Changed: Save, then Bake." : ""}`]),
+        el("div", { style: { margin: "3px 0" } }, [
+          button("Bake", () => E.runTask("art: room", { room: it.iso }), `build ${it.iso}'s picture from its map (the task "art: room"); save first`),
+          button("Iso-Editor", async () => { await E.modules.iso?.open(it.iso); E.show("iso"); }, "open its map in the Iso-Editor")]));
+    }
+    return out;
+  }
+  /** link a room to an iso map (drawn from it, at its rect's corner) or to none (a rect where the map lay) @param {any} it @param {string} id */
+  function linkMap(it, id) {
+    const S = plan.scale;
+    if (id) {
+      if (!it.iso) { const [x, y] = it.rect ?? it.at ?? [0, 0]; it.at = [round(x), round(y)]; it.rot = it.rot ?? 0; delete it.rect; }
+      // its room in the game goes with the map while it was the map's (a room drawn from a map is that room)
+      if (!it.room || it.room === it.iso) it.room = id;
+      it.iso = id;
+    } else if (it.iso) {
+      const pts = PD.points(it, S), xs = pts.map((/** @type {number[]} */ q) => q[0]), ys = pts.map((/** @type {number[]} */ q) => q[1]);
+      it.rect = [round(Math.min(...xs)), round(Math.min(...ys)), round(Math.max(...xs) - Math.min(...xs)), round(Math.max(...ys) - Math.min(...ys))];
+      delete it.iso; delete it.at; delete it.rot;
+    }
+  }
+  /** the form for a new iso room: the task "room: new" makes its map, its bake and its room in the game; here it is linked */
+  function newIsoBox() {
+    const id = /** @type {HTMLInputElement} */ (el("input", { placeholder: "id (small letters, _)", style: { width: "130px" } }));
+    const u = /** @type {HTMLInputElement} */ (el("input", { value: "5", style: { width: "40px" } })), v = /** @type {HTMLInputElement} */ (el("input", { value: "4.5", style: { width: "40px" } }));
+    const make = async () => {
+      const name = id.value.trim(), U = Number(u.value), V = Number(v.value);
+      if (!/^[a-z][a-z0-9_]*$/.test(name)) { E.setStatus("plan: a room's id is small letters, digits and _, a letter first"); return; }
+      if (lib.ISO_MAPS[name] || Cutaway.room.ids().includes(name)) { E.setStatus(`plan: ${name} is taken`); return; }
+      if (!(U >= 1 && V >= 1 && U <= 40 && V <= 40)) { E.setStatus("plan: U and V are meters, 1 to 40"); return; }
+      const r = await E.runTask("room: new", { room: name, u: String(U), v: String(V) });
+      if (r?.code !== 0) return;
+      new Function("ISO_MAPS", await E.studio.read(mapPath(name)))(lib.ISO_MAPS);
+      const b = box.getBoundingClientRect(), cx = round((b.width / 2 - zoom.x) / zoom.k), cy = round((b.height / 2 - zoom.y) / zoom.k);
+      change(() => { plan.items.push({ id: freeId(name), kind: "room", name, iso: name, at: [cx, cy], rot: 90, ...(level !== "strasse" ? { level } : {}), status: "block", room: name }); pick(freeId(name) === name ? name : plan.items.at(-1).id); });
+      E.setStatus(`${name}: made and baked, linked here (Save the plan). Reload game loads the room into the game.`);
+    };
+    return el("div", { className: "cw-sec" }, [el("div", { className: "cw-dim" }, ["New iso room: its map, its bake, its kit and the room in the game (the task \"room: new\"), linked here"]),
+      el("div", {}, ["id ", id, " U ", u, " V ", v, " m ", button("Make", () => { make(); }, "write the map, its bake file and its kit, bake it, add the room to the game, put it in the plan")])]);
+  }
   function build(/** @type {HTMLElement} */ panel) {
     if (!E.studio.available) { panel.append(el("div", { className: "cw-sec cw-dim" }, ["The Plan tab needs the studio: node lib/cutaway/tools/studio.mjs"])); return; }
     if (!plan) { panel.append(el("div", { className: "cw-sec cw-dim" }, [broken ? `plan: ${broken}` : "loading …"])); boot(); return; }
@@ -398,7 +532,8 @@
     // new
     const kindSel = /** @type {HTMLSelectElement} */ (el("select", {}, KINDS.map((k) => el("option", { value: k }, [k]))));
     panel.append(el("div", { className: "cw-sec" }, [el("div", { className: "cw-dim" }, ["New on this level, in the middle of the view"]),
-      el("div", { style: { display: "flex", gap: "4px" } }, [kindSel, button("Add", () => addNew(kindSel.value), "a new item of that kind")])]));
+      el("div", { style: { display: "flex", gap: "4px" } }, [kindSel, button("Add", () => addNew(kindSel.value), "a new item of that kind (a room: a painted room's rect, to link to a map)")])]));
+    panel.append(newIsoBox());
     // the picked
     const list = chosen(), it = picked();
     if (list.length > 1) {
@@ -413,9 +548,9 @@
       const fields = [
         row("id", textField(it, "id")), row("name", textField(it, "name")),
         row("kind", choice([it], "kind", KINDS, "—")), row("level", choice([it], "level", plan.levels.map((/** @type {any} */ l) => l.id), "strasse")),
-        row("status", choice([it], "status", STATUSES, "—")), row("room", textField(it, "room")), row("chapter", textField(it, "chapter", true)),
+        row("status", choice([it], "status", STATUSES, "—")), row("game room", roomField(it)), row("chapter", textField(it, "chapter", true)),
       ];
-      if (it.iso !== undefined) fields.push(row("iso map", choice([it], "iso", Object.keys(lib.ISO_MAPS).sort(), "—")));
+      if (it.kind === "room") fields.push(...roomFields(it));
       if (angleKey(it)) fields.push(row(angleKey(it) === "view" ? "camera" : angleKey(it), el("input", { type: "number", step: 15, value: angleOf(it), style: { width: "70px" },
         onchange: (/** @type {any} */ e) => change(() => setAngle(it, Number(e.target.value))) })));
       if (it.kind === "room") fields.push(row("outdoor", el("input", { type: "checkbox", checked: !!it.outdoor, onchange: (/** @type {any} */ e) => change(() => { if (e.target.checked) it.outdoor = true; else delete it.outdoor; }) })));
@@ -450,7 +585,10 @@
   E.tab({ id: "plan", label: "Plan", build, browse, view: () => view, key, save: () => save(), del: () => deleteSel(),
     undo: () => step(undoStack, redoStack), redo: () => step(redoStack, undoStack),
     selectNone: () => { pickNone(); E.refresh(); draw(); },
-    get unsaved() { return plan && JSON.stringify(plan) !== saved ? 1 : 0; } });
+    get unsaved() { return (plan && JSON.stringify(plan) !== saved ? 1 : 0) + [...touched].filter((id) => E.files.unsaved(mapPath(id))).length; } });
   E.modules.plan = { get plan() { return plan; }, get picked() { return [...many]; }, get level() { return level; }, set level(v) { level = v; E.refresh(); draw(); },
-    select(/** @type {string} */ id) { pick(id); E.refresh(); draw(); }, save, textNow, boot, fit };
+    select(/** @type {string} */ id) { pick(id); E.refresh(); draw(); }, save, textNow, boot, fit, resizeMap, linkMap: (/** @type {any} */ it, /** @type {string} */ id) => change(() => linkMap(it, id)),
+    /** a plan point on the screen (tests) @param {number[]} p */
+    toScreen(p) { const r = canvas.getBoundingClientRect(); return [r.left + zoom.x + p[0] * zoom.k, r.top + zoom.y + p[1] * zoom.k]; },
+    isoHandle: (/** @type {string} */ id) => isoHandle(items().find((i) => i.id === id)) };
 })();
