@@ -153,6 +153,8 @@ var STADTPLAN = {
     { id: "frei_ost", kind: "free", name: "frei", rect: [880, 230, 260, 80] },
 
     // ================================================================ Notizen
+    { id: "n_kessel", kind: "note", name: "Entschieden", level: "k14", at: [20, 840],
+      note: "2026-11-12: Der Kessel-Block wird umgebaut. Die Nordfassade der Kowalski-Straße wird länger, damit Lobby und LUCKY STATIC nebeneinander passen; die Wohnung liegt über dem Haus, nicht über der Straße; der 14. Stock wird um 90° nach rechts gedreht, sodass Fenster, Sims und Leiter zur Kowalski-Straße zeigen. Offen: A, die Lobby dreht mit (die Aufzüge bleiben übereinander, ihre Straßentür wandert in die vordere Wand), oder B, nur der 14. Stock dreht (der Aufzug öffnet zu zwei Seiten). Der Drain-Markt bleibt, wie er liegt (kein Problem)." },
     { id: "n_ines", kind: "note", name: "Offen", at: [20, 912],
       note: "Klinik, Pho Pump und Querstraße: Lage vorgeschlagen, nicht entschieden. Ines' Weg: Klinik 19:00, Pho Pump 19:15, Waschsalon 20:00, nach Hause 20:30, Sumpf-Abgang (Do 20:15, Fr 22:30), Metro 31 Fr 23:00." },
   ],
