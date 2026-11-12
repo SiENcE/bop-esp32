@@ -80,7 +80,7 @@ Nagiwa.at = {
   // (the left column of every feed is the cameras' strip, x 4 to 74, and the top left its name: nothing that matters lies there)
   // painted (art/cams/cam21.px.js, measured there: CAM21_LAYOUT): the queue across the picture toward the door under the camera, Ines
   // out from under it to the left; the clinic's hotspot is the white pylon with Nagi·wa's ring, in its own outline
-  cam21: { door: [153, 146], walkOff: [31, 140], queue: [[187, 147], [176, 130], [168, 117], [161, 107]], menu: [127, 55, 17, 15], mic: [173, 110],
+  cam21: { door: [153, 146], walkOff: [31, 140], gone: [-14, 139], queue: [[187, 147], [176, 130], [168, 117], [161, 107]], menu: [127, 55, 17, 15], mic: [173, 110],
     clinicPoly: [202, 139, 213, 106, 218, 104, 230, 113, 215, 147, 210, 149] },
   // the 14th floor's own picture and props (game/rooms/kessel.js), 352 wide, moved left by 32 (`shift`) so its right edge is the
   // feed's: Frau Haldane comes out of her door beside the lift and walks to the papers at the head of the stairs (the cameras' strip

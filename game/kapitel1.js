@@ -93,7 +93,7 @@ Cutaway.actor("lantern", { name: "Jemand im Rollstuhl", color: "#b0f0a0",
   look: ["Er trägt einen geflickten Poncho, und an seinem Rollstuhl hängen Schwimmer und Antennen."],
   talk: ["Wer bist du?"] });
 Cutaway.routine("ines", [
-  { day: [2, 3, 4], from: "19:00", to: "19:15", room: "cam21", at: A21.door, path: [A21.door, A21.walkOff] },
+  { day: [2, 3, 4], from: "19:00", to: "19:15", room: "cam21", at: A21.door, path: [A21.door, A21.walkOff, A21.gone], once: true },   // out of the picture, once
   { day: [2, 3], from: "19:15", to: "20:00", room: "cam22", at: A22.seat },
   { day: 2, from: "20:00", to: "20:30", room: "cam23", at: A23.washer, face: "nw" },
   { day: 3, from: "20:00", to: "20:15", room: "cam23", at: A23.dryer6, face: "ne" },
