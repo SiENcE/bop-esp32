@@ -106,7 +106,7 @@ const BAKE = () => bakeFeed(CAM, WORLD, { exposure: 1.2, key: "cam22" })
 // the cook's back, painted by hand where the blockout puts him, after the user's reference (a chef from behind, 2026-11-12), in units
 // of a 52-unit-tall figure scaled to his size there and slimmed (the user's wish): the tall pleated toque with its band and the
 // slit at the back, his short dark hair and neck, the white jacket with its rounded shoulders, the seam down the back and the side
-// panels, both hands on his hips so the sleeves bend out at the elbows (their seams, the cuffs), dark trousers; lit from the lamps
+// panels, both hands on his hips so the sleeves bend out at the elbows (their seams, the cuffs; his hands in front of him, out of sight), dark trousers; lit from the lamps
 // over the counter, so the tops are brightest; a dark edge round him so he reads in front of the counter
 const cookFig = (c) => {
   const top = at(CAM, [COOK[0], 1.95, COOK[1]]), foot = at(CAM, [COOK[0], 0, COOK[1]]), S = (foot[1] - top[1]) / 56, SX = S * 0.8
@@ -126,7 +126,6 @@ const cookFig = (c) => {
     // the arms, hands on the hips: the upper arm out to the elbow, the forearm back in to the hand
     for (const s of [-1, 1]) {
       const sh = [s * 13.4, 18.5], el = [s * 21.5, 28], ha = [s * 11.4, 34.6]
-      if (e(u, v, ha[0] + s * 0.6, ha[1], 1.5, 1.2)) return "6"                                // the hand on the hip
       const t1 = seg(u, v, sh, el, 2.5), t2 = seg(u, v, el, ha, 2.2)
       if (t1 >= 0 || t2 >= 0) {
         const cuff = t2 > 0.78, outer = s * u > s * (t1 >= 0 ? sh[0] + (el[0] - sh[0]) * t1 : el[0] + (ha[0] - el[0]) * t2) + 1.3
