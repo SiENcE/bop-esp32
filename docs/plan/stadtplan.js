@@ -69,8 +69,8 @@ var STADTPLAN = {
       view: { at: [585, 262], dir: 270 }, doors: { back: [597, 240], door: [560, 196] },
       note: "Ein Blick die Gasse hinunter (gemalt, kein Iso): vorn links Okonkwos Laden, gegenüber der Automat, am Ende Tor und Lull-Schirm. Der Durchgang aus der Kowalski-Straße kommt rechts unten herein." },
     { id: "okonkwo", kind: "room", name: "Okonkwos Laden", rect: [470, 160, 90, 70], status: "gemalt", room: "okonkwo_shop", chapter: 1,
-      view: { at: [515, 250], dir: 270 }, doors: { door: [560, 196] },
-      note: "Eine Bühne von der Seite: die Rückwand frontal, die Tür zur Gasse vorn in der linken Seitenwand. Hier: die Kamera im Fenster zur Jade Row." },
+      view: { at: [585, 196], dir: 180 }, doors: { door: [560, 196] },
+      note: "Eine Bühne von der Seite: die Rückwand frontal, die Tür zur Gasse vorn in der linken Seitenwand. Seine Kamera ist das Fenster zur Jade Row, es schaut nach Westen in den Laden." },
     { id: "torweg", kind: "street", name: "Torweg", poly: [760, 510, 800, 510, 800, 570, 768, 570, 768, 540, 760, 540], status: "idee",
       note: "Der Weg durch das Haus vom Tor der Kowalski-Straße (in ihrer Ostfassade) zum Torbogen in der Nordwand der Gasse." },
     { id: "gasse", kind: "room", name: "Die Gasse", iso: "gasse", at: [978.5, 570], rot: 90, outdoor: true, status: "gemalt", room: "gasse", chapter: 1,
@@ -110,7 +110,7 @@ var STADTPLAN = {
     { id: "cam18", kind: "cam", name: "CAM 18", at: [170, 80], dir: 90, status: "gemalt", room: "cam18", chapter: 1, note: "Von der Laterne senkrecht hinab." },
     { id: "cam21", kind: "cam", name: "CAM 21", at: [560, 712], dir: 15, status: "block", room: "cam21", chapter: 1, note: "Über der Klinik-Tür nach draußen (Variante B, 2026-11-12)." },
     { id: "cam22", kind: "cam", name: "CAM 22", at: [640, 700], dir: 160, status: "block", room: "cam22", chapter: 1, note: "Pho Pump, über der Theke." },
-    { id: "cam23", kind: "cam", name: "CAM 23", at: [1040, 620], dir: 45, status: "gemalt", room: "cam23", chapter: 1, note: "Das Bild des Waschsalons." },
+    { id: "cam23", kind: "cam", name: "CAM 23", at: [1040, 620], dir: 315, status: "gemalt", room: "cam23", chapter: 1, note: "Das Bild des Waschsalons." },
     { id: "cam24", kind: "cam", name: "CAM 24", at: [305, 680], dir: 270, status: "block", room: "cam24", chapter: 1, note: "Türklingel, Fischauge." },
     { id: "cam30", kind: "cam", name: "CAM 30", at: [400, 850], dir: 200, status: "block", room: "cam30", chapter: 1, note: "Tief am Wasser, die Treppe hinauf." },
 
@@ -125,7 +125,7 @@ var STADTPLAN = {
     { id: "dach", kind: "room", name: "Dach", rect: [640, 150, 135, 180], level: "dach", outdoor: true, status: "block", room: "dach", chapter: 1,
       view: { at: [610, 370], dir: 315 }, doors: { hatch: [770, 320] },
       note: "Die Regenleserin, unser Platz (dach_sitzen), der Blick auf die Ringe (dach_blick). Die Leiter kommt vom Sims herauf." },
-    { id: "cam14", kind: "cam", name: "CAM 14", at: [745, 200], dir: 225, level: "k14", status: "gemalt", room: "cam14", chapter: 1, note: "Das Bild des Flurs." },
+    { id: "cam14", kind: "cam", name: "CAM 14", at: [745, 200], dir: 135, level: "k14", status: "gemalt", room: "cam14", chapter: 1, note: "Das Bild des Flurs." },
 
     // ================================================================ der Drain-Markt
     { id: "drain_markt", kind: "room", name: "Drain-Markt", topdown: { ppm: 40, size: [1280, 720] }, at: [1019, 570], rot: 180, level: "markt", outdoor: true, status: "gemalt",

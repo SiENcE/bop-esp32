@@ -11,6 +11,9 @@
 //   turn      the handle at the end of a camera's or a room's arrow turns it ([ and ] by 15°, Shift by 90°: all the picked)
 //   new       the inspector's kinds put one in the middle of the view; Ctrl+D doubles the picked; Del takes them out (of the
 //             plan: a room's map and the room in the game stay)
+//   doors     a painted room's doors (where its ways leave it): picked with the room they show as squares, green when linked to
+//             a way of the game's (a hotspot of that room with an exit or a goto), orange when not; drag one, click it and Del
+//             takes it (not the room), the inspector links each to a way and adds one
 //   rooms     a room is drawn from an iso map (art/rooms/<id>.map.js) or, without one, as a painted room's rect; the inspector
 //             links it to a map and to a room of the game; an iso room's size is its map's: the handle at its near corner (or U
 //             and V) changes the map itself (its floor and its walls, through the Iso-Editor), Save writes it with the plan,
@@ -28,7 +31,7 @@
   /** @type {any} */ let PD = null;                 // docs/plan/plan.js, made with the maps and the game's ways
   /** @type {any} */ let lib = null;                // { ISOMAP, ISO_MAPS, drawSrc }
   /** @type {any} */ let plan = null;               // the plan as the tab holds it now
-  let level = "strasse", sel = "", broken = "", loading = false;
+  let level = "strasse", sel = "", broken = "", loading = false, selDoor = "";
   /** @type {Set<string>} every picked item's id (sel, the one the inspector shows, among them) */
   const many = new Set();
   /** @type {string[]} */ let undoStack = [], redoStack = [];
@@ -138,8 +141,11 @@
     E.setStatus(`${id}: ${n(U)} x ${n(V)} m (its map: size, floor, walls; not saved yet). Save, then Bake.`);
     E.refresh(); draw();
   }
+  /** @type {{from: string, hotspot: string, name: string, to: string}[]} the game's ways, as read last */
+  let waysNow = [];
   function remake() {
     const w = gameWays();
+    waysNow = w.links;
     PD = new Function("ISOMAP", "ISO_MAPS", "STADTPLAN_LINKS", "STADTPLAN_ROOMS", `${lib.drawSrc}\n;return PlanDraw;`)(lib.ISOMAP, lib.ISO_MAPS, w.links, w.rooms);
   }
 
@@ -148,9 +154,10 @@
   const picked = () => items().find((i) => i.id === sel) ?? null;
   const chosen = () => items().filter((i) => many.has(i.id));
   const onLevel = (/** @type {any} */ it) => (it.level ?? "strasse") === level || it.kind === "water";
-  function pickNone() { sel = ""; many.clear(); }
+  function pickNone() { sel = ""; many.clear(); selDoor = ""; }
   /** pick one: "only" it, "add" it to the picked, "toggle" it in or out @param {string} id @param {"only" | "add" | "toggle"} how */
   function pick(id, how = "only") {
+    if (id !== sel) selDoor = "";
     if (how === "only") { many.clear(); many.add(id); sel = id; }
     else if (how === "add") { many.add(id); sel = id; }
     else if (many.has(id)) { many.delete(id); sel = sel === id ? [...many].at(-1) ?? "" : sel; }
@@ -213,7 +220,11 @@
       many.clear(); for (const id of ids) many.add(id); sel = ids.at(-1) ?? "";
     });
   }
+  /** a door of the picked room taken out @param {any} it @param {string} k */
+  function deleteDoor(it, k) { change(() => { const d = { ...it.doors }; delete d[k]; if (Object.keys(d).length) it.doors = d; else delete it.doors; if (selDoor === k) selDoor = ""; }); }
   function deleteSel() {
+    const it0 = picked();
+    if (selDoor && it0?.doors?.[selDoor]) { deleteDoor(it0, selDoor); return; }
     const list = chosen(); if (!list.length) return;
     change(() => { plan.items = plan.items.filter((/** @type {any} */ i) => !list.includes(i)); pickNone(); });
   }
@@ -257,6 +268,13 @@
       ctx.fillStyle = SEL;
       if (it.rect && !it.iso && !it.topdown) { const [x, y, w, h] = it.rect; ctx.fillRect(x + w - hs, y + h - hs, hs * 2, hs * 2); }
       const ih = isoHandle(it); if (ih) { ctx.fillRect(ih[0] - hs, ih[1] - hs, hs * 2, hs * 2); }
+      const linked = new Set(waysOf(it).map((w) => w.hotspot));
+      for (const [k, p] of doorsOf(it)) {
+        const d = hs * 1.4, on = k === selDoor;
+        ctx.fillStyle = on ? SEL : linked.has(k) ? "#7fe0a0" : "#eea040"; ctx.fillRect(p[0] - d, p[1] - d, d * 2, d * 2);
+        ctx.strokeStyle = "#06080f"; ctx.lineWidth = lw; ctx.strokeRect(p[0] - d, p[1] - d, d * 2, d * 2);
+        ctx.fillStyle = on ? SEL : "#dfe6f0"; ctx.font = `${11 * lw}px sans-serif`; ctx.fillText(k, p[0] + d + 3 * lw, p[1] - d);
+      }
       if (press?.g?.what === "isosize" && press.size) {
         const P = PD.frame(it, plan.scale), [U, V] = press.size, q = [P(0, 0), P(U, 0), P(U, V), P(0, V)];
         ctx.strokeStyle = SEL; ctx.lineWidth = 2 * lw; ctx.beginPath(); q.forEach(([x, y], i) => (i ? ctx.lineTo(x, y) : ctx.moveTo(x, y))); ctx.closePath(); ctx.stroke();
@@ -274,6 +292,12 @@
     }
   }
 
+  /** a painted room (doors of its own: an iso room's come from its map and the game) @param {any} it */
+  const painted = (it) => it?.kind === "room" && !it.iso && !it.topdown;
+  /** the ways out of an item's game rooms (hotspots with an exit or a goto) @param {any} it */
+  const waysOf = (it) => { const rooms = String(it?.room ?? "").split(",").map((r) => r.trim()).filter(Boolean); return waysNow.filter((w) => rooms.includes(w.from)); };
+  /** where the picked room's doors are @param {any} it */
+  const doorsOf = (it) => (painted(it) ? Object.entries(it.doors ?? {}) : []);
   /** an iso room's size handle: its near corner (u = U, v = V) @param {any} it */
   function isoHandle(it) {
     const m = it?.iso && lib?.ISO_MAPS[it.iso]; if (!m) return null;
@@ -292,6 +316,7 @@
       const t = turnHandle(it); if (t && near(t.p)) return { what: "turn", it };
       if (it.rect && !it.iso && !it.topdown && near([it.rect[0] + it.rect[2], it.rect[1] + it.rect[3]])) return { what: "size", it };
       const ih = isoHandle(it); if (ih && near(ih)) return { what: "isosize", it };
+      for (const [k, p] of doorsOf(it)) if (near(p)) return { what: "door", it, key: k };
       if (it.poly) for (let i = 0; i < it.poly.length; i += 2) if (near([it.poly[i], it.poly[i + 1]])) return { what: "point", it, i };
     }
     const hit = PD.itemAt(plan, level, x, y);
@@ -343,6 +368,7 @@
     if (!g) { press = { frame: [x, y], to: [x, y], add: e.shiftKey, x0: e.clientX, y0: e.clientY, moved: false }; return; }
     // the water is picked by a click, moved only with Shift (it is under everything)
     if (g.it.kind === "water" && g.what === "move" && !g.group && !e.shiftKey && !many.has(g.it.id)) { pick(g.it.id); E.refresh(); draw(); return; }
+    if (g.what === "door") selDoor = g.key; else if (g.what !== "isosize") selDoor = "";
     if (g.what === "move" && !g.group && !many.has(g.it.id)) pick(g.it.id, e.shiftKey ? "add" : "only");
     else if (g.what === "move" && !g.group) sel = g.it.id;
     E.refresh();
@@ -351,7 +377,7 @@
   });
   canvas.addEventListener("pointermove", (/** @type {PointerEvent} */ e) => {
     const r = canvas.getBoundingClientRect(), [x, y] = toPlan(e.clientX - r.left, e.clientY - r.top);
-    if (!press) { const g = PD && plan && !space ? grab(x, y) : null; canvas.style.cursor = space ? "grab" : !g ? "crosshair" : g.what === "move" ? "move" : g.what === "isosize" || g.what === "size" ? "nwse-resize" : "pointer"; return; }
+    if (!press) { const g = PD && plan && !space ? grab(x, y) : null; canvas.style.cursor = space ? "grab" : !g ? "crosshair" : g.what === "move" || g.what === "door" ? "move" : g.what === "isosize" || g.what === "size" ? "nwse-resize" : "pointer"; return; }
     if (Math.abs(e.clientX - press.x0) + Math.abs(e.clientY - press.y0) > 3) press.moved = true;
     if (!press.moved) return;
     if (press.pan) { zoom.x = press.zx + e.clientX - press.x0; zoom.y = press.zy + e.clientY - press.y0; draw(); return; }
@@ -361,6 +387,7 @@
     else if (g.what === "size") it.rect = [it.rect[0], it.rect[1], Math.max(8, round(x - it.rect[0])), Math.max(8, round(y - it.rect[1]))];
     else if (g.what === "point") { it.poly[g.i] = round(x); it.poly[g.i + 1] = round(y); }
     else if (g.what === "isosize") press.size = isoSizeAt(it, x, y);
+    else if (g.what === "door") it.doors = { ...it.doors, [g.key]: [round(x), round(y)] };
     else if (g.what === "turn") { const t = turnHandle(it), a = Math.atan2(y - t.o[1], x - t.o[0]) * 180 / Math.PI; setAngle(it, e.shiftKey ? a : Math.round(a / 15) * 15); }
     draw();
   });
@@ -473,6 +500,7 @@
     const mapSel = el("select", { style: { flex: "1" }, onchange: (/** @type {any} */ e) => change(() => linkMap(it, e.target.value)) },
       [el("option", { value: "" }, ["— painted (a rect)"]), ...maps.map((k) => el("option", { value: k, selected: it.iso === k }, [k]))]);
     const out = [row("iso map", mapSel)];
+    if (painted(it)) out.push(doorsBox(it));
     if (m) {
       const num = (/** @type {number} */ v, /** @type {(x: number) => void} */ fn) => el("input", { type: "number", step: m.cell ?? 0.5, min: 1, value: v, style: { width: "60px" }, onchange: (/** @type {any} */ e) => fn(Number(e.target.value)) });
       out.push(row("size", el("span", {}, ["U ", num(m.size[0], (x) => resizeMap(it.iso, x, m.size[1])), " V ", num(m.size[1], (x) => resizeMap(it.iso, m.size[0], x)), " m"])),
@@ -482,6 +510,30 @@
           button("Iso-Editor", async () => { await E.modules.iso?.open(it.iso); E.show("iso"); }, "open its map in the Iso-Editor")]));
     }
     return out;
+  }
+  /** a painted room's doors: each linked to a way of its game room (or a name of its own), placed by dragging, taken out @param {any} it */
+  function doorsBox(it) {
+    const ways = waysOf(it), doors = doorsOf(it), linked = new Set(ways.map((w) => w.hotspot));
+    const rows = doors.map(([k]) => {
+      const sel1 = el("select", { style: { flex: "1", minWidth: "0" }, onchange: (/** @type {any} */ e) => {
+        const to = e.target.value; if (!to || to === k || it.doors[to]) return;
+        change(() => { it.doors = Object.fromEntries(Object.entries(it.doors).map(([a, p]) => [a === k ? to : a, p])); if (selDoor === k) selDoor = to; });
+      } }, [...(linked.has(k) ? [] : [el("option", { value: k, selected: true }, [`${k} (no way)`])]),
+        ...ways.map((w) => el("option", { value: w.hotspot, selected: w.hotspot === k, disabled: w.hotspot !== k && !!it.doors[w.hotspot] }, [`${w.hotspot} → ${w.to}`]))]);
+      return el("div", { style: { display: "flex", gap: "4px", alignItems: "center", margin: "2px 0", ...(k === selDoor ? { outline: `1px solid ${SEL}` } : {}) } }, [
+        el("span", { style: { width: "10px", height: "10px", flex: "none", background: linked.has(k) ? "#7fe0a0" : "#eea040" } }), sel1,
+        button("×", () => deleteDoor(it, k), "take this door out (Del when it is picked)")]);
+    });
+    const free = ways.filter((w) => !it.doors?.[w.hotspot]);
+    const add = () => {
+      const c = PD.centre(it, plan.scale), k = free[0]?.hotspot ?? (() => { let n = 1; while (it.doors?.[`door_${n}`]) n++; return `door_${n}`; })();
+      change(() => { it.doors = { ...(it.doors ?? {}), [k]: [round(c[0]), round(c[1])] }; selDoor = k; });
+    };
+    return el("div", { style: { margin: "6px 0" } }, [
+      el("div", { className: "cw-dim" }, [`doors (${doors.length}): drag a square on the plan; green linked to a way of ${it.room || "its room"}, orange not`]),
+      ...rows,
+      el("div", {}, [button("Add door", add, free.length ? `a door for the way ${free[0].hotspot} → ${free[0].to}` : "a door of its own name (no way of the game's is left)"),
+        ...(free.length ? [el("span", { className: "cw-dim" }, [`  ways without a door: ${free.map((w) => w.hotspot).join(", ")}`])] : [])])]);
   }
   /** link a room to an iso map (drawn from it, at its rect's corner) or to none (a rect where the map lay) @param {any} it @param {string} id */
   function linkMap(it, id) {
