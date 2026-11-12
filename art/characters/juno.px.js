@@ -161,8 +161,19 @@ sprite("_ne_torso", `
   .jjjjjjjjjjjjjjjj.`)
 
 // ---------------------------------------------------------------- arms
-// each arm in three pieces: the upper arm (still), the forearm and the hand (swinging by whole pixels)
-sprite("_lit_up", `
+// each arm in three pieces: the upper arm (still), the forearm and the hand (swinging by whole pixels).
+// The hands hang to just above the hip, the slicker's hem (the user's decision, 2026-11-12: first drawn they ended
+// high on the slicker; docs/characters/juno_arme_vergleich.png): the pieces below are drawn as first, and ARM_EXTRA
+// rows lengthen them: the upper arm takes the first half (its last row repeated), the forearm the rest (its first row
+// repeated), the hand moves down by all of them. The test sheet art/test/juno_arme.px.js sets it to compare lengths.
+const ARM_EXTRA = globalThis.JUNO_ARM_EXTRA ?? 3, ARM_UP = Math.ceil(ARM_EXTRA / 2), ARM_LO = ARM_EXTRA - ARM_UP
+const armPiece = (art, row, n) => {
+  const rows = art.split("\n").filter((l) => l.trim())
+  const at = row < 0 ? rows.length + row : row
+  return "\n" + [...rows.slice(0, at + 1), ...Array(n).fill(rows[at]), ...rows.slice(at + 1)].join("\n")
+}
+const armSprite = (name, art) => sprite(name, /_up$/.test(name) ? armPiece(art, -1, ARM_UP) : /_lo$/.test(name) ? armPiece(art, 0, ARM_LO) : art)
+armSprite("_lit_up", `
   yYYy
   yYYj
   yYYj
@@ -170,17 +181,17 @@ sprite("_lit_up", `
   yYyj
   yYyj
   yYyj`)                       // a lit arm, rows 13-19: SE's near arm (screen left)
-sprite("_lit_lo", `
+armSprite("_lit_lo", `
   yYyj
   jYyj
   jyyj
   jjyj
   jjjj`)                       // rows 20-24, the cuff at the bottom
-sprite("_lit_hand", `
+armSprite("_lit_hand", `
   .SS.
   .SSs
   ..s.`)                       // rows 25-27
-sprite("_se_far_up", `
+armSprite("_se_far_up", `
   yj.
   yyj
   jyj
@@ -188,16 +199,16 @@ sprite("_se_far_up", `
   jyj
   jyj
   jyj`)                        // SE's far arm (her left, screen right), rows 13-19, partly behind her
-sprite("_se_far_lo", `
+armSprite("_se_far_lo", `
   jyj
   jyj
   jjj
   jjj
   jjj`)                        // rows 20-24, mostly behind the satchel
-sprite("_se_far_hand", `
+armSprite("_se_far_hand", `
   ss
   s.`)
-sprite("_ne_far_up", `
+armSprite("_ne_far_up", `
   yYj
   yYj
   yYj
@@ -205,13 +216,13 @@ sprite("_ne_far_up", `
   yyj
   yyj
   jyj`)                        // NE's far arm (her left, screen left, lit), rows 13-19
-sprite("_ne_far_lo", `
+armSprite("_ne_far_lo", `
   jyj
   jyj
   jyj
   jjj
   jjj`)
-sprite("_shade_up", `
+armSprite("_shade_up", `
   yyy.
   jyyj
   jyyj
@@ -219,13 +230,13 @@ sprite("_shade_up", `
   jyyj
   jyyj
   jyyj`)                       // NE's near arm (her right, screen right, the shade side), rows 13-19
-sprite("_shade_lo", `
+armSprite("_shade_lo", `
   jyyj
   jyyj
   jjyj
   jjjj
   jjjj`)
-sprite("_shade_hand", `
+armSprite("_shade_hand", `
   .sS.
   .ss.
   .s..`)
@@ -308,15 +319,15 @@ const juno = (c, view, o = {}) => {
   legs(c, view, { near: { ...fe.near, x: LEG_X[view].near }, far: { ...fe.far, x: LEG_X[view].far } }, b)
   const bagY = 23 + (o.bagBob ?? b)
   if (view === "se") {
-    at("_se_far_up", 19, 13); at("_se_far_lo", 19 + (o.far ?? 0), 20); at("_se_far_hand", 20 + (o.farHand ?? 0), 25)
+    at("_se_far_up", 19, 13); at("_se_far_lo", 19 + (o.far ?? 0), 20 + ARM_UP); at("_se_far_hand", 20 + (o.farHand ?? 0), 25 + ARM_EXTRA)
     at("_se_torso", 4, 12)
     at("_se_bag", 16 + (o.bag ?? 0), bagY, 0)
-    at("_lit_up", 4, 13); at("_lit_lo", 4 + (o.near ?? 0), 20); at("_lit_hand", 4 + (o.nearHand ?? 0), 25)
+    at("_lit_up", 4, 13); at("_lit_lo", 4 + (o.near ?? 0), 20 + ARM_UP); at("_lit_hand", 4 + (o.nearHand ?? 0), 25 + ARM_EXTRA)
   } else {
     at("_ne_torso", 4, 12)
-    at("_ne_far_up", 4, 13); at("_ne_far_lo", 4 + (o.far ?? 0), 20)
+    at("_ne_far_up", 4, 13); at("_ne_far_lo", 4 + (o.far ?? 0), 20 + ARM_UP)
     at("_ne_bag", 2 + (o.bag ?? 0), bagY, 0)
-    at("_shade_up", 18, 13); at("_shade_lo", 18 + (o.near ?? 0), 20); at("_shade_hand", 18 + (o.nearHand ?? 0), 25)
+    at("_shade_up", 18, 13); at("_shade_lo", 18 + (o.near ?? 0), 20 + ARM_UP); at("_shade_hand", 18 + (o.nearHand ?? 0), 25 + ARM_EXTRA)
   }
   if (!hood) at(`_${view}_roll`, 5, 9)
   const hy = b + (o.nod ?? 0)
