@@ -6,8 +6,8 @@
 //                 lights), so the two pictures agree (one place, one picture). From the bottom up: the hem of her slicker and her
 //                 boots' toes on the wet ledge; under it the Kessel Block's own facade falling away floor after floor; at its foot
 //                 LUCKY STATIC's sign and its warm light far out on the street; on the left the facade with the broken ad screen
-//                 rising toward us, the scaffold, the vending machine and the bins at its foot; in the middle Bao's cart, Bao not there
-//                 (the user's wish): his umbrella furled, the lid on his pot, his crate empty, his lantern out; the string lights
+//                 rising toward us, the scaffold, the vending machine and the bins at its foot; in the middle Bao's cart under his open
+//                 umbrella (Bao under it; from up here one sees the umbrella, his lantern's light and the steam), the string lights
 //                 across, puddles, someone going into LUCKY STATIC. The rain falls away from her into the depth.
 // How: a straight-down view; every pixel asks which plane it meets first (the ledge, our facade, the ad screen's facade, the street).
 // The drop is drawn compressed (as look_shaft's stairwell), so the street keeps a size one can read and the facades still run to it.
@@ -28,9 +28,9 @@ include("../rooms/kowalski.map.js")
   const SIGN = open("lucky_sign"), DOOR = open("lucky_door"), ROW = open("west"), AD = open("ad"), ALLEY = open("alley")
   const CART = prop("cart"), SCAF = prop("scaffold"), VEND = prop("vending"), BINS = prop("bins")
 
-  // ---- the light on the street, from the map's lamps (their ground position and reach); Bao's lantern is out
+  // ---- the light on the street, from the map's lamps (their ground position and reach)
   const LAMP = {
-    warm: [[0, 2.75, 4.6, 1.0], [0, 4.45, 3.6, 0.9], [0.12, 5.43, 1.7, 0.8]],                 // LUCKY STATIC's window and door, the passage's lantern
+    warm: [[0, 2.75, 4.6, 1.0], [0, 4.45, 3.6, 0.9], [0.12, 5.43, 1.7, 0.8], [2.47, 2.72, 1.9, 0.8]],   // LUCKY STATIC's window and door, the passage's lantern, Bao's
     mag: [[0.2, 3.2, 4.0, 0.8]],                                                               // its sign
     cyan: [[3.9, 0.2, 5.5, 0.9]],                                                              // the ad screen, broken, still on (on the other facade)
   }
@@ -111,13 +111,20 @@ include("../rooms/kowalski.map.js")
     for (let u = SCAF.at[0] + 0.3; u < SCAF.at[0] + SCAF.foot[0]; u += 0.3) { const [x0, y] = P(u, SCAF.at[1], 2.35), [x1] = P(u, SCAF.at[1] + SCAF.foot[1], 2.35); for (let x = R(x0); x < R(x1); x++) c.px(x, R(y), "O") }
     { const [x, y] = P(3.45, 0.44, 2.4); c.px(R(x), R(y), f % 6 < 3 ? "Q" : "R") }
     top(c, BINS.at[0], BINS.at[1], BINS.foot[0], BINS.foot[1], BINS.h, "3", "k")
-    // Bao's cart, Bao not there: its top, the lid on the pot, the umbrella furled on its pole, his crate empty behind it
-    top(c, au - 0.05, av - 0.05, fu + 0.1, fv + 0.1, 0.1, "k", null)                                                 // its shadow on the lit street
-    top(c, au, av, fu, fv, CART.h, "4", "k"); top(c, au + 0.08, av + fv - 0.14, fu - 0.16, 0.08, CART.h, "5", null)   // the counter, its lit edge
-    top(c, au + 0.1, av + 0.06, 0.4, 0.2, CART.h, "O", null)                                                          // the board with his bowls, stacked
-    dot(c, au + 0.75, av + 0.3, 1.0, 0.2, "4"); dot(c, au + 0.75, av + 0.3, 1.02, 0.06, "6")
-    dot(c, au + 0.3, av + 0.3, 2.4, 0.12, "u"); { const [x, y] = P(au + 0.3, av + 0.3, 2.4); c.px(R(x), R(y), "U") }
-    top(c, 2.6, 1.5, 0.35, 0.3, 0.45, "O", "k")
+    // Bao's cart under his umbrella, seen from above: its shadow, the umbrella's panels round its knob, the steam from under its edge
+    top(c, au - 0.05, av - 0.05, fu + 0.1, fv + 0.1, 0.1, "k", null)
+    {
+      const cu = au + fu / 2, cv = av + fv / 2, [ux, uy] = P(cu, cv, 2.4), rp = 1.05 * FOC / dOf(2.4)
+      for (let j = -12; j <= 12; j++) for (let i = -12; i <= 12; i++) {
+        const r = Math.hypot(i, j); if (r > rp) continue
+        const panel = fl(((Math.atan2(j, i) + Math.PI) / (Math.PI * 2)) * 8 + 0.5) % 2
+        c.px(R(ux) + i, R(uy) + j, r > rp - 1 ? "k" : r < 1.2 ? "U" : panel ? "U" : "u")
+      }
+      for (let i = 0; i < 5; i++) {                                                                                     // the steam
+        const t = ((f + i * 6) % NF) / NF, sx = R(ux + rp * 0.7 + t * 6 + Math.sin(t * 9 + i) * 1.5), sy = R(uy - rp * 0.4 - t * 5)
+        if (bay(sx, sy) < 0.9 - t * 0.6) c.px(sx, sy, t < 0.4 ? "H" : "h")
+      }
+    }
     // the string lights across the street, high over it, sagging
     for (const [[u0, v0], [u1, v1]] of [[[0.1, 1.4], [4.2, 0.1]], [[0.1, 4.6], [6.4, 0.1]]]) {
       for (let t = 0; t <= 1; t += 0.01) {
