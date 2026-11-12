@@ -1100,9 +1100,9 @@
    */
   function key(e) {
     if (!cur) return false;
-    if (e.ctrlKey || e.metaKey) { if (e.code === "KeyD" && sel) { duplicate(); return true; } return false; }
+    if (e.ctrlKey || e.metaKey) { if (E.letter(e) === "d" && sel) { duplicate(); return true; } return false; }
     if (e.altKey) return false;
-    const t = /** @type {Record<string, string>} */ ({ KeyV: "select", KeyM: "select", KeyA: "add", KeyF: "floor", KeyW: "where" })[e.code];
+    const t = /** @type {Record<string, string>} */ ({ v: "select", m: "select", a: "add", f: "floor", w: "where" })[E.letter(e)];
     if (t) { tool = t; hov = null; E.refresh(); return true; }
     if (tool === "add" && /^Digit[1-7]$/.test(e.code)) { addKind = KINDS[Number(e.code.slice(5)) - 1][0]; E.refresh(); return true; }
     if (!sel) return false;

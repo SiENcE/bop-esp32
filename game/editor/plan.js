@@ -325,8 +325,8 @@
   /** @param {KeyboardEvent} e */
   function key(e) {
     if (!plan) return false;
-    if ((e.ctrlKey || e.metaKey) && e.code === "KeyD") { duplicate(); return true; }
-    if ((e.ctrlKey || e.metaKey) && e.code === "KeyA") { many.clear(); for (const i of items().filter((x) => onLevel(x) && x.kind !== "water")) many.add(i.id); sel = [...many].at(-1) ?? ""; E.setStatus(`${many.size} picked`); E.refresh(); draw(); return true; }
+    if ((e.ctrlKey || e.metaKey) && E.letter(e) === "d") { duplicate(); return true; }
+    if ((e.ctrlKey || e.metaKey) && E.letter(e) === "a") { many.clear(); for (const i of items().filter((x) => onLevel(x) && x.kind !== "water")) many.add(i.id); sel = [...many].at(-1) ?? ""; E.setStatus(`${many.size} picked`); E.refresh(); draw(); return true; }
     // (Ctrl+Z and Ctrl+Y: the editor hands them to the tab's undo and redo)
     if (e.ctrlKey || e.metaKey || e.altKey) return false;
     if (e.key === "Escape" && many.size) { pickNone(); E.refresh(); draw(); return true; }
