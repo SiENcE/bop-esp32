@@ -21,15 +21,7 @@ const SIGN = (c, x, y, w, s, board = "2", ink = "9") => {
 /** the back wall and the floor of a view from above */
 const ROOM = (c, wall, floor, y = 70) => { c.rect(0, 0, W, y, wall); c.rect(0, y, W, H - y, floor); c.hline(0, y, W, "1") }
 
-// the clinic's entrance: white, the door in the middle, the queue along the wall; across the way Pho Pump's window with its menu
-scene("cam21_bg", { w: W, h: H, bg: "0" }, (c) => {
-  ROOM(c, "6", "5", 76)
-  c.rect(130, 26, 44, 50, "9"); c.rect(150, 26, 4, 50, "7")
-  SIGN(c, 96, 8, 112, "LULL CLINIC 9-EAST", "8", "2")
-  c.rect(0, 150, W, 30, "3")
-  c.rect(232, 128, 72, 40, "3"); c.rect(238, 134, 28, 28, "7"); c.rect(242, 139, 20, 2, "2"); c.rect(242, 144, 20, 2, "2"); c.rect(242, 149, 14, 2, "2")
-  SIGN(c, 232, 116, 72, "PHO PUMP")
-})
+// (CAM 21 is painted now: art/cams/cam21.px.js)
 // (cam14 is the 14th floor's own picture under the feed's filter: game/stadt.js)
 // what cam14 adds to it: the morning's papers at the head of the stairs, and Frau Haldane at the floor's scale, asleep on her feet in
 // her dressing gown, her arms hanging (the feed's filter turns both green)

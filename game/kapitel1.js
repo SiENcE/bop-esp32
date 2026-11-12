@@ -105,9 +105,9 @@ Cutaway.routine("ines", [
 Cutaway.routine("lantern", [
   { day: 4, from: "23:00", to: "23:02", room: "cam31", at: A31.tunnel, face: "sw" },
 ]);
-// the queue at the clinic, before Ines comes out; one of them is on the protocol without knowing it
+// the queue at the clinic, before Ines comes out, facing the door under the camera; one of them is on the protocol without knowing it
 ["commuter_a", "commuter_b", "commuter_c", "commuter_d"].forEach((id, i) => {
-  Cutaway.time.routines.get(id).push({ day: [2, 3, 4], from: "18:00", to: "19:00", room: "cam21", at: A21.queue[i], face: "ne" });
+  Cutaway.time.routines.get(id).push({ day: [2, 3, 4], from: "18:00", to: "19:00", room: "cam21", at: A21.queue[i], face: "se" });
 });
 // On Friday Juno knows her whatever she did: `tag_ines` is forgotten overnight to keep the states few, so the implant's mark is only the look (no state)
 Cutaway.i18n.declare("feed display", ["INES CALDER"]);
@@ -190,7 +190,7 @@ const MIC = { clear: 40, lost: 150 };
 Nagiwa.camRoom("cam21", { background: "cam21_bg", mic: { at: A21.mic, ...MIC }, hotspots: {
   menu: { name: "Speisekarte", rect: A21.menu, look: "Die Speisekarte von Pho Pump hängt im Fenster gegenüber.",
     use: [{ if: { or: ["link_cam22", "off_main"] }, then: ["PHO-2291, das hab ich schon."], else: ["Da steht Suppe, Suppe, Suppe. Und ganz unten steht GÄSTE-WLAN PHO-2291.", { set: "code_cam22" }, { set: "link_cam22" }, { sfx: "link" }, "Danke für die Einladung. CAM 22 läuft."] }] },
-  clinic: { name: "Klinik", rect: A21.clinic, look: "Die Lull-Klinik 9-Ost ist weiß und still. Sie haben die Codes nie geändert." },
+  clinic: { name: "Klinik", poly: A21.clinicPoly, look: "Die Lull-Klinik 9-Ost ist weiß und still. Sie haben die Codes nie geändert." },
 } });
 Nagiwa.camRoom("cam22", { background: "cam22_bg", mic: { at: A22.mic, ...MIC }, hotspots: { bar: { name: "Theke", rect: A22.bar, look: "Pho Pump macht Suppe für alle, die nach Pumpe riechen." } } });
 // CAM 23 is the laundromat's own picture under the feed's filter, as CAM 14 is the floor's: its bake and props moved right by
