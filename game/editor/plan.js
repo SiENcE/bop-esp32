@@ -8,7 +8,9 @@
 //             is the one picked); the arrows nudge them (Shift: ten units)
 //   view      the wheel zooms; the right or middle button, or Space held, drags the view; a double click on the ground fits it
 //   shape     a rect's corner handle sizes it, a shape's points drag one by one (Alt+click on an edge adds one, on a point takes it)
-//   turn      the handle at the end of a camera's or a room's arrow turns it ([ and ] by 15°, Shift by 90°: all the picked)
+//   turn      as in a vector editor: the turning mark beside the picked's top right corner turns all the picked together round
+//             the middle of their box (in steps of 15°, free with Shift), their places, doors and cameras with them; [ and ] by
+//             15° (Shift 90°); a camera's own arrow turns only where it looks
 //   new       the inspector's kinds put one in the middle of the view; Ctrl+D doubles the picked; Del takes them out (of the
 //             plan: a room's map and the room in the game stay)
 //   doors     a painted room's doors (where its ways leave it): picked with the room they show as squares, green when linked to
@@ -192,10 +194,50 @@
   }
   /** where an item's turning handle is: at the end of its arrow from its anchor */
   function turnHandle(/** @type {any} */ it) {
-    const k = angleKey(it); if (!k) return null;
+    const k = angleKey(it); if (!k || k === "rot") return null;
     const o = k === "view" ? it.view.at : it.at, a = angleOf(it) * Math.PI / 180, r = 46 / Math.max(zoom.k, 0.4);
     return { o, p: [o[0] + Math.cos(a) * r, o[1] + Math.sin(a) * r] };
   }
+  /** the box round everything picked (one or several), no margin @returns {number[] | null} */
+  function selBox() {
+    if (!many.size) return null;
+    let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+    for (const it of chosen()) {
+      const pts = PD.points(it, plan.scale) ?? (it.at ? [[it.at[0] - 12, it.at[1] - 12], [it.at[0] + 12, it.at[1] + 12]] : []);
+      for (const [x, y] of pts) { x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x); y1 = Math.max(y1, y); }
+    }
+    return isFinite(x0) ? [x0, y0, x1, y1] : null;
+  }
+  /** where the turning mark is: beside the box's top right corner, a little out */
+  function turnMark() { const b = selBox(); if (!b) return null; const m = 18 / zoom.k; return [b[2] + m, b[1] - m]; }
+  /** an item turned by deg round c, made from what it was (so a turn dragged back and forth stays exact): its places, its shape (a
+   *  rect stays a rect by quarter turns, a shape of four points else), its label, doors and camera, a room's rot, a camera's dir
+   *  @param {any} o @param {number[]} c @param {number} deg */
+  function turned(o, c, deg) {
+    const it = JSON.parse(JSON.stringify(o)), a = deg * Math.PI / 180, ca = Math.cos(a), sa = Math.sin(a);
+    const R = (/** @type {number[]} */ p) => [round(c[0] + (p[0] - c[0]) * ca - (p[1] - c[1]) * sa), round(c[1] + (p[0] - c[0]) * sa + (p[1] - c[1]) * ca)];
+    const norm = (/** @type {number} */ x) => ((Math.round(x) % 360) + 360) % 360;
+    if (it.iso || it.topdown) { it.at = R(it.at); it.rot = norm((it.rot ?? 0) + deg); }
+    else if (it.kind === "cam" || it.kind === "view") { it.at = R(it.at); it.dir = norm((it.dir ?? 0) + deg); }
+    else if (it.at) it.at = R(it.at);
+    if (it.poly) { const out = []; for (let i = 0; i < it.poly.length; i += 2) out.push(...R([it.poly[i], it.poly[i + 1]])); it.poly = out; }
+    if (it.rect && !it.iso && !it.topdown) {
+      const [x, y, w, h] = it.rect, q = [[x, y], [x + w, y], [x + w, y + h], [x, y + h]].map(R);
+      if (norm(deg) % 90 === 0) { const xs = q.map((p) => p[0]), ys = q.map((p) => p[1]); it.rect = [Math.min(...xs), Math.min(...ys), Math.max(...xs) - Math.min(...xs), Math.max(...ys) - Math.min(...ys)]; }
+      else { delete it.rect; it.poly = q.flat(); }
+    }
+    if (it.label) it.label = R(it.label);
+    if (it.view?.at) it.view = { ...it.view, at: R(it.view.at), dir: norm((it.view.dir ?? 0) + deg) };
+    if (it.doors) it.doors = Object.fromEntries(Object.entries(it.doors).map(([k, p]) => [k, R(/** @type {number[]} */ (p))]));
+    return it;
+  }
+  /** the picked as they were, and the middle they turn round */
+  function turnStart() {
+    const b = selBox(); if (!b) return null;
+    return { c: [(b[0] + b[2]) / 2, (b[1] + b[3]) / 2], orig: chosen().map((i) => ({ idx: plan.items.indexOf(i), it: JSON.parse(JSON.stringify(i)) })) };
+  }
+  /** the picked turned by deg from where they were at turnStart @param {any} t @param {number} deg */
+  function turnTo(t, deg) { for (const { idx, it } of t.orig) plan.items[idx] = turned(it, t.c, deg); }
   /** a free id: base, else base_2, base_3 ... @param {string} base */
   const freeId = (base) => { if (!items().some((i) => i.id === base)) return base; let n = 2; while (items().some((i) => i.id === `${base}_${n}`)) n++; return `${base}_${n}`; };
   /** a new item of a kind, in the middle of the view, on this level */
@@ -284,6 +326,22 @@
       const t = turnHandle(it);
       if (t) { ctx.strokeStyle = SEL; ctx.lineWidth = 1.5 * lw; ctx.beginPath(); ctx.moveTo(t.o[0], t.o[1]); ctx.lineTo(t.p[0], t.p[1]); ctx.stroke(); ctx.beginPath(); ctx.arc(t.p[0], t.p[1], hs * 1.2, 0, Math.PI * 2); ctx.fill(); }
     }
+    // the turning mark beside the picked's top right corner: a round arrow
+    const tm = turnMark();
+    if (tm && !(press?.frame)) {
+      const r = 9 * lw, turning = press?.g?.what === "rotate";
+      ctx.fillStyle = turning ? SEL : "#1c1729"; ctx.beginPath(); ctx.arc(tm[0], tm[1], r, 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = turning ? "#1c1729" : SEL; ctx.lineWidth = 1.5 * lw; ctx.stroke();
+      ctx.beginPath(); ctx.arc(tm[0], tm[1], r * 0.55, -0.35 * Math.PI, 1.25 * Math.PI); ctx.stroke();
+      const ex = tm[0] + Math.cos(-0.35 * Math.PI) * r * 0.55, ey = tm[1] + Math.sin(-0.35 * Math.PI) * r * 0.55;
+      ctx.beginPath(); ctx.moveTo(ex + 3.2 * lw, ey - 0.6 * lw); ctx.lineTo(ex - 0.4 * lw, ey - 2.8 * lw); ctx.lineTo(ex - 0.6 * lw, ey + 1.8 * lw); ctx.closePath(); ctx.fillStyle = turning ? "#1c1729" : SEL; ctx.fill();
+      if (turning && press.turn) {
+        const [cx, cy] = press.turn.c;
+        ctx.strokeStyle = SEL; ctx.lineWidth = lw; ctx.setLineDash([3 * lw, 3 * lw]); ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(press.at[0], press.at[1]); ctx.stroke(); ctx.setLineDash([]);
+        ctx.fillStyle = SEL; ctx.fillRect(cx - 2 * lw, cy - 2 * lw, 4 * lw, 4 * lw);
+        ctx.font = `bold ${13 * lw}px sans-serif`; ctx.fillText(`${press.deg}°`, press.at[0] + 12 * lw, press.at[1] - 8 * lw);
+      }
+    }
     // the frame being dragged
     if (press?.frame && press.moved) {
       const [x0, y0] = press.frame, [x1, y1] = press.to;
@@ -312,6 +370,7 @@
   /** what a press at a plan point grabs: a handle of the picked one first (when it is the only one), then an item @param {number} x @param {number} y */
   function grab(x, y) {
     const it = picked(), near = (/** @type {number[]} */ p) => Math.hypot(p[0] - x, p[1] - y) < 9 / zoom.k;
+    const tm = turnMark(); if (tm && Math.hypot(tm[0] - x, tm[1] - y) < 11 / zoom.k) return { what: "rotate", it: it ?? chosen()[0] };
     if (it && many.size === 1) {
       const t = turnHandle(it); if (t && near(t.p)) return { what: "turn", it };
       if (it.rect && !it.iso && !it.topdown && near([it.rect[0] + it.rect[2], it.rect[1] + it.rect[3]])) return { what: "size", it };
@@ -368,6 +427,7 @@
     if (!g) { press = { frame: [x, y], to: [x, y], add: e.shiftKey, x0: e.clientX, y0: e.clientY, moved: false }; return; }
     // the water is picked by a click, moved only with Shift (it is under everything)
     if (g.it.kind === "water" && g.what === "move" && !g.group && !e.shiftKey && !many.has(g.it.id)) { pick(g.it.id); E.refresh(); draw(); return; }
+    if (g.what === "rotate") { press = { g, x0: e.clientX, y0: e.clientY, moved: false, before: JSON.stringify(plan), turn: turnStart(), at: [x, y], deg: 0 }; press.a0 = Math.atan2(y - press.turn.c[1], x - press.turn.c[0]); draw(); return; }
     if (g.what === "door") selDoor = g.key; else if (g.what !== "isosize") selDoor = "";
     if (g.what === "move" && !g.group && !many.has(g.it.id)) pick(g.it.id, e.shiftKey ? "add" : "only");
     else if (g.what === "move" && !g.group) sel = g.it.id;
@@ -377,7 +437,7 @@
   });
   canvas.addEventListener("pointermove", (/** @type {PointerEvent} */ e) => {
     const r = canvas.getBoundingClientRect(), [x, y] = toPlan(e.clientX - r.left, e.clientY - r.top);
-    if (!press) { const g = PD && plan && !space ? grab(x, y) : null; canvas.style.cursor = space ? "grab" : !g ? "crosshair" : g.what === "move" || g.what === "door" ? "move" : g.what === "isosize" || g.what === "size" ? "nwse-resize" : "pointer"; return; }
+    if (!press) { const g = PD && plan && !space ? grab(x, y) : null; canvas.style.cursor = space ? "grab" : !g ? "crosshair" : g.what === "rotate" ? "grab" : g.what === "move" || g.what === "door" ? "move" : g.what === "isosize" || g.what === "size" ? "nwse-resize" : "pointer"; return; }
     if (Math.abs(e.clientX - press.x0) + Math.abs(e.clientY - press.y0) > 3) press.moved = true;
     if (!press.moved) return;
     if (press.pan) { zoom.x = press.zx + e.clientX - press.x0; zoom.y = press.zy + e.clientY - press.y0; draw(); return; }
@@ -388,6 +448,11 @@
     else if (g.what === "point") { it.poly[g.i] = round(x); it.poly[g.i + 1] = round(y); }
     else if (g.what === "isosize") press.size = isoSizeAt(it, x, y);
     else if (g.what === "door") it.doors = { ...it.doors, [g.key]: [round(x), round(y)] };
+    else if (g.what === "rotate") {
+      const raw = (Math.atan2(y - press.turn.c[1], x - press.turn.c[0]) - press.a0) * 180 / Math.PI, d = ((raw % 360) + 540) % 360 - 180;
+      press.deg = e.shiftKey ? Math.round(d) : Math.round(d / 15) * 15; press.at = [x, y];
+      turnTo(press.turn, press.deg);
+    }
     else if (g.what === "turn") { const t = turnHandle(it), a = Math.atan2(y - t.o[1], x - t.o[0]) * 180 / Math.PI; setAngle(it, e.shiftKey ? a : Math.round(a / 15) * 15); }
     draw();
   });
@@ -428,10 +493,16 @@
     if ((e.ctrlKey || e.metaKey) && E.letter(e) === "d") { duplicate(); return true; }
     if ((e.ctrlKey || e.metaKey) && E.letter(e) === "a") { many.clear(); for (const i of items().filter((x) => onLevel(x) && x.kind !== "water")) many.add(i.id); sel = [...many].at(-1) ?? ""; E.setStatus(`${many.size} picked`); E.refresh(); draw(); return true; }
     // (Ctrl+Z and Ctrl+Y: the editor hands them to the tab's undo and redo)
+    // [ and ]: typed as they are (a German keyboard types them with AltGr, which comes as Ctrl and Alt), or the keys where they sit
+    const list0 = chosen(), altGr = e.ctrlKey && e.altKey;
+    if (list0.length && (!(e.ctrlKey || e.metaKey) || altGr) && (e.key === "[" || e.key === "]" || (!altGr && (e.code === "BracketLeft" || e.code === "BracketRight")))) {
+      const right = e.key === "]" || (e.key !== "[" && e.code === "BracketRight"), t = turnStart();
+      if (t) change(() => turnTo(t, (right ? 1 : -1) * (e.shiftKey ? 90 : 15)));
+      return true;
+    }
     if (e.ctrlKey || e.metaKey || e.altKey) return false;
     if (e.key === "Escape" && many.size) { pickNone(); E.refresh(); draw(); return true; }
     const list = chosen();
-    if (list.length && (e.key === "[" || e.key === "]")) { change(() => { for (const it of list) setAngle(it, angleOf(it) + (e.key === "]" ? 1 : -1) * (e.shiftKey ? 90 : 15)); }); return true; }
     const d = /** @type {Record<string, number[]>} */ ({ ArrowRight: [1, 0], ArrowLeft: [-1, 0], ArrowDown: [0, 1], ArrowUp: [0, -1] })[e.key];
     if (list.length && d) { const k = e.shiftKey ? 10 : 1; change(() => { for (const it of list) moveBy(it, d[0] * k, d[1] * k); }); return true; }
     return false;
@@ -611,7 +682,7 @@
       if (it.label) fields.push(el("div", {}, [button("Name in the middle", () => change(() => { delete it.label; }), "the name back in the middle of its shape")]));
       fields.push(el("div", { style: { marginTop: "4px" } }, [button("Double", duplicate, "Ctrl+D"), button("Delete", deleteSel, "Del")]));
       panel.append(el("div", { className: "cw-sec" }, [el("div", { style: { fontWeight: "bold", color: SEL } }, [it.name ?? it.id]), ...fields]));
-    } else panel.append(el("div", { className: "cw-sec cw-dim" }, ["Click a place to pick it, or drag a frame on the ground round several; drag them, a corner or a shape's points; [ and ] turn. The right button (or Space) moves the view. A double click opens a room."]));
+    } else panel.append(el("div", { className: "cw-sec cw-dim" }, ["Click a place to pick it, or drag a frame on the ground round several; drag them, a corner or a shape's points; the round arrow beside them (or [ and ]) turns them round their middle. The right button (or Space) moves the view. A double click opens a room."]));
     // what doesn't fit
     const probs = PD ? PD.problems(plan) : [];
     panel.append(el("div", { className: "cw-sec" }, [E.fold("plan.problems", "doesn't fit", () => probs.length ? probs.map((/** @type {any} */ p) => {
