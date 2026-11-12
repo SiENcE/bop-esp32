@@ -4,7 +4,8 @@
 // with the way they look; the ways between the rooms (docs/plan/uebergaenge.js, from the game) as arrows from the hotspot to where
 // Juno arrives, green where the two ends meet, amber or red where they don't; ways to another level as ↑ and ↓. What doesn't fit
 // (ends apart, rooms overlapping, stairs not over each other, rooms missing from the plan) is listed and numbered on the map.
-// Needs art/lib/isomap.js and the maps loaded (ISOMAP, ISO_MAPS). Used by docs/plan/index.html; the studio's plan tab will use it too.
+// Needs art/lib/isomap.js and the maps loaded (ISOMAP, ISO_MAPS), and the ways (STADTPLAN_LINKS, STADTPLAN_ROOMS) if there are any.
+// Used by docs/plan/index.html and by the studio's Plan tab (game/editor/plan.js), which hands it those four itself.
 "use strict";
 
 var PlanDraw = (function () {
@@ -346,5 +347,5 @@ var PlanDraw = (function () {
     return null;
   }
 
-  return { draw, itemAt, problems, ways, STATUS };
+  return { draw, drawMap, itemAt, problems, ways, points, centre, frame, isoMap, levelOf, STATUS, C };
 })();

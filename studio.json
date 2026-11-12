@@ -1,5 +1,5 @@
 {
-  "write": ["game", "art", "assets"],
+  "write": ["game", "art", "assets", "docs/plan"],
   "palette": ["art/mockups/mock_c_iso.px.js"],
   "layers": {
     "room": "game/rooms/{id}.geo.js",
@@ -21,7 +21,9 @@
     "art: everything": ["sh", "tools/build_art.sh"],
     "art: test street": ["sh", "tools/build_art.sh", "test"],
     "art: room": ["sh", "tools/build_art.sh", "room", "{room}"],
-    "room: new": ["node", "tools/new-room.mjs", "{room}", "{u}", "{v}"]
+    "room: new": ["node", "tools/new-room.mjs", "{room}", "{u}", "{v}"],
+    "plan: pictures": ["node", "tools/stadtplan.mjs"],
+    "plan: ways": ["node", "tools/stadtplan-links.mjs"]
   },
-  "editor": ["game/editor/iso.js"]
+  "editor": ["game/editor/iso.js", "game/editor/plan.js"]
 }
