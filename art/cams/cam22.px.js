@@ -3,8 +3,8 @@
 // (docs/cams/cam22_ansichten_x2.png: the perspective painting, F frontal, I iso; art/mockups/cam22_blocks2.px.js), and with it the
 // rule that each camera gets the view that fits it best (kapitel1-design). This paints on the lines of F, built in meters with a
 // long lens so the room stays flat and square.
-// Pho Pump is a standing noodle bar. In front, big, the cook's back (his cap, his shoulders, the apron's strings, his arm out with
-// the ladle) on the left, the big pot on its stove on the right with its steam; then the counter across the picture with its
+// Pho Pump is a standing noodle bar. In front, big, the cook's back (his toque, the white jacket, his hands on his hips, after the
+// user's reference) on the left, the big pot on its stove on the right with its steam; then the counter across the picture with its
 // bowls, chopsticks and bottles; across it Ines, standing to eat, facing us (her own sprite at this scale, ines_feed_bar in art/characters/feed_people.px.js);
 // behind her the tiles, a calendar, the lamps over the counter, and the front window onto the cross street with the menu board
 // and the sign seen from behind, the door; across the street the clinic's white front with its ring. Where: CAM22_LAYOUT at the
@@ -103,39 +103,55 @@ const WORLD = world(COOK)
 const BAKE = () => bakeFeed(CAM, WORLD, { exposure: 1.2, key: "cam22" })
 
 // ---------------------------------------------------------------- hand drawing on top
-// the cook's back, painted by hand where the blockout puts him, in units of a 52-unit-tall figure scaled to his size there: his
-// white cap, dark hair, the back of his white jacket, the apron's strings crossed, the bow, his left arm hanging, his right arm out to
-// the counter with the ladle; a dark edge round him so he reads in front of the counter
+// the cook's back, painted by hand where the blockout puts him, after the user's reference (a chef from behind, 2026-11-12), in units
+// of a 52-unit-tall figure scaled to his size there and slimmed (the user's wish): the tall pleated toque with its band and the
+// slit at the back, his short dark hair and neck, the white jacket with its rounded shoulders, the seam down the back and the side
+// panels, both hands on his hips so the sleeves bend out at the elbows (their seams, the cuffs), dark trousers; lit from the lamps
+// over the counter, so the tops are brightest; a dark edge round him so he reads in front of the counter
 const cookFig = (c) => {
-  const top = at(CAM, [COOK[0], 1.82, COOK[1]]), foot = at(CAM, [COOK[0], 0, COOK[1]]), S = (foot[1] - top[1]) / 52, SX = S * 0.78   // a slim man (the user's wish)
-  const hw = (v) => v < 17 ? 6 + Math.sqrt(Math.max(0, 1 - ((17 - v) / 5) ** 2)) * 8 : v < 30 ? 14 - (v - 17) * 0.18 : 11.6 - (v - 30) * 0.06
+  const top = at(CAM, [COOK[0], 1.95, COOK[1]]), foot = at(CAM, [COOK[0], 0, COOK[1]]), S = (foot[1] - top[1]) / 56, SX = S * 0.8
   const e = (u, v, cu, cv, ru, rv) => ((u - cu) / ru) ** 2 + ((v - cv) / rv) ** 2 <= 1
+  const seg = (u, v, a, b, r) => {                                                   // within r of the segment a-b, and how far along it
+    const dx = b[0] - a[0], dy = b[1] - a[1], t = Math.max(0, Math.min(1, ((u - a[0]) * dx + (v - a[1]) * dy) / (dx * dx + dy * dy)))
+    return Math.hypot(u - a[0] - t * dx, v - a[1] - t * dy) <= r ? t : -1
+  }
+  const hw = (v) => v < 19 ? 6 + Math.sqrt(Math.max(0, 1 - ((19 - v) / 4.5) ** 2)) * 8.5 : v < 34 ? 14.5 - (v - 19) * 0.24 : 10.9 + (v - 34) * 0.3   // the jacket's half width
   const key = (u, v) => {
-    if (e(u, v, 0, 3, 6.5, 3.4)) return v < 1.5 ? (u < 1 ? "9" : "8") : v < 4.5 ? (u < 3 ? "8" : "7") : "6"   // the cap
-    if (e(u, v, 0, 8, 5.2, 3.2)) return u < -2.5 ? "2" : "1"                                          // the hair
-    if (v >= 10 && v < 13 && Math.abs(u) <= 2) return "3"                                               // the neck
-    if (e(u, v, 25, 25.5, 1.8, 1.8)) return "4"                                                        // his right hand
-    { const t = (u - 12) / 12, along = 15 + t * 9.6; if (t >= 0 && t <= 1 && v >= along && v < along + 3.2) return v > along + 2.2 ? "5" : "7" }   // his right arm
-    if (v >= 15 && v < 31 && u >= -16.5 && u < -13) return u < -15.5 ? "5" : "6"                        // his left arm
-    if (v >= 12 && v < 48) {
-      const h = hw(v); if (Math.abs(u) > h) return null
-      if (v >= 14 && v <= 30) { const f = (v - 14) / 16; if (Math.abs(u - (-8 + 15 * f)) < 0.7 || Math.abs(u - (8 - 15 * f)) < 0.7) return "1" }   // the strings
-      if (v >= 29.5 && v < 31.5 && Math.abs(u) < 2.5) return "2"                                       // the bow
-      const side = u / h
-      return v >= 30 ? (side > 0.6 ? "1" : "2") : side > 0.7 ? "5" : side > 0.35 ? "6" : Math.abs(u) < 0.5 && v > 18 ? "6" : "7"
+    // the toque: a pleated puff over a band, the slit at the back of the band
+    if (e(u, v, 0.5, 3.6, 7.6, 3.8) && v < 6.5) return Math.abs(((u + 9) % 3.2) - 1.6) < 0.35 && v > 2 ? "8" : v < 2.4 ? "9" : u > 4 ? "8" : "9"
+    if (v >= 6 && v < 11.5 && Math.abs(u) <= 5) return Math.abs(u) < 0.6 && v > 8.5 ? "4" : u > 3.2 ? "8" : "9"
+    // the back of his head and his neck
+    if (v >= 11.5 && v < 12.5 && Math.abs(u) <= 4.4) return "3"
+    if (v >= 12.5 && v < 15.5 && Math.abs(u) <= 3.6) return u < -1.5 ? "7" : "6"
+    // the arms, hands on the hips: the upper arm out to the elbow, the forearm back in to the hand
+    for (const s of [-1, 1]) {
+      const sh = [s * 13.4, 18.5], el = [s * 21.5, 28], ha = [s * 11.4, 34.6]
+      if (e(u, v, ha[0] + s * 0.6, ha[1], 1.5, 1.2)) return "6"                                // the hand on the hip
+      const t1 = seg(u, v, sh, el, 2.5), t2 = seg(u, v, el, ha, 2.2)
+      if (t1 >= 0 || t2 >= 0) {
+        const cuff = t2 > 0.78, outer = s * u > s * (t1 >= 0 ? sh[0] + (el[0] - sh[0]) * t1 : el[0] + (ha[0] - el[0]) * t2) + 1.3
+        if (cuff) return "8"
+        if (t1 > 0.45 && t1 < 0.55 || t2 >= 0 && t2 < 0.08) return "7"              // the seam at the elbow
+        return outer ? "7" : v < 24 ? "9" : "8"
+      }
     }
-    if (v >= 48 && Math.abs(u) >= 3 && Math.abs(u) <= 7) return "1"                                   // his legs
+    // the jacket: rounded shoulders, the seam down the back, the side panels, the hem; the trousers below
+    if (v >= 15.5 && v < 38) {
+      const h = hw(v); if (Math.abs(u) > h) return null
+      if (Math.abs(u) < 0.45 && v > 16.5) return "7"                                  // the back seam
+      if (Math.abs(Math.abs(u) - (6.5 + (v - 19) * 0.06)) < 0.45 && v > 19) return "8"   // the side panels' seams
+      if (v >= 37) return "7"                                                          // the hem
+      return Math.abs(u) / h > 0.82 ? "8" : v < 22 ? "9" : (v > 30 ? "8" : "9")
+    }
+    if (v >= 38 && v <= 56) { const a = Math.abs(u); if (a >= 1 && a <= 7.5 - (v - 38) * 0.06) return a > 5.8 ? "1" : "2" }   // the legs
     return null
   }
   const ux = (x) => (x - top[0]) / SX, vy = (y) => (y - top[1]) / S
-  for (let y = Math.max(0, top[1] - 1); y < H; y++) for (let x = Math.max(0, Math.floor(top[0] - 18 * SX)); x < Math.min(W, top[0] + 28 * SX); x++) {
+  for (let y = Math.max(0, top[1] - 1); y < H; y++) for (let x = Math.max(0, Math.floor(top[0] - 24 * SX)); x < Math.min(W, top[0] + 24 * SX); x++) {
     const k = key(ux(x + 0.5), vy(y + 0.5))
     if (k) { c.px(x, y, k); continue }
     for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) if (key(ux(x + 0.5 + dx), vy(y + 0.5 + dy))) { c.px(x, y, "0"); break }
   }
-  // the ladle: its handle up from his hand, its bowl over the counter
-  const hx = Math.round(top[0] + 25 * SX), hy = Math.round(top[1] + 25.5 * S)
-  c.line(hx + 2, hy - 2, hx + 10, hy - 18, "8"); c.rect(hx + 8, hy - 23, 7, 4, "8"); c.hline(hx + 8, hy - 20, 7, "6")
 }
 // the steam off the big pot: soft wisps rising and leaning toward the window's draught, wider and thinner as they rise, dithered
 const steam = (c) => {
