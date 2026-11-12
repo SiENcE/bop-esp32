@@ -35,19 +35,38 @@ floor14.haken = { name: "Notschlüssel", poly: AK.hakenPoly, walkTo: AK.haken, f
 const room14 = Cutaway.room.get("kessel_14");
 room14.enter = [{ if: "got_haken", then: [{ hide: "haken" }] }, ...(room14.enter ?? [])];
 
-// ---- the ledge outside the window: Juno is afraid of heights (the old photo on the deck)
+// ---- the ledge outside the window: Juno is afraid of heights (the old photo on the deck). Painted as a stage (art/rooms/sims.px.js,
+// kapitel1-design "Der Sims im Bild"): what moves in it (KESSEL's L, the drone's light, the transformer's lamp, the AC's drip) is each
+// its own rect of the picture, behind everyone; its lamps are the runtime light, so Juno takes on the neon's magenta
+const SP = Nagiwa.parts.sims;
 Cutaway.room("sims", { name: "Der Sims", background: "sims_bg", walk: AS.walk,
-  ambience: ["city_far", { sfx: "feed_rain", gain: 0.8 }], music: { theme: "juno", intensity: 0.2 },
-  fx: [{ kind: "rain", rect: [0, 0, 320, 180], count: 40, color: "#41547a", speed: 150, slant: 0.1, length: 4 }],
+  props: [
+    ...SP.parts.map((/** @type {any} */ p) => ({ id: p.name.slice("sims_".length), image: p.name, at: p.at, anchor: [0, 0], baseline: 0 })),
+    { id: "ladder", image: SP.ladder.name, at: SP.ladder.at, anchor: [0, 0], baseline: 0, if: "ladder_down" },   // pulled down with the hook
+  ],
+  light: { ambient: 0.9, lamps: SP.lamps.map((/** @type {any} */ [x, y, color, r, power], /** @type {number} */ i) => ({ id: `lamp${i}`, at: [x, y], r, color, power })) },
+  ambience: ["city_far", "neon_buzz", { sfx: "feed_rain", gain: 0.8 }], music: { theme: "juno", intensity: 0.2 },
+  fx: [
+    { kind: "rain", rect: [0, 0, 320, 180], count: 70, color: "#2f3e5a", speed: 130, slant: 0.2, length: 3 },
+    { kind: "rain", rect: [0, 0, 320, 180], count: 30, color: "#617aa0", speed: 220, slant: 0.22, length: 6 },
+  ],
   hotspots: {
     window: { name: "Mein Fenster", rect: AS.windowRect, walkTo: AS.window, face: "nw", look: "Mein Fenster. Von außen sieht meine Wohnung fast nett aus.",
       use: [{ goto: "flat", at: AF.window, face: "sw" }] },
-    below: { name: "Die Straße", rect: AS.belowRect, walkTo: AS.window, face: "se", look: ["Es sind vierzehn Stockwerke. Nicht runterschauen.", "Ich hab runtergeschaut."] },
+    below: { name: "Die Straße", rect: AS.belowRect, walkTo: AS.window, face: "se", look: ["Es sind vierzehn Stockwerke. Nicht runterschauen.", "Ich hab runtergeschaut.",
+      "Da unten ist LUCKY STATIC. Von hier oben ist es nur noch ein Licht."] },
+    sign: { name: "KESSEL", rect: AS.signRect, walkTo: AS.sign, face: "ne", look: ["Beide E sind tot. Von der Straße liest man K SS L.", "Wenn das L auch noch ausgeht, wohne ich im K SS."] },
+    drone: { name: "Lieferdrohne", poly: AS.dronePoly, walkTo: AS.drone, face: "nw", look: ["Da hängt eine Lieferdrohne in den Kabeln, und ihr Licht blinkt noch.", "Auf das Paket wartet bestimmt jemand. Wahrscheinlich schon seit Wochen."] },
+    ac: { name: "Klimabox", rect: AS.acRect, walkTo: AS.ac, face: "ne", look: "Die Klimabox gehört zu keiner Wohnung mehr. Sie tropft trotzdem." },
+    jt: { name: "J+T", rect: AS.jtRect, walkTo: AS.jt, face: "ne", look: ["J plus T. Das hab ich mit vierzehn in den Beton gekratzt.", "Das Plus hat Teo gemacht. Er war sechs und hat darauf bestanden."] },
     ladder: { name: "Leiter", rect: AS.ladderRect, walkTo: AS.ladder, face: "ne",
       look: [{ if: "ladder_down", then: ["Die Leiter hängt jetzt da, wo sie hingehört."], else: ["Die Leiter aufs Dach hängt zwei Meter zu hoch.", "Teo kam da früher mit irgendwas Langem ran."] }],
       use: [{ if: "!ladder_down", then: ["Sie hängt zwei Meter zu hoch. Teo kam da mit irgendwas Langem ran, ich nicht.", "Ohne was mit Haken wird das nichts."],
         else: ["Nicht runterschauen.", { goto: "dach", at: AD.hatch, face: "ne" }] }],
       with: { haken: ["Der Haken greift, und ich zieh.", "Sie kommt runter, mit allem Rost der letzten zwanzig Jahre.", { remove: "haken" }, { set: "ladder_down" }, "Nicht runterschauen.", { goto: "dach", at: AD.hatch, face: "ne" }] } },
+    // the section pulled down (the prop sims_ladder): from there on the ladder reaches the ledge
+    ladder_low: { name: "Leiter", rect: AS.ladderLowRect, walkTo: AS.ladder, face: "ne", if: "ladder_down", look: "Die Leiter hängt jetzt da, wo sie hingehört.",
+      use: ["Nicht runterschauen.", { goto: "dach", at: AD.hatch, face: "ne" }] },
   } });
 
 // ---- the roof. Above it, where other people have a sky, the underside of the next Ring

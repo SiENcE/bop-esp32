@@ -85,15 +85,6 @@ scene("cam30_bg", { w: W, h: H, bg: "0" }, (c) => {
   for (const y of [66, 70, 81, 85]) c.hline(238, y, 44, "5")
   TXT.draw(c, 260, 73, "FRI 23:00", "9", { font: "hud", align: "center" })
 })
-// the ledge outside the flat: the wall of the block, the window, the ladder hanging too high, the street far below
-scene("sims_bg", { w: W, h: H, bg: "k" }, (c) => {
-  c.rect(0, 0, W, 128, "d"); c.rect(0, 128, W, 26, "f"); c.hline(0, 128, W, "h")
-  for (const x of [120, 180]) c.rect(x, 40, 34, 40, "e")
-  c.rect(28, 62, 44, 62, "g"); c.rect(32, 66, 36, 54, "m")
-  // the ladder ends two metres above where Juno could reach (her head is at y 88 on the ledge, her hands up at about 74)
-  c.rect(254, 0, 3, 36, "h"); c.rect(270, 0, 3, 36, "h"); for (let y = 6; y < 36; y += 10) c.hline(254, y, 19, "h")
-  c.rect(0, 154, W, 26, "a"); for (const [x, k] of [[30, "M"], [90, "y"], [150, "g"], [214, "M"], [280, "y"]]) c.rect(x, 170, 8, 3, k)
-})
 // The look upwards: along the transit axis, the spine the old photo shows going into the ring above. Each Ring is a ceiling with a
 // hole round the spine: panels and ribs running to the middle, its inner rim lit from below, the smog between one Ring and the next, the
 // Crown's white far up. A mock to judge whether the idea looks good, not the painting.

@@ -145,10 +145,14 @@ Nagiwa.at = {
     signPoly: [0, 82, 98, 81, 98, 69, 0, 52], parlourPoly: [116, 109, 128, 102, 128, 80, 116, 80], soupPoly: [242, 128, 211, 110, 211, 82, 242, 83],
     pharmacyPoly: [208, 106, 195, 99, 195, 82, 208, 83], nightPoly: [255, 56, 213, 67, 213, 40, 255, 7], balconyPoly: [46, 13, 75, 13, 100, 33, 100, 66, 80, 66, 46, 60], backPoly: [329, 193, 279, 160, 279, 78, 289, 58, 300, 53, 313, 54, 329, 77],
   },
-  // outside the flat's window: the ledge (kapitel1-design, "Die Stadt")
+  // outside the flat's window: the ledge, painted as a stage (art/rooms/sims.px.js, its measures: the ledge's top from y 146 to its
+  // front edge at 150, the window 38 to 82 across and 76 to 127 down, KESSEL's frame 96 to 246 and 22 to 84, the drone with its
+  // parcel at 4 to 39 and 57 to 84, the AC box 210 to 236, the ladder 258 to 276 down to 27, J+T at 279, the corner at 292, the
+  // drop below 158). Juno walks the ledge's top, her feet at 148
   sims: {
-    walk: [[20, 128, 300, 128, 300, 152, 20, 152]], window: [50, 140], ladder: [262, 140],
-    windowRect: [28, 62, 44, 62], ladderRect: [250, 0, 26, 40], belowRect: [0, 156, 320, 24],
+    walk: [[4, 146, 286, 146, 286, 151, 4, 151]], window: [60, 148], ladder: [267, 148], sign: [170, 148], drone: [24, 148], ac: [222, 148], jt: [280, 148],
+    windowRect: [38, 76, 44, 51], ladderRect: [256, 0, 22, 30], ladderLowRect: [256, 30, 20, 96], belowRect: [0, 158, 292, 22], signRect: [96, 22, 150, 62], acRect: [210, 104, 26, 17],
+    jtRect: [276, 102, 15, 13], dronePoly: [4, 57, 39, 57, 39, 67, 29, 67, 29, 84, 15, 84, 15, 67, 4, 67],
   },
   dach: {
     // the old photo's camera (art/ui/deck_wallpaper.px.js): the parapet across the picture, the tar in front of it
