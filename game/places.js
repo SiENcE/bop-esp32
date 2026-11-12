@@ -150,9 +150,11 @@ Nagiwa.at = {
   // parcel at 4 to 39 and 57 to 84, the AC box 210 to 236, the ladder 258 to 276 down to 27, J+T at 279, the corner at 292, the
   // drop below 158). Juno walks the ledge's top, her feet at 148
   sims: {
-    walk: [[4, 146, 286, 146, 286, 151, 4, 151]], window: [60, 148], ladder: [267, 148], sign: [170, 148], drone: [24, 148], ac: [222, 148], jt: [280, 148],
-    windowRect: [38, 76, 44, 51], ladderRect: [256, 0, 22, 30], ladderLowRect: [256, 30, 20, 96], belowRect: [0, 158, 292, 22], signRect: [96, 22, 150, 62], acRect: [210, 104, 26, 17],
+    walk: [[4, 146, 286, 146, 286, 151, 4, 151]], window: [60, 148], ladder: [267, 148], sign: [170, 148], drone: [24, 148], ac: [222, 148], jt: [280, 148], garden: [262, 148],
+    windowRect: [38, 76, 44, 51], ladderRect: [256, 0, 22, 30], ladderLowRect: [256, 30, 20, 96], belowRect: [0, 158, 320, 22], signRect: [96, 22, 150, 62], acRect: [210, 104, 26, 17],
     jtRect: [276, 102, 15, 13], dronePoly: [4, 57, 39, 57, 39, 67, 29, 67, 29, 84, 15, 84, 15, 67, 4, 67],
+    // the garden in the corner: the cactus, the crate, the hanging can and the drum under the broken pipe
+    gardenPoly: [279, 116, 291, 116, 296, 92, 304, 92, 311, 122, 320, 122, 320, 149, 279, 149],
   },
   dach: {
     // the old photo's camera (art/ui/deck_wallpaper.px.js): the parapet across the picture, the tar in front of it

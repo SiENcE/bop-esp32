@@ -60,6 +60,7 @@ ui() {
     $PXL build art/ui/zooms.px.js --out build/art/ui --no-preview | tail -n 1
     $PXL build art/ui/hud.px.js --out build/art/ui --no-preview | tail -n 1
     $PXL build art/ui/looks.px.js --out build/art/ui --no-preview | tail -n 1
+    $PXL build art/ui/look_strasse.px.js --out build/art/ui --no-preview | tail -n 1   # the look down from the ledge
     $ATLAS build/art/ui assets/ui.js --only "zoom_*,ui_*,look_*"
 }
 

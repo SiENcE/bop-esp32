@@ -118,6 +118,7 @@ sceneA("sims_blocks_a3", MIDDLE.auge, "A3  KAMERA, DROHNE")
 // ================================================================ B: the look down, a close-up (as look_shaft, 128x104)
 // A third framing along the wall and down was tried and dropped: the ledge shrank to a sliver and the ladder left the picture.
 // What it was for, the drop, reads better as a close-up for "Die Straße", with A or C: Juno looks down past her boots.
+// Painted as art/ui/look_strasse.px.js (the user's go of 2026-11-12).
 // x along the facade (right), y up (0: the ledge's top), z out from the facade toward the street
 const B = ((cam) => {
   const STREET = -42, ACROSS = 13, LEDGE = [-1.2, 9.5], DEEP = 0.6, LAD = 7.6
