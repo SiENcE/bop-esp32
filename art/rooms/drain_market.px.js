@@ -1006,6 +1006,26 @@ const DM = (() => {
   const bgPen = bufPen(BG)
   for (const P of PARTS) if (P.layer === "under" && P.draw) P.draw(bgPen, 0)
   const OVER = new Array(W * H), o = bufPen(OVER)
+  // the stalls' roofs hang over the people (the user's wish, 2026-11-12: a figure seen from above is drawn from her middle, so at a
+  // stall's edge half of her lay over its tarp): a closed stall whole, with its trim and lamp; an open one its tarp over the back and
+  // the rolled-up hem, not the counter, which is lower than a head. Their pixels go into the over layer; a moving part on a roof gets
+  // a twin in the over layer that draws only its roof pixels (the part itself stays under, for what of it lies on the floor)
+  const ROOF = new Uint8Array(W * H)
+  const roof = (x0, y0, x1, y1) => { for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) if (inB(x, y)) ROOF[y * W + x] = 1 }
+  for (const s of STALLS) {
+    const { X, Y, W: Wd, H: Hd } = s, south = s.face === "s", th = Hd >= 50 ? 20 : Hd >= 44 ? 16 : 11
+    if (!s.open) roof(X - 1, Y - (south ? 1 : 2), X + Wd, Y + Hd + (south ? 1 : 0))
+    else if (south) roof(X - 1, Y - 1, X + Wd, Y + th + 2)
+    else roof(X - 1, Y + Hd - th - 3, X + Wd, Y + Hd)
+  }
+  for (const P of PARTS.slice()) {
+    if (P.layer !== "under" || P.water) continue
+    let on = false
+    for (let j = 0; j < P.h && !on; j++) for (let i = 0; i < P.w; i++) if (inB(P.x + i, P.y + j) && ROOF[(P.y + j) * W + P.x + i]) { on = true; break }
+    if (on) PARTS.push({ ...P, name: P.name + "_roof", layer: "over", roofOf: P })
+  }
+  const twin = (x, y) => PARTS.some((P) => P.roofOf && x >= P.x && y >= P.y && x < P.x + P.w && y < P.y + P.h)
+  for (let i = 0; i < W * H; i++) if (ROOF[i] && BG[i] && !twin(i % W, fl(i / W))) OVER[i] = BG[i]
   // the heavy cables from rim to rim, junction boxes on them; the taps from the pillar to the stalls
   for (const [x0, y0, x1, y1] of [[98, 0, 300, 720], [1244, 0, 1040, 720], [560, 0, 700, 140]]) {
     o.line(x0, y0, x1, y1, "k"); o.line(x0 + 1, y0, x1 + 1, y1, "1")
@@ -1063,6 +1083,13 @@ const DM = (() => {
   const renderPart = (c, P) => {
     if (P.water) {
       for (let j = 0; j < P.h; j++) for (let i = 0; i < P.w; i++) { const X = P.x + i, Y = P.y + j; if (inB(X, Y) && WM[Y * W + X]) c.px(i, j, water(X, Y, c.frame, P.water(X))) }
+      return
+    }
+    if (P.roofOf) {
+      // the frame drawn whole into a buffer of its own, then only its roof pixels
+      const T = BASE.slice(0), tp = bufPen(T)
+      P.draw(tp, c.frame)
+      for (let j = 0; j < P.h; j++) for (let i = 0; i < P.w; i++) { const X = P.x + i, Y = P.y + j; if (inB(X, Y) && ROOF[Y * W + X] && T[Y * W + X]) c.px(i, j, T[Y * W + X]) }
       return
     }
     if (P.layer === "under") blit(c, BASE, P.x, P.y, P.w, P.h)
