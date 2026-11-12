@@ -80,6 +80,7 @@ Nagiwa.people.ines = { name: "INES CALDER", known: "know_ines", label: "Frau im 
 Cutaway.actor("ines", { name: "Frau im Kittel", color: "#f0a0c0",
   costume: { idle: { se: "ines_feed_front", ne: "ines_feed_back" }, walk: { se: "ines_feed_front_walk", ne: "ines_feed_back_walk" }, talk: { se: "ines_feed_front", ne: "ines_feed_back" } }, speed: [14, 10], voice: { pitch: 66, wave: "triangle", syllable: 70 },
   poses: [{ if: "at:ines=cam23", idle: "mock_ines", walk: "mock_ines", talk: "mock_ines" },     // CAM 23 is the laundromat itself: she is at its scale there
+    { if: "at:ines=cam22", idle: "mock_ines_bar", walk: "mock_ines_bar", talk: "mock_ines_bar" },   // CAM 22 is near: her upper body over the counter
     { if: "ines_down", idle: "ines_feed_down", walk: "ines_feed_down", talk: "ines_feed_down" },
     { if: "ines_gives", idle: "ines_feed_give", talk: "ines_feed_give" }],
   // what she does shows when Juno looks at her: a moment "seen or not" would double every state after it
@@ -192,7 +193,7 @@ Nagiwa.camRoom("cam21", { background: "cam21_bg", mic: { at: A21.mic, ...MIC }, 
     use: [{ if: { or: ["link_cam22", "off_main"] }, then: ["PHO-2291, das hab ich schon."], else: ["Da steht Suppe, Suppe, Suppe. Und ganz unten steht GÄSTE-WLAN PHO-2291.", { set: "code_cam22" }, { set: "link_cam22" }, { sfx: "link" }, "Danke für die Einladung. CAM 22 läuft."] }] },
   clinic: { name: "Klinik", poly: A21.clinicPoly, look: "Die Lull-Klinik 9-Ost ist weiß und still. Sie haben die Codes nie geändert." },
 } });
-Nagiwa.camRoom("cam22", { background: "cam22_bg", mic: { at: A22.mic, ...MIC }, hotspots: { bar: { name: "Theke", rect: A22.bar, look: "Pho Pump macht Suppe für alle, die nach Pumpe riechen." } } });
+Nagiwa.camRoom("cam22", { background: "cam22_bg", mic: { at: A22.mic, ...MIC }, hotspots: { bar: { name: "Theke", poly: A22.barPoly, look: "Pho Pump macht Suppe für alle, die nach Pumpe riechen." } } });
 // CAM 23 is the laundromat's own picture under the feed's filter, as CAM 14 is the floor's: its bake and props moved right by
 // A23.shift, the camera left out of its own picture, the man asleep behind his counter
 Nagiwa.camRoom("cam23", { background: undefined, color: Nagiwa.PHOSPHOR[0], mic: { at: A23.mic, ...MIC },

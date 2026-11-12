@@ -47,14 +47,15 @@ scene("look_zeitung", { w: 170, h: 112, bg: "h" }, (c) => {
     for (const [cx, cy, dx, dy] of [[x + 9, y + 3, 1, 1], [x + 30, y + 3, -1, 1], [x + 9, y + 23, 1, -1], [x + 30, y + 23, -1, -1]]) { c.hline(dx > 0 ? cx : cx - 3, cy, 4, "k"); for (let n = 0; n < 4; n++) c.px(cx, cy + n * dy, "k") }
   }
 })
-// the bar: the counter across the room, seen from over it
-scene("cam22_bg", { w: W, h: H, bg: "0" }, (c) => {
-  // (the left column is the cameras' strip: nothing that matters lies under x 76)
-  ROOM(c, "2", "5", 62)
-  c.rect(90, 18, 60, 34, "3"); c.rect(160, 18, 60, 34, "3"); c.rect(230, 18, 60, 34, "3")
-  c.rect(80, 118, 216, 20, "6"); c.hline(80, 118, 216, "8")
-  for (const x of [114, 154, 194, 234]) c.rect(x, 100, 12, 14, "2")
-  SIGN(c, 110, 4, 100, "PHO PUMP")
+// (CAM 22 is painted now: art/cams/cam22.px.js.) Ines there at its scale, on blocks until approved: her upper body over the counter,
+// facing us, the white coat, the dark hair, her right hand flat on the napkin by her bowl (the counter hides the rest; the sprite's
+// foot is the counter's far edge, game/places.js cam22.seat)
+anim("mock_ines_bar", { w: 15, h: 21, frames: 1, fps: 1, outline: "k", pivot: "bottom" }, (c) => {
+  c.rect(5, 0, 5, 3, "a"); c.rect(4, 2, 7, 4, "a"); c.rect(5, 3, 5, 3, "g"); c.px(6, 4, "a"); c.px(8, 4, "a")   // her hair, her face
+  c.rect(6, 6, 3, 1, "g")                                                                         // the neck
+  c.rect(2, 7, 11, 14, "h"); c.vline(7, 8, 13, "g")                                               // the coat, open at the front
+  c.rect(1, 9, 2, 9, "h"); c.rect(12, 9, 2, 8, "h")                                               // her arms down to the counter
+  c.rect(11, 17, 4, 2, "g"); c.rect(0, 18, 3, 2, "g")                                             // her right hand on the napkin, the left at the bowl
 })
 // the door of the Lerche block, through a fisheye (only its corners dark)
 scene("cam24_bg", { w: W, h: H, bg: "0" }, (c) => {
