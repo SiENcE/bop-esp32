@@ -80,7 +80,7 @@ Nagiwa.people.ines = { name: "INES CALDER", known: "know_ines", label: "Frau im 
 Cutaway.actor("ines", { name: "Frau im Kittel", color: "#f0a0c0",
   costume: { idle: { se: "ines_feed_front", ne: "ines_feed_back" }, walk: { se: "ines_feed_front_walk", ne: "ines_feed_back_walk" }, talk: { se: "ines_feed_front", ne: "ines_feed_back" } }, speed: [14, 10], voice: { pitch: 66, wave: "triangle", syllable: 70 },
   poses: [{ if: "at:ines=cam23", idle: "mock_ines", walk: "mock_ines", talk: "mock_ines" },     // CAM 23 is the laundromat itself: she is at its scale there
-    { if: "at:ines=cam22", idle: "mock_ines_bar", walk: "mock_ines_bar", talk: "mock_ines_bar" },   // CAM 22 is near: her upper body over the counter
+    { if: "at:ines=cam22", idle: "ines_feed_bar", walk: "ines_feed_bar", talk: "ines_feed_bar" },   // CAM 22 is near: her upper body over the counter
     { if: "ines_down", idle: "ines_feed_down", walk: "ines_feed_down", talk: "ines_feed_down" },
     { if: "ines_gives", idle: "ines_feed_give", talk: "ines_feed_give" }],
   // what she does shows when Juno looks at her: a moment "seen or not" would double every state after it

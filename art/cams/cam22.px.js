@@ -5,7 +5,7 @@
 // long lens so the room stays flat and square.
 // Pho Pump is a standing noodle bar. In front, big, the cook's back (his cap, his shoulders, the apron's strings, his arm out with
 // the ladle) on the left, the big pot on its stove on the right with its steam; then the counter across the picture with its
-// bowls, chopsticks and bottles; across it Ines, standing to eat, facing us (her own sprite at this scale, game/kapitel1.js);
+// bowls, chopsticks and bottles; across it Ines, standing to eat, facing us (her own sprite at this scale, ines_feed_bar in art/characters/feed_people.px.js);
 // behind her the tiles, a calendar, the lamps over the counter, and the front window onto the cross street with the menu board
 // and the sign seen from behind, the door; across the street the clinic's white front with its ring. Where: CAM22_LAYOUT at the
 // end of this file (printed when built), copied into game/places.js (cam22).
@@ -107,7 +107,7 @@ const BAKE = () => bakeFeed(CAM, WORLD, { exposure: 1.2, key: "cam22" })
 // white cap, dark hair, the back of his white jacket, the apron's strings crossed, the bow, his left arm hanging, his right arm out to
 // the counter with the ladle; a dark edge round him so he reads in front of the counter
 const cookFig = (c) => {
-  const top = at(CAM, [COOK[0], 1.82, COOK[1]]), foot = at(CAM, [COOK[0], 0, COOK[1]]), S = (foot[1] - top[1]) / 52
+  const top = at(CAM, [COOK[0], 1.82, COOK[1]]), foot = at(CAM, [COOK[0], 0, COOK[1]]), S = (foot[1] - top[1]) / 52, SX = S * 0.78   // a slim man (the user's wish)
   const hw = (v) => v < 17 ? 6 + Math.sqrt(Math.max(0, 1 - ((17 - v) / 5) ** 2)) * 8 : v < 30 ? 14 - (v - 17) * 0.18 : 11.6 - (v - 30) * 0.06
   const e = (u, v, cu, cv, ru, rv) => ((u - cu) / ru) ** 2 + ((v - cv) / rv) ** 2 <= 1
   const key = (u, v) => {
@@ -127,14 +127,14 @@ const cookFig = (c) => {
     if (v >= 48 && Math.abs(u) >= 3 && Math.abs(u) <= 7) return "1"                                   // his legs
     return null
   }
-  const ux = (x) => (x - top[0]) / S, vy = (y) => (y - top[1]) / S
-  for (let y = Math.max(0, top[1] - 1); y < H; y++) for (let x = Math.max(0, Math.floor(top[0] - 18 * S)); x < Math.min(W, top[0] + 28 * S); x++) {
+  const ux = (x) => (x - top[0]) / SX, vy = (y) => (y - top[1]) / S
+  for (let y = Math.max(0, top[1] - 1); y < H; y++) for (let x = Math.max(0, Math.floor(top[0] - 18 * SX)); x < Math.min(W, top[0] + 28 * SX); x++) {
     const k = key(ux(x + 0.5), vy(y + 0.5))
     if (k) { c.px(x, y, k); continue }
     for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) if (key(ux(x + 0.5 + dx), vy(y + 0.5 + dy))) { c.px(x, y, "0"); break }
   }
   // the ladle: its handle up from his hand, its bowl over the counter
-  const hx = Math.round(top[0] + 25 * S), hy = Math.round(top[1] + 25.5 * S)
+  const hx = Math.round(top[0] + 25 * SX), hy = Math.round(top[1] + 25.5 * S)
   c.line(hx + 2, hy - 2, hx + 10, hy - 18, "8"); c.rect(hx + 8, hy - 23, 7, 4, "8"); c.hline(hx + 8, hy - 20, 7, "6")
 }
 // the steam off the big pot: soft wisps rising and leaning toward the window's draught, wider and thinner as they rise, dithered
@@ -154,7 +154,7 @@ const steam = (c) => {
 
 // ================================================================ what the game needs (game/places.js cam22)
 const CAM22_LAYOUT = {
-  // Ines's sprite stands on the counter's far edge at her place (its bottom there, mock_ines_bar), her head where it would be
+  // Ines's sprite stands on the counter's far edge at her place (its bottom there, ines_feed_bar), her head where it would be
   seat: spotAt(CAM, [INES[0], COUNTER.top, COUNTER.z1]), head: spotAt(CAM, [INES[0], 1.72, INES[1]]),
   inesPx: (() => { const a = project(CAM, [INES[0], COUNTER.top, COUNTER.z1]), b = project(CAM, [INES[0], 1.72, INES[1]]); return Math.round(a[1] - b[1]) })(),
   mic: spotAt(CAM, [INES[0], 1.2, COUNTER.z1]),

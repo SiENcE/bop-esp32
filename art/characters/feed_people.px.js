@@ -534,6 +534,32 @@ anim("ines_feed_give", { w: IG_W, h: FI.H, frames: 2, ms: [450, 350], outline: "
   c.stamp("_i_arm_give", 10, 6)
   c.rect(18, 10, 4, 4, "2"); c.rect(19, 11, 2, 2, c.frame ? "4" : "9")   // 2x2, or the scanlines and the grain eat it
 })
+// At Pho Pump's counter (CAM 22, frontal and near: the user approved the block on 2026-11-12): her upper body over the counter,
+// facing us, at that camera's scale (38 px from the counter's edge to the top of her head). The white coat 9 stays her accent; the
+// plait over her left shoulder; her left hand flat on the napkin by her bowl, the right at the bowl. Frame 1 is the glance: her
+// head turns to the door, her eyes with it (Thursday she looks there all the time; Wednesday she hides what she wrote).
+anim("ines_feed_bar", { w: 26, h: 38, frames: 2, ms: [2200, 900], outline: "1", pivot: "bottom" }, (c) => {
+  const g = c.frame                                                        // the glance: the head 1 px toward the door, the eyes 2
+  // the coat over the shoulders, open at the front over a dark top, its shading on the right, the folds at the elbows
+  c.rect(4, 16, 18, 22, "9"); c.rect(2, 18, 2, 16, "9"); c.rect(22, 18, 2, 14, "9")
+  c.rect(3, 17, 2, 2, "9"); c.rect(21, 17, 2, 2, "9")
+  c.rect(18, 18, 4, 20, "8"); c.rect(22, 20, 2, 12, "8"); c.vline(2, 22, 10, "8")
+  c.rect(10, 16, 6, 9, "3"); c.px(10, 16, "9"); c.px(15, 16, "9"); c.rect(11, 25, 4, 13, "4")   // the open front, the dark top under it
+  c.vline(9, 17, 21, "7"); c.vline(16, 17, 21, "7")                                              // the lapels' edges
+  c.hline(3, 27, 3, "8"); c.hline(21, 27, 3, "7")                                                // the elbows
+  // her hands: the left flat on the napkin (on our right), the right at the bowl
+  c.rect(20, 34, 6, 3, "8"); c.hline(20, 34, 6, "9"); c.rect(1, 34, 4, 3, "7")
+  // the neck, the head: dark hair parted, the face lit from the lamps above, the eyes, the mouth
+  c.rect(11, 13, 4, 3, "6")
+  c.rect(8 - g, 1, 10, 13, "2"); c.rect(9 - g, 0, 8, 2, "2"); c.px(12 - g, 1, "3"); c.px(13 - g, 1, "3")
+  c.rect(9 - g, 4, 8, 9, "7"); c.rect(9 - g, 4, 8, 2, "6"); c.vline(16 - g, 6, 6, "6")
+  c.rect(10 - g * 2, 7, 2, 1, "2"); c.rect(14 - g * 2, 7, 2, 1, "2")                             // the eyes
+  c.hline(12 - g, 10, 2, "5")                                                                    // the mouth
+  c.rect(9 - g, 12, 8, 1, "6")
+  // the plait over her left shoulder (on our right), cut into the coat
+  for (let y = 9; y < 28; y++) { const x = 18 + Math.round((y - 9) * 0.12); c.px(x, y, y % 3 === 0 ? "3" : "2"); c.px(x + 1, y, y % 3 === 1 ? "3" : "2") }
+  c.rect(18, 28, 3, 2, "4")                                                                      // its tie
+})
 // where she fell: on her side across the picture, shoulder and hip under the coat, still the brightest thing, an arm flung out
 // toward us, the plait and the bag thrown away from her. 29x7 inside (31x9); the pivot under her hip.
 sprite("_i_down", `

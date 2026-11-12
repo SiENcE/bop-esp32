@@ -98,7 +98,7 @@ Nagiwa.at = {
   cam18: { mic: [154, 93], fish: [128, 43, 53, 107], stairs: [113, 32, 88, 117],
     fishPoly: [127, 137, 133, 84, 135, 73, 138, 64, 143, 56, 148, 49, 153, 46, 159, 44, 164, 47, 169, 52, 172, 59, 174, 68, 175, 78, 171, 142],
     stairsPoly: [114, 139, 118, 33, 201, 42, 183, 148] },
-  // painted frontal (art/cams/cam22.px.js, measured there: CAM22_LAYOUT): Ines's sprite at this scale (mock_ines_bar) stands on the
+  // painted frontal (art/cams/cam22.px.js, measured there: CAM22_LAYOUT): Ines's sprite at this scale (ines_feed_bar) stands on the
   // counter's far edge at her place; the counter is its top and the face toward us, clipped to the picture
   cam22: { seat: [160, 108], mic: [160, 101], barPoly: [0, 108, 8, 106, 290, 106, 320, 115, 320, 140, 0, 140], napkin: [169, 109, 15, 5] },
   // CAM 23 is the laundromat's own picture (one place, one picture: kapitel0-design §3), moved right by `shift` so the washers clear
