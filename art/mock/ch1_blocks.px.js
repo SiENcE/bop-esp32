@@ -55,20 +55,7 @@ scene("cam24_bg", { w: W, h: H, bg: "0" }, (c) => {
   SIGN(c, 112, 8, 96, "LERCHE BLOCK")
   c.rect(0, 0, 40, 26, "1"); c.rect(280, 0, 40, 26, "1"); c.rect(0, 154, 40, 26, "1"); c.rect(280, 154, 40, 26, "1")
 })
-// the stairs into the water, the sign, the tide board
-scene("cam30_bg", { w: W, h: H, bg: "0" }, (c) => {
-  ROOM(c, "2", "4", 48)
-  for (let i = 0; i < 6; i++) c.rect(110 + i * 2, 80 + i * 12, 100 - i * 4, 12, String(6 - i))
-  c.rect(0, 150, W, 30, "1")
-  c.rect(104, 148, 112, 32, "2")
-  SIGN(c, 88, 30, 144, "LINE 31 - CLOSED", "7", "1")
-  // a gauge on its own post beside the stairs (the top of the wall belongs to the display)
-  c.rect(258, 88, 4, 22, "3")
-  SIGN(c, 232, 52, 56, "LOW TIDE", "7", "1")
-  c.rect(232, 63, 56, 25, "3")
-  for (const y of [66, 70, 81, 85]) c.hline(238, y, 44, "5")
-  TXT.draw(c, 260, 73, "FRI 23:00", "9", { font: "hud", align: "center" })
-})
+// (CAM 30 is painted now: art/cams/cam30.px.js)
 // The look upwards: along the transit axis, the spine the old photo shows going into the ring above. Each Ring is a ceiling with a
 // hole round the spine: panels and ribs running to the middle, its inner rim lit from below, the smog between one Ring and the next, the
 // Crown's white far up. A mock to judge whether the idea looks good, not the painting.

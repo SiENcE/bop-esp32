@@ -97,10 +97,10 @@ Cutaway.routine("ines", [
   { day: [2, 3], from: "19:15", to: "20:00", room: "cam22", at: A22.seat },
   { day: 2, from: "20:00", to: "20:30", room: "cam23", at: A23.washer, face: "nw" },
   { day: 3, from: "20:00", to: "20:15", room: "cam23", at: A23.dryer6, face: "ne" },
-  { day: 3, from: "20:15", to: "20:30", room: "cam30", at: A30.board, face: "ne", path: [A30.top, A30.board] },
+  { day: 3, from: "20:15", to: "20:30", room: "cam30", at: A30.thuIn, face: "ne", path: [A30.thuIn, A30.board], once: true },   // to the board, and she stays
   { day: [2, 3], from: "20:30", to: "21:00", room: "cam24", at: A24.off, path: [A24.off, A24.door] },
   { day: 4, from: "22:15", to: "22:30", room: "cam24", at: A24.door, path: [A24.door, A24.off] },
-  { day: 4, from: "22:30", to: "22:45", room: "cam30", at: A30.top, path: [A30.top, A30.water] },
+  { day: 4, from: "22:30", to: "22:45", room: "cam30", at: A30.friIn, path: [A30.friIn, A30.turn, A30.top, A30.water, A30.gone], once: true },   // down into the old station
   { day: 4, from: "22:55", to: "23:30", room: "cam31", at: A31.top, face: "se" },
 ]);
 Cutaway.routine("lantern", [
@@ -212,8 +212,8 @@ Nagiwa.camRoom("cam23", { background: undefined, color: Nagiwa.PHOSPHOR[0], mic:
 } });
 Nagiwa.camRoom("cam24", { background: "cam24_bg", mic: { at: A24.mic, ...MIC }, hotspots: { entrance: { name: "Haustür", rect: A24.entrance, look: "Das ist der Wohnblock Lerche. Da wohnt sie." } } });
 Nagiwa.camRoom("cam30", { background: "cam30_bg", mic: { at: A30.mic, ...MIC }, hotspots: {
-  sign: { name: "Schild", rect: A30.sign, look: "LINE 31, CLOSED. Das ist sie seit der Flut, schätze ich." },
-  tide: { name: "Pegeltafel", rect: A30.tide, look: "Auf der Pegeltafel steht: Freitag, 23:00, Niedrigwasser." },
+  sign: { name: "Schild", poly: A30.signPoly, look: "LINE 31, CLOSED. Das ist sie seit der Flut, schätze ich." },
+  tide: { name: "Pegeltafel", poly: A30.tidePoly, look: "Auf der Pegeltafel steht: Freitag, 23:00, Niedrigwasser." },
   rewind: { name: "Puffer", z: 5, if: { or: [["day=3", "moment:ines_tide", "!know_meeting"], ["day=4", "moment:ines_sign", "!know_meeting"]] },
     use: [{ if: "day=3", then: ["Ich spul den Puffer zurück auf Viertel nach acht.", { replay: "ines_tide" }],
       else: ["Im Puffer ist es. Da, die Treppe runter.", { replay: "ines_sign", from: 1 }] }] },

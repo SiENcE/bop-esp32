@@ -117,7 +117,10 @@ Nagiwa.at = {
   cam24: { door: [160, 96], off: [104, 174], mic: [160, 110], entrance: [124, 24, 72, 66] },
   // job B (game/auftrag_tide.js): Jade Row from Nagi·wa's camera above it, and from the machine's own at hip height
   cam15: { door: [160, 150], spot: [271, 100], mic: [200, 100], capsules: [84, 28, 229, 52], c23: [258, 28, 26, 25] },
-  cam30: { top: [160, 84], water: [160, 146], board: [222, 112], mic: [160, 100], sign: [88, 30, 144, 11], tide: [232, 52, 56, 36] },
+  // painted near iso (art/cams/cam30.px.js, measured there: CAM30_LAYOUT): Thursday Ines comes from the street under the camera (off the
+  // bottom) to the board; Friday from the right, round the frame to the stair's head, down the steps and under the arch off the top
+  cam30: { thuIn: [210, 222], board: [179, 102], friIn: [344, 177], turn: [151, 153], top: [106, 118], water: [163, 84], gone: [253, -12], mic: [128, 102],
+    signPoly: [53, 35, 146, 91, 147, 100, 57, 44], tidePoly: [182, 91, 184, 78, 208, 91, 204, 103] },
   // measured from the camera in art/cams/cam31.px.js (it logs them when built)
   cam31: { stairs: [96, 83], top: [92, 67], shadow: [59, 92], edge: [151, 117], meet: [112, 99], asheMeet: [97, 90], tunnel: [284, 111], lantern: [183, 131], mic: [135, 108], tries: [244, 26, 72] },
   // the alley (art/rooms/gasse.map.js, game/rooms/gasse.layout.js): the laundromat's door, the niche and the way down are the map's
