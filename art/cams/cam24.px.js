@@ -4,7 +4,8 @@
 // meters, the same lens.
 // What is in it: on the left, bending round the lens, the door's frame and the door with its number; three steps down to a small
 // forecourt, wet, with two bins and a scooter under a cover; a low fence with its gate; the street with a lamp; across it the block
-// with its lit windows and one blind half down. Ines (the game's actor, her feed sprite): on Friday at 22:15 she comes out of the door
+// with its lit windows and one blind half down, a long neon sign over them (KARAOKE 24H); on the left a building at the side
+// with a vertical neon sign (HOTEL), both the user's wish of 2026-11-13. Ines (the game's actor, her feed sprite): on Friday at 22:15 she comes out of the door
 // past the lens (from the picture's lower left), crosses the yard and goes out through the gate to the right; on Wednesday and
 // Thursday the other way. Where: CAM24_LAYOUT at the end of this file (printed when built), copied into game/places.js (cam24).
 include("../lib/feed.js")
@@ -33,10 +34,15 @@ const PRIMS = [
   block([-12, -0.2, KERB], [12, 0, 14], "street"),
   cyl(3.2, KERB + 0.4, 0.07, 0, 4.2, "post"),                                        // a street lamp
   block([-14, 0, 14], [14, 12, 15], "across"),                                       // the block across the street
+  // the user's wish (2026-11-13): neon on the block across and on a building at the side
+  block([-16, 0, 7], [-7, 11, 15], "side"),                                          // the building at the side, beyond the yard
+  block([-6.95, 3.0, 9.2], [-6.65, 7.8, 9.9], "neon", { vert: true }),               // its vertical sign, HOTEL
+  block([-1.6, 5.0, 13.85], [6.2, 6.3, 14], "neon"),                                 // the long sign across, KARAOKE 24H
 ]
 const LIGHTS = [
-  { p: [0, 2.9, 0.4], I: 0.9, R: 3.2 },                                             // the lamp over the door
+  { p: [0, 2.9, 0.4], I: 0.45, R: 3.0 },                                             // the lamp over the door
   { p: [3.2, 4.1, KERB + 0.4], I: 1.6, R: 8, shadow: true },                        // the street lamp
+  { p: [-6.0, 5.4, 9.5], I: 0.9, R: 6 }, { p: [2.3, 5.6, 13.0], I: 1.0, R: 7 },       // the neon's light on the street and the yard
 ]
 const MATS = {
   facade: (P) => ({ a: ((P[1] / 0.3) % 1 + 1) % 1 < 0.06 ? 0.2 : 0.3, e: 0 }), frame: { a: 0.45, e: 0 },
@@ -54,6 +60,12 @@ const MATS = {
   yard: (P) => { const [x, , z] = P; const slab = ((x / 0.5) % 1 + 1) % 1 < 0.05 || ((z / 0.5) % 1 + 1) % 1 < 0.05; return { a: slab ? 0.24 : 0.32, e: 0, wet: Math.min(0.85, 0.2 + Math.max(0, fbm(x * 0.6, z * 0.6 + 4, 3) - 0.5) * 3), gloss: 0.2 } },
   fence: (P) => ({ a: ((P[0] * 8) % 1 + 1) % 1 < 0.3 ? 0.46 : 0.32, e: 0 }), bin: (P, n) => ({ a: n[1] > 0.5 ? 0.4 : 0.22, e: 0, wet: 0.2 }), scooter: (P, n) => ({ a: n[1] > 0.5 ? 0.45 : 0.3, e: 0 }),
   street: { a: 0.22, e: 0, wet: 0.5, gloss: 0.25 }, post: { a: 0.35, e: 0 },
+  side: (P, n) => {
+    if (n[0] <= 0.5) return { a: 0.16, e: 0 }
+    const [, y, z] = P, wz = ((z + 30) % 2.0), fy = y % 2.9, win = wz > 0.5 && wz < 1.4 && fy > 0.9 && fy < 2.2
+    return { a: 0.17, e: win && ih(Math.floor((z + 30) / 2), Math.floor(y / 2.9), 4) > 0.55 ? 0.4 : 0 }
+  },
+  neon: (P, n, f, hit) => ({ a: 0.3, e: hit.prim.vert ? (n[0] > 0.5 ? 1.0 : 0.6) : (n[2] < -0.5 ? 1.0 : 0.6) }),
   across: (P) => {
     const wx = ((P[0] + 30) % 2.2), fy = P[1] % 2.9, win = wx > 0.6 && wx < 1.6 && fy > 0.9 && fy < 2.2
     if (!win) return { a: P[1] % 2.9 < 0.15 ? 0.24 : 0.18, e: 0 }
@@ -63,7 +75,15 @@ const MATS = {
   person: { a: 0.75, e: 0 }, head: { a: 0.3, e: 0 },
 }
 const WORLD = feedWorld({ prims: PRIMS, lights: LIGHTS, materials: MATS, ground: null, ambient: 0.24, sky: 0.02, rain: 1 })
-const BAKE = () => bakeFeed(CAM, WORLD, { exposure: 1.75, key: "cam24" })
+const BAKE = () => bakeFeed(CAM, WORLD, { exposure: 1.55, key: "cam24" })
+
+// ---------------------------------------------------------------- hand drawing on top
+// the neon's letters, dark in the light boxes, each where its place on the sign lands
+const neonWords = (c) => {
+  ;[..."HOTEL"].forEach((ch, i) => { const [x, y] = at(CAM, [-6.62, 7.3 - i * 0.9, 9.55]); TXT.draw(c, x, y - 2, ch, "2", { font: "hud", align: "center" }) })
+  const T = "KARAOKE 24H"
+  ;[...T].forEach((ch, i) => { if (ch === " ") return; const [x, y] = at(CAM, [-1.2 + (i + 0.5) * 7.0 / T.length, 5.65, 13.84]); TXT.draw(c, x, y - 2, ch, "2", { font: "hud", align: "center" }) })
+}
 
 // ================================================================ what the game needs (game/places.js cam24)
 const CAM24_LAYOUT = {
@@ -87,5 +107,5 @@ const CAM24_LAYOUT = {
 console.log("CAM24_LAYOUT " + JSON.stringify(CAM24_LAYOUT))
 
 // ================================================================ the scenes
-scene("cam24_bg", { w: W, h: H, bg: "0" }, (c) => paintFeed(c, BAKE()))
-scene("review_cam24", { w: W, h: H, bg: "0" }, (c) => paintFeed(c, BAKE()), (c) => reviewFx(c, W, H))
+scene("cam24_bg", { w: W, h: H, bg: "0" }, (c) => paintFeed(c, BAKE()), neonWords)
+scene("review_cam24", { w: W, h: H, bg: "0" }, (c) => paintFeed(c, BAKE()), neonWords, (c) => reviewFx(c, W, H))
