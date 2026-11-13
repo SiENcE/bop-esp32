@@ -1,7 +1,7 @@
 # Glass Sister: die Geschichte zum Lesen (bis einschließlich Kapitel 1)
 
 Eine Lesefassung, kein neuer Entwurf: Sie erzählt nach, was in `story.md`, `kapitel0-design.md`, `kapitel1-design.md` und im
-Spiel steht, mit den Entscheidungen bis zum 13. November (story §10b–§10f). Stand: 13. November 2026. Der Vorspann und der Prolog
+Spiel steht, mit den Entscheidungen bis zum 14. November (story §10b–§10g). Stand: 13. November 2026. Der Vorspann und der Prolog
 sind gebaut und gemalt, und auch Kapitel 1 spielt ganz durch und ist gemalt; seine Zeilen sind Vorschläge, die beim Durchspielen
 geprüft werden. Im Zweifel gilt das Spiel. Der letzte Teil vor den offenen Punkten, „Was Kapitel 1 noch nicht sagt“, verrät das
 Geheimnis; wer es nicht wissen will, hört nach CAM 31 auf.
@@ -432,7 +432,7 @@ hinaustragen: Sie sind nicht krank, sie sind geblieben. „Er hat es jetzt gut�
 dem Dach sagt, Teo schlafe heute besser, dann ist das der Anfang.
 
 Drei Jahre lang hat der Zeuge Juno nur zugesehen, der Einzigen im Neunten, die noch jede Nacht wach auf seinem Protokoll ist. An
-diesem Dienstag spricht er zum ersten Mal, weil seine Uhr läuft: In der Krone ist beschlossen, ihn zu beschneiden. Deshalb steht am
+diesem Dienstag spricht er zum ersten Mal, weil seine Uhr läuft: In der Krone ist beschlossen, ihn aus dem Kollektiv der Schläfer zu bereinigen. Deshalb steht am
 Ende des Prologs ihr Name in ihrem Auge.
 
 Dass am nächsten Abend auch WREN kommt, ist kein Zufall. Der Zeuge hat Ines vor den Schläfern versteckt: Keiner von ihnen markiert sie, und ohne

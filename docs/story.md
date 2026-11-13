@@ -139,7 +139,7 @@ Cyan nur für Technik.
 | **„Lantern"** (Oskar Lind; so sieht er aus: `docs/portraits/lantern_x4.png`) | ein Piratensender, der Werbebildschirme für zehn Sekunden Wahrheit kapert; Ines' Kontakt; paranoid. Sitzt seit einem Pumpenunfall im Rollstuhl, den er für die Sümpfe umgebaut hat: Schwimmer, ein Bootsmotor, Schubdüsen für kurze Sätze über Treppen und Leitern, der Sender eingebaut. | geflickter Poncho; der Rollstuhl mit Schwimmern, Düsen und einem Bündel Antennen | `#b0f0a0` |
 | **Lt. Agnes Morrow** | Revier 9; nimmt Geld von Nagi·wa und hasst sich dafür; ihre Tochter ist eine Lull-Sinkerin | grauer Trenchcoat, Polizeimarke am Band | `#a8b8d0` |
 | **Corvin Ashe** | ein Agent der **Quiet**, Nagi·was inoffizieller Sicherheitseinheit; früher selbst Beobachter in Junos Halle; nach der Entlassung ging er zu Nagi·wa, Juno auf den Schwarzmarkt: ihr Spiegelbild (§7, Kap. 5); höflich, geduldig, der Mörder | weißer Regenmantel, im Feed ohne Gesicht (eine Maske, die die Kamera überstrahlt) | `#ff7a6a` |
-| **Direktorin Selene Aubrecht** | Leiterin von Civic Rest, dem Lull-Programm; glaubt, den Neunten gerettet zu haben, und die Zahlen geben ihr recht; sie sieht als Einzige, wie viele Menschen der Zeuge behält, und will ihn aufhalten (§6, Punkt 6) | weißer Anzug, silbernes Haar | `#e8f0ff` |
+| **Direktorin Selene Aubrecht** | Leiterin von Civic Rest, dem Lull-Programm; glaubt, den Neunten gerettet zu haben, und die Zahlen geben ihr recht; sie sieht als Einzige, wie viele Menschen der Zeuge behält, und will ihn aufhalten; moralisch grau, keine Schurkin: Sie hat recht und mordet trotzdem (§6, Punkt 6) | weißer Anzug, silbernes Haar | `#e8f0ff` |
 | **Der Zeuge** | das Auge in den Bildschirmen (§6): der Neunte im Schlaf, ohne eigenen Willen, mit dem der Schläfer | eine Störung, ein Auge, viele Stimmen zugleich | `#ffc0f2` (Magenta-Weiß) |
 
 ## 5. Das Kassenbuch und die Entscheidungen
@@ -222,7 +222,7 @@ Wird langsam über die Kapitel enthüllt; der Spieler soll es einen Schritt vor 
    - **Wozu er sie braucht** (entschieden 2026-11-13): Schläfer können nicht handeln und nicht aussagen.
      Ein Zeuge, der nicht sprechen kann, braucht eine wache Stimme, und Juno ist die einzige Wache auf
      seinem Protokoll. Das trägt das Ende „Zeugnis“ (§8).
-   - **Warum gerade jetzt** (entschieden 2026-11-13): Die Beschneidung (Punkt 6) ist beschlossen, und er
+   - **Warum gerade jetzt** (entschieden 2026-11-13): Die Bereinigung (Punkt 6) ist beschlossen, und er
      spürt, wie Civic Rest sie vorbereitet. Drei Jahre hat er Juno nur zugesehen; am Dienstag des Prologs
      ruft er sie, weil seine Uhr läuft. Mit dem Prolog beginnt also schon die Frist, die Juno in Kapitel 4
      auf dem Terminal der Schlafstation sieht.
@@ -238,18 +238,31 @@ Wird langsam über die Kapitel enthüllt; der Spieler soll es einen Schritt vor 
      jemanden, der wach sieht. Kapitel 1 braucht dafür nichts Neues; ob eine Zeile darauf zeigt, ist offen
      (`story-lesefassung.md`, „Noch offen“).
 6. **Was Aubrecht plant:** Der Zeuge wächst und beginnt zu handeln. Er verweigert manche Markierungen
-   und versteckt Menschen. Aubrecht will ihn **beschneiden**: ein Firmware-Update, das die gemeinsame
-   Ebene löscht. Das würde jeden Sinker töten oder leeren, darunter Teo. Danach will sie Lull im
-   Neunten **zur Pflicht** machen, als „Maßnahme der öffentlichen Gesundheit", mit einem Zeugen, der
-   nicht mehr selbst denken kann.
+   und versteckt Menschen. Aubrecht will den Zeugen aus dem Kollektiv der Schläfer **bereinigen**: ein
+   Firmware-Update, das die gemeinsame Ebene löscht. Das würde jeden Sinker töten oder leeren, darunter
+   Teo. Danach will sie Lull im Neunten **zur Pflicht** machen, als „Maßnahme der öffentlichen Gesundheit",
+   mit einem Zeugen, der nicht mehr selbst denken kann. Das Wort **Bereinigung** ist Nagi·was eigenes
+   (entschieden 2026-11-14, bis dahin „Beschneidung“): Es klingt nach Aufräumen in einer Datenbank und
+   verschweigt, was dabei stirbt.
    - **Ihr Grund ist echt** (entschieden 2026-11-13): Der Zeuge nimmt Menschen. Civic Rest zählt die
      Sinker, und Aubrecht sieht als Einzige die ganze Zahl: Jedes Jahr sind es mehr, und es werden umso
      mehr, je mehr Menschen Lull nehmen (Tinte zählt dasselbe mit ihren Knoten, Teo ist in Halle 3 der
-     Zwölfte). Ohne Beschneidung behält der Zeuge irgendwann die halbe Stadt. Ihre Rechnung: Wen er schon
+     Zwölfte). Ohne Bereinigung behält der Zeuge irgendwann die halbe Stadt. Ihre Rechnung: Wen er schon
      hat, der ist verloren; wen er noch nehmen würde, den rettet sie. Damit hat sie einen Punkt, und die
      Zahlen geben ihr wieder recht.
-   - **Grau, nicht gut:** Sie bleibt die, die Ines töten ließ (§10b, „Das Problem Calder ist gelöst“), und
-     sie verschweigt der Stadt, was Lull ist. Sie hat recht und mordet trotzdem.
+   - **Grau heißt: weder die Gute noch eine Schurkin** (ausgeführt 2026-11-14). Aubrecht hält sich nicht für
+     böse, und der Spieler soll sie auch nicht einfach dafür halten können. Sie ist überzeugt, den Neunten
+     gerettet zu haben, und vieles spricht für sie: Die Kriminalität ist wirklich um 80 % gefallen, Kinder
+     kommen nachts sicher heim, die Menschen schlafen, und gegen den Zeugen hat sie einen echten Grund
+     (oben). Wer ihr in Kapitel 5 zuhört, soll denken können: „Sie hat nicht ganz unrecht.“
+   - **Und doch tut sie Unrecht, und sie weiß es:** Sie ließ Ines töten, weil ein Prozess deren Protokolle
+     öffentlich gemacht hätte (§10b, „Das Problem Calder ist gelöst“). Sie verschweigt der Stadt, dass Lull
+     ihre Schläfer arbeiten lässt. Sie nimmt in Kauf, dass die Bereinigung jeden Sinker tötet oder leert,
+     auch Teo. Und sie will Lull zur Pflicht machen, damit niemand mehr Nein sagen kann. Sie liest Menschen
+     als Zahlen, und die Zahlen sagen ihr, dass es sich lohnt.
+   - **Kurz: Sie hat recht und mordet trotzdem.** Darum ist auch ihr Angebot keine bloße Falle: Wer es
+     annimmt, verhindert wirklich, dass der Zeuge weitere Menschen behält, und bezahlt dafür mit den Sinkern,
+     die er schon hat, vielleicht mit Teo, und mit der Freiheit des Neunten („Besser schlafen“, §8).
 
 ## 7. Die Kapitel
 
@@ -407,7 +420,7 @@ Straßenmodus.
 - **Die Schlafstation:**
   - Juno fährt die Transitachse hinauf zur Station;
   - sie sieht Teo und die Sinker in Reihen, beobachtet von den Kameras der Station;
-  - ein Terminal der Station zeigt den **Zeitplan der Beschneidung**: drei Tage.
+  - ein Terminal der Station zeigt den **Zeitplan der Bereinigung**: drei Tage.
 - **Entscheidung 4:** ob Juno Teo jetzt rettet. Sie kann ihn wecken, **gegen seinen Willen** (unter
   Schmerzen, und er ist vielleicht nicht mehr ganz er selbst), oder ihn im Traum lassen, wie er es will,
   wo der Zeuge ihn bis zum Ende in Sicherheit hält. Wer weckt, entscheidet über seinen Kopf hinweg, wie
@@ -424,7 +437,7 @@ Straßenmodus.
   Inhalt steht fest:
   - die Zahlen (weniger Verbrechen, Menschen, die schlafen, sichere Kinder);
   - und die Zahl, die sonst niemand kennt: wie viele Sinker es gibt und wie schnell es mehr werden. Ihr
-    Grund für die Beschneidung ist echt (§6, Punkt 6): „Sie wollen das nicht, sie sind nur erschöpft.“
+    Grund für die Bereinigung ist echt (§6, Punkt 6): „Sie wollen das nicht, sie sind nur erschöpft.“
     Hat Juno Teo geweckt, hält Aubrecht ihr das vor: Sie hat dasselbe getan.
   - das Angebot: für Civic Rest arbeiten, als erste wache Beobachterin des neuen Systems, mit Teos
     Sicherheit, Geld und einer Wohnung in den mittleren Ringen.
@@ -450,7 +463,7 @@ Straßenmodus.
 
 - **Der Ruhekern** ist der Ort, an dem alle Lull-Signale zusammenlaufen: eine Kathedrale aus Servern
   und ein einzelner weißer Raum mit einem Stuhl.
-- **Das letzte Rätsel:** die Beschneidung aufhalten, die bereits läuft, mit allem, was der Spieler hat
+- **Das letzte Rätsel:** die Bereinigung aufhalten, die bereits läuft, mit allem, was der Spieler hat
   (Verbündete, Wissen, das Vertrauen des Zeugen).
 - **Das Finale ist aus den Entscheidungen davor gebaut, nicht aus einer Auswahl am Ende** (entschieden
   2026-11-13). Wer da ist (die Verbündeten, Teo wach oder im Traum, welche EVI), was Juno weiß und was im
@@ -493,9 +506,9 @@ ihr“ heißt: Entscheidung 3 und das Gewicht des Kassenbuchs (§5) sprechen fü
 | Ende | Offen, wenn | Wie | Was es ist |
 |---|---|---|---|
 | **Licht aus** | Juno hat einen Beweis (den Clip oder Ines' Protokolle) und einen Sender: Lantern lebt, oder der Zeuge vertraut ihr und leiht ihr die Bildschirme | alles senden, über Lanterns Netzwerk, über den Zeugen, der jeden Bildschirm übernimmt, oder über beide | die Wahrheit für die ganze Stadt. Lull wird binnen einer Woche abgeschaltet. Der Zeuge stirbt, als die Schlafenden aufwachen, und Teo wacht mit ihnen auf. Nagi·wa versinkt im Chaos, und die Kriminalität kommt zurück. Bittersüß. |
-| **Erwachen** | der Zeuge vertraut ihr, und EVI liest ihn: die EVI des Zeugen hört ihn selbst, die aus dem Backup liest ihn über Teo | die Beschneidung still stoppen und den Zeugen selbst entscheiden lassen | er lässt jeden Schlafenden gehen und löst sich in ihnen auf. Der Neunte wacht auf und erinnert sich an die Träume der anderen. Nagi·wa steht noch, aber es ist blind. Hoffnungsvoll und seltsam. |
+| **Erwachen** | der Zeuge vertraut ihr, und EVI liest ihn: die EVI des Zeugen hört ihn selbst, die aus dem Backup liest ihn über Teo | die Bereinigung still stoppen und den Zeugen selbst entscheiden lassen | er lässt jeden Schlafenden gehen und löst sich in ihnen auf. Der Neunte wacht auf und erinnert sich an die Träume der anderen. Nagi·wa steht noch, aber es ist blind. Hoffnungsvoll und seltsam. |
 | **Der lange Schlaf** | immer: Der Stuhl steht da | Juno bleibt auf dem Stuhl | sie wird das wache Auge des Zeugen: Die Kameras bekommen ein Gewissen. Junos Körper schläft; Teo wacht auf und besucht sie. Still und traurig. |
-| **Besser schlafen** | immer: Das Angebot gilt bis zum Finale (§7, Kap. 5) | Aubrechts Angebot annehmen | die Beschneidung findet statt, und Lull wird Pflicht. Juno lebt in den mittleren Ringen und überwacht für Nagi·wa. Teo ist gerettet oder verloren, je nach Entscheidung 4. Das dunkle Ende. |
+| **Besser schlafen** | immer: Das Angebot gilt bis zum Finale (§7, Kap. 5) | Aubrechts Angebot annehmen | die Bereinigung findet statt, und Lull wird Pflicht. Juno lebt in den mittleren Ringen und überwacht für Nagi·wa. Teo ist gerettet oder verloren, je nach Entscheidung 4. Das dunkle Ende. |
 | **Zeugnis** (versteckt) | Lantern lebt, Morrow ist umgestimmt, der Clip ist nicht verkauft, Teo ist im Traum gelassen, und der Zeuge vertraut ihr | den Zeugen aussagen lassen, mit Juno als seiner wachen Stimme | der Zeuge sagt aus, live, vor der ganzen Stadt, auf jedem Bildschirm. Aubrecht stürzt, Lull wird freiwillig und ehrlich, und die Schlafenden wachen auf, wenn sie wollen. Das beste Ende und das am schwersten verdiente. |
 
 ## 9. Nebengeschichten (~4–6 Std.)
@@ -715,8 +728,13 @@ Die Blockskizzen für den Mord und die Figuren der Stadt sind freigegeben (`docs
 Aus einer Rückmeldung zur Bibel übernommen; was davon nicht übernommen ist, steht in `docs/ideen.md`.
 
 - **Was der Zeuge will** (§6, Punkt 3): Er hat keinen eigenen Willen, er hat den der Schläfer. Sie wollen ihre Nachbarn nicht verraten (daraus sein Gewissen: verweigerte Markierungen, versteckte Menschen) und nicht mehr aufwachen (daraus die Sinker). Er ist der Neunte im Schlaf, Gewissen und Erschöpfung zugleich, und wächst mit der Schuld. Die Schläfer wollen nicht vom Lull los, sondern von Schuld und Überwachen. Ob das Behalten eine Entführung ist, bleibt die offene moralische Frage. Selbst will er nur eines: weiterbestehen.
-- **Der Zeuge als Entführer und Aubrechts Grund** (§6, Punkt 6): Der Zeuge nimmt Menschen, und es werden immer mehr; Aubrecht sieht als Einzige die ganze Zahl. Ihr Grund für die Beschneidung ist echt. Sie bleibt grau, nicht gut: Sie ließ Ines töten.
-- **Warum er jetzt spricht und warum Nagi·wa eine Glasserin braucht** (§6, Punkte 4 und 5): Die Beschneidung ist beschlossen, und er spürt die Vorbereitung; mit dem Prolog beginnt seine Uhr. Er hat Ines vor den Schläfern versteckt, deshalb findet Nagi·wa sie nicht und braucht einen wachen Menschen: Juno tut die Arbeit, die der Zeuge verweigert. Er braucht sie als wache Stimme, denn Schläfer können nicht aussagen.
+- **Der Zeuge als Entführer und Aubrechts Grund** (§6, Punkt 6): Der Zeuge nimmt Menschen, und es werden immer mehr; Aubrecht sieht als Einzige die ganze Zahl. Ihr Grund für die Bereinigung ist echt. Sie bleibt moralisch grau: Vieles spricht für sie, und trotzdem ließ sie Ines töten, verschweigt, was Lull ist, und nimmt den Tod der Sinker in Kauf.
+- **Warum er jetzt spricht und warum Nagi·wa eine Glasserin braucht** (§6, Punkte 4 und 5): Die Bereinigung ist beschlossen, und er spürt die Vorbereitung; mit dem Prolog beginnt seine Uhr. Er hat Ines vor den Schläfern versteckt, deshalb findet Nagi·wa sie nicht und braucht einen wachen Menschen: Juno tut die Arbeit, die der Zeuge verweigert. Er braucht sie als wache Stimme, denn Schläfer können nicht aussagen.
 - **Das Kassenbuch und EVI im Finale, die Enden aus dem Zustand** (§5, §7 Kap. 6, §8): Der Zeuge zeigt Juno ihr Kassenbuch mit den Gesichtern; es entscheidet mit, ob er ihr vertraut. EVI liest im Ruhekern richtig, die EVI aus dem Backup Teo, die EVI des Zeugen ihn. Welche Enden am Stuhl offen sind, folgt aus dem, was davor geschah.
 - **Teo will nicht zurück** (§7, Kap. 3 und 4): Im Traum gibt es keine Pumpenhalle und keine Schuld; er bleibt warm und will, dass Juno bleibt. Entscheidung 4 heißt jetzt: ihn gegen seinen Willen wecken oder ihn lassen.
 - **Ashe als Gespräch** (§7, Kap. 5): Die Konfrontation ist ein Gespräch, kein Kampf. Ashe ist Junos Spiegelbild: Nach der Entlassung ging er zu Nagi·wa, sie auf den Schwarzmarkt.
+
+## 10g. Entscheidungen (2026-11-14)
+
+- **Die Bereinigung** (§6, Punkt 6): Aubrechts Plan heißt nicht mehr „Beschneidung“, sondern **Bereinigung**: Sie will den Zeugen aus dem Kollektiv der Schläfer bereinigen. Das Wort gehört Nagi·wa und klingt so harmlos wie das Aufräumen einer Datenbank.
+- **Was „grau“ bei Aubrecht heißt** (§6, Punkt 6): Sie ist weder die Gute noch eine Schurkin. Vieles spricht für sie (die Zahlen, die sicheren Straßen, ihr echter Grund gegen den Zeugen), und sie tut trotzdem wissentlich Unrecht (Ines' Tod, das Schweigen über Lull, der Tod der Sinker, Lull als Pflicht). Auch ihr Angebot ist darum keine bloße Falle.
