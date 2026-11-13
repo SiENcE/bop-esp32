@@ -48,13 +48,7 @@ scene("look_zeitung", { w: 170, h: 112, bg: "h" }, (c) => {
   }
 })
 // (CAM 22 is painted now: art/cams/cam22.px.js; Ines there at its scale is painted too: ines_feed_bar in art/characters/feed_people.px.js)
-// the door of the Lerche block, through a fisheye (only its corners dark)
-scene("cam24_bg", { w: W, h: H, bg: "0" }, (c) => {
-  ROOM(c, "3", "5", 90)
-  c.rect(124, 24, 72, 66, "5"); c.rect(158, 24, 4, 66, "3")
-  SIGN(c, 112, 8, 96, "LERCHE BLOCK")
-  c.rect(0, 0, 40, 26, "1"); c.rect(280, 0, 40, 26, "1"); c.rect(0, 154, 40, 26, "1"); c.rect(280, 154, 40, 26, "1")
-})
+// (CAM 24 is painted now: art/cams/cam24.px.js)
 // (CAM 30 is painted now: art/cams/cam30.px.js)
 // The look upwards: along the transit axis, the spine the old photo shows going into the ring above. Each Ring is a ceiling with a
 // hole round the spine: panels and ribs running to the middle, its inner rim lit from below, the smog between one Ring and the next, the

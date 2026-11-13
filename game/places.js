@@ -114,7 +114,10 @@ Nagiwa.at = {
       dryersPoly: hull([1, 2, 3, 4, 5, 6, 7, 8].map((n) => L.props[`dryer${n}`].poly).flat()).map((v, i) => (i % 2 ? v : v + S)),
       deskPoly: (L.props.counter.shape ?? L.props.counter.poly).map((/** @type {number} */ v, /** @type {number} */ i) => (i % 2 ? v : v + S)) };
   })(),
-  cam24: { door: [160, 96], off: [104, 174], mic: [160, 110], entrance: [124, 24, 72, 66] },
+  // painted (art/cams/cam24.px.js, measured there: CAM24_LAYOUT): the doorbell's fisheye; Ines comes out past the lens (off the bottom),
+  // through the gate and off to the right along the street (Friday), or the other way (Wednesday, Thursday)
+  cam24: { out: [152, 192], gate: [211, 113], street: [256, 110], away: [518, 144], mic: [211, 99],
+    doorPoly: [67, 28, 69, 0, 106, 0, 128, 180, 90, 180, 84, 167, 73, 126, 67, 68] },
   // job B (game/auftrag_tide.js): Jade Row from Nagi·wa's camera above it, and from the machine's own at hip height
   cam15: { door: [160, 150], spot: [271, 100], mic: [200, 100], capsules: [84, 28, 229, 52], c23: [258, 28, 26, 25] },
   // painted near iso (art/cams/cam30.px.js, measured there: CAM30_LAYOUT): Thursday Ines comes from the street under the camera (off the
