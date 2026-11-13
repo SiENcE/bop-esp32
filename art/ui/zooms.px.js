@@ -12,8 +12,8 @@
 //                         up, the watch at his wrist; 3 frames, the ring the brightest cluster
 //   zoom_ring_hand_pale   Kessler's hand without the ring: the pale band where it was (Chapter 1)
 //   zoom_keypad           through CAM 07V onto Okonkwo's customer display at one in the night: a small
-//                         TOTAL where the price should be, and every key he typed, 4-1-7-0-9, in VFD
-//                         segments (the unlit ones faint behind), the cursor after the 9; still (Chapter 1, job B)
+//                         TOTAL where the price should be, and every key he typed, 41709, in the game's font as
+//                         the display's dot matrix (the unlit dots faint behind), the cursor after the 9; still (Chapter 1, job B)
 //
 // How it is drawn: each picture is a small 2D buffer painted back to front; tubes (fingers, the mast)
 // and ellipsoids (palms, a head) are shaded as round forms lit from the upper left, flat shapes take
@@ -24,6 +24,7 @@ pal({
   5: "#266252", 6: "#388169", 7: "#55a585", 8: "#8acfae", 9: "#d4f7e2",
 })
 ramps("0123456789")
+include("../lib/text.js")
 
 {
   const ZW = 96, ZH = 56
@@ -445,17 +446,8 @@ ramps("0123456789")
   // Painted on the lines of the approved block A (art/mockups/zoom_keypad_blocks.px.js, drawA): the display's housing fills the
   // zoom above its stalk, the shop behind it out of focus. The moulded housing lit from the upper left (the bulb): its top lip,
   // a bevel down into the recess, two screws, a dim power lamp; the dark glass with the bulb's glare across its upper left; the
-  // small TOTAL where the price should be; the code in vacuum-fluorescent segments (lit with softer tips, the unlit ones a ghost
-  // behind, a glow where they light the glass), the underscore after the 9. One frame: the zoom is still.
-  /** the segments of a seven-segment digit w wide, h high, t thick at (x, y), as rects */
-  function kpSegs(x, y, w, h, t) {
-    const m = Math.floor((h - t) / 2)
-    return {
-      a: [x + t, y, w - 2 * t, t], d: [x + t, y + h - t, w - 2 * t, t], g: [x + t, y + m, w - 2 * t, t],
-      f: [x, y + t, t, m - t], b: [x + w - t, y + t, t, m - t], e: [x, y + m + t, t, h - m - 2 * t], c: [x + w - t, y + m + t, t, h - m - 2 * t],
-    }
-  }
-  const KP_LIT = { 0: "abcdef", 1: "bc", 4: "bcfg", 7: "abc", 9: "abcdfg" }
+  // small TOTAL where the price should be; the code in the game's own digits as a glowing dot matrix (the unlit dots a ghost behind,
+  // a glow where the lit ones light the glass), the cursor after the 9; no dashes: at twice the size they would not fit. Still.
   /** the display's pixels as keys (row by row, ZW x ZH); the review sheet reads them too */
   function zoomKeypadKeys() {
     const S = zbuf(), G = 8, GY = 10, GW = 80, GH = 34                       // the glass
@@ -511,27 +503,21 @@ ramps("0123456789")
     }
     set(9, 11, "4"); set(10, 11, "4"); set(9, 12, "3")
 
-    // TOTAL in the hud's 3x5 letters, dim, where the price should be
-    const HUD = { T: ["###", ".#.", ".#.", ".#.", ".#."], O: [".#.", "#.#", "#.#", "#.#", ".#."], A: [".#.", "#.#", "###", "#.#", "#.#"], L: ["#..", "#..", "#..", "#..", "###"] }
-    let tx = 11
-    for (const ch of "TOTAL") { HUD[ch].forEach((row, j) => [...row].forEach((p, i) => { if (p === "#") set(tx + i, 13 + j, "5", "text") })); tx += 4 }
-
-    // the code, as the block lays it out: digits 7 wide, 15 high, segments 2 thick, dashes 4 wide, 2 apart, centred on x 45
-    const DW = 7, DH = 15, T = 2, DSH = 4, GAP = 2, Y = 21
-    let x = Math.round(45 - (5 * DW + 4 * DSH + 8 * GAP) / 2)
-    const seg = ([sx, sy, w, h], lit) => {
-      for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) {
-        const px = sx + i, py = sy + j
-        if (lit) set(px, py, "9", "lit")
-        else set(px, py, roleAt(px, py) === "glare" ? "3" : "2", "ghost")      // the ghost shows a step brighter under the glare
-      }
+    // the text in the game's own fonts (art/lib/text.js), so every glyph keeps its size, baseline and spacing: TOTAL in the
+    // hud's capitals, dim, where the price should be; the code in nagiwa's 5x7 digits drawn twice the size, as the display's
+    // dot matrix: every cell of a glyph a dim dot (the unlit pixels a ghost), the lit ones 2x2 at full brightness
+    TXT.draw({ px: (x, y) => set(x, y, "5", "text") }, 11, 13, "TOTAL", "5", { font: "hud" })
+    const CODE = "41709_", SC = 2, Y = 21
+    let x = 48 - Math.floor(TXT.measure(CODE, "nagiwa") * SC / 2)
+    for (const ch of CODE) {
+      const g = NAGIWA_GLYPHS.nagiwa[ch], rows = Array.isArray(g) ? g : g.rows
+      rows.forEach((r, ry) => [...r].forEach((p, rx) => {
+        const px = x + rx * SC, py = Y + ry * SC
+        if (p === "#") { for (let j = 0; j < SC; j++) for (let i = 0; i < SC; i++) set(px + i, py + j, "9", "lit") }
+        else set(px, py, roleAt(px, py) === "glare" ? "3" : "2", "ghost")      // the ghost dot, a step brighter under the glare
+      }))
+      x += (rows[0].length + 1) * SC
     }
-    for (const ch of "4-1-7-0-9") {
-      if (ch === "-") { seg([x, Y + Math.floor((DH - T) / 2), DSH, T], true); x += DSH + GAP; continue }
-      for (const [s, r] of Object.entries(kpSegs(x, Y, DW, DH, T))) seg(r, KP_LIT[ch].includes(s))
-      x += DW + GAP
-    }
-    for (let i = 0; i < 5; i++) for (let j = 0; j < 2; j++) set(x + 1 + i, 34 + j, "9", "lit")   // the cursor, still
 
     // the glow: glass touching a lit segment goes up to 3 (a step more under the glare)
     const src = S.k.slice(), lit = (x, y) => roleAt(x, y) === "lit"
