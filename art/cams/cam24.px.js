@@ -4,8 +4,8 @@
 // meters, the same lens.
 // What is in it: on the left, bending round the lens, the door's frame and the door with its number; three steps down to a small
 // forecourt, wet, with two bins and a scooter under a cover; a low fence with its gate; the street with a lamp; across it the block
-// with its lit windows and one blind half down, a long neon sign over them (KARAOKE 24H); past the yard, far off, the
-// city's towers in the dark with a few lit windows (both the user's wish of 2026-11-13). Ines (the game's actor, her feed sprite): on Friday at 22:15 she comes out of the door
+// with its lit windows and one blind half down, a long neon sign over them (KARAOKE 24H, the user's wish of 2026-11-13);
+// past the yard on the left only the dark (the user's choice, after trying a building and then a far city's lights there). Ines (the game's actor, her feed sprite): on Friday at 22:15 she comes out of the door
 // past the lens (from the picture's lower left), crosses the yard and goes out through the gate to the right; on Wednesday and
 // Thursday the other way. Where: CAM24_LAYOUT at the end of this file (printed when built), copied into game/places.js (cam24).
 include("../lib/feed.js")
@@ -36,12 +36,6 @@ const PRIMS = [
   block([-14, 0, 14], [14, 12, 15], "across"),                                       // the block across the street
   // the user's wish (2026-11-13): neon on the block across
   block([-1.6, 5.0, 13.85], [6.2, 6.3, 14], "neon"),                                 // the long sign across, KARAOKE 24H
-  // and far off, past the yard, the city in the dark: towers with a few lit windows (the user's wish, instead of a building at the side)
-  ...Array.from({ length: 40 }, (_, i) => {
-    const a = (-128 + i * 2.4 + (ih(i, 1) - 0.5) * 2) * Math.PI / 180, d = 45 + ih(i, 2) * 60
-    const x = 0.75 + d * Math.sin(a), z = d * Math.cos(a), w = 5 + ih(i, 3) * 8, h = 18 + ih(i, 4) * 55
-    return block([x - w / 2, 0, z - w / 2], [x + w / 2, h, z + w / 2], "far")
-  }),
 ]
 const LIGHTS = [
   { p: [0, 2.9, 0.4], I: 0.45, R: 3.0 },                                             // the lamp over the door
@@ -64,12 +58,6 @@ const MATS = {
   yard: (P) => { const [x, , z] = P; const slab = ((x / 0.5) % 1 + 1) % 1 < 0.05 || ((z / 0.5) % 1 + 1) % 1 < 0.05; return { a: slab ? 0.24 : 0.32, e: 0, wet: Math.min(0.85, 0.2 + Math.max(0, fbm(x * 0.6, z * 0.6 + 4, 3) - 0.5) * 3), gloss: 0.2 } },
   fence: (P) => ({ a: ((P[0] * 8) % 1 + 1) % 1 < 0.3 ? 0.46 : 0.32, e: 0 }), bin: (P, n) => ({ a: n[1] > 0.5 ? 0.4 : 0.22, e: 0, wet: 0.2 }), scooter: (P, n) => ({ a: n[1] > 0.5 ? 0.45 : 0.3, e: 0 }),
   street: { a: 0.22, e: 0, wet: 0.5, gloss: 0.25 }, post: { a: 0.35, e: 0 },
-  // a far tower: dark, its windows a grid of which a few are lit (one pixel each at that distance)
-  far: (P) => {
-    const [x, y, z] = P, u = (x + z) / 0.9, v = y / 1.5, cx = Math.floor(u), cy = Math.floor(v)
-    const pane = (u - cx) < 0.55 && (v - cy) < 0.5                       // a window is only part of its cell: the wall between
-    return { a: 0.05, e: pane && ih(cx, cy, 11) > 0.88 ? 0.5 : pane && ih(cx, cy, 12) > 0.975 ? 0.85 : 0.02 }
-  },
   neon: (P, n) => ({ a: 0.3, e: n[2] < -0.5 ? 1.0 : 0.6 }),
   across: (P) => {
     const wx = ((P[0] + 30) % 2.2), fy = P[1] % 2.9, win = wx > 0.6 && wx < 1.6 && fy > 0.9 && fy < 2.2
