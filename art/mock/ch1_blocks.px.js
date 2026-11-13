@@ -69,15 +69,7 @@ anim("mock_imai", { w: 19, h: 44, frames: 1, fps: 1, outline: "k", pivot: "botto
   c.rect(6, 0, 7, 8, "h"); c.rect(14, 4, 1, 1, "g"); c.rect(3, 8, 13, 22, "f"); c.rect(5, 30, 9, 14, "d")
 })
 // (the bag's items are painted now: art/ui/items.px.js)
-// the laundromat's man asleep behind his counter, on a chair tipped back against the wall, his head on his shoulder, facing the
-// room (the laundromat itself is a baked map now: art/rooms/laundromat.map.js); his chair is in his figure
-anim("mock_sleeper", { w: 22, h: 40, frames: 1, fps: 1, outline: "k", pivot: "bottom" }, (c) => {
-  c.rect(3, 4, 2, 36, "e"); c.rect(3, 26, 15, 3, "e"); c.rect(15, 29, 2, 11, "e")     // the chair: its back, the seat, a front leg
-  c.rect(5, 12, 9, 15, "f"); c.rect(6, 13, 7, 3, "g")                                // his body, a grey jacket
-  c.rect(10, 26, 9, 4, "d"); c.rect(17, 30, 3, 9, "d"); c.rect(16, 38, 5, 2, "a")    // the legs out to the front, a shoe
-  c.rect(4, 4, 7, 8, "h"); c.rect(4, 4, 7, 3, "a"); c.hline(7, 9, 3, "e")            // the head on its side, hair, mouth open
-  c.rect(12, 20, 2, 8, "g")                                                           // an arm hanging
-})
+// (the sleeper behind the laundromat's counter is painted now: art/characters/schlaefer.px.js)
 
 // ---- job B (game/auftrag_tide.js): Jade Row's cameras, Okonkwo's shop, the people of the night, Ratz
 // (the register's customer display is painted now: zoom_keypad in art/ui/zooms.px.js)

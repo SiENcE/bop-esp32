@@ -226,7 +226,7 @@ Nagiwa.at = {
   })(),
   // SUDS & SPIN (art/rooms/laundromat.map.js, game/rooms/laundromat.layout.js). The door is the gap in the alley's cut wall (a cut
   // wall has no picture of its own): its hotspot is the map's zone `door`. The dryers' shape is the row's, round all eight; the man
-  // asleep behind the counter is a block of his own (art/mock/ch1_blocks.px.js) standing at the spot `sleeper`
+  // asleep behind the counter is a figure of his own (art/characters/schlaefer.px.js, his chair in it) standing at the spot `sleeper`
   laundromat: (() => {
     const at = fromLayout(Nagiwa.layouts.laundromat), P = Nagiwa.layouts.laundromat.props;
     return { ...at, dryersPoly: hull([1, 2, 3, 4, 5, 6, 7, 8].map((n) => P[`dryer${n}`].poly).flat()) };

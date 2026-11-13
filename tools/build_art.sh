@@ -46,6 +46,7 @@ characters() {
     $PXL build art/characters/tide_people.px.js --out build/art/characters --no-preview | tail -n 1  # Morrow, the Tidewater boy, Ratz, the patrol car (job B)
     $PXL build art/characters/sable.px.js --out build/art/characters --no-preview | tail -n 1        # Sable, behind the desk in the booth (job A)
     $PXL build art/characters/teo.px.js --out build/art/characters --no-preview | tail -n 1          # Teo, Juno's brother (Chapter 1)
+    $PXL build art/characters/schlaefer.px.js --out build/art/characters --no-preview | tail -n 1    # the sleeper behind the laundromat's counter (Chapter 1)
     $PXL build art/characters/juno_top.px.js --out build/art/characters --no-preview | tail -n 1     # Juno from above (the Drain Market)
     $PXL build art/characters/markt_people.px.js --out build/art/characters --no-preview | tail -n 1 # the Drain Market's people from above
     # Ines's handover reaches past her on one side: its anchor keeps her feet where her other sprites have them (15 wide, 22 high)
@@ -53,7 +54,7 @@ characters() {
     # seen from above the ground point is under the figure, in the middle of its frame, not at its foot
     node -e 'const fs=require("fs"),d=process.argv[1];for(const f of fs.readdirSync(d)){const m=/^((?:juno|ratz|prediger|haendler)_top_.*|statist_.*)\.json$/.exec(f);if(!m)continue;const s=Object.values(JSON.parse(fs.readFileSync(d+"/"+f,"utf8")).frames)[0].sourceSize;fs.writeFileSync(d+"/"+m[1]+".anchor.json",JSON.stringify({anchor:[s.w>>1,s.h>>1]}))}' build/art/characters/anims
     # build-atlas's --only matches exact names or a trailing *, so the feed people go by prefix
-    $ATLAS build/art/characters assets/characters.js --only "juno_*,teo_*,kessler_*,varga_*,commuter_*,yuen_*,ines_*,lantern_*,ashe_*,motte_*,bao_*,drone_*,regen_*,imai_*,prediger_*,monteur_*,mei_*,stamm_*,okonkwo_*,morrow_*,tideboy_*,ratz_*,streife_*,sable_*,haendler_top_*,statist_*"
+    $ATLAS build/art/characters assets/characters.js --only "juno_*,teo_*,schlaefer_*,kessler_*,varga_*,commuter_*,yuen_*,ines_*,lantern_*,ashe_*,motte_*,bao_*,drone_*,regen_*,imai_*,prediger_*,monteur_*,mei_*,stamm_*,okonkwo_*,morrow_*,tideboy_*,ratz_*,streife_*,sable_*,haendler_top_*,statist_*"
 }
 
 ui() {

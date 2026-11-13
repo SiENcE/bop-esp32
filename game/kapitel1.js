@@ -202,7 +202,7 @@ Nagiwa.camRoom("cam23", { background: undefined, color: Nagiwa.PHOSPHOR[0], mic:
     { id: "room", image: "laundromat_bg", at: [A23.shift, 0], anchor: [0, 0], baseline: -1000 },
     ...Nagiwa.at.laundromat.props.filter((/** @type {any} */ p) => p.id !== "cam").map((/** @type {any} */ p) => ({ ...p, at: [p.at[0] + A23.shift, p.at[1]],
       ...(p.front ? { front: p.front.map((/** @type {number} */ v, /** @type {number} */ i) => (i % 2 ? v : v + A23.shift)) } : {}) })),
-    { id: "sleeper", image: "mock_sleeper", at: A23.sleeper },
+    { id: "sleeper", image: "schlaefer_sit", at: A23.sleeper },
   ],
   hotspots: {
   dryers: { name: "Trockner", poly: A23.dryersPoly, look: "Da sind acht Trockner, und die Sechs ist tot, mit Zettel dran. Da sieht keiner rein." },
@@ -253,7 +253,7 @@ Cutaway.room("gasse", { name: "Die Gasse", background: "gasse_bg", size: /** @ty
 const AT_DRYER = ["!off_main", { or: [["day=3", "time>=20:00"], "day=4"] }];     // it lies there from when she has left it (the clock stands while Juno walks); Lantern only hears of it at the meeting
 // baked from its map (art/rooms/laundromat.map.js); the man asleep behind the counter is a figure of his own on his own chair, and
 // the same props make CAM 23 (one place, one picture)
-const SLEEPER = { id: "sleeper", image: "mock_sleeper", at: AW.sleeper };
+const SLEEPER = { id: "sleeper", image: "schlaefer_sit", at: AW.sleeper };
 Cutaway.room("laundromat", { name: "SUDS & SPIN", background: "laundromat_bg", walk: AW.walk, holes: AW.holes, props: [...AW.props, SLEEPER],
   light: { ambient: 0.8, lamps: AW.lamps.map((/** @type {any} */ { bake, zone, ...lamp }) => lamp) },
   ambience: ["fridge_hum", "neon_buzz"], music: { theme: "juno", intensity: 0.3 },
