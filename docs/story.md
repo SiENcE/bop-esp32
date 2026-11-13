@@ -243,7 +243,8 @@ Wird langsam über die Kapitel enthüllt; der Spieler soll es einen Schritt vor 
    Teo. Danach will sie Lull im Neunten **zur Pflicht** machen, als „Maßnahme der öffentlichen Gesundheit",
    mit einem Zeugen, der nicht mehr selbst denken kann. Das Wort **Bereinigung** ist Nagi·was eigenes
    (entschieden 2026-11-14, bis dahin „Beschneidung“): Es klingt nach Aufräumen in einer Datenbank und
-   verschweigt, was dabei stirbt.
+   verschweigt, was dabei stirbt. Auf Nagi·was Bildschirmen, die englisch sind wie alle Technik der Stadt, heißt
+   sie `PURGE` (entschieden 2026-11-14).
    - **Ihr Grund ist echt** (entschieden 2026-11-13): Der Zeuge nimmt Menschen. Civic Rest zählt die
      Sinker, und Aubrecht sieht als Einzige die ganze Zahl: Jedes Jahr sind es mehr, und es werden umso
      mehr, je mehr Menschen Lull nehmen (Tinte zählt dasselbe mit ihren Knoten, Teo ist in Halle 3 der
@@ -420,7 +421,7 @@ Straßenmodus.
 - **Die Schlafstation:**
   - Juno fährt die Transitachse hinauf zur Station;
   - sie sieht Teo und die Sinker in Reihen, beobachtet von den Kameras der Station;
-  - ein Terminal der Station zeigt den **Zeitplan der Bereinigung**: drei Tage.
+  - ein Terminal der Station zeigt den **Zeitplan der Bereinigung** (auf dem Bildschirm `PURGE`): drei Tage.
 - **Entscheidung 4:** ob Juno Teo jetzt rettet. Sie kann ihn wecken, **gegen seinen Willen** (unter
   Schmerzen, und er ist vielleicht nicht mehr ganz er selbst), oder ihn im Traum lassen, wie er es will,
   wo der Zeuge ihn bis zum Ende in Sicherheit hält. Wer weckt, entscheidet über seinen Kopf hinweg, wie
@@ -736,5 +737,5 @@ Aus einer Rückmeldung zur Bibel übernommen; was davon nicht übernommen ist, s
 
 ## 10g. Entscheidungen (2026-11-14)
 
-- **Die Bereinigung** (§6, Punkt 6): Aubrechts Plan heißt nicht mehr „Beschneidung“, sondern **Bereinigung**: Sie will den Zeugen aus dem Kollektiv der Schläfer bereinigen. Das Wort gehört Nagi·wa und klingt so harmlos wie das Aufräumen einer Datenbank.
+- **Die Bereinigung** (§6, Punkt 6): Aubrechts Plan heißt nicht mehr „Beschneidung“, sondern **Bereinigung**: Sie will den Zeugen aus dem Kollektiv der Schläfer bereinigen. Das Wort gehört Nagi·wa und klingt so harmlos wie das Aufräumen einer Datenbank. Auf den Bildschirmen der Stadt, die englisch sind, heißt sie `PURGE`.
 - **Was „grau“ bei Aubrecht heißt** (§6, Punkt 6): Sie ist weder die Gute noch eine Schurkin. Vieles spricht für sie (die Zahlen, die sicheren Straßen, ihr echter Grund gegen den Zeugen), und sie tut trotzdem wissentlich Unrecht (Ines' Tod, das Schweigen über Lull, der Tod der Sinker, Lull als Pflicht). Auch ihr Angebot ist darum keine bloße Falle.

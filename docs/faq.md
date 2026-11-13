@@ -172,7 +172,7 @@ sie sieht als Einzige die ganze Zahl. Ohne Eingriff behält er irgendwann die ha
 bereinigen, mit einem Firmware-Update, das die gemeinsame Ebene löscht. Das würde jeden Sinker töten oder
 leeren, Teo eingeschlossen. Danach soll Lull im Neunten Pflicht werden, mit einem Zeugen, der nicht mehr
 selbst denken kann: die perfekte, willenlose Überwachung. Das Wort klingt nach Aufräumen in einer Datenbank
-und verschweigt, was dabei stirbt.
+und verschweigt, was dabei stirbt. Auf Nagi·was Bildschirmen, die englisch sind, heißt sie `PURGE`.
 
 ## Ist Aubrecht die Böse?
 
