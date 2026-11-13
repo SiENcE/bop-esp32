@@ -76,7 +76,7 @@ Nagiwa.at = {
     mastPoly: [271, 32, 274, 24, 288, 25, 292, 30, 289, 38, 275, 36], vendingPoly: [68, 53, 75, 46, 91, 46, 98, 72, 93, 80, 78, 79],
     officeDoorPoly: [75, 32, 89, 21, 96, 52, 85, 66],
   },
-  // Chapter 1's blocks (art/mock/ch1_blocks.px.js)
+  // Chapter 1's cameras and places
   // (the left column of every feed is the cameras' strip, x 4 to 74, and the top left its name: nothing that matters lies there)
   // painted (art/cams/cam21.px.js, measured there: CAM21_LAYOUT): the queue across the picture toward the door under the camera, Ines
   // out from under it to the left; the clinic's hotspot is the white pylon with Nagi·wa's ring, in its own outline
@@ -90,6 +90,8 @@ Nagiwa.at = {
     const foot = [[q[0], q[1]], [q[2], q[3]], [q[4], q[5]], [q[6], q[7]]].sort((a, b) => b[1] - a[1]).slice(0, 2);
     return { shift: S, door: [Math.round((foot[0][0] + foot[1][0]) / 2) + S, Math.round((foot[0][1] + foot[1][1]) / 2) - 2],
       mat: [L.spots.stairs[0] - 24 + S, L.spots.stairs[1] + 4], mic: [180, 130], exposure: 2.2,
+      // her armchair empty while she is out here (the bake's kessel_14_chair_empty, laid over the picture where it differs)
+      chairEmpty: [L.chairEmpty[0] + S, L.chairEmpty[1]],
       // her door's own shape on its wall
       doorPoly: q.map((v, i) => (i % 2 ? v : v + S)) };
   })(),
@@ -208,7 +210,7 @@ Nagiwa.at = {
   },
   // looking from the window at the back wall (as CAM 07V): Okonkwo behind the counter (his bust stands on the walk area's edge, drawn over
   // the counter, as Mei), the safe in its right-hand end; the door to the lane at the front left
-  // Okonkwo's shop as a stage (art/mock/ch1_blocks.px.js): the counter a prop standing on the floor's back edge, Okonkwo behind it (the slit: an actor
+  // Okonkwo's shop as a stage (art/rooms/okonkwo_shop.px.js): the counter a prop standing on the floor's back edge, Okonkwo behind it (the slit: an actor
   // stands on walkable floor, as the Rain Reader on the roof)
   okonkwo_shop: {
     walk: [[10, 130, 164, 130, 164, 114, 168, 114, 168, 130, 310, 130, 316, 176, 4, 176]], arrive: [30, 150], door: [16, 136], front: [158, 140], okonkwo: [166, 116], shelves: [124, 138],

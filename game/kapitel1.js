@@ -1,4 +1,4 @@
-// Nagiwa: Chapter 1 "Glass" (docs/kapitel1-design.md), a playable mock on flat blocks (art/mock/). Three evenings on
+// Nagiwa: Chapter 1 "Glass" (docs/kapitel1-design.md), painted. Three evenings on
 // game days 2 to 4 (Wednesday to Friday), sleeping, job C (following Ines to the meeting), WREN's money, the rent. The end
 // in cam31: game/kapitel1_ende.js.
 //   e1                    Entscheidung 1: sold | refused

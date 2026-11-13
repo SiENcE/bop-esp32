@@ -13,13 +13,15 @@
 //            (open: the frame, the plate beside it), note_war (two notes, no words: a scrawl and "??",
 //            the answer with its arrow), neon_tube (its left end dying), sign_14 (stencilled)
 //   stairs   stairs_concrete (treads with a steel nosing and a worn amber stripe; the dado follows the flight)
-//   props    emergency_key (the lift's, on the wall), corner_cam (Nagi·wa's, on its arm, its red eye; `face: "v"` looks out of a right-hand wall), bin_bags, stair_rail, armchair (Frau Haldane asleep in it, seen from the side, the Lull patch behind her ear)
+//   props    emergency_key (the lift's, on the wall), corner_cam (Nagi·wa's, on its arm, its red eye; `face: "v"` looks out of a right-hand wall), bin_bags, stair_rail, armchair (Frau Haldane asleep in it, seen from the side, her curlers, the Lull patch behind her ear),
+//            armchair_empty (the same chair, the same place, nobody in it: while she walks in CAM 14)
 // Keys "!k" are never lit. Small organic things are hand grids; the rest boxes and lines.
 include("../lib/text.js")
 
 pal({
   b: "#16201f", B: "#1e2d29", d: "#2a3f37", D: "#3d5849", E: "#5f7f68", F: "#d4f7dc",   // concrete and paint in the tube's light
-  p: "#b0588a", o: "#6e3060",                                                         // Frau Haldane's robe
+  p: "#a84c80", o: "#642c50",                                                         // Frau Haldane's robe: her pink (art/characters/haldane.px.js's P, q)
+  7: "#7aa8c8", 8: "#b8688c", 9: "#d8cca8",                                           // her curlers (blue, pink, cream), as hers there
   "~": "#cfe6ff", "^": "#6ab4ff",                                                     // Lull's point, bright and dim
 })
 ramps("bBdDEF", "op")
@@ -386,19 +388,28 @@ const K14 = (() => {
   })
   // its back against the lift's shaft (-u), she faces +u toward her TV, out of sight right of the door: through the door
   // one sees her from the side, her head against the back, the Lull patch behind her ear
+  /** the armchair alone: the back, its wings, the far arm, the seat; the near arm after (it stands in front of her) */
+  const chair = (pen, p) => {
+    const [u0, v0] = p.at, du = p.foot[0], dv = p.foot[1], B = 0.16, A = 0.12, sit = u0 + B
+    pen.box(u0, v0, 0, B, dv, 0.92, () => "U", () => "u", () => "u")                                // the back
+    pen.box(u0, v0, 0.92, B, 0.14, 0.14, () => "U", () => "u", () => "u")                           // the wings
+    pen.box(u0, v0 + dv - 0.14, 0.92, B, 0.14, 0.14, () => "U", () => "u", () => "u")
+    pen.box(sit, v0, 0, du - B, A, 0.6, () => "U", () => "u", () => "u")                            // the far arm
+    pen.box(sit, v0 + A, 0, du - B, dv - 2 * A, 0.42, () => "u", () => "u", () => "u")             // the seat
+  }
+  const nearArm = (pen, p) => {
+    const [u0, v0] = p.at, du = p.foot[0], dv = p.foot[1], B = 0.16, A = 0.12
+    pen.box(u0 + B, v0 + dv - A, 0, du - B, A, 0.6, () => "U", () => "u", () => "u")
+  }
   ISOKIT.prop("armchair", {
     frames: 12,
     draw(pen, p, f) {
       const [u0, v0] = p.at, du = p.foot[0], dv = p.foot[1], B = 0.16, A = 0.12, sit = u0 + B
-      pen.box(u0, v0, 0, B, dv, 0.92, () => "U", () => "u", () => "u")                                // the back
-      pen.box(u0, v0, 0.92, B, 0.14, 0.14, () => "U", () => "u", () => "u")                           // the wings
-      pen.box(u0, v0 + dv - 0.14, 0.92, B, 0.14, 0.14, () => "U", () => "u", () => "u")
-      pen.box(sit, v0, 0, du - B, A, 0.6, () => "U", () => "u", () => "u")                            // the far arm
-      pen.box(sit, v0 + A, 0, du - B, dv - 2 * A, 0.42, () => "u", () => "u", () => "u")             // the seat
+      chair(pen, p)
       const hu = sit + 0.06, hv = v0 + dv / 2 + 0.04
       const [hx, hy] = pen.P(hu, hv, 1.0)
       pen.box(u0 + du - 0.02, v0 + A + 0.08, 0.06, 0.1, dv - 2 * A - 0.16, 0.42, () => "o", () => "o", () => "o")   // the shins
-      pen.box(sit, v0 + dv - A, 0, du - B, A, 0.6, () => "U", () => "u", () => "u")                  // the near arm
+      nearArm(pen, p)
       // her in the pink robe, from the side and filling the chair (the user's sketch of 10.11.2026): a round body
       // against the back, the lap rising over the near arm and going on to the right (+u), the near arm hanging
       // over the armrest, the hand down its side
@@ -424,17 +435,30 @@ const K14 = (() => {
         "...S..............",
         "...S..............",
       ])
-      // her head against the back, fallen a little toward us: curlers on top, the face to the right (+u), eyes
-      // shut; greys that stay grey in the TV's light (no glow)
+      // her head against the back, fallen a little toward us: the curlers on top (blue, pink, cream) under the grey net, the
+      // face to the right (+u), eyes shut; greys that stay grey in the TV's light (no glow)
       pen.at(hu, hv, 1.02, "up")
-      pen.grid(hx - 3, hy - 4, [".G.G.G.", "GgGgGgG", "ggggsSS", "gggsS1S", "gg1sSSs", ".g1sSs.", "..1ss.."])
+      pen.grid(hx - 3, hy - 4, [".7.8.9.", "77g88g9", "gGgGsSS", "gggsS1S", "gg1sSSs", ".g1sSs.", "..1ss.."])
       // the Lull patch behind her ear: an oval pale disc with its rim (as Teo's), bright on the beat, dim between
       const lull = f % 6 < 3
-      pen.grid(hx - 3, hy - 2, [".^.", lull ? "^~^" : "^^^", ".^."], { "~": "!~", "^": "!^" })
+      pen.grid(hx - 3, hy - 2, [".^.", lull ? "^~^" : "^^^", lull ? "^~^" : "^^^", ".^."], { "~": "!~", "^": "!^" })   // the oval disc, 3x4, its stripe lit on the beat
       // the slipper, fallen off
       const [sx, sy] = pen.P(u0 + du + 0.12, v0 + dv * 0.4, 0)
       pen.at(u0 + du + 0.12, v0 + dv * 0.4, 0.03, "up")
       pen.grid(sx - 2, sy - 1, ["NNM", ".MM"])
+    },
+  })
+  // the same armchair with nobody in it (the same footprint and place in the map): while she walks in CAM 14 (02:30 to 02:45 on
+  // days 2 and 3) she must not sit in it too. Only the seat's cushion still pressed down where she sat
+  ISOKIT.prop("armchair_empty", {
+    draw(pen, p) {
+      const [u0, v0] = p.at, du = p.foot[0], dv = p.foot[1], B = 0.16, A = 0.12, sit = u0 + B
+      chair(pen, p)
+      // the cushion's hollow, a shade on the seat's top
+      const [cx, cy] = pen.P(sit + (du - B) / 2, v0 + dv / 2, 0.42)
+      pen.at(sit + (du - B) / 2, v0 + dv / 2, 0.42, "up")
+      pen.grid(cx - 3, cy - 1, [".iii.", "iiiii", ".ii.."])
+      nearArm(pen, p)
     },
   })
   return {}

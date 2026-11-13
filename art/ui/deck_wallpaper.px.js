@@ -462,7 +462,7 @@ pal({
         c.px(x, y, Math.abs(y - cy) === ry || (y + drift) % 3 === 0 ? "f" : below[k] ?? "z")
       }
   }
-  // the roof today (art/mock: they go into assets/mock.js with the blocks until they are painted)
+  // the roof today (they go into the deck's atlas with the photo, tools/build_art.sh deck)
   const today = (c, sitting) => { const p = pen(sitting ? WIDE : W), from = sitting ? SIT_FROM : 0; paint(p, c.frame, true, sitting); for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) c.px(x, y, p.buf[y][x + from]) }
   anim("dach_bg", { w: W, h: H, frames: FRAMES, fps: 10 }, (c) => today(c, false))
   anim("dach_heute", { w: W, h: H, frames: FRAMES, fps: 10 }, (c) => today(c, true))

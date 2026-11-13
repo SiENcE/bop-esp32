@@ -1,4 +1,4 @@
-// Nagiwa: the city in Chapter 1 (docs/kapitel1-design.md, "Die Stadt"), on flat blocks (art/mock/). So far the
+// Nagiwa: the city in Chapter 1 (docs/kapitel1-design.md, "Die Stadt"), painted. So far the
 // way up on to the Kessel Block's roof, the Rain Reader there and the first look at the Rings from below.
 // What Juno finds, she can take when she finds it: nothing here waits for an earlier click (CLAUDE.md, conventions). So each thing has its own flag.
 //   got_ausweis, got_haken   Juno has taken the ID, the lift's key (from the prologue on: Chapter 1 keeps them)
@@ -111,7 +111,9 @@ Cutaway.dialog("zeitung_cam", { main: { choices: [
 ] } });
 Nagiwa.cams.cam14 = { id: "14", place: "KESSEL-BLOCK, 14. STOCK", owner: "NAGI·WA", map: [8, 14], if: "link_cam14" };
 Cutaway.actor("haldane_feed", { name: "Jemand im Morgenmantel", color: "#ffa8d8",
-  costume: { idle: "mock_haldane", walk: "mock_haldane", talk: "mock_haldane" }, speed: [8, 4],
+  // asleep on her feet (art/characters/haldane.px.js): SE, NE and NW drawn, so the patch stays behind the ear it belongs to
+  costume: { idle: { se: "haldane_idle_se", ne: "haldane_idle_ne", nw: "haldane_idle_nw" }, walk: { se: "haldane_walk_se", ne: "haldane_walk_ne", nw: "haldane_walk_nw" },
+    talk: { se: "haldane_idle_se", ne: "haldane_idle_ne", nw: "haldane_idle_nw" } }, speed: [8, 4],
   look: ["Da geht jemand im Morgenmantel, sehr langsam.", "Die Hände hängen einfach runter."],
   talk: [{ if: "!news_who", then: ["Es ist halb drei, und sie trägt einen Morgenmantel. Sie geht langsam, die Augen ...", "Die Augen sind zu.", "Das ist Frau Haldane aus 14C. Sie holt sich die Zeitung, ihre eigene und die von 14A.", "Und der Zettel ist ihr eigener: WER KLAUT MEINE ZEITUNG.", { set: "news_who" }, { evi: "verwirrt" }, { say: "evi", text: "Sie schläft. Darf man das?" }],
     else: ["Das ist Frau Haldane. Sie schläft und holt die Zeitung. Die markier ich nicht."] }] });
@@ -126,7 +128,10 @@ Nagiwa.camRoom("cam14", { background: undefined, color: Nagiwa.PHOSPHOR[0], mic:
     { id: "floor14", image: "kessel_14_bg", at: [SH, 0], anchor: [0, 0], baseline: -1000 },
     ...K14.props.filter((/** @type {any} */ p) => p.id !== "corner_cam").map((/** @type {any} */ p) => ({ ...p, at: [p.at[0] + SH, p.at[1]],
       ...(p.front ? { front: shiftX(p.front) } : {}), ...(p.id === "haken" ? { if: "!got_haken" } : {}) })),
-    { id: "papers", image: "mock_papers", at: [AC.mat[0] + 8, AC.mat[1] - 1], if: "time<02:45" },
+    // the morning's bundle before the mat, left of the rail's post (where the post hid half of it)
+    { id: "papers", image: "haldane_papers", at: [AC.mat[0] - 12, AC.mat[1] + 2], if: "time<02:45" },
+    // while she walks out here her armchair stands empty: she is never in two places at once
+    { id: "chair_empty", image: "kessel_14_chair_empty", at: AC.chairEmpty, anchor: [0, 0], baseline: -999, if: "at:haldane_feed=cam14" },
   ],
   hotspots: {
   doors: { name: "Tür", poly: AC.doorPoly, look: ["Das ist der Flur von oben, genau wie ich ihn in Erinnerung hab.", "Den hab ich ja mal beobachtet, von Berufs wegen."] },
