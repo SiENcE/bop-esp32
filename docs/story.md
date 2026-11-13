@@ -305,8 +305,8 @@ Straßenmodus.
     zahlen, den Ring hat Varga schon, und verschuldet traut er sich nicht mehr heim. Der Kredithai Varga
     heuert Juno an, ihn zu finden. Verkaufen, warnen oder lügen.
   - **Der Eckladen:** Die Tidewater Boys, eine Gang aus Gezeitenkindern (Kiemen, Leuchtmarkierungen),
-    wollen den Tresorcode eines Ladens
-    in der Kowalski-Straße. Verkauft Juno ihn, wird der Laden in Kapitel 2 ausgeraubt, und Bao wird
+    wollen den Tresorcode von Okonkwos Laden
+    in der Jade Row (§10c). Verkauft Juno ihn, wird der Laden in Kapitel 2 ausgeraubt, und Bao wird
     dabei verletzt.
   - **WRENs Auftrag:** Ein anonymer Auftraggeber zahlt das Fünffache ihres Satzes. „Finde heraus, wen
     Dr. Ines Calder trifft, und wo." Juno folgt Ines zwei Abende lang über vier Kameras (Tagesablauf:
@@ -326,6 +326,8 @@ Straßenmodus.
   richtig: „Er hat sie ausgeschaltet. Juno. Er hat sie ausgeschaltet."
 
 ### Kapitel 2: Aufnahme (das moralische Problem, ~2 Std.)
+
+Das Design steht in `docs/kapitel2-design.md` (Entscheidungen in §10h).
 
 **Ziel:** entscheiden, was mit dem Clip geschieht, und herausfinden, wer Ines war.
 
@@ -739,3 +741,15 @@ Aus einer Rückmeldung zur Bibel übernommen; was davon nicht übernommen ist, s
 
 - **Die Bereinigung** (§6, Punkt 6): Aubrechts Plan heißt nicht mehr „Beschneidung“, sondern **Bereinigung**: Sie will den Zeugen aus dem Kollektiv der Schläfer bereinigen. Das Wort gehört Nagi·wa und klingt so harmlos wie das Aufräumen einer Datenbank. Auf den Bildschirmen der Stadt, die englisch sind, heißt sie `PURGE`.
 - **Was „grau“ bei Aubrecht heißt** (§6, Punkt 6): Sie ist weder die Gute noch eine Schurkin. Vieles spricht für sie (die Zahlen, die sicheren Straßen, ihr echter Grund gegen den Zeugen), und sie tut trotzdem wissentlich Unrecht (Ines' Tod, das Schweigen über Lull, der Tod der Sinker, Lull als Pflicht). Auch ihr Angebot ist darum keine bloße Falle.
+
+## 10h. Entscheidungen (2026-11-14): Kapitel 2
+
+Die Gliederung von Kapitel 2 ist freigegeben (`docs/kapitel2-design.md`), mit diesen Entscheidungen:
+
+- **Der Anfang:** Juno hält es nach dem Mord nicht in der Wohnung aus, geht in der Nacht hinaus und läuft bis in den Morgen durch den Neunten. Kapitel 2 beginnt am Samstagabend, wenn sie heimkommt; dann folgt EVIs festgelegte Szene (§10b, „Soll ich den Monitor heller machen?“). So passt „Juno kommt zum ersten Mal nach dem Mord wieder nach Hause“ zum Ende von Kapitel 1, wo sie am Deck sitzt.
+- **Die Tage:** drei Abende, Samstag 10. bis Montag 12. November (Spieltage 5 bis 7); das Ende in der Nacht auf Dienstag, eine Woche nach dem Prolog.
+- **Frau Imai sieht den Mord:** `cam31` versteht nur das alte Protokoll, und der Zeuge hatte Ines vor den Schläfern versteckt (§6, Punkt 5). Nach ihrem Tod zeigt er den Mord den Schläfern, Nacht für Nacht. Imais „Frau auf einem Bahnsteig“ ist das erste Zeichen, dass er handelt.
+- **Vesper und der Mord-Clip:** Vesper bietet am meisten. Wer an ihn verkauft, landet im selben Weg wie bei Sable: Der Clip läuft eine Nacht auf NINTH LIVE, dann kauft Nagi·wa ihn auf, und er verschwindet; das Kassenbuch nennt die Zuschauer. Sables Verrat in Kapitel 4 gilt nur, wenn Sable gekauft hat.
+- **Morrow bekommt den Clip in der Jade Row,** bei ihrem nächtlichen Halt (`cam07`), nicht im Revier 9; Revier 9 wird kein Raum.
+- **Lantern finden:** Lantern kapert am Sonntag den großen Werbebildschirm der Kowalski-Straße für zehn Sekunden. Die halbe Reparatur weiß, dass es übers Kabel kam, und das Kabel führt die Treppe unter dem Drain-Markt hinab in die Sümpfe zu seinem Versteck.
+- **Frau Haldanes Sohn ist ein Sinker.** Juno findet ihn über das Archiv einer Kamera im Fünften: Am 15. Oktober wacht er nicht mehr auf, und zwei in Weiß tragen ihn hinaus. Ein kleiner Faden, der in Kapitel 3 auf der Schlafstation weitergehen kann.

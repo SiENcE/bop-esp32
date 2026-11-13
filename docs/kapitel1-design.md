@@ -75,7 +75,7 @@ Juno Sable im Prolog Kessler verkauft hat, sagt Varga das offen: „Sable sagt, 
 |---|---|---|---|
 | **Verkaufen** | Varga das Versteck senden | 400 Chits. Am nächsten Abend (am Freitag verkauft: erst in Kap. 2) in `cam15`: Vargas Leute holen Kessler aus der Kapsel (nicht gezeigt, nur die leere, offene Kapsel und eine zerbrochene Brille). In Kap. 2 sitzt Kessler mit Gips auf dem Drain-Markt und bettelt. | „Varga: Kessler, Kapsel 23. 400." später: „Kessler: zwei Rippen, ein Arm. Bettelt." |
 | **Warnen** | in Person zum Kapselhotel? Nein: über das Hotelnetz eine Nachricht auf Kapsel 23s Bildschirm (Steuern im Feed) | kein Geld. Kessler flieht aus der Stadt (Transitachse, nach oben). Varga ist verärgert; in Kap. 2 hat Juno bei Sable einen schlechteren Kurs („Varga redet."). Frau Kessler bekommt eine Postkarte (Epilog). | „Kessler: gewarnt. 0." |
-| **Lügen** | Varga einen falschen Ort senden | Varga zahlt 200 im Voraus, findet nichts, will sein Geld zurück: in Kap. 2 ein Feed-Moment, wo Vargas Mann vor dem Kessel-Block wartet. | „Varga: ein falscher Ort. 200 (geliehen)." |
+| **Lügen** | Varga einen falschen Ort senden | Varga zahlt 200 im Voraus, findet nichts, will sein Geld zurück: in Kap. 2 wartet Vargas Mann vor dem Kessel-Block (keine Kamera sieht die Haustür, deshalb auf der Kowalski-Straße im Straßenmodus, `kapitel2-design` §5). | „Varga: ein falscher Ort. 200 (geliehen)." |
 
 ## 4. Auftrag B: „Der Eckladen" (die Tidewater Boys)
 
@@ -238,7 +238,7 @@ Ausweis, Notschlüssel und der Weg aufs Dach sind schon im Prolog offen (entschi
 | Geschichte | Was passiert | Verbindung zur Hauptstory |
 |---|---|---|
 | **Der Zeitungskrieg** | Der Zettelstreit im 14. Stock wird zum Fall: Wer klaut die Zeitung? Dafür müsste Juno den eigenen Block glassen, was sie Motte gerade verbietet. Die Diebin ist Frau Haldane, im Schlaf. In ihrer Wohnung liegt der Stapel, auf jeder Seite sind Gesichter eingekreist wie Junos Klammern. | Schlafende markieren, was falsch aussieht (story §6). Niemand erklärt es. |
-| **Die Frau, die sich erinnert** (story §9) | Sie ist sicher, einen Mord gesehen zu haben, in einer Straße, in der sie nie war. Juno trifft sie im LUCKY STATIC und findet die Straße. | Sie ist die Person mit `UNKNOWN LINK` aus `cam21`. In Kapitel 2 schreibt sie: „Ich hab wieder was gesehen. Eine Frau auf einem Bahnsteig.“ |
+| **Die Frau, die sich erinnert** (story §9) | Sie ist sicher, einen Mord gesehen zu haben, in einer Straße, in der sie nie war. Juno trifft sie im LUCKY STATIC und findet die Straße. | Sie ist die Person mit `UNKNOWN LINK` aus `cam21`. In Kapitel 2 schreibt sie: „Ich hab wieder was gesehen. Eine Frau auf einem Bahnsteig.“ (`kapitel2-design` §6.1) |
 | **Die weißen Träger** | Donnerstagnacht auf der Kowalski: Ein Nagi·wa-Wagen holt einen Sinker aus dem Haus, zwei freundliche Leute in Weiß. Die Nachbarn sehen weg. Juno kann zusehen, filmen und an Vesper verkaufen, oder die Tochter trösten. | Zeigt, was mit Sinkern geschieht, lange bevor Teo einer wird. Im NETZ ist es der Beitrag „Mein Vater wacht nicht auf“. |
 
 **Der Zeitungskrieg im Einzelnen (ein Vorschlag zum Prüfen im Mock; bis auf die Nacht in `cam14` ist die Reihenfolge frei):**
