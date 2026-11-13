@@ -203,6 +203,80 @@ anim("kessler_feed_sit", { w: KS.W, h: KS.H, frames: 2, ms: [1500, 1100], outlin
   c.stamp("_ks_head", 3, c.frame)
 })
 
+// ================================================================ Herr Kessler in Chapter 1, the hood up
+// Since the meeting at Yuen's he hides (game/auftrag_varga.js, cam03 and cam15): a light grey hoodie under his office coat,
+// its hood up, a strip of it in the coat's opening in front. Variant A of art/test/kessler_hood_blocks.px.js, approved by
+// the user 2026-11-13, painted on its lines: 11x22 inside (13x24), his build as above, the hood (8, a glint 9 on its crown)
+// his tell now in place of the scarf. Front three-quarter (se) and back three-quarter (ne), and each turned (sw, nw) as
+// anims of their own: the drawing flipped, the light kept from the upper left (KH_TURNED), so the engine never mirrors him.
+const KH = { W: 11, H: 22 }
+const KH_LEGS = { W: KH.W, H: KH.H, near: 6, far: 2, hip: 17, lw: 3, sw: 3, leg: "3", shoe: "2", sep: "1" }
+// the grids' light roles: L/S the coat's lit and shaded side, H/h the hood's, G the crown's glint and Q its place when
+// turned, M/m the lit and the shaded hand
+const KH_LIT = { L: "5", S: "3", H: "8", h: "7", G: "9", Q: "7", M: "6", m: "5" }
+const KH_TURNED = { L: "3", S: "5", H: "7", h: "8", G: "7", Q: "9", M: "5", m: "6" }
+const KH_BACK_HEAD = [
+  "....HGHQ...",
+  "...HHHHhh..",
+  "...HHHHhhh.",
+  "...6HHHhhh.",
+  "...67HHhhh.",
+]                                  // rows 0-4: the hood from behind, pushed up-right with his head; its fold into the neck
+const KH_BACK_BODY = [
+  "..L66777h6.",
+  ".LL4666644.",
+  ".L2446642S.",
+  ".L2444442S.",
+  ".42444442S.",
+  ".42444442S.",
+  ".42444442S.",
+  ".42443442S.",
+  ".42443442S.",
+  ".42443442S.",
+  ".44443444S.",
+  "..4443444..",
+]                                  // rows 5-16: the hood's point down his back, the coat, its vent
+const KH_FRONT_HEAD = [
+  "...HGHQ....",
+  "..HHHHhh...",
+  "..H43334h..",
+  "..H63535h..",
+  "..H65555h..",
+  "..7H555h7..",
+]                                  // rows 0-5: the hood's rim round his face, the face in its shadow, the eyes
+const KH_FRONT_BODY = [
+  ".LL67776 4S.",
+  ".L2L8784 2S.",
+  ".L2L8784 2S.",
+  ".42L8774 2S.",
+  ".42L7774 2S.",
+  ".42476742S.",
+  ".42476742S.",
+  ".42443442S.",
+  ".42443442S.",
+  ".44443444S.",
+  "..4443444..",
+].map((r) => r.replace(/ /g, ""))  // rows 6-16: the hoodie's strip in the coat's opening, its two strings, the pocket; the coat closed below
+/** a grid through the light roles */
+const khGrid = (c, x, y, rows, P) => rows.forEach((r, j) => [...r].forEach((ch, i) => { if (ch !== ".") c.px(x + i, y + j, P[ch] ?? ch) }))
+function kesslerHood(c, o = {}) {
+  const b = o.bob ?? 0, sw = o.swing ?? 0, P = o.turned ? KH_TURNED : KH_LIT, front = o.front
+  fpLegs(c, KH_LEGS, o.feet ?? fpStand(KH.H), b)
+  khGrid(c, 0, (front ? 6 : 5) + b, front ? KH_FRONT_BODY : KH_BACK_BODY, P)
+  c.rect(1, 13 + b - sw, 1, 2, P.M); c.rect(9, 13 + b + sw, 1, 2, P.m)
+  khGrid(c, o.look ?? 0, b, front ? KH_FRONT_HEAD : KH_BACK_HEAD, P)
+}
+// idle: he stands, and glances back over his shoulder now and then (as the old Kessler did); walks as everyone's
+for (const [dir, front, turned] of [["se", true, false], ["sw", true, true], ["ne", false, false], ["nw", false, true]]) {
+  const flip = turned ? { flip: "x" } : {}
+  anim(`kessler_hood_feed_${dir}`, { w: KH.W, h: KH.H, frames: 2, ms: [1600, 700], outline: "1", pivot: "bottom", ...flip },
+    (c) => kesslerHood(c, { front, turned, look: -c.frame }))
+  anim(`kessler_hood_feed_walk_${dir}`, { w: KH.W, h: KH.H, frames: 6, fps: 10, outline: "1", pivot: "bottom", ...flip }, (c) => {
+    const i = c.frame
+    kesslerHood(c, { front, turned, bob: FP_BOB[i], swing: FP_SWING[i], feet: front ? fpFeetFront(KH.H, i) : fpFeet(KH.H, i) })
+  })
+}
+
 // ================================================================ Gus Varga
 // 15x24 inside (17x26): broad, a felt hat, a long grey coat, all of it darker than the street but
 // for the watch. Rim 0.

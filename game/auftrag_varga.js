@@ -12,6 +12,8 @@ const A3 = Nagiwa.at.cam03, A15 = Nagiwa.at.cam15, AM = Nagiwa.at.drain_market, 
 const S = (/** @type {string} */ text) => ({ say: "sable", text });
 // Sable is drawn from the front, lens over the left eye: the same picture for every facing, so the engine never mirrors it
 const every = (/** @type {string} */ anim) => ({ se: anim, sw: anim, ne: anim, nw: anim });
+/** Kessler with the hood up (art/characters/feed_people.px.js): each facing drawn, so the engine never mirrors his light @param {string} p */
+const HOOD = (p) => ({ se: `${p}se`, sw: `${p}sw`, ne: `${p}ne`, nw: `${p}nw` });
 
 // ---- who he is now: a person of his own, so the prologue's Kessler keeps his scarf
 const RECOGNISED = [{ zoom: "zoom_vending_n7" }, "Er zieht die Sieben, Huhn scharf.", "Er trägt jetzt eine Kapuze statt dem Schal. Aber die Nudeln kann er nicht lassen.", { zoom: false },
@@ -20,7 +22,7 @@ const RECOGNISED = [{ zoom: "zoom_vending_n7" }, "Er zieht die Sieben, Huhn scha
 const CAPSULE = ["Er kriecht in eine Kapsel. Die Nummer ...", "Dreiundzwanzig.", { cache: "note_kessler_hideout" }, "Die Kapsel ist achtzig Zentimeter hoch, und da wohnt er jetzt."];
 Nagiwa.people.kessler2 = { name: "KESSLER", known: "varga_step", label: "Jemand mit Kapuze", speaker: "Kessler" };
 Cutaway.actor("kessler2", { name: "Jemand mit Kapuze", color: "#b8c890",
-  costume: { idle: "mock_kessler_hood", walk: "mock_kessler_hood", talk: "mock_kessler_hood" }, speed: [14, 10], voice: { pitch: 50, wave: "square", syllable: 80 },
+  costume: { idle: HOOD("kessler_hood_feed_"), walk: HOOD("kessler_hood_feed_walk_"), talk: HOOD("kessler_hood_feed_") }, speed: [14, 10], voice: { pitch: 50, wave: "square", syllable: 80 },
   look: [{ if: "at:kessler2=cam15", then: ["Er sieht sich nicht um. Er weiß, wo er hinwill."],
     else: [{ if: "varga_step", then: ["Das ist Kessler. Ohne den Schal sieht er kleiner aus."], else: ["Da kommt einer mit Kapuze, allein, jetzt, wo alle weg sind. Er will zum Automaten."] }] }],
   talk: [{ if: "at:kessler2=cam15", then: [{ if: "cache_note_kessler_hideout", then: ["Er ist in Kapsel 23. Das weiß ich schon."], else: CAPSULE }],

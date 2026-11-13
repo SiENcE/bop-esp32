@@ -55,10 +55,7 @@ scene("look_zeitung", { w: 170, h: 112, bg: "h" }, (c) => {
 // (LUCKY STATIC is a room baked from its map now: art/rooms/lucky_static.map.js)
 // (the Drain Market is painted now, seen from above: art/rooms/drain_market.px.js)
 // (CAM 15 is painted now: art/cams/cam15.px.js)
-// who walks through cam03 and cam15 now: a hood where the scarf was
-anim("mock_kessler_hood", { w: 13, h: 24, frames: 1, fps: 1, outline: "1", pivot: "bottom" }, (c) => {
-  c.rect(4, 0, 5, 7, "5"); c.rect(5, 3, 3, 3, "2"); c.rect(2, 7, 9, 10, "6"); c.rect(3, 17, 3, 7, "4"); c.rect(7, 17, 3, 7, "4")
-})
+// (Kessler with the hood is painted now: kessler_hood_feed_* in art/characters/feed_people.px.js)
 // a close-up: the white van, two in white carrying a stretcher, a girl in a door
 scene("look_traeger", { w: 170, h: 112, bg: "a" }, (c) => {
   c.rect(0, 0, 170, 112, "a"); c.rect(0, 86, 170, 26, "b")
