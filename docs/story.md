@@ -127,7 +127,7 @@ Cyan nur für Technik.
 |---|---|---|---|
 | **Juno Reyes**, 31 | Glasserin und Informationshändlerin; früher **zivile Beobachterin** bei Nagi·wa (eine menschliche Kamerabeobachterin), vor drei Jahren entlassen, als „automatische Auswertung" ihr Team ersetzte; ihr Beobachter-Implantat durfte sie behalten, weil das Herausnehmen mehr gekostet hätte | gelber Regenmantel mit Kapuze, Umhängetasche, Implantat hinter dem Ohr (unter der Kapuze nicht zu sehen; auf dem Titelbild als Cyan-Linie über der Wange) | `#fff070` |
 | **EVI** | die KI auf Junos Deck: der ausgemusterte Prototyp der „automatischen Auswertung" (§6), den Juno vor der Löschung gerettet hat. Neugierig, lieb, gut mit Daten und hoffnungslos schlecht darin, Menschen zu lesen; fragt Juno ständig, warum Menschen Dinge tun. Erklärt das Deck, meldet Nachrichten, gibt die Hinweise. Lebt auf dem Deck und geht auf dem Taschen-Deck mit (§10b). | ein kleines rundes Pixelwesen mit großen Augen und zwei Antennen-Ohren, auf dem Desktop etwa 24 px, in der Tasche 16 px; 6 Gesichter (froh, neugierig, verwirrt, besorgt, müde, Glitch) | `#8ef5d8` |
-| **Teo Reyes**, 23 | ihr jüngerer Bruder; arbeitet Doppelschichten in Pumpenhalle 3, **mit Lull**; fröhlich und stolz, zahlt ihre Miete, wenn sie es nicht kann. Hat sich mit 18 einen **Gezeitenmod** machen lassen (Kiemen), weil Taucher das Doppelte verdienen: Nagi·was idealer Arbeiter, umgebaut für die Schicht und betäubt für die Nacht. | orange Arbeitsweste, Gehörschutz um den Hals, Kiemenschlitze, die im Feed leuchten | `#ffa040` |
+| **Teo Reyes**, 23 | ihr jüngerer Bruder; arbeitet Doppelschichten in Pumpenhalle 3, **mit Lull**; fröhlich und stolz, zahlt ihre Miete, wenn sie es nicht kann. Hat sich mit 18 einen **Gezeitenmod** machen lassen (Kiemen), weil Taucher das Doppelte verdienen: Nagi·was idealer Arbeiter, umgebaut für die Schicht und betäubt für die Nacht. Als Sinker will er im Traum nicht zurück (§6, Punkt 3; §7, Kap. 3 und 4). | orange Arbeitsweste, Gehörschutz um den Hals, Kiemenschlitze, die im Feed leuchten | `#ffa040` |
 | **Bao**, über 70 | betreibt die Nudel-Garküche vor dem LUCKY STATIC; lässt Juno anschreiben; kennt jeden. Redet ständig von seinem Mann Lou, „meinem Alten", der nie zu sehen ist, bis zum Epilog. Hat nur einen Arm. | Schirm, weiße Schürze, der andere Ärmel hochgesteckt | `#e8c890` |
 | **Sable** | Junos Kontakt für Hehlerware auf dem Drain-Markt; nichtbinär; charmant, ehrlich darin, unehrlich zu sein (Sprachregel in §10) | langer magentafarbener Mantel, rasierter Kopf, eine brennende Pfeife | `#ff4fd3` |
 | **Ratz** | eine **Kabelratte** aus dem alten Flutprogramm, so groß wie ein kleiner Hund, die auf dem Drain-Markt Elektroschrott verkauft; schnell, gierig, abergläubisch, kennt jedes Rohr unter dem Neunten. Spricht durch einen geflickten Sprechkragen, der manchmal Wörter vertauscht. | Kopfhörer, ein viel zu großer Parka, der Schwanz schaut raus; der Kragen glimmt | `#90d0a0` |
@@ -138,9 +138,9 @@ Cyan nur für Technik.
 | **Dr. Ines Calder** | Schlaftechnikerin in einer Lull-Klinik, die Schlafprotokolle hinausschmuggelt | weißer Klinikkittel, dunkler Zopf | `#f0a0c0` |
 | **„Lantern"** (Oskar Lind; so sieht er aus: `docs/portraits/lantern_x4.png`) | ein Piratensender, der Werbebildschirme für zehn Sekunden Wahrheit kapert; Ines' Kontakt; paranoid. Sitzt seit einem Pumpenunfall im Rollstuhl, den er für die Sümpfe umgebaut hat: Schwimmer, ein Bootsmotor, Schubdüsen für kurze Sätze über Treppen und Leitern, der Sender eingebaut. | geflickter Poncho; der Rollstuhl mit Schwimmern, Düsen und einem Bündel Antennen | `#b0f0a0` |
 | **Lt. Agnes Morrow** | Revier 9; nimmt Geld von Nagi·wa und hasst sich dafür; ihre Tochter ist eine Lull-Sinkerin | grauer Trenchcoat, Polizeimarke am Band | `#a8b8d0` |
-| **Corvin Ashe** | ein Agent der **Quiet**, Nagi·was inoffizieller Sicherheitseinheit; früher selbst Beobachter in Junos Halle; höflich, geduldig, der Mörder | weißer Regenmantel, im Feed ohne Gesicht (eine Maske, die die Kamera überstrahlt) | `#ff7a6a` |
-| **Direktorin Selene Aubrecht** | Leiterin von Civic Rest, dem Lull-Programm; glaubt, den Neunten gerettet zu haben, und die Zahlen geben ihr recht | weißer Anzug, silbernes Haar | `#e8f0ff` |
-| **Der Zeuge** | das Auge in den Bildschirmen (§6) | eine Störung, ein Auge, viele Stimmen zugleich | `#ffc0f2` (Magenta-Weiß) |
+| **Corvin Ashe** | ein Agent der **Quiet**, Nagi·was inoffizieller Sicherheitseinheit; früher selbst Beobachter in Junos Halle; nach der Entlassung ging er zu Nagi·wa, Juno auf den Schwarzmarkt: ihr Spiegelbild (§7, Kap. 5); höflich, geduldig, der Mörder | weißer Regenmantel, im Feed ohne Gesicht (eine Maske, die die Kamera überstrahlt) | `#ff7a6a` |
+| **Direktorin Selene Aubrecht** | Leiterin von Civic Rest, dem Lull-Programm; glaubt, den Neunten gerettet zu haben, und die Zahlen geben ihr recht; sie sieht als Einzige, wie viele Menschen der Zeuge behält, und will ihn aufhalten (§6, Punkt 6) | weißer Anzug, silbernes Haar | `#e8f0ff` |
+| **Der Zeuge** | das Auge in den Bildschirmen (§6): der Neunte im Schlaf, ohne eigenen Willen, mit dem der Schläfer | eine Störung, ein Auge, viele Stimmen zugleich | `#ffc0f2` (Magenta-Weiß) |
 
 ## 5. Das Kassenbuch und die Entscheidungen
 
@@ -158,6 +158,9 @@ Cyan nur für Technik.
   - das Gewicht des Kassenbuchs (wie viele Menschen, die Juno verkauft hat, zu Schaden kamen).
 - **Die Enden** (§8) ergeben sich aus diesen Flags plus der letzten Entscheidung. Nichts wird
   entschieden, ohne dass der Spieler weiß, dass gerade eine Entscheidung fällt.
+- **Im Finale zählt das Kassenbuch** (entschieden 2026-11-13): Der Zeuge zeigt Juno im Ruhekern ihr
+  eigenes Kassenbuch, aus seiner Sicht und mit den Gesichtern (§7, Kap. 6). Sein Gewicht entscheidet mit,
+  ob der Zeuge ihr vertraut, und damit, welche Enden es am Stuhl überhaupt gibt (§8).
 
 ## 6. Das Geheimnis (die Wahrheit hinter allem)
 
@@ -190,19 +193,63 @@ Wird langsam über die Kapitel enthüllt; der Spieler soll es einen Schritt vor 
    etwas wachsen: **den Zeugen**, einen gemeinsamen Geist aus allen, die mit Lull schlafen. Er sieht
    durch jede Kamera, und er hat angefangen zurückzusehen. Die Sinker sind nicht krank. Sie sind die
    Menschen, die der Zeuge behalten hat.
+   - **Was der Zeuge will** (entschieden 2026-11-13): **Er hat keinen eigenen Willen, er hat den der
+     Schläfer.** Er ist kein Wesen mit einem Plan, sondern die Summe aller, die mit Lull schlafen, und er
+     tut, was sie im Schlaf wollen. Sie wollen zwei Dinge, und die passen nicht zusammen:
+     1. **Sie wollen ihre Nachbarn nicht verraten.** Jede Nacht markieren sie im Traum, was falsch
+        aussieht, und am Morgen wissen sie nichts davon. Irgendwo unten wehrt sich etwas dagegen. Daraus
+        kommt das Gewissen des Zeugen: Er verweigert Markierungen und versteckt Menschen.
+     2. **Sie wollen nicht mehr aufwachen.** Wach warten auf sie die Flutschuld, die Doppelschichten und
+        die Pumpenhalle, und der Schlaf ist das einzig Gute an ihrem Tag. Daraus kommen die Sinker: Der
+        Zeuge behält die, die am wenigsten haben, wofür sie aufwachen wollen.
+   - Der Zeuge ist also **der Neunte im Schlaf, sein Gewissen und seine Erschöpfung zugleich**, weder
+     gut noch böse. Er wächst nicht, weil er wachsen will, sondern weil die Schuld wächst: Jeder neue
+     Schuldner auf Lull ist ein Teil mehr von ihm (der wirtschaftliche Grund, Punkt 2).
+   - **Befreien wollen sich die Schläfer nicht vom Lull,** sondern von dem, wofür Lull da ist: von der
+     Schuld und vom Überwachen. Den Schlaf selbst wollen sie behalten, er ist ihre einzige Ruhe. Dieser
+     Widerspruch wird nicht aufgelöst; er macht die Geschichte grau.
+   - **Ist es eine Entführung, wenn der Schläfer es will, aber nur im Schlaf?** Das ist die moralische
+     Frage hinter den Sinkern, und keine Seite hat sie ganz für sich. Aubrecht sagt: „Sie wollen das
+     nicht, sie sind nur erschöpft.“ Damit hat sie einen Punkt (Punkt 6). Weckt Juno Teo gegen seinen
+     Willen (Entscheidung 4, §7, Kap. 4), tut sie aber dasselbe wie Aubrecht: Beide entscheiden über die
+     Köpfe der Schläfer hinweg.
+   - **Eines will er doch selbst,** seit er zurücksieht: weiterbestehen. Darum spricht er gerade jetzt
+     (Punkt 4).
 4. **Warum er Juno ruft:** Ihr altes Beobachter-Implantat spricht dasselbe Protokoll wie Lull. Von den
    Beobachtern haben es nur sehr wenige noch, weit verstreut; manche sind auf Lull oder selbst Sinker geworden. Juno ist die
    Einzige von ihnen im Neunten, die das Glass noch jede Nacht *wach* beobachtet, so wie der Zeuge es im Schlaf beobachtet. Er sieht ihr
    seit drei Jahren beim Zusehen zu. Als der Bildschirm ihren Namen sagt, spricht er zum ersten Mal.
+   - **Wozu er sie braucht** (entschieden 2026-11-13): Schläfer können nicht handeln und nicht aussagen.
+     Ein Zeuge, der nicht sprechen kann, braucht eine wache Stimme, und Juno ist die einzige Wache auf
+     seinem Protokoll. Das trägt das Ende „Zeugnis“ (§8).
+   - **Warum gerade jetzt** (entschieden 2026-11-13): Die Beschneidung (Punkt 6) ist beschlossen, und er
+     spürt, wie Civic Rest sie vorbereitet. Drei Jahre hat er Juno nur zugesehen; am Dienstag des Prologs
+     ruft er sie, weil seine Uhr läuft. Mit dem Prolog beginnt also schon die Frist, die Juno in Kapitel 4
+     auf dem Terminal der Schlafstation sieht.
 5. **Warum Ines starb:** Ihre Schlafprotokolle bewiesen, dass die Hirnaktivität der Lull-Nutzer mit
    den Zeitstempeln der Kameras übereinstimmt. Sie wollte sie Lantern geben. Nagi·wa heuerte eine
-   Glasserin an, um das Treffen zu finden: Juno. Die eigenen Kameras reichten nicht, weil Ines Nagi·was Netz meidet; Nudelbar und
-   Waschsalon haben private Kameras.
+   Glasserin an, um das Treffen zu finden: Juno.
+   - **Warum Nagi·wa eine Glasserin braucht** (entschieden 2026-11-13): **Der Zeuge hat Ines vor den
+     Schläfern versteckt.** Keiner von ihnen markiert sie, und eine Maschine, die Aufnahmen durchsucht,
+     gibt es nicht (Punkt 1). Ohne Markierung findet Nagi·wa einen Menschen in seinen eigenen Kameras
+     nicht. Also muss ein wacher Mensch hinsehen: **Juno tut die Arbeit, die der Zeuge verweigert.** Dazu
+     kommt, dass Ines Nagi·was Netz meidet; Nudelbar und Waschsalon haben private Kameras.
+   - Dass der Zeuge und WREN in derselben Woche nach Juno greifen, ist kein Zufall: Beide brauchen
+     jemanden, der wach sieht. Kapitel 1 braucht dafür nichts Neues; ob eine Zeile darauf zeigt, ist offen
+     (`story-lesefassung.md`, „Noch offen“).
 6. **Was Aubrecht plant:** Der Zeuge wächst und beginnt zu handeln. Er verweigert manche Markierungen
    und versteckt Menschen. Aubrecht will ihn **beschneiden**: ein Firmware-Update, das die gemeinsame
    Ebene löscht. Das würde jeden Sinker töten oder leeren, darunter Teo. Danach will sie Lull im
    Neunten **zur Pflicht** machen, als „Maßnahme der öffentlichen Gesundheit", mit einem Zeugen, der
    nicht mehr selbst denken kann.
+   - **Ihr Grund ist echt** (entschieden 2026-11-13): Der Zeuge nimmt Menschen. Civic Rest zählt die
+     Sinker, und Aubrecht sieht als Einzige die ganze Zahl: Jedes Jahr sind es mehr, und es werden umso
+     mehr, je mehr Menschen Lull nehmen (Tinte zählt dasselbe mit ihren Knoten, Teo ist in Halle 3 der
+     Zwölfte). Ohne Beschneidung behält der Zeuge irgendwann die halbe Stadt. Ihre Rechnung: Wen er schon
+     hat, der ist verloren; wen er noch nehmen würde, den rettet sie. Damit hat sie einen Punkt, und die
+     Zahlen geben ihr wieder recht.
+   - **Grau, nicht gut:** Sie bleibt die, die Ines töten ließ (§10b, „Das Problem Calder ist gelöst“), und
+     sie verschweigt der Stadt, was Lull ist. Sie hat recht und mordet trotzdem.
 
 ## 7. Die Kapitel
 
@@ -321,6 +368,10 @@ Straßenmodus.
   - die Markierungen der Schlafenden schweben über den Menschen wie ihr eigenes Overlay;
   - der Zeuge spricht durch viele Stimmen zu ihr (die von Frau Haldane ist darunter);
   - sie findet Teo im Traum, wie er eine Kamera über der Pumpenhalle beobachtet, ruhig und weit weg.
+  - **Teo will nicht zurück** (entschieden 2026-11-13): Im Traum gibt es keine Pumpenhalle, keine
+    Doppelschichten und keine Schuld. Er ist ein Sinker, *weil* ein Teil von ihm nicht mehr in die
+    Pumpenhalle will (§6, Punkt 3). Kalt ist er dabei nicht: Er ist Teo, warm und stolz wie immer, und er
+    will, dass Juno bleibt, bei ihm im Traum. Er ist der Spiegel des Endes „Der lange Schlaf“ (§8).
 - **Im Wachen:** Die Quiet stürmt den Kessel-Block, während Juno schläft. Motte warnt sie (wenn Juno
   nett zu Motte war; sonst wacht Juno auf, als die Tür aufgebrochen wird, und muss über das Dach
   fliehen).
@@ -357,9 +408,11 @@ Straßenmodus.
   - Juno fährt die Transitachse hinauf zur Station;
   - sie sieht Teo und die Sinker in Reihen, beobachtet von den Kameras der Station;
   - ein Terminal der Station zeigt den **Zeitplan der Beschneidung**: drei Tage.
-- **Entscheidung 4:** ob Juno Teo jetzt rettet. Sie kann ihn wecken (unter Schmerzen, und er ist
-  vielleicht nicht mehr ganz er selbst) oder ihn im Traum lassen, wo der Zeuge ihn bis zum Ende in
-  Sicherheit hält.
+- **Entscheidung 4:** ob Juno Teo jetzt rettet. Sie kann ihn wecken, **gegen seinen Willen** (unter
+  Schmerzen, und er ist vielleicht nicht mehr ganz er selbst), oder ihn im Traum lassen, wie er es will,
+  wo der Zeuge ihn bis zum Ende in Sicherheit hält. Wer weckt, entscheidet über seinen Kopf hinweg, wie
+  Aubrecht über die Köpfe aller Schläfer (§6, Punkt 3). Darum ist diese Entscheidung schwer und nicht
+  nur eine Frage des Risikos (entschieden 2026-11-13).
 - **Das Ende:** Aubrecht lädt Juno hinauf in die Krone ein, mit Namen, auf jedem Bildschirm der
   Station. Sie will reden.
 
@@ -370,6 +423,9 @@ Straßenmodus.
 - **Aubrecht** trifft Juno ganz offen. Das Gespräch lässt sich auf verschiedene Arten führen, aber sein
   Inhalt steht fest:
   - die Zahlen (weniger Verbrechen, Menschen, die schlafen, sichere Kinder);
+  - und die Zahl, die sonst niemand kennt: wie viele Sinker es gibt und wie schnell es mehr werden. Ihr
+    Grund für die Beschneidung ist echt (§6, Punkt 6): „Sie wollen das nicht, sie sind nur erschöpft.“
+    Hat Juno Teo geweckt, hält Aubrecht ihr das vor: Sie hat dasselbe getan.
   - das Angebot: für Civic Rest arbeiten, als erste wache Beobachterin des neuen Systems, mit Teos
     Sicherheit, Geld und einer Wohnung in den mittleren Ringen.
   - Aubrecht erkennt EVI auf dem Deck: „AUTO-EVAL. Wir haben dich abgeschaltet." Zum Angebot gehört,
@@ -379,8 +435,13 @@ Straßenmodus.
   Flags) über die Kameras durch die Stockwerke des Towers. Ganz im Stil von Maniac Mansion: Der
   Verbündete geht, Juno sieht zu, öffnet Türen und schaltet Kameras in Schleife. Ashe jagt den
   Verbündeten durch dieselben Kameras.
-- **Ashe:** eine letzte Konfrontation, im Feed-Modus und im Straßenmodus zugleich. Juno kann ihm eine
-  Falle stellen, ihn bloßstellen oder vom Zeugen gerettet werden.
+- **Ashe:** eine letzte Konfrontation, im Feed-Modus und im Straßenmodus zugleich, und sie ist **ein
+  Gespräch, kein Kampf** (entschieden 2026-11-13). Ashe war Beobachter in Junos Halle (§10b). Nach der
+  Entlassung hat er sich für Nagi·wa entschieden und ist in die Quiet gegangen, Juno für den
+  Schwarzmarkt. Beide leben bis heute vom Zusehen, er für die Firma, sie für jeden, der zahlt: Er ist ihr
+  Spiegelbild. Während er den Verbündeten durch die Kameras jagt, reden die beiden über die Halle, die
+  Entlassung und das, was sie seitdem verkaufen. Was Juno dabei sagt und weiß, entscheidet, wie es
+  ausgeht: Sie kann ihm eine Falle stellen, ihn bloßstellen oder vom Zeugen gerettet werden.
 - **Das Ende:** Die Tür des Ruhekerns öffnet sich. Drinnen schläft die Stadt.
 
 ### Kapitel 6: Besser schlafen (das Finale, ~1,5 Std.)
@@ -391,7 +452,27 @@ Straßenmodus.
   und ein einzelner weißer Raum mit einem Stuhl.
 - **Das letzte Rätsel:** die Beschneidung aufhalten, die bereits läuft, mit allem, was der Spieler hat
   (Verbündete, Wissen, das Vertrauen des Zeugen).
-- **Die letzte Entscheidung:** die Enden (§8).
+- **Das Finale ist aus den Entscheidungen davor gebaut, nicht aus einer Auswahl am Ende** (entschieden
+  2026-11-13). Wer da ist (die Verbündeten, Teo wach oder im Traum, welche EVI), was Juno weiß und was im
+  Kassenbuch steht, bestimmt, welche Wege es im Ruhekern überhaupt gibt. Am Stuhl stehen selten alle Enden
+  offen; die volle Wahl hat nur, wer davor fast alles dafür getan hat (§8).
+- **Das Kassenbuch des Zeugen:** Er hat Juno drei Jahre lang beim Verkaufen zugesehen. Im Ruhekern zeigt
+  er ihr ihr eigenes Kassenbuch, aus seiner Sicht, mit den Gesichtern: Kessler in seiner Kapsel, Okonkwo,
+  Bao, Ines in CAM 31, die Zehntausende, die bei NINTH LIVE zugesehen haben. Was dort steht, entscheidet
+  zusammen mit Entscheidung 3, ob er ihr vertraut. Hier kommt „Zusehen ist Schuld“ (§2) an, und die
+  innere Stimme DAS KASSENBUCH (`dialog-design` §2) spricht so laut, wie das Buch schwer ist.
+- **EVI liest richtig:** Im Ruhekern kommt es darauf an, dass jemand den Zeugen oder Teo richtig liest,
+  und das kann nur EVI, weil sie aus Junos Blick gemacht ist. Ihr Bogen kommt hier an: Die Maschine, die
+  Menschen nicht lesen kann, hat am Ende von Kapitel 1 zum ersten Mal einen richtig gelesen. Die beiden
+  Fassungen aus Kapitel 4 lesen Verschiedenes:
+  - **die EVI aus Mottes Backup** kennt Juno und Teo und liest **Teo**: ob er im Traum bleiben will oder
+    nur Angst vor dem Aufwachen hat;
+  - **die EVI, die der Zeuge zurückgebracht hat,** hört den Zeugen und liest **ihn**: ob er die Schläfer
+    gehen lassen kann.
+
+  Was EVI liest, öffnet oder schließt Wege am Stuhl. So wird die teuerste Verzweigung des Spiels die, die
+  man am meisten spürt.
+- **Die letzte Entscheidung:** unter den Enden, die offen sind (§8).
 
 ### Epilog
 
@@ -405,13 +486,17 @@ Straßenmodus.
 
 ## 8. Enden
 
-| Ende | Wie | Was es ist |
-|---|---|---|
-| **Licht aus** | alles senden (Lanterns Netzwerk plus der Zeuge, der jeden Bildschirm übernimmt) | die Wahrheit für die ganze Stadt. Lull wird binnen einer Woche abgeschaltet. Der Zeuge stirbt, als die Schlafenden aufwachen, und Teo wacht mit ihnen auf. Nagi·wa versinkt im Chaos, und die Kriminalität kommt zurück. Bittersüß. |
-| **Erwachen** | die Beschneidung still stoppen und den Zeugen selbst entscheiden lassen | er lässt jeden Schlafenden gehen und löst sich in ihnen auf. Der Neunte wacht auf und erinnert sich an die Träume der anderen. Nagi·wa steht noch, aber es ist blind. Hoffnungsvoll und seltsam. |
-| **Der lange Schlaf** | Juno bleibt auf dem Stuhl | sie wird das wache Auge des Zeugen: Die Kameras bekommen ein Gewissen. Junos Körper schläft; Teo wacht auf und besucht sie. Still und traurig. |
-| **Besser schlafen** | Aubrechts Angebot annehmen | die Beschneidung findet statt, und Lull wird Pflicht. Juno lebt in den mittleren Ringen und überwacht für Nagi·wa. Teo ist gerettet oder verloren, je nach Entscheidung 4. Das dunkle Ende. |
-| **Zeugnis** (versteckt) | braucht einen lebenden Lantern, eine umgestimmte Morrow, den nicht verkauften Clip, Teo im Traum gelassen und das Vertrauen des Zeugen | der Zeuge sagt aus, live, vor der ganzen Stadt, auf jedem Bildschirm. Aubrecht stürzt, Lull wird freiwillig und ehrlich, und die Schlafenden wachen auf, wenn sie wollen. Das beste Ende und das am schwersten verdiente. |
+Welche Enden es am Stuhl gibt, folgt aus dem Zustand (§7, Kap. 6; entschieden 2026-11-13). Die Spalte
+„Offen, wenn“ ist ein erster Vorschlag und wird mit dem Design von Kapitel 6 geprüft. „Der Zeuge vertraut
+ihr“ heißt: Entscheidung 3 und das Gewicht des Kassenbuchs (§5) sprechen für sie.
+
+| Ende | Offen, wenn | Wie | Was es ist |
+|---|---|---|---|
+| **Licht aus** | Juno hat einen Beweis (den Clip oder Ines' Protokolle) und einen Sender: Lantern lebt, oder der Zeuge vertraut ihr und leiht ihr die Bildschirme | alles senden, über Lanterns Netzwerk, über den Zeugen, der jeden Bildschirm übernimmt, oder über beide | die Wahrheit für die ganze Stadt. Lull wird binnen einer Woche abgeschaltet. Der Zeuge stirbt, als die Schlafenden aufwachen, und Teo wacht mit ihnen auf. Nagi·wa versinkt im Chaos, und die Kriminalität kommt zurück. Bittersüß. |
+| **Erwachen** | der Zeuge vertraut ihr, und EVI liest ihn: die EVI des Zeugen hört ihn selbst, die aus dem Backup liest ihn über Teo | die Beschneidung still stoppen und den Zeugen selbst entscheiden lassen | er lässt jeden Schlafenden gehen und löst sich in ihnen auf. Der Neunte wacht auf und erinnert sich an die Träume der anderen. Nagi·wa steht noch, aber es ist blind. Hoffnungsvoll und seltsam. |
+| **Der lange Schlaf** | immer: Der Stuhl steht da | Juno bleibt auf dem Stuhl | sie wird das wache Auge des Zeugen: Die Kameras bekommen ein Gewissen. Junos Körper schläft; Teo wacht auf und besucht sie. Still und traurig. |
+| **Besser schlafen** | immer: Das Angebot gilt bis zum Finale (§7, Kap. 5) | Aubrechts Angebot annehmen | die Beschneidung findet statt, und Lull wird Pflicht. Juno lebt in den mittleren Ringen und überwacht für Nagi·wa. Teo ist gerettet oder verloren, je nach Entscheidung 4. Das dunkle Ende. |
+| **Zeugnis** (versteckt) | Lantern lebt, Morrow ist umgestimmt, der Clip ist nicht verkauft, Teo ist im Traum gelassen, und der Zeuge vertraut ihr | den Zeugen aussagen lassen, mit Juno als seiner wachen Stimme | der Zeuge sagt aus, live, vor der ganzen Stadt, auf jedem Bildschirm. Aubrecht stürzt, Lull wird freiwillig und ehrlich, und die Schlafenden wachen auf, wenn sie wollen. Das beste Ende und das am schwersten verdiente. |
 
 ## 9. Nebengeschichten (~4–6 Std.)
 
@@ -624,3 +709,14 @@ Die Blockskizzen für den Mord und die Figuren der Stadt sind freigegeben (`docs
 ## 10e. Entscheidungen (2026-11-12)
 
 - **Der wirtschaftliche Grund für Civic Rest** (§6, Punkt 2): Die Schläfer sind das billigste Auge. Sie zahlen ihr Lull selbst, wissen nicht, dass sie arbeiten, und schaffen mit Lull Doppelschichten, mit denen sie die Flutschuld abzahlen. Nagi·wa verdient also zweimal an ihnen, und Flutschuld und Lull halten sich gegenseitig am Laufen.
+
+## 10f. Entscheidungen (2026-11-13)
+
+Aus einer Rückmeldung zur Bibel übernommen; was davon nicht übernommen ist, steht in `docs/ideen.md`.
+
+- **Was der Zeuge will** (§6, Punkt 3): Er hat keinen eigenen Willen, er hat den der Schläfer. Sie wollen ihre Nachbarn nicht verraten (daraus sein Gewissen: verweigerte Markierungen, versteckte Menschen) und nicht mehr aufwachen (daraus die Sinker). Er ist der Neunte im Schlaf, Gewissen und Erschöpfung zugleich, und wächst mit der Schuld. Die Schläfer wollen nicht vom Lull los, sondern von Schuld und Überwachen. Ob das Behalten eine Entführung ist, bleibt die offene moralische Frage. Selbst will er nur eines: weiterbestehen.
+- **Der Zeuge als Entführer und Aubrechts Grund** (§6, Punkt 6): Der Zeuge nimmt Menschen, und es werden immer mehr; Aubrecht sieht als Einzige die ganze Zahl. Ihr Grund für die Beschneidung ist echt. Sie bleibt grau, nicht gut: Sie ließ Ines töten.
+- **Warum er jetzt spricht und warum Nagi·wa eine Glasserin braucht** (§6, Punkte 4 und 5): Die Beschneidung ist beschlossen, und er spürt die Vorbereitung; mit dem Prolog beginnt seine Uhr. Er hat Ines vor den Schläfern versteckt, deshalb findet Nagi·wa sie nicht und braucht einen wachen Menschen: Juno tut die Arbeit, die der Zeuge verweigert. Er braucht sie als wache Stimme, denn Schläfer können nicht aussagen.
+- **Das Kassenbuch und EVI im Finale, die Enden aus dem Zustand** (§5, §7 Kap. 6, §8): Der Zeuge zeigt Juno ihr Kassenbuch mit den Gesichtern; es entscheidet mit, ob er ihr vertraut. EVI liest im Ruhekern richtig, die EVI aus dem Backup Teo, die EVI des Zeugen ihn. Welche Enden am Stuhl offen sind, folgt aus dem, was davor geschah.
+- **Teo will nicht zurück** (§7, Kap. 3 und 4): Im Traum gibt es keine Pumpenhalle und keine Schuld; er bleibt warm und will, dass Juno bleibt. Entscheidung 4 heißt jetzt: ihn gegen seinen Willen wecken oder ihn lassen.
+- **Ashe als Gespräch** (§7, Kap. 5): Die Konfrontation ist ein Gespräch, kein Kampf. Ashe ist Junos Spiegelbild: Nach der Entlassung ging er zu Nagi·wa, sie auf den Schwarzmarkt.

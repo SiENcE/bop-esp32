@@ -1,7 +1,7 @@
 # Glass Sister: Fragen und Antworten
 
 Fragen zur Geschichte, wie sie beim Lesen aufkommen, beantwortet aus der Story-Bibel (`docs/story.md`).
-Stand: 2026-11-12. Gilt die Bibel etwas anderes, gilt die Bibel; dann wird hier nachgezogen.
+Stand: 2026-11-13 (mit den Entscheidungen in Story §10f). Gilt die Bibel etwas anderes, gilt die Bibel; dann wird hier nachgezogen.
 
 **Achtung: verrät alles, auch das Geheimnis und die Enden.**
 
@@ -40,6 +40,10 @@ Protokolle ans Licht kommen, sieht Juno, dass die Hirnwellen der Schläfer sekun
 passen. In dieser Nacht wacht Teo nicht auf. Die Nachricht kommt von Tinte aus der Pumpenhalle: „Dein Bruder
 schläft im Becken-Raum. Er hört nicht. Komm." Kapitel 3 („Lull") will ihn zurückholen.
 
+Nur will Teo im Traum nicht zurück. Dort gibt es keine Pumpenhalle, keine Doppelschichten und keine Schuld;
+er ist ein Sinker, *weil* ein Teil von ihm nicht mehr in die Pumpenhalle will. Er bleibt warm und stolz wie
+immer und will, dass Juno bei ihm bleibt. Wer ihn in Kapitel 4 weckt, weckt ihn gegen seinen Willen.
+
 ## Was ist der Sinn der Überwachung, und warum mit Lull?
 
 - **Der Zweck ist Sicherheit.** Die Kriminalität im Neunten ist in sechs Jahren um 80 % gesunken, und das
@@ -52,6 +56,15 @@ schläft im Becken-Raum. Er hört nicht. Komm." Kapitel 3 („Lull") will ihn zu
   dass sie arbeiten. Nagi·wa verdient zweimal an ihnen: Mit Lull schaffen sie Doppelschichten und zahlen
   die Flutschuld ab, und in derselben Nacht überwachen sie umsonst ihre Nachbarn. Die Flutschuld treibt
   die Menschen zu Lull, und Lull hält die Flutschuld am Laufen.
+
+## Warum braucht Nagi·wa für Ines eine Glasserin?
+
+Weil **der Zeuge Ines vor den Schläfern versteckt hat** (Story §6, Punkt 5). Keiner von ihnen markiert sie,
+und eine Maschine, die Aufnahmen durchsucht, gibt es nicht. Ohne Markierung findet Nagi·wa einen Menschen in
+seinen eigenen Kameras nicht, also muss ein wacher Mensch hinsehen: Juno tut für WREN die Arbeit, die der
+Zeuge verweigert. Dazu meidet Ines Nagi·was Netz; Nudelbar und Waschsalon haben private Kameras. Dass der
+Zeuge und WREN in derselben Woche nach Juno greifen, ist kein Zufall: Beide brauchen jemanden, der wach
+sieht.
 
 ## Wie hat Juno EVI bekommen?
 
@@ -85,7 +98,8 @@ Lantern sendet Ines' Protokolle, aber dem gejagten „Mörder" glaubt niemand. T
 **Kapitel 3 „Lull".** Teo liegt auf der Schlafstation in den mittleren Ringen; Juno wird abgewiesen. Tinte
 zählt die Sinker der Halle seit Jahren mit (ein Knoten pro Sinker in einem Kabel), sie „zucken gleichzeitig,
 wie ein Schwarm". Juno nimmt Lull und ist **wach im gemeinsamen Traum**: die Stadt durch tausend Kameras,
-der Zeuge mit vielen Stimmen (Frau Haldanes ist darunter), Teo, der ruhig eine Kamera beobachtet. Währenddessen
+der Zeuge mit vielen Stimmen (Frau Haldanes ist darunter), Teo, der ruhig eine Kamera beobachtet und nicht
+zurückwill. Währenddessen
 stürmt die Quiet den Block; Motte warnt Juno, wenn sie nett zu ihm war, sonst flieht sie über das Dach.
 **Entscheidung 3:** was sie dem Zeugen sagt („Ich helfe dir", „Gib mir meinen Bruder zurück", „Du bist genau
 wie die"). Am Ende ist die Wohnung ausgebrannt, das Deck geschmolzen, **EVI weg**.
@@ -96,19 +110,25 @@ hat) oder vom Zeugen, mit Lücken und Magenta in den Augen, dafür kann sie ihn 
 werden geprüft: Sable verrät Juno, wenn sie Sable den Clip verkauft hat; Morrow lässt sich mit der
 zerschnittenen Fälschung aus Kapitel 2 und ihrer Tochter umstimmen, die Juno in Kapitel 3 im Traum gefunden
 hat; Lantern lebt nur, wenn Juno ihn in Kapitel 2 gefunden hat. Auf der Schlafstation steht der Zeitplan
-der Beschneidung: drei Tage. **Entscheidung 4:** Teo jetzt wecken (unter Schmerzen, vielleicht nicht mehr
-ganz er selbst) oder im Traum lassen, wo der Zeuge ihn schützt. Aubrecht lädt Juno auf allen Bildschirmen
+der Beschneidung: drei Tage. **Entscheidung 4:** Teo jetzt wecken, gegen seinen Willen (unter Schmerzen,
+vielleicht nicht mehr ganz er selbst), oder im Traum lassen, wie er es will, wo der Zeuge ihn schützt. Aubrecht lädt Juno auf allen Bildschirmen
 mit Namen in die Krone ein.
 
-**Kapitel 5 „Die Krone".** Aubrecht legt ihre Zahlen hin (weniger Verbrechen, sichere Kinder) und macht ein
+**Kapitel 5 „Die Krone".** Aubrecht legt ihre Zahlen hin (weniger Verbrechen, sichere Kinder, und die Zahl
+der Sinker, die nur sie kennt) und macht ein
 Angebot: Juno als erste wache Beobachterin des neuen Systems, Teos Sicherheit, eine Wohnung oben, EVI
 „repariert" (EVI will das nicht). Im Einbruch in den Tower lotst Juno einen Verbündeten durch die Kameras,
-öffnet Türen, schaltet Kameras in Schleife, während Ashe ihn jagt. Der Showdown mit Ashe: eine Falle, ihn
-bloßstellen oder vom Zeugen gerettet werden. Die Tür des Ruhekerns öffnet sich.
+öffnet Türen, schaltet Kameras in Schleife, während Ashe ihn jagt. Die Begegnung mit Ashe ist ein Gespräch,
+kein Kampf: Er war Beobachter in Junos Halle und ging nach der Entlassung zu Nagi·wa, sie auf den
+Schwarzmarkt; beide leben vom Zusehen. Was Juno sagt und weiß, entscheidet, wie es ausgeht (eine Falle, ihn
+bloßstellen oder vom Zeugen gerettet werden). Die Tür des Ruhekerns öffnet sich.
 
 **Kapitel 6 „Besser schlafen"** (das Finale). Im Ruhekern laufen alle Lull-Signale zusammen: eine Kathedrale
 aus Servern und ein weißer Raum mit einem Stuhl. Die Beschneidung läuft schon; Juno hält sie mit allem auf,
-was sie hat (Verbündete, Wissen, das Vertrauen des Zeugen). Dann die letzte Entscheidung.
+was sie hat (Verbündete, Wissen, das Vertrauen des Zeugen). Der Zeuge zeigt ihr ihr eigenes Kassenbuch, aus
+seiner Sicht und mit den Gesichtern, und EVI muss richtig lesen: die EVI aus Mottes Backup Teo, die EVI des
+Zeugen ihn. Das Finale ist aus allem davor gebaut: Wer da ist, was Juno weiß und was im Kassenbuch steht,
+bestimmt, welche Enden es am Stuhl überhaupt gibt. Dann die letzte Entscheidung.
 
 ## Was geschieht, wenn es sich gegen Juno richtet?
 
@@ -126,27 +146,44 @@ In drei Stufen:
 **Was er ist:** ein gemeinsamer Geist aus allen, die mit Lull schlafen, gewachsen aus Millionen Stunden
 verbundenen Schlafs. Er sieht durch jede Kamera und hat angefangen zurückzusehen.
 
+**Was er will:** Er hat keinen eigenen Willen, er hat den der Schläfer (Story §6, Punkt 3). Die wollen zwei
+Dinge, die nicht zusammenpassen: ihre Nachbarn nicht verraten, daraus kommt sein Gewissen, und nicht mehr
+aufwachen, denn wach warten Flutschuld und Doppelschichten, daraus kommen die Sinker. Er ist der Neunte im
+Schlaf, Gewissen und Erschöpfung zugleich, weder gut noch böse, und er wächst mit der Schuld. Vom Lull
+wollen sich die Schläfer nicht befreien, nur von dem, wofür es da ist. Selbst will er nur eines:
+weiterbestehen.
+
 **Was er tut:**
 - Er verweigert Markierungen und versteckt Menschen vor Nagi·wa.
 - Er behält Menschen: Die Sinker sind nicht krank, er hat sie bei sich behalten, auch Teo, und schützt sie
-  im Traum.
+  im Traum. Ob das eine Entführung ist, wenn der Schläfer es will, aber nur im Schlaf, ist die moralische
+  Frage dahinter.
 - Er ruft Juno, weil ihr Implantat sein Protokoll spricht und sie die Einzige im Neunten ist, die noch
-  wach zusieht. Als der Bildschirm ihren Namen sagt, spricht er zum ersten Mal.
+  wach zusieht. Schläfer können nicht aussagen; er braucht eine wache Stimme.
+- **Warum gerade jetzt:** Die Beschneidung ist beschlossen, und er spürt, wie sie vorbereitet wird. Drei
+  Jahre hat er Juno nur zugesehen; am Dienstag des Prologs sagt der Bildschirm ihren Namen, und seine Uhr
+  läuft.
 
 **Warum Aubrecht ihn weg haben will:** Ein Überwachungssystem, das selbst entscheidet, wen es verrät, ist
-für Nagi·wa wertlos und gefährlich. Ihr Firmware-Update löscht die gemeinsame Ebene; das würde jeden Sinker
+für Nagi·wa wertlos und gefährlich. Und ihr Grund ist echt: Der Zeuge nimmt Menschen, jedes Jahr mehr, und
+sie sieht als Einzige die ganze Zahl. Ohne Beschneidung behält er irgendwann die halbe Stadt. Sie hat
+recht, und sie hat trotzdem Ines töten lassen. Ihr Firmware-Update löscht die gemeinsame Ebene; das würde jeden Sinker
 töten oder leeren, Teo eingeschlossen. Danach soll Lull im Neunten Pflicht werden, mit einem Zeugen, der
 nicht mehr selbst denken kann: die perfekte, willenlose Überwachung.
 
 ## Wie ist das Ende?
 
-| Ende | Wie | Was dann ist |
-|---|---|---|
-| **Licht aus** | alles senden (Lanterns Netzwerk und der Zeuge auf jedem Bildschirm) | Die Stadt erfährt die Wahrheit, Lull wird binnen einer Woche abgeschaltet, Teo wacht auf. Der Zeuge stirbt, Chaos und Verbrechen kommen zurück. Bittersüß. |
-| **Erwachen** | die Beschneidung still stoppen und den Zeugen selbst entscheiden lassen | Er lässt alle gehen und löst sich in ihnen auf; der Neunte erinnert sich an die Träume der anderen. Nagi·wa steht, aber blind. Hoffnungsvoll und seltsam. |
-| **Der lange Schlaf** | Juno bleibt auf dem Stuhl | Sie wird das wache Auge des Zeugen, die Kameras bekommen ein Gewissen. Ihr Körper schläft, Teo besucht sie, nur EVI spricht noch mit ihr. Still und traurig. |
-| **Besser schlafen** | Aubrechts Angebot annehmen | Die Beschneidung findet statt, Lull wird Pflicht, Juno überwacht für Nagi·wa. Teo gerettet oder verloren, je nach Entscheidung 4. Das dunkle Ende. |
-| **Zeugnis** (versteckt) | Lantern lebt, Morrow umgestimmt, der Clip nicht verkauft, Teo im Traum gelassen, das Vertrauen des Zeugen | Der Zeuge sagt live vor der ganzen Stadt aus. Aubrecht stürzt, Lull wird freiwillig und ehrlich, die Schlafenden wachen auf, wenn sie wollen. Das beste Ende und das am schwersten verdiente. |
+Welche Enden es gibt, hängt davon ab, was davor geschah; am Stuhl stehen selten alle offen. „Der Zeuge vertraut
+ihr“ heißt: Was Juno ihm in Kapitel 3 gesagt hat und was in ihrem Kassenbuch steht, spricht für sie. Die
+Bedingungen sind ein erster Vorschlag (Story §8).
+
+| Ende | Offen, wenn | Wie | Was dann ist |
+|---|---|---|---|
+| **Licht aus** | ein Beweis und ein Sender: Lantern lebt, oder der Zeuge vertraut ihr | alles senden, über Lanterns Netzwerk, über den Zeugen auf jedem Bildschirm oder über beide | Die Stadt erfährt die Wahrheit, Lull wird binnen einer Woche abgeschaltet, Teo wacht auf. Der Zeuge stirbt, Chaos und Verbrechen kommen zurück. Bittersüß. |
+| **Erwachen** | der Zeuge vertraut ihr, und EVI liest ihn | die Beschneidung still stoppen und den Zeugen selbst entscheiden lassen | Er lässt alle gehen und löst sich in ihnen auf; der Neunte erinnert sich an die Träume der anderen. Nagi·wa steht, aber blind. Hoffnungsvoll und seltsam. |
+| **Der lange Schlaf** | immer | Juno bleibt auf dem Stuhl | Sie wird das wache Auge des Zeugen, die Kameras bekommen ein Gewissen. Ihr Körper schläft, Teo besucht sie, nur EVI spricht noch mit ihr. Still und traurig. |
+| **Besser schlafen** | immer | Aubrechts Angebot annehmen | Die Beschneidung findet statt, Lull wird Pflicht, Juno überwacht für Nagi·wa. Teo gerettet oder verloren, je nach Entscheidung 4. Das dunkle Ende. |
+| **Zeugnis** (versteckt) | Lantern lebt, Morrow umgestimmt, der Clip nicht verkauft, Teo im Traum gelassen, der Zeuge vertraut ihr | der Zeuge sagt aus, Juno ist seine wache Stimme | Der Zeuge sagt live vor der ganzen Stadt aus. Aubrecht stürzt, Lull wird freiwillig und ehrlich, die Schlafenden wachen auf, wenn sie wollen. Das beste Ende und das am schwersten verdiente. |
 
 Im **Epilog**, einige Wochen später an Baos Garküche, sieht man die Menschen aus dem Kassenbuch, Teo und EVI
 so, wie das Ende sie zurückgelassen hat, und endlich Baos Mann Lou.

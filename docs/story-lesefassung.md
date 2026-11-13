@@ -1,9 +1,10 @@
 # Glass Sister: die Geschichte zum Lesen (bis einschließlich Kapitel 1)
 
 Eine Lesefassung, kein neuer Entwurf: Sie erzählt nach, was in `story.md`, `kapitel0-design.md`, `kapitel1-design.md` und im
-Spiel steht, mit den Entscheidungen bis zum 7. November (story §10b–§10d). Stand: 13. November 2026. Der Vorspann und der Prolog
+Spiel steht, mit den Entscheidungen bis zum 13. November (story §10b–§10f). Stand: 13. November 2026. Der Vorspann und der Prolog
 sind gebaut und gemalt, und auch Kapitel 1 spielt ganz durch und ist gemalt; seine Zeilen sind Vorschläge, die beim Durchspielen
-geprüft werden. Im Zweifel gilt das Spiel.
+geprüft werden. Im Zweifel gilt das Spiel. Der letzte Teil vor den offenen Punkten, „Was Kapitel 1 noch nicht sagt“, verrät das
+Geheimnis; wer es nicht wissen will, hört nach CAM 31 auf.
 
 ## Die Welt
 
@@ -412,6 +413,41 @@ Abblende. Kapitel 2: Aufnahme.
 
 ---
 
+## Was Kapitel 1 noch nicht sagt
+
+**Achtung: Dieser Teil verrät das Geheimnis** (story §6). Er erzählt nichts, was im Spiel geschieht. Er sagt nur, wie sich die
+ersten vier Nächte lesen, wenn man weiß, was dahinter liegt.
+
+Lull schenkt nicht nur Schlaf. Während der Neunte schläft, leiht es sich seine Augen und spielt ihm die Kameras der Stadt vor, und der
+schlafende Verstand markiert, was falsch aussieht. Keine Maschine hat Juno ersetzt, ihre Nachbarn haben es getan, im Schlaf. Darum
+malt Frau Haldane um jedes Gesicht vier kleine Ecken, darum hat Frau Imai die Treppe von oben gesehen, als hinge sie an einer Laterne,
+und darum pulsiert hinter jedem Ohr derselbe Takt, den Junos Implantat für CAM 31 braucht. Die automatische Auswertung, die sie
+damals abgelöst haben soll, hat es nie gegeben. Ihr gescheiterter Versuch sitzt in Junos Tasche und heißt EVI, gelernt aus Junos
+eigenen Klammern.
+
+Aus Millionen Stunden geteilten Schlafs ist etwas gewachsen, ein gemeinsamer Geist, der Zeuge. Einen eigenen Willen hat er nicht, er
+hat den der Schläfer, und die wollen zweierlei: ihre Nachbarn nicht verraten und nicht mehr aufwachen in die Schuld und die
+Doppelschichten. Darum behält er manche. Der Sohn vom Fischmann, der Vater des Mädchens L., den die zwei in Weiß so freundlich
+hinaustragen: Sie sind nicht krank, sie sind geblieben. „Er hat es jetzt gut“ ist eine Lüge und auch nicht ganz. Und wenn Juno auf
+dem Dach sagt, Teo schlafe heute besser, dann ist das der Anfang.
+
+Drei Jahre lang hat der Zeuge Juno nur zugesehen, der Einzigen im Neunten, die noch jede Nacht wach auf seinem Protokoll ist. An
+diesem Dienstag spricht er zum ersten Mal, weil seine Uhr läuft: In der Krone ist beschlossen, ihn zu beschneiden. Deshalb steht am
+Ende des Prologs ihr Name in ihrem Auge.
+
+Dass am nächsten Abend auch WREN kommt, ist kein Zufall. Der Zeuge hat Ines vor den Schläfern versteckt: Keiner von ihnen markiert sie, und ohne
+Markierung findet Nagi·wa einen Menschen in seinen eigenen Kameras nicht. Es braucht jemanden, der wach hinsieht. Juno tut für WREN
+die Arbeit, die der Zeuge verweigert. Beide brauchen jemanden, der wach hinsieht.
+
+Der Mann im weißen Regenmantel heißt Corvin Ashe, und er saß früher selbst in Junos Halle. Weil CAM 31 nur das alte
+Beobachter-Protokoll versteht, weiß er, was für ein Mensch gerade durch sie sieht, als er hinaufschaut.
+
+---
+
 ## Noch offen
 
 - **Vorschläge:** Die Zeilen, Preise und Zuschauerzahlen des Kapitels werden beim Durchspielen geprüft (`kapitel1-design.md`).
+- **Ines versteckt:** Dass der Zeuge Ines vor den Schläfern versteckt und Nagi·wa sie deshalb nicht selbst findet (story §6, Punkt 5,
+  entschieden 2026-11-13), deutet Kapitel 1 noch nirgends an. Nötig ist es nicht; ob eine Zeile darauf zeigt, ist offen.
+- **Teo im Traum:** Dass Teo als Sinker nicht zurückwill (story §7, Kapitel 3), deutet sein Besuch am Mittwoch nur mit „Vier Stunden
+  Lull, und ich bin wie neu.“ an und Juno auf dem Dach mit „Heute schläft er besser. Sagt er.“ Ob er selbst etwas mehr sagt, ist offen.

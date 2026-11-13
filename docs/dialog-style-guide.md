@@ -341,7 +341,8 @@ denselben Beruf hat. Seine erste Äußerung im Spiel ist ein Blick in die Kamera
 ### Der Zeuge
 
 Viele Stimmen zugleich (die von Frau Haldane ist darunter). Wenn er durch das Implantat spricht: Magenta-Weiß, Kleinbuchstaben, ohne Namen,
-und der Spieler merkt es zuerst am Ton (`dialog-design` §2). Sonst noch offen.
+und der Spieler merkt es zuerst am Ton (`dialog-design` §2). Er hat keinen eigenen Willen, er hat den der Schläfer (story §6, Punkt 3):
+Was er sagt, ist ihr Gewissen und ihre Müdigkeit zugleich, nie ein Plan. Sonst noch offen.
 
 ### Geschäftsleute und Nagi·wa
 
