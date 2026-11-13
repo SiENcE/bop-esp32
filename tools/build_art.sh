@@ -84,7 +84,8 @@ deck() {
     rm -rf build/art/deck
     $PXL build art/ui/deck.px.js --out build/art/deck --no-preview | tail -n 1
     $PXL build art/ui/deck_wallpaper.px.js --out build/art/deck --no-preview | tail -n 1
-    $ATLAS build/art/deck assets/deck.js --only "deck_*,evi_*"
+    # the roof of today comes from the old photo's code (the room dach)
+    $ATLAS build/art/deck assets/deck.js --only "deck_*,evi_*,dach_bg,dach_heute"
 }
 
 intro() {
@@ -108,9 +109,7 @@ mock() {
     for f in art/mock/*.px.js; do
         $PXL build "$f" --out build/art/mock --no-preview | tail -n 1
     done
-    # the roof of today comes from the old photo's code
-    $PXL build art/ui/deck_wallpaper.px.js --only dach_bg,dach_heute --out build/art/mock --no-preview | tail -n 1
-    $ATLAS build/art/mock assets/mock.js --only "cam*,gasse_*,laundromat_*,lucky_*,drain_*,sable_*,dach_*,jade_*,okonkwo_*,mock_*,look_*"
+    $ATLAS build/art/mock assets/mock.js --only "mock_*"
 }
 
 room() {
