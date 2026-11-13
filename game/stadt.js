@@ -214,8 +214,9 @@ Cutaway.room.get("kowalski").hotspots.lucky_door.use = [{ if: "day=1", then: ["H
 // Juno waits: at 23:30 she hears it from wherever she is, and it waits for her in the street.
 Cutaway.moment("traeger_ruf", { room: "deck", day: 3, from: "23:15", to: "23:30", if: "~never",
   unseen: [{ if: "!off_traeger", then: ["Von unten hör ich einen Wagen, der nicht hupt. So was gibt's im Neunten nicht."] }] });
+// only voices: they are seen in the close-up look_traeger (art/ui/look_traeger.px.js), never in the street (the user's decision, 2026-11-13)
 for (const [id, name, pitch] of /** @type {[string, string, number][]} */ ([["traeger_weiss", "Jemand in Weiß", 56], ["traeger_kind", "Das Mädchen", 74]]))
-  Cutaway.actor(id, { name, color: "#a8b8d0", costume: { idle: "mock_imai", walk: "mock_imai", talk: "mock_imai" }, voice: { pitch, range: 4, wave: "triangle", syllable: 80 } });
+  Cutaway.actor(id, { name, color: "#a8b8d0", voice: { pitch, range: 4, wave: "triangle", syllable: 80 } });
 Cutaway.moment("traeger", { room: "kowalski", day: 3, from: "23:30", to: "00:45", if: "!off_traeger",
   play: ["Vor dem Haus gegenüber steht ein weißer Wagen ohne Schild.", { zoom: "look_traeger" }, "Zwei Leute in Weiß, sehr freundlich, tragen jemanden raus, und der schläft.",
     { say: "traeger_weiss", text: "Ruhe-Erschöpfung." }, { say: "traeger_weiss", text: "Er hat es jetzt gut." }, "Oben gehen die Rollos runter, eins nach dem anderen.", { zoom: false }, { dialog: "traeger_wahl" }] });

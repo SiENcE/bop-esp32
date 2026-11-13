@@ -41,18 +41,7 @@ anim("mock_haldane", { w: 15, h: 46, frames: 1, fps: 1, outline: "k", pivot: "bo
 // (the Drain Market is painted now, seen from above: art/rooms/drain_market.px.js)
 // (CAM 15 is painted now: art/cams/cam15.px.js)
 // (Kessler with the hood is painted now: kessler_hood_feed_* in art/characters/feed_people.px.js)
-// a close-up: the white van, two in white carrying a stretcher, a girl in a door
-scene("look_traeger", { w: 170, h: 112, bg: "a" }, (c) => {
-  c.rect(0, 0, 170, 112, "a"); c.rect(0, 86, 170, 26, "b")
-  c.rect(8, 34, 74, 52, "h"); c.rect(8, 34, 22, 20, "d"); c.rect(14, 84, 12, 8, "k"); c.rect(62, 84, 12, 8, "k")
-  for (const x of [92, 124]) { c.rect(x, 44, 8, 8, "h"); c.rect(x - 2, 52, 12, 26, "h"); c.rect(x, 78, 8, 12, "g") }
-  c.rect(92, 62, 40, 5, "g"); c.rect(100, 56, 14, 6, "f")
-  c.rect(146, 20, 22, 70, "m"); c.rect(152, 54, 8, 8, "f"); c.rect(150, 62, 12, 22, "g")
-})
-// people not painted yet: the white carriers
-anim("mock_imai", { w: 19, h: 44, frames: 1, fps: 1, outline: "k", pivot: "bottom" }, (c) => {
-  c.rect(6, 0, 7, 8, "h"); c.rect(14, 4, 1, 1, "g"); c.rect(3, 8, 13, 22, "f"); c.rect(5, 30, 9, 14, "d")
-})
+// (the white carriers' close-up is painted now: look_traeger in art/ui/look_traeger.px.js; they are only voices, never in the street)
 // (the bag's items are painted now: art/ui/items.px.js)
 // (the sleeper behind the laundromat's counter is painted now: art/characters/schlaefer.px.js)
 
