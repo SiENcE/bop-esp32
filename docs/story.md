@@ -50,7 +50,7 @@ unten bis zur **Krone** ganz oben.
   Ringe, das durch die kaputte Hülle tropft.
 - **Das Jahr ist 2091.** Die Kriminalität im Neunten ist in sechs Jahren um 80 % gesunken. Nagi·wa
   schreibt das seiner zivilen Überwachung zu und seinem Geschenk an die Menschen: **Lull**, einem
-  billigen Schlafimplantat, von außen ein blasser Leuchtpunkt hinter dem Ohr. Vier Stunden mit Lull erholen wie zehn. Der halbe Neunte nutzt es, um
+  billigen Schlafimplantat, von außen ein blasses Pflaster hinter dem Ohr, das im Takt pulsiert (§10b). Vier Stunden mit Lull erholen wie zehn. Der halbe Neunte nutzt es, um
   Doppelschichten zu arbeiten. Die Werbung ist überall: **NAGI·WA: SLEEP BETTER.**
 - **Slang:**
   - **Glass**: die Kamera-Feeds („im Glass", „ins Glass gucken");
@@ -179,6 +179,13 @@ Wird langsam über die Kapitel enthüllt; der Spieler soll es einen Schritt vor 
    das Glass der Stadt zu träumen, und sein schlafender Verstand markiert, was falsch aussieht. Nagi·wa
    nennt das **Civic Rest**. Der Neunte wird vom Neunten überwacht, im Schlaf. **Die Leute, die Juno
    ersetzt haben, sind ihre Nachbarn.**
+   - **Warum Schläfer und nicht Beobachter:** Es ist das billigste Auge, das es gibt. Bezahlte wache
+     Beobachter kosten Lohn, Hallen und Schichten. Die Schläfer kosten nichts: Sie zahlen ihr Lull
+     selbst, und sie wissen nicht, dass sie arbeiten. Nagi·wa verdient zweimal an ihnen: Mit Lull
+     schaffen sie Doppelschichten in den Pumpen und zahlen damit die Flutschuld ab, und in derselben
+     Nacht überwachen sie umsonst ihre Nachbarn. Darum ist Lull so billig, und darum wirbt Nagi·wa
+     überall dafür (**SLEEP BETTER**). Die Flutschuld treibt die Menschen zu Lull, und Lull hält
+     die Flutschuld am Laufen.
 3. **Die Schlafenden begannen, den Traum zu teilen.** Millionen Stunden verbundenen Schlafs ließen
    etwas wachsen: **den Zeugen**, einen gemeinsamen Geist aus allen, die mit Lull schlafen. Er sieht
    durch jede Kamera, und er hat angefangen zurückzusehen. Die Sinker sind nicht krank. Sie sind die
@@ -341,7 +348,8 @@ Straßenmodus.
 - **Die Verbündeten werden auf die Probe gestellt**, abhängig von Entscheidung 2 und dem Kassenbuch:
   - **Sable** verkauft Junos Aufenthaltsort an die Quiet, wenn Juno Sable den Clip verkauft hat (ein
     Feed-Rätsel, um die Falle kommen zu sehen). Wenn nicht, hilft Sable, gegen Bezahlung.
-  - **Morrow** lässt sich mit dem Beweis aus Kapitel 3 und ihrer Tochter auf der Station umstimmen.
+  - **Morrow** lässt sich mit dem Beweis aus Kapitel 2 (der zerschnittenen Fälschung) und ihrer Tochter
+    umstimmen, die Juno in Kapitel 3 im Traum gefunden hat.
     Sie gibt Juno einen Passierschein für die Transitachse.
   - **Lantern** lebt nur, wenn Juno ihn in Kap. 2 gefunden und die Quiet nicht zu ihm geführt hat.
     Sonst findet Juno sein leeres Versteck und seine letzte, nie gesendete Sendung.
@@ -612,3 +620,7 @@ Die Blockskizzen für den Mord und die Figuren der Stadt sind freigegeben (`docs
 - **Der Prolog wird immer gespielt.** Kapitel einzeln anwählen geht höchstens nach dem Durchspielen, vielleicht gar nicht, wenn es zu kompliziert wird: Ein Kapitel ohne seine Vorgeschichte müsste jede frühere Entscheidung raten. `?act=kapitel1` bleibt ein Einstieg für Entwicklung und Tests; dort beginnt Kapitel 1 mit der Antwort des Durchspielwegs (Motte freundlich, die ganze Wahrheit an Frau Kessler).
 - **Motte sagt den Takt,** das ist fairer: Fragt Juno, wie er beim Licht seiner Mutter mitzählt, sagt er „Lang, kurz, kurz, lang. Dann Pause.“ EVI sagt ihn weiter als letzte Stufe ihres Hinweises, und ihr zweiter Hinweis schickt zu Motte. Juno sagt ihn nie.
 - **Die Stadt und die Firma heißen Nagi·wa** (vorher Halcyon, der Name passte nicht zum Spiel): 凪輪, *nagi* ist die Windstille auf See (dasselbe, was Halcyon meinte), *wa* der Ring, also „Ring der Windstille“, eine Stadt aus Ringen, die Schlaf verkauft. Geschrieben wird im Text **Nagi·wa** (Genitiv „Nagi·was“), auf Schildern und Bildschirmen **NAGI·WA**, und ab und zu nur die Zeichen **凪輪** (im alten Foto am Deck von 2074, auf dem Fernseher im LUCKY STATIC). Vorher im Netz gesucht: kein Treffer als Name einer Stadt, Firma oder eines Spiels; ins Markenregister ist noch nicht geschaut.
+
+## 10e. Entscheidungen (2026-11-12)
+
+- **Der wirtschaftliche Grund für Civic Rest** (§6, Punkt 2): Die Schläfer sind das billigste Auge. Sie zahlen ihr Lull selbst, wissen nicht, dass sie arbeiten, und schaffen mit Lull Doppelschichten, mit denen sie die Flutschuld abzahlen. Nagi·wa verdient also zweimal an ihnen, und Flutschuld und Lull halten sich gegenseitig am Laufen.

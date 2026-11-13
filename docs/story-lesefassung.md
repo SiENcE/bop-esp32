@@ -1,8 +1,9 @@
 # Glass Sister: die Geschichte zum Lesen (bis einschließlich Kapitel 1)
 
 Eine Lesefassung, kein neuer Entwurf: Sie erzählt nach, was in `story.md`, `kapitel0-design.md`, `kapitel1-design.md` und im
-Spiel steht, mit den Entscheidungen vom 5. November (story §10b). Der Vorspann und der Prolog sind gebaut, hier gilt im Zweifel
-das Spiel; Kapitel 1 ist bisher nur Entwurf. Die Nummern in eckigen Klammern verweisen auf die offenen Punkte am Ende.
+Spiel steht, mit den Entscheidungen bis zum 7. November (story §10b–§10d). Stand: 13. November 2026. Der Vorspann und der Prolog
+sind gebaut und gemalt, und auch Kapitel 1 spielt ganz durch und ist gemalt; seine Zeilen sind Vorschläge, die beim Durchspielen
+geprüft werden. Im Zweifel gilt das Spiel.
 
 ## Die Welt
 
@@ -20,8 +21,8 @@ und sind längst eine eigene Kultur. Ratten zogen Kabel durch die Rohre, Kraken 
 wurden klüger als geplant. Die Nudelautomaten haben Launen. Niemand wundert sich mehr darüber.
 
 Es ist 2091. Die Kriminalität im Neunten ist in sechs Jahren um achtzig Prozent gefallen. Nagi·wa dankt dafür seiner
-Überwachung und seinem Geschenk an die Menschen: Lull, einem billigen Schlafimplantat, von außen ein blasser, langsam
-pulsierender Punkt hinter dem Ohr. Vier Stunden mit Lull erholen wie zehn, und so schafft der halbe Neunte die Doppelschichten,
+Überwachung und seinem Geschenk an die Menschen: Lull, einem billigen Schlafimplantat, von außen ein blasses Pflaster hinter dem
+Ohr, das in einem festen Takt pulsiert. Vier Stunden mit Lull erholen wie zehn, und so schafft der halbe Neunte die Doppelschichten,
 mit denen er die Flutschuld abzahlt. Die Werbung ist überall: NAGI·WA: SLEEP BETTER. Wer mit Lull irgendwann nicht mehr aufwacht,
 ist ein Sinker; Nagi·wa nennt das Ruhe-Erschöpfung und bringt ihn auf eine Schlafstation.
 
@@ -106,8 +107,8 @@ den Leuten wurde. EVI führt es. „Ich schreib alles auf. Du hast gesagt, ich s
 Taschen-Deck ein, und EVI kommt darauf mit. „Bringst du mir was mit?“, fragt EVI. „Du isst nicht.“ – „Ich weiß. Bringst du mir was
 mit?“ In einem alten Karton liegen Junos Ausweis, CIVIC MONITOR, J. REYES, UNGÜLTIG, und der Kaktus von ihrem Pult, vertrocknet.
 
-Der Flur ist grün wie ein Aquarium, nur ohne Fische. In der Wand der Aufzug, darauf ein Zettel: OUT OF ORDER. Vorn an der Wand stehen die Müllsäcke. Oben in der Ecke hängt Nagi·was Kamera. Frau Haldanes Tür steht offen, sie schläft im Sessel, ein blauer Punkt
-pulsiert hinter ihrem Ohr. „Sie schläft, wie andere Leute blinzeln.“ Auf der Bank sitzt Motte, zwölf Jahre alt, Kurierkind, in
+Der Flur ist grün wie ein Aquarium, nur ohne Fische. In der Wand der Aufzug, darauf ein Zettel: OUT OF ORDER. Vorn an der Wand stehen die Müllsäcke. Oben in der Ecke hängt Nagi·was Kamera. Frau Haldanes Tür steht offen, sie schläft im Sessel, das Lull-Pflaster
+hinter ihrem Ohr pulsiert blassblau. „Sie schläft, wie andere Leute blinzeln.“ Auf der Bank sitzt Motte, zwölf Jahre alt, Kurierkind, in
 einer viel zu großen weißen Mütze. „Was machst du eigentlich? Den ganzen Tag?“ Was Juno antwortet, freundlich, ausweichend oder
 abweisend, merkt er sich.
 
@@ -116,7 +117,8 @@ Chits, davon Hüllenabgabe 310. „Dreihundertzehn zahl ich für die Ringe über
 
 **JUNO.** Draußen die Kowalski-Straße, Magenta und Bernstein, Regen. Vor dem LUCKY STATIC steht Baos Garküche, Bao ist über
 siebzig und schreibt an. „Mein Alter sagt, ich salz zu viel. Lou isst seit vierzig Jahren hier.“ – „Und hat er recht?“ – „Er hat
-nie recht. Darum ist er mein Alter.“ Juno isst unter seinem Schirm. Heiß, salzig, genau richtig.
+nie recht. Darum ist er mein Alter.“ „Heute nehm ich's mit, Bao. Ich ess oben.“ – „Oben! Da wird sie kalt.“ Er macht ihr einen Deckel
+auf die Schale, und die Schale soll sie ihm morgen zurückbringen.
 
 Dann stottert über der Straße der kaputte Werbebildschirm. Das ist nichts Neues. Aber im Rauschen dreht sich ein Auge zu ihr,
 Implantat-Klammern legen sich um den Schirm, und über die ganze Fläche steht: **JUNO.** Dann wieder Werbung.
@@ -125,11 +127,15 @@ Implantat-Klammern legen sich um den Schirm, und über die ganze Fläche steht: 
 
 „Das war nicht auf dem Schirm. Das war in meinem Auge.“
 
-Aus der Tasche, ganz leise, EVI: „Das war nicht ich. Ehrlich.“
+Aus der Tasche, ganz leise, EVI: „Das war nicht ich. Ehrlich.“ Dann, schon müde: „Es wird langsam spät, Juno. Und deine Suppe wird
+kalt.“ – „Ich geh ja schon.“
+
+Juno trägt die Brühe die vierzehn Stockwerke hinauf, setzt sich ans Deck und isst. „Sie ist zu salzig, und genau so muss sie sein.“
+EVI: „Du hast doch was mitgebracht. Eins Abendessen!“ Erst dann geht sie schlafen.
 
 ## Kapitel 1: Glass
 
-Das Ziel ist einfach: 900 Chits bis Freitag um Mitternacht. Das Kapitel läuft über drei Abende, Mittwoch, Donnerstag und
+Das Ziel ist einfach: 900 Chits bis Freitagabend, denn um halb elf bucht das Konto die Miete ab. Das Kapitel läuft über drei Abende, Mittwoch, Donnerstag und
 Freitag. Juno lebt nachts, und wer schlafen geht, springt zum nächsten Abend. Drei Aufträge kommen an, die in beliebiger
 Reihenfolge laufen, und nebenher lebt die Stadt weiter, ob man zusieht oder nicht.
 
@@ -137,16 +143,18 @@ Reihenfolge laufen, und nebenher lebt die Stadt weiter, ob man zusieht oder nich
 
 Um halb sieben klopft Teo, Junos Bruder, 23 Jahre alt, in oranger Arbeitsweste, den Gehörschutz um den Hals, darunter
 Kiemenschlitze, denn mit 18 hat er sich umbauen lassen, weil Taucher das Doppelte verdienen. Er bringt Essen von Bao und lacht über
-seine Doppelschichten in Pumpenhalle 3. „Vier Stunden Lull, und ich bin wie neu.“ Hinter seinem Ohr pulsiert der blaue Punkt. „Seit
+seine Doppelschichten in Pumpenhalle 3. „Vier Stunden Lull, und ich bin wie neu.“ Hinter seinem Ohr pulsiert das blasse Lull-Pflaster. „Seit
 wann?“ – „Seit es gratis ist.“ Sie reden über Junos Nagi·wa-Zeit. „Du redest noch immer, als hätten sie dich gefeuert, weil du
 schlecht warst.“
 
 Auf dem Deck warten drei Nachrichten.
 
-Von Varga: „Du warst bei Yuen's. Ich hab dich nicht gesehen, aber ich weiß, wie das läuft. Kessler ist weg. Finde ihn. 400.“
+Von Varga: „Du warst bei Yuen's. Ich hab dich nicht gesehen, aber ich weiß, wie das läuft. Kessler ist weg. Finde ihn. 400.“ Ihren
+Namen hat er von Sable.
 
-Von jemandem, der sich TIDE nennt: „Okonkwo, Kowalski 9. Wir wollen den Tresorcode. 500. Keine Fragen.“ Herr Okonkwo verkauft
-zwei Häuser neben dem LUCKY STATIC Reis und Batterien und grüßt Juno jeden Abend.
+Von jemandem, der sich TIDE nennt: „Okonkwo, Jade Row. Wir wollen den Tresorcode. 500. Keine Fragen.“ Herr Okonkwo hat seinen
+Eckladen in der Jade Row, der Gasse links von der Kowalski-Straße, gleich hinter dem LUCKY STATIC, verkauft Reis, Batterien und
+Raucherwaren und grüßt Juno jeden Abend.
 
 Und von WREN, ohne jeden anderen Absender: „Dr. Ines Calder, Lull-Klinik 9-Ost. Wir wollen wissen, wen sie trifft und wo. 1500,
 davon 250 jetzt. Diskretion.“ Dazu ein Foto, eine Frau mit dunklem Zopf im Kittel. 250 Chits sind schon auf dem Konto. Juno:
@@ -170,10 +178,12 @@ gibt es im Viertel nur noch an einem Automaten. Wenn sich um Viertel nach zehn d
 in CAM 03 jemand ohne Schal und mit Kapuze und zieht Nummer 7, Huhn scharf. An seiner Hand ist ein heller Streifen, wo der Ring war. Juno folgt ihm zum
 Kapselhotel Morpheus, dessen Kamera ein eigenes Netz hat. Den Zugang verkauft Sable auf dem Drain-Markt für 80 Chits oder gegen Shine.
 
-Der Drain-Markt ist der Schwarzmarkt in einem trockengelegten Flutkanal: Rauch, Bernstein, gebrauchte Implantate in Gläsern,
-ein Stand mit dem Schild KIDNEYS ONLY, und ein Prediger der Wachen Kirche, der gegen Lull predigt, und niemand hört zu. Sable
-sitzt hinter einem Tisch voller Bildschirme, langer magentafarbener Mantel, rasierter Kopf, eine brennende Pfeife. An der Wand hängt
-die Preisliste: NAMES 50. ADDRESSES 80. SECRETS: ASK.
+Der Drain-Markt ist der Schwarzmarkt in einem trockengelegten Flutkanal. Man erreicht ihn durch die Gasse hinter dem Gitter
+der Kowalski-Straße, eine Treppe hinunter, und von oben sieht man ihn zuerst ganz: Rauch, Bernstein, Gedränge, gebrauchte
+Implantate in Gläsern („Eins davon sieht aus wie meins.“), ein Stand mit dem Schild KIDNEYS ONLY, HOT WOK, und auf einer Kiste ein
+Prediger der Wachen Kirche, der gegen Lull predigt, und niemand hört zu. Sable sitzt hinter einem Vorhang, der nach Pfeife riecht,
+vor Bildschirmen und einem Vogel aus Draht, der nicht singt: langer magentafarbener Mantel, rasierter Kopf, eine brennende Pfeife.
+An der Wand hängt die Preisliste: NAMES 50. ADDRESSES 80. SECRETS: ASK.
 
 Im Gang des Hotels kriecht Kessler in Kapsel 23. Was nun?
 
@@ -181,59 +191,139 @@ Im Gang des Hotels kriecht Kessler in Kapsel 23. Was nun?
   mit Gips auf dem Drain-Markt und bettelt. Im Kassenbuch steht dann: „Zwei Rippen, ein Arm.“
 - **Warnen:** Eine Nachricht auf den Bildschirm seiner Kapsel, kein Geld. Er flieht, und Frau Kessler bekommt irgendwann eine
   Postkarte. Varga redet, und Sable zahlt Juno schlechtere Kurse.
-- **Lügen:** Ein falscher Ort, 200 Chits im Voraus. Varga findet nichts und will sein Geld wieder, und in Kapitel 2 wartet sein
+- **Lügen:** Ein falscher Ort, das Pfandhaus am Fischmarkt, 200 Chits im Voraus. Varga findet nichts und will sein Geld wieder, und in Kapitel 2 wartet sein
   Mann vor dem Kessel-Block.
 
 ### Der Eckladen
 
-CAM 07 sieht die Kowalski-Straße von oben und, richtig geschwenkt, durch Okonkwos Fenster auf die Theke. Um ein Uhr nachts kniet
-er sich hinter die Theke an den Tresor, aber von oben verdeckt sein Rücken das Tastenfeld. Der Automat vor dem Laden hat eine
-eigene kleine Kamera, die „Lächeln für einen Gutschein!“ verspricht und am Netz nicht hängt. Um sie anzuzapfen, braucht Juno
-einen Abzweiger.
+Die Jade Row ist eine enge Gasse voller Schilder, Nebel und Lampen, mehr Chinatown als der Rest des Neunten. Links nimmt Okonkwos
+Laden die ganze Wand ein, Fenster und Tür nebeneinander, gegenüber steht ein Automat. CAM 07 ist Nagi·was Kamera über der Gasse,
+und Junos alter Zugang geht noch. Um ein Uhr nachts schließt Okonkwo ab und tippt den Code in die alte Kasse auf der Theke, denn der
+Tresor darunter hängt an ihr. Ein Tastenfeld zeigt man nicht öffentlich. Aber das Kundendisplay der Kasse steht auf einem Ständer zum
+Fenster und zeigt jede getippte Taste statt des Preises, ein Defekt, den nie jemand repariert hat. Von der hohen Kamera ist es zu klein
+und zu steil: „Das ist der falsche Winkel. Ich brauch was auf Augenhöhe.“
 
-Den verkauft Ratz, eine Kabelratte so groß wie ein kleiner Hund, in Kopfhörern und viel zu großem Parka, deren geflickter
-Sprechkragen Wörter vertauscht: „Sechzig Chits, Freundschaftspreis, Feindschaftspreis wäre achtzig.“ Ratz fragt, ob Juno
-Ratten in den Rohren unter der Krone gesehen hat. Oder Motte baut ihn, wenn sie ihn unterrichtet. Den Abzweiger setzt sie, wenn
-der Lichtkegel der Drohne weitergewandert ist. Dann steht der Code im Fischauge auf Hüfthöhe: 4-1-7-0-9.
+Der Automat gegenüber hat eine eigene kleine Kamera, die „Lächeln für einen Gutschein!“ verspricht und genau durchs Fenster sieht. Am
+Netz hängt sie nicht. Um sie anzuzapfen, braucht Juno einen Abzweiger.
 
-In der ersten oder zweiten Nacht, um halb eins, hält vor dem Laden ein Polizeiwagen. Lieutenant Morrow nimmt von einem Jungen mit
+Den verkauft Ratz auf dem Drain-Markt, eine Kabelratte so groß wie ein kleiner Hund, in Kopfhörern und viel zu großem Parka, deren
+geflickter Sprechkragen Wörter vertauscht: „Sechzig Chits, Freundschaftspreis, Feindschaftspreis wäre achtzig.“ Ratz fragt, ob Juno
+Ratten in den Rohren unter der Krone gesehen hat. Oder Motte baut ihn aus seinem Tideboy, wenn sie ihn unterrichtet. Den Abzweiger
+klemmt sie an, wenn die Drohne vorbei ist; Juno wartet sie selbst ab. Dann sieht der Automat auf Hüfthöhe über die Gasse auf die Theke,
+und um eins steht auf dem Display: 4-1-7-0-9. Wer später kommt, findet es im Puffer derselben Nacht.
+
+In der ersten oder zweiten Nacht, um halb eins, hält in der Gasse ein Polizeiwagen. Lieutenant Morrow nimmt von einem Jungen mit
 leuchtendem Hals einen Umschlag. „Das ist für die ruhige Woche. Freitag fährt keiner die Kowalski.“ Wer das aufzeichnet,
 hat etwas gegen sie in der Hand.
+
+Verkaufen kann Juno erst, wenn sie den echten Code kennt; sonst wüsste sie nicht einmal, wie einer aussieht.
 
 - **Den echten Code verkaufen:** 500 Chits. In Kapitel 2 wird der Laden ausgeraubt, und Bao, der helfen will, wird
   niedergeschlagen. Seine Garküche bleibt eine Woche zu.
 - **Einen falschen Code verkaufen:** 250 im Voraus. Die Boys scheitern, und an Junos Tür steht bald eine Drohung: GLASSER LIES. Sie sind
   von da an Feinde.
-- **Okonkwo warnen:** Kein Geld. Er ändert den Code und gibt ihr eine Stange Reis und Batterien. „Ich vergesse das nicht.“ In
+- **Okonkwo warnen:** Das geht im Laden, solange er offen hat, auch ohne den Code, denn TIDEs Nachricht sagt genug. Kein Geld.
+  Er ändert den Code, um eins sieht man ihn einen neuen tippen, und er gibt ihr eine Stange Reis und Batterien. „Ich vergesse das nicht.“ In
   Kapitel 4 hat sie bei ihm ein Versteck. Die Boys suchen einen Verräter.
 
 ### Das Leben drumherum
 
-Der Werbebildschirm stottert jetzt jedes Mal, wenn Juno vorbeigeht. Am zweiten Abend zeigt er ihr eine Sekunde lang Kessler unterm
-Vordach. Am dritten nur noch das Auge.
+Der Werbebildschirm stottert jetzt jedes Mal, wenn Juno vorbeigeht. Wer ihn am Donnerstag ansieht, sieht eine Sekunde lang Kessler
+unterm Vordach, zwei Nächte alt. Am Freitag nur noch das Auge, und Juno weiß nicht, ob auf dem Schirm oder in ihrem Auge. Auf einem
+Gerüst davor wohnt die halbe Reparatur, ein Mann mit Kocher, Wäscheleine und Pfoten wie ein Maulwurf, der nur die linke Hälfte
+repariert: „Links ist mein Vertrag. Rechts ist Vertrag 9-B. Der Kollege kommt seit 2087.“ Am Donnerstag fragt er, ob ihr schon
+aufgefallen ist, dass der Schirm nur stottert, wenn sie vorbeigeht.
 
-Motte wartet im Flur. War Juno im Prolog freundlich, fragt er: „Zeigst du mir was?“ Es gibt drei Lektionen, eine pro Abend: was
-eine Kamera ist, wie man einen Code findet, warum man nie den eigenen Block glasst. Wer alle drei gibt, hat einen Schüler, und
-das wird später zählen.
+Bao erinnert sich an den Dienstag, ob bar bezahlt oder angeschrieben, und sieht ihr an, dass sie etwas gesehen hat: „Du guckst, als
+hättest du was gesehen.“ – „Ich guck immer so.“ – „Eben.“ Am Freitag sagt er fast nichts.
 
-Am zweiten Abend steht Frau Haldane wach an ihrer Tür: Ihr Sohn schreibt nicht mehr aus den mittleren Ringen. Im LUCKY STATIC
-läuft auf dem Fernseher „Kriminalität im Neunten auf Rekordtief“, und jemand erzählt, der Sohn vom Fischmann sei nicht aufgewacht.
-Ruhe-Erschöpfung, sagen sie. Auf dem Glasser-Brett schreibt jemand: „Wer weiß was über Ruhe-Erschöpfung? Mein Vater wacht nicht
-auf.“
+Motte sitzt auf seiner Bank und spielt Sump Runner auf seinem Tideboy. Sein Spielstand ist weg: „Man macht immer ein Backup.“ –
+„Wovon?“ – „Von allem, was du nicht verlieren willst.“ War Juno im Prolog freundlich, fragt er jeden Abend: „Zeigst du mir heute
+was?“ Es gibt drei Lektionen, eine pro Abend: was eine Kamera ist, wie man einen Code findet, warum man nie den eigenen Block glasst.
+In der zweiten baut er den Abzweiger. Wer alle drei gibt, hat einen Schüler, und das wird später zählen. Das Licht hinter dem Ohr
+seiner Mutter blinkt komisch, sagt er, immer gleich, und er zählt manchmal mit.
 
-Im Chat meldet sich Vesper, Einkäufer für NINTH LIVE, einen Kanal, der in der Krone „echtes Leben aus dem Neunten“ streamt: „Ich
-höre, Sie haben ein Auge für das Echte. Ich zahle das Doppelte von Sable. Für jeden rohen Clip.“ EVI zeigt Juno dabei, wie man
-Gesichter unkenntlich macht. Solche Clips nimmt Vesper nicht. Was Juno ihm verkauft, bekommt im Kassenbuch später eine Zahl
-dazu: wie viele zugesehen haben.
+Am Donnerstag hat Frau Haldane bis zu ihrer Schicht um sieben frei und sitzt wach im Sessel, mit Tee. Das Licht hinter ihrem Ohr ist
+aus. Ihr Sohn schreibt jeden Sonntag aus dem Fünften, wo er Arbeit hat, seit drei Sonntagen nicht mehr. „Dann schlaf ich, und morgens
+ist es nicht mehr so schlimm.“
+
+Das LUCKY STATIC hat jeden Abend offen. Mei steht hinter der Theke, einen Bleistift im hochgesteckten Haar, und lässt anschreiben:
+„Wer anschreibt, kommt wieder.“ Auf der Tafel hinter ihr ist Junos Strichreihe die lange. Der Fernseher spricht in Nagi·was Cyan, am
+Mittwoch „Lull jetzt kostenlos im ganzen Neunten. Vier Stunden, die sich anfühlen wie zehn.“, genau Teos Worte, am Donnerstag
+„Kriminalität im Neunten auf Rekordtief.“ Mei hat ihn einmal ausgemacht, und zehn Minuten später kam einer und fragte freundlich, ob
+was kaputt ist. Am Donnerstag erzählt man sich, der Sohn vom Fischmann sei nicht aufgewacht. Ruhe-Erschöpfung, sagen sie. Am Freitag
+hört man gar nichts. Die üblichen zwei sitzen auf ihren Hockern: Er schläft auf seinen Armen, das Lull-Pflaster hinterm Ohr, und sie
+erzählt ihm trotzdem, wie es vorher war.
+
+Im NETZ steht jeden Abend eine neue Seite. Am Donnerstag: „Ruhe-Erschöpfung: kein Grund zur Sorge, sagen Nagi·was Ärzte.“ EVI: „Dann
+sorgt sich jetzt keiner mehr?“ Juno: „Das ist der Plan.“ Auf dem Glasser-Brett schreibt jemand: „Wer weiß was über Ruhe-Erschöpfung?
+Mein Vater wacht nicht auf.“, unterschrieben L., Kowalski-Straße. Am Freitag: „Mein Vater ist weg. Zwei in Weiß haben ihn abgeholt.
+Sie waren sehr freundlich.“
+
+Ab Donnerstag schreibt Vesper im Chat, Einkäufer für NINTH LIVE, einen Kanal, der in der Krone „echtes Leben aus dem Neunten“ streamt:
+„Ich höre, Sie haben ein Auge für das Echte. Ich zahle das Doppelte von Sable. Für jeden rohen Clip.“ Und: „Nur roh, bitte. Ohne
+Gesichter ist es kein Leben.“ Er nimmt Kesslers Ring, Morrows Umschlag und die weißen Träger. EVI zeigt Juno, wie man im Clip-Editor
+Gesichter unkenntlich macht; solche Clips nimmt Vesper nicht. Was in der Nacht auf Freitag gelaufen ist, steht am Freitag im
+Kassenbuch mit der Zahl derer, die zugesehen haben: Zehntausende, beim Sinker Hunderttausende.
+
+### Die Stadt
+
+Die Abende sollen nach Leben schmecken, nicht nach Warten aufs Bett, und das Bett geht ohnehin erst ab eins: „Schlafen? Ich schlaf
+nicht vor eins. Nie.“ Mittwoch ist Ankommen, Donnerstag ist die Stadt, Freitag wird alles still.
+
+**Das Dach.** Keine Treppe führt hinauf. Das Fenster klemmt, „da kommt man nur mit was Flachem ran“, und das Flachste, was Juno hat,
+ist ihr alter Nagi·wa-Ausweis: „Das ist das erste Mal, dass das Ding was aufmacht.“ Draußen auf dem Sims hängt die Leiter zwei Meter zu
+hoch. „Teo kam da früher mit irgendwas Langem ran.“ Neben der Aufzugtür im vierzehnten Stock hängt der Notschlüssel, ein langer Haken:
+„Um stecken zu bleiben, müsste der Aufzug erst mal fahren.“ Juno hat Höhenangst. „Nicht runterschauen.“ Das alles geht schon im Prolog.
+
+Oben sieht sie die Ringe zum ersten Mal von unten: „Da oben ist nicht der Himmel. Da oben ist der Boden von jemand anderem.“ Es ist
+derselbe Blick wie auf dem alten Foto am Deck, zwanzig Jahre später: Der große Schirm sagt SLEEP BETTER statt RISE ABOVE, und dem
+NOODLES-Schild fehlen zwei Buchstaben. Juno kann sich an ihren alten Platz setzen, allein, wo sie mit vierzehn und Teo mit sechs eine
+Schale Nudeln geteilt haben. „Er ist hier eingeschlafen. An meiner Schulter. … Heute schläft er besser. Sagt er.“
+
+Auf einem Eimer sitzt die **Regenleserin**, 82, und kostet mit ihren Barteln das Tropfwasser, ein billiger Umbau noch aus der Flut.
+Sie sagt, von welchem Ring es kommt: „Das ist vom Vierten. Die gießen da oben ihre Orchideen.“ Sie ging in der alten Stadt zur
+Schule und kennt Juno und Teo von früher. Über sie erklärt sich die Welt („Als das Wasser kam, haben sie nicht abgepumpt. Sie haben
+draufgebaut. Und uns die Rechnung geschickt.“), und nebenbei fallen Dinge, an die man sich später erinnert: Der Fünfte schmeckt seit
+Jahren nach Kochsalz, jede Nacht eimerweise, „ich frag mich, wer da oben jede Nacht so viele wäscht“. Aus der Krone kommt kein
+Tropfen. Lull und Junos Implantat sitzen an derselben Stelle, „sparsam sind sie, die Leute da oben“. Teo soll raufkommen, solange er die
+Leiter noch findet. Am Freitag schmeckt das Wasser nach gar nichts: „Wenn der Regen so still wird, dann räumt jemand auf.“
+
+**Der Zeitungskrieg.** Auf dem vierzehnten Stock ist Krieg, auf Zetteln: Wer klaut die Zeitung? Nagi·was Kamera in der Ecke sieht
+alles, aber den eigenen Block glasst man nicht, das sagt Juno gerade Motte. „Nur dieses eine Mal.“ Um halb drei geht in CAM 14 jemand im
+Morgenmantel den Flur entlang, sehr langsam, die Hände hängen herunter, die Augen zu: Frau Haldane holt sich die Zeitung, ihre eigene,
+und weiß es nicht. Hinter ihrem Sessel liegt ein Stapel, so hoch wie Motte, und um jedes Gesicht darin sind vier kleine Ecken gemalt.
+„Wie meine.“ EVI: „Warum macht sie das?“ – „Ich weiß es nicht, und sie weiß es auch nicht.“ Auf den Zettel schreibt Juno: ES IST
+NIEMAND. 14B.
+
+**Die Frau, die sich erinnert.** Im Chat schreibt Frau Imai: „Ich habe einen Mord gesehen. In einer Straße, in der ich nie war.“ Im
+LUCKY STATIC sitzt sie vor kaltem Tee, drei viel zu lange Finger an jeder Hand, den blassen Punkt hinter dem Ohr, und Juno erkennt sie
+aus der Schlange vor der Klinik. „Da ist eine Treppe, und auf den Stufen ist ein großer Fisch. Es regnet von links. Ein Mann fällt die
+Treppe hinunter … Das Komische ist, dass ich von oben draufgeschaut habe. Es war, als würde ich an einer Laterne hängen.“ Sie schläft
+von drei bis sieben, vier Stunden Lull, wie alle hier. Die Treppe ist die am alten Fischmarkt, CAM 18, und im Archiv findet Juno den
+29. Oktober, 03:12: Es ist wirklich geschehen, genau von dieser Kamera aus gesehen, und den ganzen Fisch auf den Stufen sieht man nur
+von dort oben. Dann muss Juno ihr antworten: „Sie sind nicht verrückt.“, und Frau Imai traut sich nicht mehr zu schlafen, oder „Das
+war ein Traum.“, und sie schläft wieder gut. EVI: „Die Treppe gibt es aber. Ich hab sie gesehen.“ – „Ich weiß.“
+
+**Die weißen Träger.** Donnerstag, halb zwölf, hört Juno von überall her einen Wagen, der nicht hupt. „So was gibt's im Neunten
+nicht.“ Vor dem Haus gegenüber steht ein weißer Wagen ohne Schild. Zwei Leute in Weiß, sehr freundlich, tragen jemanden heraus, der
+schläft: „Ruhe-Erschöpfung. Er hat es jetzt gut.“ In der Tür steht ein Mädchen, oben gehen die Rollos herunter, eins nach dem anderen.
+Juno kann zusehen, filmen, für Vesper, oder zu dem Mädchen gehen; mehr als bleiben kann sie nicht. Das Mädchen ist L. vom
+Glasser-Brett.
+
+Und auf dem Drain-Markt steht der Prediger auf seiner Kiste, eine Thermoskanne in jeder Hand, und blinzelt nicht, denn er hat keine Lider
+mehr. „Neun Tage! Neun Tage wach, und ich sehe klarer als ihr alle! Kaffee?“ Am Donnerstag: „Wer schläft, sieht nichts. Falsch! Wer
+schläft, sieht was anderes!“ Am Freitag: „Elf Tage. Da hinten steht jemand, und der kichert.“ – „Da steht niemand.“ – „Das sagt er auch.“
 
 ### Dr. Ines Calder
 
 Das ist der Faden, der durch alle drei Abende läuft. CAM 21 vor der Klinik ist eine Nagi·wa-Kamera, und Junos alter Zugang geht
 noch. „Sie haben die Codes nie geändert.“ Über jemandem in der Schlange müder Menschen steht in Junos Overlay eine zweite Klammer, dazu
-`UNKNOWN LINK`, und sie pulsiert. Niemand erklärt es. Um sieben kommt Ines aus der
+`UNKNOWN LINK`, und sie pulsiert. Niemand erklärt es, bis Juno Frau Imai im LUCKY STATIC erkennt. Um sieben kommt Ines aus der
 weißen Klinik, vorbei an der Schlange. Sie
 isst allein in der Nudelbar Pho Pump, schreibt etwas auf eine Serviette und hält die Hand darüber. Dann geht sie in den Waschsalon
-SUDS & SPIN, dessen Kamera den Code 0000 hat („Natürlich.“), und nach Hause in den Wohnblock Lerche.
+SUDS & SPIN, dessen Kamera den Code 0000 hat („Natürlich.“), und nach Hause in den Wohnblock Lerche. Dessen Haustürkamera hat einen Code im Hausnetz; den gibt es bei Sable,
+und am Freitag ist sie ohnehin offen.
 
 Am Donnerstag ist es fast dasselbe, nur schaut sie in der Nudelbar oft zur Tür. Um acht legt sie im Waschsalon einen Datenstick in den
 kaputten Trockner 6 und geht ohne Wäsche. Sie geht auch nicht nach Hause, sondern zum Sumpf-Abgang, an dem ein Schild hängt: LINE 31 –
@@ -245,8 +335,12 @@ Juno kann selbst in den Waschsalon gehen. Auf dem Stick liegt nur ein Schlüssel
 behält ihn.
 
 Die Kamera in der alten Station ist älter als Nagi·wa. Der Konzern hat sie einst nachgerüstet und dann vergessen, und kein Code findet
-sie. Nur das alte Beobachter-Protokoll, das Juno im Kopf trägt, verbindet sie: „Das kann nur noch mein Kopf.“ Im Rauschen vor dem Bild
-steht für einen Takt das Auge.
+sie. Nur das alte Beobachter-Protokoll, das Juno im Kopf trägt, kommt an sie heran, und es will einen Takt, einen Handshake. Im
+Handbuch steht nur „Handshake: siehe Anlage C“, und die Anlage fehlt. Aber der Takt pulsiert hinter jedem Ohr im Neunten: bei Frau
+Haldane im Flur („Der Punkt hinter ihrem Ohr blinkt immer gleich. Woher kenn ich das?“), bei Frau Imai, über dem `UNKNOWN LINK` in der
+Schlange. Motte zählt ihn bei seiner Mutter mit, und wenn Juno fragt, wie, sagt er ihn: „Lang, kurz, kurz, lang. Dann Pause.“ Juno gibt
+ihn Schlag für Schlag ein, und erst am Ende zeigt sich, ob er stimmt. „Das kann nur noch mein Kopf.“ Im Rauschen vor dem Bild steht
+für einen Takt das Auge.
 
 ### Freitag
 
@@ -306,7 +400,7 @@ Dann hebt der Mann den Kopf, und sieht direkt in die Kamera: zwei dunkle Schlitz
 
 Keine Musik, nur die Lüfter. Lange nichts.
 
-Hat sie den Ort verkauft, kommt fünf Minuten später darüber eine letzte Nachricht: „Zahlung erfolgt. Danke für die Live-Übertragung.“ Das
+Hat sie den Ort verkauft, kommt um 23:05, noch über `SIGNAL LOST`, eine letzte Nachricht: „Zahlung erfolgt. Danke für die Live-Übertragung.“ Das
 Kassenbuch schreibt sich selbst eine Zeile dazu: „Ines Calder: tot.“
 
 Juno sitzt in ihrer Wohnung. Der Puffer hat alles festgehalten, auch wenn sie nicht auf REC gedrückt hat. „Ich hab's. Ich hab alles.“ Und
@@ -320,6 +414,4 @@ Abblende. Kapitel 2: Aufnahme.
 
 ## Noch offen
 
-Was noch offen war, ist vorläufig entschieden (`story.md` §10b) und wird beim Durchspielen des Mocks geprüft.
-
-- **Noch nicht gebaut:** Die Straße hat noch keinen Eckladen und keinen Automaten mit Kamera davor.
+- **Vorschläge:** Die Zeilen, Preise und Zuschauerzahlen des Kapitels werden beim Durchspielen geprüft (`kapitel1-design.md`).

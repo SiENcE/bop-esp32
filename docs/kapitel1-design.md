@@ -79,7 +79,7 @@ Juno Sable im Prolog Kessler verkauft hat, sagt Varga das offen: „Sable sagt, 
 
 ## 4. Auftrag B: „Der Eckladen" (die Tidewater Boys)
 
-Eine Nachricht von „TIDE": „Okonkwo, Kowalski 9. Wir wollen den Tresorcode. 500. Keine Fragen." Der
+Eine Nachricht von „TIDE": „Okonkwo, Jade Row. Wir wollen den Tresorcode. 500. Keine Fragen." Der
 Laden steht in der **Jade Row**, der Gasse links von der Kowalski-Straße (entschieden 2026-11-06, story §10c), Durchgang am linken Ende der Straße, gleich hinter LUCKY STATIC. Herr Okonkwo verkauft Reis, Batterien und Raucherwaren und
 grüßt Juno jeden Abend.
 
