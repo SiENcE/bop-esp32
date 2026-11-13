@@ -62,7 +62,8 @@ ui() {
     $PXL build art/ui/hud.px.js --out build/art/ui --no-preview | tail -n 1
     $PXL build art/ui/looks.px.js --out build/art/ui --no-preview | tail -n 1
     $PXL build art/ui/look_strasse.px.js --out build/art/ui --no-preview | tail -n 1   # the look down from the ledge
-    $ATLAS build/art/ui assets/ui.js --only "zoom_*,ui_*,look_*"
+    $PXL build art/ui/items.px.js --out build/art/ui --no-preview | tail -n 1          # what is in the bag (Chapter 1)
+    $ATLAS build/art/ui assets/ui.js --only "zoom_*,ui_*,look_*,inv_*"
 }
 
 title() {
@@ -105,7 +106,7 @@ mock() {
     done
     # the roof of today comes from the old photo's code
     $PXL build art/ui/deck_wallpaper.px.js --only dach_bg,dach_heute --out build/art/mock --no-preview | tail -n 1
-    $ATLAS build/art/mock assets/mock.js --only "cam*,gasse_*,laundromat_*,lucky_*,drain_*,sable_*,dach_*,jade_*,okonkwo_*,mock_*,look_*,inv_*,zoom_keypad"
+    $ATLAS build/art/mock assets/mock.js --only "cam*,gasse_*,laundromat_*,lucky_*,drain_*,sable_*,dach_*,jade_*,okonkwo_*,mock_*,look_*"
 }
 
 room() {

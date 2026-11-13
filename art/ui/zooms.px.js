@@ -11,6 +11,9 @@
 //   zoom_ring             cam04's table: Kessler pulls his wedding ring off, Varga's hand waits, palm
 //                         up, the watch at his wrist; 3 frames, the ring the brightest cluster
 //   zoom_ring_hand_pale   Kessler's hand without the ring: the pale band where it was (Chapter 1)
+//   zoom_keypad           through CAM 07V onto Okonkwo's customer display at one in the night: a small
+//                         TOTAL where the price should be, and every key he typed, 4-1-7-0-9, in VFD
+//                         segments (the unlit ones faint behind), the cursor after the 9; still (Chapter 1, job B)
 //
 // How it is drawn: each picture is a small 2D buffer painted back to front; tubes (fingers, the mast)
 // and ellipsoids (palms, a head) are shaded as round forms lit from the upper left, flat shapes take
@@ -437,4 +440,114 @@ ramps("0123456789")
     kesslerHand(S, { pale: true, dx: 22, dy: 4 })
     S.flush(c)
   })
+
+  // ================================================================ zoom_keypad
+  // Painted on the lines of the approved block A (art/mockups/zoom_keypad_blocks.px.js, drawA): the display's housing fills the
+  // zoom above its stalk, the shop behind it out of focus. The moulded housing lit from the upper left (the bulb): its top lip,
+  // a bevel down into the recess, two screws, a dim power lamp; the dark glass with the bulb's glare across its upper left; the
+  // small TOTAL where the price should be; the code in vacuum-fluorescent segments (lit with softer tips, the unlit ones a ghost
+  // behind, a glow where they light the glass), the underscore after the 9. One frame: the zoom is still.
+  /** the segments of a seven-segment digit w wide, h high, t thick at (x, y), as rects */
+  function kpSegs(x, y, w, h, t) {
+    const m = Math.floor((h - t) / 2)
+    return {
+      a: [x + t, y, w - 2 * t, t], d: [x + t, y + h - t, w - 2 * t, t], g: [x + t, y + m, w - 2 * t, t],
+      f: [x, y + t, t, m - t], b: [x + w - t, y + t, t, m - t], e: [x, y + m + t, t, h - m - 2 * t], c: [x + w - t, y + m + t, t, h - m - 2 * t],
+    }
+  }
+  const KP_LIT = { 0: "abcdef", 1: "bc", 4: "bcfg", 7: "abc", 9: "abcdfg" }
+  /** the display's pixels as keys (row by row, ZW x ZH); the review sheet reads them too */
+  function zoomKeypadKeys() {
+    const S = zbuf(), G = 8, GY = 10, GW = 80, GH = 34                       // the glass
+    const role = new Array(ZW * ZH).fill("")                                 // what each glass pixel shows
+    const set = (x, y, k, r) => { S.bg(x, y, k); if (r) role[y * ZW + x] = r }
+    const roleAt = (x, y) => (x >= 0 && y >= 0 && x < ZW && y < ZH ? role[y * ZW + x] : "")
+    bokeh(S, 31, { density: 0.06, keys: "334", base: "2" })                 // the shop behind, the bulb's warm wall
+
+    // the stalk: a round post lit from the left, in the housing's shadow at the top, a swivel joint
+    for (let y = 48; y < ZH; y++) for (let x = 42; x < 54; x++) {
+      let k = x === 42 ? "3" : x < 45 ? "4" : x === 45 ? "4" : x < 52 ? "3" : "2"
+      if (y === 48) k = "1"
+      else if (y === 51) k = x < 52 ? "2" : "1"
+      else if (y === 52) k = x < 45 ? "5" : x < 52 ? "4" : "2"
+      if (x === 44 && y > 52 && y % 2) k = "5"
+      set(x, y, k)
+    }
+
+    // the housing: x 3-92, y 5-48, its outer corners rounded off
+    for (let y = 5; y <= 48; y++) for (let x = 3; x <= 92; x++) {
+      if ((x === 3 || x === 92) && (y === 5 || y === 48)) continue
+      let k = "3"
+      if (y === 5) k = x < 52 ? "6" : "5"                                    // the top lip catches the bulb, fading right
+      else if (y === 6) k = x < 12 ? "6" : "5"
+      else if (y >= 47) k = y === 48 ? "1" : "2"                              // the underside
+      else if (x === 3) k = "5"
+      else if (x === 4) k = "4"
+      else if (x >= 91) k = x === 92 ? "1" : "2"
+      else if (y === 46) k = "2"
+      else if (zhash(x >> 1, y, 77) < 0.04) k = "4"                         // scuffs on the moulding
+      set(x, y, k)
+    }
+    // the bevel down into the recess: its top and left walls in shadow, its bottom and right lit
+    for (let x = 6; x <= 89; x++) { set(x, 8, "2"); set(x, 45, x < 9 ? "3" : "4") }
+    for (let y = 8; y <= 45; y++) { set(6, y, "2"); set(89, y, y < 11 ? "3" : "4") }
+    set(6, 45, "3"); set(89, 8, "2")
+    // the bezel's inner lip, the glass
+    for (let y = 9; y <= 44; y++) for (let x = 7; x <= 88; x++) set(x, y, "0")
+    for (let y = GY; y < GY + GH; y++) for (let x = G; x < G + GW; x++) set(x, y, "1", "glass")
+    // the screws at the ends, their slots; the power lamp under the glass at the right
+    set(5, 25, "2"); set(5, 26, "1"); set(5, 27, "4")
+    set(90, 25, "2"); set(90, 26, "2"); set(90, 27, "5")
+    set(85, 46, "6"); set(86, 46, "5"); set(85, 47, "3")
+
+    // the bulb's glare across the glass's upper left (the block's quad, its edge at x + y = 36), brightest in the corner,
+    // a thin second streak beside it (the shop window's edge), and the bulb itself, a hard little spot
+    for (let y = GY; y < GY + GH; y++) for (let x = G; x < G + GW; x++) {
+      const d = (x - G) + (y - GY), dither = (x + y) % 2
+      let k = null
+      if (x + y < 36 && y < 26) k = d < 4 ? "3" : d < 8 ? (dither ? "3" : "2") : d < 14 ? "2" : dither ? "2" : "1"
+      else if (x + y === 40 && y < 29) k = "2"
+      if (k) set(x, y, k, "glare")
+    }
+    set(9, 11, "4"); set(10, 11, "4"); set(9, 12, "3")
+
+    // TOTAL in the hud's 3x5 letters, dim, where the price should be
+    const HUD = { T: ["###", ".#.", ".#.", ".#.", ".#."], O: [".#.", "#.#", "#.#", "#.#", ".#."], A: [".#.", "#.#", "###", "#.#", "#.#"], L: ["#..", "#..", "#..", "#..", "###"] }
+    let tx = 11
+    for (const ch of "TOTAL") { HUD[ch].forEach((row, j) => [...row].forEach((p, i) => { if (p === "#") set(tx + i, 13 + j, "5", "text") })); tx += 4 }
+
+    // the code, as the block lays it out: digits 7 wide, 15 high, segments 2 thick, dashes 4 wide, 2 apart, centred on x 45
+    const DW = 7, DH = 15, T = 2, DSH = 4, GAP = 2, Y = 21
+    let x = Math.round(45 - (5 * DW + 4 * DSH + 8 * GAP) / 2)
+    const seg = ([sx, sy, w, h], lit) => {
+      for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) {
+        const px = sx + i, py = sy + j
+        if (lit) set(px, py, "9", "lit")
+        else set(px, py, roleAt(px, py) === "glare" ? "3" : "2", "ghost")      // the ghost shows a step brighter under the glare
+      }
+    }
+    for (const ch of "4-1-7-0-9") {
+      if (ch === "-") { seg([x, Y + Math.floor((DH - T) / 2), DSH, T], true); x += DSH + GAP; continue }
+      for (const [s, r] of Object.entries(kpSegs(x, Y, DW, DH, T))) seg(r, KP_LIT[ch].includes(s))
+      x += DW + GAP
+    }
+    for (let i = 0; i < 5; i++) for (let j = 0; j < 2; j++) set(x + 1 + i, 34 + j, "9", "lit")   // the cursor, still
+
+    // the glow: glass touching a lit segment goes up to 3 (a step more under the glare)
+    const src = S.k.slice(), lit = (x, y) => roleAt(x, y) === "lit"
+    for (let y = GY; y < GY + GH; y++) for (let x = G; x < G + GW; x++) {
+      const r = roleAt(x, y)
+      if (r !== "glass" && r !== "glare") continue
+      const k = Number(src[y * ZW + x])
+      if (lit(x - 1, y) || lit(x + 1, y) || lit(x, y - 1) || lit(x, y + 1)) S.bg(x, y, String(Math.max(k + 1, 3)))
+    }
+    return S
+  }
+  anim("zoom_keypad", { w: ZW, h: ZH, frames: 1 }, (c) => zoomKeypadKeys().flush(c))
+  // for the review sheet (art/ui/zoom_keypad_review.px.js): the painted keys, frame included
+  var ZOOM_KEYPAD_KEYS = () => {
+    const S = zoomKeypadKeys(), k = S.k.slice()
+    for (let y = 0; y < ZH; y++) for (let x = 0; x < ZW; x++) if (x === 0 || y === 0 || x === ZW - 1 || y === ZH - 1) k[y * ZW + x] = "0"
+    return { w: ZW, h: ZH, k }
+  }
 }

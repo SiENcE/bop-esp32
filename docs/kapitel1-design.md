@@ -383,9 +383,9 @@ Größen wie in `kapitel0-design` §8: 30 px pro Meter Höhe; im Feed misst ein 
 - **Der Schläfer:** Variante B, der schwere Mann in der Steppweste mit der Mütze über den Augen (sie sieht aus wie eine VR-Brille, das bleibt so), mit dem Lull-Pflaster.
 - **Die weißen Träger:** Variante A (Overall, Kapuze, Maske unterm Kinn), das Mädchen A (Schlafanzug, die Jacke des Vaters, barfuß); **nur in der Nahaufnahme** `look_traeger`, in der nahen Fassung, mit dem kurzen Wagen nach der Skizze der Nutzerin. Auf der Straße stehen sie nicht.
 - **Die Zeitung** (`look_zeitung`): die Innenseite mit den Passfotos, um jedes Gesicht die vier Ecken in blauem Kuli.
-- **Das Kassendisplay** (`zoom_keypad`): das Display allein, die große Zahl, das kleine TOTAL.
+- **Das Kassendisplay** (`zoom_keypad`): das Display allein, die große Zahl, das kleine TOTAL; **gemalt** in `art/ui/zooms.px.js` (96x56 wie die anderen Zooms).
 - **Der Blick auf die Ringe** (`dach_blick`): genau die gerade Sicht am Turm entlang (der alte Block A); **gemalt** in `art/rooms/dach_blick.px.js`. Die Fassung B, schräg vom Platz aus, ist weg.
-- **Die Gegenstände:** überall Variante A, nur der Notschlüssel als B (der dünne Stab mit dem Ring und dem roten Band).
+- **Die Gegenstände:** überall Variante A, nur der Notschlüssel als B (der dünne Stab mit dem Ring und dem roten Band); **gemalt** in `art/ui/items.px.js`, im UI-Atlas.
 
 ## 11. Rätselkette als Überblick
 
