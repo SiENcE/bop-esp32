@@ -31,15 +31,7 @@ anim("mock_haldane", { w: 15, h: 46, frames: 1, fps: 1, outline: "k", pivot: "bo
   c.rect(2, 11, 11, 31, "f"); c.rect(6, 11, 3, 31, "e"); c.rect(1, 13, 2, 16, "f"); c.rect(12, 13, 2, 16, "f"); c.rect(3, 42, 4, 4, "h"); c.rect(8, 42, 4, 4, "h")
 })
 // (Ines in the laundromat is painted now: art/characters/ines_waschsalon.px.js)
-// a close-up: one page of the stack, every face in it marked with four corners
-scene("look_zeitung", { w: 170, h: 112, bg: "h" }, (c) => {
-  c.rect(0, 0, 170, 112, "h"); c.rect(0, 0, 170, 16, "g")
-  TXT.draw(c, 85, 5, "NINTH HERALD", "k", { font: "hud", align: "center" })
-  for (const [x, y] of [[10, 24], [62, 24], [114, 24], [10, 68], [62, 68], [114, 68]]) {
-    c.rect(x, y, 40, 34, "f"); c.rect(x + 13, y + 6, 14, 14, "d"); c.rect(x + 8, y + 20, 24, 14, "e")
-    for (const [cx, cy, dx, dy] of [[x + 9, y + 3, 1, 1], [x + 30, y + 3, -1, 1], [x + 9, y + 23, 1, -1], [x + 30, y + 23, -1, -1]]) { c.hline(dx > 0 ? cx : cx - 3, cy, 4, "k"); for (let n = 0; n < 4; n++) c.px(cx, cy + n * dy, "k") }
-  }
-})
+// (the newspaper page is painted now: look_zeitung in art/ui/look_zeitung.px.js)
 // (CAM 22 is painted now: art/cams/cam22.px.js; Ines there at its scale is painted too: ines_feed_bar in art/characters/feed_people.px.js)
 // (CAM 24 is painted now: art/cams/cam24.px.js)
 // (CAM 30 is painted now: art/cams/cam30.px.js)
