@@ -11,7 +11,7 @@ const T = (/** @type {string} */ text) => ({ say: "teo", text });
 
 Cutaway.actor("teo", { name: "Teo", color: "#ffa040",
   costume: { idle: "mock_teo", walk: "mock_teo", talk: "mock_teo" }, voice: { pitch: 52, range: 5, wave: "triangle", syllable: 70, speed: 1.15 },
-  look: ["Teo trägt die orange Weste und den Gehörschutz um den Hals.", "Seine Kiemen sind rot vom Salzwasser.", "Hinter seinem Ohr klebt das Lull-Pflaster, und es blinkt."],
+  look: ["Teo trägt die orange Weste und den Gehörschutz um den Hals.", "Am Hals leuchten seine Kiemen, wie bei allen aus der Pumpenhalle.", "Hinter seinem Ohr klebt das Lull-Pflaster, und es blinkt."],
   talk: [T("Iss, Ju.")] });
 
 // never watched: it happens as its window ends, wherever Juno is (the window begins with the evening, so 18:30 is the only new stop of

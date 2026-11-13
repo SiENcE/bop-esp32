@@ -10,6 +10,8 @@
 (function () {
 const A3 = Nagiwa.at.cam03, A15 = Nagiwa.at.cam15, AM = Nagiwa.at.drain_market, AB = Nagiwa.at.sable_booth;
 const S = (/** @type {string} */ text) => ({ say: "sable", text });
+// Sable is drawn from the front, lens over the left eye: the same picture for every facing, so the engine never mirrors it
+const every = (/** @type {string} */ anim) => ({ se: anim, sw: anim, ne: anim, nw: anim });
 
 // ---- who he is now: a person of his own, so the prologue's Kessler keeps his scarf
 const RECOGNISED = [{ zoom: "zoom_vending_n7" }, "Er zieht die Sieben, Huhn scharf.", "Er trägt jetzt eine Kapuze statt dem Schal. Aber die Nudeln kann er nicht lassen.", { zoom: false },
@@ -57,7 +59,7 @@ Cutaway.dialog("k1a_warn", { main: { choices: [
 // ---- Sable sells access. The booth is behind a curtain on the Drain Market. Only a hotel Juno knows of can be asked for.
 Nagiwa.ledger.sable_kessler.what.swap = "Kesslers Schulden, gegen einen Code";
 Cutaway.actor("sable", { name: "Sable", color: "#ff4fd3", room: "sable_booth", at: AB.sable, facing: "sw",
-  costume: { idle: "sable_sit", walk: "sable_sit", talk: "sable_talk" }, voice: { pitch: 56, range: 3, wave: "triangle", syllable: 80, speed: 0.95 },
+  costume: { idle: every("sable_sit"), walk: every("sable_sit"), talk: every("sable_talk") }, voice: { pitch: 56, range: 3, wave: "triangle", syllable: 80, speed: 0.95 },
   look: ["Sable hat einen Mantel, eine Pfeife und eine Preisliste.", "Bei Sable hat alles einen Preis. Das ist das Ehrliche daran."],
   talk: [S("Juno. Kaufst du, oder verkaufst du?"), { dialog: "sable" }] });
 Cutaway.dialog("sable", {

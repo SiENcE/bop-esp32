@@ -1,0 +1,2 @@
+# ripgrep (and the Grep tool) skip these: generated atlases are base64 in one line, a search hit would print it whole
+assets/

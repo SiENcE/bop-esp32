@@ -324,7 +324,7 @@ Cutaway.room.get("gasse").hotspots.market.use = [{ if: "markt_gesehen", then: [{
   { goto: "drain_market", at: AM.arrive, face: "down" }];
 
 // the big look upwards (a shot of its own: the block for what will be painted as large as the intro's)
-Cutaway.room("dach_blick", { name: "Die Ringe", background: "dach_blick_b_bg", observe: true, lines: "bottom", buttons: false,
+Cutaway.room("dach_blick", { name: "Die Ringe", background: "dach_blick_bg", observe: true, lines: "bottom", buttons: false,
   ambience: ["city_far", { sfx: "feed_rain", gain: 0.5 }], music: { theme: "juno", intensity: 0.2 },
   fx: [{ kind: "rain", rect: [0, 0, 320, 180], count: 30, color: "#a8b8d0", speed: 90, slant: 0, length: 3 }],
   hotspots: { back: { name: "Zurück", rect: [0, 0, 320, 180], exit: { to: "dach", at: AD.edge, face: "sw" } } },

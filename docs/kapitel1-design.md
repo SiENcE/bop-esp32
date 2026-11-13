@@ -374,6 +374,19 @@ Größen wie in `kapitel0-design` §8: 30 px pro Meter Höhe; im Feed misst ein 
 | Lt. Morrow | 50 px | grauer Trenchcoat offen über einem dunklen Pullover, der Gürtel hängt lose; die Haare zurückgebunden; die Marke leuchtet am Band (entschieden 2026-11-09 von der Nutzerin aus je zwei Varianten in `docs/characters/tide_people_blocks_x4.png`; **gemalt** in `art/characters/tide_people.px.js`, `docs/characters/tide_people_x5.png`) | `#a8b8d0` | Feed |
 | Tidewater-Junge | 44 px | Gezeitenkind: der Hoodie zu groß, die Kapuze unten, der Kopf kahl rasiert; die Kiemen offen am Hals, drei dunkle Schlitze mit je einer leuchtenden Markierung darunter (deutlicher als in der Skizze, auf Wunsch der Nutzerin), bis zur Schläfe; der Umschlag in der Hand (entschieden 2026-11-09 von der Nutzerin aus je zwei Varianten in `docs/characters/tide_people_blocks_x4.png`; **gemalt** in `art/characters/tide_people.px.js`, `docs/characters/tide_people_x5.png`) | `#7ab0c0` | Feed |
 
+**Was noch auf Blöcken stand, entschieden 2026-11-13** (die Blätter in `docs/characters/`, `docs/cams/`, `docs/rooms/` mit `_blocks` im Namen, ihre Quellen in `art/test/` und `art/mockups/`):
+
+- **Teo:** Variante A, der Gehörschutz um den Hals, die Kiemen leuchten (die Zeile beim Ansehen sagt das jetzt, statt „rot vom Salzwasser“). Er hat eine eigene gezeichnete NW-Ansicht ohne Pflaster, denn gespiegelt säße es am falschen Ohr. **Regel seitdem:** Wer etwas nur auf einer Seite trägt (ein Pflaster, eine Tasche, eine Linse), wird für die Richtung, in der es die Seite wechseln würde, eigens gezeichnet und nicht gespiegelt. Sable zeigt die Engine deshalb in jeder Richtung ungespiegelt. Juno bleibt vorerst gespiegelt (Entscheidung der Nutzerin).
+- **Frau Haldane:** Variante A (Lockenwickler unter dem Netz, der lange Morgenmantel), ihre Farbe ist **rosa**, auch im Sessel hinter ihrer Tür. Solange sie in CAM 14 schlafwandelt, ist der Sessel leer. Sie hat eine eigene NW-Ansicht. Die Zeitungen sind das verschnürte Bündel.
+- **Kessler:** Variante A, ein heller Kapuzenpulli unter dem Büromantel, damit man ihn im Feed findet.
+- **Ines im Waschsalon:** Variante A, der Zopf über den Rücken, die Tasche an der rechten Hüfte; NE und NW gezeichnet.
+- **Der Schläfer:** Variante B, der schwere Mann in der Steppweste mit der Mütze über den Augen (sie sieht aus wie eine VR-Brille, das bleibt so), mit dem Lull-Pflaster.
+- **Die weißen Träger:** Variante A (Overall, Kapuze, Maske unterm Kinn), das Mädchen A (Schlafanzug, die Jacke des Vaters, barfuß); **nur in der Nahaufnahme** `look_traeger`, in der nahen Fassung, mit dem kurzen Wagen nach der Skizze der Nutzerin. Auf der Straße stehen sie nicht.
+- **Die Zeitung** (`look_zeitung`): die Innenseite mit den Passfotos, um jedes Gesicht die vier Ecken in blauem Kuli.
+- **Das Kassendisplay** (`zoom_keypad`): das Display allein, die große Zahl, das kleine TOTAL.
+- **Der Blick auf die Ringe** (`dach_blick`): genau die gerade Sicht am Turm entlang (der alte Block A); **gemalt** in `art/rooms/dach_blick.px.js`. Die Fassung B, schräg vom Platz aus, ist weg.
+- **Die Gegenstände:** überall Variante A, nur der Notschlüssel als B (der dünne Stab mit dem Ring und dem roten Band).
+
 ## 11. Rätselkette als Überblick
 
 ```
