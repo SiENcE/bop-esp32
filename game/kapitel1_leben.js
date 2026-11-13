@@ -8,9 +8,14 @@
 (function () {
 const AF = Nagiwa.at.flat;
 const T = (/** @type {string} */ text) => ({ say: "teo", text });
+/** his costume; with "_bowl" Bao's broth in his hands, seen from the front (the bowl only shows in SE) @param {string} bowl */
+const TEO = (bowl) => Object.fromEntries(["idle", "walk", "talk"].map((k) => [k, { se: `teo${bowl}_${k}_se`, ne: `teo_${k}_ne`, nw: `teo_${k}_nw` }]));
+// he carries the broth in until he hands it over: only a look, so a view flag (no state for the solver)
+Cutaway.state.view("teo_bowl");
 
 Cutaway.actor("teo", { name: "Teo", color: "#ffa040",
-  costume: { idle: "mock_teo", walk: "mock_teo", talk: "mock_teo" }, voice: { pitch: 52, range: 5, wave: "triangle", syllable: 70, speed: 1.15 },
+  // drawn SE, NE and NW (art/characters/teo.px.js): the Lull patch is behind his left ear, so NW is drawn, not the mirror of NE
+  costume: TEO(""), poses: [{ if: "teo_bowl", ...TEO("_bowl") }], voice: { pitch: 52, range: 5, wave: "triangle", syllable: 70, speed: 1.15 },
   look: ["Teo trägt die orange Weste und den Gehörschutz um den Hals.", "Am Hals leuchten seine Kiemen, wie bei allen aus der Pumpenhalle.", "Hinter seinem Ohr klebt das Lull-Pflaster, und es blinkt."],
   talk: [T("Iss, Ju.")] });
 
@@ -28,12 +33,14 @@ Cutaway.moment("teo_visit", { room: "deck", day: 2, from: "18:00", to: "18:30", 
   { face: "nw" },
   { open: "flat/door_gap" },
   { open: "flat/door_leaf", sfx: "door_open", ms: 400 },
+  { set: "teo_bowl" },
   { place: "teo", room: "flat", at: AF.doorway, face: "se" },
   { walk: "teo", to: AF.visitTeo, free: true, wait: false },
   { walk: "juno", to: AF.visitJuno },
   { face: "nw" },
   { face: "teo", to: "se" },
   { say: "teo", text: "Von Bao. Er sagt, du hast seit Dienstag nichts gegessen. Er zählt mit." },
+  { unset: "teo_bowl" },
   "Er zählt falsch.",
   { say: "teo", text: "Er zählt nie falsch. Nur zu deinen Gunsten." },
   "Hinter seinem Ohr klebt ein blasses Pflaster, und es blinkt.",
