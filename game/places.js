@@ -119,7 +119,10 @@ Nagiwa.at = {
   cam24: { out: [152, 192], gate: [211, 113], street: [256, 110], away: [518, 144], mic: [211, 99],
     doorPoly: [67, 28, 69, 0, 106, 0, 128, 180, 90, 180, 84, 167, 73, 126, 67, 68] },
   // job B (game/auftrag_tide.js): Jade Row from Nagi·wa's camera above it, and from the machine's own at hip height
-  cam15: { door: [160, 150], spot: [271, 100], mic: [200, 100], capsules: [84, 28, 229, 52], c23: [258, 28, 26, 25] },
+  // painted frontal (art/cams/cam15.px.js, measured there: CAM15_LAYOUT): Kessler comes in at the door on the right and walks along the
+  // capsule wall to 23's ladder; the wall's hotspot leaves 23 out with a notch, so the two never cover each other
+  cam15: { door: [258, 126], spot: [125, 120], mic: [122, 104],
+    c23Poly: [105, 78, 126, 77, 129, 96, 109, 96], capsulesPoly: [85, 78, 105, 78, 109, 96, 129, 96, 126, 78, 252, 78, 240, 112, 95, 112] },
   // painted near iso (art/cams/cam30.px.js, measured there: CAM30_LAYOUT): Thursday Ines comes from the street under the camera (off the
   // bottom) to the board; Friday from the right, round the frame to the stair's head, down the steps and under the arch off the top
   cam30: { thuIn: [210, 222], board: [179, 102], friIn: [344, 177], turn: [151, 153], top: [106, 118], water: [163, 84], gone: [253, -12], mic: [128, 102],

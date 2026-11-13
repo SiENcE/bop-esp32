@@ -25,7 +25,7 @@ Cutaway.actor("kessler2", { name: "Jemand mit Kapuze", color: "#b8c890",
     else: [{ if: "varga_step", then: ["Den hab ich."], else: RECOGNISED }] }] });
 Cutaway.routine("kessler2", [
   { day: [2, 3, 4], from: "22:15", to: "22:30", if: ["!off_varga", "!kessler_gone"], room: "cam03", at: A3.exitFar, path: [A3.exitFar, A3.vendingSpot, A3.exitRight] },
-  { day: [2, 3, 4], from: "22:30", to: "22:45", if: ["!off_varga", "!kessler_gone"], room: "cam15", at: A15.door, path: [A15.door, A15.spot] },
+  { day: [2, 3, 4], from: "22:30", to: "22:45", if: ["!off_varga", "!kessler_gone"], room: "cam15", at: A15.door, path: [A15.door, A15.spot], once: true },   // in at the door, along the wall to 23, and he stays
 ]);
 
 // ---- cam03: he has stopped coming to work; the machine is the one thing he still comes for
@@ -42,8 +42,8 @@ Nagiwa.cams.cam15 = { id: "15", place: "KAPSELHOTEL MORPHEUS", owner: "MORPHEUS,
   linked: ["Sables Code geht."] };
 Nagiwa.cache.note_kessler_hideout = { kind: "note", name: "KESSLER, KAPSEL 23", about: "Kapselhotel Morpheus, Kapsel 23. Er kommt um halb elf, ohne Schal." };
 Nagiwa.camRoom("cam15", { background: "cam15_bg", mic: { at: A15.mic, clear: 40, lost: 150 }, hotspots: {
-  capsules: { name: "Kapseln", rect: A15.capsules, look: ["Da sind zwei Reihen Kapseln. Hier schläft, wer nicht gefunden werden will.", "Oder wer sich nichts anderes leisten kann."] },
-  kapsel23: { name: "Kapsel 23", rect: A15.c23, if: "cache_note_kessler_hideout",
+  capsules: { name: "Kapseln", poly: A15.capsulesPoly, look: ["Da sind zwei Reihen Kapseln. Hier schläft, wer nicht gefunden werden will.", "Oder wer sich nichts anderes leisten kann."] },
+  kapsel23: { name: "Kapsel 23", poly: A15.c23Poly, if: "cache_note_kessler_hideout",
     look: [{ if: "kessler_gone", then: [{ if: "k1a=sold", then: ["Kapsel 23 steht offen. Auf dem Boden liegt eine zerbrochene Brille."], else: ["Kapsel 23 ist leer. Auf dem Bildschirm steht noch meine Zeile."] }], else: ["Das ist Kapsel 23.", "Jede Kapsel hat einen Bildschirm, und das Hotel schreibt drauf, wann man raus muss."] }],
     use: [{ if: "!k1a", then: ["Das Hotelnetz kann auf jeden Bildschirm schreiben. Ich jetzt auch.", { dialog: "k1a_warn" }], else: ["Das ist erledigt."] }] },
   rewind: { name: "Puffer", z: 5, if: ["time>=22:45", "!cache_note_kessler_hideout", "!kessler_gone"], use: ["Ich spul den Puffer zurück auf 22:30.", ...CAPSULE] },

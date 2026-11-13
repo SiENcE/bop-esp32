@@ -109,17 +109,7 @@ scene("dach_blick_b_bg", { w: W, h: H, bg: "k" }, (c) => {
 // (CAM 18 is painted now: art/cams/cam18.px.js)
 // (LUCKY STATIC is a room baked from its map now: art/rooms/lucky_static.map.js)
 // (the Drain Market is painted now, seen from above: art/rooms/drain_market.px.js)
-// the Morpheus from its corridor's ceiling: two rows of capsules with their numbers, each with a small screen
-scene("cam15_bg", { w: W, h: H, bg: "0" }, (c) => {
-  ROOM(c, "4", "7", 84)
-  // (the left column is the cameras' strip: the capsules begin after it, the door Kessler comes through is under the camera)
-  for (let row = 0; row < 2; row++) for (let i = 0; i < 8; i++) {
-    const x = 84 + i * 29, y = 28 + row * 27, n = 17 + row * 8 + i
-    c.rect(x, y, 26, 25, "2"); c.rect(x + 2, y + 2, 22, 21, "3"); c.rect(x + 17, y + 4, 6, 4, "8")
-    TXT.draw(c, x + 10, y + 12, String(n), "9", { font: "hud", align: "center" })
-  }
-  SIGN(c, 110, 0, 100, "MORPHEUS"); c.rect(146, 120, 28, 60, "6")
-})
+// (CAM 15 is painted now: art/cams/cam15.px.js)
 // who walks through cam03 and cam15 now: a hood where the scarf was
 anim("mock_kessler_hood", { w: 13, h: 24, frames: 1, fps: 1, outline: "1", pivot: "bottom" }, (c) => {
   c.rect(4, 0, 5, 7, "5"); c.rect(5, 3, 3, 3, "2"); c.rect(2, 7, 9, 10, "6"); c.rect(3, 17, 3, 7, "4"); c.rect(7, 17, 3, 7, "4")
