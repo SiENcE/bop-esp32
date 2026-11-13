@@ -77,9 +77,11 @@ Cutaway.dialog("cam31_takt", takt);
 // ---- the people of job C (art/characters/feed_people.px.js)
 const A21 = Nagiwa.at.cam21, A22 = Nagiwa.at.cam22, A23 = Nagiwa.at.cam23, A24 = Nagiwa.at.cam24, A30 = Nagiwa.at.cam30, A31 = Nagiwa.at.cam31;
 Nagiwa.people.ines = { name: "INES CALDER", known: "know_ines", label: "Frau im Kittel", speaker: "Ines" };
+// her figure at the laundromat's scale, from behind (art/characters/ines_waschsalon.px.js): NW drawn, so the bag stays at her right hip
+const WASH = { ne: "ines_wash_ne", nw: "ines_wash_nw" };
 Cutaway.actor("ines", { name: "Frau im Kittel", color: "#f0a0c0",
   costume: { idle: { se: "ines_feed_front", ne: "ines_feed_back" }, walk: { se: "ines_feed_front_walk", ne: "ines_feed_back_walk" }, talk: { se: "ines_feed_front", ne: "ines_feed_back" } }, speed: [14, 10], voice: { pitch: 66, wave: "triangle", syllable: 70 },
-  poses: [{ if: "at:ines=cam23", idle: "mock_ines", walk: "mock_ines", talk: "mock_ines" },     // CAM 23 is the laundromat itself: she is at its scale there
+  poses: [{ if: "at:ines=cam23", idle: WASH, walk: WASH, talk: WASH },     // CAM 23 is the laundromat itself: she is at its scale there
     { if: "at:ines=cam22", idle: "ines_feed_bar", walk: "ines_feed_bar", talk: "ines_feed_bar" },   // CAM 22 is near: her upper body over the counter
     { if: "ines_down", idle: "ines_feed_down", walk: "ines_feed_down", talk: "ines_feed_down" },
     { if: "ines_gives", idle: "ines_feed_give", talk: "ines_feed_give" }],

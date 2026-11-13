@@ -47,6 +47,7 @@ characters() {
     $PXL build art/characters/sable.px.js --out build/art/characters --no-preview | tail -n 1        # Sable, behind the desk in the booth (job A)
     $PXL build art/characters/teo.px.js --out build/art/characters --no-preview | tail -n 1          # Teo, Juno's brother (Chapter 1)
     $PXL build art/characters/schlaefer.px.js --out build/art/characters --no-preview | tail -n 1    # the sleeper behind the laundromat's counter (Chapter 1)
+    $PXL build art/characters/ines_waschsalon.px.js --out build/art/characters --no-preview | tail -n 1 # Ines in the laundromat, from behind (Chapter 1)
     $PXL build art/characters/juno_top.px.js --out build/art/characters --no-preview | tail -n 1     # Juno from above (the Drain Market)
     $PXL build art/characters/markt_people.px.js --out build/art/characters --no-preview | tail -n 1 # the Drain Market's people from above
     # Ines's handover reaches past her on one side: its anchor keeps her feet where her other sprites have them (15 wide, 22 high)

@@ -30,14 +30,7 @@ anim("mock_haldane", { w: 15, h: 46, frames: 1, fps: 1, outline: "k", pivot: "bo
   c.rect(4, 0, 7, 4, "h"); c.rect(4, 4, 7, 7, "g"); c.hline(5, 7, 2, "e"); c.hline(8, 7, 2, "e")
   c.rect(2, 11, 11, 31, "f"); c.rect(6, 11, 3, 31, "e"); c.rect(1, 13, 2, 16, "f"); c.rect(12, 13, 2, 16, "f"); c.rect(3, 42, 4, 4, "h"); c.rect(8, 42, 4, 4, "h")
 })
-// Ines at the laundromat's scale (CAM 23 is the laundromat's own picture), seen from behind as she faces the machines: dark hair
-// tied back, the white coat to her knees, a bag on her shoulder
-anim("mock_ines", { w: 15, h: 50, frames: 1, fps: 1, outline: "k", pivot: "bottom" }, (c) => {
-  c.rect(4, 0, 7, 9, "a"); c.rect(6, 9, 3, 3, "a")                                         // her hair, its knot
-  c.rect(2, 11, 11, 25, "h"); c.vline(7, 20, 16, "g"); c.rect(1, 13, 2, 17, "h"); c.rect(12, 13, 2, 17, "h")   // the coat, its back seam, the arms
-  c.rect(11, 12, 2, 12, "e"); c.rect(10, 22, 4, 6, "e")                                     // the bag's strap and the bag
-  c.rect(4, 36, 3, 11, "d"); c.rect(8, 36, 3, 11, "d"); c.rect(3, 47, 4, 3, "a"); c.rect(8, 47, 4, 3, "a")       // the legs, the shoes
-})
+// (Ines in the laundromat is painted now: art/characters/ines_waschsalon.px.js)
 // a close-up: one page of the stack, every face in it marked with four corners
 scene("look_zeitung", { w: 170, h: 112, bg: "h" }, (c) => {
   c.rect(0, 0, 170, 112, "h"); c.rect(0, 0, 170, 16, "g")
