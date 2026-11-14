@@ -105,6 +105,16 @@ es nicht mehr, §7).
   dem Stick in der Tasche prüft vorerst nur der Solver (`--set stick_ines`), denn `play.mjs` kann keinen Start mit gesetzten Flags.
   Der Start stellt außerdem `p1` aus `ledger_kessler` wieder her (dieselben Werte): Ohne `p1` ließ die Wohnungstür Juno nicht hinaus,
   und Frau Kesslers Antworten aus dem Prolog gingen wieder auf (sie gelten jetzt nur am Dienstag).
+- **Ines' Wohnung** (§3.3, `game/kapitel2_lerche.js`, die Räume `lerche_flur` und `ines_wohnung` als **Blöcke** aus den Kits des 14. Stocks
+  und von Junos Wohnung, gebaut mit `tools/new-room.mjs`): In `cam24` kommt jeden Abend um 19:30 ein Nachbar heim und tippt den Code
+  (`code_lerche`, **Platzhalter** „4719“ und als Figur ein Pendler aus `cam03`; verpasst hat ihn der Puffer). Das Tor der Jade Row fragt
+  „Zum Wohnblock Lerche.“ oder „Zurück.“ (die Klinik kommt dazu, wenn sie gebaut ist). Im Flur weiß Juno ohne `know_flat` nicht, welche
+  Tür; `cam25` (neu, mit `cam24` verbunden, das Bild des Flurs unter dem Filter) zeigt am Sonntag um 20:00 die zwei in Weiß an 4B (als Figur
+  vorerst Ashe aus `cam31`) und gibt `know_flat`. Ab Sonntag 21:00 ist 4B offen (eine Zeit, kein Flag); wer die zwei verpasst hat, erkennt
+  die Tür am Siegel `CIVIC REST – SEALED` und weiß es dann auch. Am Kühlschrank fragt Juno: „Die Serviette ansehen.“, „Das Gefrierfach
+  aufmachen.“ oder „Nichts.“, beides in beliebiger Reihenfolge; die Akte gibt `cache_note_civic_rest` und `evi_knows`, und EVIs Szene (W7)
+  läuft wie oben. Die Uhr am Montag verlangt jetzt auch `evi_knows`. Die Momente des Vortags vergisst die Nacht (`passes`), sonst
+  verdoppelt jedes „gesehen oder nicht“ alles danach.
 - Die Hinweise des Kapitels sind seine eigenen (`Cutaway.hints(..., { act: "kapitel2" })`); die von Prolog und Kapitel 1 gelten nur
   noch in ihren Akten.
 - Geprüft wird wie in Kapitel 1 der Hauptweg mit geschlossenen Fäden (`off_<thread>`): `node tools/solve-act.mjs kapitel2 --full

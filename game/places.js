@@ -45,6 +45,18 @@ Nagiwa.at = {
   kessel_lobby: fromLayout(Nagiwa.layouts.kessel_lobby),
   // the observation hall, the intro's shot 1 (art/rooms/hall.map.js, game/rooms/hall.layout.js)
   hall: fromLayout(Nagiwa.layouts.hall),
+  // the 4th floor's landing in the Wohnblock Lerche, on blocks (art/rooms/lerche_flur.map.js, game/rooms/lerche_flur.layout.js)
+  lerche_flur: fromLayout(Nagiwa.layouts.lerche_flur),
+  // Ines' flat, 4B, on blocks (art/rooms/ines_wohnung.map.js, game/rooms/ines_wohnung.layout.js); the fridge's upper part has the napkin
+  // under its magnet, its lower part is the freezer (one hotspot asks which)
+  ines_wohnung: fromLayout(Nagiwa.layouts.ines_wohnung),
+  // CAM 25 is the landing's own picture under the feed's filter, as CAM 14 is the 14th floor's (one place, one picture), the camera left
+  // out of its own picture; the two in white stand at 4B and go to the stairs with the boxes
+  cam25: (() => {
+    const L = Nagiwa.layouts.lerche_flur, S = 0;
+    return { shift: S, exposure: 2.2, mic: L.spots.door_4b, door_4b: L.spots.door_4b, door_4b2: [L.spots.door_4b[0] + 14, L.spots.door_4b[1] + 6],
+      stairs: L.spots.stairs, doorPoly: L.openingPolys.door_4b };
+  })(),
   // Kowalski Street (art/rooms/kowalski.map.js, game/rooms/kowalski.layout.js)
   kowalski: {
     fromGasse: [346, 170],

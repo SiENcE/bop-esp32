@@ -11,17 +11,21 @@
 const AF = Nagiwa.at.flat, AK = Nagiwa.at.kessel_14, AJ = Nagiwa.at.jade_row, AG = Nagiwa.at.gasse;
 
 // Saturday's evening has no card of its own: the chapter's card is it (as in Chapter 1)
+// overnight the day's moments are forgotten (whether one was watched no longer matters, and each would double what follows: a moment
+// unset here happens again unseen at once, so every way of having got there becomes the same)
+const FORGET = (/** @type {string[]} */ ids) => ids.map((id) => ({ unset: `~moment.${id}` }));
 Object.assign(Nagiwa.nights, {
-  6: { date: "Sonntag, 11. November", evening: "Abend 2" },
-  7: { date: "Montag, 12. November", evening: "Abend 3", last: true },
+  6: { date: "Sonntag, 11. November", evening: "Abend 2", passes: FORGET(["nachbar_sat", "lantern_sat"]) },
+  7: { date: "Montag, 12. November", evening: "Abend 3", last: true, passes: FORGET(["nachbar_sun", "lantern_sun", "quiet_flat"]) },
 });
 
-// ---- the clock: on Monday it stops at 00:45 until everything is ready (kapitel2-design §3.7): Lantern has the stick, and decision 2
-// has fallen (the deck asks itself, with what can be done at the deck). Ines' flat (evi_knows) joins it when it is built.
-const [STILL_THE_KEY] = Cutaway.i18n.declare("waiting", ["Ich hab noch ihren Schlüssel. Ohne den ist alles umsonst."]);
+// ---- the clock: on Monday it stops at 00:45 until everything is ready (kapitel2-design §3.7): Juno has been in Ines' flat, Lantern has the
+// stick, and decision 2 has fallen (the deck asks itself, with what can be done at the deck)
+const [WHO_SHE_WAS, STILL_THE_KEY] = Cutaway.i18n.declare("waiting", ["Ich weiß immer noch nicht, wer sie war.", "Ich hab noch ihren Schlüssel. Ohne den ist alles umsonst."]);
 Nagiwa.holds.push((/** @type {number} */ to) => {
   const S = Cutaway.state;
   if (Cutaway.time.now.day !== 7 || S.flag("end_beat2") || !(to > Cutaway.time.parse("00:45"))) return null;
+  if (!S.flag("evi_knows")) return WHO_SHE_WAS;
   if (S.flag("stick_ines") || S.flag("stick_dryer")) return STILL_THE_KEY;
   return S.flag("e2") ? null : { dialog: "k2_clip" };
 });
@@ -168,6 +172,15 @@ const CLIP_WAYS = ["reply_vesper_ines", "contact_vesper", "app_chat"];
 Cutaway.hints([
   { if: ["day=7", "end_beat2=sent"], about: ["protokolle"],
     text: ["Du hast doch Clips mit Uhrzeit.", "Leg die Protokolle neben deine Aufnahmen.", "Nimm Kesslers Ring. Dienstag, 22:35."] },
+  // Ines' flat (game/kapitel2_lerche.js): the house door's code, which door, when it opens, what she left
+  { if: ["!evi_knows", "!code_lerche"], about: ["cam_cam24", "thumb_cam24", "rewind", "gate"],
+    text: ["Ihr Haus hat ein Zahlenfeld an der Tür.", "Die Klingelkamera hängt direkt daneben.", "Öffne CAM 24 um halb acht. Da kommt ein Nachbar heim."] },
+  { if: ["!evi_knows", "!know_flat", { not: { or: ["day=7", ["day=6", "time>=21:00"]] } }], about: ["cam_cam25", "thumb_cam25", "door_4b"],
+    text: ["Welche Tür ist ihre? An keiner steht ein Name.", "Die von Civic Rest räumen ihre Wohnung aus. Schau in CAM 25.", "Sonntag um acht kommen sie. Öffne dann CAM 25."] },
+  { if: ["!evi_knows", { not: { or: ["day=7", ["day=6", "time>=21:00"]] } }], about: ["door_4b", "fridge", "gate"],
+    text: ["Ihre Tür ist zu. Das bleibt sie nicht lange.", "Die von Civic Rest räumen die Wohnung aus. Danach ist sie offen.", "Warte, bis sie weg sind. Sonntag ab neun ist der Flur frei."] },
+  { if: "!evi_knows", about: ["fridge", "door_4b", "gate"],
+    text: ["Die haben den Rechner genommen. Ines hat auf Papier geschrieben.", "Wo hebt man Papier auf, das niemand finden soll?", "Geh in ihre Wohnung, 4B, und schau ins Gefrierfach."] },
   // the stick (game/kapitel2_stick.js): while Juno has it, Lantern can't send
   { if: "stick_ines", about: ["dryer6"],
     text: ["Du hast noch ihren Schlüssel. Der aus der Metro sucht ihn bestimmt.", "Sie hat ihn in den Trockner gelegt. Dort sucht er ihn.", "Leg ihn in Trockner sechs zurück. Um halb eins holt er ihn."] },
@@ -205,12 +218,12 @@ Cutaway.act("kapitel2", {
     { if: "got_ausweis", then: [{ give: "ausweis" }] }, { if: "got_haken", then: [{ give: "haken" }] },
     { if: "stick_ines", then: [{ give: "stick" }] },
     { place: "juno", room: "flat", at: AF.doorSide, face: "se" },
-    // Juno's old access, Ines' way and CAM 04, whose code she has known since Tuesday
-    ...["cam03", "cam04", "cam07", "cam18", "cam21", "cam22", "cam23", "cam24", "cam30"].flatMap((c) => [{ set: `code_${c}` }, { set: `link_${c}` }]),
+    // Juno's old access, Ines' way (CAM 25 is the same house's as CAM 24) and CAM 04, whose code she has known since Tuesday
+    ...["cam03", "cam04", "cam07", "cam18", "cam21", "cam22", "cam23", "cam24", "cam25", "cam30"].flatMap((c) => [{ set: `code_${c}` }, { set: `link_${c}` }]),
     { cache: "note_kessler_photo" }, { cache: "note_obs_handbook" },
     { set: "know_ines" }, { set: "saw_varga" }, { set: "read_kessler" },
     { set: "fridge_empty" }, { set: "rent_notice" }, { set: "moth_met" }, { set: "bao_soup" },
-    { been_to: ["flat", "deck", "kessel_14", "kessel_lobby", "kowalski", "gasse", "laundromat", "sims", "dach", "dach_blick", "dach_sitzen", "lucky_static", "jade_row", "okonkwo_shop", "drain_market", "sable_booth", "cam15", "signal_lost", "flat_danach", "cam03", "cam04", "cam07", "cam07v", "cam14", "cam18", "cam21", "cam22", "cam23", "cam24", "cam30", "cam31"] },
+    { been_to: ["flat", "deck", "kessel_14", "kessel_lobby", "kowalski", "gasse", "laundromat", "sims", "dach", "dach_blick", "dach_sitzen", "lucky_static", "jade_row", "okonkwo_shop", "drain_market", "sable_booth", "cam15", "signal_lost", "flat_danach", "cam03", "cam04", "cam07", "cam07v", "cam14", "cam18", "cam21", "cam22", "cam23", "cam24", "cam25", "cam30", "cam31"] },
     { solo: true },
   ],
 });
