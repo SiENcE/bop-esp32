@@ -232,7 +232,7 @@ Each item gets tests (`node tests/run.mjs`, "all passed"), `npm run check`, a se
 | **H3** | game | The rest of the prologue: the intro "Die letzte Schicht", `kessel_14`, `kessel_lobby`, `kowalski`, Bao, "JUNO.", hints, music | the prologue solves and plays from the title screen |
 | **H4** | game | Chapter 1 (`docs/kapitel1-design.md`): 9 rooms, 12 cameras, three evenings, the Kassenbuch, money, the murder in two variants | `solve-act ch1 --full` |
 | **R0** | game | The demo build: prologue plus Chapter 1, web and desktop (as the Loonies' release) | built and played through |
-| **H5–H9** | game | Chapters 2–6, each: a design document (German) → art → logic → solve | each chapter solves alone and through to the end |
+| **H5–H9** | game | Chapters 2–6, each: a design document (German) → art → logic → solve | each chapter solves alone and through to the end; the hand-over is checked (`sh tools/handoff.sh`: nothing read that the act before sets but this one doesn't keep), and from H5 on the solver runs across the chapter line: chapter N from every end state of chapter N−1, cut down to N's `keep` (stage 2 of the checks, 2026-11-14) |
 | **H10** | game | The English version | `validate --lang en` complete |
 
 H2 is the important test. It proves the two modes and the watch–record–sell loop before anything

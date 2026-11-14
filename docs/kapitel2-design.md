@@ -69,7 +69,7 @@ wie Kapitel 1 Junos alten Zugang setzt: Junos alten Zugang zu `cam03`, `cam07`, 
 Ines' Weg und `cam04`, deren Code Juno seit dem Prolog kennt (Kapitel 1 bot `cam04` nicht an, Kapitel 2 wieder, §9.1). Die Bedingungen
 der Kameras (ihr `if` in `game/rooms/cams.js`, `game/kapitel1.js`, `game/stadt.js`, `game/auftrag_varga.js` und `game/auftrag_tide.js`,
 etwa `day<4` bei `cam22` und `cam23`, `varga_step` bei `cam15`) bekommen Kapitel 2 dazu. Was Kapitel 1 nur für sich brauchte oder sich aus anderem ergibt, bleibt
-zurück: `know_meeting`, `end_beat`, die Momente, `kessler_gone` (folgt aus `k1a`), `imai_step`, `traeger` (die Zeile im NETZ braucht
+zurück (im Akt `leave`, damit die Übergabe-Prüfung es als Absicht kennt): `know_meeting`, `end_beat`, die Momente, `kessler_gone` (folgt aus `k1a`), `imai_step`, `traeger` (die Zeile im NETZ braucht
 es nicht mehr, §7).
 
 **Was Kapitel 2 weitergibt:** `e2`, `lantern_alive` (ein Flag: Juno hat Lantern gefunden und die Quiet nicht zu ihm geführt),
@@ -507,6 +507,10 @@ Archiv einer Kamera, Gegenstände an Hotspots und Fragen mit vier Antworten gibt
    Spielschrift).
 5. **Ein Ausgang mit Auswahl** (das Tor der Jade Row): ein Hotspot, der eine Frage stellt und in einen von zwei Räumen führt.
 6. Der Akt `kapitel2` mit seinem `keep` (§2.1) und `?act=kapitel2`.
+7. **Der Solver über die Kapitelgrenze** (beschlossen 2026-11-14, Stufe 2 der Prüfungen): Sobald Kapitel 2 gebaut ist, löst der Solver
+   es nicht nur aus einer festen Vorgeschichte, sondern aus jedem Endzustand von Kapitel 1, beschränkt auf das, was `keep` übernimmt
+   (die Zahl der Varianten nennt `sh tools/handoff.sh`, im Studio der Tab Handoffs). Dafür braucht es in der Engine einen Start aus
+   einer Liste von Zuständen; die Übergabe-Prüfung (`handoff.mjs`) und die Endzustände in den Graph-Daten gibt es schon.
 
 ## 14. Offen
 

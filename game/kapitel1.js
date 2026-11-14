@@ -279,6 +279,8 @@ Cutaway.act("kapitel1", {
   title: "Kapitel 1", name: "Glass", room: "flat", actor: "juno", fresh: true,
   keep: ["p1", "chits", "ledger_kessler", "ledger_sable_kessler", "moth_kind", "moth_brushed", "bao_paid", "evi_trust",
     "cache_clip_kessler_ring", "cache_clip_kessler_cut", "cache_note_kessler_debt", "got_ausweis", "got_haken"],
+  // left behind on purpose (the tools check it, sh tools/handoff.sh): her marks of Tuesday don't come along, Wednesday's Kessler is a man of his own
+  leave: ["tag_kessler", "tag_varga"],
   start: [
     { time: "18:00", day: 2 }, { give: "evi_bag", to: "juno" },
     { if: "got_ausweis", then: [{ give: "ausweis" }] }, { if: "got_haken", then: [{ give: "haken" }] },     // what she took in the prologue

@@ -3,8 +3,9 @@ build/
 out/
 node_modules/
 *.log
-# the pxl skill is its own repository
-.claude/skills/
+# the pxl skill is its own repository; the game's own skills are checked in
+.claude/skills/*
+!.claude/skills/story-sync/
 # third-party reference (Dreamweb screenshots and a walkthrough by Stijn Bolle): internal reference only,
 # kept out of the history so the repository can go public later without them
 docs/screenshots/

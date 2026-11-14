@@ -9,6 +9,8 @@ line() { printf '%-28s %s\n' "$1" "$2"; }
 need() { case "$2" in *"$3"*) ;; *) failed=1; line "$1" "FAILED: $2" ;; esac; }
 
 out=$(node lib/cutaway/tools/validate.mjs index.html 2>&1 | tail -1); line validate "$out"; need validate "$out" " 0 errors"
+# the docs against the game: names it knows, values it sets, weekdays that fit their dates (tools/doc-lint.mjs)
+out=$(node tools/doc-lint.mjs 2>&1 | tail -1); line docs "$out"; need docs "$out" " 0 Fehler"
 # the prologue's way with the roof shut (off_roof, as in Chapter 1): open, the roof multiplies its states beyond what the solver can walk
 out=$(node tools/solve-act.mjs prolog --full --set off_roof 2>&1)
 s=$(echo "$out" | grep -E "states in|soft-lock|SOFT|HINTS|^hints|UNSOLV" | tr '\n' ' '); line "prologue solve" "$s"; need "prologue solve" "$s" "no soft-locks"; need "prologue solve" "$s" "every state on the way"
