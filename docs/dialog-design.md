@@ -32,8 +32,8 @@ Verkauf, jede Warnung stärkt eine Stimme. Wer Juno ist, hört man.
 
 - Die Stimmen sind **Stimmen-Figuren ohne Kostüm** (die Engine kennt das schon) und sprechen in
   GROSSBUCHSTABEN-Namen: `DIE HÄNDLERIN — Er lügt nicht. Er verhandelt.`
-- Werte als Flags: `v_beobachterin`, `v_haendlerin`, `v_schwester`, `v_hunger`, `v_implantat`,
-  `v_kassenbuch` (0–6, Start: Beobachterin 2, Implantat 2, Hunger 1, alle anderen 0).
+- Werte als Flags (geplant, Engine C12): `v_beobachterin`, `v_haendlerin`, `v_schwester`, `v_hunger`,
+  `v_implantat`, `v_kassenbuch` (geplant; 0–6, Start: Beobachterin 2, Implantat 2, Hunger 1, alle anderen 0).
 - **EVI ist keine Stimme.** Die KI auf Junos Deck (Prolog-Design §2.2) ist ein Gegenüber: Juno
   redet mit ihr, und sie antwortet. Gespräche mit EVI sind normale Gespräche (Nabe und Speichen),
   meist kurz und auf dem Deck. Wo eine Stimme und EVI dasselbe sehen, lesen sie es verschieden: DIE

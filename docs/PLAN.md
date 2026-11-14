@@ -9,7 +9,7 @@ with his first dialogue, the look down the stairwell: the first top-down view, `
 LUCKY STATIC, the half-broken ad screen, the noodle machine with its tired face, Bao's cart and umbrella (see-through
 where it hides someone: the engine's `seeThrough`), the alley shut; the cart ends the test section. Bao is painted
 (head A, `art/characters/bao.px.js`) behind his cart with step 16 ("Wie immer? Ich
-schreib's an.", paying cash with `bao_paid`, eating: `ate_bao`); the menu screen shows the street whole as a still. Steps 17-18 follow it: the broken screen
+schreib's an.", paying cash with `bao_paid`, eating: `soup_eaten`); the menu screen shows the street whole as a still. Steps 17-18 follow it: the broken screen
 stutters, the eye in its static turns to Juno, JUNO. over the whole screen with the stinger "witness", Bao saw
 nothing, EVI: "Das war nicht ich. Ehrlich.", the card for Chapter 1 (`docs/rooms/kowalski_juno_x3.png`). **The
 prologue plays from the flat to its end.** The intro "Die letzte Schicht" (kapitel0-design §5) is decided as a storyboard in blocks

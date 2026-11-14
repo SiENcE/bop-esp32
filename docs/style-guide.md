@@ -250,7 +250,7 @@ The light has two parts: halos and pools baked into the art, and glows on top.
 
 ## 8. Street mode interface
 
-Reference: the UI in `mock_c_iso`.
+Reference: the UI in `docs/mockups/mock_c_iso_x3.png`.
 
 - **No verb bar, full screen.** The left button does the sensible thing (walk, use, take, talk,
   open, go through). The right button looks.

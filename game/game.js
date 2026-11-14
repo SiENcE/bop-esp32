@@ -24,6 +24,8 @@
       return d;
     },
   });
+  // the Kassenbuch on the deck (game/deck.js, BUCH) reads every entry's flag in code: tell the tools (validate, handoff)
+  Cutaway.state.readBy("the deck's BUCH", Object.keys(Nagiwa.ledger).map((id) => `ledger_${id}`));
   Cutaway.start({
     width: 320, height: 180, id: "glass-sister", version: 3, language: "de", languages: ["de"],
     actor: "juno", party: ["juno"], dev: true, title: Nagiwa.title,

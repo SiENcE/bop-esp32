@@ -60,20 +60,20 @@ Kopf der Datei, die es setzt (`game/nagiwa.js` nennt die Muster).
 | `know_ines` | `true` | `act kapitel1.start.18` |  |  |
 | `know_meeting` | `true` | `moment ines_tide.play.6`, `moment ines_sign.play.1` | `room cam03.hotspots.thumb_cam31.if`, `room cam04.hotspots.thumb_cam31.if`, `room cam21.hotspots.thumb_cam31.if`, … (5) |  |
 | `ladder_down` | `true` | `room sims.hotspots.ladder.with.haken.0.else.3` | `room sims.props.ladder.if`, `room sims.hotspots.ladder.look.0`, `room sims.hotspots.ladder.use.0`, … (5) |  |
-| `ledger_imai` |  | `dialog imai_wahl.main.0.then.2`, `dialog imai_wahl.main.1.then.2` |  |  |
-| `ledger_ines` |  | `moment ines_death.play.22.then.1` |  |  |
-| `ledger_kessler` |  | `room deck.hotspots.reply_kessler_full.use.2`, `room deck.hotspots.reply_kessler_cut.use.2`, `room deck.hotspots.reply_kessler_nothing.use.2`, … (4) |  | kapitel1 |
-| `ledger_kessler_warn` |  | `dialog k1a_warn.main.0.then.1` |  |  |
-| `ledger_okonkwo` |  | `dialog okonkwo.main.2.then.1` |  |  |
-| `ledger_sable_kessler` |  | `room deck.hotspots.reply_sable_sold.use.1`, `dialog sable.code.1.then.0` | `room deck.hotspots.reply_sable_sold.if`, `dialog sable.code.1.if` | kapitel1 |
-| `ledger_tide` |  | `room deck.hotspots.reply_tide_sold.use.2`, `room deck.hotspots.reply_tide_lied.use.2` |  |  |
-| `ledger_varga` |  | `room deck.hotspots.reply_varga_sold.use.2`, `room deck.hotspots.reply_varga_lied.use.2` |  |  |
-| `ledger_vesper_morrow` |  | `room flat.hotspots.bed.use.0.then.0.else.0.else.2`, `room deck.hotspots.reply_vesper_morrow.use.1` | `room deck.hotspots.reply_vesper_morrow.if` |  |
-| `ledger_vesper_ring` |  | `room flat.hotspots.bed.use.0.then.0.else.0.else.2`, `room deck.hotspots.reply_vesper_ring.use.1` | `room deck.hotspots.reply_vesper_ring.if` |  |
-| `ledger_vesper_traeger` |  | `room flat.hotspots.bed.use.0.then.0.else.0.else.2`, `room deck.hotspots.reply_vesper_traeger.use.1` | `room deck.hotspots.reply_vesper_traeger.if` |  |
-| `ledger_wren` |  | `room deck.hotspots.reply_wren_send.use.2.then.0`, `room deck.hotspots.reply_wren_send.use.2.else.0`, `room deck.hotspots.reply_wren_refuse.use.2`, … (4) |  |  |
-| `ledger_wren_advance` |  | `room deck.hotspots.reply_wren_back.use.2`, `act kapitel1.start.26` | `room deck.hotspots.reply_wren_back.if`, `room deck.hotspots.reply_wren_send.use.2` |  |
-| `ledger_wren_live` |  | `moment ines_death.play.22.then.0` |  |  |
+| `ledger_imai` |  | `dialog imai_wahl.main.0.then.2`, `dialog imai_wahl.main.1.then.2` | `code the deck's BUCH` |  |
+| `ledger_ines` |  | `moment ines_death.play.22.then.1` | `code the deck's BUCH` |  |
+| `ledger_kessler` |  | `room deck.hotspots.reply_kessler_full.use.2`, `room deck.hotspots.reply_kessler_cut.use.2`, `room deck.hotspots.reply_kessler_nothing.use.2`, … (4) | `code the deck's BUCH` | kapitel1 |
+| `ledger_kessler_warn` |  | `dialog k1a_warn.main.0.then.1` | `code the deck's BUCH` |  |
+| `ledger_okonkwo` |  | `dialog okonkwo.main.2.then.1` | `code the deck's BUCH` |  |
+| `ledger_sable_kessler` |  | `room deck.hotspots.reply_sable_sold.use.1`, `dialog sable.code.1.then.0` | `room deck.hotspots.reply_sable_sold.if`, `dialog sable.code.1.if`, `code the deck's BUCH` | kapitel1 |
+| `ledger_tide` |  | `room deck.hotspots.reply_tide_sold.use.2`, `room deck.hotspots.reply_tide_lied.use.2` | `code the deck's BUCH` |  |
+| `ledger_varga` |  | `room deck.hotspots.reply_varga_sold.use.2`, `room deck.hotspots.reply_varga_lied.use.2` | `code the deck's BUCH` |  |
+| `ledger_vesper_morrow` |  | `room flat.hotspots.bed.use.0.then.0.else.0.else.2`, `room deck.hotspots.reply_vesper_morrow.use.1` | `room deck.hotspots.reply_vesper_morrow.if`, `code the deck's BUCH` |  |
+| `ledger_vesper_ring` |  | `room flat.hotspots.bed.use.0.then.0.else.0.else.2`, `room deck.hotspots.reply_vesper_ring.use.1` | `room deck.hotspots.reply_vesper_ring.if`, `code the deck's BUCH` |  |
+| `ledger_vesper_traeger` |  | `room flat.hotspots.bed.use.0.then.0.else.0.else.2`, `room deck.hotspots.reply_vesper_traeger.use.1` | `room deck.hotspots.reply_vesper_traeger.if`, `code the deck's BUCH` |  |
+| `ledger_wren` |  | `room deck.hotspots.reply_wren_send.use.2.then.0`, `room deck.hotspots.reply_wren_send.use.2.else.0`, `room deck.hotspots.reply_wren_refuse.use.2`, … (4) | `code the deck's BUCH` |  |
+| `ledger_wren_advance` |  | `room deck.hotspots.reply_wren_back.use.2`, `act kapitel1.start.26` | `room deck.hotspots.reply_wren_back.if`, `room deck.hotspots.reply_wren_send.use.2`, `code the deck's BUCH` |  |
+| `ledger_wren_live` |  | `moment ines_death.play.22.then.0` | `code the deck's BUCH` |  |
 | `link_cam03` | `true` | `room cam04.hotspots.thumb_cam03.use.0.else.0`, `room cam21.hotspots.thumb_cam03.use.0.else.0`, `room cam22.hotspots.thumb_cam03.use.0.else.0`, … (5) | `room cam04.hotspots.thumb_cam03.if`, `room cam04.hotspots.thumb_cam03.use.0`, `room cam21.hotspots.thumb_cam03.if`, … (5) |  |
 | `link_cam04` | `true` | `room cam03.hotspots.thumb_cam04.use.0.else.0`, `room cam21.hotspots.thumb_cam04.use.0.else.0`, `room cam22.hotspots.thumb_cam04.use.0.else.0`, … (5) | `room cam03.hotspots.thumb_cam04.if`, `room cam03.hotspots.thumb_cam04.use.0`, `room cam21.hotspots.thumb_cam04.if`, … (5) |  |
 | `link_cam07` | `true` | `room cam03.hotspots.thumb_cam07.use.0.else.0`, `room cam04.hotspots.thumb_cam07.use.0.else.0`, `room cam21.hotspots.thumb_cam07.use.0.else.0`, … (5) | `room cam03.hotspots.thumb_cam07.if`, `room cam03.hotspots.thumb_cam07.use.0`, `room cam04.hotspots.thumb_cam07.if`, … (5) |  |

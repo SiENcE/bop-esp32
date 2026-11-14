@@ -4,7 +4,8 @@
 //   node tools/doc-lint.mjs --all      also lists the names only planned
 // A name in backticks (`stick_ines`, `k1b=lied`, `cam31`) must be one the game has: a flag, room, actor, item, dialogue, act,
 // sequence, moment, hotspot, sprite, camera, CACHE or Kassenbuch entry. A doc whose head says "Nichts davon ist gebaut" is a plan:
-// its new names count as planned, and so do they where another doc names them. Code with spaces, capitals, a path or a placeholder
+// its new names count as planned, and so do they where another doc names them, and so does a name on a line that says it is for later
+// ("geplant", "später", "Kap. 4"). Code with spaces, capitals, a path or a placeholder
 // (`<id>`) is no name, and an unknown single word without a digit or an underscore is let be (it is often a word of the data's format). A weekday beside a date must be that date's (the year 2091 unless it says another).
 // Exit code 1 on errors (an unknown value, a wrong weekday); unknown names are warnings.
 import { readFileSync, readdirSync, writeFileSync } from "node:fs";
@@ -21,9 +22,11 @@ const C = g.C, N = /** @type {any} */ (g.ctx).Nagiwa;
 const v = /** @type {any} */ (validate(C, { languages: g.options?.languages, demo: g.options?.demo, title: g.options?.title, intro: g.options?.intro, gate: g.options?.gate }));
 
 /** A Set, Map, array or object as a list of its entries' names. @param {any} x @returns {string[]} */
-const names = (x) => !x ? [] : x instanceof Map ? [...x.keys()] : x instanceof Set || Array.isArray(x) ? [...x].map(String) : Object.keys(x);
+// (duck-typed: Maps and Sets made in the game's vm are not this realm's, instanceof misses them)
+const isMap = (/** @type {any} */ x) => typeof x?.get === "function" && typeof x?.keys === "function", isSet = (/** @type {any} */ x) => typeof x?.has === "function" && typeof x?.add === "function" && !isMap(x);
+const names = (x) => !x ? [] : isMap(x) ? [...x.keys()] : isSet(x) || Array.isArray(x) ? [...x].map(String) : Object.keys(x);
 /** What a Map or object holds for a key, as a list. @param {any} x @param {string} k @returns {string[] | null} */
-const listOf = (x, k) => { const e = !x ? undefined : x instanceof Map ? x.get(k) : x[k]; return e == null ? null : e instanceof Set || Array.isArray(e) ? [...e].map(String) : [String(e)]; };
+const listOf = (x, k) => { const e = !x ? undefined : isMap(x) ? x.get(k) : x[k]; return e == null ? null : isSet(e) || Array.isArray(e) ? [...e].map(String) : [String(e)]; };
 
 // ---- what the game knows
 const flagsSet = new Set(names(v.flags?.set)), flagsTested = new Set(names(v.flags?.tested));
@@ -37,7 +40,8 @@ for (const id of C.room.ids()) { const r = C.room.get(id); add(Object.keys(r?.ho
 add(C.assets?.names?.() ?? []); add(C.sfx?.names?.() ?? []); add(C.score?.ids?.() ?? []); add(C.synth?.names?.() ?? []); add(C.script?.names?.() ?? []);
 add(names(N?.cams)); add(names(N?.cache)); add(names(N?.cache), "cache_"); add(names(N?.ledger)); add(names(N?.ledger), "ledger_");
 add(names(N?.contacts)); add(names(N?.threads));
-add(readdirSync(path.join(root, "tools", "paths")).filter((f) => f.endsWith(".json")).map((f) => f.slice(0, -5)));   // the click paths
+const paths = readdirSync(path.join(root, "tools", "paths")).filter((f) => f.endsWith(".json")).map((f) => f.slice(0, -5));
+add(paths); add(paths.map((p) => p.replace(/^[a-z0-9]+_/, "")));   // the click paths, also by their part after the act
 add(["i18n"]);
 /** the values a flag is set to (when the validator says), else null @param {string} f */
 const valuesOf = (f) => listOf(v.flags?.values, f);
@@ -81,7 +85,9 @@ for (const { f, lines } of read) {
       // a single word without a digit or an underscore is as often a word of the data's format (`once`, `extras`) as a name: left alone
       if (!known.has(n.name) && !/[_0-9]/.test(n.name)) continue;
       if (!known.has(n.name)) {
-        (plannedNames.has(n.name) ? planned : warnings).push({ ...at, text: `\`${t}\`: ${plannedNames.has(n.name) ? "geplant" : "kennt das Spiel nicht"}` });
+        // a line that says the name is for later ("geplant", "später", "Kap. 4") names it as planned
+        const later = plannedNames.has(n.name) || /geplant|später|Kap\. [2-9]/.test(l);
+        (later ? planned : warnings).push({ ...at, text: `\`${t}\`: ${later ? "geplant" : "kennt das Spiel nicht"}` });
         continue;
       }
       if (n.op === "=" && flags.has(n.name) && !/^\d+$/.test(n.value)) {

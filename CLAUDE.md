@@ -189,7 +189,8 @@ The connections between chapters and docs (the user's decision, 2026-11-14):
   names count as planned), every `flag=value` a value it sets, every weekday its date's. `--flags` writes `docs/flags.md`.
 - `sh tools/handoff.sh` before a milestone or after changing what an act keeps (it traces every run, as long as the solver's checks;
   `--only` puts together what `build/graph` has): an act that reads what the one before sets without keeping it is an error. An act
-  lists what it keeps (`keep`) and what it leaves behind on purpose (`leave`), as its chapter's design lists them. The
+  lists what it keeps (`keep`) and what it leaves behind on purpose (`leave`), as its chapter's design lists them. A flag that only the
+  game's own code reads (a screen it draws, as the BUCH) is told to the tools with `Cutaway.state.readBy` (`game/game.js`). The
   studio's tab Handoffs shows the same, and its tasks "graph: all runs" and "handoff: all acts" make it.
 - After a story change, the skill `story-sync` (`.claude/skills/story-sync/`) checks every doc that tells the same fact.
 
