@@ -138,6 +138,10 @@ code comments English.
   puzzle dependency chart with the winning way, and the state budget (which flag multiplies the states by how much). In the
   editor it is the tab Connections: the studio's tasks "graph: prolog" and "graph: kapitel1 main" make the data
   (`studio.json`, the folder `build/graph`), a step opens its script in Things, a fact lists every place that sets or asks it.
+  There the solver can be watched: "watch the solver" plays its winning way in the game (Game, with the moves in a dock under the
+  picture: play, one move, 1x to 8x, a click on a move jumps to the solver's state before it), and opens a soft-lock or a state
+  without a fitting hint as the solver found it, or plays the way to it; after each move it compares the game with the solver
+  and stops where they differ. A data file made before (no `replay` in it) is made again with its task.
 - In the editor with the studio: the tab Map (every room with its exits and script warps, what is unreachable) and the game's
   own tab Iso-Editor (`game/editor/iso.js`): a street-mode room's map edited over its picture and baked from there (`art: room`);
   "Where from?" (or Alt+click) on a pixel opens the kit piece or the map line that made it. Change the map there or in the
