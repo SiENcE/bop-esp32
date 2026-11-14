@@ -59,7 +59,7 @@ Durchspielwegs von Kapitel 1 (wie `?act=kapitel1`, story §10d).
 
 **Was Kapitel 1 übergibt** (`keep` des Akts; nach dem Grundsatz, dass ein Kapitel nur wenige Flags übernimmt, story §10h): `e1`
 (sold | refused), `stick_ines`, `k1a`, `k1b`, `imai_told` (gesetzt heißt: sie hat geantwortet), `moth_student`, `rent`, `chits`, die
-Einträge im Kassenbuch (`ledger_*`), die Clips im CACHE (`clip_ines_death` für alle, dazu Kesslers Ring, Morrows Umschlag,
+Einträge im Kassenbuch (`ledger_*`), `evi_trust` (aus dem Prolog; eine Aufgabe dafür ist offen, §14), die Clips im CACHE (`clip_ines_death` für alle, dazu Kesslers Ring, Morrows Umschlag,
 `clip_traeger`) und der Weg aufs Dach (`got_ausweis`, `got_haken`, `window_open`, `ladder_down`: Wer ihn kennt, muss ihn nicht noch
 einmal öffnen), dazu `anon_<clip>` (ein verpixelter Clip bleibt verpixelt, und das letzte Prüfen zählt ihn, §8) und die Zugänge,
 die sich ein Faden erarbeitet hat: `link_cam14` (nur wer im Zeitungskrieg „Nur dieses eine Mal.“ gesagt hat), `link_cam15` (wer Kessler
@@ -524,5 +524,8 @@ Archiv einer Kamera, Gegenstände an Hotspots und Fragen mit vier Antworten gibt
   das rote Licht der Kamera im 14. Stock aus.
 - **Sprechkarten** im `dialog-style-guide`: Lantern fehlt noch, ebenso die Pflegerin, Vargas Mann und Frau Imai; die Karte von Frau
   Haldane ist zu ergänzen.
+- **`evi_trust`** (wie offen Juno im Prolog zu EVI war) geht mit, bekommt aber erst später eine Aufgabe (vom Nutzer entschieden
+  2026-11-14): vielleicht, wenn EVI erfährt, was sie ist (§3.3), oder im Finale, wenn sie richtig lesen muss (story §7, Kap. 6).
+  Bis dahin meldet die Übergabe-Prüfung es als „kept for nothing“; das ist bekannt.
 - **Das Richtmikro und Lanterns Sender im RADIO:** Bibel (§10b) und `kapitel0-design` (§2.1, §3) versprechen beides für Kapitel 2,
   dieser Plan hat keins von beiden. Offen, bis wir die Stelle bearbeiten; dann wird gefragt (2026-11-14).

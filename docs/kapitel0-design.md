@@ -150,7 +150,8 @@ Kapitel 2.
 - **EVI ist keine innere Stimme** (Dialog-Design §2): Die sechs Stimmen sind *in* Juno, EVI ist ein
   Gegenüber, mit dem Juno redet und das antwortet. Damit es nicht zu viele Stimmen werden, spricht EVI
   vor allem auf dem Deck und kurz.
-- **Flags:** `evi_trust` (0–3, wie offen Juno zu EVI ist: Antworten auf ihre Fragen), später
+- **Flags:** `evi_trust` (0–3, wie offen Juno zu EVI ist: Antworten auf ihre Fragen; es geht über die Kapitel mit, seine
+  Aufgabe ist noch offen, `kapitel2-design` §14), später
   `evi_knows` (Kap. 2), `evi_backup` / `evi_witness` (Kap. 4, Story §7).
 
 ### 2.3 Der Messenger (CHAT)
