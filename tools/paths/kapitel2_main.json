@@ -1,0 +1,1 @@
+[{"kind":"wait"},{"kind":"wait"},{"kind":"act","id":"bed"},{"kind":"wait"},{"kind":"wait"},{"kind":"act","id":"bed"},{"kind":"act","id":"deck"},{"kind":"act","id":"wait"},{"kind":"act","id":"wait"},{"kind":"act","id":"wait","choices":[1]},{"kind":"act","id":"wait"},{"kind":"act","id":"protokolle"}]

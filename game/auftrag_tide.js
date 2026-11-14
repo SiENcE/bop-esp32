@@ -18,7 +18,7 @@ const every = (/** @type {string} */ anim) => ({ se: anim, sw: anim, ne: anim, n
 const IDLE = every("okonkwo_idle_sw"), TALK = every("okonkwo_talk_sw"), BACK = every("okonkwo_idle_ne");
 
 // ---- the chat: TIDE's message, what Juno can send (the code she has is her only way in: nothing to accept first)
-Object.assign(Nagiwa.contacts, { tide: { name: "TIDE", color: "#7ab0c0", status: "online", if: ["day>1", "!off_tide"], unread: "!read_tide",
+Object.assign(Nagiwa.contacts, { tide: { name: "TIDE", color: "#7ab0c0", status: "online", if: ["day>1", "day<5", "!off_tide"], unread: "!read_tide",
   open: [{ if: "!read_tide", then: [{ set: "read_tide" }, "Es geht um Okonkwo. Der grüßt mich jeden Abend."] }] } });
 Cutaway.state.view("read_tide");
 Nagiwa.threads.tide = [
@@ -42,7 +42,7 @@ Nagiwa.cache.note_safe_code = { kind: "note", name: "OKONKWOS TRESOR", about: "J
 Nagiwa.cache.clip_morrow_bribe = { kind: "clip", name: "MORROWS UMSCHLAG", about: "Jade Row, 00:30. Lt. Morrow nimmt einen Umschlag von einem Tidewater-Jungen. „Freitag fährt keiner die Kowalski.“" };
 
 // ---- CAM 07, Nagi·wa's camera over the lane (Juno's old access): from above Okonkwo's back hides the keypad
-Nagiwa.cams.cam07 = { id: "07", place: "JADE ROW", owner: "NAGI·WA", map: [64, 62], if: ["day>1", "!off_tide"] };
+Nagiwa.cams.cam07 = { id: "07", place: "JADE ROW", owner: "NAGI·WA", map: [64, 62], if: { or: [["day>1", "day<5", "!off_tide"], "day>4"] } };
 Nagiwa.cams.cam07v = { id: "07V", place: "JADE ROW, AUTOMAT", owner: "SMILE FOR A COUPON", map: [8, 86], if: ["link_cam07v", "!off_tide"] };
 Cutaway.actor("okonkwo_feed", { name: "Okonkwo", color: "#d8b890",
   costume: { idle: BACK, walk: BACK, talk: BACK },

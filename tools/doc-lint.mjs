@@ -3,7 +3,7 @@
 //   node tools/doc-lint.mjs --flags    also writes docs/flags.md, the register of every flag (never edit it by hand)
 //   node tools/doc-lint.mjs --all      also lists the names only planned
 // A name in backticks (`stick_ines`, `k1b=lied`, `cam31`) must be one the game has: a flag, room, actor, item, dialogue, act,
-// sequence, moment, hotspot, sprite, camera, CACHE or Kassenbuch entry. A doc whose head says "Nichts davon ist gebaut" is a plan:
+// sequence, moment, hotspot, sprite, camera, CACHE or Kassenbuch entry. A doc whose head says "Nichts davon ist gebaut" or "Im Bau" (a chapter being built) is a plan:
 // its new names count as planned, and so do they where another doc names them, and so does a name on a line that says it is for later
 // ("geplant", "später", "Kap. 4"). Code with spaces, capitals, a path or a placeholder
 // (`<id>`) is no name, and an unknown single word without a digit or an underscore is let be (it is often a word of the data's format). A weekday beside a date must be that date's (the year 2091 unless it says another).
@@ -70,7 +70,7 @@ function nameOf(t) {
 }
 
 const read = files.map((f) => ({ f, lines: readFileSync(path.join(docsDir, f), "utf8").split(/\r?\n/) }));
-const isPlan = (/** @type {string[]} */ lines) => lines.slice(0, 8).some((l) => /Nichts davon ist gebaut/.test(l));
+const isPlan = (/** @type {string[]} */ lines) => lines.slice(0, 8).some((l) => /Nichts davon ist gebaut|Im Bau\b/.test(l));
 for (const { lines } of read) if (isPlan(lines)) for (const l of lines) for (const t of spans(l)) { const n = nameOf(t); if (n && !known.has(n.name)) plannedNames.add(n.name); }
 
 for (const { f, lines } of read) {

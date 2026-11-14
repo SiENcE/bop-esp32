@@ -230,7 +230,7 @@ Cutaway.room("flat", {
     { if: "day=1", then: [
       { if: "p1", then: [{ once: [{ say: "evi", text: "Bringst du mir was mit?" }, "Du isst nicht.", { say: "evi", text: "Ich weiß. Bringst du mir was mit?" }] }] },
       { once: ["Es ist halb zehn. Frau Kesslers Mann hat um zehn Schichtende.", "Ich setz mich erst mal ans Deck."] }],
-    else: [{ once: ["Heute ist Mittwoch. Bis Freitag brauch ich neunhundert Chits."] }] }],
+    else: [{ once: [{ if: "day<5", then: ["Heute ist Mittwoch. Bis Freitag brauch ich neunhundert Chits."] }] }] }],
 });
 
 // ---- the act

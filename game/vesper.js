@@ -22,7 +22,7 @@ const CLIPS = [
 const THANKS = { ring: "Wie er den Ring abzieht! Und dieser Blick. 240.", morrow: "Eine Polizistin, die nimmt! Oben glaubt uns das keiner. 300.",
   traeger: "Das Mädchen in der Tür. Ich musste kurz rausgehen. 400." };
 
-Object.assign(Nagiwa.contacts, { vesper: { name: "VESPER", color: "#d0c0f8", status: "online", if: ["day>2", "!off_vesper"], unread: "!read_vesper",
+Object.assign(Nagiwa.contacts, { vesper: { name: "VESPER", color: "#d0c0f8", status: "online", if: { or: [["day>2", "day<5", "!off_vesper"], "day>4"] }, unread: "!read_vesper",
   open: [{ if: "!read_vesper", then: [{ set: "read_vesper" }, "Das ist NINTH LIVE. Die zeigen uns da oben im Abendprogramm.",
     { evi: "froh" }, { say: "evi", text: "Ich kann Gesichter wegmachen! Im Clip-Editor." }, "Dann kauft er's nicht.", { evi: "verwirrt" }, { say: "evi", text: "Oh." }] }] } });
 Cutaway.state.view("read_vesper");
@@ -33,7 +33,7 @@ Nagiwa.threads.vesper = [
   ...CLIPS.flatMap(([id, clip]) => [{ from: "juno", if: SOLD(id), clip: Nagiwa.cache[clip].name }, { from: "vesper", if: SOLD(id), text: THANKS[/** @type {keyof typeof THANKS} */ (id)] }]),
   ...CLIPS.map(([id, , , what, , viewers]) => ({ from: "vesper", if: `${SOLD(id)}=seen`, at: "18:00", text: `${what}: ${viewers} Zuschauer gestern Nacht. Die Krone dankt Ihnen.` })),
 ];
-Nagiwa.replies.vesper = CLIPS.map(([id, clip, text, , , , , said]) => ({ id, text, if: [`cache_${clip}`, `!anon_${clip}`, `!${SOLD(id)}`],
+Nagiwa.replies.vesper = CLIPS.map(([id, clip, text, , , , , said]) => ({ id, text, if: ["day<5", `cache_${clip}`, `!anon_${clip}`, `!${SOLD(id)}`],
   use: [{ ledger: `vesper_${id}`, value: "sold" }, ...said] }));
 for (const [id, , , what, pay, viewers, short] of CLIPS) {
   // the morning after, the line says who watched (short, to fit the book's line)

@@ -105,7 +105,7 @@ const AC = Nagiwa.at.cam14;
 const notesLook = floor14.notes.look;
 floor14.notes.look = [{ if: ["news_who", "news_stack"], then: [...notesLook, "Und drunter steht von mir: ES IST NIEMAND. 14B."], else: notesLook }];
 floor14.notes.use = [{ if: "day>1", then: ["Wer klaut die? Seit Wochen geht das so.", "Über mir hängt Nagi·was Kamera. Ich müsste nur reinschauen."], else: ["Auf dem vierzehnten ist Krieg."] }];
-floor14.corner_cam.use = [{ if: ["day>1", "!link_cam14", "!off_zeitung"], then: ["Mein alter Zugang geht auch hier.", "Den eigenen Block glasst man nicht. Das sag ich Motte auch.", { dialog: "zeitung_cam" }],
+floor14.corner_cam.use = [{ if: ["day>1", "day<5", "!link_cam14", "!off_zeitung"], then: ["Mein alter Zugang geht auch hier.", "Den eigenen Block glasst man nicht. Das sag ich Motte auch.", { dialog: "zeitung_cam" }],
   else: [{ if: "link_cam14", then: ["Ich bin schon drauf. Schöner wird's nicht."], else: ["Den eigenen Block glasst man nicht."] }] }];
 Cutaway.dialog("zeitung_cam", { main: { choices: [
   { text: "„Nur dieses eine Mal.“", goto: "end", then: [{ set: "code_cam14" }, { set: "link_cam14" }, { sfx: "link" }, "Das sagen alle. CAM 14 ist auf dem Deck."] },
@@ -141,7 +141,7 @@ Nagiwa.camRoom("cam14", { background: undefined, color: Nagiwa.PHOSPHOR[0], mic:
 const haldaneUse = floor14.haldane.use;
 // the point behind a sleeper's ear: the beat cam31 waits for (and nobody says why)
 const PUNKT = ["Der Punkt hinter ihrem Ohr blinkt immer gleich.", "Woher kenn ich das?"];
-floor14.haldane.use = [{ if: ["day>1", "!news_stack", "!off_zeitung"], then: ["Die Tür steht offen. Sie schläft wirklich.", "Hinter dem Sessel liegt ein Stapel Zeitungen, so hoch wie Motte.", { zoom: "look_zeitung" }, "Auf jeder Seite sind Gesichter angestrichen.", "Nein, nicht angestrichen. Um jedes Gesicht sind vier kleine Ecken.", "So markier ich.", { zoom: false }, { set: "news_stack" }, { cache: "note_haldane_marks" }, ...PUNKT,
+floor14.haldane.use = [{ if: ["day>1", "day<5", "!news_stack", "!off_zeitung"], then: ["Die Tür steht offen. Sie schläft wirklich.", "Hinter dem Sessel liegt ein Stapel Zeitungen, so hoch wie Motte.", { zoom: "look_zeitung" }, "Auf jeder Seite sind Gesichter angestrichen.", "Nein, nicht angestrichen. Um jedes Gesicht sind vier kleine Ecken.", "So markier ich.", { zoom: false }, { set: "news_stack" }, { cache: "note_haldane_marks" }, ...PUNKT,
     { evi: "besorgt" }, { say: "evi", text: "Warum macht sie das?" }, "Ich weiß es nicht, und sie weiß es auch nicht."],
   else: [{ if: "day>1", then: PUNKT, else: [haldaneUse] }] }];
 // a click does a hotspot's first action, and her door's is talking: from Wednesday on that is the newspaper war's
@@ -166,7 +166,7 @@ Nagiwa.cache.note_haldane_marks = { kind: "note", name: "FRAU HALDANES ZEITUNGEN
 // if she hung on a lamp post. The street exists, and the night: she saw the camera's feed in her sleep. Juno is the only one who can
 // tell her, and has the choice: the truth, which frightens her, or a lie that lets her sleep. She is the UNKNOWN LINK in the clinic's queue.
 const AI = Nagiwa.at.lucky_static, A18 = Nagiwa.at.cam18;
-Object.assign(Nagiwa.contacts, { imai: { name: "R. IMAI", color: "#c8d8b0", status: "schläft", if: ["day>1", "!off_imai"], unread: "!read_imai",
+Object.assign(Nagiwa.contacts, { imai: { name: "R. IMAI", color: "#c8d8b0", status: "schläft", if: ["day>1", "day<5", "!off_imai"], unread: "!read_imai",
   open: [{ if: "!read_imai", then: [{ set: "read_imai" }, "Sie hat einen Mord gesehen, in einer Straße, in der sie nie war.", "Und sie nimmt Lull. Natürlich nimmt sie Lull."] }] } });
 Cutaway.state.view("read_imai");
 Nagiwa.threads.imai = [
@@ -195,7 +195,7 @@ Cutaway.dialog("imai_wahl", { main: { choices: [
   { text: "„Das war ein Traum.“", goto: "end", then: [{ set: "imai_step", value: 3 }, { set: "imai_told", value: "dream" }, { ledger: "imai", value: "dream" }, "Ich hab nachgesehen. Da gibt es keine Treppe und keinen Fisch.",
     { say: "imai", text: "Gott sei Dank. Ich dachte schon ..." }, "Schlafen Sie gut, Frau Imai.", { evi: "verwirrt" }, { say: "evi", text: "Die Treppe gibt es aber. Ich hab sie gesehen." }, "Ich weiß."] },
 ] } });
-Nagiwa.cams.cam18 = { id: "18", place: "ALTER FISCHMARKT", owner: "NAGI·WA", map: [120, 14], if: "imai_step>=1" };
+Nagiwa.cams.cam18 = { id: "18", place: "ALTER FISCHMARKT", owner: "NAGI·WA", map: [120, 14], if: { or: ["day>4", "imai_step>=1"] } };
 Nagiwa.cache.note_imai_street = { kind: "note", name: "FRAU IMAIS TREPPE", about: "CAM 18, 29.10., 03:12. Es ist passiert. Sie schlief. Sie hat es von hier oben gesehen." };
 // the rain from the left: the camera hangs crooked
 Nagiwa.camRoom("cam18", { background: "cam18_bg", mic: { at: A18.mic, clear: 40, lost: 150 },

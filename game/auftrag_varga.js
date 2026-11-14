@@ -41,7 +41,7 @@ const streetVending = Cutaway.room.get("kowalski").hotspots.vending;
 streetVending.look = [...streetVending.look, { if: "day>1", then: ["Da war die Nummer 7 drin."] }];
 
 // ---- cam15, the Morpheus. Its own net: no sticker, no factory code. Whoever sells access has it.
-Nagiwa.cams.cam15 = { id: "15", place: "KAPSELHOTEL MORPHEUS", owner: "MORPHEUS, PRIVAT", map: [8, 62], if: "varga_step",
+Nagiwa.cams.cam15 = { id: "15", place: "KAPSELHOTEL MORPHEUS", owner: "MORPHEUS, PRIVAT", map: [8, 62], if: { or: [["day>4", "link_cam15"], ["day<5", "varga_step"]] },
   tryIt: ["Das Morpheus hat ein eigenes Netz, ohne Aufkleber und ohne Werkscode.", "Zugänge verkauft Sable."],
   linked: ["Sables Code geht."] };
 Nagiwa.cache.note_kessler_hideout = { kind: "note", name: "KESSLER, KAPSEL 23", about: "Kapselhotel Morpheus, Kapsel 23. Er kommt um halb elf, ohne Schal." };
@@ -89,7 +89,7 @@ Cutaway.room("sable_booth", { name: "Sables Bude", background: "sable_booth_bg",
   } });
 
 // ---- the chat: what Varga wrote, what Juno can send (the place she found is her only way in: nothing to accept first)
-Object.assign(Nagiwa.contacts, { varga: { name: "G. VARGA", color: "#a0a0b8", status: "online", if: ["day>1", "!off_varga"], unread: "!read_varga",
+Object.assign(Nagiwa.contacts, { varga: { name: "G. VARGA", color: "#a0a0b8", status: "online", if: ["day>1", "day<5", "!off_varga"], unread: "!read_varga",
   open: [{ if: "!read_varga", then: [{ set: "read_varga" }, "Den Rest kriegt er von Kessler nicht. Also soll ich ihn suchen."] }] } });
 Cutaway.state.view("read_varga");
 Nagiwa.threads.varga = [

@@ -1,6 +1,7 @@
 # Kapitel 2 „Aufnahme": Design
 
-Stand: Entwurf (2026-11-14), die Gliederung vom Nutzer freigegeben am selben Tag (story §10h). Nichts davon ist gebaut oder gemalt.
+Stand: Entwurf (2026-11-14), die Gliederung vom Nutzer freigegeben am selben Tag (story §10h). Im Bau: Das Gerüst steht auf Blöcken
+(`game/kapitel2.js`, `game/kapitel2_ende.js`, siehe „Im Mock gebaut“ unter §2.1), der Rest ist geplant; gemalt ist nichts.
 Story: `docs/story.md` (§6, §7 Kapitel 2, §10b, §10f, §10h). Was Kapitel 1 übergibt: `docs/kapitel1-design.md`. Regeln für Deck,
 Feed-Modus und Zeit: `docs/kapitel0-design.md` §2–4. Wie die Texte klingen: `docs/dialog-style-guide.md`. Alle Zeilen hier sind
 Vorschläge und werden beim Durchspielen geprüft; Namen neuer Figuren sind offen (§14).
@@ -71,6 +72,33 @@ der Kameras (ihr `if` in `game/rooms/cams.js`, `game/kapitel1.js`, `game/stadt.j
 etwa `day<4` bei `cam22` und `cam23`, `varga_step` bei `cam15`) bekommen Kapitel 2 dazu. Was Kapitel 1 nur für sich brauchte oder sich aus anderem ergibt, bleibt
 zurück (im Akt `leave`, damit die Übergabe-Prüfung es als Absicht kennt): `know_meeting`, `end_beat`, die Momente, `kessler_gone` (folgt aus `k1a`), `imai_step`, `traeger` (die Zeile im NETZ braucht
 es nicht mehr, §7).
+
+**Im Mock gebaut** (2026-11-14, das Gerüst; Zeilen und Abläufe sind beim Durchspielen zu prüfen):
+
+- Der Akt `kapitel2` mit `keep` und `leave` wie oben; das Kassenbuch nimmt er ganz mit (jeder Eintrag aus Prolog und Kapitel 1). Wer
+  `?act=kapitel2` startet, beginnt mit den Antworten des Durchspielwegs von Kapitel 1: `e1=sold`, der Stick zurückgelegt (also
+  `stick_lantern`), `rent=paid`, 1550 Chits, keine Aufträge. Kapitel 1 geht am Ende von selbst in Kapitel 2 über.
+- Die Spieltage 5 bis 7; das Bett geht am Samstag und Sonntag ab 01:00 auf, am Montag nicht. Was Kapitel 1 an offenen Bedingungen
+  hatte (die Aufträge, WREN, Mottes Lektionen, Vespers Käufe roher Clips, der Zeitungskrieg, Frau Imais Chat aus Kapitel 1), ist an
+  diesen Tagen zu; die Kameras zeigen, was §2.1 nennt.
+- Die Engine kennt jetzt den Beginn eines Akts an einem späteren Tag (Cutaway.js 9804188): Die Momente früherer Tage gelten als
+  vergangen, ohne dass ihr `unseen` noch einmal läuft (sonst hätte der Start von Kapitel 2 die Miete ein zweites Mal abgebucht und
+  Teos Besuch vom Mittwoch noch einmal gespielt).
+- Der Anfang: die wortlose Sequenz `k2_heimweg` als **Platzhalter** aus den Straßen der Stadt (Kowalski, Jade Row, Gasse, ihre Tür),
+  bis die abstrakten Bilder als Blöcke freigegeben sind; Junos eine Zeile über der Tür; dann EVIs festgelegte Szene, Wort für Wort.
+- Teos Besuch am Montag um 18:30 als Block (§7): das Klopfen, Bao, die Miete, der Haken, die Leiter, das Dach mit Tinte. Auf dem Dach
+  fehlt Teo noch im Bild (seine Pose sitzend von hinten, §10).
+- Die Uhr hält am Montag um 00:45. **Bisher verlangt sie nur Entscheidung 2** (vom Nutzer so gewollt): `evi_knows` und
+  `stick_lantern` kommen dazu, sobald Wohnung und Stick gebaut sind. Gebaut sind von Entscheidung 2 Vesper im CHAT (immer da, auch
+  bei `off_vesper`) und die Frage des Decks um 00:45 („An Vesper verkaufen.“, „Behalten.“, „Noch nicht.“). Preis und Zuschauer sind
+  Platzhalter (§14).
+- Das Ende als Kette mit `end_beat2` (sent > found) bis zur Karte „Kapitel 3: Lull (kommt später)“. Das letzte Prüfen ist vorerst ein
+  Klick auf das Deck (`[MOCK]`), der Kontakt um 03:15 heißt bis zur Entscheidung `BECKEN 3` (§14).
+- Die Hinweise des Kapitels sind seine eigenen (`Cutaway.hints(..., { act: "kapitel2" })`); die von Prolog und Kapitel 1 gelten nur
+  noch in ihren Akten.
+- Geprüft wird wie in Kapitel 1 der Hauptweg mit geschlossenen Fäden (`off_<thread>`): `node tools/solve-act.mjs kapitel2 --full
+  --set off_roof,off_zeitung,off_imai,off_traeger,off_varga,off_tide,off_motte,off_vesper`; die Klicks `tools/paths/kapitel2_main.json`,
+  und `spiel.json` geht vom Titel bis zum Ende von Kapitel 2.
 
 **Was Kapitel 2 weitergibt:** `e2`, `lantern_alive` (ein Flag: Juno hat Lantern gefunden und die Quiet nicht zu ihm geführt),
 `forgery_proven`, `moth_student`, `k1b` nur als `warned` (Okonkwos Versteck in Kapitel 4) und das Kassenbuch. In Kapitel 2

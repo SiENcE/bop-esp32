@@ -6,7 +6,7 @@
 (function () {
 Nagiwa.cams.cam03 = { id: "03", place: "OSTBRÜCKE", owner: "PUMPENVERWALTUNG OST", map: [64, 14] };
 // cam04 is on Juno's map only once she knows Kessler is going to Yuen's (`if`)
-Nagiwa.cams.cam04 = { id: "04", place: "IMBISS YUEN", owner: "YUEN'S, PRIVAT", map: [120, 62], if: "heard_yuens",
+Nagiwa.cams.cam04 = { id: "04", place: "IMBISS YUEN", owner: "YUEN'S, PRIVAT", map: [120, 62], if: { or: ["day>4", "heard_yuens"] },
   linked: [{ evi: "froh" }, { say: "evi", text: "Verbunden! Hallo, Kamera vier." }] };          // what happens when it is linked (step 6)
 
 /** The phosphor duotone (docs/style-guide.md §9), the same ten values as the art. */

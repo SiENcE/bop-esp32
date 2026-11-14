@@ -13,22 +13,22 @@
 (function () {
 const AF = Nagiwa.at.flat;
 
-Nagiwa.nights = {
+Object.assign(Nagiwa.nights, {
   2: { date: "Mittwoch, 7. November", evening: "Abend 1" },
   3: { date: "Donnerstag, 8. November", evening: "Abend 2" },
   // Friday: Ines goes neither to the bar nor to the laundromat, her home is open (Sable or Motte will have given the code by then),
   // and how Juno spent Thursday only counts through what she knows and has
-  4: { date: "Freitag, 9. November", evening: "Abend 3", passes: [
+  4: { date: "Freitag, 9. November", evening: "Abend 3", last: true, passes: [
     ...["tag_ines", "code_cam22", "link_cam22", "code_cam23", "link_cam23",
       "~moment.ines_drop", "~moment.ines_tide", "~moment.traeger"].map((f) => ({ unset: f })),
     { set: "code_cam24" }, { set: "link_cam24" },
   ] },
-};
+});
 
 // ---- the clock: on Friday it stops at 22:45, until Juno is watching on cam31 (everything is on the 15-minute ticks: any
 // other time would come once for each way of having got there)
 const [NOT_YET, WATCH_IT] = Cutaway.i18n.declare("waiting", ["Erst muss ich da reinkommen.", "Es ist so weit. Ich muss auf CAM 31 sein."]);
-Cutaway.time.hold((/** @type {number} */ to) => {
+Nagiwa.holds.push((/** @type {number} */ to) => {
   if (Cutaway.time.now.day !== 4) return null;
   if (Cutaway.state.test("moment:ines_meeting")) return Cutaway.state.flag("end_beat") === "after" ? WATCH_IT : null;     // the scene moves the clock itself
   return to > Cutaway.time.parse("22:45") ? (Cutaway.state.flag("link_cam31") ? WATCH_IT : NOT_YET) : null;
@@ -52,11 +52,11 @@ Cutaway.moment("rent_due", { room: "deck", day: 4, from: "22:15", to: "22:30", i
 Cutaway.moment("friday_stop", { room: "deck", day: 4, from: "22:30", to: "22:45", if: "~never", unseen: [] });
 
 Nagiwa.cams.cam21 = { id: "21", place: "LULL-KLINIK 9-OST", owner: "NAGI·WA", map: [8, 38], if: "day>1" };
-Nagiwa.cams.cam22 = { id: "22", place: "PHO PUMP", owner: "PRIVAT", map: [64, 38], if: ["day>1", "day<4", "!off_main"] };
-Nagiwa.cams.cam23 = { id: "23", place: "SUDS & SPIN", owner: "PRIVAT", map: [120, 38], if: ["day>1", "day<4", "!off_main"],
+Nagiwa.cams.cam22 = { id: "22", place: "PHO PUMP", owner: "PRIVAT", map: [64, 38], if: { or: [["day>1", "day<4", "!off_main"], "day>4"] } };
+Nagiwa.cams.cam23 = { id: "23", place: "SUDS & SPIN", owner: "PRIVAT", map: [120, 38], if: { or: [["day>1", "day<4", "!off_main"], "day>4"] },
   tryIt: ["Das ist eine billige Kamera, und ihr Werkscode ist 0000.", { set: "code_cam23" }, { set: "link_cam23" }, { sfx: "link" }, "Natürlich."] };
-Nagiwa.cams.cam24 = { id: "24", place: "WOHNBLOCK LERCHE", owner: "PRIVAT", map: [176, 14], if: "day=4" };      // (the code will come from Sable or Motte's second lesson, kapitel1-design C4)
-Nagiwa.cams.cam30 = { id: "30", place: "SUMPF-ABGANG", owner: "NAGI·WA", map: [176, 62], if: { or: [["day>1", "!off_main"], "day=4"] } };
+Nagiwa.cams.cam24 = { id: "24", place: "WOHNBLOCK LERCHE", owner: "PRIVAT", map: [176, 14], if: "day>3" };      // (the code will come from Sable or Motte's second lesson, kapitel1-design C4)
+Nagiwa.cams.cam30 = { id: "30", place: "SUMPF-ABGANG", owner: "NAGI·WA", map: [176, 62], if: { or: [["day>1", "!off_main"], "day>3"] } };
 Nagiwa.cams.cam31 = { id: "31", place: "ALTE METRO, LINIE 31", owner: "UNBEKANNT", map: [120, 86], if: "know_meeting",
   // the old protocol is in Juno's head, and it wants a beat: the eye in the noise when she has it (kapitel1-design C7)
   tryIt: ["Kein Code findet die. Das Ding ist älter als Nagi·wa.", "Aber sie wartet auf was. Das alte Protokoll will einen Takt.", { dialog: "cam31_takt" }] };
@@ -153,7 +153,7 @@ Object.assign(Nagiwa.ledger, {
   wren_live: { to: "WREN", what: { paid: "die Live-Übertragung" }, chits: { paid: 750 } },
 });
 Object.assign(Nagiwa.contacts, {
-  wren: { name: "WREN", color: "#d0d8f0", status: "online", if: "day>1", unread: "!read_wren",
+  wren: { name: "WREN", color: "#d0d8f0", status: "online", if: ["day>1", "day<5"], unread: "!read_wren",
     open: [{ if: "!read_wren", then: [{ set: "read_wren" }, "Wer bezahlt im Voraus? Niemand bezahlt im Voraus."] }] },
 });
 // who has been read only shows as a dot: no state for the solver (conventions: view flags)
@@ -180,9 +180,9 @@ Nagiwa.replies.wren = [
 ];
 // Frau Kessler picks up the prologue (kapitel1-design §7); Teo, if the rent wasn't there
 Nagiwa.threads.kessler.push(
-  { from: "kessler", if: ["day>1", "p1=full"], at: "18:10", text: "Er ist nicht heimgekommen. Schulden, haben Sie geschrieben. Wo ist er?" },
-  { from: "kessler", if: ["day>1", "p1=cut"], at: "18:10", text: "Er ist nicht heimgekommen. Zu ihr, nehme ich an." },
-  { from: "kessler", if: ["day>1", "p1=nothing"], at: "18:10", text: "Er ist nicht heimgekommen. Sie haben wirklich nichts gefunden?" },
+  { from: "kessler", if: ["day>1", "day<5", "p1=full"], at: "18:10", text: "Er ist nicht heimgekommen. Schulden, haben Sie geschrieben. Wo ist er?" },
+  { from: "kessler", if: ["day>1", "day<5", "p1=cut"], at: "18:10", text: "Er ist nicht heimgekommen. Zu ihr, nehme ich an." },
+  { from: "kessler", if: ["day>1", "day<5", "p1=nothing"], at: "18:10", text: "Er ist nicht heimgekommen. Sie haben wirklich nichts gefunden?" },
 );
 Nagiwa.threads.teo.push(
   { from: "teo", if: "rent=teo", at: "22:30", text: "Hab gehört, die Miete. Ich hab Schichten gemacht. Schon überwiesen. Sag nichts." },

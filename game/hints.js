@@ -4,9 +4,11 @@
 // (solve.mjs --full checks both).
 "use strict";
 
-// Chapter 1 comes first: on its days one of these always holds, so the prologue's below don't speak there
+// The same list for the prologue and Chapter 1, each its act's own (later chapters have theirs). Chapter 1 comes first: on its
+// days one of these always holds, so the prologue's below don't speak there
+(function () {
 const HOME = ["door", "door_juno", "stairs", "kessel_door", "deck", "back"];       // the way back to the deck
-Cutaway.hints([
+const HINTS = [
   { if: "end_beat=threat",
     text: ["Ich hab nichts. Keine Tür, kein Licht, keine Nummer.", "Ich such weiter. Ich find nichts, was geht.", "Du kannst nichts tun, Juno. Ich auch nicht."] },
   // job A speaks only when Ines has gone home and before Kessler has gone to bed: nothing of it is needed, so they have no `about`, and
@@ -89,4 +91,6 @@ Cutaway.hints([
     text: ["Bao ist draußen. Draußen ist hinter der Haustür.", "Die Haustür ist links, die aus Glas.", "Geh durch die Haustür raus."] },
   { if: ["fridge_empty", "visited:kessel_14"], about: ["stairs", "door"],
     text: ["Bao ist unten auf der Straße. Unten ist da, wo die Treppe hingeht.", "Die Treppe ist rechts, hinter dem Geländer.", "Geh die Treppe runter."] },
-]);
+];
+for (const act of ["prolog", "kapitel1"]) Cutaway.hints(HINTS, { act });
+})();

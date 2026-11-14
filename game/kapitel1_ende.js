@@ -203,7 +203,7 @@ Cutaway.moment("ines_death", { room: "cam31", day: 4, from: "23:03", to: "23:30"
   { wait: 1500 },
   { fade: "out", ms: 2000 },
   { letterbox: false, ms: 0 },
-  { end: "Kapitel 2: Aufnahme (kommt später)" },
+  { act: "next" },
 ] });
 
 // no music, only the fans; the pointer stays and nothing answers
