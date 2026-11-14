@@ -58,7 +58,7 @@ Nagiwa.talkTree("regenleserin", [
         ["„Teo? Der schläft doch gar nicht.“", [R("Sag ihm, er soll mal raufkommen. Solange er die Leiter noch findet.")], undefined, "!moment:teo_visit"],
       ]],
     ]],
-    ["„Was sagst du zu Lull?“", [R("Ich bin zweiundachtzig. Den Schlaf, den ich noch hab, schlaf ich selber."), R("Zwei Wochen gratis, steht auf dem Schirm. Das Wasser war auch mal gratis.")], [
+    ["„Was sagst du zu Lull?“", [R("Ich bin zweiundachtzig. Den Schlaf, den ich noch hab, schlaf ich selber."), R("Gratis, steht auf dem Schirm. Das Wasser war auch mal gratis.")], [
       ["„Was merkst du denn nachts?“", [R("Früher hat jeder für sich geschnarcht. Hör dir den Block mal um drei an."), R("Jetzt holt das halbe Haus zur selben Zeit Luft. Zur selben.")], [
         ["„Zufall.“", [R("Das schmeckt nicht nach Zufall, Kind.")]],
       ]],

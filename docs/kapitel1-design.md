@@ -12,7 +12,7 @@ Zeit: `docs/kapitel0-design.md` §2–4. Stil: `docs/style-guide.md`.
 | Aufbau | **offen**: drei Aufträge, in beliebiger Reihenfolge und parallel, über drei Abende verteilt; das Kapitel endet am dritten Abend mit dem Treffen in der alten Metro |
 | Neu im Spiel | der Drain-Markt und Sable (persönlich), Ratz, die Deck-App NETZ, Anonymisieren im Clip-Editor, Vesper (NINTH LIVE), Werkzeuge kaufen, Steuern im Feed, Kamera vor Ort anzapfen, die Tage, Teo, die Polizei (Morrow, kurz) |
 | Orte, Straßenmodus | `flat`, `kessel_14`, `kessel_lobby`, `kowalski`, `jade_row`, `lucky_static`, `okonkwo_shop`, `drain_market`, `sable_booth`, `laundromat` (10) |
-| Kameras | `cam03`, `cam04`, `cam07` (Kowalski-Straße, das Mockup E), `cam07v` (die Automatenkamera), `cam15` (Kapselhotel Morpheus), `cam21`–`cam24` (Ines' Wege), `cam30` (Sumpf-Abgang), `cam31` (alte Metro) (11) |
+| Kameras | `cam03`, `cam04`, `cam07` (Jade Row, das Bild der Gasse unter dem Feed-Filter), `cam07v` (die Automatenkamera), `cam15` (Kapselhotel Morpheus), `cam21`–`cam24` (Ines' Wege), `cam30` (Sumpf-Abgang), `cam31` (alte Metro) (11) |
 | Entscheidungen | K1a (Kessler), K1b (der Eckladen), **Entscheidung 1** (WREN) |
 | Ende | der Mord an Ines in `cam31` |
 | Dialoge | zuerst einfache Dialoge; die inneren Stimmen (`dialog-design`, Engine E-d) kommen vor den endgültigen Texten dazu |
@@ -25,7 +25,7 @@ zum nächsten Abend. Jeder Abend beginnt mit neuen Nachrichten auf dem Deck.
 | Abend | Was neu ist | Was an diesem Abend geschieht |
 |---|---|---|
 | **1 (Mi, 7.11.)** | drei Auftragsangebote: Varga (A), die Tidewater Boys (B), WREN (C) | Teo kommt vorbei (§7). Ines' erster beobachtbarer Abend. Der Drain-Markt ist offen. Okonkwo öffnet den Tresor (01:00). |
-| **2 (Do, 8.11.)** | eine Mahnung vom Vermieter, die Werbung „Lull: 2 Wochen gratis" | Ines versteckt den Stick im kaputten Trockner 6 (20:00) und liest die Pegeltafel am Sumpf-Abgang (20:15). Okonkwo öffnet den Tresor (01:00), zum letzten Mal. |
+| **2 (Do, 8.11.)** | eine Mahnung vom Vermieter, die Werbung „Lull: jetzt gratis" | Ines versteckt den Stick im kaputten Trockner 6 (20:00) und liest die Pegeltafel am Sumpf-Abgang (20:15). Okonkwo öffnet den Tresor (01:00), zum letzten Mal. |
 | **3 (Fr, 9.11.)** | Varga drängt („Freitag ist heute."), WREN will „bis 22 Uhr" den Ort | Kein Schlafen. 22:00 WRENs Frist, 22:30 bucht das Konto die Miete ab (§5). Die Uhr hält um 22:45, bis Juno auf `cam31` zusieht. 23:00 das Treffen in der Metro. Kapitelende. |
 
 Was nicht an einen Abend gebunden ist, geht an jedem (die Aufträge A und B lassen sich am Abend 1, 2
@@ -88,19 +88,19 @@ grüßt Juno jeden Abend.
 | # | Wo | Was passiert | Flags / Dinge |
 |---|---|---|---|
 | B1 | Deck | annehmen | `job_b` |
-| B2 | `cam07` | Die Kowalski-Straße von oben (das Mockup E). Ins Ladenfenster sieht man nur schräg. Die Kamera hat drei Stellungen (Steuern): in Stellung 3 sieht sie durch das Fenster auf die Theke. | — |
+| B2 | `cam07` | Die Jade Row von oben, hoch am Gassenende zur Kowalski (ein Ort, ein Bild: das Bild der Gasse unter dem Feed-Filter). Ins Ladenfenster sieht man nur schräg; die Kamera hat nur einen Blick. | — |
 | B3 | `cam07` | 01:00 schließt Okonkwo, kniet sich hinter die Theke, öffnet den Tresor. Von oben verdeckt sein Rücken das Tastenfeld. Juno: „Falscher Winkel. Ich brauch was auf Augenhöhe." | — |
-| B4 | `kowalski` | Der Automat vor dem Laden hat eine eigene kleine Kamera (Werbung, „Lächeln für einen Gutschein!"). Ansehen: „Die Automatenkamera. Sieht genau durchs Fenster." Sie hängt nicht am Netz: Man muss sie anzapfen. | — |
+| B4 | `jade_row` | Der Automat gegenüber dem Laden hat eine eigene kleine Kamera (Werbung, „Lächeln für einen Gutschein!"). Ansehen: „Die Automatenkamera. Sieht genau durchs Fenster." Sie hängt nicht am Netz: Man muss sie anzapfen. | — |
 | B5 | `drain_market` | Ein Händler (Ratz, eine Kabelratte aus dem alten Flutprogramm, so groß wie ein kleiner Hund, Kopfhörer, Stand mit Elektroschrott; Story §4) verkauft einen **Abzweiger**: 60 Chits. Ratz feilscht, vertauscht über seinen geflickten Sprechkragen Wörter („Sechzig Chits, Freundschaftspreis, Feindschaftspreis wäre achtzig.") und will wissen, ob Juno Ratten in den Rohren unter der Krone gesehen hat (Nebengeschichte, Story §9). Oder Motte baut einen aus Junks, wenn Juno ihm im Prolog freundlich geantwortet hat und ihm jetzt eine Lektion gibt (§7). | `+tap` |
-| B6 | `kowalski` | Den Abzweiger am Automaten benutzen (Straßenmodus, Juno kniet sich hin). Die Drohne patrouilliert: Nur wenn ihr Lichtkegel weg ist (alle 8 Sekunden), sonst: „Nicht, solange die Drohne guckt." | `link_cam07v` |
+| B6 | `jade_row` | Den Abzweiger am Automaten benutzen (Straßenmodus, Juno kniet sich hin). Die Drohne patrouilliert: Nur wenn ihr Lichtkegel weg ist (alle 8 Sekunden), sonst: „Nicht, solange die Drohne guckt." | `link_cam07v` |
 | B7 | `cam07v` | Ein Fischauge auf Hüfthöhe, die Ladentheke im Hintergrund. 01:00: das Tastenfeld, Zoom: der Code `4-1-7-0-9`. Aufzeichnen oder notieren. | `note_safe_code` |
-| B8 | `cam07` | **Morrow**: in den Nächten von Abend 1 und 2, 00:30, ein Polizeiwagen hält vor dem Laden. Lt. Morrow nimmt von einem Tidewater-Jungen einen Umschlag (Kiemenschlitze, die Leuchtmarkierung am Hals im Feed hell wie eine Lampe). Zuhören: „Das ist für die ruhige Woche. Freitag fährt keiner die Kowalski." Moment `morrow_bribe` (für Kap. 2 und 4 wichtig, wer ihn aufzeichnet, hat etwas gegen Morrow). | optional `+clip_morrow_bribe` |
+| B8 | `cam07` | **Morrow**: in den Nächten von Abend 1 und 2, 00:30, ein Polizeiwagen hält vor dem Laden. Lt. Morrow nimmt von einem Tidewater-Jungen einen Umschlag (Kiemenschlitze, die Leuchtmarkierung am Hals im Feed hell wie eine Lampe). Zuhören: „Das ist für die ruhige Woche. Freitag fährt keiner die Kowalski." Moment `morrow_bribe` (wer ihn aufzeichnet, hat etwas gegen Morrow: ein Clip für Vesper und, in Kap. 2, eine Aufnahme für das letzte Prüfen; über Kapitel 2 hinaus geht davon nichts, story §10h). | optional `+clip_morrow_bribe` |
 | B9 | **Entscheidung K1b** | siehe unten | |
 
 **Im Mock gebaut** (`game/auftrag_tide.js`, auf Blöcken; Zeilen und Abläufe sind beim Durchspielen zu prüfen). Ein eigener Faden, `off_tide`, mit `got_tap`, `k1b` und `link_cam07v`; seine Wege sind `tools/paths/kapitel1_tide_*.json`. Abweichungen von der Kette:
 
 - **Annehmen entfällt** (kein `job_b`): TIDEs Nachricht steht ab Mittwoch im Chat („Okonkwo, Jade Row. …“).
-- **Der Laden steht in der Jade Row** (story §10c), gegenüber der Automat mit der Kamera. `cam07` ist Nagi·was Kamera über der Gasse, mit Junos altem Zugang, und hat **nur einen Blick**: Die drei Stellungen des Designs entfallen im Mock, weil der Laden nicht mehr an der Kowalski liegt. Von oben verdeckt Okonkwos Rücken um 01:00 das Tastenfeld.
+- **Der Laden steht in der Jade Row** (story §10c), gegenüber der Automat mit der Kamera. `cam07` ist Nagi·was Kamera über der Gasse, mit Junos altem Zugang, und hat **nur einen Blick**: Drei Stellungen eines früheren Entwurfs entfallen, weil der Laden nicht mehr an der Kowalski liegt. Von oben verdeckt Okonkwos Rücken um 01:00 das Tastenfeld.
 - **Der Abzweiger** kommt nur von Ratz (60 Chits, ein Gespräch mit verschachtelten Themen); Mottes Weg kommt mit seinen Lektionen.
 - **Die Drohne:** Juno wartet selbst ab, bis sie vorbei ist, dann klemmt sie den Abzweiger an. Nichts hängt am Timing (CLAUDE.md, Konventionen).
 - **`cam07v`:** Okonkwo steht abends an der Theke, um 01:00 kniet er am Tresor; ein Klick auf ihn zeigt den Code im Zoom. Wer später kommt, findet ihn im Puffer derselben Nacht.
@@ -184,7 +184,7 @@ Kap. 2: Nach dem Senden weiß die Quiet sofort, wer Juno ist; nach der Weigerung
 
 | Wann | Wo | Was |
 |---|---|---|
-| Abend 1, 18:30 | `flat` | **Teo** klopft. Orange Weste, Gehörschutz um den Hals, hinter dem Ohr der blaue Lull-Punkt. Er bringt Essen von Bao. Er lacht über seine Doppelschichten („Vier Stunden Lull, und ich bin wie neu."). Ansehen des Punkts: Juno: „Seit wann?" Teo: „Seit es gratis ist." Ein Dialog über ihre Nagi·wa-Zeit (Teo: „Du redest noch immer, als hätten sie dich gefeuert, weil du schlecht warst."). |
+| Abend 1, 18:30 | `flat` | **Teo** klopft. Orange Weste, Gehörschutz um den Hals, hinter dem Ohr das ovale Lull-Pflaster, das im Takt pulsiert. Er bringt Essen von Bao. Er lacht über seine Doppelschichten („Vier Stunden Lull, und ich bin wie neu."). Ansehen des Punkts: Juno: „Seit wann?" Teo: „Seit es gratis ist." Ein Dialog über ihre Nagi·wa-Zeit (Teo: „Du redest noch immer, als hätten sie dich gefeuert, weil du schlecht warst."). |
 | jeder Abend | `kowalski` | Der Werbebildschirm stottert, wenn Juno vorbeigeht. Abend 2 zeigt er eine Sekunde lang das Bild aus `cam03` (Kessler unterm Vordach, zwei Nächte alt). Abend 3 nur das Auge. |
 | Abend 1–3 | `kessel_14` | **Motte** wartet auf seiner Bank. Wenn Juno ihm im Prolog freundlich geantwortet hat: „Zeigst du mir was?" Drei Lektionen (je eine pro Abend, ein kleiner Dialog): was eine Kamera ist, wie man einen Code findet, warum man nie seinen eigenen Block glasst. Nach der zweiten baut er den Abzweiger (B5). Nach der dritten: `moth_student` (in Kap. 3 warnt er Juno vor der Razzia). |
 | Abend 2 | `kessel_14` | Frau Haldane, wach, an ihrer Tür: Ihr Sohn schreibt nicht mehr aus den mittleren Ringen. Eine Nebengeschichte beginnt (Story §9). |
@@ -227,7 +227,7 @@ Die Abende sollen nach Leben in der Stadt schmecken, nicht nach Warten aufs Bett
 | 2 | `flat`, Karton | Der alte Nagi·wa-Ausweis, `UNGÜLTIG`. Am Fenster: „Das ist das erste Mal, dass das Ding was aufmacht.“ |
 | 3 | `sims` | Die Leiter hängt zwei Meter zu hoch. „Teo kam da früher mit irgendwas Langem ran.“ |
 | 4 | `kessel_14`, Aufzug | Neben der Tür hängt der Notschlüssel, ein langer Haken: „Um stecken zu bleiben, müsste der Aufzug erst mal fahren.“ |
-| 5 | `sims`, Leiter | Haken, die Leiter kommt runter, hoch aufs Dach. |
+| 5 | `sims`, Leiter | Haken, die Leiter kommt runter, hoch aufs Dach. Den Haken behält Juno in der Tasche (entschieden 2026-11-14): Kapitel 2 braucht ihn für das Floß (`kapitel2-design` §3.5). |
 
 Ausweis, Notschlüssel und der Weg aufs Dach sind schon im Prolog offen (entschieden 2026-11-06): Es gibt keinen Grund in der Welt, sie zu sperren, und die Regenleserin verrät nichts, was Vorwissen braucht. Kapitel 1 übernimmt beide Gegenstände. Der Notschlüssel hängt sichtbar neben der Aufzugtür, über der Tür sind schon Anzeige und Lampe.
 
@@ -393,7 +393,7 @@ Größen wie in `kapitel0-design` §8: 30 px pro Meter Höhe; im Feed misst ein 
  Abend 1 ─ Nachrichten: A (Varga), B (TIDE), C (WREN) ─ Teo kommt vorbei
    │
    ├─ A: cam03 Kessler ohne Schal ─ Automat Nr. 7 / Ringstreifen ─ cam15 (Code bei Sable) ─ Kapsel 23 ─ K1a
-   ├─ B: cam07 schwenken ─ falscher Winkel ─ Abzweiger (Ratz / Motte) ─ Automat anzapfen (Drohne!) ─ cam07v ─ Code ─ K1b
+   ├─ B: cam07 ─ falscher Winkel ─ Abzweiger (Ratz / Motte) ─ Automat anzapfen (Drohne!) ─ cam07v ─ Code ─ K1b
    │      └─ optional: Morrows Bestechung aufzeichnen
    └─ C: cam21 ─ cam22 ─ cam23 ─ (Abend 2) Stick in Trockner 6
            ├─ optional selbst hingehen: den Stick zurücklegen oder behalten

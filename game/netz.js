@@ -33,7 +33,7 @@
     lull: { title: "LULL // SLEEP BETTER", label: "Lull: Besser schlafen", up: "nagiwa", by: "Nagi·wa Gesundheit", text: [
       "Vier Stunden, die sich anfühlen wie zehn.",
       "Lull ist Nagi·was Geschenk an alle, die hart arbeiten. Ein kleiner Punkt hinter dem Ohr, und Ihre Nacht gehört wieder Ihnen.",
-      "Zwei Wochen gratis in jeder Ausgabestelle. Danach zu einem Preis, der sich nach Ihrer Schicht richtet.",
+      "Jetzt gratis in jeder Ausgabestelle, im ganzen Neunten. Ein Geschenk von Nagi·wa.",
       "Lull-Nutzer berichten von ruhigen, klaren Träumen.",
       "Fragen? Die Lull-Kliniken im Neunten sind für Sie da." ] },
     rekordtief: { title: "KRIMINALITÄT AUF REKORDTIEF", label: "Kriminalität im Neunten auf Rekordtief", up: "nagiwa", by: "Nagi·wa Sicherheit", text: [

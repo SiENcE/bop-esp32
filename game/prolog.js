@@ -147,7 +147,7 @@ Object.assign(Nagiwa.threads, {
     { from: "teo", at: "gestern", text: "Bin heut früh im Bett. Schlaf du auch mal, Ju." },
   ],
   nagiwa: [
-    { from: "nagiwa", at: "20:00", text: "LULL: TWO WEEKS FREE. Vier Stunden Schlaf wie zehn." },
+    { from: "nagiwa", at: "20:00", text: "LULL: NOW FREE. Vier Stunden Schlaf wie zehn, jetzt gratis im ganzen Neunten." },
     { from: "nagiwa", at: "20:00", text: "Ihre Hüllenabgabe wurde angepasst." },
   ],
   sable: [
@@ -239,7 +239,7 @@ Nagiwa.netz.push(
   { kind: "head", slot: 0, page: "rekordtief", if: "day<3", text: "Kriminalität im Neunten auf Rekordtief." },
   { kind: "sub", slot: 1, if: "day=1", text: "Pumpenhalle 3: Wartung planmäßig. Nagi·wa dankt den Nachtschichten." },
   { kind: "board", slot: 2, page: "automat", if: "day=1", text: "Der Nudelautomat Ecke Kowalski frisst Chits. Schon wieder.", by: "K." },
-  { kind: "ad", slot: 3, page: "lull", label: "LULL // SLEEP BETTER", text: "Vier Stunden wie zehn. Zwei Wochen gratis." },
+  { kind: "ad", slot: 3, page: "lull", label: "LULL // SLEEP BETTER", text: "Vier Stunden wie zehn. Jetzt gratis." },
   { kind: "live", slot: 4, page: "ninthlive", label: "NINTH LIVE // TONIGHT" });
 
 Cutaway.act("prolog", {

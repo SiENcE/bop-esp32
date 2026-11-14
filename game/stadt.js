@@ -66,7 +66,9 @@ Cutaway.room("sims", { name: "Der Sims", background: "sims_bg", walk: AS.walk,
       look: [{ if: "ladder_down", then: ["Die Leiter hängt jetzt da, wo sie hingehört."], else: ["Die Leiter aufs Dach hängt zwei Meter zu hoch.", "Teo kam da früher mit irgendwas Langem ran."] }],
       use: [{ if: "!ladder_down", then: ["Sie hängt zwei Meter zu hoch. Teo kam da mit irgendwas Langem ran, ich nicht.", "Ohne was mit Haken wird das nichts."],
         else: ["Nicht runterschauen.", { goto: "dach", at: AD.hatch, face: "ne" }] }],
-      with: { haken: ["Der Haken greift, und ich zieh.", "Sie kommt runter, mit allem Rost der letzten zwanzig Jahre.", { remove: "haken" }, { set: "ladder_down" }, "Nicht runterschauen.", { goto: "dach", at: AD.hatch, face: "ne" }] } },
+      // the hook stays in the bag: Chapter 2 needs it again for the raft (the user's decision, 2026-11-14)
+      with: { haken: [{ if: "ladder_down", then: ["Die hängt schon unten."], else: ["Der Haken greift, und ich zieh.", "Sie kommt runter, mit allem Rost der letzten zwanzig Jahre.",
+        "Den Haken behalt ich. Wer weiß.", { set: "ladder_down" }, "Nicht runterschauen.", { goto: "dach", at: AD.hatch, face: "ne" }] }] } },
     // the section pulled down (the prop sims_ladder): from there on the ladder reaches the ledge
     ladder_low: { name: "Leiter", rect: AS.ladderLowRect, walkTo: AS.ladder, face: "ne", if: "ladder_down", look: "Die Leiter hängt jetzt da, wo sie hingehört.",
       use: ["Nicht runterschauen.", { goto: "dach", at: AD.hatch, face: "ne" }] },

@@ -1,7 +1,7 @@
 # Glass Sister: die Geschichte zum Lesen (bis einschließlich Kapitel 1)
 
 Eine Lesefassung, kein neuer Entwurf: Sie erzählt nach, was in `story.md`, `kapitel0-design.md`, `kapitel1-design.md` und im
-Spiel steht, mit den Entscheidungen bis zum 14. November (story §10b–§10g). Stand: 13. November 2026. Der Vorspann und der Prolog
+Spiel steht, mit den Entscheidungen bis zum 14. November (story §10b–§10h). Stand: 14. November 2026. Der Vorspann und der Prolog
 sind gebaut und gemalt, und auch Kapitel 1 spielt ganz durch und ist gemalt; seine Zeilen sind Vorschläge, die beim Durchspielen
 geprüft werden. Im Zweifel gilt das Spiel. Der letzte Teil vor den offenen Punkten, „Was Kapitel 1 noch nicht sagt“, verrät das
 Geheimnis; wer es nicht wissen will, hört nach CAM 31 auf.
@@ -22,7 +22,7 @@ und sind längst eine eigene Kultur. Ratten zogen Kabel durch die Rohre, Kraken 
 wurden klüger als geplant. Die Nudelautomaten haben Launen. Niemand wundert sich mehr darüber.
 
 Es ist 2091. Die Kriminalität im Neunten ist in sechs Jahren um achtzig Prozent gefallen. Nagi·wa dankt dafür seiner
-Überwachung und seinem Geschenk an die Menschen: Lull, einem billigen Schlafimplantat, von außen ein blasses Pflaster hinter dem
+Überwachung und seinem Geschenk an die Menschen: Lull, einem Schlafimplantat, jahrelang billig und jetzt gratis, von außen ein blasses Pflaster hinter dem
 Ohr, das in einem festen Takt pulsiert. Vier Stunden mit Lull erholen wie zehn, und so schafft der halbe Neunte die Doppelschichten,
 mit denen er die Flutschuld abzahlt. Die Werbung ist überall: NAGI·WA: SLEEP BETTER. Wer mit Lull irgendwann nicht mehr aufwacht,
 ist ein Sinker; Nagi·wa nennt das Ruhe-Erschöpfung und bringt ihn auf eine Schlafstation.
@@ -431,13 +431,13 @@ Doppelschichten. Darum behält er manche. Der Sohn vom Fischmann, der Vater des 
 hinaustragen: Sie sind nicht krank, sie sind geblieben. „Er hat es jetzt gut“ ist eine Lüge und auch nicht ganz. Und wenn Juno auf
 dem Dach sagt, Teo schlafe heute besser, dann ist das der Anfang.
 
-Drei Jahre lang hat der Zeuge Juno nur zugesehen, der Einzigen im Neunten, die noch jede Nacht wach auf seinem Protokoll ist. An
+Drei Jahre lang hat der Zeuge Juno nur zugesehen, einer der wenigen im Neunten, die noch jede Nacht wach auf seinem Protokoll sind. An
 diesem Dienstag spricht er zum ersten Mal, weil seine Uhr läuft: In der Krone ist beschlossen, ihn aus dem Kollektiv der Schläfer zu bereinigen. Deshalb steht am
 Ende des Prologs ihr Name in ihrem Auge.
 
-Dass am nächsten Abend auch WREN kommt, ist kein Zufall. Der Zeuge hat Ines vor den Schläfern versteckt: Keiner von ihnen markiert sie, und ohne
-Markierung findet Nagi·wa einen Menschen in seinen eigenen Kameras nicht. Es braucht jemanden, der wach hinsieht. Juno tut für WREN
-die Arbeit, die der Zeuge verweigert. Beide brauchen jemanden, der wach hinsieht.
+Dass am nächsten Abend auch WREN kommt, ist kein Zufall. Der Zeuge hat Ines vor den Schläfern versteckt: Keiner von ihnen markiert
+sie, und ohne Markierung findet Nagi·wa einen Menschen in seinen eigenen Kameras nicht. Juno tut für WREN die Arbeit, die der Zeuge
+verweigert. Beide brauchen jemanden, der wach hinsieht.
 
 Der Mann im weißen Regenmantel heißt Corvin Ashe, und er saß früher selbst in Junos Halle. Weil CAM 31 nur das alte
 Beobachter-Protokoll versteht, weiß er, was für ein Mensch gerade durch sie sieht, als er hinaufschaut.
@@ -450,4 +450,5 @@ Beobachter-Protokoll versteht, weiß er, was für ein Mensch gerade durch sie si
 - **Ines versteckt:** Dass der Zeuge Ines vor den Schläfern versteckt und Nagi·wa sie deshalb nicht selbst findet (story §6, Punkt 5,
   entschieden 2026-11-13), deutet Kapitel 1 noch nirgends an. Nötig ist es nicht; ob eine Zeile darauf zeigt, ist offen.
 - **Teo im Traum:** Dass Teo als Sinker nicht zurückwill (story §7, Kapitel 3), deutet sein Besuch am Mittwoch nur mit „Vier Stunden
-  Lull, und ich bin wie neu.“ an und Juno auf dem Dach mit „Heute schläft er besser. Sagt er.“ Ob er selbst etwas mehr sagt, ist offen.
+  Lull, und ich bin wie neu.“ an und Juno auf dem Dach mit „Heute schläft er besser. Sagt er.“ Deutlicher sagt er es selbst in
+  Kapitel 2, auf dem Dach am Montag: „Wenn ich schlaf, ist alles still. Keine Pumpen. Keine Schulden.“ (`kapitel2-design.md` §7)

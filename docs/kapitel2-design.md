@@ -30,9 +30,9 @@ und alle Zeiten liegen auf den 15-Minuten-Takten. Die Spieltage sind 5 bis 7 (Ka
 
 | Abend | Thema | Was neu ist | Was an diesem Abend geschieht |
 |---|---|---|---|
-| **1 (Sa, 10.11.)** | danach | Juno kommt heim (§2.1). Im NETZ und im LUCKY STATIC: „Tote in der alten Metro.“ Frau Imai schreibt (§6.1). | Die Folgen aus Kapitel 1 treffen ein (§5). Hat Juno den Stick zurückgelegt, holt Lantern ihn um halb eins (§3.1). Um 00:30 hält Morrows Flutwagen in Jade Row. In der Nacht fällt `cam07` aus (§4). |
+| **1 (Sa, 10.11.)** | danach | Juno kommt heim (§2.1). Im NETZ und im LUCKY STATIC: „Tote in der alten Metro.“ Frau Imai schreibt (§6.1). | Die Folgen aus Kapitel 1 treffen ein (§5), auch der Überfall der Nacht davor. Hat Juno den Stick zurückgelegt, holt Lantern ihn um halb eins (§3.1). Um 00:30 hält Morrows Flutwagen auf ihrer Runde in der Jade Row. In der Nacht fällt `cam07` aus (§4). |
 | **2 (So, 11.11.)** | die Lüge | Die Nachrichten zeigen die **Fälschung**: Lantern tötet Ines (§3.4). Frau Haldane wartet wach auf den Brief ihres Sohnes (§6.2). | Um 20:00 räumt die Quiet Ines' Wohnung aus, danach ist sie versiegelt (§3.3). Um 22:00 kapert Lantern den großen Schirm (§3.5). Um 00:30 hält Morrow wieder in Jade Row. In der Nacht fällt `cam14` aus. |
-| **3 (Mo, 12.11.)** | Entscheidung 2 | Um 18:30 kommt Teo, und sie gehen aufs Dach (§7). | Um 00:45 hält die Uhr, bis alles bereit ist (§3.7). Um 01:00 sendet Lantern. Gegen 03:00 kommt Tintes Nachricht (§8). |
+| **3 (Mo, 12.11.)** | Entscheidung 2 | Um 18:30 kommt Teo, und sie gehen aufs Dach (§7). | Ab heute weiß die Quiet in jedem Fall, wer Juno ist (§4). Um 00:45 hält die Uhr, bis alles bereit ist (§3.7). Um 01:00 sendet Lantern. Um 03:15 kommt Tintes Nachricht (§8). |
 
 Was nicht an einen Abend gebunden ist, geht an jedem; die nächtlichen Momente wiederholen sich, wo nicht anders gesagt. Was
 über Nacht vergessen wird (`Nagiwa.nights[day].passes`): die Momente des Vortags, `cam07` ab Abend 2 und `cam14` ab Abend 3 (§4).
@@ -40,9 +40,11 @@ Was nicht an einen Abend gebunden ist, geht an jedem; die nächtlichen Momente w
 ### 2.1 Der Anfang
 
 Kapitel 1 endet, als Juno am Deck sitzt und EVI sagt: „Er hat sie ausgeschaltet.“ Kapitel 2 beginnt am Samstag um 18:00 an ihrer
-Wohnungstür (entschieden 2026-11-14, story §10h): Sie hat es in der Nacht nicht ausgehalten, ist hinausgegangen und bis in den Morgen
-durch den Neunten gelaufen. Gezeigt wird das nicht, nur gesagt („Ich bin gelaufen. Irgendwann war es hell.“). Sie kommt heim, und EVI
-macht etwas Normales, die festgelegte Szene (`dialog-style-guide` §8, story §10b), Wort für Wort:
+Wohnungstür (entschieden 2026-11-14, story §10h): Sie hat es in der Nacht nicht ausgehalten, ist hinausgegangen und durch den Neunten
+gelaufen, die Nacht und den Tag, bis wieder Abend war. Das zeigt eine kurze Sequenz ohne Worte, abstrakt (entschieden 2026-11-14): Neon,
+das Gewühl der Stadt, viele Menschen, darin der gelbe Mantel, mal nah, mal verloren; dann ihre Tür. Juno sagt dazu nur eine Zeile („Ich
+bin gelaufen. Irgendwann war wieder Abend.“). Sie kommt heim, und EVI macht etwas Normales, die festgelegte Szene (`dialog-style-guide`
+§8, story §10b), Wort für Wort:
 
 > EVI: Willkommen zurück, Juno.\
 > Juno: ...\
@@ -55,11 +57,22 @@ macht etwas Normales, die festgelegte Szene (`dialog-style-guide` §8, story §1
 Danach ist die Wohnung wie immer, und das Kapitel ist offen. Wer `?act=kapitel2` startet, beginnt mit den Antworten des
 Durchspielwegs von Kapitel 1 (wie `?act=kapitel1`, story §10d).
 
-**Was Kapitel 1 übergibt** (`keep` des Akts): `e1` (sold | refused), `stick_ines`, `k1a`, `k1b`, `kessler_gone`, `imai_step` und
-`imai_told`, `traeger`, `moth_student`, `rent`, `chits`, die Einträge im Kassenbuch (`ledger_*`), die Clips im CACHE
-(`clip_ines_death` für alle, dazu `clip_traeger`, Morrows Umschlag, Kesslers Ring), die Kamerazugänge (`code_*`, `link_*`, darunter
-`link_cam24`), `got_ausweis`, `got_haken`, `ladder_down`. Was Kapitel 1 nur für sich brauchte (`know_meeting`, `end_beat`, die Momente),
-bleibt zurück.
+**Was Kapitel 1 übergibt** (`keep` des Akts; nach dem Grundsatz, dass ein Kapitel nur wenige Flags übernimmt, story §10h): `e1`
+(sold | refused), `stick_ines`, `k1a`, `k1b`, `imai_told` (gesetzt heißt: sie hat geantwortet), `moth_student`, `rent`, `chits`, die
+Einträge im Kassenbuch (`ledger_*`), die Clips im CACHE (`clip_ines_death` für alle, dazu Kesslers Ring, Morrows Umschlag,
+`clip_traeger`) und der Weg aufs Dach (`got_ausweis`, `got_haken`, `window_open`, `ladder_down`: Wer ihn kennt, muss ihn nicht noch
+einmal öffnen). Die **Kamerazugänge** übernimmt der Akt nicht, er setzt sie beim Start, wie Kapitel 1 Junos alten Zugang setzt: was
+jeder Spieler am Freitag hat (Junos alten Zugang zu `cam03`, `cam07`, `cam14`, `cam21` und `cam30`, `cam04` mit dem Code vom Gehäuse
+aus dem Prolog, `cam22` bis `cam24` von Ines' Weg), und was ein Faden sich erarbeitet hat, aus dessen Flag (`cam15` nach `k1a`,
+`cam07v` nach `k1b=sold` oder `lied`). Die Bedingungen dieser Kameras (`if` in `game/rooms/cams.js` und `game/kapitel1.js`, etwa
+`day<4` bei `cam22` und `cam23`) bekommen Kapitel 2 dazu. Was Kapitel 1 nur für sich brauchte oder sich aus anderem ergibt, bleibt
+zurück: `know_meeting`, `end_beat`, die Momente, `kessler_gone` (folgt aus `k1a`), `imai_step`, `traeger` (die Zeile im NETZ braucht
+es nicht mehr, §7).
+
+**Was Kapitel 2 weitergibt:** `e2`, `lantern_alive` (ein Flag: Juno hat Lantern gefunden und die Quiet nicht zu ihm geführt),
+`forgery_proven`, `moth_student`, `k1b` nur als `warned` (Okonkwos Versteck in Kapitel 4) und das Kassenbuch. In Kapitel 2
+abgeschlossen sind Varga und Kessler, der Eckladen bis auf Okonkwos Dank, Frau Imai, Frau Haldane (ihr Sohn ist in Kapitel 3 höchstens
+ein Blick auf der Station, ohne Flag), Vesper, WREN und die Miete.
 
 ## 3. Der Hauptfaden: Ines
 
@@ -71,12 +84,17 @@ kann er nicht senden.
 - **Lag der Stick am Freitag noch im Trockner** (`!stick_ines`), hat Lantern ihn in derselben Nacht geholt. Kapitel 2 beginnt mit
   `stick_lantern`.
 - **Hat Juno ihn,** findet Lantern die Sechs leer. Er sieht jede Nacht zwischen 00:30 und 01:00 nach, in `cam23` zu sehen: ein
-  Rollstuhl mit Schwimmern im grünen Licht, der vor Trockner 6 hält und wieder fährt. Juno kann den Stick anonym zurücklegen; in
-  der nächsten Nacht nimmt Lantern ihn mit (`stick_lantern`). Oder sie bringt ihn ihm selbst (§3.5). Dieser Weg bleibt immer offen.
+  Rollstuhl mit Schwimmern im grünen Licht, der vor Trockner 6 hält und wieder fährt (er kommt übers Wasser, die Gasse ist ein Steg).
+  Juno kann den Stick anonym zurücklegen; um halb eins in derselben Nacht nimmt Lantern ihn mit (`stick_lantern`). Legt sie ihn erst
+  danach zurück, holt er ihn noch in derselben Nacht, ungesehen, auch wenn Juno schon schläft (beim Bau ein Schritt im Übergang der
+  Nacht, wie `Nagiwa.nights`): **Ein zurückgelegter Stick
+  ist am nächsten Abend immer weg** (entschieden 2026-11-14). Oder sie bringt ihn ihm selbst (§3.5). Dieser Weg bleibt immer offen.
 - **Die Quiet am Trockner:** Gibt Juno ihre Aufnahme **ungeschnitten** weiter (an Sable, Vesper oder Morrow, §3.6), hört Nagi·wa das
-  Flüstern („SUDS & SPIN. Trockner sechs, der kaputte.“). Ab dem nächsten Takt sitzt ein Mann in Weiß im Waschsalon (`quiet_dryer`, in
-  `cam23` zu sehen), und Zurücklegen geht nicht mehr: Dann bleibt nur, den Stick Lantern selbst zu bringen. Hält Lantern ihn schon,
-  kommt die Quiet zu spät, und der Mann in Weiß sitzt umsonst dort. **Die Quiet bekommt den Stick nie** (story §10b).
+  Flüstern („SUDS & SPIN. Trockner sechs, der kaputte.“). **Ab dem nächsten Abend** sitzt ein Mann in Weiß im Waschsalon (`quiet_dryer`,
+  in `cam23` zu sehen), und Zurücklegen geht nicht mehr. Die Zeitfolge sorgt dafür, dass die Quiet immer zu spät kommt (entschieden
+  2026-11-14): Liegt der Stick an dem Tag, an dem Juno den Clip weggibt, im Trockner, oder legt sie ihn in derselben Nacht noch
+  zurück, hat Lantern ihn, bevor die Quiet am nächsten Abend kommt. Hat Juno ihn noch, sieht der misstrauische Lantern den Mann in Weiß vom Wasser aus und kommt nicht mehr; dann bleibt nur,
+  ihm den Stick selbst zu bringen. **Die Quiet bekommt den Stick nie** (story §10b), und Lantern bleibt im Spiel.
 - **Das Flüstern schneiden:** Mit dem Werkzeug Schneiden aus dem Prolog kann Juno den Moment des Flüsterns aus ihrem Clip nehmen
   (`clip_ines_cut`). Dann erfährt niemand von der Sechs. EVI fragt, bevor Juno den ganzen Clip weggibt: „Im Clip ist das Flüstern.
   Willst du, dass das jemand hört?“
@@ -89,12 +107,12 @@ geht hinein, setzt sich in die Schlange und wird als Patientin aufgenommen: ein 
 
 | # | Wo | Was |
 |---|---|---|
-| K1 | `cam21` | Ab Samstag kommt Ines um 19:00 nicht mehr heraus. Um 19:00 geht stattdessen eine Schwester nach Hause, die sich zweimal nach der Tür umsieht. |
-| K2 | `klinik` | Die Aufnahme: Name, Schlafzeiten, „Haben Sie schon ein Implantat?“ Der Scanner piept: `LEGACY IMPLANT DETECTED`. Die Schwester: „Oh, ein altes Modell. Dann geht es bei Ihnen ganz leicht.“ Sie bietet Lull an: „Es kostet Sie nichts.“ (Lull ist gratis, Kapitel 1.) Juno: „Nicht heute.“ (kein Gegenstand; das Lull bekommt Juno in Kapitel 3, story §7) |
+| K1 | `cam21` | Ab Samstag kommt Ines um 19:00 nicht mehr heraus. Um 19:00 kommt stattdessen die Schwester zur Nachtschicht, die an der Aufnahme sitzt, und sieht sich zweimal nach der Tür um. |
+| K2 | `klinik` | Die Aufnahme ab 19:00 (vorher schickt der Schalter in die Schlange: „Nachtaufnahme ab sieben.“): Name (Juno nennt einen falschen), Schlafzeiten. Die Schwester bietet Lull an: „Es kostet nichts.“ Sie will noch hinter dem Ohr nachsehen, ob schon etwas sitzt; die innere Stimme DAS IMPLANTAT warnt, und Juno zieht die Kapuze wieder hoch: „Nicht heute.“ Kein Scan, keine Spur zu ihr, und nichts nimmt Kapitel 3 vorweg (entschieden 2026-11-14; kein Gegenstand, das Lull bekommt Juno in Kapitel 3, story §7). Die Schwester: „Kommen Sie wieder, wenn Sie nicht schlafen können.“ |
 | K3 | `klinik` | Juno fragt nach Dr. Calder. Die Schwester senkt die Stimme: Ines hat nachts Protokolle geschrieben, „die keiner bestellt hat“, und sie hat nie das Netz der Klinik benutzt, alles auf Papier. Am Samstagmorgen waren Leute in Weiß da und haben ihren Spind ausgeräumt. Am Samstag: „Morgen um acht räumen sie auch ihre Wohnung. Lerche, vierter Stock.“ Am Sonntag: „Heute um acht …“, am Montag: „Gestern haben sie ihre Wohnung ausgeräumt.“ → `know_flat` |
 
 Das ist ein Weg zu Ines' Wohnung, nicht der einzige: Wer die Klinik auslässt, sieht die Quiet am Sonntag in `cam25` die Tür 4B öffnen
-(§3.3). Die Klinik erzählt, wer Ines war, und legt Kapitel 3 an: Juno weiß jetzt, wo es Lull gibt und dass ihr altes Implantat dazu passt.
+(§3.3). Die Klinik erzählt, wer Ines war, und legt Kapitel 3 an: Juno weiß jetzt, wo es Lull gibt. Dass ihr Implantat dazu passt, erfährt sie erst dort (story §10a).
 
 ### 3.3 Ines' Wohnung
 
@@ -104,8 +122,8 @@ Wohnblock Lerche, vierter Stock, Tür 4B. Story §7: ein Einbruch im Straßenmod
 |---|---|---|---|
 | W1 | `cam24` | Die Haustür hat ein Zahlenfeld gleich neben der Klingelkamera. Jeden Abend um 19:30 tippt ein Nachbar den Code, und das Fischauge sieht seine Finger aus nächster Nähe (Zoom; verpasst: der Puffer). Die Zahlen werden mit der Spielschrift gesetzt (`art/lib/text.js`). | `code_lerche` |
 | W2 | `jade_row`, Tor | Am Ende der Jade Row führt das Tor unter dem Lull-Schirm nach Westen, in das Viertel der Klinik. Ein Klick fragt, wohin: „Zur Klinik.“, „Zum Wohnblock Lerche.“, „Zurück.“ Ohne den Code: „Die Haustür hat ein Zahlenfeld. Den Code hab ich nicht.“ | — |
-| W3 | `cam25` | Der Flur im vierten Stock, das Iso-Bild von `lerche_flur` unter dem Feed-Filter (ein Ort, ein Bild). Derselbe Hauszugang wie `cam24`, also verbunden, sobald `cam24` es ist. Am Sonntag um 19:45 kommen zwei von der Quiet in weißen Regenmänteln, öffnen 4B und tragen bis 21:00 Kisten hinaus; der Rechner geht mit. Dann kleben sie ein Siegel über die Tür. | `know_flat` (auch so) |
-| W4 | `lerche_flur` | Vorher ist 4B abgeschlossen: „Abgeschlossen. Ich bin keine Einbrecherin. Jedenfalls nicht so eine.“ Von 19:45 bis 21:00 am Sonntag geht Juno nicht hinauf: „Da oben sind Stimmen. Ich warte.“ Danach hängt nur noch das Siegel `CIVIC REST – SEALED` über dem aufgebrochenen Schloss. Juno reißt es ab. | — |
+| W3 | `cam25` | Der Flur im vierten Stock, das Iso-Bild von `lerche_flur` unter dem Feed-Filter (ein Ort, ein Bild). Derselbe Hauszugang wie `cam24`, also verbunden, sobald `cam24` es ist. Am Sonntag um 20:00 kommen zwei von der Quiet in weißen Regenmänteln, öffnen 4B und tragen bis 21:00 Kisten hinaus; der Rechner geht mit. Dann kleben sie ein Siegel über die Tür. | `know_flat` (auch so) |
+| W4 | `lerche_flur` | Vorher ist 4B abgeschlossen: „Abgeschlossen. Ich bin keine Einbrecherin. Jedenfalls nicht so eine.“ Von 20:00 bis 21:00 am Sonntag geht Juno nicht hinauf: „Da oben sind Stimmen. Ich warte.“ Danach hängt nur noch das Siegel `CIVIC REST – SEALED` über dem aufgebrochenen Schloss. Juno reißt es ab. | — |
 | W5 | `ines_wohnung` | Ausgeräumt: die Matratze, leere Regale, ein heller Fleck, wo der Rechner stand. Am Kühlschrank hängt unter einem Magneten **die Serviette** aus Pho Pump, die Ines am Mittwoch beschrieben und mit der Hand verdeckt hat (Kapitel 1, C2): `6.11. 22:35 – 41` und darunter weitere Daten mit Zahlen. Juno erkennt das erste: „Der sechste, halb elf. Da war ich bei Yuen's.“ Was die Zahl heißt, weiß sie noch nicht. | `cache_note_serviette` |
 | W6 | `ines_wohnung`, Gefrierfach | In einem Gefrierbeutel liegt eine Akte, Papier: „Kalt hält Papier.“ Das hat die Quiet nicht gesucht, denn sie sucht Rechner. Die Akte aus Civic Rest: „AUTO-EVAL eingestellt, 2087-10. Ersatz: Programm Civic Rest.“ Darunter die Trainingsdaten: „Beobachterin 0412, J. REYES.“ Juno fotografiert sie mit dem Taschen-Deck. | `cache_note_civic_rest`, `evi_knows` |
 | W7 | dort | **EVI erfährt, was EVI ist** (story §7). Die Szene steht unten. | — |
@@ -130,18 +148,22 @@ Am Sonntag um 18:00 zeigen Nagi·was Nachrichten (NETZ, der Fernseher im LUCKY S
 Rollstuhl tötet Ines, „der Piratensender, der sich LANTERN nennt“. Revier 9 jagt ihn. Wer die Nachricht im NETZ öffnet, hat den Clip
 im CACHE (`clip_forgery`).
 
+**Warum Nagi·wa damit durchkommt** (entschieden 2026-11-14): Niemand weiß, wer der Mann in Weiß ist, und Lantern kennt auch keiner;
+Nagi·wa kann behaupten, was es will. Das gilt auch, wenn Junos echter Clip vorher eine Nacht auf NINTH LIVE lief (§3.6): Ein Mann ohne
+Gesicht beweist nichts.
+
 **Woher das Bild kommt:** aus der Live-Übertragung an WREN, die nur Bild war (story §10b). Hat Juno gesendet, ist es ihr eigenes Bild.
 Hat sie sich geweigert, ist es das des anderen Glassers, der WRENs Auftrag übernommen hat (story §9). In beiden Fällen ist die
 Fälschung **stumm**; Junos Aufnahme hat den Ton des Mikros neben Ines. Juno, wenn sie gesendet hat: „Das ist mein Bild. Die haben mein
 Bild genommen.“
 
-**Das Rätsel am Schreibtisch** (Prüfen, `kapitel0-design` §2.4): Juno legt `clip_forgery` neben `clip_ines_death` (oder den Puffer).
+**Das Rätsel am Schreibtisch** (Prüfen, `kapitel0-design` §2.4): Juno legt `clip_forgery` neben `clip_ines_death` (den hat jeder, Kapitel 1, §8).
 Beide laufen auf zwei Zeitleisten untereinander, und Juno findet drei Stellen, jede mit einem Klick auf die Zeitleiste und einem auf
 die Stelle im Bild. Keine Fingerfertigkeit, keine Zeit; ein falscher Klick kostet nichts.
 
 | Stelle | Was man sieht |
 |---|---|
-| der Zeitstempel | Bei 23:02:58 springt die Fälschung auf 23:03:10; zwölf Sekunden fehlen, genau die, in denen Ashe aus dem Schatten tritt. |
+| der Zeitstempel | Bei 23:01:58 springt die Fälschung auf 23:03:10; mehr als eine Minute fehlt, genau die, in der Lantern wegfährt und Ashe aus dem Schatten tritt. In der Fälschung fährt der Rollstuhl nie weg (Ashe lässt Lantern absichtlich ziehen, story §10c). |
 | der Regen | Dieselben Tropfen fallen zweimal am selben Fleck: Die Lücke ist mit einer Schleife geflickt. |
 | das Licht | In Junos Aufnahme brennt die Maske als weißer Fleck über den Kopf hinaus. In der Fälschung ist an derselben Stelle ein dunkler Rollstuhl, und nichts überstrahlt das Bild. |
 
@@ -157,15 +179,17 @@ Lantern kennt Juno nicht (story §10b) und vertraut niemandem. Er ist gejagt, se
 | L1 | `kowalski`, Sonntag 22:00 | Der große Werbebildschirm reißt mitten in der Lull-Werbung ab. Zehn Sekunden lang steht dort in Lanterns Grün: `I DIDN'T KILL HER. – LANTERN`, dann wieder SLEEP BETTER. Wer nicht auf der Straße ist, liest es danach im NETZ und hört es im LUCKY STATIC. Die Regenleserin hatte erzählt, dass er das vor zwei Jahren schon einmal getan hat (Kapitel 1). | Moment `hijack` |
 | L2 | `kowalski`, Gerüst | Die halbe Reparatur hat es gesehen, von ganz nah: „Das kam nicht über Funk. Das kam übers Kabel. Von unten.“ Er zeigt auf das neue Kabel, das hinter dem Schirm in den Gully geht. „Rechts. Nicht mein Vertrag.“ | `know_cable` |
 | L3 | `drain_market` | Die Treppe hinab, die Kapitel 1 schon vorgesehen hat, führt unter den Markt. Das Kabel läuft an ihrem Geländer mit. | — |
-| L4 | `sumpf` | Die überfluteten Straßen der alten Stadt (story §3): Stege, Hausfronten bis zum ersten Stock im Wasser, das Kabel an einer Wand. Der Steg endet am Wasser; drüben treibt ein Floß an einem Seil, zu weit weg. Mit dem **Haken** (der Notschlüssel vom Aufzug, aus Kapitel 1; wer ihn nicht hat, findet ihn noch neben der Aufzugtür) zieht Juno es heran. „Teo hätte das mit einer Hand gemacht.“ | — |
+| L4 | `sumpf` | Die überfluteten Straßen der alten Stadt (story §3): Stege, Hausfronten bis zum ersten Stock im Wasser, das Kabel an einer Wand. Der Steg endet am Wasser; drüben treibt ein Floß an einem Seil, zu weit weg. Mit dem **Haken** (der Notschlüssel vom Aufzug, aus Kapitel 1: Juno behält ihn nach der Leiter in der Tasche; wer ihn nie genommen hat, findet ihn noch neben der Aufzugtür) zieht Juno es heran. „Teo hätte das mit einer Hand gemacht.“ | — |
 | L5 | `lantern_versteck` | Am Ende des Kabels ein halb versunkener Laden, voller Antennen und Bildschirme. Lantern in seinem Rollstuhl. Er siezt sie, bricht Sätze ab und will wissen, woher sie kommt. Was Juno ihm sagen kann, ist ein Gespräch mit höchstens vier Antworten (`Nagiwa.talkTree`): „Ich hab gesehen, was passiert ist.“, „Ich hab ihren Schlüssel.“ (wenn sie den Stick hat), „Ich hab eine Aufnahme.“ (Entscheidung 2, §3.6), „Ich geh wieder.“ | `lantern_found` |
 
 **Lantern** (Vorschläge; die Stimme fehlt noch im Style Guide): „Wer sind Sie? Nein. Sagen Sie's nicht.“ Beim Stick: „Sie hat gesagt,
 sonst weiß es keiner.“ Juno: „Sie konnte mich nicht sehen.“ Gibt Juno ihm den Stick, `stick_lantern`, und er sagt, wann er sendet:
 „Montag. Um eins. Bis dahin stehen die Sender.“ Wird Lantern ihr Verbündeter (Stick oder Clip), wechseln beide zum Du (Style Guide §5).
 
-**Der Schatten:** Weiß die Quiet, wer Juno ist (nach `e1=sold`, oder sobald sie den Clip an Sable, Vesper oder Morrow gegeben hat),
-steht ab dem nächsten Abend jemand in Weiß auf der Kowalski-Straße, von 19:00 bis 23:00, gegenüber ihrer Haustür (§4). Wer in dieser
+**Der Schatten:** Weiß die Quiet, wer Juno ist, steht jemand in Weiß auf der Kowalski-Straße, von 19:00 bis 23:00, gegenüber ihrer
+Haustür (§4): nach `e1=sold`, sobald Juno den Clip an Sable, Vesper oder Morrow gegeben hat (gleich, nicht erst am nächsten Abend:
+so liest der Schatten nur `e1`, `e2` und den Tag und braucht kein eigenes Flag), und sonst ab Montag, denn dann hat die Quiet sie in
+jedem Fall gefunden (§4). Wer in dieser
 Zeit zu Lantern geht, führt die Quiet zu ihm (`led_quiet`; in Kapitel 4 stirbt Lantern dann, story §7). Das ist keine Sperre, aber der
 Spieler weiß es vorher: Auf dem Weg in die Gasse sagt EVI: „Der in Weiß schaut uns nach.“ Vor 19:00 oder nach 23:00 ist die Straße frei.
 
@@ -176,9 +200,9 @@ kann den ganzen Clip oder den ohne das Flüstern nehmen (§3.1).
 
 | Wahl | Wo | Was geschieht | Kassenbuch |
 |---|---|---|---|
-| **An Sable verkaufen** | `sable_booth` | 3000 Chits; mit `forgery_proven` 4000 („Mit Beweis kostet's mehr. Auch beim Käufer.“); nach `k1a=warned` je 1000 weniger („Varga redet.“). Sable verkauft ihn an Nagi·wa weiter, und er verschwindet. Sable steht in Junos Schuld und verrät sie in Kapitel 4. | „Sable: die Aufnahme aus CAM 31. 3000.“ |
-| **An Vesper verkaufen** | CHAT | Vesper bietet das Meiste, 5000 („Das ist das Echteste, was ich je gesehen habe.“). Der Clip läuft eine Nacht auf NINTH LIVE, dann kauft Nagi·wa ihn auf, und er ist weg wie bei Sable (entschieden 2026-11-14). Anonymisiert nimmt Vesper ihn nicht. Sable steht danach in keiner Schuld. | „Vesper: Ines Calder, CAM 31. 5000.“ und am nächsten Abend die Zuschauer: 1.240.000 |
-| **Morrow geben** | `jade_row`, Sa und So 00:30 | Ihr Flutwagen hält, wie in Kapitel 1; Juno geht hin (entschieden 2026-11-14: kein Revier 9 als Raum). Morrow, knapp: „Beweisstück. Kein Geschäft. Ich kümmer mich.“ Der Clip verschwindet im Revier 9, und Juno ist markiert (die Quiet weiß jetzt, wer sie ist). Morrow kennt Juno jetzt. Mit `forgery_proven`: „Dann jagen wir den Falschen.“ | „Morrow: die Aufnahme. 0.“ |
+| **An Sable verkaufen** | `sable_booth` | 3000 Chits; mit `forgery_proven` 4000 („Mit Beweis kostet's mehr. Auch beim Käufer.“); nach `k1a=warned` je 1000 weniger („Varga redet.“). Sable verkauft ihn an Nagi·wa weiter, und er verschwindet. Sable hat jetzt einen Käufer bei Nagi·wa und verkauft Juno in Kapitel 4 gleich mit. | „Sable: die Aufnahme aus CAM 31. 3000.“ |
+| **An Vesper verkaufen** | CHAT | Vesper bietet das Meiste, 5000 („Das ist das Echteste, was ich je gesehen habe.“). Der Clip läuft eine Nacht auf NINTH LIVE, dann kauft Nagi·wa ihn auf, und er ist weg wie bei Sable (entschieden 2026-11-14). Anonymisiert nimmt Vesper ihn nicht. Sable hat dann keinen Käufer bei Nagi·wa. | „Vesper: Ines Calder, CAM 31. 5000.“ und am nächsten Abend die Zuschauer: 1.240.000 |
+| **Morrow geben** | `jade_row`, Sa und So 00:30 | Ihr Flutwagen hält auf ihrer Runde, wie in Kapitel 1; Juno geht hin (entschieden 2026-11-14: kein Revier 9 als Raum). Morrow, knapp: „Beweisstück. Kein Geschäft. Ich kümmer mich.“ Der Clip verschwindet im Revier 9, und Juno ist markiert (die Quiet weiß jetzt, wer sie ist). Morrow kennt Juno jetzt. Mit `forgery_proven`: „Dann jagen wir den Falschen.“ | „Morrow: die Aufnahme. 0.“ |
 | **Lantern bringen** | `lantern_versteck` | nur mit `lantern_found`. Lantern wird ein Verbündeter. Er sendet den Clip am Montag mit den Protokollen, zu früh: Dem gejagten „Mörder“ glauben nur wenige, und er wird noch härter gejagt. Mit `forgery_proven` sendet er die zerschnittene Fälschung mit. | „Lantern: die Aufnahme. 0.“ |
 | **Behalten** | — | jetzt die sicherste Wahl; niemand weiß davon. Juno ist allein, und das Kassenbuch vergisst nicht. | „CAM 31: behalten.“ |
 
@@ -207,9 +231,12 @@ Story §7: Kameras in der Nähe von Junos Block fallen eine nach der anderen aus
 | ab Abend 3 | `cam14`, ihr eigener Flur, ist grau. Im Flur ist das rote Licht der Kamera aus. | „Jetzt sind sie im Haus.“ |
 | wenn die Quiet sie kennt | der Schatten auf der Kowalski-Straße, 19:00 bis 23:00 (§3.5) | „Weiß hält hier unten keinen Tag.“ (das hat die Regenleserin gesagt) |
 | nach `e1=refused` | Sable: „Der, der für WREN geglasst hat, ist weg. Seit gestern.“ Die Quiet sucht, wer noch an CAM 31 war, und ihre Liste ist kurz (story §10b). | „Dann bin ich die Nächste auf der Liste.“ |
+| Samstag und Sonntag, unterwegs | Die Schläfer sehen sie (entschieden 2026-11-14): Wenn Juno hinausgeht, auf die Kowalski-Straße, in die Jade Row, zum Waschsalon, ist sie in Nagi·was Kameras, und Civic Rest lässt nach ihr markieren. Ines hat der Zeuge versteckt, Juno versteckt er nicht (warum, ist offen, §14). Kein Flag: Das gilt für jeden Spieler, denn jeder geht hinaus. | (Vorschlag, wenn sie es ahnt) „Die gucken mich an. Alle, die schlafen.“ |
+| ab Montag, in jedem Fall | Die Quiet hat Juno gefunden, auch nach einer Weigerung und wenn sie den Clip behält (entschieden 2026-11-14): Ihr alter Nagi·wa-Zugang war an Ines' Kameras offen (`cam21`, `cam30`), und als die Quiet sucht, wer dort zugesehen hat, steht ihre Kennung im Protokoll; dazu die Markierungen der Schläfer. Der Schatten steht ab Montag vor dem Haus. Die Meldung an Revier 9 aus Kapitel 1 spielt keine Rolle: Sie ist dort ein freiwilliger Klick ohne Flag. | „Mein alter Zugang. Die haben die Codes nie geändert. Aber nachgesehen haben sie.“ |
 
-Kein Flag außer dem Wissen, das die Quiet schon hat: Die Kameras gehen über Nacht (`passes`), der Schatten liest `e1` und `e2`. In
-Kapitel 3 stürmt die Quiet den Block (story §7).
+Kein Flag außer dem Wissen, das die Quiet schon hat: Die Kameras gehen über Nacht (`passes`), der Schatten liest `e1`, `e2` und den Tag.
+Am Ende von Kapitel 2 weiß die Quiet in jedem Fall, wer Juno ist; Kapitel 3, in dem sie den Block stürmt (story §7), braucht dafür
+kein Flag.
 
 ## 5. Was aus Kapitel 1 nachkommt
 
@@ -219,17 +246,19 @@ Jede Folge liest nur Flags aus Kapitel 1 und den Tag; die Fäden bleiben getrenn
 
 | K1a | In Kapitel 2 |
 |---|---|
+| **nichts geantwortet** | Varga hat Kessler selbst gefunden (Kapitel 1, A1): ab Sonntag sitzt Kessler mit Gips auf dem Drain-Markt wie nach einem Verkauf, aber ohne Eintrag im Kassenbuch. |
 | **verkauft** | Am Freitag verkauft: am Samstag in `cam15` die offene Kapsel 23 und die zerbrochene Brille (Kapitel 1, §3). Ab Sonntag sitzt Kessler mit Gips auf dem Drain-Markt neben Ratz' Stand und bettelt, von oben gezeichnet wie alle dort. Er kennt Juno nicht. Sie kann ihm 50 Chits geben oder weitergehen. Das Kassenbuch ergänzt sich selbst: „Kessler: zwei Rippen, ein Arm. Bettelt.“ |
 | **gewarnt** | Sable zahlt schlechter (§3.6, „Varga redet.“). Die Postkarte an Frau Kessler kommt erst im Epilog. |
-| **gelogen** | Am Samstag und Sonntag von 19:00 bis 22:00 wartet **Vargas Mann** vor der Haustür des Kessel-Blocks auf der Kowalski-Straße, im Straßenmodus. Kapitel 1 nannte das einen Feed-Moment; keine Kamera sieht die Haustür, deshalb steht er auf der Straße. „Die 200, Glasserin.“ Juno kann zahlen, sagen, dass sie es nicht hat („Dann schuldest du Varga was.“, für Kapitel 4), oder an ihm vorbeigehen; er sperrt keinen Weg. Am Montag liegt ein Zettel im Briefkasten. Flag `varga2` = paid \| owed. |
+| **gelogen** | Am Samstag und Sonntag von 19:00 bis 22:00 wartet **Vargas Mann** vor der Haustür des Kessel-Blocks auf der Kowalski-Straße, im Straßenmodus. Kapitel 1 nannte das einen Feed-Moment; keine Kamera sieht die Haustür, deshalb steht er auf der Straße. „Die 200, Glasserin.“ Juno kann zahlen, sagen, dass sie es nicht hat („Dann schuldest du Varga was.“), oder an ihm vorbeigehen; er sperrt keinen Weg. Am Montag liegt ein Zettel im Briefkasten. Kessler zieht seine Nudeln jetzt woanders. Flag `varga2` = paid \| owed; Vargas Faden endet in Kapitel 2, nichts davon geht weiter. |
 
 **Der Eckladen (K1b, `off_tide`):**
 
 | K1b | In Kapitel 2 |
 |---|---|
-| **verkauft** | Samstagnacht um 01:30 der Überfall, in `cam07` und `cam07v` zu sehen: Drei Jungen gehen in den Laden, der Tresor geht auf, Bao kommt aus der Kowalski gelaufen und fällt. Ab Sonntag ist Okonkwos Laden mit Brettern zu, und Baos Wagen fehlt. Am Montag steht Bao trotzdem da, mit Verband: „Eine Woche, sagt der Arzt. Ich sag Montag.“ Kassenbuch: „Okonkwo: ausgeraubt. Bao: Gehirnerschütterung.“ (Kapitel 1, §4) |
-| **falscher Code** | Samstagnacht scheitern die Jungen am Tresor. Am Sonntag steht an Junos Tür `GLASSER LIES`. Die Tidewater Boys sind von da an Feinde. |
-| **gewarnt** | Okonkwo grüßt sie wie einen Gast. In der Jade Row steht ab Sonntag an der Wand `WHO TALKED?`: Die Boys suchen den Verräter. |
+| **verkauft** | Der Überfall geschieht in der Nacht von Freitag auf Samstag, während Juno durch die Stadt läuft, und wird nicht gezeigt (entschieden 2026-11-14): Morrow hatte den Freitag verkauft („Freitag fährt keiner die Kowalski“, und über die Kowalski kommt man in die Jade Row). Ab Samstag ist Okonkwos Laden mit Brettern zu, und Baos Wagen fehlt; Juno hört davon bei Mei. Am Montag steht Bao trotzdem da, mit Verband: „Eine Woche, sagt der Arzt. Ich sag Montag.“ Kassenbuch: „Okonkwo: ausgeraubt. Bao: Gehirnerschütterung.“ (Kapitel 1, §4) |
+| **falscher Code** | In der Nacht auf Samstag scheitern die Jungen am Tresor. Ab Samstag steht an Junos Tür `GLASSER LIES`. Die Tidewater Boys sind Feinde; mehr folgt daraus nicht. |
+| **gewarnt** | Okonkwo grüßt sie wie einen Gast. In der Jade Row steht ab Samstag an der Wand `WHO TALKED?`: Die Boys suchen den Verräter. Das ist das Einzige aus diesem Faden, was weitergeht (Okonkwos Versteck in Kapitel 4). |
+| **nichts geantwortet** | Kein Überfall. TIDE schreibt am Samstag einmal: „Dann eben ohne dich.“ Damit ist der Faden zu. |
 
 **WREN:** Nach `e1=sold` ist WRENs Kontakt am Samstag gelöscht (`KONTAKT GELÖSCHT`); die Chits bleiben. Nach `e1=refused` schreibt
 sich das Kassenbuch am Samstag die Zeile dazu, die Kapitel 1 angekündigt hat: „WREN hat es von jemand anderem.“
@@ -242,16 +271,17 @@ sich das Kassenbuch am Samstag die Zeile dazu, die Kapitel 1 angekündigt hat: �
 
 ### 6.1 Frau Imai (`off_imai`)
 
-Nur, wenn Juno ihr in Kapitel 1 geantwortet hat (`imai_step=3`); sonst bleibt der Faden zu.
+Nur, wenn Juno ihr in Kapitel 1 geantwortet hat (`imai_told` ist gesetzt); sonst bleibt der Faden zu. Er endet in Kapitel 2.
 
 | # | Wo | Was |
 |---|---|---|
 | I1 | CHAT, Samstag | „Ich hab wieder was gesehen. Eine Frau auf einem Bahnsteig.“ (Kapitel 1, §7) |
-| I2 | `lucky_static`, Sa und So 20:00–23:00 | An ihrem kleinen Tisch: Wasser bis zur Kante, eine Frau in Weiß, ein Mann in Weiß, der aus dem Schatten kommt. „Er hat hochgeschaut. Zu mir.“ Und: „Ich hab es dreimal gesehen. Immer um drei.“ Sie hat es nicht live gesehen, sondern danach, im Schlaf, wieder und wieder. Nach `imai_told=truth` hat sie kaum geschlafen und es trotzdem gesehen („Ich hab nur kurz die Augen zugemacht.“); nach `imai_told=dream`: „Sie haben gesagt, es war ein Traum.“ |
+| I2 | `lucky_static`, Sa und So 20:00–23:00 | An ihrem kleinen Tisch: Wasser bis zur Kante, eine Frau in Weiß, ein Mann in Weiß, der aus dem Schatten kommt. „Er hat hochgeschaut. Zu mir.“ Und: „Ich hab es gesehen. Um drei, im Schlaf.“ (entschieden 2026-11-14) Sie hat es nicht live gesehen, sondern danach, im Schlaf, wieder und wieder. Nach `imai_told=truth` hat sie kaum geschlafen und es trotzdem gesehen („Ich hab nur kurz die Augen zugemacht.“); nach `imai_told=dream`: „Sie haben gesagt, es war ein Traum.“ |
 | I3 | dort | Die Wahl: „Ich hab es auch gesehen. Es ist wirklich passiert.“ oder „Das war ein Traum.“ Kassenbuch: „Frau Imai: die Wahrheit, zum zweiten Mal.“ oder „Frau Imai: wieder ein Traum.“ Flag `imai2`. |
 
-**Warum sie es gesehen hat** (entschieden 2026-11-14, story §10h): `cam31` versteht nur das alte Protokoll, und der Zeuge hatte Ines
-vor den Schläfern versteckt. Nach ihrem Tod zeigt er den Mord den Schläfern, jede Nacht um drei. Das ist das erste Zeichen, dass er
+**Warum sie es gesehen hat** (entschieden 2026-11-14, story §10h): `cam31` hängt nicht an Nagi·was Netz, also spielt Civic Rest sie
+keinem Schläfer vor, und der Zeuge hatte Ines vor den Schläfern versteckt. Wer den Mord im Schlaf sieht, dem zeigt ihn der Zeuge: Nach
+Ines' Tod zeigt er ihn den Schläfern, jede Nacht um drei. Das ist das erste Zeichen, dass er
 handelt. Andere merken es auch, ohne dass ein Faden daran hängt (§7): der schlafende Stammgast im LUCKY STATIC, der Prediger.
 
 ### 6.2 Frau Haldanes Sohn (`off_haldane`)
@@ -262,8 +292,8 @@ nicht mehr, der letzte Brief kam am 14. Oktober.
 | # | Wo | Was |
 |---|---|---|
 | H1 | `kessel_14`, ab Sonntag | Sonntag ist Brieftag, und Frau Haldane schläft nicht, bis er kommt: Sie sitzt wach an ihrer offenen Tür, das Pflaster hinterm Ohr dunkel. „Sonntags schlaf ich nicht. Sonntags kommt sein Brief.“ Am Montag wartet sie immer noch. Sie bittet Juno: „Du kennst dich doch mit Kameras aus. Kannst du sehen, ob es ihm gut geht?“ Sein Wohnheim: 5-Süd, im Fünften. |
-| H2 | `sable_booth` | Kameras im Fünften hat Juno nicht. Sable verkauft einen Blick ins Archiv des Wohnheims: 150 Chits oder ein Clip als Shine (wie der Zugang zu `cam15` in Kapitel 1). | 
-| H3 | `cam51`, nur Archiv | Der Schlafsaal des Wohnheims, Reihen von Kojen (neues Bild, §9). Sonntag, 14. Oktober, 21:00: Er schreibt auf seiner Koje einen Brief, drückt das Lull-Pflaster an und legt sich hin. Montag, 15. Oktober, 06:00: Er steht nicht auf. Um 06:30 tragen ihn zwei in Weiß hinaus, freundlich. Juno: „Ruhe-Erschöpfung. Seit vier Wochen.“ |
+| H2 | `sable_booth` | Kameras im Fünften hat Juno nicht. Sable verkauft einen Blick ins Archiv des Wohnheims: 150 Chits oder ein Clip als Shine (wie der Zugang zu `cam15` in Kapitel 1). |
+| H3 | `cam51`, nur Archiv | Der Schlafsaal des Wohnheims, Reihen von Kojen (neues Bild, §9). Sonntag, 14. Oktober, 21:00: Er liest auf seiner Koje einen Brief seiner Mutter (seiner war am selben Tag bei ihr angekommen, der letzte), drückt das Lull-Pflaster an und legt sich hin. Montag, 15. Oktober, 06:00: Er steht nicht auf. Um 06:30 tragen ihn zwei in Weiß hinaus, freundlich. Juno: „Ruhe-Erschöpfung. Seit vier Wochen.“ |
 | H4 | `kessel_14` | Die Wahl, an ihrer Tür: **die Wahrheit** („Er schläft. Sie haben ihn auf eine Station gebracht.“), **ein montierter Clip** oder **„Ich hab nichts gefunden.“** Kassenbuch und Flag `haldane` = truth \| fake \| nothing. |
 
 **Montieren** (`kapitel0-design` §2.4) kommt hier zum ersten Mal: Juno nimmt aus dem Archiv einen Moment, in dem er morgens zur Schicht
@@ -272,13 +302,12 @@ Fälschung, wie die von Nagi·wa, und die einzige, die Juno selbst macht; nie n�
 
 Ihre Antworten (Vorschläge): nach der Wahrheit, nach einer langen Pause: „Dann schlaf ich auch. Dann bin ich näher bei ihm.“ (Sie meint
 es, wie es der Zeuge meint, story §6.) Nach dem Clip: „Er sieht müde aus. Er sah immer müde aus.“ Nach „nichts“: „Dann warte ich
-eben weiter.“ In Kapitel 3 liegt er auf der Schlafstation, und Juno kann ihn finden (Vorschlag).
+eben weiter.“ Der Faden endet hier; in Kapitel 3 liegt er höchstens als Blick auf der Schlafstation, ohne Flag.
 
 ### 6.3 Vesper (`off_vesper`)
 
-Vesper kauft weiter rohe Clips wie in Kapitel 1. Was Juno ihm am Freitag verkauft hat, bekommt am Samstag seine Zuschauerzahl, die
-Kapitel 1 nicht mehr geben konnte (Kapitel 1, §7). Neu zu kaufen gibt es den Überfall aus `cam07v`, wenn er geschah (300, Zuschauer am
-nächsten Abend). Sein Angebot für den Mord gehört zu Entscheidung 2 und damit zum Hauptfaden (§3.6). Anonymisieren bleibt nur wach,
+Vesper bleibt im Chat, aber er kauft keine neuen rohen Clips mehr. Was Juno ihm am Freitag verkauft hat, bekommt am Samstag seine Zuschauerzahl, die
+Kapitel 1 nicht mehr geben konnte (Kapitel 1, §7). Der Faden endet hier. Sein Angebot für den Mord gehört zu Entscheidung 2 und damit zum Hauptfaden (§3.6). Anonymisieren bleibt nur wach,
 solange sein Faden offen ist.
 
 ### 6.4 Motte und das Backup (`off_motte`)
@@ -293,13 +322,13 @@ Moment: „Fertig. Ich hab sie mir gemerkt.“ Was er gemacht hat, sagt niemand.
 
 | Wann | Wo | Was |
 |---|---|---|
-| **Montag, 18:30** | `flat` → `sims` → `dach_sitzen` | **Teos letzter Besuch, wach.** Es klopft wie in Kapitel 1. Teo ist müder als am Mittwoch, das Pflaster blinkt. Hat Bao zu, bringt er etwas von Mei. „Gehen wir rauf, Ju? Wie früher.“ Er hat einen langen Haken aus der Pumpenhalle dabei und holt die Leiter herunter, ob Juno sie schon kennt oder nicht. Oben setzen sie sich auf ihren Platz, und neben Juno ist zum ersten Mal jemand (der leere Platz aus Kapitel 1, `dach_sitzen`). Er erzählt von **Tinte**, der Krake im Filterbecken: „Tinte sagt, ich zuck im Schlaf. Wie die anderen.“ Und: „Wenn ich schlaf, ist alles still. Keine Pumpen. Keine Schulden.“ Er schläft kurz an ihrer Schulter ein, wie auf dem Foto, wacht auf und muss zur Schicht. Nach `rent=teo`: „Die Miete. Danke.“ „Hab gesagt, sag nichts.“ Eine Szene ohne Wahl. |
-| Samstag | `lucky_static` | Der Fernseher: „Tote in der alten Metro. Revier 9 ermittelt.“ Der schlafende Stammgast murmelt auf seinen Armen: „Sie geht zur Treppe.“ Die Frau neben ihm: „Er redet nie im Schlaf. Nie.“ |
+| **Montag, 18:30** | `flat` → `sims` → `dach_sitzen` | **Teos letzter Besuch, wach.** Es klopft wie in Kapitel 1. Teo ist müder als am Mittwoch, das Pflaster blinkt. Er bringt wieder etwas von Bao; nach dem Überfall: „Bao hat einen Verband. Gekocht hat er trotzdem.“ „Gehen wir rauf, Ju? Wie früher.“ Er hat einen langen Haken aus der Pumpenhalle dabei und holt die Leiter herunter, ob Juno sie schon kennt oder nicht. Oben setzen sie sich auf ihren Platz, und neben Juno ist zum ersten Mal jemand (der leere Platz aus Kapitel 1, `dach_sitzen`). Er erzählt von **Tinte**, der Krake im Filterbecken: „Tinte sagt, ich zuck im Schlaf. Wie die anderen.“ Und: „Wenn ich schlaf, ist alles still. Keine Pumpen. Keine Schulden.“ Er schläft kurz an ihrer Schulter ein, wie damals, wacht auf und muss zur Schicht. Nach `rent=teo`: „Die Miete. Danke.“ „Hab gesagt, sag nichts.“ Eine Szene ohne Wahl. |
+| Samstag | `lucky_static` | Der Fernseher: „Tote in der alten Metro. Revier 9 ermittelt.“ Nach `k1b=sold` erzählt Mei vom Überfall bei Okonkwo und von Bao. Der schlafende Stammgast murmelt auf seinen Armen: „Sie geht zur Treppe.“ Die Frau neben ihm: „Er redet nie im Schlaf. Nie.“ |
 | Sonntag | `lucky_static` | Der Fernseher zeigt die Fälschung (§3.4). Mei schaltet nicht aus, sie schaut weg. |
 | Montag | `lucky_static` | „Fahndung nach dem Piratensender LANTERN. Hinweise an Revier 9.“ Mei: „Der hat doch nie jemandem was getan. Der hat nur geredet.“ |
-| jeder Abend | Deck, NETZ | Samstag die Meldung und auf dem Brett jemand, der fragt, was in Linie 31 war. L. (Kapitel 1) schreibt: „Sie sagen, er ist jetzt auf einer Station. Besuchen darf man nicht.“ Nach `traeger=filmed` und einem Verkauf an Vesper: „Jemand hat ihn gefilmt. Er war oben im Fernsehen.“ Sonntag die Fälschung, Montag die Fahndung und „Wer hat gestern den großen Schirm gesehen?“ |
-| jeder Abend | `kowalski` | **Bao**, wenn er da ist: Samstag „Du warst gestern nicht da. Lou hat gefragt.“, Sonntag stellt er ihr die Schale wortlos hin, Montag „Iss. Du siehst aus wie dein Bruder.“ Der **Werbebildschirm** stottert weiter; am Sonntag um 22:00 Lanterns zehn Sekunden (§3.5). Die **halbe Reparatur** (L2). |
-| jeder Abend | `dach` | **Die Regenleserin.** Samstag: „Gestern hab ich gesagt, frag mich morgen. Jetzt weißt du's selber, Kind.“ Sonntag: „Unten im Wasser wohnt einer, der hört alles mit. Der ist jetzt still.“ Montag, nach Teos Besuch: „Er hat die Leiter noch gefunden. Gut.“ |
+| jeder Abend | Deck, NETZ | Samstag die Meldung „Tote in der alten Metro.“ und auf dem Brett jemand, der fragt, was in Linie 31 war. L. (Kapitel 1) schreibt: „Sie sagen, er ist jetzt auf einer Station. Besuchen darf man nicht.“ Sonntag die Fälschung, Montag die Fahndung und „Wer hat gestern den großen Schirm gesehen?“ |
+| jeder Abend | `kowalski` | **Bao**, wenn er da ist: Samstag „Lou hat gefragt, wo du die ganze Nacht warst.“, Sonntag stellt er ihr die Schale wortlos hin, Montag „Iss. Du siehst aus wie dein Bruder.“ Der **Werbebildschirm** stottert weiter; am Sonntag um 22:00 Lanterns zehn Sekunden (§3.5). Die **halbe Reparatur** (L2). |
+| jeder Abend | `dach` | **Die Regenleserin.** Samstag: „Freitag hat's nach nichts geschmeckt. Jetzt weißt du, warum, Kind.“ Sonntag: „Unten im Wasser wohnt einer, der hört alles mit. Der ist jetzt still.“ Montag, nach Teos Besuch: „Er hat die Leiter noch gefunden. Gut.“ |
 | jeder Abend | `drain_market` | **Der Prediger**, Tag 12, 13, 14: „Die Schläfer reden von einer Frau auf einem Bahnsteig!“ und „Er zeigt es euch, damit ihr es seht! Bleibt wach!“ **Ratz** fragt wieder nach seiner Kolonie. |
 | ab Sonntag | `gasse` | Am Flutdenkmal schwimmt ein neues Papierboot mit Kerze, darauf ein `I.` Wer es hingestellt hat, sagt niemand. |
 | Samstag | `kessel_lobby` | Der Briefkasten ist leer: „Nicht mal eine Mahnung.“ Am Montag liegt dort, nach `k1a=lied`, Vargas Zettel (§5). |
@@ -315,7 +344,7 @@ zwischen den Takten liegen.
 | Zeit | Was geschieht |
 |---|---|
 | 01:00 | Wo Juno auch ist: Jeder Schirm, den Lantern erreicht, reißt ab, auch der große auf der Kowalski. In Grün: `THEY DON'T SLEEP. THEY WORK.` Im NETZ liegen Ines' Protokolle, offen für alle. Hat Juno ihm den Clip gegeben, läuft er mit. Die Nachrichten sagen nichts, das Brett lacht über den „Mörder mit den Tabellen“. Abblende in Junos Wohnung, an das Deck. |
-| danach | Das letzte Prüfen: Juno legt die Protokolle neben ihre eigenen Aufnahmen. Eine Zeitleiste mit den Spitzen der Schläfer, darunter ihr CACHE. Die eine Aufnahme, die jeder hat, ist **Kesslers Ring** vom Dienstag (Prolog): 6.11., 22:35, und genau dort steht in den Protokollen eine Spitze, 41 Schläfer zur selben Sekunde. Das ist die Zahl auf Ines' Serviette (W5). Wer mehr hat, findet mehr: Frau Haldane in `cam14` um 02:30, Frau Imais Treppe in `cam18` am 29. Oktober um 03:12, die weißen Träger. Eine Übereinstimmung genügt. |
+| danach | Das letzte Prüfen: Juno legt die Protokolle neben ihre eigenen Aufnahmen. Eine Zeitleiste mit den Spitzen der Schläfer, darunter ihr CACHE. Die eine Aufnahme, die jeder hat, ist **Kesslers Ring** vom Dienstag (Prolog): 6.11., 22:35, und genau dort steht in den Protokollen eine Spitze, 41 Schläfer zur selben Sekunde. Das ist die Zahl auf Ines' Serviette (W5). Wer mehr Clips im CACHE hat, findet mehr: Morrows Umschlag, die weißen Träger. Nur Clips zählen, keine Notizen und kein Archiv; ein anonymisierter Clip behält seinen Zeitstempel und zählt auch. Eine Übereinstimmung genügt. |
 | | Juno: „Die haben zugesehen. Als ich zugesehen hab.“ EVI: „Wer?“ Juno: „Alle, die schlafen.“ EVI: „Dann haben die dich ersetzt. Nicht ich.“ Juno: „Meine Nachbarn.“ (Die Antwort auf EVIs „Wer dann?“, §3.3; story §6.) |
 | 03:00 | Stille. Durch die Wand hört man, wie das halbe Haus zur selben Zeit Luft holt (die Regenleserin, Kapitel 1). |
 | 03:15 | Eine Nachricht von einem Kontakt, den Juno nicht kennt: `BECKEN 3`. „Dein Bruder schläft im Becken-Raum. Er hört nicht. Komm.“ Juno weiß, wer schreibt: Teo hat am Abend von Tinte erzählt. |
@@ -333,26 +362,25 @@ more than once“).
 
 | Ort | In Kapitel 2 |
 |---|---|
-| `flat` | der Anfang (§2.1), Teos Klopfen, das Ende am Deck (§8); nach `k1b=lied` außen an der Tür `GLASSER LIES` |
+| `flat` | der Anfang (§2.1), Teos Klopfen, das Ende am Deck (§8) |
 | Deck | GLASS mit den grauen Kameras, NETZ, CHAT (Imai, Vesper, `BECKEN 3`), der Clip-Editor mit **Prüfen** und **Montieren**, CACHE, BUCH, RADIO mit den Nachrichten |
-| `kessel_14`, `cam14` | Motte und das Backup, Frau Haldane wach an ihrer Tür; ab Abend 3 ist `cam14` aus, das rote Licht im Flur dunkel |
+| `kessel_14`, `cam14` | Motte und das Backup, Frau Haldane wach an ihrer Tür; nach `k1b=lied` an Junos Tür `GLASSER LIES`; ab Abend 3 ist `cam14` aus, das rote Licht im Flur dunkel |
 | `kessel_lobby` | der Briefkasten, Vargas Zettel |
 | `kowalski` | Bao (oder sein leerer Platz), der Werbebildschirm und Lanterns zehn Sekunden, die halbe Reparatur mit dem Kabel, Vargas Mann, der Schatten in Weiß |
 | `gasse` | der Weg zu Waschsalon und Markt, das Papierboot am Denkmal |
 | `laundromat`, `cam23` | den Stick zurücklegen; Lantern um halb eins; der Mann in Weiß, wenn die Quiet vom Trockner weiß |
 | `lucky_static` | Mei, der Fernseher an allen drei Abenden, der Stammgast, der im Schlaf redet, Frau Imai |
-| `jade_row`, `cam07` | Morrows Flutwagen (Entscheidung 2), der Überfall in der Nacht auf Sonntag, `WHO TALKED?`; das **Tor am Ende** führt jetzt zur Klinik und zum Wohnblock Lerche; `cam07` fällt aus |
-| `okonkwo_shop`, `cam07v` | der Überfall von innen, danach die Bretter; oder Okonkwos Dank |
+| `jade_row`, `cam07` | Morrows Flutwagen (Entscheidung 2), nach dem Überfall die Bretter an Okonkwos Laden, `WHO TALKED?`; das **Tor am Ende** führt jetzt zur Klinik und zum Wohnblock Lerche; `cam07` fällt aus |
+| `okonkwo_shop`, `cam07v` | nach dem Überfall zu (die Tür mit Brettern, `cam07v` zeigt den leeren, dunklen Laden); oder Okonkwos Dank |
 | `drain_market` | Sable, Ratz, der Prediger, Kessler mit Gips, und die **Treppe hinab** in die Sümpfe |
 | `sable_booth` | Entscheidung 2, der Blick ins Archiv des Wohnheims, die Nachricht über den anderen Glasser |
 | `sims`, `dach`, `dach_sitzen` | Teo am Montag, die Regenleserin |
 | `cam03` | Kessler kommt nicht mehr; am Automaten zieht jemand anderes Nummer 7 (nur Ansehen) |
 | `cam04` | Varga sitzt am Samstag um 22:30 wieder bei Yuen's, auf seinem Platz; nach `k1a=lied` redet er über die Glasserin. Kesslers Ring vom Dienstag (der Clip aus dem Prolog) ist die Aufnahme, die das Ende braucht (§8) |
 | `cam15` | nach einem Verkauf am Freitag die offene Kapsel |
-| `cam18` | das Archiv für das Ende (Frau Imais Treppe) |
-| `cam21` | die Klinik von außen: Ines kommt nicht mehr, die Schwester geht um 19:00 nach Hause |
+| `cam21` | die Klinik von außen: Ines kommt nicht mehr, die Schwester kommt um 19:00 zur Nachtschicht |
 | `cam22` | Pho Pump: Ines' Platz an der Theke bleibt leer; der Koch stellt trotzdem eine Schale hin, am Samstag |
-| `cam24` | der Code der Haustür (W1), am Sonntag um 19:45 die Quiet |
+| `cam24` | der Code der Haustür (W1), am Sonntag um 20:00 die Quiet |
 | `cam30` | das Absperrband am Sumpf-Abgang |
 | `cam31` | `KEIN SIGNAL`, im Rauschen das Auge |
 
@@ -390,7 +418,7 @@ wechseln würde, eine eigene Ansicht (Kapitel 1, §10). Lull ist immer die ovale
 
 | Wer | Neu oder wieder | Wo | Ansichten | Was zu beachten ist |
 |---|---|---|---|---|
-| **die Schwester an der Aufnahme** | neu | `klinik`, `cam21` (Feed) | Iso SE hinter dem Glas (sitzend), Feed SE und SW auf dem Heimweg | weißer Kittel wie Ines, aber kurz; kein Lull. Name offen (§14) |
+| **die Schwester an der Aufnahme** | neu | `klinik`, `cam21` (Feed) | Iso SE hinter dem Glas (sitzend), Feed NE und NW auf dem Weg zur Nachtschicht | weißer Kittel wie Ines, aber kurz; kein Lull. Name offen (§14) |
 | **die Quiet** (zwei im Flur, der Schatten, der Mann am Trockner) | neu | `cam25`, `cam23` (Feed), `kowalski` (Iso) | Feed SE, SW, NE, NW mit Kisten; Iso SE, NE, NW stehend | weiße Regenmäntel wie Ashe, die Masken überstrahlen im Feed; im Straßenmodus eine glatte weiße Maske. Ist die Maske symmetrisch, genügt das Spiegeln; trägt einer etwas einseitig (ein Funkgerät), wird NW gezeichnet |
 | **Lantern** (persönlich) | neu als Bühnenfigur | `lantern_versteck` | eine Ansicht von vorn, sitzend, mit kleinen Bewegungen | das Gesicht aus `docs/portraits/lantern_x4.png` (grüner Iro, das Okular über **einem** Auge, Headset): Da er nur von vorn zu sehen ist, braucht er keine Gegenrichtung |
 | Lantern im Feed | wieder | `cam23` | wie in `cam31`, im Maßstab des Waschsalons | die Silhouette wie das Piktogramm, gespiegelt beim Wegfahren, wie entschieden (story §10c) |
@@ -398,7 +426,7 @@ wechseln würde, eine eigene Ansicht (Kapitel 1, §10). Lull ist immer die ovale
 | Teo mit dem Haken | neu (Pose) | `flat`, `sims` | SE, NE, NW wie seine Figur | der lange Haken aus der Pumpenhalle in einer Hand; NW gezeichnet wie bisher |
 | **Vargas Mann** | neu | `kowalski` | Iso SE, NE, NW stehend | nur nach `k1a=lied`; Varga selbst ist nur im Feed gemalt. Name offen |
 | **Kessler mit Gips** | neu (von oben) | `drain_market` | von oben, sitzend | der Gips am Arm ist einseitig: von oben kein Problem, er sitzt immer gleich |
-| **Bao mit Verband** | Variante | `kowalski` | wie Bao | nur nach `k1b=sold`, Montag |
+| **Bao mit Verband** | Variante | `kowalski` | wie Bao | nur nach `k1b=sold`, Montag (Samstag und Sonntag fehlt sein Wagen) |
 | **Frau Haldane, wach an der Tür** | Variante | `kessel_14` | wie ihre Figur (SE, NE, NW) | wach, ohne Lockenwickler? Vorschlag: die Lockenwickler bleiben, die Augen offen, das Pflaster dunkel |
 | **ihr Sohn** | neu | `cam51` (Feed) | Feed liegend auf der Koje, SE gehend | Lull-Pflaster als ovale Scheibe, im Feed als heller Punkt |
 | **die weißen Träger im Feed** | neu (Feed) | `cam51` | Feed SE, SW mit der Trage | Overall und Kapuze wie in `look_traeger` |
@@ -413,7 +441,7 @@ wechseln würde, eine eigene Ansicht (Kapitel 1, §10). Lull ist immer die ovale
    │
    ├─ Stick: liegt er im Trockner, hat Lantern ihn ─ sonst: zurücklegen (cam23, 00:30) oder Lantern bringen
    ├─ Klinik (optional): cam21 ─ Tor der Jade Row ─ Aufnahme ─ „Lerche, vierter Stock“
-   ├─ Lerche: cam24 19:30, der Code ─ cam25 ─ (So 19:45–21:00 die Quiet) ─ 4B ─ Serviette ─ Akte ─ EVI erfährt es
+   ├─ Lerche: cam24 19:30, der Code ─ cam25 ─ (So 20:00–21:00 die Quiet) ─ 4B ─ Serviette ─ Akte ─ EVI erfährt es
    ├─ Fälschung (So 18:00): NETZ ─ Prüfen: Zeitstempel, Regen, Licht ─ Beweis
    ├─ Lantern (So 22:00 der Schirm): halbe Reparatur ─ Kabel ─ Treppe hinab ─ Sumpf ─ Haken, Floß ─ Versteck
    │      └─ der Schatten in Weiß (19:00–23:00), wenn die Quiet Juno kennt
@@ -430,7 +458,7 @@ mit dem Hauptfaden (`off_main` und `know_flat` für die Fäden allein, wie in Ka
 
 **Der Zustand:** neu im Hauptfaden `stick_lantern`, `quiet_dryer`, `know_flat`, `code_lerche`, `evi_knows`, `forgery_cuts` (0–3, im
 Editor) und `forgery_proven`, `know_cable`, `lantern_found`, `led_quiet`, `e2`, `clip_ines_cut`; in den Fäden `varga2`, `imai2`,
-`haldane` und ein Schritt je Faden. Die Kameras, die ausfallen, und alles in §7 kosten nichts.
+`haldane` und ein Schritt je Faden. Weiter gehen davon nur die Flags, die §2.1 nennt. Die Kameras, die ausfallen, und alles in §7 kosten nichts.
 
 ## 12. Hinweise
 
@@ -438,15 +466,15 @@ Die Hinweise spricht EVI (Prolog-Design §2.2). Die Tabelle nennt die schweren S
 
 | Für | Stufe 1 | Stufe 2 | Stufe 3 |
 |---|---|---|---|
-| der Stick | „Du hast noch ihren Schlüssel. Lantern sucht ihn.“ | „Er schaut jede Nacht in den Trockner. Oder du findest ihn.“ | „Leg ihn in Trockner sechs zurück. Um halb eins holt er ihn.“ (Mit der Quiet am Trockner: „Bring ihn Lantern selbst.“) |
+| der Stick | „Du hast noch ihren Schlüssel. Lantern sucht ihn.“ | „Er schaut jede Nacht in den Trockner. Oder du findest ihn.“ | „Leg ihn in Trockner sechs zurück. Um halb eins holt er ihn.“ (Mit der Quiet am Trockner: „Lantern kommt nicht mehr, solange der da sitzt. Bring ihn ihm selbst.“) |
 | W1, der Code | „Ihr Haus hat ein Zahlenfeld an der Tür.“ | „Die Klingelkamera hängt direkt daneben.“ | „Öffne CAM 24 um halb acht. Da kommt ein Nachbar heim.“ |
 | W3/W4, der Flur | „Ihre Tür ist zu. Das bleibt sie nicht lange.“ | „Die von Civic Rest räumen die Wohnung aus. Schau in CAM 25.“ | „Warte, bis sie weg sind. Sonntag ab neun ist der Flur frei.“ |
 | W6, die Akte | „Die haben den Rechner genommen. Ines hat auf Papier geschrieben.“ | „Wo hebt man Papier auf, das niemand finden soll?“ | „Schau ins Gefrierfach.“ |
 | die Fälschung | „Das ist nicht, was wir gesehen haben.“ | „Leg die beiden Clips nebeneinander. Prüfen.“ | „Schau auf die Uhrzeit, den Regen und das Licht.“ |
 | L2–L5, Lantern | „Der Schirm war gekapert. Wer weiß, woher so was kommt?“ | „Der Mann auf dem Gerüst repariert den Schirm. Frag ihn.“ | „Folge dem Kabel, die Treppe unter dem Markt hinab.“ |
-| L4, das Floß | „Das Floß ist zu weit weg.“ | „Mit etwas Langem käme man ran.“ | „Nimm den Haken. Er hängt neben dem Aufzug, wenn du ihn nicht hast.“ |
+| L4, das Floß | „Das Floß ist zu weit weg.“ | „Mit etwas Langem käme man ran.“ | „Nimm den Haken aus der Tasche. Hast du ihn nicht, hängt er neben dem Aufzug.“ |
 | der Schatten | „Der in Weiß steht wieder unten.“ | „Wenn er dich sieht, sieht er auch, wohin du gehst.“ | „Er geht um elf. Warte bis dahin, bevor du zu Lantern gehst.“ |
-| Entscheidung 2 | „Was machst du mit dem Clip?“ | „Sable kauft, Vesper zahlt mehr, Morrow hält nachts in der Jade Row, Lantern ist im Sumpf.“ | „Du kannst ihn auch behalten. Aber im Clip ist das Flüstern.“ |
+| Entscheidung 2 | „Was machst du mit dem Clip?“ | „Sable kauft, Vesper zahlt mehr, Morrow hält samstags und sonntags um halb eins in der Jade Row, Lantern ist im Sumpf.“ (am Montag ohne Morrow) | „Du kannst ihn auch behalten. Aber im Clip ist das Flüstern.“ |
 | Montag, 00:45 | (je nachdem, was fehlt, eine der Zeilen aus §3.7) | | |
 | das Ende | „Du hast doch Clips mit Uhrzeit.“ | „Leg die Protokolle neben deine Aufnahmen.“ | „Nimm Kesslers Ring. Dienstag, 22:35.“ |
 
@@ -472,4 +500,5 @@ Archiv einer Kamera, Gegenstände an Hotspots und Fragen mit vier Antworten gibt
 - **Zeilen:** alles, was hier steht, sind Vorschläge; Lanterns Stimme für die großen Gespräche fehlt noch im Style Guide.
 - **Preise und Zahlen:** Sable 3000, Vesper 5000, die Zuschauer, Sables Archiv 150, Kessler 50.
 - **Aussehen:** Klinik, Flur, Wohnung, Sumpf, Versteck, `cam51` und alle neuen Figuren gehen erst als Blöcke zur Freigabe.
-- **Frau Haldane in Kapitel 3:** ob Juno ihren Sohn auf der Schlafstation findet.
+- **Frau Haldane in Kapitel 3:** ihr Sohn ist dort höchstens ein Blick, ohne Flag (entschieden 2026-11-14).
+- **Warum der Zeuge Juno nicht versteckt:** Ines hat er vor den Schläfern versteckt, Juno nicht, und so markieren die Schläfer sie, als Civic Rest nach ihr suchen lässt (§4). Warum, ist offen.

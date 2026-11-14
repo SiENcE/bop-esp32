@@ -1,7 +1,7 @@
 # Glass Sister: Fragen und Antworten
 
 Fragen zur Geschichte, wie sie beim Lesen aufkommen, beantwortet aus der Story-Bibel (`docs/story.md`).
-Stand: 2026-11-14 (mit den Entscheidungen in Story §10f und §10g). Gilt die Bibel etwas anderes, gilt die Bibel; dann wird hier nachgezogen.
+Stand: 2026-11-14 (mit den Entscheidungen in Story §10f bis §10h). Gilt die Bibel etwas anderes, gilt die Bibel; dann wird hier nachgezogen.
 
 **Achtung: verrät alles, auch das Geheimnis und die Enden.**
 
@@ -52,8 +52,8 @@ immer und will, dass Juno bei ihm bleibt. Wer ihn in Kapitel 4 weckt, weckt ihn 
   EVI ist der gescheiterte Versuch: Sie hielt Tränen für Regen und Umarmungen für Ringkämpfe. Es braucht
   menschliche Gehirne, die markieren, was falsch aussieht.
 - **Warum Schläfer** (Story §6, Punkt 2, und §10e): Sie sind das billigste Auge, das es gibt. Bezahlte
-  wache Beobachter kosten Lohn, Hallen und Schichten. Die Schläfer zahlen ihr Lull selbst und wissen nicht,
-  dass sie arbeiten. Nagi·wa verdient zweimal an ihnen: Mit Lull schaffen sie Doppelschichten und zahlen
+  wache Beobachter kosten Lohn, Hallen und Schichten. Die Schläfer zahlten ihr Lull jahrelang selbst (seit diesem Herbst
+  verschenkt Nagi·wa es, der Schritt vor der Pflicht) und wissen nicht, dass sie arbeiten. Nagi·wa verdient zweimal an ihnen: Mit Lull schaffen sie Doppelschichten und zahlen
   die Flutschuld ab, und in derselben Nacht überwachen sie umsonst ihre Nachbarn. Die Flutschuld treibt
   die Menschen zu Lull, und Lull hält die Flutschuld am Laufen.
 
@@ -87,7 +87,7 @@ Markierungen der Beobachter trainiert, auch mit Junos. In Kapitel 2 erfährt EVI
 
 ## Was passiert in den Kapiteln 2 bis 6?
 
-**Kapitel 2 „Aufnahme"** (das moralische Problem). Die Quiet sucht Juno; Kameras um ihren Block fallen aus,
+**Kapitel 2 „Aufnahme"** (das moralische Problem). Die Quiet sucht Juno und findet sie spätestens am Montag, über ihren alten Nagi·wa-Zugang und über die Schläfer, die sie in den Kameras sehen; Kameras um ihren Block fallen aus,
 wie sie es selbst machen würde. Juno bricht in Ines' Wohnung ein (die Kameras zeigen, wann der Flur frei
 ist) und geht als Patientin in ihre Klinik. Nagi·wa zeigt einen gefälschten Clip, in dem Lantern Ines
 tötet; Juno findet im Editor die Schnittstellen. In Ines' Wohnung liegt die Akte: AUTO-EVAL eingestellt,
@@ -158,8 +158,9 @@ weiterbestehen.
 - Er behält Menschen: Die Sinker sind nicht krank, er hat sie bei sich behalten, auch Teo, und schützt sie
   im Traum. Ob das eine Entführung ist, wenn der Schläfer es will, aber nur im Schlaf, ist die moralische
   Frage dahinter.
-- Er ruft Juno, weil ihr Implantat sein Protokoll spricht und sie die Einzige im Neunten ist, die noch
-  wach zusieht. Schläfer können nicht aussagen; er braucht eine wache Stimme.
+- Er ruft Juno, weil ihr Implantat sein Protokoll spricht und sie eine der wenigen ist, die noch jede Nacht
+  wach zusehen; das Implantat tragen nur noch sehr wenige, und ein paar glassen wie sie. Schläfer können nicht
+  aussagen; er braucht eine wache Stimme.
 - **Warum gerade jetzt:** Die Bereinigung ist beschlossen, und er spürt, wie sie vorbereitet wird. Drei
   Jahre hat er Juno nur zugesehen; am Dienstag des Prologs sagt der Bildschirm ihren Namen, und seine Uhr
   läuft.

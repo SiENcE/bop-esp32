@@ -190,6 +190,10 @@ moment (seen or not doubles what follows); what no longer matters is forgotten o
 checked alone with the others shut (`off_<thread>`, `game/stadt.js`), since together they would multiply each other. What they do to each other is
 not covered by the solver: keep them independent (their own `<thread>_step` number, no flag shared).
 
+Across chapters (the user's decision, 2026-11-14, story §10h): a chapter takes over only a few flags from the earlier ones, and most
+things are settled within the chapter they begin in, or variables and open threads pile up chapter by chapter. Each chapter's design
+lists exactly what it keeps (its act's `keep`) and what it hands on.
+
 ## Art
 
 - Read `docs/style-guide.md` and `.claude/skills/claude-pxl/SKILL.md` before making any art.

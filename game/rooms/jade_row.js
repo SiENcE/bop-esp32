@@ -65,7 +65,7 @@
       night: { name: "NACHTMARKT", poly: AJ.nightPoly, walkTo: AJ.pharmacy, face: "ne", look: "Das heißt Nachtmarkt, sagt Mei. Einen Markt gibt's lange nicht mehr, die Nacht schon." },
       arcade: { name: "Spielautomaten", rect: AJ.arcadeRect, walkTo: AJ.parlour, face: "nw", look: ["SUMP RUNNER gibt's hier als Automat. Der da spielt, seit ich hier wohne.", "Motte wär längst weiter."] },
       car: { name: "Der Wagen", rect: AJ.carRect, if: { not: ["day>1", "day<4", "time>=00:30", "time<00:45", "!off_tide"] }, walkTo: AJ.far, face: "ne", look: "Der Wagen hat den Motor laufen und das Licht an. Hier hält nur, wer wartet." },
-      screen: { name: "Der große Schirm", rect: AJ.screenRect, walkTo: AJ.far, face: "ne", look: "LULL. FREE. Zwei Wochen ist es gratis, danach kostet's." },
+      screen: { name: "Der große Schirm", rect: AJ.screenRect, walkTo: AJ.far, face: "ne", look: "LULL. FREE. Seit dem Herbst ist es gratis, im ganzen Neunten. Umsonst ist bei Nagi·wa nichts." },
     },
   });
 })();

@@ -167,7 +167,7 @@ Kapitel 2.
   ankommt, während Juno im Feed oder auf der Straße ist, meldet eine Benachrichtigung.
 - **Gelesen** zeigt ein Häkchen; Kontakte reagieren darauf („Ich seh, dass du's gelesen hast, Juno.").
 - **Spam und Werbung** als eigener Kontakt `NAGI·WA SERVICE` (englische Betreffzeilen, deutscher
-  Text): „Lull: 2 Wochen gratis", „Ihre Hüllenabgabe wurde angepasst".
+  Text): „Lull: jetzt gratis", „Ihre Hüllenabgabe wurde angepasst".
 
 ### 2.4 Der Clip-Editor
 

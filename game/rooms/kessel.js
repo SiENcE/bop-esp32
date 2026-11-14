@@ -91,7 +91,7 @@
       sign: { name: "Warnschild", poly: AL.signPoly, walkTo: AL.sign, face: "nw",
         look: "Vorsicht, nass. Das Schild steht seit Wochen hier. Der Boden ist seitdem nass." },
       flyers: { name: "Werbezettel", poly: AL.flyersPoly, walkTo: AL.mailboxes, face: "nw",
-        look: ["Hier liegt hundertmal dieselbe Werbung auf dem Boden.", "Lull zum halben Preis. Schlaf besser, schlaf Nagi·wa."] },
+        look: ["Hier liegt hundertmal dieselbe Werbung auf dem Boden.", "Lull jetzt gratis. Schlaf besser, schlaf Nagi·wa."] },
     },
     enter: [{ if: "day=1", then: [{ once: ["Ich bin unten. Es riecht nach Regen und nach dem Müll von vierzehn Stockwerken."] }] }],
   });
