@@ -22,6 +22,7 @@
     "graph: prolog": ["sh", "tools/graph.sh", "prolog"],
     "graph: kapitel1 main": ["sh", "tools/graph.sh", "main"],
     "graph: kapitel2 main": ["sh", "tools/graph.sh", "kapitel2"],
+    "graph: kapitel2 stick": ["sh", "tools/graph.sh", "kapitel2_stick"],
     "graph: all runs": ["sh", "tools/graph.sh", "all"],
     "handoff: all acts": ["sh", "tools/handoff.sh", "--only"],
     "art: everything": ["sh", "tools/build_art.sh"],

@@ -156,16 +156,16 @@ Object.assign(Nagiwa.threads, {
     { from: "sable", if: "ledger_sable_kessler", text: "Nett. 120." },
   ],
 });
-// P1: what Frau Kessler gets (docs/kapitel0-design.md §6.3); and Sable's offer
+// P1: what Frau Kessler gets (docs/kapitel0-design.md §6.3), only on Tuesday (a later chapter doesn't keep p1); and Sable's offer
 Object.assign(Nagiwa.replies, {
   kessler: [
-    { id: "full", text: "Den ganzen Clip schicken.", if: ["cache_clip_kessler_ring", "!p1"],
+    { id: "full", text: "Den ganzen Clip schicken.", if: ["day=1", "cache_clip_kessler_ring", "!p1"],
       use: [{ set: "p1", value: "full" }, { ledger: "kessler", value: "full" }, "Das war die Wahrheit, für zweihundert Chits.",
         { evi: "verwirrt" }, { say: "evi", text: "Sie schreibt nichts mehr. Ist sie jetzt froh?" }, { notify: "sable" }] },
-    { id: "cut", text: "Nur den Ring schicken.", if: ["cache_clip_kessler_cut", "!p1"],                 // the cut clip (the editor)
+    { id: "cut", text: "Nur den Ring schicken.", if: ["day=1", "cache_clip_kessler_cut", "!p1"],                 // the cut clip (the editor)
       use: [{ set: "p1", value: "cut" }, { ledger: "kessler", value: "cut" }, "Sie hat bekommen, was sie bestellt hat.",
         { evi: "besorgt" }, { say: "evi", text: "Sie hat ‚Ich wusste es‘ geschrieben. Sie hat es nicht gewusst, oder?" }, { notify: "sable" }] },
-    { id: "nothing", text: "„Nichts gefunden.“", if: ["cache_clip_kessler_ring", "!p1"],
+    { id: "nothing", text: "„Nichts gefunden.“", if: ["day=1", "cache_clip_kessler_ring", "!p1"],
       use: [{ set: "p1", value: "nothing" }, { ledger: "kessler", value: "nothing" }, "Soll er's ihr selbst sagen.",
         { evi: "verwirrt" }, { say: "evi", text: "Wir haben nichts geschickt. Ist das nett oder feige? Ich weiß das nie." }, { notify: "sable" }] },
   ],

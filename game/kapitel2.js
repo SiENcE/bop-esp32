@@ -2,7 +2,8 @@
 // (Saturday 10 to Monday 12 November), the way home at the start, Teo's last visit awake on Monday, the clock that stops on
 // Monday at 00:45 until everything is ready, decision 2 as far as it is built. The end: game/kapitel2_ende.js.
 //   e2              Entscheidung 2: sable | vesper | morrow | lantern | kept (so far built: vesper, kept)
-//   stick_lantern   Lantern has Ines' stick, the key to her wallet: without it he can't send (story §10b)
+//   (Ines' stick, the key to her wallet, without which Lantern can't send: Juno has it (stick_ines, kept from Chapter 1), it lies in
+//   dryer 6 again (stick_dryer), or Lantern has it, which needs no flag of its own: game/kapitel2_stick.js)
 // (what Chapter 1 hands on: `keep` of the act, kapitel2-design §2.1)
 "use strict";
 
@@ -15,11 +16,14 @@ Object.assign(Nagiwa.nights, {
   7: { date: "Montag, 12. November", evening: "Abend 3", last: true },
 });
 
-// ---- the clock: on Monday it stops at 00:45 until everything is ready (kapitel2-design §3.7). So far only decision 2 is built: the
-// deck asks itself, with what can be done at the deck. Ines' flat (evi_knows) and the stick (stick_lantern) join it when they are built.
+// ---- the clock: on Monday it stops at 00:45 until everything is ready (kapitel2-design §3.7): Lantern has the stick, and decision 2
+// has fallen (the deck asks itself, with what can be done at the deck). Ines' flat (evi_knows) joins it when it is built.
+const [STILL_THE_KEY] = Cutaway.i18n.declare("waiting", ["Ich hab noch ihren Schlüssel. Ohne den ist alles umsonst."]);
 Nagiwa.holds.push((/** @type {number} */ to) => {
-  if (Cutaway.time.now.day !== 7 || Cutaway.state.flag("end_beat2")) return null;
-  return to > Cutaway.time.parse("00:45") && !Cutaway.state.flag("e2") ? { dialog: "k2_clip" } : null;
+  const S = Cutaway.state;
+  if (Cutaway.time.now.day !== 7 || S.flag("end_beat2") || !(to > Cutaway.time.parse("00:45"))) return null;
+  if (S.flag("stick_ines") || S.flag("stick_dryer")) return STILL_THE_KEY;
+  return S.flag("e2") ? null : { dialog: "k2_clip" };
 });
 // the bed opens at 01:00 on Saturday and Sunday: the clock stops there (Monday has no bed, the end comes at 01:00)
 Cutaway.moment("one_sat", { room: "deck", day: 5, from: "00:45", to: "01:00", if: "~never", unseen: [] });
@@ -83,7 +87,8 @@ Cutaway.sequence("k2_heimweg", {
   after: [{ place: "juno", room: "kessel_14", at: AK.door_juno, face: "nw" }],
 });
 // home, and EVI does something ordinary: the fixed scene, word for word (dialog-style-guide §8, story §10b)
-Cutaway.moment("heimkehr", { room: "flat", day: 5, from: "18:00", to: "18:15", play: [
+// (only once the act's start has put her into the flat: its `been_to` comes after the clock is set)
+Cutaway.moment("heimkehr", { room: "flat", day: 5, from: "18:00", to: "18:15", if: "visited:flat", play: [
   { sequence: "k2_heimweg", restore: false },
   { letterbox: false, ms: 0 },
   { goto: "flat", at: AF.doorSide, face: "se", transition: false },
@@ -163,6 +168,9 @@ const CLIP_WAYS = ["reply_vesper_ines", "contact_vesper", "app_chat"];
 Cutaway.hints([
   { if: ["day=7", "end_beat2=sent"], about: ["protokolle"],
     text: ["Du hast doch Clips mit Uhrzeit.", "Leg die Protokolle neben deine Aufnahmen.", "Nimm Kesslers Ring. Dienstag, 22:35."] },
+  // the stick (game/kapitel2_stick.js): while Juno has it, Lantern can't send
+  { if: "stick_ines", about: ["dryer6"],
+    text: ["Du hast noch ihren Schlüssel. Der aus der Metro sucht ihn bestimmt.", "Sie hat ihn in den Trockner gelegt. Dort sucht er ihn.", "Leg ihn in Trockner sechs zurück. Um halb eins holt er ihn."] },
   { if: ["day=7", "time>=00:45", "!e2"], about: ["wait", ...CLIP_WAYS, ...HOME],
     text: ["Was machst du mit dem Clip?", "Vesper zahlt am meisten. Er ist im CHAT.", "Du kannst ihn auch behalten. Drück WARTEN, dann fragt das Deck."] },
   { if: ["day=7", "time>=00:45", "e2"], about: ["wait", "protokolle", ...HOME],
@@ -190,9 +198,12 @@ Cutaway.act("kapitel2", {
     { if: "!e1", then: [{ set: "e1", value: "sold" }, { set: "rent", value: "paid" },
       { ledger: "kessler", value: "full" }, { ledger: "wren_advance", value: "paid" }, { ledger: "wren", value: "sold" }, { ledger: "wren_live", value: "paid" }, { ledger: "ines", value: "dead" },
       { set: "chits", value: 1550 }, { set: "cache_clip_kessler_ring" }, { set: "cache_clip_ines_death" }] },
-    // what she has in her bag; a stick left in the dryer Lantern took on Friday night (kapitel2-design §3.1)
+    // what Frau Kessler got on Tuesday: the prologue's answer, which the flat's door, the chat and Sable's contact read, is the Kassenbuch's
+    // line kept from it (the same values), so it needs no flag of its own across the chapter line
+    ...["full", "cut", "nothing"].map((v) => ({ if: `ledger_kessler=${v}`, then: [{ set: "p1", value: v }] })),
+    // what she has in her bag (a stick left in the dryer Lantern took on Friday night, kapitel2-design §3.1)
     { if: "got_ausweis", then: [{ give: "ausweis" }] }, { if: "got_haken", then: [{ give: "haken" }] },
-    { if: "stick_ines", then: [{ give: "stick" }], else: [{ set: "stick_lantern" }] },
+    { if: "stick_ines", then: [{ give: "stick" }] },
     { place: "juno", room: "flat", at: AF.doorSide, face: "se" },
     // Juno's old access, Ines' way and CAM 04, whose code she has known since Tuesday
     ...["cam03", "cam04", "cam07", "cam18", "cam21", "cam22", "cam23", "cam24", "cam30"].flatMap((c) => [{ set: `code_${c}` }, { set: `link_${c}` }]),

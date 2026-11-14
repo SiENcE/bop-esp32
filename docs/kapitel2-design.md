@@ -76,8 +76,8 @@ es nicht mehr, §7).
 **Im Mock gebaut** (2026-11-14, das Gerüst; Zeilen und Abläufe sind beim Durchspielen zu prüfen):
 
 - Der Akt `kapitel2` mit `keep` und `leave` wie oben; das Kassenbuch nimmt er ganz mit (jeder Eintrag aus Prolog und Kapitel 1). Wer
-  `?act=kapitel2` startet, beginnt mit den Antworten des Durchspielwegs von Kapitel 1: `e1=sold`, der Stick zurückgelegt (also
-  `stick_lantern`), `rent=paid`, 1550 Chits, keine Aufträge. Kapitel 1 geht am Ende von selbst in Kapitel 2 über.
+  `?act=kapitel2` startet, beginnt mit den Antworten des Durchspielwegs von Kapitel 1: `e1=sold`, der Stick zurückgelegt (also hat
+  Lantern ihn), `rent=paid`, 1550 Chits, keine Aufträge. Kapitel 1 geht am Ende von selbst in Kapitel 2 über.
 - Die Spieltage 5 bis 7; das Bett geht am Samstag und Sonntag ab 01:00 auf, am Montag nicht. Was Kapitel 1 an offenen Bedingungen
   hatte (die Aufträge, WREN, Mottes Lektionen, Vespers Käufe roher Clips, der Zeitungskrieg, Frau Imais Chat aus Kapitel 1), ist an
   diesen Tagen zu; die Kameras zeigen, was §2.1 nennt.
@@ -88,12 +88,23 @@ es nicht mehr, §7).
   bis die abstrakten Bilder als Blöcke freigegeben sind; Junos eine Zeile über der Tür; dann EVIs festgelegte Szene, Wort für Wort.
 - Teos Besuch am Montag um 18:30 als Block (§7): das Klopfen, Bao, die Miete, der Haken, die Leiter, das Dach mit Tinte. Auf dem Dach
   fehlt Teo noch im Bild (seine Pose sitzend von hinten, §10).
-- Die Uhr hält am Montag um 00:45. **Bisher verlangt sie nur Entscheidung 2** (vom Nutzer so gewollt): `evi_knows` und
-  `stick_lantern` kommen dazu, sobald Wohnung und Stick gebaut sind. Gebaut sind von Entscheidung 2 Vesper im CHAT (immer da, auch
+- Die Uhr hält am Montag um 00:45. **Sie verlangt, was gebaut ist** (vom Nutzer so gewollt): den Stick bei Lantern und Entscheidung 2;
+  `evi_knows` kommt dazu, sobald die Wohnung gebaut ist. Gebaut sind von Entscheidung 2 Vesper im CHAT (immer da, auch
   bei `off_vesper`) und die Frage des Decks um 00:45 („An Vesper verkaufen.“, „Behalten.“, „Noch nicht.“). Preis und Zuschauer sind
   Platzhalter (§14).
 - Das Ende als Kette mit `end_beat2` (sent > found) bis zur Karte „Kapitel 3: Lull (kommt später)“. Das letzte Prüfen ist vorerst ein
   Klick auf das Deck (`[MOCK]`), der Kontakt um 03:15 heißt bis zur Entscheidung `BECKEN 3` (§14).
+- **Der Stick** (§3.1, `game/kapitel2_stick.js`): Wo er ist, sagen zwei Flags, `stick_ines` (Juno hat ihn) und `stick_dryer` (er liegt
+  wieder in Trockner 6); hat Juno ihn nicht und liegt er nicht im Trockner, hat Lantern ihn (kein eigenes Flag, das spart Zustände).
+  Juno legt ihn an Trockner 6 zurück („Zurücklegen.“ oder „Behalten.“). Solange er nicht Lanterns ist, sieht Lantern jede Nacht um
+  00:30 nach, in `cam23` zu sehen (die Momente `lantern_sat`, `lantern_sun`, `lantern_mon`), und nimmt ihn mit, wenn er drinliegt;
+  legt Juno ihn erst nach seinem Blick zurück, ist er über Nacht weg, und am Montag nimmt Lantern ihn dann sofort (es gibt keine Nacht
+  mehr, und die Uhr steht in seinem Fenster). Lantern ist in `cam23` noch seine Figur aus `cam31` (**Platzhalter**, §10); steht Juno
+  um halb eins selbst im Waschsalon, sieht sie ihn dort nicht, denn im Straßenmodus gibt es ihn noch nicht (beim Malen zu lösen: ein
+  Ort, ein Bild). Bis Sonntag kennt Juno seinen Namen nicht und sagt „der aus der Metro“. Den Weg mit
+  dem Stick in der Tasche prüft vorerst nur der Solver (`--set stick_ines`), denn `play.mjs` kann keinen Start mit gesetzten Flags.
+  Der Start stellt außerdem `p1` aus `ledger_kessler` wieder her (dieselben Werte): Ohne `p1` ließ die Wohnungstür Juno nicht hinaus,
+  und Frau Kesslers Antworten aus dem Prolog gingen wieder auf (sie gelten jetzt nur am Dienstag).
 - Die Hinweise des Kapitels sind seine eigenen (`Cutaway.hints(..., { act: "kapitel2" })`); die von Prolog und Kapitel 1 gelten nur
   noch in ihren Akten.
 - Geprüft wird wie in Kapitel 1 der Hauptweg mit geschlossenen Fäden (`off_<thread>`): `node tools/solve-act.mjs kapitel2 --full
@@ -112,11 +123,11 @@ ein Blick auf der Station, ohne Flag), Vesper, WREN und die Miete.
 Ines' Daten-Wallet hat Lantern, ihr Schlüssel ist der Stick aus Trockner 6 (story §10b). Am Ende muss Lantern beides haben, sonst
 kann er nicht senden.
 
-- **Lag der Stick am Freitag noch im Trockner** (`!stick_ines`), hat Lantern ihn in derselben Nacht geholt. Kapitel 2 beginnt mit
-  `stick_lantern`.
-- **Hat Juno ihn,** findet Lantern die Sechs leer. Er sieht jede Nacht zwischen 00:30 und 01:00 nach, in `cam23` zu sehen: ein
+- **Lag der Stick am Freitag noch im Trockner** (`!stick_ines`), hat Lantern ihn in derselben Nacht geholt. Kapitel 2 beginnt damit,
+  dass er ihn hat.
+- **Hat Juno ihn,** findet Lantern die Sechs leer. Er sieht jede Nacht um halb eins nach (00:30 bis 00:45), in `cam23` zu sehen: ein
   Rollstuhl mit Schwimmern im grünen Licht, der vor Trockner 6 hält und wieder fährt (er kommt übers Wasser, die Gasse ist ein Steg).
-  Juno kann den Stick anonym zurücklegen; um halb eins in derselben Nacht nimmt Lantern ihn mit (`stick_lantern`). Legt sie ihn erst
+  Juno kann den Stick anonym zurücklegen; um halb eins in derselben Nacht nimmt Lantern ihn mit (bis dahin `stick_dryer`). Legt sie ihn erst
   danach zurück, holt er ihn noch in derselben Nacht, ungesehen, auch wenn Juno schon schläft (beim Bau ein Schritt im Übergang der
   Nacht, wie `Nagiwa.nights`): **Ein zurückgelegter Stick
   ist am nächsten Abend immer weg** (entschieden 2026-11-14). Oder sie bringt ihn ihm selbst (§3.5). Dieser Weg bleibt immer offen.
@@ -218,7 +229,7 @@ Lantern kennt Juno nicht (story §10b) und vertraut niemandem. Er ist gejagt, se
 | L5 | `lantern_versteck` | Am Ende des Kabels ein halb versunkener Laden, voller Antennen und Bildschirme. Lantern in seinem Rollstuhl. Er siezt sie, bricht Sätze ab und will wissen, woher sie kommt. Was Juno ihm sagen kann, ist ein Gespräch mit höchstens vier Antworten (`Nagiwa.talkTree`): „Ich hab gesehen, was passiert ist.“, „Ich hab ihren Schlüssel.“ (wenn sie den Stick hat), „Ich hab eine Aufnahme.“ (Entscheidung 2, §3.6), „Ich geh wieder.“ | `lantern_found` |
 
 **Lantern** (Vorschläge; die Stimme fehlt noch im Style Guide): „Wer sind Sie? Nein. Sagen Sie's nicht.“ Beim Stick: „Sie hat gesagt,
-sonst weiß es keiner.“ Juno: „Sie konnte mich nicht sehen.“ Gibt Juno ihm den Stick, `stick_lantern`, und er sagt, wann er sendet:
+sonst weiß es keiner.“ Juno: „Sie konnte mich nicht sehen.“ Gibt Juno ihm den Stick, hat er ihn, und er sagt, wann er sendet:
 „Montag. Um eins. Bis dahin stehen die Sender.“ Wird Lantern ihr Verbündeter (Stick oder Clip), wechseln beide zum Du (`dialog-style-guide` §5).
 
 **Der Schatten:** Weiß die Quiet, wer Juno ist, steht jemand in Weiß auf der Kowalski-Straße, von 19:00 bis 23:00, gegenüber ihrer
@@ -249,7 +260,7 @@ gekauft hat (Sables Verrat).
 Um 00:45 hält die Uhr, wie am Freitag in Kapitel 1, bis drei Dinge erfüllt sind:
 
 1. Juno war in Ines' Wohnung (`evi_knows`). Sonst: „Ich weiß immer noch nicht, wer sie war.“
-2. Lantern hat den Stick (`stick_lantern`). Sonst: „Ich hab noch ihren Schlüssel. Ohne den ist alles umsonst.“ Liegt der Stick wieder
+2. Lantern hat den Stick (weder `stick_ines` noch `stick_dryer`). Sonst: „Ich hab noch ihren Schlüssel. Ohne den ist alles umsonst.“ Liegt der Stick wieder
    im Trockner, holt Lantern ihn sofort, die Uhr steht ja in seinem Fenster.
 3. Entscheidung 2 ist gefallen. Sonst fragt das Deck selbst, mit dem, was am Deck geht: Vesper im Chat und „Behalten.“. Zu Sable und
    zu Lantern geht Juno hin; die Uhr steht ja, und Wege kosten nichts. Morrow hält am Montag nicht.
@@ -492,12 +503,12 @@ wechseln würde, eine eigene Ansicht (Kapitel 1, §10). Lull ist immer die ovale
               ─ Prüfen: Protokolle gegen Kesslers Ring ─ „Meine Nachbarn.“ ─ 03:15 BECKEN 3 ─ Kapitel 3
 ```
 
-Regeln: Das Ende braucht `evi_knows`, `stick_lantern` und `e2`; alles andere ist frei. Die Klinik und die Fälschung sind nie nötig, aber
+Regeln: Das Ende braucht `evi_knows`, den Stick bei Lantern und `e2`; alles andere ist frei. Die Klinik und die Fälschung sind nie nötig, aber
 gut angezeigt. Wer den Stick hat und die Quiet an den Trockner bringt, muss Lantern finden; der Weg dahin steht ab Sonntag 22:00 jedem
 offen. Die Nebenfäden (`off_varga`, `off_tide`, `off_imai`, `off_haldane`, `off_vesper`, `off_motte`) prüft der Solver jeden für sich
 mit dem Hauptfaden (`off_main` und `know_flat` für die Fäden allein, wie in Kapitel 1).
 
-**Der Zustand:** neu im Hauptfaden `stick_lantern`, `quiet_dryer`, `know_flat`, `code_lerche`, `cache_note_serviette`,
+**Der Zustand:** neu im Hauptfaden `stick_dryer`, `quiet_dryer`, `know_flat`, `code_lerche`, `cache_note_serviette`,
 `cache_note_civic_rest`, `evi_knows`, `cache_clip_forgery`, `forgery_cuts` (0–3, im Editor) und `forgery_proven` mit seiner Notiz,
 `know_cable`, `stairs_open`, `lantern_found`, `led_quiet`, `e2`, `clip_ines_cut`; in den Fäden `varga2`, `imai2`,
 `haldane` und ein Schritt je Faden. Weiter gehen davon nur die Flags, die §2.1 nennt. Die Kameras, die ausfallen, und alles in §7 kosten nichts.

@@ -110,7 +110,7 @@ Nagiwa.at = {
     const boxes = [1, 2, 3, 4, 5, 6, 7, 8].map((n) => L.props[`dryer${n}`].box), c = L.props.counter.box;
     const x0 = Math.min(...boxes.map((b) => b[0])), y0 = Math.min(...boxes.map((b) => b[1]));
     const x1 = Math.max(...boxes.map((b) => b[0] + b[2])), y1 = Math.max(...boxes.map((b) => b[1] + b[3]));
-    return { shift: S, exposure: 2.2, dryer6: sh(L.spots.dryer6), washer: sh(L.spots.washer), sleeper: sh(L.spots.sleeper), mic: sh(L.spots.dryer6),
+    return { shift: S, exposure: 2.2, door: sh(L.spots.door), dryer6: sh(L.spots.dryer6), washer: sh(L.spots.washer), sleeper: sh(L.spots.sleeper), mic: sh(L.spots.dryer6),
       dryers: [x0 + S, y0, x1 - x0, y1 - y0], desk: [c[0] + S, c[1], c[2], c[3]],
       // the hotspots' shapes: the row of dryers round all eight, the counter's own outline (as in the laundromat)
       dryersPoly: hull([1, 2, 3, 4, 5, 6, 7, 8].map((n) => L.props[`dryer${n}`].poly).flat()).map((v, i) => (i % 2 ? v : v + S)),
