@@ -141,7 +141,9 @@ code comments English.
   There the solver can be watched: "watch the solver" plays its winning way in the game (Game, with the moves in a dock under the
   picture: play, one move, 1x to 8x, a click on a move jumps to the solver's state before it), and opens a soft-lock or a state
   without a fitting hint as the solver found it, or plays the way to it; after each move it compares the game with the solver
-  and stops where they differ. A data file made before (no `replay` in it) is made again with its task.
+  and stops where they differ. A data file made before (no `replay` in it) is made again with its task. "Play all runs" plays
+  every run in `build/graph` in turn (the prologue, Chapter 1's main way, then its threads), each from its own start: the runs
+  are searched apart, so a thread begins again at the chapter's start; the whole game as one playthrough is `spiel.json`.
 - In the editor with the studio: the tab Map (every room with its exits and script warps, what is unreachable) and the game's
   own tab Iso-Editor (`game/editor/iso.js`): a street-mode room's map edited over its picture and baked from there (`art: room`);
   "Where from?" (or Alt+click) on a pixel opens the kit piece or the map line that made it. Change the map there or in the
