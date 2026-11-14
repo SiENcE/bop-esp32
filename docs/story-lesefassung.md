@@ -219,8 +219,8 @@ hat etwas gegen sie in der Hand.
 
 Verkaufen kann Juno erst, wenn sie den echten Code kennt; sonst wüsste sie nicht einmal, wie einer aussieht.
 
-- **Den echten Code verkaufen:** 500 Chits. In Kapitel 2 wird der Laden ausgeraubt, und Bao, der helfen will, wird
-  niedergeschlagen. Seine Garküche bleibt eine Woche zu.
+- **Den echten Code verkaufen:** 500 Chits. In der Nacht nach Freitag wird der Laden ausgeraubt, und Bao, der helfen will, wird
+  niedergeschlagen. Der Arzt sagt, eine Woche; nach zwei Tagen steht Bao wieder an seinem Wagen.
 - **Einen falschen Code verkaufen:** 250 im Voraus. Die Boys scheitern, und an Junos Tür steht bald eine Drohung: GLASSER LIES. Sie sind
   von da an Feinde.
 - **Okonkwo warnen:** Das geht im Laden, solange er offen hat, auch ohne den Code, denn TIDEs Nachricht sagt genug. Kein Geld.
@@ -435,8 +435,8 @@ Drei Jahre lang hat der Zeuge Juno nur zugesehen, einer der wenigen im Neunten, 
 diesem Dienstag spricht er zum ersten Mal, weil seine Uhr läuft: In der Krone ist beschlossen, ihn aus dem Kollektiv der Schläfer zu bereinigen. Deshalb steht am
 Ende des Prologs ihr Name in ihrem Auge.
 
-Dass am nächsten Abend auch WREN kommt, ist kein Zufall. Der Zeuge hat Ines vor den Schläfern versteckt: Keiner von ihnen markiert
-sie, und ohne Markierung findet Nagi·wa einen Menschen in seinen eigenen Kameras nicht. Juno tut für WREN die Arbeit, die der Zeuge
+Dass am nächsten Abend auch WREN kommt, ist kein Zufall. Was die Schläfer von Ines sehen, gibt der Zeuge nicht weiter: Keine
+ihrer Markierungen kommt bei Nagi·wa an, und ohne Markierung findet Nagi·wa einen Menschen in seinen eigenen Kameras nicht. Juno tut für WREN die Arbeit, die der Zeuge
 verweigert. Beide brauchen jemanden, der wach hinsieht.
 
 Der Mann im weißen Regenmantel heißt Corvin Ashe, und er saß früher selbst in Junos Halle. Weil CAM 31 nur das alte
@@ -447,7 +447,7 @@ Beobachter-Protokoll versteht, weiß er, was für ein Mensch gerade durch sie si
 ## Noch offen
 
 - **Vorschläge:** Die Zeilen, Preise und Zuschauerzahlen des Kapitels werden beim Durchspielen geprüft (`kapitel1-design.md`).
-- **Ines versteckt:** Dass der Zeuge Ines vor den Schläfern versteckt und Nagi·wa sie deshalb nicht selbst findet (story §6, Punkt 5,
+- **Ines nicht gemeldet:** Dass der Zeuge nicht weitergibt, was die Schläfer von Ines sehen, und Nagi·wa sie deshalb nicht selbst findet (story §6, Punkt 5,
   entschieden 2026-11-13), deutet Kapitel 1 noch nirgends an. Nötig ist es nicht; ob eine Zeile darauf zeigt, ist offen.
 - **Teo im Traum:** Dass Teo als Sinker nicht zurückwill (story §7, Kapitel 3), deutet sein Besuch am Mittwoch nur mit „Vier Stunden
   Lull, und ich bin wie neu.“ an und Juno auf dem Dach mit „Heute schläft er besser. Sagt er.“ Deutlicher sagt er es selbst in

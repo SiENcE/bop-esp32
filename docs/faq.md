@@ -59,8 +59,8 @@ immer und will, dass Juno bei ihm bleibt. Wer ihn in Kapitel 4 weckt, weckt ihn 
 
 ## Warum braucht Nagi·wa für Ines eine Glasserin?
 
-Weil **der Zeuge Ines vor den Schläfern versteckt hat** (Story §6, Punkt 5). Keiner von ihnen markiert sie,
-und eine Maschine, die Aufnahmen durchsucht, gibt es nicht. Ohne Markierung findet Nagi·wa einen Menschen in
+Weil **der Zeuge nicht weitergibt, was die Schläfer von Ines sehen** (Story §6, Punkt 5). Sie sehen sie und
+ihre Entdeckung über Lull, aber keine Markierung kommt bei Nagi·wa an; aktiv versteckt er niemanden. Eine Maschine, die Aufnahmen durchsucht, gibt es nicht. Ohne Markierung findet Nagi·wa einen Menschen in
 seinen eigenen Kameras nicht, also muss ein wacher Mensch hinsehen: Juno tut für WREN die Arbeit, die der
 Zeuge verweigert. Dazu meidet Ines Nagi·was Netz; Nudelbar und Waschsalon haben private Kameras. Dass der
 Zeuge und WREN in derselben Woche nach Juno greifen, ist kein Zufall: Beide brauchen jemanden, der wach
@@ -87,12 +87,12 @@ Markierungen der Beobachter trainiert, auch mit Junos. In Kapitel 2 erfährt EVI
 
 ## Was passiert in den Kapiteln 2 bis 6?
 
-**Kapitel 2 „Aufnahme"** (das moralische Problem). Die Quiet sucht Juno und findet sie spätestens am Montag, über ihren alten Nagi·wa-Zugang und über die Schläfer, die sie in den Kameras sehen; Kameras um ihren Block fallen aus,
+**Kapitel 2 „Aufnahme"** (das moralische Problem). Hat Juno den Ort verkauft, kennt die Quiet sie schon; sonst sucht sie Juno und findet sie spätestens am Montag, über ihren alten Nagi·wa-Zugang und über die Schläfer, die sie in den Kameras sehen. Kameras um ihren Block fallen aus,
 wie sie es selbst machen würde. Juno bricht in Ines' Wohnung ein (die Kameras zeigen, wann der Flur frei
 ist) und geht als Patientin in ihre Klinik. Nagi·wa zeigt einen gefälschten Clip, in dem Lantern Ines
 tötet; Juno findet im Editor die Schnittstellen. In Ines' Wohnung liegt die Akte: AUTO-EVAL eingestellt,
 ersetzt durch Civic Rest, Trainingsdaten „Beobachterin 0412, J. REYES". EVI: „Ich hab nie jemanden
-ersetzt." **Entscheidung 2:** den Clip an Sable verkaufen, Morrow geben, Lantern bringen oder behalten.
+ersetzt." **Entscheidung 2:** den Clip an Sable oder Vesper verkaufen, Morrow geben, Lantern bringen oder behalten; eine Kopie behält Juno immer.
 Lantern sendet Ines' Protokolle, aber dem gejagten „Mörder" glaubt niemand. Teo wacht nicht mehr auf.
 
 **Kapitel 3 „Lull".** Teo liegt auf der Schlafstation in den mittleren Ringen; Juno wird abgewiesen. Tinte
@@ -109,7 +109,7 @@ durch die Rohre, sie baut ein neues Deck. EVI kommt zurück: aus Mottes Backup (
 hat) oder vom Zeugen, mit Lücken und Magenta in den Augen, dafür kann sie ihn übersetzen. Die Verbündeten
 werden geprüft: Sable verrät Juno, wenn sie Sable den Clip verkauft hat; Morrow lässt sich mit der
 zerschnittenen Fälschung aus Kapitel 2 und ihrer Tochter umstimmen, die Juno in Kapitel 3 im Traum gefunden
-hat; Lantern lebt nur, wenn Juno ihn in Kapitel 2 gefunden hat. Auf der Schlafstation steht der Zeitplan
+hat; Lantern lebt nur, wenn Juno ihn in Kapitel 2 gefunden und die Quiet nicht zu ihm geführt hat. Auf der Schlafstation steht der Zeitplan
 der Bereinigung: drei Tage. **Entscheidung 4:** Teo jetzt wecken, gegen seinen Willen (unter Schmerzen,
 vielleicht nicht mehr ganz er selbst), oder im Traum lassen, wie er es will, wo der Zeuge ihn schützt. Aubrecht lädt Juno auf allen Bildschirmen
 mit Namen in die Krone ein.
@@ -154,7 +154,7 @@ wollen sich die Schläfer nicht befreien, nur von dem, wofür es da ist. Selbst 
 weiterbestehen.
 
 **Was er tut:**
-- Er verweigert Markierungen und versteckt Menschen vor Nagi·wa.
+- Manche Markierungen gibt er nicht an Nagi·wa weiter; wen er nicht meldet, findet Nagi·wa nicht.
 - Er behält Menschen: Die Sinker sind nicht krank, er hat sie bei sich behalten, auch Teo, und schützt sie
   im Traum. Ob das eine Entführung ist, wenn der Schläfer es will, aber nur im Schlaf, ist die moralische
   Frage dahinter.

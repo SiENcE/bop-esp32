@@ -178,8 +178,8 @@ darin. Was Juno damit tun kann, wächst über das Spiel:
 |---|---|---|---|
 | **Schneiden** | einen Moment allein behalten | der Clip erzählt etwas anderes (Entscheidung P1) | Prolog |
 | **Anonymisieren** | Gesichter einzelner Personen verpixeln | der Clip ist weniger wert (manche Käufer nehmen ihn gar nicht: Vesper, Story §9), aber die Gefilmten sind geschützt; der Eintrag im Kassenbuch sagt „anonymisiert" | Kap. 1 (gebaut: ein Klick verpixelt das ganze Bild und alle Namen in Junos Kopie, für immer; in Kapitel 1 kauft niemand anonymisierte Clips, `kapitel1-design` §7) |
-| **Prüfen** | einen fremden Clip neben einen eigenen oder den Puffer legen und Schnitte finden (Zeitstempel, Regen, Licht, fehlende Dinge) | entlarvt Fälschungen; ein Rätsel am Schreibtisch | Kap. 2 (die Fälschung aus CAM 31) |
-| **Montieren** | Momente aus zwei Clips zu einem zusammensetzen | eine Fälschung, die Juno selbst macht; eine Wahl mit Gewicht, nie nötig für die Hauptgeschichte | Kap. 2 |
+| **Prüfen** | einen fremden Clip neben einen eigenen oder den Puffer legen und Schnitte finden (Zeitstempel, Regen, Licht, fehlende Dinge); auch Daten mit Zeitstempeln, etwa Schlafprotokolle, gegen die eigenen Clips legen und Übereinstimmungen finden | entlarvt Fälschungen; ein Rätsel am Schreibtisch | Kap. 2 (die Fälschung aus CAM 31) |
+| **Montieren** | einem Moment einen anderen Zeitstempel geben oder Momente aus zwei Clips zu einem zusammensetzen (in Kap. 2 das Erste, `kapitel2-design` §6.2) | eine Fälschung, die Juno selbst macht; eine Wahl mit Gewicht, nie nötig für die Hauptgeschichte | Kap. 2 |
 
 Alle Werkzeuge sind Klicks auf die Zeitleiste und die Personen, keine Fingerfertigkeit.
 
@@ -227,7 +227,8 @@ alten Beobachter-Protokoll (nur bestimmte alte Kameras, Kap. 1).
 
 - Das Spiel hat eine **Uhr in Takten von 15 Minuten** (Uhrzeit auf dem Deck und, im Feed, im OSD).
   Die Uhr springt nicht von selbst weiter: Sie rückt vor, wenn Juno etwas tut, das Zeit kostet
-  (ein Weg in einen anderen Bezirk, ein Auftrag, Essen), oder wenn der Spieler im Feed **Vorspulen**
+  (geplant: ein Weg in einen anderen Bezirk, ein Auftrag, Essen; seit Kapitel 1 kosten Wege keine Zeit, die Uhr läuft nur beim
+  Warten, `kapitel1-design` §2), oder wenn der Spieler im Feed **Vorspulen**
   wählt („bis zur nächsten Bewegung" oder „bis 03:00").
 - Innerhalb eines Takts laufen die Figuren ihre Wege und Animationen in Echtzeit; die Zeit des Takts
   steht aber still, bis etwas sie weiterschiebt. Das hält Rätsel lösbar und den Solver endlich.

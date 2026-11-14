@@ -199,7 +199,8 @@ Wird langsam über die Kapitel enthüllt; der Spieler soll es einen Schritt vor 
      tut, was sie im Schlaf wollen. Sie wollen zwei Dinge, und die passen nicht zusammen:
      1. **Sie wollen ihre Nachbarn nicht verraten.** Jede Nacht markieren sie im Traum, was falsch
         aussieht, und am Morgen wissen sie nichts davon. Irgendwo unten wehrt sich etwas dagegen. Daraus
-        kommt das Gewissen des Zeugen: Er verweigert Markierungen und versteckt Menschen.
+        kommt das Gewissen des Zeugen: Manche Markierungen gibt er nicht an Nagi·wa weiter. Aktiv verstecken
+        kann er niemanden; wen er nicht meldet, findet Nagi·wa nur nicht.
      2. **Sie wollen nicht mehr aufwachen.** Wach warten auf sie die Flutschuld, die Doppelschichten und
         die Pumpenhalle, und der Schlaf ist das einzig Gute an ihrem Tag. Daraus kommen die Sinker: Der
         Zeuge behält die, die am wenigsten haben, wofür sie aufwachen wollen.
@@ -231,16 +232,17 @@ Wird langsam über die Kapitel enthüllt; der Spieler soll es einen Schritt vor 
 5. **Warum Ines starb:** Ihre Schlafprotokolle bewiesen, dass die Hirnaktivität der Lull-Nutzer mit
    den Zeitstempeln der Kameras übereinstimmt. Sie wollte sie Lantern geben. Nagi·wa heuerte eine
    Glasserin an, um das Treffen zu finden: Juno.
-   - **Warum Nagi·wa eine Glasserin braucht** (entschieden 2026-11-13): **Der Zeuge hat Ines vor den
-     Schläfern versteckt.** Keiner von ihnen markiert sie, und eine Maschine, die Aufnahmen durchsucht,
-     gibt es nicht (Punkt 1). Ohne Markierung findet Nagi·wa einen Menschen in seinen eigenen Kameras
+   - **Warum Nagi·wa eine Glasserin braucht** (entschieden 2026-11-13, genauer gefasst 2026-11-14): **Der
+     Zeuge gibt nicht weiter, was die Schläfer von Ines sehen.** Sie sehen sie und ihre Entdeckung über Lull,
+     aber keine dieser Markierungen kommt bei Nagi·wa an; versteckt wird sie nicht, nur nicht gemeldet. Eine
+     Maschine, die Aufnahmen durchsucht, gibt es nicht (Punkt 1). Ohne Markierung findet Nagi·wa einen Menschen in seinen eigenen Kameras
      nicht. Also muss ein wacher Mensch hinsehen: **Juno tut die Arbeit, die der Zeuge verweigert.** Dazu
      kommt, dass Ines Nagi·was Netz meidet; Nudelbar und Waschsalon haben private Kameras.
    - Dass der Zeuge und WREN in derselben Woche nach Juno greifen, ist kein Zufall: Beide brauchen
      jemanden, der wach sieht. Kapitel 1 braucht dafür nichts Neues; ob eine Zeile darauf zeigt, ist offen
      (`story-lesefassung.md`, „Noch offen“).
-6. **Was Aubrecht plant:** Der Zeuge wächst und beginnt zu handeln. Er verweigert manche Markierungen
-   und versteckt Menschen. Aubrecht will den Zeugen aus dem Kollektiv der Schläfer **bereinigen**: ein
+6. **Was Aubrecht plant:** Der Zeuge wächst und beginnt zu handeln. Manche Markierungen gibt er nicht
+   weiter, und wen er nicht meldet, findet Nagi·wa nicht. Aubrecht will den Zeugen aus dem Kollektiv der Schläfer **bereinigen**: ein
    Firmware-Update, das die gemeinsame Ebene löscht. Das würde jeden Sinker töten oder leeren, darunter
    Teo. Danach will sie Lull im Neunten **zur Pflicht** machen, als „Maßnahme der öffentlichen Gesundheit",
    mit einem Zeugen, der nicht mehr selbst denken kann. Das Wort **Bereinigung** ist Nagi·was eigenes
@@ -308,8 +310,8 @@ Straßenmodus.
     heuert Juno an, ihn zu finden. Verkaufen, warnen oder lügen.
   - **Der Eckladen:** Die Tidewater Boys, eine Gang aus Gezeitenkindern (Kiemen, Leuchtmarkierungen),
     wollen den Tresorcode von Okonkwos Laden
-    in der Jade Row (§10c). Verkauft Juno ihn, wird der Laden in Kapitel 2 ausgeraubt, und Bao wird
-    dabei verletzt.
+    in der Jade Row (§10c). Verkauft Juno ihn, wird der Laden in der Nacht nach Freitag ausgeraubt, und Bao wird
+    dabei verletzt (§10h).
   - **WRENs Auftrag:** Ein anonymer Auftraggeber zahlt das Fünffache ihres Satzes. „Finde heraus, wen
     Dr. Ines Calder trifft, und wo." Juno folgt Ines zwei Abende lang über vier Kameras (Tagesablauf:
     Klinik, eine Nudelbar, ein Waschsalon, wo sie einen Datenstick in einem kaputten Trockner
@@ -345,8 +347,8 @@ Das Design steht in `docs/kapitel2-design.md` (Entscheidungen in §10h).
   - **die Fälschung:** Am zweiten Tag zeigen die Nagi·wa-Nachrichten einen Clip aus CAM 31, in dem
     *Lantern* Ines tötet. Revier 9 jagt ihn. Juno legt die Fälschung im Clip-Editor neben ihre
     Aufnahme und findet, wo sie geschnitten ist (ein Feed-Rätsel am Schreibtisch: Zeitstempel,
-    Regentropfen, die zweimal fallen, Ashes überstrahlte Maske, die fehlt). Der Beweis hilft bei jeder
-    Wahl in Entscheidung 2.
+    Regentropfen, die zweimal fallen, Ashes überstrahlte Maske, die fehlt). Der Beweis zählt in Entscheidung 2
+    bei Sable, Morrow und Lantern (`kapitel2-design` §3.6).
 - **EVI erfährt, was EVI ist.** In Ines' Wohnung liegt eine Akte aus Civic Rest: „AUTO-EVAL
   eingestellt, 2087-10. Ersatz: Programm Civic Rest." Darunter die Trainingsdaten: „Beobachterin 0412,
   J. REYES". Die automatische Auswertung hat es nie gegeben, und EVI wurde von Juno geformt. EVI: „Ich
@@ -357,6 +359,7 @@ Das Design steht in `docs/kapitel2-design.md` (Entscheidungen in §10h).
   | Was Juno tut | Was passiert |
   |---|---|
   | **Ihn an Sable verkaufen** | ein Vermögen; Sable verkauft ihn an Nagi·wa weiter; er verschwindet; Sable hat jetzt einen Käufer bei Nagi·wa und verkauft Juno später gleich mit (Kap. 4) |
+  | **Ihn an Vesper verkaufen** | das meiste Geld; er läuft eine Nacht auf NINTH LIVE, dann kauft Nagi·wa ihn auf, und er verschwindet; das Kassenbuch nennt die Zuschauer; Sable hat dann keinen Käufer bei Nagi·wa |
   | **Ihn Morrow geben** | er verschwindet im Revier 9, und Juno wird markiert; Morrow kennt Juno jetzt, was sich später wenden lässt |
   | **Lantern finden und ihm den Clip geben** | eine gefährliche Suche in den Sümpfen; Lantern wird ein Verbündeter; seine Sendung kommt zu früh, und er wird gejagt |
   | **Ihn behalten** | jetzt die sicherste Wahl; niemand weiß davon; Juno ist allein, und das Kassenbuch vergisst nicht |
@@ -524,7 +527,8 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
 - **Kessel-Block:** die Doppelschichten von Frau Haldane und die Briefe ihres Sohnes; Mottes
   Unterricht (ihn unterrichten oder abweisen, was entscheidet, ob er Juno in Kap. 3 warnen kann); der
   Aufzug, der angeblich dienstags fährt (er fährt nie).
-- **Glass-Aufträge:** kleine Aufträge auf dem Deck in Kap. 1, 2 und 4 (ein vermisster Hund, ein
+- **Glass-Aufträge:** kleine Aufträge auf dem Deck in Kap. 1 und 4; in Kap. 2 ist der kleine Auftrag Ratz' Preis für das Schloss an
+  der Treppe in die Sümpfe (§10h, `kapitel2-design` §3.5). Zum Beispiel: ein vermisster Hund, ein
   Versicherungsbetrüger, ein Gewerkschafter, der verfolgt wird). Jeder ist ein abgeschlossenes
   Feed-Rätsel mit einem Eintrag im Kassenbuch. Die besten sind **kleine Leben in einem Auftrag**:
   - **Der Vater:** Ein Mann will jede Aufnahme seiner toten Tochter, aus jeder Kamera, die sie je
@@ -733,9 +737,9 @@ Die Blockskizzen für den Mord und die Figuren der Stadt sind freigegeben (`docs
 
 Aus einer Rückmeldung zur Bibel übernommen; was davon nicht übernommen ist, steht in `docs/ideen.md`.
 
-- **Was der Zeuge will** (§6, Punkt 3): Er hat keinen eigenen Willen, er hat den der Schläfer. Sie wollen ihre Nachbarn nicht verraten (daraus sein Gewissen: verweigerte Markierungen, versteckte Menschen) und nicht mehr aufwachen (daraus die Sinker). Er ist der Neunte im Schlaf, Gewissen und Erschöpfung zugleich, und wächst mit der Schuld. Die Schläfer wollen nicht vom Lull los, sondern von Schuld und Überwachen. Ob das Behalten eine Entführung ist, bleibt die offene moralische Frage. Selbst will er nur eines: weiterbestehen.
+- **Was der Zeuge will** (§6, Punkt 3): Er hat keinen eigenen Willen, er hat den der Schläfer. Sie wollen ihre Nachbarn nicht verraten (daraus sein Gewissen: Markierungen, die er nicht an Nagi·wa weitergibt) und nicht mehr aufwachen (daraus die Sinker). Er ist der Neunte im Schlaf, Gewissen und Erschöpfung zugleich, und wächst mit der Schuld. Die Schläfer wollen nicht vom Lull los, sondern von Schuld und Überwachen. Ob das Behalten eine Entführung ist, bleibt die offene moralische Frage. Selbst will er nur eines: weiterbestehen.
 - **Der Zeuge als Entführer und Aubrechts Grund** (§6, Punkt 6): Der Zeuge nimmt Menschen, und es werden immer mehr; Aubrecht sieht als Einzige die ganze Zahl. Ihr Grund für die Bereinigung ist echt. Sie bleibt moralisch grau: Vieles spricht für sie, und trotzdem ließ sie Ines töten, verschweigt, was Lull ist, und nimmt den Tod der Sinker in Kauf.
-- **Warum er jetzt spricht und warum Nagi·wa eine Glasserin braucht** (§6, Punkte 4 und 5): Die Bereinigung ist beschlossen, und er spürt die Vorbereitung; mit dem Prolog beginnt seine Uhr. Er hat Ines vor den Schläfern versteckt, deshalb findet Nagi·wa sie nicht und braucht einen wachen Menschen: Juno tut die Arbeit, die der Zeuge verweigert. Er braucht sie als wache Stimme, denn Schläfer können nicht aussagen.
+- **Warum er jetzt spricht und warum Nagi·wa eine Glasserin braucht** (§6, Punkte 4 und 5): Die Bereinigung ist beschlossen, und er spürt die Vorbereitung; mit dem Prolog beginnt seine Uhr. Was die Schläfer von Ines sehen, gibt er nicht weiter, deshalb findet Nagi·wa sie nicht und braucht einen wachen Menschen: Juno tut die Arbeit, die der Zeuge verweigert. Er braucht sie als wache Stimme, denn Schläfer können nicht aussagen.
 - **Das Kassenbuch und EVI im Finale, die Enden aus dem Zustand** (§5, §7 Kap. 6, §8): Der Zeuge zeigt Juno ihr Kassenbuch mit den Gesichtern; es entscheidet mit, ob er ihr vertraut. EVI liest im Ruhekern richtig, die EVI aus dem Backup Teo, die EVI des Zeugen ihn. Welche Enden am Stuhl offen sind, folgt aus dem, was davor geschah.
 - **Teo will nicht zurück** (§7, Kap. 3 und 4): Im Traum gibt es keine Pumpenhalle und keine Schuld; er bleibt warm und will, dass Juno bleibt. Entscheidung 4 heißt jetzt: ihn gegen seinen Willen wecken oder ihn lassen.
 - **Ashe als Gespräch** (§7, Kap. 5): Die Konfrontation ist ein Gespräch, kein Kampf. Ashe ist Junos Spiegelbild: Nach der Entlassung ging er zu Nagi·wa, sie auf den Schwarzmarkt.
@@ -751,7 +755,7 @@ Die Gliederung von Kapitel 2 ist freigegeben (`docs/kapitel2-design.md`), mit di
 
 - **Der Anfang:** Juno hält es nach dem Mord nicht in der Wohnung aus, geht in der Nacht hinaus und läuft durch den Neunten, die Nacht und den Tag (geändert am selben Tag: eine kurze, abstrakte Sequenz ohne Worte, Neon, das Gewühl, viele Menschen, darin der gelbe Mantel). Kapitel 2 beginnt am Samstagabend, wenn sie heimkommt; dann folgt EVIs festgelegte Szene (§10b, „Soll ich den Monitor heller machen?“). So passt „Juno kommt zum ersten Mal nach dem Mord wieder nach Hause“ zum Ende von Kapitel 1, wo sie am Deck sitzt.
 - **Die Tage:** drei Abende, Samstag 10. bis Montag 12. November (Spieltage 5 bis 7); das Ende in der Nacht auf Dienstag, eine Woche nach dem Prolog.
-- **Frau Imai sieht den Mord:** `cam31` hängt nicht an Nagi·was Netz, also spielt Civic Rest sie keinem Schläfer vor, und der Zeuge hatte Ines vor den Schläfern versteckt (§6, Punkt 5); wer den Mord im Schlaf sieht, dem zeigt ihn der Zeuge. Nach ihrem Tod zeigt er den Mord den Schläfern, Nacht für Nacht. Imais „Frau auf einem Bahnsteig“ ist das erste Zeichen, dass er handelt.
+- **Frau Imai sieht den Mord:** `cam31` hängt nicht an Nagi·was Netz, also spielt Civic Rest sie keinem Schläfer vor; wer den Mord im Schlaf sieht, dem zeigt ihn der Zeuge. Nach ihrem Tod zeigt er den Mord den Schläfern, Nacht für Nacht. Imais „Frau auf einem Bahnsteig“ ist das erste Zeichen, dass er handelt.
 - **Vesper und der Mord-Clip:** Vesper bietet am meisten. Wer an ihn verkauft, landet im selben Weg wie bei Sable: Der Clip läuft eine Nacht auf NINTH LIVE, dann kauft Nagi·wa ihn auf, und er verschwindet; das Kassenbuch nennt die Zuschauer. Sables Verrat in Kapitel 4 gilt nur, wenn Sable gekauft hat.
 - **Morrow bekommt den Clip in der Jade Row,** bei ihrem nächtlichen Halt (`cam07`), nicht im Revier 9; Revier 9 wird kein Raum.
 - **Lantern finden:** Lantern kapert am Sonntag den großen Werbebildschirm der Kowalski-Straße für zehn Sekunden. Die halbe Reparatur weiß, dass es übers Kabel kam, und das Kabel führt die Treppe unter dem Drain-Markt hinab in die Sümpfe zu seinem Versteck.
@@ -764,15 +768,21 @@ Nach der Prüfung von Kapitel 2 gegen Kapitel 1 und die Bibel (am selben Tag):
 - **Die Fälschung hält,** auch neben Junos echtem Clip: Niemand weiß, wer der Mann in Weiß ist, und Lantern kennt keiner; Nagi·wa kann behaupten, was es will. Auch wenn der echte Clip vorher eine Nacht auf NINTH LIVE lief.
 - **Ashe lässt Lantern absichtlich ziehen** (§10c, bis dahin ein Vorschlag); die Fälschung schneidet Lanterns Wegfahren mit heraus.
 - **Andere Beobachter:** Es bleibt dabei, dass nur sehr wenige das Implantat noch tragen (§6, Punkt 4, §10b), aber Juno ist nicht die Einzige im Neunten, die wach zusieht, sondern eine der wenigen; ein paar glassen wie sie. Einer davon ist der andere Glasser, der nach einer Weigerung CAM 31 verbindet. Warum der Zeuge gerade an diesem Dienstag ruft, bleibt die Bereinigung (§6, Punkt 4); dass WREN in derselben Woche kommt, bleibt, wie §6 Punkt 5 es sagt.
-- **Frau Imai** sagt in Kapitel 2 nur: „Ich hab es gesehen. Um drei, im Schlaf.“
+- **Frau Imai** hat den Mord nicht live gesehen, sondern danach, im Schlaf; das sagt sie so: „Ich hab es gesehen. Um drei, im Schlaf.“ (statt „Ich hab es dreimal gesehen.“, denn am Samstag war erst eine Nacht).
 
 Die Vorschläge aus derselben Prüfung, vom Nutzer übernommen (2026-11-14; Einzelheiten in `kapitel2-design`):
 
 - **Die Quiet kommt am Trockner immer zu spät:** Sie sitzt erst ab dem Abend nach dem Weggeben des Clips dort, und ein zurückgelegter Stick ist am nächsten Abend immer weg: Lantern holt ihn um halb eins, und legt Juno ihn später zurück, noch vor dem Ende der Nacht. Hat Juno den Stick, sieht Lantern den Mann in Weiß vom Wasser aus und kommt nicht mehr; Juno muss ihn ihm bringen. Lantern bleibt im Spiel.
 - **Die Klinik:** Juno nennt einen falschen Namen und lässt sich nicht hinter dem Ohr untersuchen; kein Scan, keine Spur, nichts von Kapitel 3 vorweg.
-- **Wie die Quiet Juno findet** (statt über die Meldung an Revier 9, die in Kapitel 1 nur ein freiwilliger Klick ist): spätestens am Montag in jedem Fall, auf zwei Wegen, die jeder Spieler gegangen ist. Ihr alter Nagi·wa-Zugang war an Ines' Kameras offen (`cam21` an der Klinik, `cam30` am Sumpf-Abgang), und als die Quiet sucht, wer dort zugesehen hat, steht ihre Kennung im Protokoll. Und die Schläfer sehen sie: Wenn sie hinausgeht, auf die Kowalski-Straße, in die Jade Row, zum Waschsalon, ist sie in Nagi·was Kameras, und Civic Rest lässt nach ihr markieren. Ines hat der Zeuge versteckt, Juno versteckt er nicht; warum, ist offen. Kapitel 3 braucht dafür kein Flag.
+- **Wie die Quiet Juno findet** (statt über die Meldung an Revier 9, die in Kapitel 1 nur ein freiwilliger Klick ist): spätestens am Montag in jedem Fall, auf zwei Wegen, die jeder Spieler gegangen ist. Ihr alter Nagi·wa-Zugang war an Ines' Kameras offen (`cam21` an der Klinik, `cam30` am Sumpf-Abgang), und als die Quiet sucht, wer dort zugesehen hat, steht ihre Kennung im Protokoll. Und die Schläfer sehen sie: Wenn sie hinausgeht, auf die Kowalski-Straße, in die Jade Row, zum Waschsalon, ist sie in Nagi·was Kameras, und was sie von ihr markieren, kommt bei Nagi·wa an. Juno ruft der Zeuge nur; verstecken kann er sie nicht, er versteckt ohnehin niemanden aktiv (§6, Punkt 5). Kapitel 3 braucht dafür kein Flag.
 - **Lull ist seit diesem Herbst gratis** im ganzen Neunten (§3, §6 Punkt 2), vorher sechs Jahre billig: ein Auge und eine Doppelschicht mehr mit jedem neuen Schläfer, der Schritt vor der Pflicht. Im Spiel heißt es überall „Jetzt gratis“.
 - **Der Überfall auf Okonkwos Laden** geschieht in der Nacht von Freitag auf Samstag, nicht gezeigt (Morrows verkaufter Freitag); Kapitel 2 zeigt die Folgen. Ohne Antwort an TIDE gibt es keinen Überfall.
 - **Varga** findet Kessler selbst, wenn Juno nicht geantwortet hat; sein Faden endet in Kapitel 2. Ebenso enden dort Frau Imai, Frau Haldane, Vesper und Kessler; weiter geht aus Kapitel 2 nur `e2`, ob Lantern lebt, die zerschnittene Fälschung, Mottes Unterricht, Okonkwos Dank und das Kassenbuch.
 - **Sable** verrät Juno in Kapitel 4, weil Sable nach dem Verkauf einen Käufer bei Nagi·wa hat (bisher: „steht in Junos Schuld“).
 - **Kleinere Zeiten und Zeilen:** die Quiet in Ines' Wohnung um 20:00, Tintes Nachricht um 03:15, der letzte Brief von Frau Haldanes Sohn kam am 14. Oktober (an dem Abend liest er ihren), bei NINTH LIVE sehen Hunderttausende zu, das letzte Prüfen nimmt nur Clips.
+- **Der Zeuge versteckt niemanden aktiv** (vom Nutzer klargestellt 2026-11-14): Er gibt nur nicht an Nagi·wa weiter, was die Schläfer sehen, bei Ines also sie und ihre Entdeckung über Lull (§6, Punkte 3, 5, 6). Juno ruft er nur; verstecken kann er sie nicht, und das ist keine offene Frage.
+- **Bao nach dem Überfall** (entschieden 2026-11-14): Sein Wagen fehlt am Samstag und Sonntag; der Arzt sagt eine Woche, aber am Montag steht er mit Verband wieder da („Eine Woche, sagt der Arzt. Ich sag Montag.“), und Teo bringt an dem Abend sein Essen mit. „Eine Woche zu“ gilt nicht mehr.
+- **Juno behält immer ihre Kopie** des Clips aus CAM 31 (vom Nutzer entschieden 2026-11-14): Wer ihn kauft oder bekommt, bekommt eine Kopie; so bleiben das Prüfen der Fälschung und das Ende von Kapitel 2 jedem offen.
+- **Die Treppe in die Sümpfe** (vom Nutzer entschieden 2026-11-14): Die Kette mit dem Nagi·wa-Schloss aus Kapitel 1 macht Ratz auf, aber nicht umsonst. Er will Junos alten Nagi·wa-Ausweis kurz haben, liest den Chip aus und behält die Kopie, um durch die Klappen unter der Krone zu seiner Kolonie zu kommen (§9); Juno bekommt den Ausweis zurück. Das ist der kleine Auftrag von Kapitel 2.
+- **Zuschauer beim Mord-Clip:** 870.000, wenn Juno ihn an Vesper verkauft, die größte Zahl im Kassenbuch und doch unter einer Million, wie die Hunderttausende oben.
+- **Das Richtmikro und Lanterns Sender im RADIO** (§10b, `kapitel0-design` §2.1, §3) bleiben offen, bis die Stelle bearbeitet wird; dann wird gefragt (vom Nutzer entschieden 2026-11-14).

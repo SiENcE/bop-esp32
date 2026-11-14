@@ -114,7 +114,7 @@ grüßt Juno jeden Abend.
 
 | Wahl | Was Juno tut | Folge | Kassenbuch |
 |---|---|---|---|
-| **Verkaufen** | den echten Code an TIDE | 500 Chits. Kap. 2: der Laden wird ausgeraubt; Bao, der Okonkwo helfen will, wird niedergeschlagen. Baos Wagen ist eine Woche zu. | „TIDE: Okonkwos Tresor. 500." später: „Okonkwo: ausgeraubt. Bao: Gehirnerschütterung." |
+| **Verkaufen** | den echten Code an TIDE | 500 Chits. In der Nacht nach Freitag wird der Laden ausgeraubt, ungesehen (`kapitel2-design` §5); Bao, der Okonkwo helfen will, wird niedergeschlagen. Sein Wagen fehlt am Samstag und Sonntag; der Arzt sagt eine Woche, Bao steht am Montag wieder da. | „TIDE: Okonkwos Tresor. 500." später: „Okonkwo: ausgeraubt. Bao: Gehirnerschütterung." |
 | **Falscher Code** | einen falschen | 250 im Voraus. Kap. 2: die Boys scheitern am Tresor, kommen zu Juno: eine Drohung an ihrer Tür (Graffiti `GLASSER LIES`). Die Tidewater Boys sind Feinde (Nebengeschichte). | „TIDE: ein falscher Code. 250." |
 | **Okonkwo warnen** | in den Laden gehen und es ihm sagen | kein Geld. Okonkwo ändert den Code, gibt Juno eine Stange Reis und Batterien („Ich vergesse das nicht.") und später, in Kap. 4, ein Versteck im Lagerraum. Die Boys suchen einen Verräter. | „Okonkwo: gewarnt. Eine Stange Reis." |
 
