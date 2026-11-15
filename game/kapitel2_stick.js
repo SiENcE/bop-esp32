@@ -65,9 +65,10 @@ dryer6.use = [{ if: "day>4", then: [
     { dialog: "stick_zurueck" }],
     else: [{ if: "stick_dryer", then: ["Er liegt drin. Wer ihn sucht, findet ihn jetzt."], else: ["Er ist kalt und leer. Er hat ihn."] }] },
 ], else: dryer6.use }];
-dryer6.with = { ...(dryer6.with ?? {}), stick: [{ if: ["day>4", "stick_ines"], then: PUT_BACK, else: ["Der gehört nicht in den Trockner. Noch nicht."] }] };
+// (off_dryer shuts putting it back for the solver's run of the way to Lantern, which checks that the stick always reaches him by hand)
+dryer6.with = { ...(dryer6.with ?? {}), stick: [{ if: ["day>4", "stick_ines", "!off_dryer"], then: PUT_BACK, else: ["Der gehört nicht in den Trockner. Noch nicht."] }] };
 Cutaway.dialog("stick_zurueck", { main: { choices: [
-  { text: "Zurücklegen.", silent: true, goto: "end", then: PUT_BACK },
+  { text: "Zurücklegen.", silent: true, if: "!off_dryer", goto: "end", then: PUT_BACK },
   { text: "Behalten.", silent: true, goto: "end", then: ["Noch nicht."] },
 ] } });
 // what she knows of it now: the whisper in CAM 31 told her

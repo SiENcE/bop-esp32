@@ -17,7 +17,7 @@ const AF = Nagiwa.at.flat, AK = Nagiwa.at.kessel_14, AJ = Nagiwa.at.jade_row, AG
 const FORGET = (/** @type {string[]} */ ids) => ids.map((id) => ({ unset: `~moment.${id}` }));
 Object.assign(Nagiwa.nights, {
   6: { date: "Sonntag, 11. November", evening: "Abend 2", passes: FORGET(["nachbar_sat", "lantern_sat"]) },
-  7: { date: "Montag, 12. November", evening: "Abend 3", last: true, passes: FORGET(["nachbar_sun", "lantern_sun", "quiet_flat"]) },
+  7: { date: "Montag, 12. November", evening: "Abend 3", last: true, passes: FORGET(["nachbar_sun", "lantern_sun", "quiet_flat", "hijack"]) },
 });
 
 // ---- the clock: on Monday it stops at 00:45 until everything is ready (kapitel2-design §3.7): Juno has been in Ines' flat, Lantern has the
@@ -28,7 +28,7 @@ Nagiwa.holds.push((/** @type {number} */ to) => {
   if (Cutaway.time.now.day !== 7 || S.flag("end_beat2") || !(to > Cutaway.time.parse("00:45"))) return null;
   if (!S.flag("evi_knows")) return WHO_SHE_WAS;
   if (S.flag("stick_ines") || S.flag("stick_dryer")) return STILL_THE_KEY;
-  return S.flag("e2") ? null : { dialog: "k2_clip" };
+  return S.flag("e2") || S.flag("off_main") ? null : { dialog: "k2_clip" };     // (off_main: the run of the way to Lantern alone)
 });
 // the bed opens at 01:00 on Saturday and Sunday: the clock stops there (Monday has no bed, the end comes at 01:00)
 Cutaway.moment("one_sat", { room: "deck", day: 5, from: "00:45", to: "01:00", if: "~never", unseen: [] });
@@ -45,7 +45,7 @@ Object.assign(Nagiwa.ledger, {
   vesper_ines: { to: "VESPER", what: { sold: "Ines Calder, CAM 31" }, chits: { sold: 5000 } },
   cam31: { to: "CAM 31", what: { kept: "behalten" } },
 });
-Nagiwa.replies.vesper.push({ id: "ines", text: CLIP_LINE, if: ["day>4", "cache_clip_ines_death", "!e2"], use: SOLD_VESPER });
+Nagiwa.replies.vesper.push({ id: "ines", text: CLIP_LINE, if: ["day>4", "cache_clip_ines_death", "!e2", "!off_main"], use: SOLD_VESPER });
 Nagiwa.threads.vesper.push(
   { from: "vesper", if: "day>4", at: "18:05", text: "Man spricht von einer Aufnahme aus der alten Metro. Ich zahle, was sie wert ist." },
   { from: "juno", if: "e2=vesper", clip: Nagiwa.cache.clip_ines_death.name },
@@ -183,9 +183,19 @@ Cutaway.hints([
   { if: "!evi_knows", about: ["fridge", "door_4b", "gate"],
     text: ["Die haben den Rechner genommen. Ines hat auf Papier geschrieben.", "Wo hebt man Papier auf, das niemand finden soll?", "Geh in ihre Wohnung, 4B, und schau ins Gefrierfach."] },
   // the stick (game/kapitel2_stick.js): while Juno has it, Lantern can't send
-  { if: ["stick_ines", "day=5"], about: ["dryer6"],
+  // ... or he brings it to Lantern himself (game/kapitel2_lantern.js): the way down, step by step, once Juno is on it (the dryer stays the
+  // shorter way, so each names it too)
+  { if: ["stick_ines", "lantern_found"], about: ["lantern_k2", "raft", "dryer6"],
+    text: ["Lantern hat seine Wallet. Den Schlüssel hast du.", "Bring ihn ihm. Oder leg ihn in den Trockner, um halb eins holt er ihn.", "Fahr mit dem Floß zu ihm und gib ihm den Stick."] },
+  { if: ["stick_ines", "stairs_open"], about: ["raft", "haken", "down", "dryer6"],
+    text: ["Am Ende vom Steg treibt ein Floß.", "Mit etwas Langem käme man ran. Der Notschlüssel vom Aufzug ist lang.", "Nimm den Haken für das Floß. Hast du ihn nicht, hängt er neben dem Aufzug."] },
+  { if: ["stick_ines", "know_cable"], about: ["ratz", "down", "box_old", "dryer6"],
+    text: ["Die Kette an der Treppe ist neu, und das Schloss ist von Nagi·wa.", "Ratz kennt jedes Schloss hier unten. Frag ihn.", "Ratz will deinen alten Ausweis, nur kurz. Der liegt im Karton unter deinem Bett, wenn du ihn nicht dabeihast."] },
+  { if: ["stick_ines", { or: ["day=7", ["day=6", "time>=22:00"]] }], about: ["reparatur", "dryer6"],
+    text: ["Du hast noch ihren Schlüssel. Lantern sucht ihn.", "Er schaut jede Nacht in den Trockner. Oder du findest ihn: Der Monteur weiß, woher der Schirm kam.", "Leg ihn in Trockner sechs zurück. Um halb eins holt er ihn."] },
+  { if: ["stick_ines", "day=5"], about: ["dryer6", "bed", "wait", "close", ...HOME],
     text: ["Du hast noch ihren Schlüssel. Der aus der Metro sucht ihn bestimmt.", "Sie hat ihn in den Trockner gelegt. Dort sucht er ihn.", "Leg ihn in Trockner sechs zurück. Um halb eins holt er ihn."] },
-  { if: "stick_ines", about: ["dryer6"],
+  { if: "stick_ines", about: ["dryer6", "bed", "wait", "close", ...HOME],
     text: ["Du hast noch ihren Schlüssel. Lantern sucht ihn bestimmt.", "Sie hat ihn in den Trockner gelegt. Dort sucht er ihn.", "Leg ihn in Trockner sechs zurück. Um halb eins holt er ihn."] },
   // the forgery (game/kapitel2_faelschung.js), only while Juno looks at it (in the clip editor or PRÜFEN) and nothing of the main thread
   // waits but time and the clip: never needed, so its `about` has the ways on as the hints after it
@@ -193,9 +203,9 @@ Cutaway.hints([
     about: ["clip_check_clip_forgery", "clip_check_clip_ines_death", "pruef_faelschung_zeit", "pruef_faelschung_regen", "pruef_faelschung_licht",
       "bed", "wait", "close", ...CLIP_WAYS, ...HOME],
     text: ["Das ist nicht das, was wir gesehen haben.", "Leg die beiden Clips nebeneinander. PRÜFEN.", "Schau der Reihe nach auf die Uhrzeit, den Regen und das Licht."] },
-  { if: ["day=7", "time>=00:45", "!e2"], about: ["wait", ...CLIP_WAYS, ...HOME],
+  { if: ["day=7", "time>=00:45", "!e2", "!off_main"], about: ["wait", ...CLIP_WAYS, ...HOME],
     text: ["Was machst du mit dem Clip?", "Vesper zahlt am meisten. Er ist im CHAT.", "Du kannst ihn auch behalten. Drück WARTEN, dann fragt das Deck."] },
-  { if: ["day=7", "time>=00:45", "e2"], about: ["wait", "protokolle", ...HOME],
+  { if: ["day=7", "time>=00:45", { or: ["e2", "off_main"] }], about: ["wait", "protokolle", ...HOME],
     text: ["Gleich ist es eins. Ich weiß nicht, was dann ist.", "Warten geht am Deck und in jedem Feed.", "Drück WARTEN."] },
   { if: ["day=7", "time<00:45"], about: ["wait", "protokolle", ...CLIP_WAYS, ...HOME],
     text: ["Heute Nacht passiert was. Ich weiß nur nicht, was.", "Bis Viertel vor eins musst du wissen, was mit dem Clip passiert.", "Warte bis Viertel vor eins. Oder antworte Vesper im CHAT."] },
@@ -232,7 +242,7 @@ Cutaway.act("kapitel2", {
     { cache: "note_kessler_photo" }, { cache: "note_obs_handbook" },
     { set: "know_ines" }, { set: "saw_varga" }, { set: "read_kessler" },
     { set: "fridge_empty" }, { set: "rent_notice" }, { set: "moth_met" }, { set: "bao_soup" },
-    { been_to: ["flat", "deck", "kessel_14", "kessel_lobby", "kowalski", "gasse", "laundromat", "sims", "dach", "dach_blick", "dach_sitzen", "lucky_static", "jade_row", "okonkwo_shop", "drain_market", "sable_booth", "cam15", "signal_lost", "flat_danach", "cam03", "cam04", "cam07", "cam07v", "cam14", "cam18", "cam21", "cam22", "cam23", "cam24", "cam25", "cam30", "cam31"] },
+    { been_to: ["flat", "deck", "kessel_14", "kessel_lobby", "kowalski", "gasse", "laundromat", "sims", "dach", "dach_blick", "dach_sitzen", "lucky_static", "jade_row", "okonkwo_shop", "drain_market", "sable_booth", "cam15", "signal_lost", "flat_danach", "cam03", "cam04", "cam07", "cam07v", "cam14", "cam18", "cam21", "cam22", "cam23", "cam24", "cam25", "cam30", "cam31", "sumpf", "lantern_versteck", "drain_arrival"] },
     { solo: true },
   ],
 });

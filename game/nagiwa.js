@@ -86,7 +86,7 @@ Cutaway.script.action("tag", async (s) => {
 }, { sets: (s) => [`tag_${s.tag}`] });
 
 // { solo: true } says which threads tools/solve-act.mjs can shut, one flag each (--set off_roof); in the game they stay open
-Cutaway.script.action("solo", () => {}, { sets: () => ["off_main", "off_roof", "off_zeitung", "off_imai", "off_traeger", "off_varga", "off_tide", "off_motte", "off_vesper"] });
+Cutaway.script.action("solo", () => {}, { sets: () => ["off_main", "off_roof", "off_zeitung", "off_imai", "off_traeger", "off_varga", "off_tide", "off_motte", "off_vesper", "off_lantern", "off_dryer"] });
 
 // { been_to: ["flat", ...] } rooms Juno knows already, when a chapter begins (nobody asks; each one left open would double the solver's states)
 Cutaway.script.action("been_to", (s) => { for (const room of s.been_to) Cutaway.state.visit(room); });

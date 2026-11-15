@@ -30,9 +30,11 @@ for p in tools/paths/kapitel1_*.json; do
   n=$(basename "$p" .json); out=$(node lib/cutaway/tools/play.mjs index.html --act kapitel1 --path "$p" 2>&1 | tail -1); line "clicks: $n" "$out"; need "clicks: $n" "$out" "all passed"
 done
 # Chapter 2 on blocks (kapitel2-design): its main way, the threads shut as in Chapter 1 (its own threads come later); once as the plain
-# way hands it on, once with Ines' stick still in Juno's bag (stick_ines from Chapter 1)
-for v in main stick; do
-  r="$(off main)"; [ "$v" = stick ] && r="$r,stick_ines"
+# way hands it on, once with Ines' stick still in Juno's bag (stick_ines from Chapter 1), both with the way to Lantern shut (off_lantern);
+# and that way alone, Juno with the stick and the dryer shut (off_dryer: it must reach him by hand), her flat and the forgery done (its
+# steps would multiply every other state)
+for v in main stick lantern; do
+  r="$(off main)"; [ "$v" = main ] && r="$r,off_lantern"; [ "$v" = stick ] && r="$r,off_lantern,stick_ines"; [ "$v" = lantern ] && r="$r,off_main,stick_ines,off_dryer,evi_knows,forgery_proven"
   out=$(node tools/solve-act.mjs kapitel2 --full --set "$r" 2>&1)
   s=$(echo "$out" | grep -E "states in|soft-lock|SOFT|HINTS|^hints|UNSOLV" | tr '\n' ' '); line "kapitel2 solve: $v" "$s"; need "kapitel2 solve: $v" "$s" "no soft-locks"; need "kapitel2 solve: $v" "$s" "every state on the way"
 done

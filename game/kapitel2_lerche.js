@@ -20,25 +20,26 @@ Cutaway.actor("nachbar", { name: "Nachbar", color: "#8acfae",
 Cutaway.routine("nachbar", [
   { day: [5, 6, 7], from: "19:30", to: "19:45", room: "cam24", at: A24.street, path: [A24.street, A24.gate], once: true },
 ]);
-Cutaway.moment("nachbar_sat", { room: "cam24", day: 5, from: "19:30", to: "19:45", if: "!code_lerche", play: [
+// (off_main shuts the flat for the solver's run of the way to Lantern, as Chapter 1's threads shut the main thread)
+Cutaway.moment("nachbar_sat", { room: "cam24", day: 5, from: "19:30", to: "19:45", if: ["!code_lerche", "!off_main"], play: [
   "Da kommt einer heim. Er bleibt an der Haustür stehen.",
   "Das Zahlenfeld ist direkt neben der Linse. Ich seh jede Taste.",
   "Vier, sieben, eins, neun.",
   { set: "code_lerche" },
   "Danke, Nachbar.",
 ] });
-Cutaway.moment("nachbar_sun", { room: "cam24", day: 6, from: "19:30", to: "19:45", if: "!code_lerche", play: [{ replay: "nachbar_sat" }] });
-Cutaway.moment("nachbar_mon", { room: "cam24", day: 7, from: "19:30", to: "19:45", if: "!code_lerche", play: [{ replay: "nachbar_sat" }] });
+Cutaway.moment("nachbar_sun", { room: "cam24", day: 6, from: "19:30", to: "19:45", if: ["!code_lerche", "!off_main"], play: [{ replay: "nachbar_sat" }] });
+Cutaway.moment("nachbar_mon", { room: "cam24", day: 7, from: "19:30", to: "19:45", if: ["!code_lerche", "!off_main"], play: [{ replay: "nachbar_sat" }] });
 const cam24 = Cutaway.room.get("cam24");
 cam24.hotspots.rewind = { name: "Puffer", rect: Nagiwa.osd.rewind, z: 5,
-  if: [{ or: [["day=5", "moment:nachbar_sat"], ["day=6", "moment:nachbar_sun"], ["day=7", "moment:nachbar_mon"]] }, "!code_lerche"],
+  if: [{ or: [["day=5", "moment:nachbar_sat"], ["day=6", "moment:nachbar_sun"], ["day=7", "moment:nachbar_mon"]] }, "!code_lerche", "!off_main"],
   use: ["Ich spul den Puffer zurück auf halb acht.", { replay: "nachbar_sat" }] };
 
 // ---- the gate at the end of Jade Row leads west now, into the clinic's quarter (W2; the clinic comes later)
 const gate = Cutaway.room.get("jade_row").hotspots.gate;
 gate.use = [{ if: "day>4", then: [{ dialog: "k2_tor" }], else: ["Dahinter ist nur noch mehr Neunter. Da will ich heute nicht hin."] }];
 Cutaway.dialog("k2_tor", { main: { choices: [
-  { text: "„Zum Wohnblock Lerche.“", silent: true, goto: "end", then: [
+  { text: "„Zum Wohnblock Lerche.“", silent: true, if: "!off_main", goto: "end", then: [
     { if: "!code_lerche", then: ["Die Haustür hat ein Zahlenfeld. Den Code hab ich nicht."],
       else: [{ if: ["day=6", "time>=20:00", "time<21:00"], then: ["Da oben sind Stimmen. Ich warte."],
         else: [{ goto: "lerche_flur", at: AL.arrive, face: "sw" }] }] }] },
@@ -66,7 +67,7 @@ for (const id of ["quiet_a", "quiet_b"]) {
 }
 Cutaway.routine("quiet_a", [{ day: 6, from: "20:00", to: "21:00", room: "cam25", at: A25.door_4b, face: "ne" }]);
 Cutaway.routine("quiet_b", [{ day: 6, from: "20:00", to: "21:00", room: "cam25", at: A25.door_4b2, face: "ne" }]);
-Cutaway.moment("quiet_flat", { room: "cam25", day: 6, from: "20:00", to: "21:00", play: [
+Cutaway.moment("quiet_flat", { room: "cam25", day: 6, from: "20:00", to: "21:00", if: "!off_main", play: [
   "Zwei in weißen Regenmänteln, auf ihrem Flur.",
   "Wie der in der Metro.",
   "Sie gehen zu 4B. Einen Schlüssel brauchen sie nicht.",

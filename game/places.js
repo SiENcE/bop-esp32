@@ -50,6 +50,11 @@ Nagiwa.at = {
   // Ines' flat, 4B, on blocks (art/rooms/ines_wohnung.map.js, game/rooms/ines_wohnung.layout.js); the fridge's upper part has the napkin
   // under its magnet, its lower part is the freezer (one hotspot asks which)
   ines_wohnung: fromLayout(Nagiwa.layouts.ines_wohnung),
+  // the drowned streets under the Drain Market, on blocks (art/rooms/sumpf.map.js, game/rooms/sumpf.layout.js); the cable's hotspot is its
+  // own strip on the wall, not the outline of all the alley kit's cable runs that stand in for it
+  sumpf: { ...fromLayout(Nagiwa.layouts.sumpf), cableLine: Nagiwa.layouts.sumpf.props.cable.poly },
+  // Lantern's hide, on blocks (art/rooms/lantern_versteck.map.js, game/rooms/lantern_versteck.layout.js); he sits at "lantern"
+  lantern_versteck: fromLayout(Nagiwa.layouts.lantern_versteck),
   // CAM 25 is the landing's own picture under the feed's filter, as CAM 14 is the 14th floor's (one place, one picture), the camera left
   // out of its own picture; the two in white stand at 4B and go to the stairs with the boxes
   cam25: (() => {

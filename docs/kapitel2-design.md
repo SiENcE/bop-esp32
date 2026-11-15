@@ -1,7 +1,7 @@
 # Kapitel 2 „Aufnahme": Design
 
-Stand: Entwurf (2026-11-14), die Gliederung vom Nutzer freigegeben am selben Tag (story §10h). Im Bau: Das Gerüst, der Stick, Ines' Wohnung
-und die Fälschung mit dem Werkzeug PRÜFEN stehen auf Blöcken (`game/kapitel2*.js`, `game/pruefen.js`, siehe „Im Mock gebaut“ unter §2.1), der
+Stand: Entwurf (2026-11-14), die Gliederung vom Nutzer freigegeben am selben Tag (story §10h). Im Bau: Das Gerüst, der Stick, Ines' Wohnung,
+die Fälschung mit dem Werkzeug PRÜFEN und der Weg zu Lantern stehen auf Blöcken (`game/kapitel2*.js`, `game/pruefen.js`, siehe „Im Mock gebaut“ unter §2.1), der
 Rest ist geplant; gemalt ist nichts.
 Story: `docs/story.md` (§6, §7 Kapitel 2, §10b, §10f, §10h). Was Kapitel 1 übergibt: `docs/kapitel1-design.md`. Regeln für Deck,
 Feed-Modus und Zeit: `docs/kapitel0-design.md` §2–4. Wie die Texte klingen: `docs/dialog-style-guide.md`. Alle Zeilen hier sind
@@ -134,13 +134,35 @@ es nicht mehr, §7).
   Kesslers Ring passt zu Dienstag 22:35 (41), der geschnittene Ring ebenso, Morrows Umschlag zu den Spitzen um 00:30, die weißen Träger zu
   Donnerstag 23:30. Ihre Aufnahme aus CAM 31 und die Fälschung passen zu keiner, und Juno sagt, warum. Eine Übereinstimmung genügt, dann
   läuft die Kette.
+- **Lantern finden** (§3.5, `game/kapitel2_lantern.js`, 2026-11-15; die Räume `sumpf` und `lantern_versteck` als **Blöcke** mit
+  `tools/new-room.mjs`, aus den Kits der Gasse und von Junos Wohnung): Am Sonntag um 22:00 reißt der große Schirm ab (der Moment `hijack`, über
+  Nacht vergessen); der Text steht vorerst als Bildunterschrift über dem Stottern des Schirms (**Platzhalter**, §13, 4). Die halbe Reparatur
+  steht jetzt auch an den Abenden von Kapitel 2 auf dem Gerüst; ab Sonntag 22:00 sagt sie, dass es übers Kabel kam (`know_cable`, auch wer den
+  Schirm nicht gesehen hat). An der Treppe hinab am Markt sagt Juno ohne `know_cable` „Die Kette ist zu. Und ich will da nicht runter.“, mit
+  ihm sieht sie das Kabel am Geländer. Ratz öffnet das Schloss gegen eine Kopie ihres Ausweises (ein eigenes Gespräch, solange es zu ist;
+  `stairs_open` und die Zeile im Kassenbuch). Den Ausweis gibt der Karton unter dem Bett und den Haken die Wand am Aufzug in Kapitel 2 auch
+  dem, der in Kapitel 1 nie aufs Dach ging; Juno nimmt jedes erst, wenn sie weiß, wofür (technisch entschieden, sonst verdoppelte jedes
+  alle Zustände des Kapitels): den Ausweis, sobald sie vor dem Schloss stand, das eine Karte will (`know_cable`; vorher: „Wozu? Der macht
+  nichts mehr auf.“), den Haken, sobald Ratz ihr gesagt hat, dass das Floß weit draußen hängt („Nimm was Langes mit.“). In den Sümpfen zieht der Haken das Floß heran; beim ersten Mal sitzt Lantern im Versteck und
+  will nicht gefunden werden (`lantern_found=found`), danach zieht sich Juno am Seil hinüber. Sein Gespräch (`Nagiwa.talkTree`): „Ich hab
+  gesehen, was passiert ist.“, „Ich hab ihren Schlüssel.“ (mit dem Stick: „Hier. Der gehört Ihnen.“ oder „Noch nicht.“), „Was ist das hier?“
+  und „Ich geh wieder.“. Gibt Juno ihm den Stick, hat er ihn (wie aus dem Trockner), `lantern_found=ally`, und er wechselt zum Du („Sag's
+  nicht. Ich will's nicht wissen müssen.“). „Ich hab eine Aufnahme.“ kommt mit Entscheidung 2. Am Montag fragt das Brett, wer den Schirm
+  gesehen hat. Die Hinweise zu diesem Weg gelten, solange Juno den Stick hat, Schritt für Schritt (der Trockner bleibt der kürzere Weg).
+  **Platzhalter:** Lantern ist im Versteck seine Feed-Figur, das Floß sind Kisten, das Kabel sind die der Gasse.
 - Die Hinweise des Kapitels sind seine eigenen (`Cutaway.hints(..., { act: "kapitel2" })`); die von Prolog und Kapitel 1 gelten nur
   noch in ihren Akten. Der Hinweis zur Fälschung gilt nur, während Juno sie im Editor ansieht, und erst nach den Hinweisen des Hauptfadens.
 - Geprüft wird wie in Kapitel 1 der Hauptweg mit geschlossenen Fäden (`off_<thread>`): `node tools/solve-act.mjs kapitel2 --full
-  --set off_roof,off_zeitung,off_imai,off_traeger,off_varga,off_tide,off_motte,off_vesper`; die Klicks `tools/paths/kapitel2_main.json`,
+  --set off_roof,off_zeitung,off_imai,off_traeger,off_varga,off_tide,off_motte,off_vesper,off_lantern`, und dasselbe mit `stick_ines`. Der Weg zu
+  Lantern ist darin zu (`off_lantern`: der Monteur weiß nichts, der Schirm reißt nicht ab), denn seine Schritte vervielfachten jeden anderen
+  Zustand; er hat seinen eigenen Lauf mit `off_main,stick_ines,off_dryer,evi_knows,forgery_proven` statt `off_lantern` (`off_dryer` schließt den Trockner, so
+  zeigt der Lauf, dass der Stick Lantern immer auch von Hand erreicht; `off_main` schließt wie in Kapitel 1 den Rest des Hauptfadens: den
+  Weg zum Wohnblock Lerche, Vespers Angebot und die Frage nach Entscheidung 2) (technisch entschieden 2026-11-15, wie bei
+  den Fäden); die Klicks `tools/paths/kapitel2_main.json`,
   und `spiel.json` geht vom Titel bis zum Ende von Kapitel 2.
 
-**Was Kapitel 2 weitergibt:** `e2`, `lantern_alive` (ein Flag: Juno hat Lantern gefunden und die Quiet nicht zu ihm geführt),
+**Was Kapitel 2 weitergibt:** `e2`, `lantern_alive` (ein Flag: Juno hat Lantern gefunden und die Quiet nicht zu ihm geführt; gebaut ist bisher
+`lantern_found` = found | ally),
 `forgery_proven`, `moth_student`, `k1b` nur als `warned` (Okonkwos Versteck in Kapitel 4) und das Kassenbuch. In Kapitel 2
 abgeschlossen sind Varga und Kessler, der Eckladen bis auf Okonkwos Dank, Frau Imai, Frau Haldane (ihr Sohn ist in Kapitel 3 höchstens
 ein Blick auf der Station, ohne Flag), Vesper, WREN und die Miete.
