@@ -257,7 +257,7 @@ Lantern kennt Juno nicht (story §10b) und vertraut niemandem. Er ist gejagt, se
 | L4 | `sumpf` | Die überfluteten Straßen der alten Stadt (story §3): Stege, Hausfronten bis zum ersten Stock im Wasser, das Kabel an einer Wand. Der Steg endet am Wasser; drüben treibt ein Floß an einem Seil, zu weit weg. Mit dem **Haken** (der Notschlüssel vom Aufzug, aus Kapitel 1: Juno behält ihn nach der Leiter in der Tasche; wer ihn nie genommen hat, findet ihn noch neben der Aufzugtür) zieht Juno es heran. „Teo hätte das mit einer Hand gemacht.“ | — |
 | L5 | `lantern_versteck` | Am Ende des Kabels ein halb versunkener Laden, voller Antennen und Bildschirme. Lantern in seinem Rollstuhl. Er siezt sie, bricht Sätze ab und will wissen, woher sie kommt. Was Juno ihm sagen kann, ist ein Gespräch mit höchstens vier Antworten (`Nagiwa.talkTree`): „Ich hab gesehen, was passiert ist.“, „Ich hab ihren Schlüssel.“ (wenn sie den Stick hat), „Ich hab eine Aufnahme.“ (Entscheidung 2, §3.6), „Ich geh wieder.“ | `lantern_found` |
 
-**Lantern** (Vorschläge; die Stimme fehlt noch im Style Guide): „Wer sind Sie? Nein. Sagen Sie's nicht.“ Beim Stick: „Sie hat gesagt,
+**Lantern** (Vorschläge; seine Sprechkarte steht seit 2026-11-15 im `dialog-style-guide` §6, als Entwurf): „Wer sind Sie? Nein. Sagen Sie's nicht.“ Beim Stick: „Sie hat gesagt,
 sonst weiß es keiner.“ Juno: „Sie konnte mich nicht sehen.“ Gibt Juno ihm den Stick, hat er ihn, und er sagt, wann er sendet:
 „Montag. Um eins. Bis dahin stehen die Sender.“ Wird Lantern ihr Verbündeter (Stick oder Clip), wechseln beide zum Du (`dialog-style-guide` §5).
 
@@ -585,16 +585,17 @@ Archiv einer Kamera, Gegenstände an Hotspots und Fragen mit vier Antworten gibt
 
 - **Namen:** die Pflegerin an der Aufnahme, Frau Haldanes Sohn, Vargas Mann, die Quiet im Flur (vielleicht ohne Namen), der Kontakt
   `BECKEN 3` (oder `TINTE`), die Kameranummern `cam25` und `cam51`.
-- **Zeilen:** alles, was hier steht, sind Vorschläge; Lanterns Stimme für die großen Gespräche fehlt noch im Style Guide.
+- **Zeilen:** alles, was hier steht, sind Vorschläge; Lanterns Sprechkarte ist ein Entwurf (2026-11-15), beim Durchspielen zu prüfen.
 - **Preise und Zahlen:** Sable 3000, Vesper 5000, die Zuschauer, Sables Archiv 150, Kessler 50.
 - **Aussehen:** Klinik, Flur, Wohnung, Sumpf, Versteck, `cam51` und alle neuen Figuren gehen erst als Blöcke zur Freigabe, ebenso
   die Änderungen an fertigen Bildern: die Bretter an Okonkwos Laden und der dunkle Laden in `cam07v`, `GLASSER LIES` und `WHO TALKED?`,
   das neue Kabel hinter dem großen Schirm, Lanterns grüner Text auf dem Schirm, das Papierboot mit `I.`, das Absperrband an `cam30`,
   das rote Licht der Kamera im 14. Stock aus.
-- **Sprechkarten** im `dialog-style-guide`: Lantern fehlt noch, ebenso die Pflegerin, Vargas Mann und Frau Imai; die Karte von Frau
+- **Sprechkarten** im `dialog-style-guide`: Lantern steht als Entwurf; es fehlen noch die Pflegerin, Vargas Mann und Frau Imai; die Karte von Frau
   Haldane ist zu ergänzen.
 - **`evi_trust`** (wie offen Juno im Prolog zu EVI war) geht mit, bekommt aber erst später eine Aufgabe (vom Nutzer entschieden
   2026-11-14): vielleicht, wenn EVI erfährt, was sie ist (§3.3), oder im Finale, wenn sie richtig lesen muss (story §7, Kap. 6).
   Bis dahin meldet die Übergabe-Prüfung es als „kept for nothing“; das ist bekannt.
-- **Das Richtmikro und Lanterns Sender im RADIO:** Bibel (§10b) und `kapitel0-design` (§2.1, §3) versprechen beides für Kapitel 2,
-  dieser Plan hat keins von beiden. Offen, bis wir die Stelle bearbeiten; dann wird gefragt (2026-11-14).
+- **Lanterns Sender im RADIO:** `kapitel0-design` (§2.1) verspricht ihn für Kapitel 2, dieser Plan hat ihn nicht. Offen; gefragt wird,
+  wenn wir die Stelle bearbeiten. **Das Richtmikro ist gestrichen** (vom Nutzer 2026-11-15): Man hört, was nah am Mikro einer Kamera
+  gesagt wird, wie bei Ines' Tod, und kein Rätsel braucht es.

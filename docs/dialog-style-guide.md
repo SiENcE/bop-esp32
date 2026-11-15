@@ -315,10 +315,36 @@ Knapp und dienstlich, und sie hasst, was sie tut. Sie redet im Telegrammstil, wi
 ### Dr. Ines Calder und Lantern
 
 Juno hört die beiden fast nur durchs Glass, also müssen wenige Sätze sie tragen. Ines: genau, ruhig, wissenschaftlich, und man hört, was
-sie weiß. Lantern: misstrauisch, vorsichtig, bricht Sätze ab. Lanterns Stimme für die großen Gespräche ab Kapitel 2 fehlt noch.
+sie weiß. Lantern: misstrauisch, vorsichtig, bricht Sätze ab. Für die großen Gespräche ab Kapitel 2 hat er seine eigene Karte (unten).
 
 > Ines: „Es stimmt. Sie schlafen nicht. Sie *arbeiten*.“\
 > Lantern: „Wenn das stimmt ...“
+
+### Lantern: der Sender
+
+(Entwurf 2026-11-15, vom Nutzer gewünscht; zu prüfen beim Durchspielen.) Oskar Lind, früher Pumpentechniker, seit dem Unfall im
+Rollstuhl und seit Jahren unten in den Sümpfen. Er hat zwei Stimmen, und gerade der Wechsel zwischen ihnen macht ihn aus.
+
+- **Mit Menschen** ist er misstrauisch, vorsichtig und abgebrochen. Er fragt zurück, statt zu antworten, und prüft jeden Satz auf eine
+  Falle. Sätze über sich selbst lässt er unfertig („Ich war mal ...“). Er redet kurz, mit vielen Pausen, nie mehr als nötig.
+- **Auf Sendung**, und wenn er über die Sendung redet, ist er auf einmal ganz da: flüssig, ruhig, ein bisschen feierlich, wie ein
+  Moderator von früher. Das Senden ist das Einzige, dem er traut. „Hier ist Lantern. Wer das hier sieht, ist noch wach.“
+- **Namen sagt er nicht laut,** weil man Namen abhören kann. Ines ist „sie“, Juno ist lange „Sie“ ohne Namen, er selbst ist Lantern. Seinen
+  echten Namen sagt er höchstens einmal, und dann ist es ein Ereignis.
+- **Bilder aus der Hand:** Frequenzen, Kabel, Rauschen, Akkus, Pumpen und der Wasserstand. „Funk hört jeder. Ein Kabel hört nur, wer dran
+  hängt.“
+- **Humor:** trocken und schwarz, über sich und den Stuhl, nie über andere. „Treppen sind ein Argument. Ich hab Düsen.“
+- **Trauer und Wärme zeigt er im Tun,** nicht in Worten: Er legt die Wallet nicht aus der Hand, er dreht die Laterne heller, wenn jemand
+  bleibt. Von Ines redet er in der Gegenwart, bis er sich verbessert.
+- **Du und Sie:** Er siezt Juno, und sie siezt ihn. Wird er ihr Verbündeter (der Stick, der Clip), wechselt er als Erster zum Du,
+  beiläufig, mitten im Satz (§5).
+- **Was er nie tut:** Pläne erklären, Technik vortragen, Heldenreden halten, „die Wahrheit“ beschwören (§3, Melodram). Er sagt „senden“,
+  nicht „enthüllen“. Er klagt nicht über den Stuhl.
+
+> „Wer sind Sie? Nein. Sagen Sie's nicht.“\
+> „Zehn Sekunden. Länger glaubt einem eh keiner.“\
+> „Sie hat gesagt, sonst weiß es keiner.“\
+> „Montag. Um eins. Bis dahin stehen die Sender.“
 
 ### Direktorin Selene Aubrecht: die Überzeugte
 
