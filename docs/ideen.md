@@ -87,3 +87,35 @@ Die Sinker sind sein Gerüst. Ohne Menschen, die nie aufwachen, zerfällt er jed
 zu sterben, wie ein Parasit, der seinen Wirt braucht. Das ist klarer, aber kälter, und er wäre eher ein Problem als ein Gegenüber.
 Nicht genommen, weil die erste Fassung ihn an die Menschen bindet, die Kapitel 1 schon zeigt: Frau Haldane, die im Schlaf Gesichter
 einkreist, und Teo mit seinen Doppelschichten.
+
+## 2026-11-16: Mit dem Floß in die Sümpfe (eine Idee des Nutzers)
+
+Eine Idee des Nutzers zum Weg zu Lantern, nach den Bildern der Blöcke `sumpf` und `lantern_versteck`. Nicht entschieden.
+
+**Wie es jetzt gebaut ist** (kapitel2-design §3.5, L3 bis L5): Juno folgt dem Kabel die abgesperrte Treppe am Drain-Markt hinab
+(SUMP 9, NO ENTRY). Ratz öffnet das Schloss für eine Kopie ihres Ausweises (`stairs_open`). Unten im `sumpf` endet ein Steg am Wasser,
+und mit dem Haken zieht sie das Floß am Seil heran. Lanterns Versteck ist ein halb versunkener Laden voller Antennen und Bildschirme.
+
+**Die Idee:** Juno kommt vom Drain-Markt aus auf dem Kanal in die Sümpfe. Sie spricht jemanden an, der sie mitnimmt, zum Beispiel den
+Mann auf dem Floß DATA 1C/GB. Dafür will er etwas von ihr, eine kleine Folge von Handlungen. Dann sieht man sie auf das Floß steigen und
+nach rechts aus dem Markt fahren. Die Fahrt zeigt eine Animation durch richtige Sümpfe (Bäume im Wasser, Wasserlinsen, Moos in den
+Ästen, Spiegelungen), von der Seite, weil Iso hier komisch aussähe. Am Ende kommt sie in einem Versteck im Sumpf an. Lantern lebt dort
+in einem Wohnwagen auf Pontons und betreibt von da seinen Sender.
+
+**Was schon dazu passt:**
+- Der Kanal im Drain-Markt führt Wasser und fließt im Bild von links nach rechts. Das Floß DATA 1C/GB ist schon gemalt, mit einer
+  Batteriebank und einer Antenne. Sein Besitzer verkauft Daten pro Gigabyte und könnte wissen, wohin das Kabel führt, oder Lantern
+  Batterien bringen.
+- Die Engine kann Seitenansichten mit Tiefe: Props und Teile haben `depth` (Parallaxe gegen die Kamera), Sequenzen fahren die Kamera
+  über einen breiten Raum. Die Fahrt wäre ein gemalter, breiter Raum, durch den die Kamera fährt, wie die Bilder des Intros, die keine
+  Iso-Räume sind.
+
+**Was es ändern würde:**
+- story §3 sagt: Die Sümpfe sind die überfluteten Straßen der alten Stadt unter dem Neunten, also im Dunkeln. Bäume brauchen Licht.
+  Entweder liegen die Sümpfe dort, wo die Stadt über ihnen offen ist (am Rand, unter dem Himmel), oder die Bäume sind etwas anderes
+  (tote Stämme, bleiches Zeug, das im Dunkeln wächst). Es spielt außerdem immer abends und nachts.
+- L3 bis L5: Ratz und das Schloss (entschieden 2026-11-14 als der kleine Auftrag des Kapitels), der Haken (story §10: Kapitel 2 braucht
+  ihn für das Floß), der Steg, das Kabel und `know_cable`. Wofür sie dann noch stehen, wäre neu zu entscheiden.
+- Der halb versunkene Laden würde ein Wohnwagen auf Pontons.
+- Für den Solver ist der kleine Auftrag ein eigener Schritt mit eigenem Zähler, wie Ratz' Schloss jetzt. Die Fahrt selbst ist eine
+  Kette ohne Verzweigung und kostet keine Zustände.
