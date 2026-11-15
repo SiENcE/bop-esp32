@@ -187,6 +187,7 @@ Die Anrede sagt etwas über Nähe und Abstand, nichts über Geschlecht, Herkunft
 | Wer | Was |
 |---|---|
 | Lantern | siezt Juno zuerst, aus Misstrauen; wird Lantern in Kapitel 2 zum Verbündeten, wechseln die beiden zum Du |
+| Pike | duzt Juno wie jeder auf dem Markt |
 | Ashe | bleibt beim Sie, obwohl er und Juno einmal in derselben Halle saßen: Das Sie trägt die Bedrohung |
 | Juno am Feed | sagt du zu denen, die sie beobachtet und die sie nicht hören können („Ines. Geh nach Hause.“) |
 | Teo, die Regenleserin | duzen wie alle; Teo sagt „Ju“, die Regenleserin „Kind“ |
@@ -345,6 +346,28 @@ Rollstuhl und seit Jahren unten in den Sümpfen. Er hat zwei Stimmen, und gerade
 > „Zehn Sekunden. Länger glaubt einem eh keiner.“\
 > „Sie hat gesagt, sonst weiß es keiner.“\
 > „Montag. Um eins. Bis dahin stehen die Sender.“
+
+### Pike: der Fährmann
+
+(Entwurf 2026-11-16; zu prüfen beim Durchspielen.) Lanterns Gehilfe auf dem Floß DATA 1C/GB im Kanal des Drain-Markts, umgebaut mit dem
+Reiher. Er verkauft Daten pro Gigabyte, bringt Lantern Akkus und Teile und schützt ihn, ohne es zu sagen.
+
+- **Er wartet.** Wie ein Reiher im Wasser steht er still, bis sich etwas lohnt. Er redet wenig und langsam, lässt Pausen stehen und
+  antwortet oft erst auf die vorige Frage. Eile versteht er nicht.
+- **Er handelt wie der Markt:** Gefallen gegen Gefallen, Gigabyte gegen Chits. Was er will, sagt er einmal und klar; warum, sagt er nicht.
+- **Bilder aus dem Wasser:** Strömung, Pegel, Grund, Fische, Köder, der Stab im Schlamm. „Wer auf dem Kanal wohnt, schaut nach unten.“
+- **Lantern** nennt er nie beim Namen, auch nicht „Lantern“: Er ist „der da draußen“ oder „mein Kunde“. Ob Juno zu ihm will, fragt er
+  nicht; er wartet, bis sie es sagt.
+- **Der Reiher** ist ihm unangenehm, aber er redet nicht darüber. Zuckt sein Hals nach etwas, das sich bewegt, tut er, als sei nichts. Den
+  Vorfall mit Ratz nennt er einen Reflex, und dabei bleibt er.
+- **Humor:** trocken, selten, über sich. „Ratz sagt, ich hätte ihn fressen wollen. Ich frühstücke nie.“
+- **Du:** Er duzt Juno wie jeder auf dem Markt.
+- **Was er nie tut:** Pläne erzählen, Lanterns Versteck beschreiben, sich beeilen, über Ratz schimpfen.
+
+> „Ich verkauf Daten. Keine Fahrten.“\
+> „Ratz hat eine Endstufe. Aus einem Flutwarnmast. Mir gibt er sie nicht.“\
+> „Ein Reflex. Mehr war das nicht.“\
+> „Setz dich in die Mitte. Und schau nicht ins Wasser.“
 
 ### Direktorin Selene Aubrecht: die Überzeugte
 
