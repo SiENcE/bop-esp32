@@ -141,9 +141,9 @@ es nicht mehr, §7).
   Schirm nicht gesehen hat). An der Treppe hinab am Markt sagt Juno ohne `know_cable` „Die Kette ist zu. Und ich will da nicht runter.“, mit
   ihm sieht sie das Kabel am Geländer. Ratz öffnet das Schloss gegen eine Kopie ihres Ausweises (ein eigenes Gespräch, solange es zu ist;
   `stairs_open` und die Zeile im Kassenbuch). Den Ausweis gibt der Karton unter dem Bett und den Haken die Wand am Aufzug in Kapitel 2 auch
-  dem, der in Kapitel 1 nie aufs Dach ging; Juno nimmt jedes erst, wenn sie weiß, wofür (technisch entschieden, sonst verdoppelte jedes
-  alle Zustände des Kapitels): den Ausweis, sobald sie vor dem Schloss stand, das eine Karte will (`know_cable`; vorher: „Wozu? Der macht
-  nichts mehr auf.“), den Haken, sobald Ratz ihr gesagt hat, dass das Floß weit draußen hängt („Nimm was Langes mit.“). In den Sümpfen zieht der Haken das Floß heran; beim ersten Mal sitzt Lantern im Versteck und
+  dem, der in Kapitel 1 nie aufs Dach ging, und Juno kann beides jederzeit mitnehmen (vom Nutzer entschieden 2026-11-15). Nur die
+  Solver-Läufe, in denen dieser Weg zu ist (`off_lantern`), schließen Karton und Haken mit, wie Kapitel 1 es mit dem Dach tut (`off_roof`).
+  Ratz rät ihr beim Öffnen, etwas Langes mitzunehmen („Nimm was Langes mit.“). In den Sümpfen zieht der Haken das Floß heran; beim ersten Mal sitzt Lantern im Versteck und
   will nicht gefunden werden (`lantern_found=found`), danach zieht sich Juno am Seil hinüber. Sein Gespräch (`Nagiwa.talkTree`): „Ich hab
   gesehen, was passiert ist.“, „Ich hab ihren Schlüssel.“ (mit dem Stick: „Hier. Der gehört Ihnen.“ oder „Noch nicht.“), „Was ist das hier?“
   und „Ich geh wieder.“. Gibt Juno ihm den Stick, hat er ihn (wie aus dem Trockner), `lantern_found=ally`, und er wechselt zum Du („Sag's

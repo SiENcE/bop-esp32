@@ -80,17 +80,14 @@ Nagiwa.talkTree("ratz_schloss", [
   ["„Was willst du da unten?“", [RZ("Ich? Nichts. Unten ist nass."), RZ("Aber in den Rohren über dem Wasser, da wohnen Ratten. Große."), "Deine Kolonie.", RZ("Sag's keinem.")]],
 ]);
 
-// ---- the pass and the hook are where they always were, also for whoever never went up on the roof in Chapter 1 (the roof's thread shut).
-// Juno takes each once she knows what for: the pass once she has stood at the lock that wants a card, the hook once Ratz has told her the
-// raft hangs far out (knowledge she lacks before; and taken any time, each would double every state of the chapter)
+// ---- the pass and the hook are where they always were, also for whoever never went up on the roof in Chapter 1, and Juno can take them any
+// time (what she finds she can take at once). Only the solver's runs that shut this way (off_lantern) shut them too, as Chapter 1's runs
+// shut them with the roof (off_roof): taken any time, each would double every state of those runs
 const flat = Cutaway.room.get("flat").hotspots, floor14 = Cutaway.room.get("kessel_14").hotspots;
-flat.box_old.use = [{ if: ["day>4", "!got_ausweis"], then: [{ if: "know_cable",
-  then: ["Da ist der Ausweis: CIVIC MONITOR, J. REYES. UNGÜLTIG.", "Das Schloss will eine Karte. Den steck ich ein.", { give: "ausweis" }, { set: "got_ausweis" }],
-  else: ["Da ist mein alter Ausweis drin.", "Wozu? Der macht nichts mehr auf."] }],
+flat.box_old.use = [{ if: ["day>4", "!got_ausweis", "!off_lantern"],
+  then: ["Da ist der Ausweis: CIVIC MONITOR, J. REYES. UNGÜLTIG.", "Er ist flach und hart. Den steck ich ein.", { give: "ausweis" }, { set: "got_ausweis" }],
   else: flat.box_old.use }];
-floor14.haken.if = ["!got_haken", { or: ["!off_roof", "day>4"] }];
-floor14.haken.use = [{ if: ["day>4", "!stairs_open"], then: ["Der Notschlüssel vom Aufzug. Der Aufzug fährt eh nicht.", "Wozu sollte ich den mitnehmen?"],
-  else: floor14.haken.use }];
+floor14.haken.if = ["!got_haken", { or: ["!off_roof", ["day>4", "!off_lantern"]] }];
 
 // ---- L4: the jetty ends in the water; the raft on its rope is too far, and the hook pulls it over. Once Juno has been over, she pulls
 // herself along the rope. The first time Lantern is there, and doesn't want her to be
