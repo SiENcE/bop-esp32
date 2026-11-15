@@ -227,7 +227,7 @@ Die Abende sollen nach Leben in der Stadt schmecken, nicht nach Warten aufs Bett
 | 2 | `flat`, Karton | Der alte Nagi·wa-Ausweis, `UNGÜLTIG`. Am Fenster: „Das ist das erste Mal, dass das Ding was aufmacht.“ |
 | 3 | `sims` | Die Leiter hängt zwei Meter zu hoch. „Teo kam da früher mit irgendwas Langem ran.“ |
 | 4 | `kessel_14`, Aufzug | Neben der Tür hängt der Notschlüssel, ein langer Haken: „Um stecken zu bleiben, müsste der Aufzug erst mal fahren.“ |
-| 5 | `sims`, Leiter | Haken, die Leiter kommt runter, hoch aufs Dach. Den Haken behält Juno in der Tasche (entschieden 2026-11-14): Kapitel 2 braucht ihn für das Floß (`kapitel2-design` §3.5). |
+| 5 | `sims`, Leiter | Haken, die Leiter kommt runter, hoch aufs Dach. Den Haken behält Juno in der Tasche (entschieden 2026-11-14): Kapitel 2 braucht ihn für das Floß (`kapitel2-design` §3.5; ob noch, ist seit dem Weg mit dem Floß, 2026-11-16, offen: dort §14). |
 
 Ausweis, Notschlüssel und der Weg aufs Dach sind schon im Prolog offen (entschieden 2026-11-06): Es gibt keinen Grund in der Welt, sie zu sperren, und die Regenleserin verrät nichts, was Vorwissen braucht. Kapitel 1 übernimmt beide Gegenstände. Der Notschlüssel hängt sichtbar neben der Aufzugtür, über der Tür sind schon Anzeige und Lampe.
 

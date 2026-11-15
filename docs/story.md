@@ -109,7 +109,7 @@ Maschinen für die Arbeit am Wasser umgebaut.
 | Neunter | **Lull-Klinik 9-Ost** | weiß, still, Schlangen müder Menschen |
 | Neunter | **Pumpenhalle 3** | wo Teo arbeitet; das Tosen des Meeres; Wartungstunnel; Tinte im Filterbecken |
 | Neunter | **Revier 9** | die Wache von Lieutenant Morrow |
-| Darunter | **Die Sümpfe** | überflutete Straßen der alten Stadt unter dem Neunten; Lanterns Versteck |
+| Darunter | **Die Sümpfe** | überflutete Straßen der alten Stadt unter dem Neunten (der Sumpf-Abgang, die alte Metro); weiter draußen, wo der Kanal des Drain-Markts an den Rand führt und kein Ring mehr darüber liegt, ein ertrunkener Wald zwischen den Hausfronten unter dem Nachthimmel; dort Lanterns Wohnwagen auf Pontons |
 | Mitte (5.) | **Die Transitachse**, die Aufzüge zwischen den Ringen | Kontrollpunkte, der einzige legale Weg nach oben |
 | Mitte | **Die Schlafstation** | Reihen von Sinkern in weißem Licht |
 | Krone | **Nagi·wa Tower, Civic Rest** | Aubrechts Büros; sauber, kalt, lautlos |
@@ -527,8 +527,8 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
 - **Kessel-Block:** die Doppelschichten von Frau Haldane und die Briefe ihres Sohnes; Mottes
   Unterricht (ihn unterrichten oder abweisen, was entscheidet, ob er Juno in Kap. 3 warnen kann); der
   Aufzug, der angeblich dienstags fährt (er fährt nie).
-- **Glass-Aufträge:** kleine Aufträge auf dem Deck in Kap. 1 und 4; in Kap. 2 ist der kleine Auftrag Ratz' Preis für das Schloss an
-  der Treppe in die Sümpfe (§10h, `kapitel2-design` §3.5). Zum Beispiel: ein vermisster Hund, ein
+- **Glass-Aufträge:** kleine Aufträge auf dem Deck in Kap. 1 und 4; in Kap. 2 ist der kleine Auftrag das Teil, das Juno
+  für Lanterns Gehilfen bei Ratz besorgt (§10h, `kapitel2-design` §3.5). Zum Beispiel: ein vermisster Hund, ein
   Versicherungsbetrüger, ein Gewerkschafter, der verfolgt wird). Jeder ist ein abgeschlossenes
   Feed-Rätsel mit einem Eintrag im Kassenbuch. Die besten sind **kleine Leben in einem Auftrag**:
   - **Der Vater:** Ein Mann will jede Aufnahme seiner toten Tochter, aus jeder Kamera, die sie je
@@ -758,13 +758,13 @@ Die Gliederung von Kapitel 2 ist freigegeben (`docs/kapitel2-design.md`), mit di
 - **Frau Imai sieht den Mord:** `cam31` hängt nicht an Nagi·was Netz, also spielt Civic Rest sie keinem Schläfer vor; wer den Mord im Schlaf sieht, dem zeigt ihn der Zeuge. Nach ihrem Tod zeigt er den Mord den Schläfern, Nacht für Nacht. Imais „Frau auf einem Bahnsteig“ ist das erste Zeichen, dass er handelt.
 - **Vesper und der Mord-Clip:** Vesper bietet am meisten. Wer an ihn verkauft, landet im selben Weg wie bei Sable: Der Clip läuft eine Nacht auf NINTH LIVE, dann kauft Nagi·wa ihn auf, und er verschwindet; das Kassenbuch nennt die Zuschauer. Sables Verrat in Kapitel 4 gilt nur, wenn Sable gekauft hat.
 - **Morrow bekommt den Clip in der Jade Row,** bei ihrem nächtlichen Halt (`cam07`), nicht im Revier 9; Revier 9 wird kein Raum.
-- **Lantern finden:** Lantern kapert am Sonntag den großen Werbebildschirm der Kowalski-Straße für zehn Sekunden. Die halbe Reparatur weiß, dass es übers Kabel kam, und das Kabel führt die Treppe unter dem Drain-Markt hinab in die Sümpfe zu seinem Versteck.
+- **Lantern finden:** Lantern kapert am Sonntag den großen Werbebildschirm der Kowalski-Straße für zehn Sekunden. Die halbe Reparatur weiß, dass es übers Kabel kam, und das Kabel führt in den Kanal des Drain-Markts und an ihm entlang hinaus in die Sümpfe zu seinem Versteck (der Weg dorthin: „Mit dem Floß in die Sümpfe“, unten).
 - **Frau Haldanes Sohn ist ein Sinker.** Juno findet ihn über das Archiv einer Kamera im Fünften: Am 15. Oktober wacht er nicht mehr auf, und zwei in Weiß tragen ihn hinaus. Ein kleiner Faden, der in Kapitel 2 endet; auf der Schlafstation in Kapitel 3 ist ihr Sohn höchstens ein Blick, ohne Flag.
 
 Nach der Prüfung von Kapitel 2 gegen Kapitel 1 und die Bibel (am selben Tag):
 
 - **Wenige Variablen über Kapitelgrenzen:** Ein Kapitel übernimmt nur wenige Flags aus den früheren, und vieles wird innerhalb eines Kapitels abgeschlossen; sonst sammeln sich Variablen und offene Fäden über die Kapitel an. Jedes Kapitel-Design nennt deshalb genau, was es übernimmt (`keep`) und was es weitergibt, und eine Folge, die nur Farbe ist, liest lieber einen Wert, der ohnehin übergeben wird, als einen neuen.
-- **Der Haken bleibt in der Tasche:** Nach der Leiter behält Juno den Notschlüssel; Kapitel 2 braucht ihn für das Floß in den Sümpfen.
+- **Der Haken bleibt in der Tasche:** Nach der Leiter behält Juno den Notschlüssel; Kapitel 2 braucht ihn für das Floß in den Sümpfen. (Ob er dort noch gebraucht wird, ist seit dem Weg mit dem Floß, 2026-11-16, offen: `kapitel2-design` §14.)
 - **Die Fälschung hält,** auch neben Junos echtem Clip: Niemand weiß, wer der Mann in Weiß ist, und Lantern kennt keiner; Nagi·wa kann behaupten, was es will. Auch wenn der echte Clip vorher eine Nacht auf NINTH LIVE lief.
 - **Ashe lässt Lantern absichtlich ziehen** (§10c, bis dahin ein Vorschlag); die Fälschung schneidet Lanterns Wegfahren mit heraus.
 - **Andere Beobachter:** Es bleibt dabei, dass nur sehr wenige das Implantat noch tragen (§6, Punkt 4, §10b), aber Juno ist nicht die Einzige im Neunten, die wach zusieht, sondern eine der wenigen; ein paar glassen wie sie. Einer davon ist der andere Glasser, der nach einer Weigerung CAM 31 verbindet. Warum der Zeuge gerade an diesem Dienstag ruft, bleibt die Bereinigung (§6, Punkt 4); dass WREN in derselben Woche kommt, bleibt, wie §6 Punkt 5 es sagt.
@@ -783,7 +783,7 @@ Die Vorschläge aus derselben Prüfung, vom Nutzer übernommen (2026-11-14; Einz
 - **Der Zeuge versteckt niemanden aktiv** (vom Nutzer klargestellt 2026-11-14): Er gibt nur nicht an Nagi·wa weiter, was die Schläfer sehen, bei Ines also sie und ihre Entdeckung über Lull (§6, Punkte 3, 5, 6). Juno ruft er nur; verstecken kann er sie nicht, und das ist keine offene Frage.
 - **Bao nach dem Überfall** (entschieden 2026-11-14): Sein Wagen fehlt am Samstag und Sonntag; der Arzt sagt eine Woche, aber am Montag steht er mit Verband wieder da („Eine Woche, sagt der Arzt. Ich sag Montag.“), und Teo bringt an dem Abend sein Essen mit. „Eine Woche zu“ gilt nicht mehr.
 - **Juno behält immer ihre Kopie** des Clips aus CAM 31 (vom Nutzer entschieden 2026-11-14): Wer ihn kauft oder bekommt, bekommt eine Kopie; so bleiben das Prüfen der Fälschung und das Ende von Kapitel 2 jedem offen.
-- **Die Treppe in die Sümpfe** (vom Nutzer entschieden 2026-11-14): Die Kette mit dem Nagi·wa-Schloss aus Kapitel 1 macht Ratz auf, aber nicht umsonst. Er will Junos alten Nagi·wa-Ausweis kurz haben, liest den Chip aus und behält die Kopie, um durch die Klappen unter der Krone zu seiner Kolonie zu kommen (§9); Juno bekommt den Ausweis zurück. Das ist der kleine Auftrag von Kapitel 2.
+- **Mit dem Floß in die Sümpfe** (vom Nutzer entschieden 2026-11-16; bis dahin, seit 2026-11-14, öffnete Ratz die Kette an der Treppe unter dem Markt gegen eine Kopie von Junos Ausweis): Juno kommt nicht die Treppe hinab, sondern auf dem Kanal des Drain-Markts. Das Kabel läuft am Kanal entlang zum Floß DATA 1C/GB. Der Mann darauf ist Lanterns Gehilfe, selbst umgebaut. Er nimmt Juno mit, wenn sie ihm ein Technikteil besorgt, das nur Ratz hat; ihm verkauft Ratz seit einem Vorfall nichts mehr. Juno bekommt es von Ratz für Geld oder einen Gefallen (Ratz' Bedingung kommt später). Dann steigt sie aufs Floß, und es fährt nach rechts aus dem Markt. Die Fahrt ist von der Seite gezeigt, nicht in Iso: Der Kanal führt hinaus an den Rand, wo über der alten Stadt kein Ring mehr liegt. Dort steht ein ertrunkener Wald zwischen den Hausfronten, darüber der Nachthimmel und der Schein der Krone, im Regen. Lantern lebt dort in einem Wohnwagen auf Pontons und sendet von da. Die Kette an der Treppe bleibt zu. Das ist der kleine Auftrag von Kapitel 2; der Vorfall, das Teil, der Mod und der Name des Gehilfen sind Vorschläge (`kapitel2-design` §3.5).
 - **Zuschauer beim Mord-Clip:** 870.000, wenn Juno ihn an Vesper verkauft, die größte Zahl im Kassenbuch und doch unter einer Million, wie die Hunderttausende oben.
 - **Lanterns Sender im RADIO** (`kapitel0-design` §2.1) bleibt offen, bis die Stelle bearbeitet wird; dann wird gefragt (vom Nutzer entschieden 2026-11-14).
 - **Das Richtmikro ist gestrichen** (vom Nutzer entschieden 2026-11-15): Man hört, was nah am Mikro einer Kamera gesagt wird, wie bei Ines' Tod in `cam31`; kein Rätsel braucht ein Werkzeug dafür.

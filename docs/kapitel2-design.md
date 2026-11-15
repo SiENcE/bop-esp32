@@ -150,6 +150,8 @@ es nicht mehr, §7).
   nicht. Ich will's nicht wissen müssen.“). „Ich hab eine Aufnahme.“ kommt mit Entscheidung 2. Am Montag fragt das Brett, wer den Schirm
   gesehen hat. Die Hinweise zu diesem Weg gelten, solange Juno den Stick hat, Schritt für Schritt (der Trockner bleibt der kürzere Weg).
   **Platzhalter:** Lantern ist im Versteck seine Feed-Figur, das Floß sind Kisten, das Kabel sind die der Gasse.
+  **Wird umgebaut** (vom Nutzer entschieden 2026-11-16, §3.5): statt der Treppe, Ratz' Schloss und dem Steg das Floß DATA 1C/GB auf dem
+  Kanal, die Fahrt von der Seite und Lanterns Wohnwagen auf Pontons. Bis dahin steht hier, was gebaut ist.
 - Die Hinweise des Kapitels sind seine eigenen (`Cutaway.hints(..., { act: "kapitel2" })`); die von Prolog und Kapitel 1 gelten nur
   noch in ihren Akten. Der Hinweis zur Fälschung gilt nur, während Juno sie im Editor ansieht, und erst nach den Hinweisen des Hauptfadens.
 - Geprüft wird wie in Kapitel 1 der Hauptweg mit geschlossenen Fäden (`off_<thread>`): `node tools/solve-act.mjs kapitel2 --full
@@ -274,10 +276,10 @@ Lantern kennt Juno nicht (story §10b) und vertraut niemandem. Er ist gejagt, se
 |---|---|---|---|
 | L1 | `kowalski`, Sonntag 22:00 | Der große Werbebildschirm reißt mitten in der Lull-Werbung ab. Zehn Sekunden lang steht dort in Lanterns Grün: `I DIDN'T KILL HER. – LANTERN`, dann wieder SLEEP BETTER. Wer nicht auf der Straße ist, liest es danach im NETZ und hört es im LUCKY STATIC. Die Regenleserin hatte erzählt, dass er das vor zwei Jahren schon einmal getan hat (Kapitel 1). | Moment `hijack` |
 | L2 | `kowalski`, Gerüst | Die halbe Reparatur hat es gesehen, von ganz nah: „Das kam nicht über Funk. Das kam übers Kabel. Von unten.“ Er zeigt auf das neue Kabel, das hinter dem Schirm in den Gully geht. „Rechts. Nicht mein Vertrag.“ | `know_cable` |
-| L3 | `drain_market` | Die Treppe hinab, die Kapitel 1 schon vorgesehen hat, führt unter den Markt. Das Kabel läuft an ihrem Geländer mit. Davor hängt noch die Kette mit dem neuen, rot blinkenden Schloss von Nagi·wa (Kapitel 1). Ohne `know_cable` hat Juno da unten nichts zu suchen („Die Kette ist zu. Und ich will da nicht runter.“). | — |
-| L3b | `drain_market`, Ratz | **Ratz macht das Schloss auf, aber nicht umsonst** (entschieden 2026-11-14; der kleine Auftrag dieses Kapitels, story §9): Er kennt das Schloss („Nagi·wa-Schloss. Neu. Die mögen alte Karten.“) und will dafür etwas, das Juno schon hat: ihren alten Nagi·wa-Ausweis, nur kurz. Er liest den Chip aus und behält die Kopie, denn mit einer Karte von drinnen gehen auch die Klappen in den Rohren unter der Krone auf, zu seiner Kolonie. Juno bekommt den Ausweis zurück: „Das zweite Mal, dass das Ding was aufmacht.“ Hat sie ihn nicht dabei, liegt er im Karton unter ihrem Bett. Kassenbuch: „Ratz: eine Kopie meines alten Ausweises.“ Ein Gespräch mit höchstens vier Antworten. | `stairs_open` |
-| L4 | `sumpf` | Die überfluteten Straßen der alten Stadt (story §3): Stege, Hausfronten bis zum ersten Stock im Wasser, das Kabel an einer Wand. Der Steg endet am Wasser; drüben treibt ein Floß an einem Seil, zu weit weg. Mit dem **Haken** (der Notschlüssel vom Aufzug, aus Kapitel 1: Juno behält ihn nach der Leiter in der Tasche; wer ihn nie genommen hat, findet ihn noch neben der Aufzugtür) zieht Juno es heran. „Teo hätte das mit einer Hand gemacht.“ | — |
-| L5 | `lantern_versteck` | Am Ende des Kabels ein halb versunkener Laden, voller Antennen und Bildschirme. Lantern in seinem Rollstuhl. Er siezt sie, bricht Sätze ab und will wissen, woher sie kommt. Was Juno ihm sagen kann, ist ein Gespräch mit höchstens vier Antworten (`Nagiwa.talkTree`): „Ich hab gesehen, was passiert ist.“, „Ich hab ihren Schlüssel.“ (wenn sie den Stick hat), „Ich hab eine Aufnahme.“ (Entscheidung 2, §3.6), „Ich geh wieder.“ | `lantern_found` |
+| L3 | `drain_market` | Das Kabel kommt hinter dem Schirm aus dem Gully in den Kanal und läuft an der Kanalmauer entlang bis zum Floß DATA 1C/GB, dem mit der Batteriebank und der Antenne. Ohne `know_cable` ist sein Mann nur einer, der Daten verkauft. Die Kette an der Treppe hinab bleibt zu (vom Nutzer entschieden 2026-11-16: Ratz muss kein Schloss mehr öffnen). | — |
+| L3b | `drain_market`, der Gehilfe und Ratz | **Der kleine Auftrag dieses Kapitels** (vom Nutzer entschieden 2026-11-16, statt Ratz und dem Schloss vom 2026-11-14): Der Mann auf dem Floß ist Lanterns Gehilfe, selbst umgebaut. Er nimmt Juno mit, wenn sie ihm ein Technikteil besorgt, das nur Ratz hat; ihm verkauft Ratz seit einem Vorfall nichts mehr. Juno bekommt es von Ratz für Geld oder einen Gefallen (Ratz' Bedingung kommt später). **Vorschläge:** Das Teil ist eine Endstufe aus einem alten Flutwarnmast, die Lantern für seine Sendung am Montag braucht. Der Gehilfe trägt den **Reiher** (story §10, Tier-Mods): lange dünne Beine, mit denen er im Wasser steht und das Floß stakt, ein langer Hals, ein spitzes Gesicht. Der Vorfall: Sein Mod hat Ratz einmal am Schwanz aus dem Kanal geschnappt und kopfüber über das Wasser gehalten. „Ein Reflex“, sagt er. Ratz: „Ein Schnabel macht nichts von allein.“ | (neu, wenn gebaut; `stairs_open` entfällt) |
+| L4 | der Kanal, die Fahrt | Juno steigt aufs Floß, und es fährt nach rechts aus dem Markt. Die Fahrt ist **von der Seite** gezeigt (in Iso sähe sie komisch aus): Der Kanal führt hinaus an den Rand, wo über der alten Stadt kein Ring mehr liegt. Dort steht ein ertrunkener Wald zwischen den Hausfronten, Stämme im Wasser, Moos in den Ästen, Wasserlinsen, Spiegelungen, darüber der Nachthimmel und der Schein der Krone, im Regen. Technisch (entschieden von Claude): ein breiter gemalter Raum mit Tiefe (`depth`), durch den die Kamera mit dem Floß fährt; beim ersten Mal ganz, danach kurz. Eine Kette ohne Verzweigung, sie kostet den Solver nichts. | — |
+| L5 | `sumpf`, `lantern_versteck` | Am Ende des Kabels ein Wohnwagen auf Pontons zwischen den Bäumen, voller Antennen. Drinnen Lantern in seinem Rollstuhl, die Bildschirme, der Sender. Er siezt sie, bricht Sätze ab und will wissen, woher sie kommt. Was Juno ihm sagen kann, ist ein Gespräch mit höchstens vier Antworten (`Nagiwa.talkTree`): „Ich hab gesehen, was passiert ist.“, „Ich hab ihren Schlüssel.“ (wenn sie den Stick hat), „Ich hab eine Aufnahme.“ (Entscheidung 2, §3.6), „Ich geh wieder.“ | `lantern_found` |
 
 **Lantern** (Vorschläge; seine Sprechkarte steht seit 2026-11-15 im `dialog-style-guide` §6, als Entwurf): „Wer sind Sie? Nein. Sagen Sie's nicht.“ Beim Stick: „Sie hat gesagt,
 sonst weiß es keiner.“ Juno: „Sie konnte mich nicht sehen.“ Gibt Juno ihm den Stick, hat er ihn, und er sagt, wann er sendet:
@@ -470,7 +472,7 @@ more than once“).
 | `lucky_static` | Mei, der Fernseher an allen drei Abenden, der Stammgast, der im Schlaf redet, Frau Imai |
 | `jade_row`, `cam07` | Morrows Flutwagen (Entscheidung 2), nach dem Überfall die Bretter an Okonkwos Laden, `WHO TALKED?`; das **Tor am Ende** führt jetzt zur Klinik und zum Wohnblock Lerche; `cam07` fällt aus |
 | `okonkwo_shop`, `cam07v` | nach dem Überfall zu (die Tür mit Brettern, `cam07v` zeigt den leeren, dunklen Laden); oder Okonkwos Dank |
-| `drain_market` | Sable, Ratz, der Prediger, Kessler mit Gips, und die **Treppe hinab** in die Sümpfe |
+| `drain_market` | Sable, Ratz, der Prediger, Kessler mit Gips, und das **Floß DATA 1C/GB** mit Lanterns Gehilfen, der Juno in die Sümpfe bringt (§3.5) |
 | `sable_booth` | Entscheidung 2, der Blick ins Archiv des Wohnheims, die Nachricht über den anderen Glasser |
 | `sims`, `dach`, `dach_sitzen`, `dach_blick` | Teo am Montag, die Regenleserin; der Blick nach oben wie in Kapitel 1 |
 | `cam03` | Kessler kommt nicht mehr; am Automaten zieht jemand anderes Nummer 7 (nur Ansehen) |
@@ -490,8 +492,8 @@ more than once“).
 | `klinik` | Iso, etwa 6 x 4 m | kaltes Weiß, Lull-Cyan | Tür → `jade_row` (über das Tor) | Wartebank mit müden Leuten, die Aufnahme mit der Pflegerin hinter Glas, eine Kabine mit Scanner-Stuhl, Nagi·was Ring an der Wand, `SLEEP BETTER` auf einem Schirm |
 | `lerche_flur` | Iso, ein Treppenhausflur, etwa 5 x 3 m | gelbliches Flurlicht, Grünstich | Treppe → `jade_row` (über das Tor), Tür 4B → `ines_wohnung` | Wohnungstüren, 4B mit dem Siegel, Schuhe vor einer Tür, die Kamera `cam25` in der Ecke |
 | `ines_wohnung` | Iso, etwa 4 x 4 m | ausgeräumt, das Licht der Straße | Tür → `lerche_flur` | Matratze, leere Regale, der helle Fleck vom Rechner, der Kühlschrank mit der Serviette, das Gefrierfach, eine Pflanze, die niemand mehr gießt |
-| `sumpf` | Iso, ein Steg über Wasser wie die Gasse, das Bild scrollt | schwarzes Wasser, Lanterns Grün am Kabel, Magenta von oben aus dem Markt | Treppe → `drain_market`, Floß → `lantern_versteck` | die alte Stadt bis zum ersten Stock im Wasser, Ladenschilder von vor der Flut, das Kabel, der Steg, das Floß am Seil |
-| `lantern_versteck` | 320x180, eine Bühne von vorn wie `sable_booth`: Lantern sitzt ihr gegenüber | Grün und Bernstein, Bildschirme | Floß → `sumpf` | ein halb versunkener Laden, Antennen, Bildschirme mit Kameras, die keiner mehr kennt, der Sender |
+| `sumpf` | die Fahrt von der Seite (ein breites Bild, durch das die Kamera fährt), am Ende der Wohnwagen von außen | Nacht, Regen, der Schein der Krone von oben, Lanterns Grün an den Antennen | Floß → `drain_market`, Wohnwagen → `lantern_versteck` | der ertrunkene Wald zwischen den Hausfronten bis zum ersten Stock im Wasser, Stämme, Moos, Wasserlinsen, das Kabel, der Wohnwagen auf Pontons |
+| `lantern_versteck` | 320x180, eine Bühne von vorn wie `sable_booth`: Lantern sitzt ihr gegenüber | Grün und Bernstein, Bildschirme | Tür → `sumpf` | der Wohnwagen auf Pontons von innen, Antennen, Bildschirme mit Kameras, die keiner mehr kennt, der Sender |
 
 **Der Weg dorthin:** Das Tor am Ende der Jade Row bekommt eine Auswahl (W2); zwischen Tor und Klinik gibt es keinen eigenen Raum. So
 wird kein Ort im Straßenmodus begehbar, den eine Kamera schon anders zeigt (`cam21`, `cam24`): Juno betritt die Klinik und den Flur von
@@ -508,7 +510,7 @@ innen.
 
 Neue Einträge für `docs/plan/stadtplan.js`, wenn der Nutzer sie will: die Klinik 9-Ost von innen (am vorgeschlagenen Ort der Klinik,
 an der Querstraße am Westende), der Wohnblock Lerche mit Treppenhaus und 4B (dort, wo `cam24` hängt), der Weg vom Tor der Jade Row
-dorthin, die Sümpfe unter dem Drain-Markt mit Lanterns Versteck (Ebene „die Tiefe“). Das Wohnheim im Fünften liegt außerhalb des Plans.
+dorthin, die Sümpfe am Rand, wohin der Kanal des Drain-Markts führt, mit Lanterns Wohnwagen. Das Wohnheim im Fünften liegt außerhalb des Plans.
 
 ## 10. Figuren
 
@@ -524,6 +526,7 @@ wechseln würde, eine eigene Ansicht (Kapitel 1, §10). Lull ist immer die ovale
 | **Teo, sitzend von hinten** | neu (Pose) | `dach_sitzen` | eine | neben Juno, die Kapuze unten, der Gehörschutz; von hinten sieht man das Pflaster hinter seinem Ohr, am selben Ohr wie in seinen anderen Ansichten (nicht aus einer gespiegelten Ansicht nehmen) |
 | Teo mit dem Haken | neu (Pose) | `flat`, `sims` | SE, NE, NW wie seine Figur | der lange Haken aus der Pumpenhalle in einer Hand; NW gezeichnet wie bisher |
 | **Vargas Mann** | neu | `kowalski` | Iso SE, NE, NW stehend | nur nach `k1a=lied`; Varga selbst ist nur im Feed gemalt. Name offen |
+| **Lanterns Gehilfe** | neu | `drain_market` (von oben), die Fahrt (von der Seite) | von oben stehend und stakend; von der Seite auf dem Floß, stakend | umgebaut, Vorschlag: der Reiher (§3.5); einseitig trägt er nichts, so genügt das Spiegeln. Name offen |
 | **Kessler mit Gips** | neu (von oben) | `drain_market` | von oben, sitzend | der Gips am Arm ist einseitig: von oben kein Problem, er sitzt immer gleich |
 | **Bao mit Verband** | Variante | `kowalski` | wie Bao | nur nach `k1b=sold`, Montag (Samstag und Sonntag fehlt sein Wagen) |
 | **Frau Haldane, wach an der Tür** | Variante | `kessel_14` | wie ihre Figur (SE, NE, NW) | wach, ohne Lockenwickler? Vorschlag: die Lockenwickler bleiben, die Augen offen, das Pflaster dunkel |
@@ -546,7 +549,7 @@ wechseln würde, eine eigene Ansicht (Kapitel 1, §10). Lull ist immer die ovale
    ├─ Klinik (optional): cam21 ─ Tor der Jade Row ─ Aufnahme ─ „Lerche, vierter Stock“
    ├─ Lerche: cam24 19:30, der Code ─ cam25 ─ (So 20:00–21:00 die Quiet) ─ 4B ─ Serviette ─ Akte ─ EVI erfährt es
    ├─ Fälschung (So 18:00): NETZ ─ Prüfen: Zeitstempel, Regen, Licht ─ Beweis
-   ├─ Lantern (So 22:00 der Schirm): halbe Reparatur ─ Kabel ─ Ratz und der Ausweis ─ Treppe hinab ─ Sumpf ─ Haken, Floß ─ Versteck
+   ├─ Lantern (So 22:00 der Schirm): halbe Reparatur ─ Kabel ─ der Gehilfe auf dem Floß ─ das Teil von Ratz ─ die Fahrt ─ der Wohnwagen
    │      └─ der Schatten in Weiß (19:00–23:00), wenn die Quiet Juno kennt
    └─ Entscheidung 2: Sable │ Vesper │ Morrow (Jade Row 00:30) │ Lantern │ behalten   (das Flüstern schneiden?)
                                                                   │
@@ -562,7 +565,7 @@ mit dem Hauptfaden (`off_main` und `know_flat` für die Fäden allein, wie in Ka
 **Der Zustand:** neu im Hauptfaden `stick_dryer`, `quiet_dryer`, `know_flat`, `code_lerche`, `cache_note_serviette`,
 `cache_note_civic_rest`, `evi_knows`, `cache_clip_forgery` (bei jedem ab Sonntag 18:00, also kein Zustand für sich), `forgery_cuts` (1–2,
 der Reihe nach; eine Ansicht, kein Zustand: Zustand ist erst `forgery_proven`, das der dritte Fund setzt) und `forgery_proven` mit seiner Notiz,
-`know_cable`, `stairs_open`, `lantern_found`, `led_quiet`, `e2`, `clip_ines_cut`; in den Fäden `varga2`, `imai2`,
+`know_cable`, der Auftrag des Gehilfen (statt `stairs_open`), `lantern_found`, `led_quiet`, `e2`, `clip_ines_cut`; in den Fäden `varga2`, `imai2`,
 `haldane` und ein Schritt je Faden. Weiter gehen davon nur die Flags, die §2.1 nennt. Die Kameras, die ausfallen, und alles in §7 kosten nichts.
 
 ## 12. Hinweise
@@ -576,9 +579,8 @@ Die Hinweise spricht EVI (Prolog-Design §2.2). Die Tabelle nennt die schweren S
 | W3/W4, der Flur | „Welche Tür ist ihre? Die Klinik weiß es, oder die von Civic Rest zeigen es dir.“ Dann: „Ihre Tür ist zu. Das bleibt sie nicht lange.“ | „Die von Civic Rest räumen die Wohnung aus. Schau in CAM 25.“ | „Warte, bis sie weg sind. Sonntag ab neun ist der Flur frei.“ |
 | W6, die Akte | „Die haben den Rechner genommen. Ines hat auf Papier geschrieben.“ | „Wo hebt man Papier auf, das niemand finden soll?“ | „Schau ins Gefrierfach.“ |
 | die Fälschung | „Das ist nicht das, was wir gesehen haben.“ | „Leg die beiden Clips nebeneinander. PRÜFEN.“ | „Schau der Reihe nach auf die Uhrzeit, den Regen und das Licht.“ (gilt nur, solange Juno die Fälschung im Editor hat) |
-| L2–L5, Lantern | „Der Schirm war gekapert. Wer weiß, woher so was kommt?“ | „Der Mann auf dem Gerüst repariert den Schirm. Frag ihn.“ | „Folge dem Kabel, die Treppe unter dem Markt hinab.“ |
-| L3b, das Schloss | „Die Kette ist neu, und das Schloss ist von Nagi·wa.“ | „Ratz kennt jedes Schloss hier unten. Frag ihn.“ | „Ratz will deinen alten Ausweis, nur kurz. Der liegt im Karton unter deinem Bett, wenn du ihn nicht dabeihast.“ |
-| L4, das Floß | „Das Floß ist zu weit weg.“ | „Mit etwas Langem käme man ran.“ | „Nimm den Haken aus der Tasche. Hast du ihn nicht, hängt er neben dem Aufzug.“ |
+| L2–L5, Lantern | „Der Schirm war gekapert. Wer weiß, woher so was kommt?“ | „Der Mann auf dem Gerüst repariert den Schirm. Frag ihn.“ | „Folge dem Kabel in den Kanal des Markts.“ |
+| L3b, der Gehilfe | „Der auf dem Floß weiß, wohin das Kabel führt.“ | „Er will etwas von Ratz, und Ratz redet nicht mit ihm.“ | „Hol das Teil bei Ratz und bring es dem auf dem Floß.“ |
 | der Schatten | „Der in Weiß steht wieder unten.“ | „Wenn er dich sieht, sieht er auch, wohin du gehst.“ | „Er geht um elf. Warte bis dahin, bevor du zu Lantern gehst.“ |
 | Entscheidung 2 | „Was machst du mit dem Clip?“ | „Sable kauft, Vesper zahlt mehr, Morrow hält samstags und sonntags um halb eins in der Jade Row, Lantern ist im Sumpf.“ (am Montag ohne Morrow) | „Du kannst ihn auch behalten. Aber im Clip ist das Flüstern.“ |
 | Montag, 00:45 | (je nachdem, was fehlt, eine der Zeilen aus §3.7) | | |
@@ -605,11 +607,11 @@ Archiv einer Kamera, Gegenstände an Hotspots und Fragen mit vier Antworten gibt
 
 ## 14. Offen
 
-- **Namen:** die Pflegerin an der Aufnahme, Frau Haldanes Sohn, Vargas Mann, die Quiet im Flur (vielleicht ohne Namen), der Kontakt
+- **Namen:** Lanterns Gehilfe, die Pflegerin an der Aufnahme, Frau Haldanes Sohn, Vargas Mann, die Quiet im Flur (vielleicht ohne Namen), der Kontakt
   `BECKEN 3` (oder `TINTE`), die Kameranummern `cam25` und `cam51`.
 - **Zeilen:** alles, was hier steht, sind Vorschläge; Lanterns Sprechkarte ist ein Entwurf (2026-11-15), beim Durchspielen zu prüfen.
 - **Preise und Zahlen:** Sable 3000, Vesper 5000, die Zuschauer, Sables Archiv 150, Kessler 50.
-- **Aussehen:** Klinik, Flur, Wohnung, Sumpf, Versteck, `cam51` und alle neuen Figuren gehen erst als Blöcke zur Freigabe, ebenso
+- **Aussehen:** Klinik, Flur, Wohnung, die Fahrt durch den Wald, der Wohnwagen außen und innen, der Gehilfe auf seinem Floß, `cam51` und alle neuen Figuren gehen erst als Blöcke zur Freigabe, ebenso
   die Änderungen an fertigen Bildern: die Bretter an Okonkwos Laden und der dunkle Laden in `cam07v`, `GLASSER LIES` und `WHO TALKED?`,
   das neue Kabel hinter dem großen Schirm, Lanterns grüner Text auf dem Schirm, das Papierboot mit `I.`, das Absperrband an `cam30`,
   das rote Licht der Kamera im 14. Stock aus.
@@ -618,6 +620,7 @@ Archiv einer Kamera, Gegenstände an Hotspots und Fragen mit vier Antworten gibt
 - **`evi_trust`** (wie offen Juno im Prolog zu EVI war) geht mit, bekommt aber erst später eine Aufgabe (vom Nutzer entschieden
   2026-11-14): vielleicht, wenn EVI erfährt, was sie ist (§3.3), oder im Finale, wenn sie richtig lesen muss (story §7, Kap. 6).
   Bis dahin meldet die Übergabe-Prüfung es als „kept for nothing“; das ist bekannt.
+- **Der Weg mit dem Floß** (vom Nutzer entschieden 2026-11-16, §3.5): offen sind der Vorfall, das Teil und der Mod des Gehilfen (Vorschläge dort), Ratz' Bedingung (Geld oder ein Gefallen, kommt später), ob der Haken noch gebraucht wird (story §10 behält ihn aus Kapitel 1 dafür) und wozu der Ausweis im Karton dient, der Ratz' Preis für das Schloss war.
 - **Lanterns Sender im RADIO:** `kapitel0-design` (§2.1) verspricht ihn für Kapitel 2, dieser Plan hat ihn nicht. Offen; gefragt wird,
   wenn wir die Stelle bearbeiten. **Das Richtmikro ist gestrichen** (vom Nutzer 2026-11-15): Man hört, was nah am Mikro einer Kamera
   gesagt wird, wie bei Ines' Tod, und kein Rätsel braucht es.
