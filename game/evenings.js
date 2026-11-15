@@ -22,7 +22,7 @@ Nagiwa.sleep = [
     else: [{ if: "time<01:00", then: ["Schlafen? Ich schlaf nicht vor eins. Nie."], else: [
       "Genug für heute.",
       { fade: "out", ms: 700 },
-      { night_passes: true },
+      { night_passes: true }, { unset: "deck_woke" },
       { time: "18:00", day: "+1" },
       { evening_card: true },
       { fade: "in", ms: 700 },

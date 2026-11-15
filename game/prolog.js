@@ -105,14 +105,16 @@ Nagiwa.photo.look = ["Teo und ich, auf dem Dach vom Kessel-Block. Er hatte nie A
   { say: "evi", text: "Ihr seid sehr klein darauf." }];
 
 // ---- the deck (game/deck.js, EVI: game/evi.js). Step 0a: the first time tonight it boots, EVI wakes up
-// and points at the chat (docs/kapitel0-design.md §6.2)
+// and points at the chat (docs/kapitel0-design.md §6.2). In Chapter 1, while WREN's message is unread, the deck boots
+// once a night (deck_woke, a view the bed forgets: game/evenings.js), not each time Juno comes back from a camera
+Cutaway.state.view("deck_woke");
 Nagiwa.deckEnter = [{ unset: "rec_on" }, { if: "day=1", then: [{ once: [
   { deck_boot: true }, { evi: "froh" },
   { say: "evi", text: "Guten Abend, Juno! Eine neue Nachricht. Null Abendessen." },
   "Danke, EVI.",
   { evi_point: "chat" },
-] }], else: [{ if: "!read_wren", then: [
-  { deck_boot: true }, { evi: "neugierig" },
+] }], else: [{ if: ["day<5", "!read_wren", "!deck_woke"], then: [
+  { set: "deck_woke" }, { deck_boot: true }, { evi: "neugierig" },
   { say: "evi", text: "Guten Abend, Juno! Eine neue Nachricht. Sie hat keinen Absender, da steht nur WREN." },
   { evi_point: "chat" },
 ] }] }];
