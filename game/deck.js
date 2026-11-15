@@ -3,7 +3,7 @@
 // over it (the engine's "frame.screen" moment). What is open is state the solver sees, kept to one flag:
 //   deck_app     the app whose window is open (glas, chat, cache, buch, konto, netz, radio, muell), or none;
 //                the chat with a thread open is "chat_<contact>", a clip in the clip editor "clip_<cache id>",
-//                the old photo full screen "photo". Entering the flat closes it (its enter
+//                PRÜFEN on a check "pruef_<check id>" (game/pruefen.js), the old photo full screen "photo". Entering the flat closes it (its enter
 //                script), so the deck is fresh each time Juno sits down; between the deck and a camera it stays.
 //   read_<id>    a contact's messages have been read (only where it matters: a contact's `unread` says when
 //                its dot shows, by default until read_<id>)
@@ -45,7 +45,7 @@
     buch: { y: 30, row: 12 },
     radio: { y: 24, row: 15 },
     netz: { tabs: 24, tab: 37, title: 38, rows: 50, row: 13, back: 270, search: [34, 14, 114] },   // NETZ: the bookmarks, a page's title, its rows (a link each), SUCHE's buttons [y, row, column]                                // RADIO's stations, then AUS, then what the presenter says
-    clip: { pic: [82, 23, 96, 56], meta: 185, line: [84, 90, 224], tools: 137, anon: [48, 60] },   // the clip editor: picture, who/where, timeline, tools (ANONYMISIEREN: after, wide)
+    clip: { pic: [82, 23, 96, 56], meta: 185, line: [84, 90, 224], tools: 137, anon: [48, 60], check: [112, 32] },   // the clip editor: picture, who/where, timeline, tools (ANONYMISIEREN, PRÜFEN: [after SCHNEIDEN, wide])
     map: [82, 22, 228, 124],                                  // GLASS's map inside the window
     camBox: 54,                                               // a camera's place on it, as wide as its longest line ("CODE BEKANNT"): keep the cameras this far apart
   };
@@ -69,10 +69,15 @@
   /** The clip editor's clips (docs/kapitel0-design.md §2.4), by cache id: the camera, the minutes it runs
    * (22:31 is 31), its moments and who is in it, what a cut keeps and makes (a new cache entry), the script
    * after the cut. A clip from another hour gives it (`hour`, 22 by default); one Juno filmed herself has no camera, only a place
-   * (`where`). Anonymising (from Chapter 1, while `anon.if` holds) blurs every face for good: the flag `anon_<cache id>`.
+   * (`where`). Anonymising (from Chapter 1, while `anon.if` holds) blurs every face for good: the flag `anon_<cache id>`. PRÜFEN (Chapter 2)
+   * lays the clip beside another: `check` names the check it opens (Nagiwa.checks, game/pruefen.js). A clip without a picture of its own
+   * (`thumb`) may draw one (`picture`).
    * @type {Record<string, {cam?: string, where?: string, hour?: number, from: number, to: number, thumb?: string, moments: [number, number, string][],
-   *   people: [string, number, number][], cut?: {moment: number, gives: string, if?: any, then?: any[]}, anon?: {if?: any, then?: any[]}}>} */
+   *   people: [string, number, number][], cut?: {moment: number, gives: string, if?: any, then?: any[]}, anon?: {if?: any, then?: any[]}, check?: string,
+   *   picture?: (ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number) => void}>} */
   Nagiwa.clips = {};
+  /** what other files add to the deck's hotspots once everything is loaded (PRÜFEN, game/pruefen.js) @type {((hs: Record<string, any>) => void)[]} */
+  Nagiwa.deckParts = [];
   /** NETZ, Nagi·wa-Net's start page (kapitel0-design §2.1): headlines, small news, the Glasser board, ads, each in its row (`slot`, 0 to 7;
    * entries of the same evening in rows of their own) while its `if` holds, one that opens a page naming it (`page`, game/netz.js)
    * (the chapters fill it; texts German, labels the city's English)
@@ -139,6 +144,14 @@
         if: [`deck_app=clip_${id}`, `!anon_${id}`, ...(clip.anon.if ? [].concat(clip.anon.if) : [])],
         use: [{ sfx: "glitch" }, { set: `anon_${id}` }, ...(clip.anon.then ?? [])] };
     }
+    // PRÜFEN: the check the clip opens, while it is awake (game/pruefen.js adds the check's own hotspots: Nagiwa.deckParts)
+    for (const [id, clip] of Object.entries(Nagiwa.clips)) {
+      if (!clip.check) continue;
+      hs[`clip_check_${id}`] = { name: "Prüfen", rect: [X + 8 + D.clip.check[0], D.clip.tools, D.clip.check[1], 10], z: 5,
+        if: [`deck_app=clip_${id}`, ...Nagiwa.checkAwake(clip.check)],
+        use: [{ set: "deck_app", value: `pruef_${clip.check}` }, { set: "pruef_from", value: id }, { sfx: "type" }] };
+    }
+    for (const add of Nagiwa.deckParts) add(hs);
     // the old photo: a click on the wallpaper shows it whole, with its music; a click anywhere closes it
     hs.photo = { name: "Das alte Foto", rect: [80, 14, 206, 104], if: "!deck_app", z: 1,
       look: Nagiwa.photo.look ?? "Das ist das Foto von Teo und mir.",
@@ -243,6 +256,7 @@
     const v = String(S().flag("deck_app") ?? "");
     if (v.startsWith("chat")) return { app: "chat", with: v.slice(5), clip: "" };
     if (v.startsWith("clip_")) return { app: "cache", with: "", clip: v.slice(5) };
+    if (v.startsWith("pruef_")) return { app: "cache", with: "", clip: "", check: v.slice(6) };
     return { app: v, with: "", clip: "" };
   };
 
@@ -641,6 +655,7 @@
     const [px, py, pw, ph] = E.pic;
     rect(ctx, C.ink, px - 1, py - 1, pw + 2, ph + 2);
     if (clip.thumb && Cutaway.assets.has(clip.thumb)) Cutaway.assets.draw(ctx, clip.thumb, px, py, { anchor: [0, 0], t: Cutaway.clock.time });
+    else if (clip.picture) { ctx.save(); ctx.beginPath(); ctx.rect(px, py, pw, ph); ctx.clip(); clip.picture(ctx, px, py, pw, ph); ctx.restore(); }
     else rect(ctx, "#12332d", px, py, pw, ph);
     if (anon) {                                                     // the picture itself as a mosaic: the scene is still there, nobody in it
       const M = 6, tiny = mosaic.canvas;
@@ -680,10 +695,11 @@
       small(ctx, `${t(label)}: ${t(cut ? "GESCHNITTEN" : "SCHNITT {s} S", { s: Math.round((b - a) * 60) })}`, Math.round((at(a) + at(b)) / 2), ly + 40, C.cyan, "center");
       rect(ctx, C.yellow, Math.round((at(a) + at(b)) / 2), ly + 2, 1, 36);                     // the playhead: where Juno looks
     }
-    // the tools: cutting from the prologue, anonymising from Chapter 1; the others come later (locked). The first two have
-    // fixed places, as their hotspots do (the room's, D.clip.anon)
+    // the tools: cutting from the prologue, anonymising from Chapter 1, checking from Chapter 2; montage comes later (locked). The first
+    // three have fixed places, as their hotspots do (the room's, D.clip.anon and .check)
     let bx = X + 8;
-    const tools = /** @type {[string, boolean, number | null][]} */ ([["SCHNEIDEN", !!clip.cut && !cut && S().test(clip.cut.if), E.anon[0] - 4], ["ANONYMISIEREN", anonOn, E.anon[1]], ["PRÜFEN", false, null], ["MONTIEREN", false, null]]);
+    const checkOn = !!clip.check && Nagiwa.checkAwake(clip.check).every((c) => S().test(c));
+    const tools = /** @type {[string, boolean, number | null][]} */ ([["SCHNEIDEN", !!clip.cut && !cut && S().test(clip.cut.if), E.anon[0] - 4], ["ANONYMISIEREN", anonOn, E.anon[1]], ["PRÜFEN", checkOn, E.check[1]], ["MONTIEREN", false, null]]);
     for (const [label, on, fixed] of tools) {
       const w = fixed ?? hud().measure(t(label)) + 8, r = [bx, E.tools, w, 10], hot = on && inRect(p.x, p.y, r), dim = !on;
       chamfer(ctx, bx, E.tools, w, 10, 2, hot ? C.cyanDark : on ? C.cyanDeep : C.steel1, dim ? C.steel3 : C.cyan, dim ? C.steel4 : C.cyanPale);
@@ -710,10 +726,14 @@
     if (boot(ctx)) return;
     if (S().flag("deck_app") === "photo") { sprite(ctx, "deck_photo", 0, 0); return; }     // the old photo, whole
     desktop(ctx);
-    const { app: open, clip } = opened();
-    if (clip) { frame(ctx, t("CACHE // {name}", { name: t(Nagiwa.cache[clip]?.name ?? clip) })); editor(ctx, clip); }
+    const { app: open, clip, check } = opened();
+    if (check) Nagiwa.drawCheck(ctx, check);
+    else if (clip) { frame(ctx, t("CACHE // {name}", { name: t(Nagiwa.cache[clip]?.name ?? clip) })); editor(ctx, clip); }
     else if (open && /** @type {any} */ (APP_DRAW)[open]) { frame(ctx, LABEL[/** @type {keyof typeof LABEL} */ (open)]); /** @type {any} */ (APP_DRAW)[open](ctx); }
     header(ctx);
     evi(ctx);
   });
+
+  // what game/pruefen.js draws with: the deck's look
+  Nagiwa.deckDraw = { C, small, text, rect, chamfer, frame, fit, wrap, pointer, inRect, sprite };
 })();

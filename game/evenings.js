@@ -3,8 +3,10 @@
 // nobody sleeps through it) and when the clock must stop (Nagiwa.holds). Loaded before the rooms: the flat's bed uses it.
 "use strict";
 
-/** The cards between the evenings: the game day they lead to, the date and which evening it is; `last` for a chapter's last one. */
-Nagiwa.nights = /** @type {Record<number, {date: string, evening: string, last?: boolean, passes?: any[]}>} */ ({});
+/** The cards between the evenings: the game day they lead to, the date and which evening it is; `last` for a chapter's last one;
+ * `passes` what changes overnight, `wake` what plays once the evening has begun (after its card, in the light: a moment at 18:00 in the
+ * flat would play while the bed's fade is still dark). */
+Nagiwa.nights = /** @type {Record<number, {date: string, evening: string, last?: boolean, passes?: any[], wake?: any[]}>} */ ({});
 
 /** Where each chapter stops the clock: asked in turn with the minutes a step would go on to, the first that gives a reason
  * (a line, or a step) keeps the time where it is (engine Cutaway.time.hold, which takes one function). Each asks its own days. */
@@ -24,6 +26,7 @@ Nagiwa.sleep = [
       { time: "18:00", day: "+1" },
       { evening_card: true },
       { fade: "in", ms: 700 },
+      { wake: true },
     ] }] },
 ];
 
@@ -33,6 +36,12 @@ Cutaway.script.action("night_passes", (s, ctx) => {
   const n = Nagiwa.nights[Number(Cutaway.state.flag("day")) + 1];
   return n?.passes ? Cutaway.script.exec(n.passes, ctx) : undefined;
 }, { sets: () => Object.values(Nagiwa.nights).flatMap((n) => (n.passes ?? []).flatMap((/** @type {any} */ p) => [p.set, ...(p.then ?? []).map((/** @type {any} */ q) => q.set)]).filter(Boolean)) });
+
+// { wake: true } what the evening that has just begun plays first (Nagiwa.nights[day].wake), once its card is gone
+Cutaway.script.action("wake", (s, ctx) => {
+  const n = Nagiwa.nights[Number(Cutaway.state.flag("day"))];
+  return n?.wake ? Cutaway.script.exec(n.wake, ctx) : undefined;
+});
 
 // { evening_card: true } the card for the evening that has just begun (its text declared by Nagiwa.declareTexts)
 Cutaway.script.action("evening_card", (s, ctx) => {

@@ -28,6 +28,9 @@
       { text: "Mittwoch. Die Woche hat noch Hoffnung. Ich hab sie gestern gesehen.", day: 2 },
       { text: "Donnerstag. Viele schlafen gerade sehr gut. Ich nicht. Ich hab ja euch.", day: 3 },
       { text: "Freitag. Später trocken, sagen sie im Fernsehen. Ich glaub's, wenn ich's seh.", day: 4 },
+      { text: "Samstag. In der alten Metro ist jemand gestorben. Das nächste ist leise.", day: 5 },
+      { text: "Sonntag. Sie sagen, LANTERN war's. Ich kenn seine Sendungen. Der hat nie wen angefasst.", day: 6 },
+      { text: "Montag. Sie suchen LANTERN. Wer ihn sieht, hat ihn nicht gesehen.", day: 7 },
     ] },
     // NAGI·WA EASY: the company's station; its announcer is friendly, says Sie and says nothing (dialog-style-guide §6)
     { id: "easy", name: "NAGI·WA EASY", freq: "101.0", music: { theme: "easy" }, lines: [
@@ -36,6 +39,8 @@
       { text: "Ihre Sicherheit ist unser Auftrag. Kriminalität im Neunten auf Rekordtief." },
       { text: "Das Wetter für den Neunten: Niederschlag. Bleiben Sie entspannt." },
       { text: "Nagi·wa dankt Ihnen für Ihren Dienst." },
+      { text: "Revier 9 bittet um Ihre Mithilfe bei der Suche nach dem Piratensender LANTERN.", day: 6 },
+      { text: "Hinweise zum Piratensender LANTERN nimmt Revier 9 jederzeit entgegen. Vielen Dank.", day: 7 },
     ] },
     // KESSEL ROOFTOP: someone in the block plays records at night; sleepy, never says who
     { id: "roof", name: "KESSEL ROOFTOP", freq: "94.2", music: { theme: "rooftop" }, lines: [

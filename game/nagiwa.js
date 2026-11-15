@@ -49,6 +49,8 @@ Nagiwa.declareTexts = function () {
   d("chat", Object.values(Nagiwa.threads ?? {}).flatMap((list) => list.flatMap((m) => [m.text, m.photo, m.clip, m.at].filter((x) => typeof x === "string"))));
   d("evenings", Object.values(Nagiwa.nights ?? {}).flatMap((n) => [n.date, n.evening]));
   d("NETZ", (Nagiwa.netz ?? []).flatMap((n) => [n.text, n.by].filter((t) => typeof t === "string")));
+  d("netz", [...Object.values(Nagiwa.netzPages ?? {}).flatMap((p) => [p.title, p.label, p.by, ...(p.text ?? []), ...(p.posts ?? []).flatMap((q) => [q.by, q.text])]),
+    ...(Nagiwa.netzSearch ?? []).flatMap((s) => [s.term, s.none])].filter((x) => typeof x === "string"));
   d("people", Object.values(Nagiwa.people).flatMap((p) => [p.name, p.label, p.speaker].filter((t) => typeof t === "string")));
 };
 

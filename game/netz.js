@@ -121,7 +121,6 @@
   ];
 
   Cutaway.i18n.declare("netz", ["START", "NAGI·WA", "BRETT", "ARCHIV", "SUCHE", "ZURÜCK", "HEUTE", "MELDUNG", "ANZEIGE", "LIVE", "Wonach suchen Sie?",
-    "Keine Treffer.", "TREFFER FÜR „{term}“",
-    ...Object.values(Nagiwa.netzPages).flatMap((p) => [p.title, p.label, p.by, ...(p.text ?? []), ...(p.posts ?? []).flatMap((q) => [q.by, q.text])]).filter((x) => typeof x === "string"),
-    ...Nagiwa.netzSearch.flatMap((s) => [s.term, s.none]).filter((x) => typeof x === "string")]);
+    "Keine Treffer.", "TREFFER FÜR „{term}“"]);
+  // the pages and the search's terms: Nagiwa.declareTexts (game/nagiwa.js), once the chapters have added theirs
 })();

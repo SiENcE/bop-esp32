@@ -1,7 +1,8 @@
 # Kapitel 2 „Aufnahme": Design
 
-Stand: Entwurf (2026-11-14), die Gliederung vom Nutzer freigegeben am selben Tag (story §10h). Im Bau: Das Gerüst steht auf Blöcken
-(`game/kapitel2.js`, `game/kapitel2_ende.js`, siehe „Im Mock gebaut“ unter §2.1), der Rest ist geplant; gemalt ist nichts.
+Stand: Entwurf (2026-11-14), die Gliederung vom Nutzer freigegeben am selben Tag (story §10h). Im Bau: Das Gerüst, der Stick, Ines' Wohnung
+und die Fälschung mit dem Werkzeug PRÜFEN stehen auf Blöcken (`game/kapitel2*.js`, `game/pruefen.js`, siehe „Im Mock gebaut“ unter §2.1), der
+Rest ist geplant; gemalt ist nichts.
 Story: `docs/story.md` (§6, §7 Kapitel 2, §10b, §10f, §10h). Was Kapitel 1 übergibt: `docs/kapitel1-design.md`. Regeln für Deck,
 Feed-Modus und Zeit: `docs/kapitel0-design.md` §2–4. Wie die Texte klingen: `docs/dialog-style-guide.md`. Alle Zeilen hier sind
 Vorschläge und werden beim Durchspielen geprüft; Namen neuer Figuren sind offen (§14).
@@ -92,8 +93,8 @@ es nicht mehr, §7).
   `evi_knows` kommt dazu, sobald die Wohnung gebaut ist. Gebaut sind von Entscheidung 2 Vesper im CHAT (immer da, auch
   bei `off_vesper`) und die Frage des Decks um 00:45 („An Vesper verkaufen.“, „Behalten.“, „Noch nicht.“). Preis und Zuschauer sind
   Platzhalter (§14).
-- Das Ende als Kette mit `end_beat2` (sent > found) bis zur Karte „Kapitel 3: Lull (kommt später)“. Das letzte Prüfen ist vorerst ein
-  Klick auf das Deck (`[MOCK]`), der Kontakt um 03:15 heißt bis zur Entscheidung `BECKEN 3` (§14).
+- Das Ende als Kette mit `end_beat2` (sent > found) bis zur Karte „Kapitel 3: Lull (kommt später)“. Das letzte Prüfen ist seit 2026-11-15
+  das Werkzeug PRÜFEN (siehe „Das letzte Prüfen“ unten), der Kontakt um 03:15 heißt bis zur Entscheidung `BECKEN 3` (§14).
 - **Der Stick** (§3.1, `game/kapitel2_stick.js`): Wo er ist, sagen zwei Flags, `stick_ines` (Juno hat ihn) und `stick_dryer` (er liegt
   wieder in Trockner 6); hat Juno ihn nicht und liegt er nicht im Trockner, hat Lantern ihn (kein eigenes Flag, das spart Zustände).
   Juno legt ihn an Trockner 6 zurück („Zurücklegen.“ oder „Behalten.“). Solange er nicht Lanterns ist, sieht Lantern jede Nacht um
@@ -115,8 +116,26 @@ es nicht mehr, §7).
   aufmachen.“ oder „Nichts.“, beides in beliebiger Reihenfolge; die Akte gibt `cache_note_civic_rest` und `evi_knows`, und EVIs Szene (W7)
   läuft wie oben. Die Uhr am Montag verlangt jetzt auch `evi_knows`. Die Momente des Vortags vergisst die Nacht (`passes`), sonst
   verdoppelt jedes „gesehen oder nicht“ alles danach.
+- **Die Fälschung** (§3.4, `game/kapitel2_faelschung.js`, das Werkzeug in `game/pruefen.js`, 2026-11-15): Am Sonntag um 18:00, wenn Juno
+  aufwacht, hat EVI die Nachricht gefunden und legt den Clip in den CACHE (`clip_forgery`). Weil das jeder sieht, kostet es keinen
+  Zustand (technisch entschieden statt „wer die Nachricht im NETZ öffnet“). Ab da kennt Juno den Namen Lantern, vorher sagt sie „der aus
+  der Metro“ (am Trockner, beim Stick, im Hinweis). NETZ zeigt an den drei Abenden „Tote in der alten Metro.“, die Fälschung und die
+  Fahndung, dazu „Was war gestern in Linie 31?“ auf dem Brett und L.s Nachtrag; der Fernseher im LUCKY STATIC und das Radio (NINTH FM,
+  NAGI·WA EASY) sagen dasselbe. Junos eigene Aufnahme öffnet jetzt auch im Clip-Editor. **PRÜFEN** legt die Fälschung neben ihre Aufnahme:
+  zwei Bilder über einer Zeitleiste mit vier Stellen (01:30, 01:58, 02:30, 03:03; wo der Abspielkopf steht, ist eine Ansicht), und die
+  drei Funde **der Reihe nach** (technisch entschieden: so ist `forgery_cuts` ein Zähler, und zwar eine Ansicht, kein Zustand; als
+  Zustand hätte er jeden Zustand ab Sonntag vervierfacht, nur `forgery_proven` zählt für die Geschichte): erst der
+  Zeitstempel, dann der Regen, dann das Licht. Ein Klick außer der Reihe sagt nur „Da ist was anders. Aber ich geh der Reihe nach, sonst
+  übersehe ich was.“ Mit dem dritten Fund: `forgery_proven`, die Notiz „Die Fälschung, zerschnitten“, und Juno: „Lantern war schon weg.
+  Das kann ich zeigen.“ Die Bilder sind **Platzhalter**: das Bild von `cam31` mit seinen Feed-Figuren, im Code ausgeschnitten und in die
+  zehn Werte des Phosphors gebracht (in der Fälschung ein abgedunkelter Rollstuhl an Ashes Stelle, bei Juno der weiße Fleck der Maske).
+- **Das letzte Prüfen** (§8) ist dasselbe Werkzeug: Ein Klick auf das Deck öffnet die Protokolle, drei Nächte (Dienstag bis Donnerstag)
+  mit den Spitzen der Schläfer, darunter Junos Clips mit ihren Zeiten. Juno wählt einen Clip (eine Ansicht) und dann die Spitze dazu:
+  Kesslers Ring passt zu Dienstag 22:35 (41), der geschnittene Ring ebenso, Morrows Umschlag zu den Spitzen um 00:30, die weißen Träger zu
+  Donnerstag 23:30. Ihre Aufnahme aus CAM 31 und die Fälschung passen zu keiner, und Juno sagt, warum. Eine Übereinstimmung genügt, dann
+  läuft die Kette.
 - Die Hinweise des Kapitels sind seine eigenen (`Cutaway.hints(..., { act: "kapitel2" })`); die von Prolog und Kapitel 1 gelten nur
-  noch in ihren Akten.
+  noch in ihren Akten. Der Hinweis zur Fälschung gilt nur, während Juno sie im Editor ansieht, und erst nach den Hinweisen des Hauptfadens.
 - Geprüft wird wie in Kapitel 1 der Hauptweg mit geschlossenen Fäden (`off_<thread>`): `node tools/solve-act.mjs kapitel2 --full
   --set off_roof,off_zeitung,off_imai,off_traeger,off_varga,off_tide,off_motte,off_vesper`; die Klicks `tools/paths/kapitel2_main.json`,
   und `spiel.json` geht vom Titel bis zum Ende von Kapitel 2.
@@ -201,7 +220,7 @@ mitgenommen? Weil ich aus dir bin?“ Juno: „Ich hab dich mitgenommen, weil du
 
 Am Sonntag um 18:00 zeigen Nagi·was Nachrichten (NETZ, der Fernseher im LUCKY STATIC, das Radio) einen Clip aus CAM 31: Ein Mann im
 Rollstuhl tötet Ines, „der Piratensender, der sich LANTERN nennt“. Revier 9 jagt ihn. Wer die Nachricht im NETZ öffnet, hat den Clip
-im CACHE (`clip_forgery`).
+im CACHE (`clip_forgery`). Gebaut ist es anders: EVI legt ihn am Sonntag um 18:00 jedem in den CACHE (siehe „Im Mock gebaut“ unter §2.1).
 
 **Warum Nagi·wa damit durchkommt** (entschieden 2026-11-14): Niemand weiß, wer der Mann in Weiß ist, und Lantern kennt auch keiner;
 Nagi·wa kann behaupten, was es will. Das gilt auch, wenn Junos echter Clip vorher eine Nacht auf NINTH LIVE lief (§3.6): Ein Mann ohne
@@ -214,7 +233,7 @@ Bild genommen.“
 
 **Das Rätsel am Schreibtisch** (Prüfen, `kapitel0-design` §2.4): Juno legt `clip_forgery` neben `clip_ines_death` (den hat jeder, Kapitel 1, §8).
 Beide laufen auf zwei Zeitleisten untereinander, und Juno findet drei Stellen, jede mit einem Klick auf die Zeitleiste und einem auf
-die Stelle im Bild. Keine Fingerfertigkeit, keine Zeit; ein falscher Klick kostet nichts.
+die Stelle im Bild, der Reihe nach (so gebaut, 2026-11-15). Keine Fingerfertigkeit, keine Zeit; ein falscher Klick kostet nichts.
 
 | Stelle | Was man sieht |
 |---|---|
@@ -519,7 +538,8 @@ offen. Die Nebenfäden (`off_varga`, `off_tide`, `off_imai`, `off_haldane`, `off
 mit dem Hauptfaden (`off_main` und `know_flat` für die Fäden allein, wie in Kapitel 1).
 
 **Der Zustand:** neu im Hauptfaden `stick_dryer`, `quiet_dryer`, `know_flat`, `code_lerche`, `cache_note_serviette`,
-`cache_note_civic_rest`, `evi_knows`, `cache_clip_forgery`, `forgery_cuts` (0–3, im Editor) und `forgery_proven` mit seiner Notiz,
+`cache_note_civic_rest`, `evi_knows`, `cache_clip_forgery` (bei jedem ab Sonntag 18:00, also kein Zustand für sich), `forgery_cuts` (1–2,
+der Reihe nach; eine Ansicht, kein Zustand: Zustand ist erst `forgery_proven`, das der dritte Fund setzt) und `forgery_proven` mit seiner Notiz,
 `know_cable`, `stairs_open`, `lantern_found`, `led_quiet`, `e2`, `clip_ines_cut`; in den Fäden `varga2`, `imai2`,
 `haldane` und ein Schritt je Faden. Weiter gehen davon nur die Flags, die §2.1 nennt. Die Kameras, die ausfallen, und alles in §7 kosten nichts.
 
@@ -533,7 +553,7 @@ Die Hinweise spricht EVI (Prolog-Design §2.2). Die Tabelle nennt die schweren S
 | W1, der Code | „Ihr Haus hat ein Zahlenfeld an der Tür.“ | „Die Klingelkamera hängt direkt daneben.“ | „Öffne CAM 24 um halb acht. Da kommt ein Nachbar heim.“ |
 | W3/W4, der Flur | „Welche Tür ist ihre? Die Klinik weiß es, oder die von Civic Rest zeigen es dir.“ Dann: „Ihre Tür ist zu. Das bleibt sie nicht lange.“ | „Die von Civic Rest räumen die Wohnung aus. Schau in CAM 25.“ | „Warte, bis sie weg sind. Sonntag ab neun ist der Flur frei.“ |
 | W6, die Akte | „Die haben den Rechner genommen. Ines hat auf Papier geschrieben.“ | „Wo hebt man Papier auf, das niemand finden soll?“ | „Schau ins Gefrierfach.“ |
-| die Fälschung | „Das ist nicht, was wir gesehen haben.“ | „Leg die beiden Clips nebeneinander. Prüfen.“ | „Schau auf die Uhrzeit, den Regen und das Licht.“ |
+| die Fälschung | „Das ist nicht das, was wir gesehen haben.“ | „Leg die beiden Clips nebeneinander. PRÜFEN.“ | „Schau der Reihe nach auf die Uhrzeit, den Regen und das Licht.“ (gilt nur, solange Juno die Fälschung im Editor hat) |
 | L2–L5, Lantern | „Der Schirm war gekapert. Wer weiß, woher so was kommt?“ | „Der Mann auf dem Gerüst repariert den Schirm. Frag ihn.“ | „Folge dem Kabel, die Treppe unter dem Markt hinab.“ |
 | L3b, das Schloss | „Die Kette ist neu, und das Schloss ist von Nagi·wa.“ | „Ratz kennt jedes Schloss hier unten. Frag ihn.“ | „Ratz will deinen alten Ausweis, nur kurz. Der liegt im Karton unter deinem Bett, wenn du ihn nicht dabeihast.“ |
 | L4, das Floß | „Das Floß ist zu weit weg.“ | „Mit etwas Langem käme man ran.“ | „Nimm den Haken aus der Tasche. Hast du ihn nicht, hängt er neben dem Aufzug.“ |

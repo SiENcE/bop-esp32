@@ -2,6 +2,7 @@
 // (Saturday 10 to Monday 12 November), the way home at the start, Teo's last visit awake on Monday, the clock that stops on
 // Monday at 00:45 until everything is ready, decision 2 as far as it is built. The end: game/kapitel2_ende.js.
 //   e2              Entscheidung 2: sable | vesper | morrow | lantern | kept (so far built: vesper, kept)
+//   (the forgery and PRÜFEN: game/kapitel2_faelschung.js)
 //   (Ines' stick, the key to her wallet, without which Lantern can't send: Juno has it (stick_ines, kept from Chapter 1), it lies in
 //   dryer 6 again (stick_dryer), or Lantern has it, which needs no flag of its own: game/kapitel2_stick.js)
 // (what Chapter 1 hands on: `keep` of the act, kapitel2-design §2.1)
@@ -182,8 +183,16 @@ Cutaway.hints([
   { if: "!evi_knows", about: ["fridge", "door_4b", "gate"],
     text: ["Die haben den Rechner genommen. Ines hat auf Papier geschrieben.", "Wo hebt man Papier auf, das niemand finden soll?", "Geh in ihre Wohnung, 4B, und schau ins Gefrierfach."] },
   // the stick (game/kapitel2_stick.js): while Juno has it, Lantern can't send
-  { if: "stick_ines", about: ["dryer6"],
+  { if: ["stick_ines", "day=5"], about: ["dryer6"],
     text: ["Du hast noch ihren Schlüssel. Der aus der Metro sucht ihn bestimmt.", "Sie hat ihn in den Trockner gelegt. Dort sucht er ihn.", "Leg ihn in Trockner sechs zurück. Um halb eins holt er ihn."] },
+  { if: "stick_ines", about: ["dryer6"],
+    text: ["Du hast noch ihren Schlüssel. Lantern sucht ihn bestimmt.", "Sie hat ihn in den Trockner gelegt. Dort sucht er ihn.", "Leg ihn in Trockner sechs zurück. Um halb eins holt er ihn."] },
+  // the forgery (game/kapitel2_faelschung.js), only while Juno looks at it (in the clip editor or PRÜFEN) and nothing of the main thread
+  // waits but time and the clip: never needed, so its `about` has the ways on as the hints after it
+  { if: [{ or: ["deck_app=clip_clip_forgery", "deck_app=clip_clip_ines_death", "deck_app=pruef_faelschung"] }, "!forgery_proven"],
+    about: ["clip_check_clip_forgery", "clip_check_clip_ines_death", "pruef_faelschung_zeit", "pruef_faelschung_regen", "pruef_faelschung_licht",
+      "bed", "wait", "close", ...CLIP_WAYS, ...HOME],
+    text: ["Das ist nicht das, was wir gesehen haben.", "Leg die beiden Clips nebeneinander. PRÜFEN.", "Schau der Reihe nach auf die Uhrzeit, den Regen und das Licht."] },
   { if: ["day=7", "time>=00:45", "!e2"], about: ["wait", ...CLIP_WAYS, ...HOME],
     text: ["Was machst du mit dem Clip?", "Vesper zahlt am meisten. Er ist im CHAT.", "Du kannst ihn auch behalten. Drück WARTEN, dann fragt das Deck."] },
   { if: ["day=7", "time>=00:45", "e2"], about: ["wait", "protokolle", ...HOME],

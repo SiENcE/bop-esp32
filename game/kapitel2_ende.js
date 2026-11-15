@@ -1,8 +1,8 @@
 // Nagiwa: the end of Chapter 2 (docs/kapitel2-design.md §8), on blocks. Monday from 01:00: Lantern sends Ines' protocols, Juno lays them
 // beside her own recordings, and Teo doesn't wake up. One chain on which nothing branches, as Chapter 1's end:
 //   end_beat2    sent (the protocols are out, Juno at her deck) > found (the match: the rest goes on by itself)
-// So the times in it may lie between the ticks. [PLATZHALTER] the last check is a single click on the deck for now; the real one is the
-// clip editor's PRÜFEN (step 2, with the forgery): the protocols as a timeline against her CACHE, Kessler's ring the match everyone has.
+// So the times in it may lie between the ticks. The last check is PRÜFEN (game/pruefen.js): the protocols as a timeline over her CACHE's
+// clips, one picked (a view), then the spike where it matches; Kessler's ring is the match everyone has, more clips find more.
 "use strict";
 
 (function () {
@@ -18,41 +18,67 @@ Cutaway.moment("protokolle", { room: "deck", day: 7, from: "00:45", to: "01:00",
   { caption: "THEY DON'T SLEEP. THEY WORK.", at: "c", color: "#7cff9a", ms: 3200 },
   "Lantern. Er sendet.",
   { fade: "out", ms: 1200 },
+  { unset: "deck_app" },
   { goto: "k2_protokolle", at: AF.deck, face: "ne", transition: false },
   { fade: "in", ms: 1200 },
   "Ihre Protokolle liegen im NETZ, offen für alle. Tabellen, Nacht für Nacht.",
   "Das Brett lacht über den Mörder mit den Tabellen.",
 ] });
 
-// her flat at night, only the deck's screens lit (the look of Chapter 1's end); one thing to click: the deck
-Cutaway.room("k2_protokolle", { name: "Junos Wohnung", background: "flat_bg", props: AF.props, buttons: false, eviCorner: true, post: [{ deck_only: true }],
+// ---- the last check: Ines' protocols over the clips in Juno's CACHE (§8). Only clips count, and an anonymised one keeps its stamp
+const RING = ["Kesslers Ring. Dienstag, 22:35.", "Da ist eine Spitze. Einundvierzig Schläfer zur selben Sekunde.",
+  { if: "cache_note_serviette", then: ["Das ist die Zahl auf ihrer Serviette."] }];
+const MORROW = ["Morrows Umschlag, halb eins.", "Da ist auch eine Spitze. Die haben Morrow zugesehen, genau wie ich."];
+const TRAEGER = ["Die weißen Träger. Donnerstag, halb zwölf.", "Dreiunddreißig Schläfer, genau da, wo ich gefilmt hab."];
+Cutaway.i18n.declare("deck", ["PROTOKOLLE", "INES CALDER // REM, LOWER NINTH", "DI 6.11.", "MI 7.11.", "DO 8.11.",
+  "DI 22:31-22:37", "DI 22:34", "00:30-00:31", "DO 23:30-23:34", "FR 23:00-23:04"]);
+Nagiwa.checks.protokolle = { kind: "data", title: "PROTOKOLLE", label: "INES CALDER // REM, LOWER NINTH", if: "end_beat2=sent", done: "end_beat2=found",
+  nights: ["DI 6.11.", "MI 7.11.", "DO 8.11."], from: 21, to: 27,
+  spikes: [{ night: 0, at: "22:35", n: 41 }, { night: 1, at: "23:10", n: 9 }, { night: 1, at: "00:30", n: 17 }, { night: 2, at: "23:30", n: 33 }, { night: 2, at: "00:30", n: 19 }],
+  rows: [
+    { clip: "clip_kessler_ring", stamp: "DI 22:31-22:37", matches: { 0: RING } },
+    { clip: "clip_kessler_cut", stamp: "DI 22:34", matches: { 0: RING } },
+    { clip: "clip_morrow_bribe", stamp: "00:30-00:31", matches: { 2: MORROW, 4: MORROW } },
+    { clip: "clip_traeger", stamp: "DO 23:30-23:34", matches: { 3: TRAEGER } },
+    { clip: "clip_ines_death", stamp: "FR 23:00-23:04", matches: {}, wrong: ["In der alten Metro hat keiner zugesehen. Nur ich."] },
+    { clip: "clip_forgery", stamp: "FR 23:00-23:04", matches: {}, wrong: ["Die Fälschung gab es da noch gar nicht."] },
+  ],
+  none: ["Erst brauch ich einen Clip daneben."],
+  wrong: ["Da passt die Zeit nicht."],
+  found: [{ set: "end_beat2", value: "found" }, { replay: "k2_ende" }] };
+
+// what follows the match, whichever clip it was: written once, here, where the Schedule tab edits it (never reached by the clock itself: the
+// scene ends the chapter at 03:15)
+Cutaway.moment("k2_ende", { room: "k2_protokolle", day: 7, from: "03:30", to: "03:45", if: "~never", unseen: [], play: [
+  { wait: 900 },
+  { unset: "deck_app" }, { unset: "pruef_pick" },
+  "Die haben zugesehen. Als ich zugesehen hab.",
+  { say: "evi", text: "Wer?" },
+  "Alle, die schlafen.",
+  { say: "evi", text: "Dann haben die dich ersetzt. Nicht ich." },
+  "Meine Nachbarn.",
+  { wait: 1500 },
+  { time: "03:00" },
+  "Durch die Wand hör ich, wie das halbe Haus Luft holt. Alle zur selben Zeit.",
+  { wait: 1500 },
+  { time: "03:15" },
+  { notify: "becken3" },
+  { wait: 1200 },
+  "Das ist nicht Nagi·wa. Das ist Tinte.",
+  { fade: "out", ms: 2000 },
+  { end: "Kapitel 3: Lull (kommt später)" },
+] });
+
+// her flat at night, only the deck's screens lit (the look of Chapter 1's end); one thing to click: the deck, which opens the check
+Cutaway.room("k2_protokolle", { name: "Junos Wohnung", background: "flat_bg", props: AF.props, buttons: false, eviCorner: true, checkScreen: true, post: [{ deck_only: true }],
   walk: [[AF.deck[0] - 1, AF.deck[1] - 1, AF.deck[0] + 1, AF.deck[1] - 1, AF.deck[0] + 1, AF.deck[1] + 1, AF.deck[0] - 1, AF.deck[1] + 1]],
   light: { ambient: 0.38, color: "#8a9cff", lamps: AF.lamps.map((/** @type {any} */ { bake, ...lamp }) => lamp) },
   ambience: ["deck_fans"], music: { stop: true },
   hotspots: {
-    protokolle: { name: "Die Protokolle", poly: AF.deckPoly, if: "end_beat2=sent",
+    protokolle: { name: "Die Protokolle", poly: AF.deckPoly, if: ["end_beat2=sent", "!deck_app"],
       look: "Ines' Protokolle: REM-Spitzen, Nacht für Nacht, auf die Sekunde.",
-      use: [
-        "[MOCK] Hier leg ich die Protokolle neben meine Aufnahmen. Das Prüfen kommt noch.",
-        "Kesslers Ring. Dienstag, 22:35.",
-        "Da ist eine Spitze. Einundvierzig Schläfer zur selben Sekunde.",
-        { set: "end_beat2", value: "found" },
-        "Die haben zugesehen. Als ich zugesehen hab.",
-        { say: "evi", text: "Wer?" },
-        "Alle, die schlafen.",
-        { say: "evi", text: "Dann haben die dich ersetzt. Nicht ich." },
-        "Meine Nachbarn.",
-        { wait: 1500 },
-        { time: "03:00" },
-        "Durch die Wand hör ich, wie das halbe Haus Luft holt. Alle zur selben Zeit.",
-        { wait: 1500 },
-        { time: "03:15" },
-        { notify: "becken3" },
-        { wait: 1200 },
-        "Das ist nicht Nagi·wa. Das ist Tinte.",
-        { fade: "out", ms: 2000 },
-        { end: "Kapitel 3: Lull (kommt später)" },
-      ] },
+      use: ["Ich leg die Protokolle neben meine Aufnahmen.", { set: "deck_app", value: "pruef_protokolle" }, { sfx: "type" }] },
+    ...Nagiwa.checkHotspots("protokolle", { close: true }),
   } });
 
 // 03:15: a contact Juno doesn't know. [PLATZHALTER] its name (§14: BECKEN 3 or TINTE)

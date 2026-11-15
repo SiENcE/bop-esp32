@@ -6,7 +6,8 @@
 // He looks into the dryer every night at half past twelve while he hasn't got it, seen in CAM 23 (he comes over the water: the alley is a
 // jetty). A stick put back is always gone by the next evening (the user's decision, 2026-11-14): after his look it goes in the night unseen,
 // even while Juno sleeps; on Monday, when he has looked already (there is no night after it, and the clock stands at 00:45 in his
-// window), he takes it at once. Juno doesn't know his name until Sunday's news (§3.4): to her he is the one from the metro.
+// window), he takes it at once. Juno doesn't know his name until Sunday's news (§3.4, game/kapitel2_faelschung.js): to her he is the one
+// from the metro until then.
 // [PLATZHALTER] Lantern in CAM 23 is his figure from CAM 31 for now, not yet at the laundromat's scale (§10)
 "use strict";
 
@@ -60,7 +61,8 @@ const PUT_BACK = [
     else: [{ set: "stick_dryer" }, "So. Keiner weiß, dass ich hier war."] },
 ];
 dryer6.use = [{ if: "day>4", then: [
-  { if: "stick_ines", then: ["Hier lag er. Sie hat ihn für den aus der Metro hiergelassen.", { dialog: "stick_zurueck" }],
+  { if: "stick_ines", then: [{ if: "day=5", then: ["Hier lag er. Sie hat ihn für den aus der Metro hiergelassen."], else: ["Hier lag er. Sie hat ihn für Lantern hiergelassen."] },
+    { dialog: "stick_zurueck" }],
     else: [{ if: "stick_dryer", then: ["Er liegt drin. Wer ihn sucht, findet ihn jetzt."], else: ["Er ist kalt und leer. Er hat ihn."] }] },
 ], else: dryer6.use }];
 dryer6.with = { ...(dryer6.with ?? {}), stick: [{ if: ["day>4", "stick_ines"], then: PUT_BACK, else: ["Der gehört nicht in den Trockner. Noch nicht."] }] };
@@ -70,5 +72,6 @@ Cutaway.dialog("stick_zurueck", { main: { choices: [
 ] } });
 // what she knows of it now: the whisper in CAM 31 told her
 const stick = Cutaway.item.get("stick");
-stick.look = [{ if: "day>4", then: ["Das ist ihr Schlüssel zu der Wallet. Der aus der Metro braucht ihn, sonst kann er nichts damit anfangen."], else: [].concat(stick.look) }];
+stick.look = [{ if: "day=5", then: ["Das ist ihr Schlüssel zu der Wallet. Der aus der Metro braucht ihn, sonst kann er nichts damit anfangen."],
+  else: [{ if: "day>5", then: ["Das ist ihr Schlüssel zu der Wallet. Lantern braucht ihn, sonst kann er nichts damit anfangen."], else: [].concat(stick.look) }] }];
 })();
