@@ -39,9 +39,6 @@ ISO_MAPS.lantern_versteck = {
     { id: "zeitschriften", kit: "lv_magazines", at: [1.08, 1.85], foot: [0.3, 0.24], h: 0.22 },
     { id: "fernseher", kit: "lv_crt", at: [4.3, 1.75], foot: [0.5, 0.45], h: 0.8 },
     { id: "ghettoblaster", kit: "lv_boombox", at: [1.25, 0.6], foot: [0.4, 0.16], h: 0.22 },
-    // and more mess: a tower of dirty cups by the fridge, an old box of who knows what by the rack
-    { id: "tassen", kit: "cup_tower", at: [2.3, 0.6], foot: [0.25, 0.25], h: 0.45 },
-    { id: "karton", kit: "box_old", at: [4.35, 0.55], foot: [0.45, 0.35], h: 0.3 },
     // the two doors in the cut walls, hinted at by their sills (one walks over them)
     { id: "schwelle", kit: "lv_schwelle", at: [2.0, 2.3], foot: [0.9, 0.2], h: 0.04, block: false },
     { id: "kabinenschwelle", kit: "lv_schwelle", at: [4.8, 0.7], foot: [0.2, 0.9], h: 0.04, block: false },
