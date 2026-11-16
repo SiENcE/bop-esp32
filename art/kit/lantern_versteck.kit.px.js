@@ -5,8 +5,9 @@
 //   floor    p  plain screed, a joint every meter
 //   walls    lantern_versteck_wall  plain paint over a dark skirting
 //   props    lv_kitchen, lv_rack, lv_schwelle  the caravan's kitchen, the rack of senders, a door's sill (blocks)
-//            lv_magazines, lv_crt, lv_boombox      old magazines, a CRT on a crate of VHS tapes, a boombox (the nineties' junk)
-//   opening  lv_window              the bigger window onto the swamp
+//            lv_magazines, lv_crt, lv_boombox      old magazines, a monitor on a crate of VHS tapes, a boombox (the nineties' junk)
+//            lv_fridge              his fridge (plain: not Juno's with its kettle and Teo's photo)
+//   opening  lv_window, lv_poster   the bigger window onto the swamp; a Lull poster, defaced, darts in it
 //   (the floor and the walls carry the dirt and the litter)
 
 const KIT_LANTERN_VERSTECK = (() => {
@@ -70,6 +71,33 @@ const KIT_LANTERN_VERSTECK = (() => {
       return e > ah * 0.75 ? "0" : (a + e * 2) % 9 === 0 ? "7" : "0"
     },
   })
+  // on the wall over the bed: Nagi·wa's poster for Lull, SLEEP BETTER over a sleeper's face with the pale patch on her temple, defaced:
+  // a cross sprayed over the face, a corner torn off, and darts stuck in it (in the patch, the eye, the company's mark)
+  ISOKIT.opening("lv_poster", {
+    pad: 0.05,
+    paint(s, h, o) {
+      const { aw, ah } = o
+      o.memo.poster ??= ISOKIT.raster(aw + 2, ah + 2, (c) => {
+        const W = aw + 2, Hh = ah + 2
+        c.rect(0, 0, W, Hh, "h"); c.hline(0, 0, W, "x"); c.vline(0, 0, Hh, "x"); c.hline(0, Hh - 1, W, "x"); c.vline(W - 1, 0, Hh, "x")
+        c.rect(2, 2, Math.round(W * 0.38), Hh - 4, "H")                                                   // the picture's pale ground
+        const fx = Math.round(W * 0.21), fy = Math.round(Hh * 0.52), tx = Math.round(W * 0.42)
+        c.ellipse(fx, fy, 5, 6, "S"); c.ellipse(fx, fy - 5, 5, 2, "1"); c.vline(fx - 5, fy - 4, 6, "1")      // the sleeper: her face, her hair
+        c.hline(fx - 3, fy - 1, 2, "s"); c.hline(fx + 1, fy - 1, 2, "s"); c.hline(fx - 1, fy + 3, 2, "s")     // eyes closed, a smile
+        c.ellipse(fx + 4, fy - 3, 1, 1, "h"); c.px(fx + 4, fy - 3, "W")                                       // the Lull patch at her temple
+        TXT.draw(c, tx, 4, "SLEEP", "c", { font: "hud" })
+        TXT.draw(c, tx, 11, "BETTER", "c", { font: "hud" })
+        c.rect(tx, Hh - 7, 9, 3, "C"); c.hline(tx + 1, Hh - 6, 7, "v")                                         // the company's mark
+        c.line(fx - 6, fy - 7, fx + 6, fy + 6, "M"); c.line(fx + 6, fy - 7, fx - 6, fy + 6, "M")              // the cross sprayed over it
+        for (let i = 0; i < 5; i++) for (let j = 0; j < 5 - i; j++) c.px(W - 1 - i, Hh - 1 - j, "_")         // a corner torn off
+        for (const [dx, dy, fl] of [[fx + 4, fy - 3, "P"], [fx - 2, fy - 1, "v"], [tx + 4, Hh - 6, "P"]]) {
+          c.line(dx, dy, dx + 3, dy - 2, "6"); c.px(dx + 4, dy - 3, fl); c.px(dx + 4, dy - 2, fl); c.px(dx + 3, dy - 3, fl)   // darts
+          c.px(dx, dy, "k")
+        }
+      }, -1, -1)
+      return o.memo.poster(o.a, o.e)
+    },
+  })
   // a stack of old magazines: a faded cover on top, their edges in many dull colours
   ISOKIT.prop("lv_magazines", {
     draw(p, m) {
@@ -80,7 +108,7 @@ const KIT_LANTERN_VERSTECK = (() => {
         (a, e) => ["x", "A", "h", "w", "P", "G"][e % 6])
     },
   })
-  // the nineties: a fat CRT TV showing snow, on a crate of VHS tapes
+  // a monitor on a crate of VHS tapes: a dark casing, a thin frame, its picture glowing (a camera's view in his green and cyan, scanlines)
   ISOKIT.prop("lv_crt", {
     draw(p, m) {
       const [u0, v0] = m.at, [du, dv] = m.foot, H = m.h, C = H * 0.4
@@ -88,10 +116,15 @@ const KIT_LANTERN_VERSTECK = (() => {
         () => "O",
         (a, e) => (e % 4 === 3 ? "O" : a % 5 === 4 ? "k" : e % 4 === 1 && a % 5 === 2 ? "H" : "1"),
         (a, e) => (e % 4 === 3 ? "O" : a % 5 === 4 ? "k" : e % 4 === 1 && a % 5 === 2 ? "H" : "1"))
-      p.box(u0 + 0.04, v0 + 0.04, C, du - 0.08, dv - 0.08, H - C,
-        () => "g",
-        (a, e, o) => (a === o.aw - 1 ? "G" : "g"),
-        (a, e, o) => (a < 2 || a >= o.aw - 2 || e < 2 || e >= o.ah - 3 ? "g" : ((a * 7 + e * 13 + p.f * 5) % 3 ? "!H" : "!h")))
+      p.box(u0 + 0.02, v0 + 0.02, C, du - 0.04, dv - 0.04, H - C,
+        () => "1",
+        (a, e, o) => (a === o.aw - 1 ? "3" : e % 3 === 0 && a > 2 && a < o.aw - 3 ? "k" : "2"),            // its side: vents
+        (a, e, o) => {
+          if (a < 1 || a >= o.aw - 1 || e >= o.ah - 1) return "3"                                           // the frame
+          if (e < 2) return a === o.aw - 3 ? "!v" : "2"                                                     // the chin, its power light
+          if (e % 2 === 0) return (a + p.f) % 9 === 0 ? "!V" : "!c"                                         // the picture: scanlines
+          return (a * 3 + e * 5 + p.f) % 13 === 0 ? "!8" : a > o.aw * 0.4 && a < o.aw * 0.7 && e > o.ah * 0.3 ? "!7" : "!0"
+        })
     },
   })
   // a boombox: two speakers, the cassette deck between them, the handle
@@ -130,6 +163,33 @@ const KIT_LANTERN_VERSTECK = (() => {
       p.box(u0, v0, 0, du, dv, H,
         (lu, lv) => ((du > dv ? lv : lu) > (du > dv ? dv : du) * 0.4 && (du > dv ? lv : lu) < (du > dv ? dv : du) * 0.6 ? "!v" : "5"),
         () => "3", () => "3")
+    },
+  })
+  // his fridge, old and lived with (the user's wish, 2026-11-16: no kettle, no handle, but with character): a chrome strip across its
+  // doors with the maker's plate, magnets, a note held by one, stickers (a square of his station's green, a Lull patch crossed out),
+  // a dent, rust where the floor is wet; on its side a cable hanging from the back
+  ISOKIT.prop("lv_fridge", {
+    draw(p, m) {
+      const [u0, v0] = m.at, [du, dv] = m.foot, H = m.h
+      p.box(u0, v0, 0, du, dv, H,
+        () => "5",
+        (a, e, o) => (e <= 1 ? "2" : a === o.aw - 1 ? "5" : a === 3 && e > o.ah * 0.4 && e < o.ah - 4 ? "k" : a === 3 && e <= o.ah * 0.4 && e > o.ah * 0.4 - 6 ? "1" : "4"),
+        (a, e, o) => {
+          const gap = Math.round(o.ah * 0.68)
+          if (e <= 1) return "2"
+          if (e === gap) return "3"                                                                       // the gap between its doors
+          if (e === gap + 2 || e === gap + 3) return e === gap + 3 ? "6" : "x"                             // the chrome strip
+          if (e === gap + 2 && a >= 5 && a <= 9) return "h"
+          if (e >= gap + 1 && e <= gap + 4 && a >= 5 && a <= 9) return e === gap + 3 ? "H" : "h"           // the maker's plate on it
+          if (e >= 2 && e <= 4 && (a * 7) % 5 === 1) return "O"                                             // rust
+          if (Math.abs(a - 11) + Math.abs(e - (gap - 9)) * 1.5 < 2.2) return "4"                           // a dent
+          if (a >= 2 && a <= 6 && e >= o.ah - 11 && e <= o.ah - 6) return e === o.ah - 6 ? "x" : e % 2 ? "H" : "h"   // a note
+          if (a === 4 && e === o.ah - 5) return "q"                                                         // the magnet holding it
+          if (a >= 9 && a <= 12 && e >= o.ah - 10 && e <= o.ah - 7) return "!8"                             // his station's green sticker
+          if (Math.abs(a - 6) * 0.8 + Math.abs(e - (gap - 4)) * 1.4 < 2.6) return Math.abs(a - 6 - (e - gap + 4)) < 1 ? "M" : "V"   // a Lull patch, crossed out
+          for (const [mx, me, k] of [[11, gap - 3, "m"], [3, gap - 14, "v"], [12, gap - 16, "P"], [8, 8, "T"]]) if (a === mx && e === me) return k   // magnets
+          return a === 0 ? "6" : "5"
+        })
     },
   })
   ISOKIT.prop("lv_rack", {
