@@ -11,13 +11,13 @@
 // The way is checked on its own (off_lantern shuts it in the other runs: the half repair doesn't know, the screen doesn't tear), since its
 // steps would multiply every state of the chapter: tools/check.sh, the run "lantern" (Juno with the stick, the flat and the forgery done).
 // Lantern's and Pike's voices: dialog-style-guide §6 (drafts). [PLATZHALTER] Pike is a figure of the market's crowd, the output stage has
-// the tap's icon, the ride is a few lines before the goto (its picture: art/test/sumpf_fahrt_blocks.px.js, for approval), the rooms are
-// blocks, Lantern in his caravan is his feed figure; the words on the screen are a caption over the stutter until the street's picture shows
+// the tap's icon, the ride and the arrival are blocks (art/rooms/sumpf.px.js, from the sketch art/test/sumpf_fahrt_blocks.px.js), the
+// caravan inside is the old shop's iso block, Lantern in it is his feed figure; the words on the screen are a caption over the stutter until the street's picture shows
 // them (§13, 4)
 "use strict";
 
 (function () {
-const AS = Nagiwa.at.sumpf, AV = Nagiwa.at.lantern_versteck, AM = Nagiwa.at.drain_market;
+const AV = Nagiwa.at.lantern_versteck, AM = Nagiwa.at.drain_market;
 const L = (/** @type {string} */ text) => ({ say: "lantern_k2", text });
 const R = (/** @type {string} */ text) => ({ say: "reparatur", text });
 const RZ = (/** @type {string} */ text) => ({ say: "ratz", text });
@@ -86,18 +86,46 @@ market.datenfloss = { name: "DATA 1C/GB", rect: AM.datenflossRect, walkTo: AM.pi
     { set: "pike_met" },
   ], else: ["Warum sollte ich das Floß ranholen? Ich will keine Daten."] }] }] } };
 
-// ---- L4: the ride out to the drowned forest. [PLATZHALTER] a few lines; the ride seen from the side comes once its blocks are approved
+// ---- L4: the ride out to the drowned forest, seen from the side (game/rooms/sumpf.js). The first time Pike sounds Juno out, whether she is
+// for the sender or against it; her answers are choices without a flag (what he thinks of her changes nothing the solver sees). After
+// that the ride is short
 const RIDE = [
-  P("Setz dich in die Mitte. Und schau nicht ins Wasser."),
-  "Er stakt das Floß nach rechts aus dem Markt. Hinter dem Markt wird der Kanal breit.",
-  { goto: "sumpf", at: AS.arrive, face: "ne" },
-  "Über uns hören die Ringe auf. Da ist Himmel. Und es stehen Bäume im Wasser, zwischen den Häusern.",
+  "Ich steig auf. Er stakt das Floß nach rechts, aus dem Markt hinaus.",
+  { goto: "sumpf_fahrt" },
+  { if: "lantern_found", then: [P("Mitte."), "Ich weiß.", { wait: 3000 }], else: [
+    P("Setz dich in die Mitte."), { wait: 1500 },
+    { dialog: "pike_fahrt" },
+    "Über uns hören die Ringe auf. Da ist Himmel. Und Bäume, mitten in der Stadt.",
+    P("Da vorn hängen seine Lichter."),
+  ] },
+  { goto: "sumpf" },
 ];
-Nagiwa.talkTree("pike", [
-  ["„Hier. Die Endstufe.“", [{ remove: "endstufe" }, P("Die mit den Kühlrippen. Gut."), ...RIDE], undefined, "has:endstufe"],
-  ["„Fährst du mich raus?“", [P("Steig auf."), ...RIDE], undefined, ["ledger_ratz", "!has:endstufe"]],
-  ["„Was ist mit Ratz?“", [P("Ratz sagt, ich hätte ihn fressen wollen."), P("Ich frühstücke nie."), P("Und ich ess keine Ratten. Der Hals sieht das manchmal anders.")]],
-], "Später.");
+Cutaway.dialog("pike_fahrt", {
+  main: { enter: [P("Was willst du von ihm?")], choices: [
+    { text: "„Ich hab gesehen, was mit ihr passiert ist.“", goto: "sonst", then: [P("Gesehen. Wo?"), "Auf einer Kamera. Ich schau viel auf Kameras.",
+      P("Eine Glasserin also. Die verkaufen, was sie sehen."), "Das hier nicht."] },
+    { text: "„Ich hab was, das ihm gehört.“", if: "stick_ines", goto: "sonst", then: [P("Dann gib's mir. Ich bring's ihm."), "Nein. Ihm selbst.", P("..."), P("Gut.")] },
+    { text: "„Das sag ich ihm selbst.“", goto: "sonst", then: [P("Mhm. Ich stake trotzdem.")] },
+  ] },
+  sonst: { enter: [P("Und was machst du sonst? Ohne Grund kauft hier keiner bei Ratz.")], choices: [
+    { text: "„Ich seh mir Kameras an und verkauf, was ich seh.“", goto: "hoeren", then: [P("Ehrlich. Das ist selten auf dem Kanal.")] },
+    { text: "„Nichts Besonderes. Ich wohn im Kessel-Block.“", goto: "hoeren", then: [P("Da wohnen viele. Die meisten schlafen.")] },
+  ] },
+  hoeren: { enter: [P("Hörst du ihn manchmal? Den Sender.")], choices: [
+    { text: "„Am Sonntag hab ich den Schirm gesehen.“", goto: "end", then: [P("Zehn Sekunden."), "Länger glaubt einem eh keiner.", P("..."), P("Das sagt er auch.")] },
+    { text: "„Die Nachrichten sagen, er hat sie umgebracht.“", goto: "end", then: ["Seine Stange bleibt im Wasser stehen.", P("Sagen sie."),
+      "Ich hab gesehen, dass er's nicht war.", P("..."), P("Dann sag ihm das. Das hört er nicht oft.")] },
+    { text: "„Nein. Ich hör Kameras, kein Radio.“", goto: "end", then: [P("Kameras lügen auch."), "Die nicht. Die Leute, die sie schneiden."] },
+  ] },
+});
+// Pike on his raft, once Juno knows what he wants. A plain dialogue, not a talkTree: the ride ends the talk (a talkTree's topic would
+// come back to its choices, after the ride, in the swamp)
+Cutaway.dialog("pike", { main: [
+  { text: "„Hier. Die Endstufe.“", if: "has:endstufe", goto: "end", then: [{ remove: "endstufe" }, P("Die mit den Kühlrippen. Gut."), ...RIDE] },
+  { text: "„Fährst du mich raus?“", if: ["ledger_ratz", "!has:endstufe"], goto: "end", then: [P("Steig auf."), ...RIDE] },
+  { text: "„Was ist mit Ratz?“", then: [P("Ratz sagt, ich hätte ihn fressen wollen."), P("Ich frühstücke nie."), P("Und ich ess keine Ratten. Der Hals sieht das manchmal anders.")] },
+  { text: "Später.", silent: true, goto: "end" },
+] });
 
 // ---- L3b: Ratz has the output stage, and he gives it to Juno (never to the heron) for a copy of her old pass: his colony, the flaps in the
 // pipes under the Crown. Asked only once Pike has said what he wants (knowledge she lacks before)

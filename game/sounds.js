@@ -8,6 +8,7 @@
 //   ambience (rooms' loops)     rain_glass, city_far, neon_buzz, fridge_hum, deck_fans, feed_hiss, feed_rain
 //   the Drain Market            its loops at their places (the crowd, the wok, the canal, the roofs' ACs, the pillar) and
 //                               one-shots from its stalls (haggling, cleavers, the wok tossed, the loudspeaker)
+//   the swamps                  the water and the insects as loops, frogs, drops and a bird far off by chance (rooms/sumpf.js)
 // Hear them all at once: node tools/render-sounds.mjs (writes build/sounds/).
 "use strict";
 
@@ -91,6 +92,16 @@
   S("markt_stimmen_c", { loop: { noise: { filter: "bandpass", freq: 480, q: 0.8 }, gain: 0.07, wobble: [0.23, 0.4] } });
   S("wok_zischen", { loop: { noise: { filter: "highpass", freq: 2600, q: 0.6 }, gain: 0.05, wobble: [0.9, 0.3], crackle: 0.35 } });   // oil spitting
   S("kanal_wasser", { loop: { noise: { filter: "lowpass", freq: 520, q: 0.7 }, gain: 0.05, wobble: [0.09, 0.55] } });    // the canal lapping
+  // ---------------------------------------------------------------- the swamps (game/rooms/sumpf.js): the water at the raft, the insects
+  // in the trees; now and then a frog, a deeper one, a drop from the moss, once in a while a bird far off
+  S("sumpf_wasser", { loop: { noise: { filter: "lowpass", freq: 640, q: 0.9 }, gain: 0.045, wobble: [0.18, 0.6] } });
+  S("sumpf_grillen", { loop: { noise: { filter: "bandpass", freq: 5200, q: 7 }, gain: 0.012, wobble: [6.5, 0.7] } });
+  S("frosch", { tone: [0, 140].map((at) => ({ wave: "square", from: 190, to: 150, ms: 70, gain: 0.04, at })),
+    noise: [0, 140].map((at) => ({ filter: "bandpass", from: 700, q: 6, ms: 60, gain: 0.05, at })) });
+  S("frosch_tief", { tone: [{ wave: "triangle", from: 92, to: 70, ms: 260, attack: 30, gain: 0.12 }], noise: [{ filter: "lowpass", from: 300, ms: 220, gain: 0.05 }] });
+  S("tropfen", { tone: [{ wave: "sine", from: 1500, to: 900, ms: 60, gain: 0.05 }, { wave: "sine", from: 700, to: 500, ms: 120, gain: 0.025, at: 40 }] });
+  S("vogel_fern", { tone: [{ wave: "sawtooth", from: 620, to: 430, ms: 260, attack: 20, gain: 0.025 }],
+    noise: [{ filter: "bandpass", from: 1300, to: 900, q: 5, ms: 260, gain: 0.05 }] });
   S("dach_luefter", { loop: { noise: { filter: "bandpass", freq: 210, q: 2.2 }, tone: { wave: "triangle", freq: 61 }, gain: 0.03, wobble: [0.6, 0.15] } });   // the ACs on the roofs
   S("pfeiler_brummen", { loop: { tone: { wave: "sine", freq: 55 }, gain: 0.04 } });                                       // the city's pillar
   // the market's other tunes (tunes at a place: a theme of game/music.js with a player of its own, beside the wok's radio):

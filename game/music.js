@@ -13,6 +13,7 @@
 //   wokradio: the old song on the radio at HOT WOK in the Drain Market, heard at its place through a small speaker;
 //   markt_ankunft: the view down into the market from the stairs as one arrives, its pentatonic, ending on the market whole.
 //   pachinko, strassenmusik: two of the market's other tunes at their places (a machine's jingle, a busker's erhu).
+//   sumpf: the swamps, the ride on Pike's raft and Lantern's lights (game/rooms/sumpf.js): calm and mystical, a flute over a soft pad.
 // Stingers: "clue" (a moment caught), "witness" (the screen says JUNO.: everything else stops for it).
 // Listen: node lib/cutaway/tools/render-music.mjs index.html --out build/music/juno.wav --steps '[...]'
 "use strict";
@@ -85,6 +86,31 @@
         drone: bars(hold("D2+A2"), hold("D2+A2"), hold("D2+Bb2"), hold("D2+A2")),
         bell: bars("A5 . . . . . . . . . . . . . . .", ". . . . . . . . . . . . . . . .", ". . . . . . . . F5 . . . . . . .", ". . . . . . . . . . . . E5 . . ."),
         pulse: bars("D2 . . . D2 . . . D2 . . . D2 . . .", "D2 . . . D2 . . . D2 . . . D2 . . .", "D2 . . . D2 . . . D2 . . . D2 . . .", "D2 . . . D2 . . . D2 . . . C2 . C#2 ."),
+      } },
+    },
+  });
+
+  // ---------------------------------------------------------------- the swamps: the ride on Pike's raft and Lantern's lights
+  // Mystical and calm (the user's wish, 2026-11-16): D Dorian at 56 bpm, a low drone on D, a soft pad drifting through Dsus2, F over C,
+  // G over D and A minor, a breathy flute that sings a little and stops again, a bell now and then like a lantern seen through the trees.
+  I("sumpf_pad", { type: "sub", wave: "triangle", voices: 3, detune: 9, filter: { cutoff: 520, q: 1 }, amp: { a: 2.2, d: 1, s: 0.9, r: 3.5 }, gain: 0.05, reverb: 0.8 });
+  I("sumpf_flute", { type: "sub", wave: "sine", amp: { a: 0.35, d: 0.6, s: 0.75, r: 1.6 }, vibrato: { rate: 4.8, depth: 11, delay: 0.5, rise: 0.8 },
+    bend: { from: -40, time: 0.2 }, gain: 0.07, reverb: 0.75, delay: 0.35, pan: -0.1 });
+  Cutaway.score.theme("sumpf", {
+    tempo: 56, key: "D",
+    tracks: { drone: { inst: "drone" }, pad: { inst: "sumpf_pad" }, flute: { inst: "sumpf_flute" }, bell: { inst: "glassbell" } },
+    sections: {
+      a: { bars: 4, next: "b", tracks: {
+        drone: bars(hold("D2+A2"), hold("D2+A2"), hold("D2+G2"), hold("D2+A2")),
+        pad: bars(hold("D3+A3+E4"), hold("C3+F3+A3+E4"), hold("D3+G3+B3"), hold("C3+E3+A3")),
+        flute: bars(". . . . A4 - - - - - - - E5 - D5 -", "C5 - - - - - - - . . . . . . . .", "B4 - - - D5 - - - A4 - - - - - - -", ". . . . . . . . . . . . . . . ."),
+        bell: bars(". . . . . . . . . . . . . . . .", ". . . . . . . . . . . . B5 . . .", ". . . . . . . . . . . . . . . .", ". . . . . . . . E6 . . . . . . ."),
+      } },
+      b: { bars: 4, next: "a", tracks: {
+        drone: bars(hold("D2+A2"), hold("D2+A2"), hold("D2+G2"), hold("D2+A2")),
+        pad: bars(hold("D3+A3+E4"), hold("Bb2+F3+A3+D4"), hold("C3+G3+E4"), hold("D3+A3+E4")),
+        flute: bars(". . . . . . . . . . . . . . . .", "F5 - - - E5 - - - D5 - - - - - - -", ". . . . . . . . C5 - B4 - A4 - - -", "- - - - - - - - . . . . . . . ."),
+        bell: bars(". . . . . . . . A5 . . . . . . .", ". . . . . . . . . . . . . . . .", ". . . . . . . . . . . . . . . .", ". . . . . . . . . . . . D6 . . ."),
       } },
     },
   });

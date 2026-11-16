@@ -142,9 +142,14 @@ es nicht mehr, §7).
   Kanal; die Treppe hinab bleibt zu. Mit `know_cable` zieht der Haken das Floß an den Rand, und Pike (Figur `pike`, abends auf dem Floß; seine
   Planke ist eine eigene Gehfläche, mit einem Schlitz an den Rand angebunden) sagt, was er will (`pike_met`). Ratz gibt die Endstufe (das Ding
   `endstufe`) für eine Kopie des Ausweises (sein eigenes Gespräch, solange `pike_met` und noch kein `ledger_ratz`); gibt Juno sie Pike, stakt
-  er sie hinaus, und danach jederzeit („Fährst du mich raus?“, solange sie sie nicht mehr hat). Die Fahrt sind vorerst ein paar Zeilen vor dem
-  Wechsel; ihre Blockskizze von der Seite ist `art/test/sumpf_fahrt_blocks.px.js` (zur Freigabe). Im `sumpf` ist das Floß der Weg zurück und
-  der Wohnwagen die Tür zu Lantern; beim ersten Mal sitzt er drin und will nicht gefunden werden (`lantern_found=found`). Den Ausweis gibt der
+  er sie hinaus, und danach jederzeit („Fährst du mich raus?“, solange sie sie nicht mehr hat; Pikes Gespräch ist ein einfacher Dialog, kein
+  `talkTree`, damit die Fahrt es beendet). **Die Fahrt** ist eine Bühne von der Seite (`sumpf_fahrt`, `game/rooms/sumpf.js`, auf Blöcken aus
+  `art/rooms/sumpf.px.js`, das aus der Skizze `art/test/sumpf_fahrt_blocks.px.js` kommt): Die Ebenen ziehen als Props mit `scroll` vorbei,
+  das Floß mit Pike und Juno ist eine Animation, die Zeilen stehen oben. Beim ersten Mal fühlt Pike Juno auf den Zahn (der Dialog `pike_fahrt`,
+  drei Fragen mit Wahl, ohne Flag), danach kurz. Dazu die Melodie `sumpf` (`game/music.js`: D-dorisch, 56 bpm, eine Flöte über einer weichen
+  Fläche und einem tiefen Grundton, ab und zu eine Glocke) und die Geräusche des Sumpfs (`game/sounds.js`: das Wasser und die Insekten als
+  Schleifen, Frösche, Tropfen und ein ferner Vogel zufällig). **Die Ankunft** `sumpf` ist eine Bühne von der Seite, auf der niemand geht: Ein
+  Klick auf das Floß führt zurück zum Markt, einer auf den Wohnwagen zu Lantern; beim ersten Mal sitzt er drin und will nicht gefunden werden (`lantern_found=found`). Den Ausweis gibt der
   Karton unter dem Bett und den Haken die Wand am Aufzug in Kapitel 2 auch dem, der in Kapitel 1 nie aufs Dach ging, und Juno kann beides
   jederzeit mitnehmen (vom Nutzer entschieden 2026-11-15). Nur die Solver-Läufe, in denen dieser Weg zu ist (`off_lantern`), schließen Karton und
   Haken mit, wie Kapitel 1 es mit dem Dach tut (`off_roof`). Lanterns Gespräch (`Nagiwa.talkTree`): „Ich hab
@@ -152,8 +157,9 @@ es nicht mehr, §7).
   und „Ich geh wieder.“. Gibt Juno ihm den Stick, hat er ihn (wie aus dem Trockner), `lantern_found=ally`, und er wechselt zum Du („Sag's
   nicht. Ich will's nicht wissen müssen.“). „Ich hab eine Aufnahme.“ kommt mit Entscheidung 2. Am Montag fragt das Brett, wer den Schirm
   gesehen hat. Die Hinweise zu diesem Weg gelten, solange Juno den Stick hat, Schritt für Schritt (der Trockner bleibt der kürzere Weg).
-  **Platzhalter:** Pike ist eine Figur aus der Menge des Markts, die Endstufe hat das Bild des Abzweigers, die Räume `sumpf` und
-  `lantern_versteck` sind noch die alten Blöcke (Steg und Laden), Lantern ist seine Feed-Figur, das Kabel ist das der Gasse.
+  **Platzhalter:** Pike ist auf dem Markt eine Figur aus der Menge, die Endstufe hat das Bild des Abzweigers, die Fahrt und die Ankunft sind
+  Blöcke, `lantern_versteck` ist noch der Iso-Block des Ladens, Lantern ist seine Feed-Figur. Vom Markt fährt das Floß noch nicht sichtbar
+  ab (eine Zeile, dann der Wechsel): Dafür muss das gemalte Floß im Markt ein eigenes Teil werden.
 - Die Hinweise des Kapitels sind seine eigenen (`Cutaway.hints(..., { act: "kapitel2" })`); die von Prolog und Kapitel 1 gelten nur
   noch in ihren Akten. Der Hinweis zur Fälschung gilt nur, während Juno sie im Editor ansieht, und erst nach den Hinweisen des Hauptfadens.
 - Geprüft wird wie in Kapitel 1 der Hauptweg mit geschlossenen Fäden (`off_<thread>`): `node tools/solve-act.mjs kapitel2 --full

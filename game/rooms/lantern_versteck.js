@@ -12,7 +12,7 @@
     ambience: ["deck_fans", "kanal_wasser"], music: { theme: "juno", intensity: 0.15 },
     hotspots: {
       door: { name: "Tür", poly: A.doorPoly, walkTo: A.door, face: "nw", look: "Draußen schaukeln die Pontons, und Pike wartet auf seinem Floß.",
-        use: [{ goto: "sumpf", at: Nagiwa.at.sumpf.end, face: "sw" }] },
+        use: [{ goto: "sumpf" }] },
       sender: { name: "Sender", poly: A.senderPoly, walkTo: A.talk, face: "ne",
         look: ["Da laufen Bildschirme mit Kameras, die keiner mehr kennt.", "Mittendrin steht ein Kasten mit Antennen. Das ist der Sender."] },
       window: { name: "Fenster", poly: A.windowPoly, walkTo: A.talk, face: "ne",

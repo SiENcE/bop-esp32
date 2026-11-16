@@ -1,23 +1,59 @@
-// sumpf: the drowned forest at the edge, where Pike's raft ties up at Lantern's caravan on pontoons (docs/kapitel2-design.md §3.5 L5, §9.2),
-// on blocks: its picture, walk area, props and lamps come from the bake (game/rooms/sumpf.layout.js, Nagiwa.at.sumpf). [PLATZHALTER] the
-// picture is still the old jetty's (a jetty, the cable along a wall, a raft beyond): the "stairs" are where Pike's raft lies, the raft beyond
-// is the caravan. What Juno does here (the caravan's door, the raft back): game/kapitel2_lantern.js.
+// The swamps (docs/kapitel2-design.md §3.5 L4, L5; decided 2026-11-16), on blocks (art/rooms/sumpf.px.js): two stages seen from the side,
+// where Juno sits on Pike's raft and nobody walks (observe: the one played isn't in the picture, she sits on the raft's canvas):
+//   sumpf_fahrt  the ride out of the Drain Market to the drowned forest: the planes scroll past the raft at their own speeds, the talk
+//                runs at the top (what is said: game/kapitel2_lantern.js)
+//   sumpf        the arrival: the raft tied up at the walk of planks, Lantern's caravan on its pontoons, his green lanterns in the trees;
+//                a click on the caravan takes Juno in (lantern_versteck, an iso room), one on the raft back to the market
+// The swamp's sounds: the water and the insects as loops, and by chance a frog, a drop, a bird far off (heard only while a swamp shows;
+// nothing is saved, nothing waits for them). Its melody: the theme "sumpf" (game/music.js).
 "use strict";
 
 (function () {
-  const A = Nagiwa.at.sumpf;
+  const F = Nagiwa.at.sumpf_fahrt, A = Nagiwa.at.sumpf;
+  const RAIN = { kind: "rain", rect: [0, 0, 320, 180], count: 60, color: "#41547a", speed: 130, slant: 0.25, length: 4 };
+  Cutaway.room("sumpf_fahrt", {
+    name: "Auf dem Kanal", background: "sumpf_fahrt_bg", observe: true, buttons: false, lines: "top", label: true,
+    props: [
+      { id: "far", image: "sumpf_fahrt_far", at: F.far, anchor: [0, 0], baseline: 1, scroll: -24 },
+      { id: "mid", image: "sumpf_fahrt_mid", at: [0, 0], anchor: [0, 0], baseline: 2, scroll: -48 },
+      { id: "weed", image: "sumpf_fahrt_weed", at: F.weed, anchor: [0, 0], baseline: 3, scroll: -48 },
+      { id: "floss", image: "sumpf_fahrt_floss", at: F.floss, anchor: [0, 0], baseline: 4 },
+      { id: "near", image: "sumpf_fahrt_near", at: [0, 0], anchor: [0, 0], baseline: 999, scroll: -96 },
+    ],
+    fx: [RAIN],
+    ambience: ["sumpf_wasser", "sumpf_grillen"], music: { theme: "sumpf", intensity: 0.5 },
+    hotspots: {},
+  });
   Cutaway.room("sumpf", {
-    name: "Die Sümpfe", background: "sumpf_bg",
-    walk: A.walk, holes: A.holes, props: A.props,
-    light: { ambient: 0.55, lamps: A.lamps.map((/** @type {any} */ { bake, zone, ...lamp }) => lamp) },
-    ambience: ["kanal_wasser", "city_far"], music: { theme: "juno", intensity: 0.2 },
+    name: "Bei Lantern", background: "sumpf_bg", observe: true, lines: "top", label: true,
+    props: [{ id: "floss", image: "sumpf_floss", at: A.floss, anchor: [0, 0], baseline: 4 }],
+    fx: [{ ...RAIN, count: 40 }],
+    ambience: ["sumpf_wasser", "sumpf_grillen"], music: { theme: "sumpf", intensity: 0.4 },
     hotspots: {
-      floss: { name: "Pikes Floß", poly: A.stairsPoly, walkTo: A.stairs, face: "nw",
-        look: ["Pike wartet auf seinem Floß. Er steht ganz still und schaut ins Wasser.", "Vom Markt hört man hier nichts mehr."] },
-      cable: { name: "Kabel", poly: A.cableLine, walkTo: A.cable, face: "nw",
-        look: ["Das Kabel kommt über das Wasser und endet am Wohnwagen.", "Es leuchtet grün, so grün wie die Schrift auf dem Schirm."] },
-      wohnwagen: { name: "Wohnwagen", poly: A.raftPoly, walkTo: A.end, face: "ne",
-        look: ["Ein Wohnwagen auf Pontons, voller Antennen. Hinter einem Fenster brennt grünes Licht.", "Hier stand mal eine ganze Straße. Jetzt stehen Bäume zwischen den Häusern, bis zum ersten Stock im Wasser."] },
+      wohnwagen: { name: "Wohnwagen", poly: A.wohnwagenPoly,
+        look: ["Ein alter Camper auf Pontons, bis aufs Dach vollgepackt: Solarpaneele, eine Tonne, Pflanzen, Antennen.", "Hinter der offenen Tür brennt grünes Licht. Das Kabel geht hinein."] },
+      floss: { name: "Pikes Floß", poly: A.flossPoly,
+        look: ["Pike steht auf seinem Floß, auf die Stange gestützt, und schaut ins Wasser.", "In den Bäumen hängen kleine grüne Laternen. Seine Lichter."] },
+    },
+  });
+
+  const pick = (/** @type {string[]} */ list) => list[Math.floor(Math.random() * list.length)];
+  const between = (/** @type {number} */ a, /** @type {number} */ b) => a + Math.random() * (b - a);
+  const kinds = [
+    { every: [2500, 7000], play: () => pick(["frosch", "frosch", "frosch_tief"]) },
+    { every: [3000, 8000], play: () => "tropfen" },
+    { every: [20000, 40000], play: () => "vogel_fern" },
+  ].map((k) => ({ ...k, next: between(k.every[0], k.every[1]) }));
+  Cutaway.ui.addLayer({
+    z: 0,
+    update(/** @type {number} */ dt) {
+      const id = Cutaway.scene.room?.id;
+      if ((id !== "sumpf" && id !== "sumpf_fahrt") || !Cutaway.audio.ctx) return;
+      for (const k of kinds) {
+        if ((k.next -= dt) > 0) continue;
+        k.next = between(k.every[0], k.every[1]);
+        Cutaway.sfx.play(k.play());
+      }
     },
   });
 })();
