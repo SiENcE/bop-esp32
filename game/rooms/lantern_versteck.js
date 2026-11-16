@@ -1,6 +1,6 @@
 // lantern_versteck: Lantern's caravan from the inside, his home and his sender (docs/kapitel2-design.md §3.5 L5, §9.2; the user's layout,
 // 2026-11-16), on blocks: its picture, walk area, props and lamps come from the bake (game/rooms/lantern_versteck.layout.js,
-// Nagiwa.at.lantern_versteck). The bed at the back against the left wall, a Lull poster over it with darts in it; along the long side wall the kitchen with
+// Nagiwa.at.lantern_versteck). The bed at the back against the left wall, his neon poster against Lull over it, an LED ticker running along its foot; along the long side wall the kitchen with
 // its window and the fridge, then his monitors and deck and the rack of senders; the door to the cab at the front, only hinted at (shut:
 // nobody goes there); the sliding door out to the pontoon in the middle of the near side.
 // Lantern and his talk: game/kapitel2_lantern.js.
@@ -10,7 +10,7 @@
   const A = Nagiwa.at.lantern_versteck;
   Cutaway.room("lantern_versteck", {
     name: "Lanterns Wohnwagen", background: "lantern_versteck_bg",
-    walk: A.walk, holes: A.holes, props: A.props,
+    walk: A.walk, holes: A.holes, props: [...A.props, { id: "ticker", image: "lantern_versteck_ticker", at: A.tickerAt, anchor: [0, 0], baseline: 1 }],
     light: { ambient: 0.6, lamps: A.lamps.map((/** @type {any} */ { bake, zone, ...lamp }) => lamp) },
     ambience: ["deck_fans", "sumpf_regen"], music: { theme: "sumpf", intensity: 0.3 },
     hotspots: {
@@ -29,7 +29,7 @@
       bett: { name: "Bett", poly: A.bettPoly, walkTo: A.arrive, face: "nw",
         look: ["Eine Matratze quer im Heck, eine Decke darüber.", "Daneben eine Rampe aus Brettern, für den Stuhl."] },
       plakat: { name: "Plakat", poly: A.plakatPoly, walkTo: A.arrive, face: "nw",
-        look: ["Ein Plakat für Lull: SLEEP BETTER. Jemand hat ein Kreuz über das Gesicht gesprüht.", "Drei Wurfpfeile stecken drin. Einer genau im Pflaster."] },
+        look: ["WAKE UP!, in Neon. Darunter läuft eine Leuchtschrift: STAY AWAKE, LULL LIES.", "Er hat sich sein eigenes Plakat gemacht. Gegen das von Nagi·wa."] },
       kabine: { name: "Fahrerkabine", poly: A.kabinePoly, walkTo: A.talk, face: "se",
         look: "Die Tür nach vorn zur Fahrerkabine ist zu.", use: ["Die Tür ist zu. Und das ist sein Wagen, nicht meiner."] },
     },

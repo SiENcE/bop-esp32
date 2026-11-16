@@ -7,7 +7,7 @@
 //   props    lv_kitchen, lv_rack, lv_schwelle  the caravan's kitchen, the rack of senders, a door's sill (blocks)
 //            lv_magazines, lv_crt, lv_boombox      old magazines, a monitor on a crate of VHS tapes, a boombox (the nineties' junk)
 //            lv_fridge              his fridge (plain: not Juno's with its kettle and Teo's photo)
-//   opening  lv_window, lv_poster   the bigger window onto the swamp; a Lull poster, defaced, darts in it
+//   opening  lv_window, lv_poster   the bigger window onto the swamp; his neon poster against Lull (its ticker: art/rooms/lantern_versteck.px.js)
 //   (the floor and the walls carry the dirt and the litter)
 
 const KIT_LANTERN_VERSTECK = (() => {
@@ -71,30 +71,27 @@ const KIT_LANTERN_VERSTECK = (() => {
       return e > ah * 0.75 ? "0" : (a + e * 2) % 9 === 0 ? "7" : "0"
     },
   })
-  // on the wall over the bed: Nagi·wa's poster for Lull, SLEEP BETTER over a sleeper's face with the pale patch on her temple, defaced:
-  // a cross sprayed over the face, a corner torn off, and darts stuck in it (in the patch, the eye, the company's mark)
+  // on the wall over the bed: his own poster against Lull, colourful and lit (the user's wish, 2026-11-16): a deep purple ground glowing
+  // magenta round its words, a neon frame in magenta and cyan that stutters now and then, WAKE UP in magenta neon, a small lantern in
+  // his green; along its foot a dark band where an LED ticker runs (lantern_versteck_ticker, a sprite of its own laid over it: the
+  // room's picture has only twelve frames)
   ISOKIT.opening("lv_poster", {
     pad: 0.05,
     paint(s, h, o) {
-      const { aw, ah } = o
+      const { aw, ah, f } = o
       o.memo.poster ??= ISOKIT.raster(aw + 2, ah + 2, (c) => {
         const W = aw + 2, Hh = ah + 2
-        c.rect(0, 0, W, Hh, "h"); c.hline(0, 0, W, "x"); c.vline(0, 0, Hh, "x"); c.hline(0, Hh - 1, W, "x"); c.vline(W - 1, 0, Hh, "x")
-        c.rect(2, 2, Math.round(W * 0.38), Hh - 4, "H")                                                   // the picture's pale ground
-        const fx = Math.round(W * 0.21), fy = Math.round(Hh * 0.52), tx = Math.round(W * 0.42)
-        c.ellipse(fx, fy, 5, 6, "S"); c.ellipse(fx, fy - 5, 5, 2, "1"); c.vline(fx - 5, fy - 4, 6, "1")      // the sleeper: her face, her hair
-        c.hline(fx - 3, fy - 1, 2, "s"); c.hline(fx + 1, fy - 1, 2, "s"); c.hline(fx - 1, fy + 3, 2, "s")     // eyes closed, a smile
-        c.ellipse(fx + 4, fy - 3, 1, 1, "h"); c.px(fx + 4, fy - 3, "W")                                       // the Lull patch at her temple
-        TXT.draw(c, tx, 4, "SLEEP", "c", { font: "hud" })
-        TXT.draw(c, tx, 11, "BETTER", "c", { font: "hud" })
-        c.rect(tx, Hh - 7, 9, 3, "C"); c.hline(tx + 1, Hh - 6, 7, "v")                                         // the company's mark
-        c.line(fx - 6, fy - 7, fx + 6, fy + 6, "M"); c.line(fx + 6, fy - 7, fx - 6, fy + 6, "M")              // the cross sprayed over it
-        for (let i = 0; i < 5; i++) for (let j = 0; j < 5 - i; j++) c.px(W - 1 - i, Hh - 1 - j, "_")         // a corner torn off
-        for (const [dx, dy, fl] of [[fx + 4, fy - 3, "P"], [fx - 2, fy - 1, "v"], [tx + 4, Hh - 6, "P"]]) {
-          c.line(dx, dy, dx + 3, dy - 2, "6"); c.px(dx + 4, dy - 3, fl); c.px(dx + 4, dy - 2, fl); c.px(dx + 3, dy - 3, fl)   // darts
-          c.px(dx, dy, "k")
-        }
+        c.rect(0, 0, W, Hh, "u"); c.rect(1, 1, W - 2, Math.round(Hh * 0.45), "U")                        // the ground, lighter above
+        for (let y = 2; y < Hh - 10; y++) for (let x = 2; x < W - 2; x++) if ((x + y) % 3 === 0 && Math.abs(x - W * 0.4) < W * 0.3 && y < Hh * 0.6) c.px(x, y, "n")   // the glow round the words
+        TXT.draw(c, 4, 3, "WAKE", "!m", { font: "hud" })
+        TXT.draw(c, 8, 10, "UP!", "!m", { font: "hud" })
+        const lx = W - 9, ly = 5                                                                          // a small lantern in his green
+        c.hline(lx + 1, ly, 3, "!7"); c.rect(lx, ly + 1, 5, 6, "!8"); c.rect(lx + 1, ly + 2, 3, 4, "!9"); c.hline(lx, ly + 7, 5, "!7")
+        c.rect(1, Hh - 10, W - 2, 8, "k")                                                                 // the ticker's band
       }, -1, -1)
+      const W = aw + 2, Hh = ah + 2, x = o.a + 1, y = Hh - 1 - (o.e + 1)
+      const edge = x === 0 || y === 0 || x === W - 1 || y === Hh - 1
+      if (edge) return (f % 12 === 7 || f % 12 === 8) && (x + y) % 3 === 0 ? "M" : (x + y) % 6 < 3 ? "!m" : "!v"   // the neon frame, stuttering
       return o.memo.poster(o.a, o.e)
     },
   })

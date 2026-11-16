@@ -59,7 +59,8 @@ Nagiwa.at = {
     wohnwagenPoly: [170, 146, 170, 88, 176, 72, 212, 72, 214, 82, 270, 82, 290, 106, 308, 112, 308, 146],
     flossPoly: [40, 170, 40, 150, 52, 150, 54, 70, 72, 70, 74, 150, 88, 150, 90, 126, 104, 126, 106, 150, 138, 150, 138, 170] },
   // Lantern's hide, on blocks (art/rooms/lantern_versteck.map.js, game/rooms/lantern_versteck.layout.js); he sits at "lantern"
-  lantern_versteck: fromLayout(Nagiwa.layouts.lantern_versteck),
+  // where the LED ticker lies over his poster (art/rooms/lantern_versteck.px.js prints it, TICKER_AT, from the poster's opening)
+  lantern_versteck: { ...fromLayout(Nagiwa.layouts.lantern_versteck), tickerAt: [88, 45] },
   // CAM 25 is the landing's own picture under the feed's filter, as CAM 14 is the 14th floor's (one place, one picture), the camera left
   // out of its own picture; the two in white stand at 4B and go to the stairs with the boxes
   cam25: (() => {
