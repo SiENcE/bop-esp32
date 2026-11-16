@@ -32,8 +32,10 @@ const LANTERN_PAL = {
 pal(LANTERN_PAL)
 
 const LNW = 36, LNH = 60, LCX = 17, LGY = 56
+// a quarter wider across than the block (the user, 2026-11-16: in the room he looked narrow); his depth and height are the block's
+const LNWIDE = 1.25
 /** a point of him (meters): f forward (toward the lower left), s to his right (the upper left), h up -> the sprite's px */
-const LNP = (f, s, h) => [LCX - 16 * (f + s), LGY + 8 * (f - s) - 30 * h]
+const LNP = (f, s, h) => [LCX - 16 * (f + s * LNWIDE), LGY + 8 * (f - s * LNWIDE) - 30 * h]
 const R = Math.round
 /** a filled convex shape round the points (their hull); where(x, y) may pick the key per pixel */
 function lnHull(c, pts, k) {
