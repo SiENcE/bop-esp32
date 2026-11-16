@@ -91,26 +91,31 @@
   });
 
   // ---------------------------------------------------------------- the swamps: the ride on Pike's raft and Lantern's lights
-  // Mystical and calm (the user's wish, 2026-11-16): D Dorian at 56 bpm, a low drone on D, a soft pad drifting through Dsus2, F over C,
+  // Mystical, and uneasy under it (the user's wishes, 2026-11-16): D Dorian at 56 bpm, a low drone on D, a soft pad drifting through Dsus2, F over C,
   // G over D and A minor, a breathy flute that sings a little and stops again, a bell now and then like a lantern seen through the trees.
   I("sumpf_pad", { type: "sub", wave: "triangle", voices: 3, detune: 9, filter: { cutoff: 520, q: 1 }, amp: { a: 2.2, d: 1, s: 0.9, r: 3.5 }, gain: 0.05, reverb: 0.8 });
   I("sumpf_flute", { type: "sub", wave: "sine", amp: { a: 0.35, d: 0.6, s: 0.75, r: 1.6 }, vibrato: { rate: 4.8, depth: 11, delay: 0.5, rise: 0.8 },
     bend: { from: -40, time: 0.2 }, gain: 0.07, reverb: 0.75, delay: 0.35, pan: -0.1 });
+  // the dread under it (the user's wish, 2026-11-16: the swamp must feel dangerous): a low tritone swelling up and away, with the intensity
+  I("sumpf_dread", { type: "sub", wave: "saw", voices: 2, detune: 18, filter: { cutoff: 190, q: 3 }, amp: { a: 3, d: 1, s: 1, r: 4 }, gain: 0.06, reverb: 0.6 });
   Cutaway.score.theme("sumpf", {
     tempo: 56, key: "D",
-    tracks: { drone: { inst: "drone" }, pad: { inst: "sumpf_pad" }, flute: { inst: "sumpf_flute" }, bell: { inst: "glassbell" } },
+    tracks: { drone: { inst: "drone" }, pad: { inst: "sumpf_pad" }, flute: { inst: "sumpf_flute" }, bell: { inst: "glassbell" }, dread: { inst: "sumpf_dread", layer: "dread" } },
+    layers: { dread: [0.4, 0.7] },
     sections: {
       a: { bars: 4, next: "b", tracks: {
         drone: bars(hold("D2+A2"), hold("D2+A2"), hold("D2+G2"), hold("D2+A2")),
         pad: bars(hold("D3+A3+E4"), hold("C3+F3+A3+E4"), hold("D3+G3+B3"), hold("C3+E3+A3")),
         flute: bars(". . . . A4 - - - - - - - E5 - D5 -", "C5 - - - - - - - . . . . . . . .", "B4 - - - D5 - - - A4 - - - - - - -", ". . . . . . . . . . . . . . . ."),
         bell: bars(". . . . . . . . . . . . . . . .", ". . . . . . . . . . . . B5 . . .", ". . . . . . . . . . . . . . . .", ". . . . . . . . E6 . . . . . . ."),
+        dread: bars(". . . . . . . . . . . . . . . .", hold("D2+Ab2"), ". . . . . . . . . . . . . . . .", half("Ab1+D2", ".")),
       } },
       b: { bars: 4, next: "a", tracks: {
         drone: bars(hold("D2+A2"), hold("D2+A2"), hold("D2+G2"), hold("D2+A2")),
         pad: bars(hold("D3+A3+E4"), hold("Bb2+F3+A3+D4"), hold("C3+G3+E4"), hold("D3+A3+E4")),
         flute: bars(". . . . . . . . . . . . . . . .", "F5 - - - E5 - - - D5 - - - - - - -", ". . . . . . . . C5 - B4 - A4 - - -", "- - - - - - - - . . . . . . . ."),
         bell: bars(". . . . . . . . A5 . . . . . . .", ". . . . . . . . . . . . . . . .", ". . . . . . . . . . . . . . . .", ". . . . . . . . . . . . D6 . . ."),
+        dread: bars(hold("D2+Ab2"), ". . . . . . . . . . . . . . . .", half(".", "Ab1+Eb2"), ". . . . . . . . . . . . . . . ."),
       } },
     },
   });

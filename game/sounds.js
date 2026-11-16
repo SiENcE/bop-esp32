@@ -8,7 +8,8 @@
 //   ambience (rooms' loops)     rain_glass, city_far, neon_buzz, fridge_hum, deck_fans, feed_hiss, feed_rain
 //   the Drain Market            its loops at their places (the crowd, the wok, the canal, the roofs' ACs, the pillar) and
 //                               one-shots from its stalls (haggling, cleavers, the wok tossed, the loudspeaker)
-//   the swamps                  the water and the insects as loops, frogs, drops and a bird far off by chance (rooms/sumpf.js)
+//   the swamps                  the rain, the water and the insects as loops; frogs, drops, bubbles, creaking wood, a splash, a rumble
+//                               and a bird far off by chance (rooms/sumpf.js)
 // Hear them all at once: node tools/render-sounds.mjs (writes build/sounds/).
 "use strict";
 
@@ -100,6 +101,12 @@
     noise: [0, 140].map((at) => ({ filter: "bandpass", from: 700, q: 6, ms: 60, gain: 0.05, at })) });
   S("frosch_tief", { tone: [{ wave: "triangle", from: 92, to: 70, ms: 260, attack: 30, gain: 0.12 }], noise: [{ filter: "lowpass", from: 300, ms: 220, gain: 0.05 }] });
   S("tropfen", { tone: [{ wave: "sine", from: 1500, to: 900, ms: 60, gain: 0.05 }, { wave: "sine", from: 700, to: 500, ms: 120, gain: 0.025, at: 40 }] });
+  // what makes it uneasy: the rain on leaves and water, bubbles rising, wood creaking, something heavy in the water, a rumble far off
+  S("sumpf_regen", { loop: { noise: { filter: "highpass", freq: 2400, q: 0.4 }, gain: 0.05, crackle: 0.35 } });
+  S("blubbern", { tone: [0, 90, 170].map((at, i) => ({ wave: "sine", from: 380 + i * 60, to: 900 + i * 80, ms: 45, gain: 0.04, at })) });
+  S("knarzen", { tone: [{ wave: "sawtooth", from: 190, to: 140, ms: 520, attack: 120, gain: 0.018 }], noise: [{ filter: "bandpass", from: 820, to: 640, q: 9, ms: 520, attack: 120, gain: 0.05 }] });
+  S("platsch", { noise: [{ filter: "bandpass", from: 1300, to: 380, q: 1.2, ms: 320, gain: 0.16 }], tone: [{ wave: "sine", from: 320, to: 110, ms: 140, gain: 0.06 }] });
+  S("grollen", { noise: [{ filter: "lowpass", from: 140, to: 90, ms: 2600, attack: 500, gain: 0.3 }], tone: [{ wave: "sine", from: 46, to: 34, ms: 2200, attack: 400, gain: 0.12 }] });
   S("vogel_fern", { tone: [{ wave: "sawtooth", from: 620, to: 430, ms: 260, attack: 20, gain: 0.025 }],
     noise: [{ filter: "bandpass", from: 1300, to: 900, q: 5, ms: 260, gain: 0.05 }] });
   S("dach_luefter", { loop: { noise: { filter: "bandpass", freq: 210, q: 2.2 }, tone: { wave: "triangle", freq: 61 }, gain: 0.03, wobble: [0.6, 0.15] } });   // the ACs on the roofs

@@ -19,7 +19,7 @@ pal({
   R: "#ffd58a", M: "#5a1f52",                                                                                        // a window, a dead sign
   "!": "#050c09", "~": "#0a1712", $: "#10231a", "%": "#183324", "&": "#22472f", "*": "#34683f", "+": "#5a9a62", "=": "#9ad8a4",   // the deep forest, its glow
   "(": "#0e1411", ")": "#18221b", "[": "#253225", "]": "#3a4a35", "{": "#5d7a48", "<": "#6a2e14", ">": "#a8582a",                  // bark, moss, thorns
-  a: "#2a2f36", A: "#474e57", s: "#6f7882", S: "#a9b2bb", t: "#141b26", T: "#2f4766", o: "#ff9a30", i: "#7a4018", W: "#5e4632", K: "#5a2a1e", B: "#7a3e2a", p: "#1c3156", P: "#2c4c84", F: "#7c8590",                  // the van
+  a: "#2a2f36", A: "#474e57", s: "#6f7882", S: "#a9b2bb", t: "#141b26", T: "#2f4766", o: "#ff9a30", i: "#7a4018", W: "#5e4632", K: "#5a2a1e", B: "#7a3e2a", Q: "#4a4038", p: "#1c3156", P: "#2c4c84", F: "#7c8590",                  // the van
 })
 include("../lib/text.js")
 
@@ -292,13 +292,18 @@ function van(c, x0, b) {
   c.rect(x1, top + 30, 3, 4, "o"); c.dither(x1 + 2, top + 27, 8, 10, ".", "<", 0.4); c.px(x1 + 3, top + 31, "o")
   for (let y = top + 36; y < b - 4; y += 3) c.px(x1 + 2, y, "(")
   c.rect(x1 - 4, b - 4, 9, 4, "A"); c.hline(x1 - 4, b - 4, 9, "s")
-  // no wheels: the empty arches dark, and under each axle a stack of bricks it rests on, on the pontoon's deck
+  // no wheels: the empty arches dark, and under each axle a stack of bricks it rests on: three courses, bonded, the joints filled with
+  // mortar, standing on the pontoon's deck and reaching up into the arch where the axle was
   for (const wx of [x0 + 22, x1 - 22]) {
     c.ellipse(wx, b - 1, 10, 7, "("); c.rect(wx - 10, b - 1, 21, 2, "(")
-    for (let row = 0; row < 2; row++) for (let i = 0; i < 3; i++) {
-      const bx = wx - 9 + i * 6 + (row ? 3 : 0), by = b + 3 - row * 3
-      if (bx + 5 > wx + 11) continue
-      c.rect(bx, by, 5, 2, "K"); c.hline(bx, by, 5, "B"); c.px(bx + 5, by, "u"); c.px(bx + 5, by + 1, "u")
+    for (let row = 0; row < 3; row++) {
+      const y = b + 3 - row * 3, half = row === 2 ? 7 : 11, l = wx - half, r = wx + half
+      c.rect(l, y, r - l + 1, 3, "Q")                                                                                  // the mortar
+      for (let s0 = l - (row % 2 ? 4 : 0); s0 <= r; s0 += 8) {
+        const bl = Math.max(s0, l), br = Math.min(s0 + 6, r)
+        if (br - bl < 1) continue
+        c.rect(bl, y, br - bl + 1, 2, "K"); c.hline(bl, y, br - bl + 1, "B")
+      }
     }
   }
   // rust and moss: streaks under the windows, moss along the roof
@@ -362,6 +367,48 @@ sprite("sumpf_bg", { w: W, h: H }, (c) => {
   // his lanterns on strings from the branch and the vines, doubled on the water; spores drifting in the light
   for (const [lx, ly, s] of [[46, 58, 30], [94, 44, 24], [128, 86, 50], [158, 40, 22], [204, 56, 34], [246, 40, 20], [286, 72, 52], [116, 112, 16], [232, 108, 14]]) lantern(c, lx, ly, ly > 100 ? 146 : 0, s)
   for (let i = 0; i < 18; i++) c.px(70 + R(hsh(i + 700) * 190), 70 + R(hsh(i + 750) * 70), i % 3 ? "+" : "=")
+})
+
+// ---------------------------------------------------------------- what makes the swamp uneasy (the user's wish, 2026-11-16)
+// Banks of mist, seamless across their 320 px, that the game drifts over the water at a low alpha (fx mist); value noise repeating
+// every 320 px, thick parts pale, a dithered fringe, fading to nothing at the band's top and bottom.
+function mistBand(c, h, seed, cell, thick) {
+  const P = W / cell, bay = (x, y) => ([0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5][(y & 3) * 4 + (x & 3)] + 0.5) / 16
+  const hv = (a, bb) => hsh((((a % P) + P) % P) * 13.1 + bb * 7.7 + seed * 101)
+  const noise = (x, y) => {
+    const xi = Math.floor(x), yi = Math.floor(y), fx = x - xi, fy = y - yi, sx = fx * fx * (3 - 2 * fx), sy = fy * fy * (3 - 2 * fy)
+    const a0 = hv(xi, yi), b0 = hv(xi + 1, yi), c0 = hv(xi, yi + 1), d0 = hv(xi + 1, yi + 1)
+    return a0 + (b0 - a0) * sx + (c0 - a0) * sy + (a0 - b0 - c0 + d0) * sx * sy
+  }
+  for (let y = 0; y < h; y++) for (let x = 0; x < W; x++) {
+    const v = (noise(x / cell, y / (cell * 0.35)) * 0.65 + noise(x / (cell / 2), y / (cell * 0.18) + 9) * 0.35) * Math.pow(Math.sin(Math.PI * (y + 0.5) / h), 0.8)
+    if (v > thick) c.px(x, y, "+")
+    else if (v > thick - 0.09 && bay(x, y) < (v - thick + 0.09) / 0.09) c.px(x, y, "*")
+  }
+}
+sprite("sumpf_nebel_a", { w: W, h: 40 }, (c) => mistBand(c, 40, 1, 40, 0.5))
+sprite("sumpf_nebel_b", { w: W, h: 30 }, (c) => mistBand(c, 30, 2, 32, 0.52))
+// Something under the water (never seen): a slow wake crossing the picture, the rings it leaves, now and then bubbles that rise and burst.
+// 160 frames at 10 fps; the wake crosses in the first 110, then the water lies still but for the bubbles.
+anim("sumpf_wesen", { w: W, h: 26, frames: 160, fps: 10 }, (c) => {
+  const f = c.frame
+  if (f < 110) {
+    const hx = R(-20 + f * 3.2), hy = 12
+    for (let k = 1; k < 7; k++) {                                                                   // the V behind it, widening
+      const bx = hx - k * 5, sp = k * 2
+      c.px(bx, hy - sp, k < 4 ? "*" : "&"); c.px(bx - 1, hy - sp, "&"); c.px(bx, hy + sp, k < 4 ? "*" : "&"); c.px(bx - 1, hy + sp, "&")
+    }
+    c.hline(hx - 2, hy, 4, "+"); c.px(hx + 2, hy, "*")                                              // the swell over it
+    for (const back of [24, 52]) {                                                                   // rings left where it rose
+      const age = f % 28, rx = hx - back - age, rr = R(age / 3) + 2
+      if (age < 20) c.ellipse(rx, hy, rr + 3, R(rr / 2) + 1, age < 10 ? "*" : "&", true)
+    }
+  }
+  for (let i = 0; i < 4; i++) {                                                                       // bubbles: rise, burst, gone
+    const t0 = i * 37 + 20, age = (f - t0 + 160) % 160, bx = 40 + i * 71 + (i % 2) * 13
+    if (age < 6) c.px(bx, 14 - (age >> 1), "+")
+    else if (age < 9) { c.ellipse(bx, 13, age - 4, 1, "*", true) }
+  }
 })
 
 // ---------------------------------------------------------------- the game's pictures

@@ -55,6 +55,7 @@ Nagiwa.at = {
   // the raft to click
   sumpf_fahrt: { far: [0, 0], weed: [0, 142], floss: [78, 32], juno: [170, 151], walk: [[150, 148, 196, 148, 196, 153, 150, 153]] },
   sumpf: { floss: [6, 42], juno: [100, 161], walk: [[80, 158, 126, 158, 126, 163, 80, 163]],
+    lanterns: [[46, 58], [94, 44], [128, 86], [158, 40], [204, 56], [246, 40], [286, 72], [116, 112], [232, 108]],
     wohnwagenPoly: [170, 146, 170, 88, 176, 72, 212, 72, 214, 82, 270, 82, 290, 106, 308, 112, 308, 146],
     flossPoly: [40, 170, 40, 150, 52, 150, 54, 70, 72, 70, 74, 150, 88, 150, 90, 126, 104, 126, 106, 150, 138, 150, 138, 170] },
   // Lantern's hide, on blocks (art/rooms/lantern_versteck.map.js, game/rooms/lantern_versteck.layout.js); he sits at "lantern"

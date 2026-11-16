@@ -4,13 +4,21 @@
 //                runs at the top (what is said: game/kapitel2_lantern.js)
 //   sumpf        the arrival: the raft tied up at the walk of planks, Lantern's caravan on its pontoons, his green lanterns in the trees;
 //                a click on the caravan takes Juno in (lantern_versteck, an iso room), one on the raft back to the market
-// The swamp's sounds: the water and the insects as loops, and by chance a frog, a drop, a bird far off (heard only while a swamp shows;
-// nothing is saved, nothing waits for them). Its melody: the theme "sumpf" (game/music.js).
+// The swamp is not a calm place (the user's wish, 2026-11-16: dangerous and uncomfortable, never still): heavy rain in three layers, mist
+// drifting over the water, something under the surface that passes now and then (only its wake, rings and bubbles), Lantern's lanterns
+// wavering. Its sounds: the rain, the water and the insects as loops, and by chance a frog, a drop, bubbles, a splash, wood creaking,
+// a rumble far off, once in a while a bird (heard only while a swamp shows; nothing is saved, nothing waits for them). Its melody: the
+// theme "sumpf" (game/music.js), with a layer of dread under it.
 "use strict";
 
 (function () {
   const F = Nagiwa.at.sumpf_fahrt, A = Nagiwa.at.sumpf;
-  const RAIN = { kind: "rain", rect: [0, 0, 320, 180], count: 60, color: "#41547a", speed: 130, slant: 0.25, length: 4 };
+  const RAIN = [
+    { kind: "rain", rect: [0, 0, 320, 180], count: 130, color: "#2f3e5a", speed: 140, slant: 0.28, length: 2 },
+    { kind: "rain", rect: [0, 0, 320, 180], count: 110, color: "#41547a", speed: 210, slant: 0.28, length: 5 },
+    { kind: "rain", rect: [0, 0, 320, 180], count: 36, color: "#8e9ab0", speed: 320, slant: 0.3, length: 9 },
+  ];
+  const SOUND = ["sumpf_regen", "sumpf_wasser", "sumpf_grillen"];
   Cutaway.room("sumpf_fahrt", {
     name: "Auf dem Kanal", background: "sumpf_fahrt_bg", buttons: false, lines: "top", label: true, walk: F.walk,
     light: { ambient: 0.62, color: "#b8c8d8" },
@@ -18,19 +26,27 @@
       { id: "far", image: "sumpf_fahrt_far", at: F.far, anchor: [0, 0], baseline: 1, scroll: -24 },
       { id: "mid", image: "sumpf_fahrt_mid", at: [0, 0], anchor: [0, 0], baseline: 2, scroll: -48 },
       { id: "weed", image: "sumpf_fahrt_weed", at: F.weed, anchor: [0, 0], baseline: 3, scroll: -48 },
+      { id: "wesen", image: "sumpf_wesen", at: [0, 158], anchor: [0, 0], baseline: 3 },
       { id: "floss", image: "sumpf_fahrt_floss", at: F.floss, anchor: [0, 0], baseline: 4 },
       { id: "near", image: "sumpf_fahrt_near", at: [0, 0], anchor: [0, 0], baseline: 999, scroll: -96 },
     ],
-    fx: [RAIN],
-    ambience: ["sumpf_wasser", "sumpf_grillen"], music: { theme: "sumpf", intensity: 0.5 },
+    fx: [...RAIN,
+      { kind: "mist", image: "sumpf_nebel_a", rect: [0, 96, 320, 60], at: [0, 100], drift: [-16, 0], alpha: 0.16, bob: 2 },
+      { kind: "mist", image: "sumpf_nebel_b", rect: [0, 120, 320, 60], at: [0, 134], drift: [-26, 0], alpha: 0.12, bob: 3 }],
+    ambience: SOUND, music: { theme: "sumpf", intensity: 0.65 },
     hotspots: {},
   });
   Cutaway.room("sumpf", {
     name: "Bei Lantern", background: "sumpf_bg", lines: "top", label: true, walk: A.walk,
-    light: { ambient: 0.66, color: "#dcd8c8", lamps: [{ at: [222, 120], r: 90, power: 0.5, color: "#9ad8a4" }] },
-    props: [{ id: "floss", image: "sumpf_floss", at: A.floss, anchor: [0, 0], baseline: 4 }],
-    fx: [{ ...RAIN, count: 40 }],
-    ambience: ["sumpf_wasser", "sumpf_grillen"], music: { theme: "sumpf", intensity: 0.4 },
+    light: { ambient: 0.66, color: "#dcd8c8", lamps: [{ at: [222, 120], r: 90, power: 0.5, color: "#9ad8a4", flicker: 0.12, rate: 3 },
+      // his lanterns: each wavers in its own time, a pool and a halo of its own
+      ...A.lanterns.map((/** @type {[number, number]} */ at, /** @type {number} */ i) => ({ id: `lantern${i}`, at, r: 22, power: 0.8, color: "#9ad8a4",
+        flicker: 0.4, rate: 3 + (i % 4), add: true, glow: { r: 7, strength: 0.45 } }))] },
+    props: [{ id: "wesen", image: "sumpf_wesen", at: [0, 146], anchor: [0, 0], baseline: 3 }, { id: "floss", image: "sumpf_floss", at: A.floss, anchor: [0, 0], baseline: 4 }],
+    fx: [...RAIN,
+      { kind: "mist", image: "sumpf_nebel_a", rect: [0, 100, 320, 60], at: [0, 108], drift: [-5, 0], alpha: 0.17, bob: 2 },
+      { kind: "mist", image: "sumpf_nebel_b", rect: [0, 126, 320, 54], at: [0, 138], drift: [4, 0], alpha: 0.13, bob: 3 }],
+    ambience: SOUND, music: { theme: "sumpf", intensity: 0.65 },
     hotspots: {
       wohnwagen: { name: "Wohnwagen", poly: A.wohnwagenPoly,
         look: ["Ein alter Camper auf Pontons, bis aufs Dach vollgepackt: Solarpaneele, eine Tonne, Pflanzen, Antennen.", "Hinter der offenen Tür brennt grünes Licht. Das Kabel geht hinein."] },
@@ -44,6 +60,10 @@
   const kinds = [
     { every: [2500, 7000], play: () => pick(["frosch", "frosch", "frosch_tief"]) },
     { every: [3000, 8000], play: () => "tropfen" },
+    { every: [6000, 14000], play: () => "blubbern" },
+    { every: [9000, 18000], play: () => "knarzen" },
+    { every: [12000, 25000], play: () => "platsch" },
+    { every: [25000, 45000], play: () => "grollen" },
     { every: [20000, 40000], play: () => "vogel_fern" },
   ].map((k) => ({ ...k, next: between(k.every[0], k.every[1]) }));
   Cutaway.ui.addLayer({
