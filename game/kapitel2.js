@@ -1,7 +1,8 @@
 // Nagiwa: Chapter 2 "Aufnahme" (docs/kapitel2-design.md), on blocks: the frame so far. Three evenings on game days 5 to 7
 // (Saturday 10 to Monday 12 November), the way home at the start, Teo's last visit awake on Monday, the clock that stops on
 // Monday at 00:45 until everything is ready, decision 2 as far as it is built. The end: game/kapitel2_ende.js.
-//   e2              Entscheidung 2: sable | vesper | morrow | lantern | kept (so far built: vesper, kept)
+//   e2              Entscheidung 2: sable | vesper | morrow | lantern | kept (Sable in her booth: game/auftrag_varga.js; Morrow in Jade Row
+//                   at 00:30 on Saturday and Sunday: here and game/auftrag_tide.js; Lantern in his talk: game/kapitel2_lantern.js)
 //   (the forgery and PRÜFEN: game/kapitel2_faelschung.js)
 //   (Ines' stick, the key to her wallet, without which Lantern can't send: Juno has it (stick_ines, kept from Chapter 1), it lies in
 //   dryer 6 again (stick_dryer), or Lantern has it, which needs no flag of its own: game/kapitel2_stick.js)
@@ -34,9 +35,9 @@ Nagiwa.holds.push((/** @type {number} */ to) => {
 Cutaway.moment("one_sat", { room: "deck", day: 5, from: "00:45", to: "01:00", if: "~never", unseen: [] });
 Cutaway.moment("one_sun", { room: "deck", day: 6, from: "00:45", to: "01:00", if: "~never", unseen: [] });
 
-// ---- decision 2 (kapitel2-design §3.6), as far as it is built: Vesper in the chat (always there for it, also with off_vesper),
-// and keeping it, which the deck asks on Monday at 00:45. Sable, Morrow and Lantern come with the main thread.
-// [PLATZHALTER] the price (§14: Sable 3000, Vesper 5000) and the viewers the morning after
+// ---- decision 2 (kapitel2-design §3.6): Vesper in the chat (always there for it, also with off_vesper), Sable in her booth, Morrow at
+// her patrol car in Jade Row (Saturday and Sunday, 00:30), Lantern in his caravan, or keeping it, which the deck asks on Monday at 00:45.
+// [PLATZHALTER] the prices (§14: Sable 3000, with the proof 4000, after k1a=warned 1000 less; Vesper 5000) and the viewers the morning after
 const CLIP_LINE = "Die Aufnahme aus CAM 31 senden.";
 const SOLD_VESPER = [{ set: "e2", value: "vesper" }, { ledger: "vesper_ines", value: "sold" },
   "Fünftausend. Für das, was ich nicht verhindert hab.", { evi: "besorgt" }, { say: "evi", text: "Ist das jetzt gut?" }, "Nein."];
@@ -44,7 +45,28 @@ const KEEP = [{ set: "e2", value: "kept" }, { ledger: "cam31", value: "kept" }, 
 Object.assign(Nagiwa.ledger, {
   vesper_ines: { to: "VESPER", what: { sold: "Ines Calder, CAM 31" }, chits: { sold: 5000 } },
   cam31: { to: "CAM 31", what: { kept: "behalten" } },
+  sable_ines: { to: "SABLE", what: { sold: "die Aufnahme aus CAM 31", proof: "die Aufnahme aus CAM 31", warned: "die Aufnahme aus CAM 31", proof_warned: "die Aufnahme aus CAM 31" },
+    chits: { sold: 3000, proof: 4000, warned: 2000, proof_warned: 3000 } },
+  morrow_ines: { to: "MORROW", what: { given: "die Aufnahme" } },
+  lantern_ines: { to: "LANTERN", what: { given: "die Aufnahme" } },
 });
+// Morrow at her patrol car in Jade Row, Saturday and Sunday at 00:30 (her round as in Chapter 1; game/auftrag_tide.js puts her there).
+// She says Sie and wants nothing; the clip disappears into Revier 9, and from now on the Quiet knows who Juno is
+const MO = (/** @type {string} */ text) => ({ say: "morrow", text });
+Cutaway.dialog("morrow_k2", { main: {
+  enter: [MO("Revier 9. Gehen Sie weiter.")],
+  choices: [
+    { text: "„Ich hab eine Aufnahme. Aus der alten Metro.“", if: ["cache_clip_ines_death", "!e2"], goto: "clip", then: [MO("Zeigen.")] },
+    { text: "„Nichts. Ich geh schon.“", silent: true, goto: "end" },
+  ] },
+  clip: { enter: ["Ines auf der Treppe. Bis er hochsieht.", MO("...")],
+    choices: [
+      { text: "„Nehmen Sie sie.“", goto: "end", then: [{ set: "e2", value: "morrow" }, { ledger: "morrow_ines", value: "given" },
+        MO("Beweisstück. Kein Geschäft. Ich kümmer mich."),
+        { if: "forgery_proven", then: ["Die im Glass ist gefälscht. Da fehlt eine Minute.", MO("Dann jagen wir den Falschen.")] },
+        "Sie sieht sich mein Gesicht an. Lange.", "Jetzt kennt sie mich. Und Revier 9 auch."] },
+      { text: "„Doch nicht.“", silent: true, goto: "end", then: [MO("Dann haben Sie mir nichts gezeigt.")] },
+    ] } });
 Nagiwa.replies.vesper.push({ id: "ines", text: CLIP_LINE, if: ["day>4", "cache_clip_ines_death", "!e2", "!off_main"], use: SOLD_VESPER });
 Nagiwa.threads.vesper.push(
   { from: "vesper", if: "day>4", at: "18:05", text: "Man spricht von einer Aufnahme aus der alten Metro. Ich zahle, was sie wert ist." },
@@ -169,7 +191,7 @@ Cutaway.moment("teo_monday", { room: "deck", day: 7, from: "18:00", to: "18:30",
 // ---- the hints (EVI): Chapter 2's own, only while it is played (game/hints.js has the prologue's and Chapter 1's)
 // (waiting has no name a hint could give: on Monday the way on is waiting, then the end's click on the protocols)
 const HOME = ["door", "door_juno", "stairs", "kessel_door", "deck", "back"];       // the way back to the deck
-const CLIP_WAYS = ["reply_vesper_ines", "contact_vesper", "app_chat"];
+const CLIP_WAYS = ["reply_vesper_ines", "contact_vesper", "app_chat", "sable", "morrow", "lantern_k2"];
 Cutaway.hints([
   { if: ["day=7", "end_beat2=sent"], about: ["protokolle"],
     text: ["Du hast doch Clips mit Uhrzeit.", "Leg die Protokolle neben deine Aufnahmen.", "Nimm Kesslers Ring. Dienstag, 22:35."] },
@@ -219,7 +241,7 @@ Cutaway.hints([
 
 // ---- the act. It begins from a clean state, whichever way: what Chapter 1 hands on comes along in `keep` (kapitel2-design §2.1),
 // and from the title screen it stands on the plain way through Chapter 1 (WREN told, the stick put back, the rent paid, no jobs)
-const KEPT_LEDGER = Object.keys(Nagiwa.ledger).filter((id) => !["vesper_ines", "cam31"].includes(id)).map((id) => `ledger_${id}`);
+const KEPT_LEDGER = Object.keys(Nagiwa.ledger).filter((id) => !["vesper_ines", "cam31", "sable_ines", "morrow_ines", "lantern_ines"].includes(id)).map((id) => `ledger_${id}`);
 Cutaway.act("kapitel2", {
   title: "Kapitel 2", name: "Aufnahme", room: "flat", actor: "juno", fresh: true,
   keep: ["e1", "stick_ines", "k1a", "k1b", "imai_told", "moth_student", "rent", "chits", "evi_trust", ...KEPT_LEDGER,

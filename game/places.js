@@ -174,6 +174,8 @@ Nagiwa.at = {
   jade_row: {
     walk: [[67, 142, 253, 142, 306, 176, 14, 176]], arrive: [292, 172], back: [292, 172], mid: [186, 158], shop: [56, 158], machine: [232, 146], soup: [214, 144], far: [160, 143], parlour: [112, 143], pharmacy: [196, 143],
     backRect: [278, 54, 42, 122], windowRect: [60, 84, 38, 50], doorRect: [36, 84, 24, 78], signRect: [0, 52, 98, 30], machineRect: [232, 84, 28, 57], soupRect: [212, 82, 20, 50],
+    // Chapter 2: Morrow at her patrol car, Saturday and Sunday at 00:30 (the car's foot where CAM 07 sees it, moved back by its shift)
+    morrow: [180, 147], car: [173, 107],
     parlourRect: [118, 88, 8, 26], arcadeRect: [100, 90, 16, 32], balconyRect: [44, 20, 58, 46], nightRect: [212, 8, 43, 62], carRect: [168, 92, 24, 17], pharmacyRect: [195, 88, 13, 24], gateRect: [136, 50, 48, 46], screenRect: [136, 4, 48, 44], signsRect: [195, 56, 22, 32],
     // the hotspots' shapes, measured from the blocks' own perspective (art/old/jade_row_blocks.px.js prints JADE_POLYS): what lies on a side
     // wall is a trapezoid here; the machine, the arcade, the gate, the screen, the car and the hanging signs are drawn as rects

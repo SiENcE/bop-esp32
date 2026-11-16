@@ -69,7 +69,21 @@ Cutaway.dialog("sable", {
     { text: "„Ich brauch den Code vom Morpheus, CAM 15.“", if: ["varga_step", "!code_cam15"], goto: "code", then: [S("Achtzig. Oder was, das achtzig wert ist.")] },
     { text: "„Du hast Varga meinen Namen gegeben.“", then: [S("Verkauft. Geben tu ich nichts."), "Für wie viel?", S("Das kostet extra.")] },
     { text: "„Was verkaufst du sonst?“", then: [S("Steht an der Wand. Namen, Adressen."), "Und Geheimnisse?", S("Frag. Fragen kostet schon.")] },
+    // Chapter 2's decision 2 (kapitel2-design §3.6): Sable buys the clip and sells it on to Nagi·wa (the code above is Chapter 1's only)
+    { text: "„Ich hab die Aufnahme aus der alten Metro.“", if: ["day>4", "cache_clip_ines_death", "!e2", "!off_main"], goto: "clip",
+      then: [S("Man fragt danach. Zeig."), "Ines auf der Treppe. Bis er hochsieht.",
+        { if: "forgery_proven", then: ["Die im Glass ist gefälscht. Das kann ich zeigen.", S("Mit Beweis kostet's mehr. Auch beim Käufer.")] },
+        { if: "k1a=warned", then: [S("Varga redet. Tausend weniger.")] },
+        { if: "forgery_proven", then: [{ if: "k1a=warned", then: [S("3000.")], else: [S("4000.")] }],
+          else: [{ if: "k1a=warned", then: [S("2000.")], else: [S("3000.")] }] }] },
     { text: "Bis dann.", silent: true, goto: "end" },
+  ],
+  clip: [
+    { text: "„Verkauft.“", goto: "end", then: [{ set: "e2", value: "sable" },
+      { if: "forgery_proven", then: [{ if: "k1a=warned", then: [{ ledger: "sable_ines", value: "proof_warned" }], else: [{ ledger: "sable_ines", value: "proof" }] }],
+        else: [{ if: "k1a=warned", then: [{ ledger: "sable_ines", value: "warned" }], else: [{ ledger: "sable_ines", value: "sold" }] }] },
+      S("Nett."), "Sable fragt nicht, wer sie war. Sable fragt nie.", "Wer sie kauft, sagt Sable auch nicht. Das kostet extra."] },
+    { text: "„Noch nicht.“", goto: "main", then: [S("Ich hab Zeit. Die Aufnahme nicht.")] },
   ],
   code: [
     { text: "„Hier sind achtzig.“", if: "chits>=80", goto: "end", then: [{ inc: "chits", by: -80 }, { set: "code_cam15" }, S("Nett. Das Morpheus ändert ihn nie."), "CAM 15 steht jetzt auf dem Deck."] },

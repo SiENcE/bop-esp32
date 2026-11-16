@@ -2,6 +2,8 @@
 //   Nagiwa.talkTree("id", [topic, topic, topic])
 //   a topic is [the choice's text, what is said, its own topics?, when?]; with topics of its own it opens them, and "Was anderes." goes back up;
 //   when: a condition, for what Juno can only say once she knows it
+//   a place may hold one of two topics, { either: [topic, topic] }, whose conditions exclude each other: the place counts once, and
+//   only one of them shows at a time (Lantern: her key while she has it, then her recording)
 // Three topics at most on a level: the fourth choice is the way back or away. Nothing here is a flag, so a talk may be walked again and again.
 "use strict";
 
@@ -19,12 +21,13 @@ Nagiwa.talkTree = function (id, topics, bye = "Bis dann.") {
   const level = (name, list, way) => {
     if (list.length > 3) throw new Error(`talk ${id}: "${name}" has ${list.length} topics, at most 3 (with the way out, four choices)`);
     nodes[name] = [];         // its place first: the dialogue starts at the first key, which must be "main", not the deepest topic
-    nodes[name] = [...list.map(([text, then, more, when], i) => {
+    nodes[name] = [...list.flatMap((slot, i) => (slot.either ?? [slot]).map((/** @type {any[]} */ [text, then, more, when], /** @type {number} */ j) => {
+      if (slot.either && !when) throw new Error(`talk ${id}: "${text}" shares its place, so it needs its condition`);
       if (!more) return { text, then, ...(when ? { if: when } : {}) };
-      const sub = `${name}.${i}`;
+      const sub = slot.either ? `${name}.${i}${"abcd"[j]}` : `${name}.${i}`;
       level(sub, more, { text: "Was anderes.", silent: true, goto: name });
       return { text, then, goto: sub, ...(when ? { if: when } : {}) };
-    }), way];
+    })), way];
   };
   level("main", topics, { text: bye, silent: true, goto: "end" });
   Cutaway.dialog(id, nodes);

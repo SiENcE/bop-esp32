@@ -190,6 +190,15 @@ const HANDOVER = [
   "Ich heiß ...",
   L("Sag's nicht. Ich will's nicht wissen müssen."),
 ];
+// her recording given to him (decision 2): he sends it on Monday with the protocols, too early; with it he is her ally, and says du first,
+// in the middle of a sentence (dialog-style-guide, Lantern's card)
+const GIVE_CLIP = [{ set: "e2", value: "lantern" }, { ledger: "lantern_ines", value: "given" },
+  L("Montag. Um eins. Mit ihren Tabellen."),
+  { if: "forgery_proven", then: ["Und die Fälschung. Mit der Minute, die fehlt.", L("Die auch. Dann sieht jeder beide.")] },
+  { if: "lantern_found=ally", then: [L("Pass auf dich auf. Bald fragen die, wer das gefilmt hat.")],
+    else: [{ set: "lantern_found", value: "ally" }, L("Dann ... hängst du jetzt mit drin. Ob du willst oder nicht."), "Ich hab nicht gefragt.",
+      L("Keiner fragt. Man hängt einfach dran.")] },
+];
 // He sits turned to Juno where she stands to talk (south-west), one view only, drawn: never the engine's mirror (art/characters/lantern.px.js)
 Cutaway.actor("lantern_k2", { name: "Lantern", color: "#b0f0a0", room: "lantern_versteck", at: AV.lantern, facing: "sw", walkTo: AV.talk, face: "ne",
   costume: { idle: { sw: "lantern_sit_sw" }, talk: { sw: "lantern_talk_sw" } }, voice: { pitch: 46, wave: "square", syllable: 85 },
@@ -208,16 +217,28 @@ Nagiwa.talkTree("lantern", [
     { if: "forgery_proven", then: ["Die haben eine Minute rausgeschnitten. Das kann ich zeigen.", L("Zeigen. Wem denn? Die glauben, was auf dem Schirm ist.")],
       else: ["Das ist nicht das, was ich gesehen hab."] },
   ]],
-  ["„Ich hab ihren Schlüssel.“", [
-    L("..."),
-    L("Sie hat gesagt, sonst weiß es keiner."),
-    "Sie konnte mich nicht sehen. Ich war an der Kamera, und ich hab gehört, wo er liegt.",
-    L("Und dann haben Sie ihn geholt. Vor mir."),
-    "Ja.",
-  ], [
-    ["„Hier. Der gehört Ihnen.“", HANDOVER, undefined, "stick_ines"],
-    ["„Noch nicht.“", [L("Dann gehen Sie. Und lassen Sie sich nicht folgen.")], undefined, "stick_ines"],
-  ], "stick_ines"],
+  // one place for two topics (the user's choice, 2026-11-16): her key while she has it, then her recording (decision 2, kapitel2-design §3.6)
+  { either: [
+    ["„Ich hab ihren Schlüssel.“", [
+      L("..."),
+      L("Sie hat gesagt, sonst weiß es keiner."),
+      "Sie konnte mich nicht sehen. Ich war an der Kamera, und ich hab gehört, wo er liegt.",
+      L("Und dann haben Sie ihn geholt. Vor mir."),
+      "Ja.",
+    ], [
+      ["„Hier. Der gehört Ihnen.“", HANDOVER, undefined, "stick_ines"],
+      ["„Noch nicht.“", [L("Dann gehen Sie. Und lassen Sie sich nicht folgen.")], undefined, "stick_ines"],
+    ], "stick_ines"],
+    ["„Ich hab eine Aufnahme.“", [
+      "CAM 31. Ines auf der Treppe, bis er hochsieht.",
+      L("..."),
+      { if: "lantern_found=ally", then: [L("Und die willst du senden lassen. Von mir.")], else: [L("Und die wollen Sie senden lassen. Von mir.")] },
+      "Bevor sie einer kauft, der sie verschwinden lässt.",
+    ], [
+      ["„Hier. Mit ihren Protokollen.“", GIVE_CLIP, undefined, "!e2"],
+      ["„Noch nicht.“", [{ if: "lantern_found=ally", then: [L("Dann behalt sie. Aber nicht zu lange.")], else: [L("Dann behalten Sie sie. Aber nicht zu lange.")] }], undefined, "!e2"],
+    ], ["!stick_ines", "!e2", "cache_clip_ines_death", "!off_main"]],
+  ] },
   ["„Was ist das hier?“", [
     L("Der Wagen hat mal Urlaub gemacht. Jetzt sendet er."),
     L("Hier ist Lantern. Wer das hier sieht, ist noch wach."),

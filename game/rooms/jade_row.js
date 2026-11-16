@@ -21,8 +21,12 @@
       { id: "steam", image: "jade_row_steam", at: [108, 40], anchor: [0, 0], baseline: 1 },
       { id: "crowd", image: "jade_row_crowd", at: [0, 148], anchor: [0, 0], baseline: 300 },
       // the car parked facing us down the lane (art/mock/jade_row.px.js, JADE_CAR); gone while Revier 9's patrol car waits there in
-      // CAM 07 at 00:30 (game/auftrag_tide.js), the user's wish
-      { id: "car", image: "jade_row_car", at: [156, 86], anchor: [0, 0], baseline: 107, if: { not: ["day>1", "day<4", "time>=00:30", "time<00:45", "!off_tide"] } },
+      // CAM 07 at 00:30 (game/auftrag_tide.js), the user's wish, and in Chapter 2 while Morrow stops there on her round
+      { id: "car", image: "jade_row_car", at: [156, 86], anchor: [0, 0], baseline: 107,
+        if: { not: { or: [["day>1", "day<4", "time>=00:30", "time<00:45", "!off_tide"], ["day>4", "day<7", "time>=00:30", "time<00:45", "!off_main"]] } } },
+      // Chapter 2: Morrow's patrol car in its place while she stops there (game/auftrag_tide.js; a picture here, since nobody walks
+      // where it stands)
+      { id: "streife", image: "streife_idle", at: AJ.car, anchor: [0.5, 1], baseline: 107, if: ["day>4", "day<7", "time>=00:30", "time<00:45", "!off_main"] },
     ],
     // the atmosphere the user chose (2026-11-11, docs/rooms/jade_row_stimmung_vergleich.png, f; the mist through the picture and the
     // lights' halos are painted, art/rooms/jade_row.px.js): rain in three layers, fine and far, mid, a few long near streaks; a cyan

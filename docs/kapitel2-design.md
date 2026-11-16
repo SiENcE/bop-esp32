@@ -157,7 +157,7 @@ es nicht mehr, §7).
   Haken mit, wie Kapitel 1 es mit dem Dach tut (`off_roof`). Lanterns Gespräch (`Nagiwa.talkTree`): „Ich hab
   gesehen, was passiert ist.“, „Ich hab ihren Schlüssel.“ (mit dem Stick: „Hier. Der gehört Ihnen.“ oder „Noch nicht.“), „Was ist das hier?“
   und „Ich geh wieder.“. Gibt Juno ihm den Stick, hat er ihn (wie aus dem Trockner), `lantern_found=ally`, und er wechselt zum Du („Sag's
-  nicht. Ich will's nicht wissen müssen.“). „Ich hab eine Aufnahme.“ kommt mit Entscheidung 2. Am Montag fragt das Brett, wer den Schirm
+  nicht. Ich will's nicht wissen müssen.“). „Ich hab eine Aufnahme.“ (Entscheidung 2, §3.6) steht auf dem Platz des Schlüssels, sobald Juno den Stick nicht mehr hat (vom Nutzer entschieden 2026-11-16: wer den Stick noch trägt, gibt ihn zuerst); gibt sie Lantern den Clip, ist er ihr Verbündeter (`lantern_found=ally`) und wechselt zum Du, falls er es nicht schon getan hat. Am Montag fragt das Brett, wer den Schirm
   gesehen hat. Die Hinweise zu diesem Weg gelten, solange Juno den Stick hat, Schritt für Schritt (der Trockner bleibt der kürzere Weg).
   **Gemalt** (2026-11-16, nach den Vorlagen des Nutzers, Prüfbilder `docs/rooms/sumpf_*`): die Fahrt und die Ankunft mit Pike, Juno und dem
   Floß; der Wohnwagen von innen auf den freigegebenen Blöcken (2026-11-16, Prüfbild `docs/rooms/lantern_versteck_x3.png`): Wände
@@ -351,6 +351,12 @@ kann den ganzen Clip oder den ohne das Flüstern nehmen (§3.1).
 
 Flag: `e2` = sable | vesper | morrow | lantern | kept. In Kapitel 2 haben Sable und Vesper dieselben Folgen; für Kapitel 4 zählt, wer
 gekauft hat (Sables Verrat).
+
+**Gebaut** (2026-11-16, auf Blöcken, die Preise Platzhalter): alle fünf Wege. Sable in ihrer Bude („Ich hab die Aufnahme aus der alten
+Metro.“, dann „Verkauft.“ oder „Noch nicht.“; die vier Preise als Werte von `ledger_sable_ines`); Morrow am Samstag und Sonntag um
+00:30 in der Jade Row selbst, ihr Streifenwagen hinter ihr, wo `cam07` ihn in Kapitel 1 sah (Morrows Dialog `morrow_k2`, sie siezt);
+Lantern in seinem Gespräch (§2.1); Vesper im CHAT; Behalten fragt das Deck am Montag um 00:45. Hat Lantern den Clip, läuft er um 01:00
+mit (§8). Noch nicht gebaut: das Flüstern schneiden (`clip_ines_cut`), EVIs Frage davor und der Mann in Weiß am Trockner (`quiet_dryer`).
 
 ### 3.7 Montag, 00:45
 

@@ -56,14 +56,17 @@ for (const [id, name, color, idle, talk, pitch] of /** @type {[string, string, s
   Cutaway.actor(id, { name, color, costume: { idle: every(idle), walk: every(idle), talk: every(talk) }, voice: { pitch, range: 3, wave: "triangle", syllable: 80 },
     look: id === "tide_boy" ? ["Er hat Kiemen am Hals, und an ihnen leuchten die Markierungen wie kleine Lampen.", "Das ist einer von den Tidewater Boys."]
       : id === "morrow" ? ["Das ist Lieutenant Morrow vom Revier 9.", "Sie trägt einen Trenchcoat und sieht müde aus."] : ["Das ist ein Wagen vom Revier 9, und sein Motor läuft.", { evi: "froh" }, { say: "evi", text: "Der hat einen Schnorchel! Fährt er damit durchs Wasser, wenn die Pumpen ausfallen?" }],
-    talk: [{ dialog: "morrow_bribe" }] });
+    talk: [{ if: "day>4", then: [{ dialog: "morrow_k2" }], else: [{ dialog: "morrow_bribe" }] }] });     // (Chapter 2: decision 2, game/kapitel2.js)
 const BRIBE = [{ say: "tide_boy", text: "Wie abgemacht." }, { say: "morrow", text: "Das ist für die ruhige Woche. Freitag fährt keiner die Kowalski." }, "Das ist Morrow. Sie verkauft den Freitag für einen Umschlag."];
 Cutaway.dialog("morrow_bribe", { main: { choices: [
   { text: "Aufnehmen.", silent: true, if: "!cache_clip_morrow_bribe", goto: "end", then: [...BRIBE, { cache: "clip_morrow_bribe" }, "Ich hab's. Das ist mehr wert als der Umschlag."] },
   { text: "Nur zuhören.", silent: true, goto: "end", then: BRIBE },
 ] } });
 Cutaway.routine("okonkwo_feed", [{ day: [2, 3], from: "01:00", to: "01:15", if: "!off_tide", room: "cam07", at: A7.okonkwo }]);
-Cutaway.routine("morrow", [{ day: [2, 3], from: "00:30", to: "00:45", if: "!off_tide", room: "cam07", at: A7.morrow, face: "se" }]);
+// in Chapter 2 her round stops in Jade Row itself on Saturday and Sunday, and Juno can go to her with the clip (kapitel2-design §3.6: the
+// main thread's, not this job's)
+Cutaway.routine("morrow", [{ day: [2, 3], from: "00:30", to: "00:45", if: "!off_tide", room: "cam07", at: A7.morrow, face: "se" },
+  { day: [5, 6], from: "00:30", to: "00:45", if: "!off_main", room: "jade_row", at: AJ.morrow, face: "sw" }]);
 Cutaway.routine("tide_boy", [{ day: [2, 3], from: "00:30", to: "00:45", if: "!off_tide", room: "cam07", at: A7.boy, face: "se" }]);
 Cutaway.routine("streife", [{ day: [2, 3], from: "00:30", to: "00:45", if: "!off_tide", room: "cam07", at: A7.car }]);
 // CAM 07 is Jade Row's own picture under the feed's filter (one place, one picture), moved right by A7.shift; its steam and the heads

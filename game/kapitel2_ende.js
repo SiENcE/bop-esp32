@@ -22,6 +22,9 @@ Cutaway.moment("protokolle", { room: "deck", day: 7, from: "00:45", to: "01:00",
   { goto: "k2_protokolle", at: AF.deck, face: "ne", transition: false },
   { fade: "in", ms: 1200 },
   "Ihre Protokolle liegen im NETZ, offen für alle. Tabellen, Nacht für Nacht.",
+  // (decision 2: given to Lantern, the clip goes out with them, too early, kapitel2-design §3.6)
+  { if: "e2=lantern", then: ["Meine Aufnahme läuft mit. Ines auf der Treppe, bis er hochsieht.",
+    { if: "forgery_proven", then: ["Und daneben die Fälschung, mit der Minute, die fehlt."] }, "Zu früh. Einem Mörder glaubt keiner. Auch nicht mit Beweis."] },
   "Das Brett lacht über den Mörder mit den Tabellen.",
 ] });
 
