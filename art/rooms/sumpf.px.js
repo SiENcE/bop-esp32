@@ -19,7 +19,7 @@ pal({
   R: "#ffd58a", M: "#5a1f52",                                                                                        // a window, a dead sign
   "!": "#050c09", "~": "#0a1712", $: "#10231a", "%": "#183324", "&": "#22472f", "*": "#34683f", "+": "#5a9a62", "=": "#9ad8a4",   // the deep forest, its glow
   "(": "#0e1411", ")": "#18221b", "[": "#253225", "]": "#3a4a35", "{": "#5d7a48", "<": "#6a2e14", ">": "#a8582a",                  // bark, moss, thorns
-  a: "#2a2f36", A: "#474e57", s: "#6f7882", S: "#a9b2bb", t: "#141b26", T: "#2f4766", o: "#ff9a30", i: "#7a4018",                  // the van
+  a: "#2a2f36", A: "#474e57", s: "#6f7882", S: "#a9b2bb", t: "#141b26", T: "#2f4766", o: "#ff9a30", i: "#7a4018", p: "#1c3156", P: "#2c4c84", F: "#7c8590",                  // the van
 })
 include("../lib/text.js")
 
@@ -43,20 +43,32 @@ function limb(c, a, b, ctl, r0, r1, k, lit, side) {
 // a giant tree: the trunk widening down to its roots, which reach out and down into the water like legs; ridges in the bark, its edge
 // lit on the side toward the glow (side +1: right), moss on the ledges, thorns. ks: [body, ridge, lit edge, moss]
 function giant(c, cx, top, base, w, legs, side, ks, seed, thorns = 0) {
-  const [kb, kr, kl, km] = ks, foot = base - 34
-  c.poly([cx - w / 2, top, cx + w / 2, top, cx + w * 0.75, foot, cx - w * 0.75, foot], kb)
-  for (let i = 0; i < legs; i++) {
-    const u = legs > 1 ? i / (legs - 1) - 0.5 : 0, a = [cx + u * w * 1.1, foot - 6], b = [cx + u * w * 3.2 + (hsh(seed + i) - 0.5) * 10, base + R(hsh(seed * 2 + i) * 6)]
-    limb(c, a, b, [b[0], a[1] + 6], Math.max(3, R(w / 7)), 2, kb, (u * side > 0) ? kl : 0, side)
+  // each one its own: how low its roots spread (a flat foot, never a socket), how much it flares toward them, how it leans, how it
+  // narrows, whether it forks into a heavy limb, how many roots and how far they reach
+  const [kb, kr, kl, km] = ks, rootH = 9 + R(hsh(seed + 1) * 9), foot = base - rootH
+  const flare = 0.5 + hsh(seed + 2) * 0.22, lean = (hsh(seed + 3) - 0.5) * w * 0.9, narrow = 0.36 + hsh(seed + 5) * 0.12
+  const xAt = (y, u) => { const f = (y - top) / (foot - top); return cx + lean * (1 - f) + u * w * (narrow + (flare - narrow) * f * f) }
+  const pts = []
+  for (let y = top; y <= foot; y += 6) pts.push(xAt(y, -1), y)
+  pts.push(xAt(foot, -1), foot, xAt(foot, 1), foot)
+  for (let y = foot - ((foot - top) % 6); y >= top; y -= 6) pts.push(xAt(y, 1), y)
+  c.poly(pts.map(R), kb)
+  for (let i = 0; i < legs; i++) {                                                                    // the roots: out and down, low
+    const u = legs > 1 ? i / (legs - 1) - 0.5 : 0, reach = 1.4 + hsh(seed + 7 + i) * 1.3
+    const ra = [xAt(foot, u * 1.6), foot - 2], rb = [cx + u * w * reach * 1.6 + (hsh(seed + i) - 0.5) * 8, base + R(hsh(seed * 2 + i) * 4)]
+    limb(c, ra, rb, [rb[0] - u * 4, ra[1]], Math.max(2, R(w / 9)), 1, kb, (u * side > 0) ? kl : 0, side)
   }
-  for (let x = cx - w / 2 + 3; x < cx + w / 2 - 2; x += 4 + R(hsh(seed + x) * 3)) {             // ridges, a little wavy
-    for (let y = top; y < foot; y += 1) c.px(R(x + Math.sin((y + seed * 7) / 9) * 1.5 + (y - top) / (foot - top) * (x - cx) * 0.5), y, kr)
+  if (hsh(seed + 4) > 0.45) {                                                                         // a heavy limb, forking off
+    const fy = top + (foot - top) * (0.25 + hsh(seed + 6) * 0.25), dir = hsh(seed + 8) > 0.5 ? 1 : -1
+    limb(c, [xAt(fy, dir * 0.6), fy], [xAt(fy, dir) + dir * w * 1.2, top - 10], [xAt(fy, dir) + dir * w * 0.9, fy - 10], Math.max(2, R(w / 4)), 2, kb, kl, side)
   }
-  const ex = side > 0 ? cx + w / 2 : cx - w / 2
-  for (let y = top; y < foot; y++) c.px(R(ex + side * (y - top) / (foot - top) * w * 0.25) - side, y, kl)       // the lit edge
-  for (let i = 0; i < 14; i++) { const mx = cx - w / 2 + R(hsh(seed + i * 3) * w), my = top + R(hsh(seed + i * 5) * (foot - top)); c.hline(mx, my, 2 + R(hsh(i) * 3), km) }
+  for (let u = -0.8; u <= 0.8; u += 0.28 + hsh(seed + u * 10) * 0.12) {                            // ridges, following its lean, a little wavy
+    for (let y = top; y < foot; y++) c.px(R(xAt(y, u) + Math.sin((y + seed * 7 + u * 20) / 9) * 1.2), y, kr)
+  }
+  for (let y = top; y < foot; y++) c.px(R(xAt(y, side * 0.95)), y, kl)                                // the lit edge
+  for (let i = 0; i < 14; i++) { const my = top + R(hsh(seed + i * 5) * (foot - top)); c.hline(R(xAt(my, hsh(seed + i * 3) * 1.6 - 0.8)), my, 2 + R(hsh(i) * 3), km) }
   for (let i = 0; i < thorns; i++) {                                                                  // thorns, a few orange twigs
-    const tx = cx + (hsh(seed + i * 11) - 0.5) * w, ty = top + 20 + R(hsh(seed + i * 13) * (foot - top - 30))
+    const ty = top + 20 + R(hsh(seed + i * 13) * (foot - top - 30)), tx = xAt(ty, hsh(seed + i * 11) - 0.5)
     for (let j = 0; j < 6; j++) c.line(R(tx), R(ty), R(tx + (hsh(seed + i + j) - 0.5) * 14), R(ty + (hsh(seed + j * 7 + i) - 0.5) * 12), j % 2 ? ">" : "<")
   }
 }
@@ -139,13 +151,12 @@ sprite("_near", { w: NEAR_W, h: H, wrap: "x" }, (c) => {
 })
 
 // ---------------------------------------------------------------- the raft, Pike, Juno
-// The raft DATA 1C/GB as on the market: planks lashed over drums, a battery bank, an aerial with its sign.
+// The raft DATA 1C/GB as on the market: planks lashed over drums, a battery bank, an aerial (its sign stays on the market).
 function raft(c, x, y, f) {
   for (const dx of [6, 40, 76]) { c.ellipse(x + dx + 6, y + 3, 7, 3, "O"); c.hline(x + dx, y + 3, 12, "u") }
   c.rect(x, y - 3, 96, 4, "U"); for (let px = x; px < x + 96; px += 8) c.vline(px, y - 3, 4, "u")
   c.rect(x + 66, y - 13, 14, 10, "3"); c.hline(x + 66, y - 13, 14, "4"); c.px(x + 77, y - 10, (f >> 3) % 2 ? "v" : "C")   // the batteries
   c.vline(x + 86, y - 46, 43, "4"); c.px(x + 86, y - 47, "V")                                                            // the aerial
-  c.rect(x + 74, y - 40, 26, 9, "k"); TXT.draw(c, x + 87, y - 38, "DATA 1C/GB", "v", { font: "hud", align: "center" })
   c.hline(x, y + 6, 96, "e"); for (let px = x + 2; px < x + 94; px += 3) c.px(px, y + 8, "z")                           // its shadow on the water
 }
 // Juno sitting cross-legged in the middle, looking ahead (right): the hood up, the slicker, the bag
@@ -210,7 +221,14 @@ function lantern(c, x, y, water, string = 10) {
 // the van, from the side, its cab to the right: x0 its back, b the bottom of its body
 function van(c, x0, b) {
   const x1 = x0 + 130, top = b - 50
-  for (const dx of [10, 46, 82, 112]) { c.ellipse(x0 + dx + 6, b + 4, 8, 4, "O"); c.hline(x0 + dx, b + 4, 12, "u") }   // the drums it stands on
+  // the pontoon it stands on: a deck of boards on a row of blue floats, half in the water, posts and a rail along its edge
+  const px0 = x0 - 12, px1 = x1 + 12
+  for (let x = px0 + 1; x < px1 - 8; x += 11) { c.rect(x, b + 9, 10, 7, "p"); c.hline(x, b + 9, 10, "P"); c.vline(x, b + 9, 7, "P") }
+  c.dither(px0, b + 13, px1 - px0, 3, ".", "~", 0.5)
+  c.rect(px0, b + 6, px1 - px0, 3, "U"); for (let x = px0; x < px1; x += 6) c.px(x, b + 7, "u"); c.hline(px0, b + 8, px1 - px0, "u")
+  for (let x = px0 + 2; x < px1; x += 14) c.vline(x, b - 2, 8, "F")
+  c.hline(px0 + 2, b - 2, px1 - px0 - 4, "F")
+  for (let x = px0; x < px1; x += 3) c.px(x, b + 17 + (x % 2), "&")                                     // its line on the water
   c.poly([x0, top + 2, x0 + 2, top, x1 - 34, top, x1 - 14, top + 20, x1 + 2, top + 26, x1 + 3, b, x0, b], "s")        // the body, silver
   c.poly([x0, top + 26, x1 + 2, top + 26, x1 + 3, b, x0, b], "a")                                                     // dark below the belt
   c.hline(x0 + 2, top, x1 - 36 - x0, "S"); c.line(x1 - 34, top, x1 - 14, top + 20, "S"); c.hline(x0, top + 26, x1 + 2 - x0, "A")
@@ -221,12 +239,12 @@ function van(c, x0, b) {
   c.line(x1 - 30, top + 2, x1 - 13, top + 19, "t")
   // the sliding door open: his green inside, the cable going in
   c.rect(x0 + 38, top + 6, 26, b - top - 7, "d"); c.rect(x0 + 41, top + 9, 20, b - top - 12, "L"); c.vline(x0 + 37, top + 5, b - top - 5, "A")
-  for (let y = b + 6; y < b + 26; y += 2) c.hline(x0 + 40, y, 22, y % 4 ? "d" : "~")                                 // its light on the water
+  for (let y = b + 18; y < b + 34; y += 2) c.hline(x0 + 40, y, 22, y % 4 ? "d" : "~")                                // its light on the water
   // the cab's front: the lamp, the grille's edge, the bumper, the mirror; the wheel arches with the wheels hanging
   c.rect(x1, top + 30, 3, 4, "o"); c.dither(x1 + 2, top + 27, 8, 10, ".", "<", 0.4); c.px(x1 + 3, top + 31, "o")
   for (let y = top + 36; y < b - 4; y += 3) c.px(x1 + 2, y, "(")
   c.rect(x1 - 4, b - 4, 9, 4, "A"); c.rect(x1 - 26, top + 10, 3, 5, "A")
-  for (const wx of [x0 + 22, x1 - 22]) { c.ellipse(wx, b, 10, 7, "("); c.ellipse(wx, b + 2, 7, 6, ")"); c.ellipse(wx, b + 2, 3, 3, "A") }
+  for (const wx of [x0 + 22, x1 - 22]) { c.ellipse(wx, b - 1, 10, 7, "("); c.ellipse(wx, b, 6, 6, ")"); c.ellipse(wx, b, 3, 3, "A") }
   // rust and moss: streaks under the windows, moss along the roof
   for (const rx of [x0 + 12, x0 + 30, x0 + 80, x0 + 92]) c.vline(rx, top + 20, 6 + R(hsh(rx) * 5), "i")
   for (let x = x0 + 2; x < x1 - 36; x += 3) if (hsh(x * 3) > 0.55) c.px(x, top - 1, "{")
@@ -236,7 +254,12 @@ function van(c, x0, b) {
   c.rect(x0 + 43, top - 12, 6, 7, "a"); c.rect(x0 + 50, top - 11, 6, 6, "a")
   c.poly([x0 + 58, top - 6, x0 + 84, top - 14, x0 + 86, top - 10, x0 + 60, top - 5], "c"); for (let i = 1; i < 4; i++) c.line(x0 + 58 + i * 7, top - 6 - i * 2, x0 + 59 + i * 7, top - 5 - i * 2, "4")
   c.ellipse(x0 + 18, top - 24, 8, 4, "A"); c.ellipse(x0 + 18, top - 24, 6, 2, "a"); c.vline(x0 + 18, top - 20, 4, "A")
-  for (const [ax, ah] of [[x0 + 30, 30], [x0 + 34, 18], [x0 + 70, 26]]) { c.vline(ax, top - 16 - ah, ah, "A"); c.px(ax, top - 17 - ah, "=") }
+  const mast = x0 + 30, mtop = 6
+  c.vline(mast, mtop, top - 16 - mtop, "A"); c.vline(mast + 1, mtop + 10, top - 26 - mtop, "a")
+  for (let i = 0; i < 6; i++) { const y = mtop + 4 + i * 5, half = 7 - i; c.hline(mast - half, y, half * 2 + 1, "A") }   // its crossbars, shorter going down
+  c.line(mast, mtop + 2, x0 + 2, top - 16, "("); c.line(mast, mtop + 2, x0 + 40, top - 5, "(")                        // guy lines
+  c.px(mast, mtop - 1, "="); c.px(mast, mtop, "+")
+  for (const [ax, ah] of [[x0 + 36, 56], [x0 + 66, 44], [x0 + 86, 62], [x1 - 40, 36]]) { c.vline(ax, top - 6 - ah, ah, "A"); c.px(ax, top - 7 - ah, "=") }
   c.vline(x0 - 3, top, b - top, "A"); c.vline(x0 - 7, top, b - top, "A"); for (let y = top + 3; y < b; y += 5) c.hline(x0 - 7, y, 5, "A")
 }
 sprite("sumpf_bg", { w: W, h: H }, (c) => {
