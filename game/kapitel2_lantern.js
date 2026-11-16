@@ -69,7 +69,7 @@ Cutaway.actor("pike", { name: "Pike", color: "#a8b4c8", walkTo: AM.pikeTalk, fac
       else: [P("Gigabyte gegen Chits."), "Danke. Ich hab selber welche."] }] }] });
 Cutaway.routine("pike", [{ day: [5, 6, 7], from: "18:00", to: "04:00", room: "drain_market", at: AM.pike, face: "down" }]);
 const market = Cutaway.room.get("drain_market").hotspots;
-market.datenfloss = { name: "DATA 1C/GB", rect: AM.datenflossRect, walkTo: AM.pikeTalk, face: "down", if: "day>4",
+market.datenfloss = { name: "DATA 1C/GB", rect: AM.datenflossRect, walkTo: AM.pikeTalk, face: "down",
   look: [{ if: "know_cable", then: ["Das Kabel kommt an der Kanalmauer entlang und geht auf das Floß DATA 1C/GB.", "Das Floß liegt draußen an seinem Seil."],
     else: ["Auf dem Floß DATA 1C/GB verkauft einer Daten. Es liegt draußen an seinem Seil."] }],
   use: [{ if: "pike_met", then: [{ dialog: "pike" }], else: [{ if: "know_cable", then: ["Zu weit. Mit der Hand komm ich da nicht ran."], else: ["Ich brauch keine Daten. Ich hab selber welche."] }] }],
@@ -86,20 +86,20 @@ market.datenfloss = { name: "DATA 1C/GB", rect: AM.datenflossRect, walkTo: AM.pi
     { set: "pike_met" },
   ], else: ["Warum sollte ich das Floß ranholen? Ich will keine Daten."] }] }] } };
 
-// ---- L4: the ride out to the drowned forest, seen from the side (game/rooms/sumpf.js). The first time Pike sounds Juno out, whether she is
-// for the sender or against it; her answers are choices without a flag (what he thinks of her changes nothing the solver sees). After
-// that the ride is short
-const RIDE = [
-  "Ich steig auf. Er stakt das Floß nach rechts, aus dem Markt hinaus.",
-  { goto: "sumpf_fahrt" },
-  { if: "lantern_found", then: [P("Mitte."), "Ich weiß.", { wait: 3000 }], else: [
-    P("Setz dich in die Mitte."), { wait: 1500 },
-    { dialog: "pike_fahrt" },
-    "Über uns hören die Ringe auf. Da ist Himmel. Und Bäume, mitten in der Stadt.",
-    P("Da vorn hängen seine Lichter."),
-  ] },
-  { goto: "sumpf" },
+// ---- L4: the ride out to the drowned forest, seen from the side (game/rooms/sumpf.js), Juno standing on the raft. The first ride is the
+// one the output stage pays for: Pike sounds Juno out, whether she is for the sender or against it; her answers are choices without a
+// flag (what he thinks of her changes nothing the solver sees). Every later ride ("Fährst du mich raus?") is short; which is which comes
+// from the choice, so it costs no flag
+const AF = Nagiwa.at.sumpf_fahrt, AH = Nagiwa.at.sumpf;
+const RIDE_OUT = ["Ich steig auf. Er stakt das Floß nach rechts, aus dem Markt hinaus.", { goto: "sumpf_fahrt", at: AF.juno, face: "se" }];
+const RIDE_FIRST = [...RIDE_OUT,
+  P("Stell dich in die Mitte."), { wait: 1500 },
+  { dialog: "pike_fahrt" },
+  "Über uns hören die Ringe auf. Da ist Himmel. Und Bäume, mitten in der Stadt.",
+  P("Da vorn hängen seine Lichter."),
+  { goto: "sumpf", at: AH.juno, face: "se" },
 ];
+const RIDE_AGAIN = [...RIDE_OUT, P("Mitte."), "Ich weiß.", { wait: 3000 }, { goto: "sumpf", at: AH.juno, face: "se" }];
 Cutaway.dialog("pike_fahrt", {
   main: { enter: [P("Was willst du von ihm?")], choices: [
     { text: "„Ich hab gesehen, was mit ihr passiert ist.“", goto: "sonst", then: [P("Gesehen. Wo?"), "Auf einer Kamera. Ich schau viel auf Kameras.",
@@ -112,7 +112,7 @@ Cutaway.dialog("pike_fahrt", {
     { text: "„Nichts Besonderes. Ich wohn im Kessel-Block.“", goto: "hoeren", then: [P("Da wohnen viele. Die meisten schlafen.")] },
   ] },
   hoeren: { enter: [P("Hörst du ihn manchmal? Den Sender.")], choices: [
-    { text: "„Am Sonntag hab ich den Schirm gesehen.“", goto: "end", then: [P("Zehn Sekunden."), "Länger glaubt einem eh keiner.", P("..."), P("Das sagt er auch.")] },
+    { text: "„Ich weiß, was er auf den Schirm geschrieben hat.“", goto: "end", then: [P("Zehn Sekunden."), "Länger glaubt einem eh keiner.", P("..."), P("Das sagt er auch.")] },
     { text: "„Die Nachrichten sagen, er hat sie umgebracht.“", goto: "end", then: ["Seine Stange bleibt im Wasser stehen.", P("Sagen sie."),
       "Ich hab gesehen, dass er's nicht war.", P("..."), P("Dann sag ihm das. Das hört er nicht oft.")] },
     { text: "„Nein. Ich hör Kameras, kein Radio.“", goto: "end", then: [P("Kameras lügen auch."), "Die nicht. Die Leute, die sie schneiden."] },
@@ -120,12 +120,17 @@ Cutaway.dialog("pike_fahrt", {
 });
 // Pike on his raft, once Juno knows what he wants. A plain dialogue, not a talkTree: the ride ends the talk (a talkTree's topic would
 // come back to its choices, after the ride, in the swamp)
+const PAID = [{ remove: "endstufe" }, P("Die mit den Kühlrippen. Gut."), ...RIDE_FIRST];
 Cutaway.dialog("pike", { main: [
-  { text: "„Hier. Die Endstufe.“", if: "has:endstufe", goto: "end", then: [{ remove: "endstufe" }, P("Die mit den Kühlrippen. Gut."), ...RIDE] },
-  { text: "„Fährst du mich raus?“", if: ["ledger_ratz", "!has:endstufe"], goto: "end", then: [P("Steig auf."), ...RIDE] },
-  { text: "„Was ist mit Ratz?“", then: [P("Ratz sagt, ich hätte ihn fressen wollen."), P("Ich frühstücke nie."), P("Und ich ess keine Ratten. Der Hals sieht das manchmal anders.")] },
+  { text: "„Hier. Die Endstufe.“", if: "has:endstufe", goto: "end", then: PAID },
+  { text: "„Fährst du mich raus?“", if: ["ledger_ratz", "!has:endstufe"], goto: "end", then: [P("Steig auf."), ...RIDE_AGAIN] },
+  { text: "„Was ist mit Ratz?“", then: [P("Ratz sagt, ich hätte ihn fressen wollen."), P("Ich frühstücke nie.")] },
   { text: "Später.", silent: true, goto: "end" },
 ] });
+// the output stage handed to him straight from the bag works as well as saying so (what the hint says: give it to Pike)
+const pikeDef = /** @type {any} */ (Cutaway.actors.get("pike")).def;
+pikeDef.with = { endstufe: ["Hier. Die Endstufe.", ...PAID], haken: market.datenfloss.with.haken };
+market.datenfloss.with.endstufe = pikeDef.with.endstufe;
 
 // ---- L3b: Ratz has the output stage, and he gives it to Juno (never to the heron) for a copy of her old pass: his colony, the flaps in the
 // pipes under the Crown. Asked only once Pike has said what he wants (knowledge she lacks before)
@@ -144,9 +149,9 @@ Nagiwa.talkTree("ratz_endstufe", [
       { ledger: "ratz", value: "copy" }, { give: "endstufe" },
       { if: "window_open", then: ["Das zweite Mal, dass das Ding was aufmacht."], else: ["Das erste Mal, dass das Ding was aufmacht."] },
       RZ("Und sag dem Reiher nicht, von wem."),
-    ], undefined, "has:ausweis"],
-    ["„Den hab ich nicht dabei.“", ["Der liegt noch im Karton unter meinem Bett.", RZ("Dann hol ihn. Ich lauf nicht weg. Ich wohn hier.")], undefined, "!has:ausweis"],
-  ]],
+    ], undefined, ["has:ausweis", "!ledger_ratz"]],
+    ["„Den hab ich nicht dabei.“", ["Der liegt noch im Karton unter meinem Bett.", RZ("Dann hol ihn. Ich lauf nicht weg. Ich wohn hier.")], undefined, ["!has:ausweis", "!ledger_ratz"]],
+  ], "!ledger_ratz"],
   ["„Wohin geht das Kabel am Kanal?“", [RZ("Raus. Wo keiner wohnt, der Miete zahlt."), RZ("Da draußen wachsen Bäume. Bäume! Wer braucht Bäume?")]],
 ]);
 
@@ -174,18 +179,28 @@ hide.wohnwagen.use = [{ if: "lantern_found", then: [{ goto: "lantern_versteck", 
 ] }];
 hide.floss.use = [P("Zurück?"), "Zurück.", { goto: "drain_market", at: AM.pikeTalk, face: "down" }];
 
-// Lantern in person (his figure in the feed for now). He says Sie until she has brought him the stick
+// Lantern in person (his figure in the feed for now). He says Sie until she has brought him the stick. The hand-over: said in his talk, or
+// the stick given to him from the bag
+const HANDOVER = [
+  { unset: "stick_ines" }, { if: "has:stick", then: [{ remove: "stick" }] }, { set: "lantern_found", value: "ally" },
+  L("Ohne den sind ihre Tabellen nur Rauschen."),
+  L("Montag. Um eins. Bis dahin stehen die Sender."),
+  L("Und ... danke. Du hast ihn mir gebracht. Das vergess ich nicht."),
+  "Ich heiß ...",
+  L("Sag's nicht. Ich will's nicht wissen müssen."),
+];
 Cutaway.actor("lantern_k2", { name: "Lantern", color: "#b0f0a0", room: "lantern_versteck", at: AV.lantern, facing: "se", walkTo: AV.talk, face: "nw",
   costume: { idle: "lantern_feed", walk: "lantern_feed", talk: "lantern_feed" }, voice: { pitch: 46, wave: "square", syllable: 85 },
   look: ["Ein grüner Iro, ein Okular über einem Auge, ein Headset mit drei Antennen.", "Um den Hals hängt eine kleine Laterne am Kabel. Sie brennt."],
-  talk: [{ if: "lantern_found=ally", then: [L("Du schon wieder. Pass auf, wer dir nachgeht.")], else: [L("Sie schon wieder.")] }, { dialog: "lantern" }] });
+  talk: [{ if: "lantern_found=ally", then: [L("Du schon wieder. Pass auf, wer dir nachgeht.")], else: [L("Sie schon wieder.")] }, { dialog: "lantern" }],
+  with: { stick: ["Hier. Der gehört Ihnen.", ...HANDOVER] } });
 Nagiwa.talkTree("lantern", [
   ["„Ich hab gesehen, was passiert ist.“", [
     L("Was heißt gesehen?"),
     "CAM 31. Ich hab zugesehen, die ganze Zeit.",
-    L("Dann wissen Sie, dass ich ..."),
+    { if: "lantern_found=ally", then: [L("Dann weißt du, dass ich ...")], else: [L("Dann wissen Sie, dass ich ...")] },
     L("Ich war schon weg. Ich hab nicht mal ..."),
-    "Sie konnten ihn nicht sehen. Er stand hinter der Treppe.",
+    { if: "lantern_found=ally", then: ["Du konntest ihn nicht sehen. Er stand hinter der Treppe."], else: ["Sie konnten ihn nicht sehen. Er stand hinter der Treppe."] },
     L("..."),
     L("Und jetzt zeigen sie überall, dass ich's war."),
     { if: "forgery_proven", then: ["Die haben eine Minute rausgeschnitten. Das kann ich zeigen.", L("Zeigen. Wem denn? Die glauben, was auf dem Schirm ist.")],
@@ -198,15 +213,8 @@ Nagiwa.talkTree("lantern", [
     L("Und dann haben Sie ihn geholt. Vor mir."),
     "Ja.",
   ], [
-    ["„Hier. Der gehört Ihnen.“", [
-      { unset: "stick_ines" }, { if: "has:stick", then: [{ remove: "stick" }] }, { set: "lantern_found", value: "ally" },
-      L("Ohne den sind ihre Tabellen nur Rauschen."),
-      L("Montag. Um eins. Bis dahin stehen die Sender."),
-      L("Und ... danke. Du hast ihn mir gebracht. Das vergess ich nicht."),
-      "Ich heiß ...",
-      L("Sag's nicht. Ich will's nicht wissen müssen."),
-    ]],
-    ["„Noch nicht.“", [L("Dann gehen Sie. Und lassen Sie sich nicht folgen.")]],
+    ["„Hier. Der gehört Ihnen.“", HANDOVER, undefined, "stick_ines"],
+    ["„Noch nicht.“", [L("Dann gehen Sie. Und lassen Sie sich nicht folgen.")], undefined, "stick_ines"],
   ], "stick_ines"],
   ["„Was ist das hier?“", [
     L("Der Wagen hat mal Urlaub gemacht. Jetzt sendet er."),

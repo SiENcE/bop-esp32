@@ -50,10 +50,11 @@ Nagiwa.at = {
   // Ines' flat, 4B, on blocks (art/rooms/ines_wohnung.map.js, game/rooms/ines_wohnung.layout.js); the fridge's upper part has the napkin
   // under its magnet, its lower part is the freezer (one hotspot asks which)
   ines_wohnung: fromLayout(Nagiwa.layouts.ines_wohnung),
-  // the swamps, two stages seen from the side, on blocks (art/rooms/sumpf.px.js): the ride on Pike's raft, its planes where they start
-  // (each scrolls), the raft's canvas; and the arrival at the caravan, the raft tied up at the walk, the caravan and the raft to click
-  sumpf_fahrt: { far: [0, 0], weed: [0, 142], floss: [78, 32] },
-  sumpf: { floss: [6, 42],
+  // the swamps, two stages seen from the side (art/rooms/sumpf.px.js): the ride on Pike's raft, its planes where they start (each
+  // scrolls), the raft's canvas, where Juno stands on it; and the arrival at the caravan, the raft tied up at the walk, the caravan and
+  // the raft to click
+  sumpf_fahrt: { far: [0, 0], weed: [0, 142], floss: [78, 32], juno: [170, 151], walk: [[150, 148, 196, 148, 196, 153, 150, 153]] },
+  sumpf: { floss: [6, 42], juno: [100, 161], walk: [[80, 158, 126, 158, 126, 163, 80, 163]],
     wohnwagenPoly: [170, 146, 170, 88, 176, 72, 212, 72, 214, 82, 270, 82, 290, 106, 308, 112, 308, 146],
     flossPoly: [40, 170, 40, 150, 52, 150, 54, 70, 72, 70, 74, 150, 88, 150, 90, 126, 104, 126, 106, 150, 138, 150, 138, 170] },
   // Lantern's hide, on blocks (art/rooms/lantern_versteck.map.js, game/rooms/lantern_versteck.layout.js); he sits at "lantern"
@@ -204,8 +205,9 @@ Nagiwa.at = {
   // cables, string lights and lanterns hang over the people. The runtime lamps are the painting's own, so Juno takes on its light
   drain_market: (() => {
     const L = Nagiwa.layouts.drain_market, part = (/** @type {any} */ p) => p.name.slice("drain_market_".length);
-    return { ...L.spots, ...L.rects, walk: [...L.walk, [1176, 358, 1196, 358, 1196, 340, 1204, 340, 1204, 358, 1228, 358, 1228, 378, 1176, 378]], holes: L.holes, size: L.size, sounds: L.sounds,
-      // Pike on the raft DATA 1C/GB in the canal (Chapter 2; its deck is a walk area of its own, joined to the kerb by a slit as Sable's booth has one), and where Juno stands
+    return { ...L.spots, ...L.rects, walk: [...L.walk, [1192, 340, 1200, 340, 1200, 370, 1192, 370]], holes: L.holes, size: L.size, sounds: L.sounds,
+      // Pike on the raft DATA 1C/GB in the canal (Chapter 2; he stands at the end of a slit in the walk area, as Sable does in her booth: an actor stands on walkable floor; the raft's
+      // hotspot covers the slit, so nobody walks out onto it), and where Juno stands
       // on the kerb above it (not from the layout: the raft is the painting's, the man on it isn't yet)
       pike: [1196, 368], pikeTalk: [1200, 343], datenflossRect: [1172, 352, 60, 30],
       props: L.parts.filter((/** @type {any} */ p) => p.layer === "under").map((/** @type {any} */ p) => ({ id: part(p), image: p.name, at: p.at, anchor: [0, 0], baseline: 0 })),

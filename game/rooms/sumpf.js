@@ -1,5 +1,5 @@
 // The swamps (docs/kapitel2-design.md §3.5 L4, L5; decided 2026-11-16), painted (art/rooms/sumpf.px.js): two stages seen from the side,
-// where Juno sits on Pike's raft and nobody walks (observe: the one played isn't in the picture, she sits on the raft's canvas):
+// where Juno stands on Pike's raft as her own figure (her walk area is a strip of its deck, so she doesn't go anywhere):
 //   sumpf_fahrt  the ride out of the Drain Market to the drowned forest: the planes scroll past the raft at their own speeds, the talk
 //                runs at the top (what is said: game/kapitel2_lantern.js)
 //   sumpf        the arrival: the raft tied up at the walk of planks, Lantern's caravan on its pontoons, his green lanterns in the trees;
@@ -12,7 +12,8 @@
   const F = Nagiwa.at.sumpf_fahrt, A = Nagiwa.at.sumpf;
   const RAIN = { kind: "rain", rect: [0, 0, 320, 180], count: 60, color: "#41547a", speed: 130, slant: 0.25, length: 4 };
   Cutaway.room("sumpf_fahrt", {
-    name: "Auf dem Kanal", background: "sumpf_fahrt_bg", observe: true, buttons: false, lines: "top", label: true,
+    name: "Auf dem Kanal", background: "sumpf_fahrt_bg", buttons: false, lines: "top", label: true, walk: F.walk,
+    light: { ambient: 0.62, color: "#b8c8d8" },
     props: [
       { id: "far", image: "sumpf_fahrt_far", at: F.far, anchor: [0, 0], baseline: 1, scroll: -24 },
       { id: "mid", image: "sumpf_fahrt_mid", at: [0, 0], anchor: [0, 0], baseline: 2, scroll: -48 },
@@ -25,7 +26,8 @@
     hotspots: {},
   });
   Cutaway.room("sumpf", {
-    name: "Bei Lantern", background: "sumpf_bg", observe: true, lines: "top", label: true,
+    name: "Bei Lantern", background: "sumpf_bg", lines: "top", label: true, walk: A.walk,
+    light: { ambient: 0.66, color: "#dcd8c8", lamps: [{ at: [222, 120], r: 90, power: 0.5, color: "#9ad8a4" }] },
     props: [{ id: "floss", image: "sumpf_floss", at: A.floss, anchor: [0, 0], baseline: 4 }],
     fx: [{ ...RAIN, count: 40 }],
     ambience: ["sumpf_wasser", "sumpf_grillen"], music: { theme: "sumpf", intensity: 0.4 },

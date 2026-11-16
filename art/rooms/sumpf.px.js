@@ -3,9 +3,9 @@
 //   sumpf_fahrt_bg      the ride's still part: the sky, the city and the Crown behind, the water (320x180)
 //   sumpf_fahrt_far     the farther rows (384 wide), sumpf_fahrt_mid the drowned house fronts and trunks (768), sumpf_fahrt_weed the
 //                       duckweed (768), sumpf_fahrt_near the big trunks passing in front (768): each a prop that scrolls (game/rooms/sumpf.js)
-//   sumpf_fahrt_floss   the raft DATA 1C/GB with Pike poling and Juno sitting, riding the water (48 frames at 12 fps)
+//   sumpf_fahrt_floss   the raft DATA 1C/GB with Pike poling (48 frames at 12 fps); Juno stands on it as her own figure (game/rooms/sumpf.js)
 //   sumpf_bg            the arrival: the old trees, the mist, Lantern's lanterns, the walk of planks, the caravan on pontoons (320x180)
-//   sumpf_floss         the raft tied up at the walk, Pike resting on his pole, Juno sitting (24 frames)
+//   sumpf_floss         the raft tied up at the walk, Pike resting on his pole (24 frames)
 "use strict"
 pal({
   k: "#0c0e1a", n: "#06080f", 1: "#131a2a", 2: "#1a2337", 3: "#232f47", 4: "#2f3e5a", 5: "#41547a", 6: "#617aa0",   // night
@@ -19,7 +19,7 @@ pal({
   R: "#ffd58a", M: "#5a1f52",                                                                                        // a window, a dead sign
   "!": "#050c09", "~": "#0a1712", $: "#10231a", "%": "#183324", "&": "#22472f", "*": "#34683f", "+": "#5a9a62", "=": "#9ad8a4",   // the deep forest, its glow
   "(": "#0e1411", ")": "#18221b", "[": "#253225", "]": "#3a4a35", "{": "#5d7a48", "<": "#6a2e14", ">": "#a8582a",                  // bark, moss, thorns
-  a: "#2a2f36", A: "#474e57", s: "#6f7882", S: "#a9b2bb", t: "#141b26", T: "#2f4766", o: "#ff9a30", i: "#7a4018", W: "#5e4632", p: "#1c3156", P: "#2c4c84", F: "#7c8590",                  // the van
+  a: "#2a2f36", A: "#474e57", s: "#6f7882", S: "#a9b2bb", t: "#141b26", T: "#2f4766", o: "#ff9a30", i: "#7a4018", W: "#5e4632", K: "#5a2a1e", B: "#7a3e2a", p: "#1c3156", P: "#2c4c84", F: "#7c8590",                  // the van
 })
 include("../lib/text.js")
 
@@ -190,25 +190,13 @@ function raft(c, x, y, f) {
   c.vline(x + 86, y - 46, 43, "4"); c.hline(x + 83, y - 38, 7, "4"); c.hline(x + 84, y - 30, 5, "4"); c.px(x + 86, y - 47, "V")
   c.hline(x, y + 6, 96, "e"); for (let px = x + 2; px < x + 94; px += 3) c.px(px, y + 8, "z")                           // its shadow on the water
 }
-// Juno sitting cross-legged in the middle, looking ahead (right): the hood up with its rim, a little of her face, the slicker's folds, an
-// arm on her knee, the boots, the bag behind her on its strap
-function junoSits(c, x, y) {
-  c.ellipse(x + 1, y - 3, 8, 3, "2"); c.hline(x - 5, y - 6, 12, "3")                                                  // her legs, crossed
-  c.rect(x + 5, y - 4, 5, 3, "1"); c.hline(x + 5, y - 1, 5, "k")                                                      // a boot
-  c.poly([x - 7, y - 4, x - 5, y - 20, x + 5, y - 20, x + 7, y - 4], "y")
-  c.vline(x - 6, y - 18, 14, "j"); c.vline(x - 5, y - 16, 10, "j")                                                    // the slicker's back in shade
-  c.line(x - 2, y - 17, x - 3, y - 6, "j"); c.line(x + 2, y - 15, x + 2, y - 7, "j")                                  // its folds
-  c.vline(x + 6, y - 18, 12, "Y")                                                                                      // its front, lit
-  c.line(x + 2, y - 17, x + 7, y - 7, "y"); c.line(x + 3, y - 17, x + 8, y - 7, "j")                                  // her arm, the hand on her knee
-  c.ellipse(x, y - 25, 5, 6, "y"); c.line(x + 4, y - 30, x + 6, y - 22, "Y"); c.px(x - 4, y - 23, "j")                // the hood, its rim
-  c.rect(x + 3, y - 27, 3, 5, "1"); c.px(x + 5, y - 25, "s"); c.px(x + 5, y - 24, "S")                                // her face in the hood's shadow
-  c.line(x + 3, y - 19, x - 6, y - 9, "1"); c.rect(x - 11, y - 11, 5, 6, "3"); c.hline(x - 11, y - 11, 5, "4")        // the strap, the bag behind her
-}
 // Pike standing at the back, poling, a grey heron as a man: long thin legs with their joints, a coat folded like grey wings in layers of
 // feathers with the black at the shoulder, the long white neck in an S with its black stripe down the front, a small white head, the
 // black streak from the eye into the crest that hangs back, the long beak, paler below. t (0..1): the pole's stroke, planted and pushed,
 // lifted out, raised high, plunged again
-const STROKE = [[0, -10, 22, 4, -62], [0.4, -26, 22, -2, -40], [0.55, -24, -16, -2, -60], [0.8, -8, -32, 4, -82], [1, -10, 22, 4, -62]]
+const STROKE = [[0, -10, 18, 4, -50], [0.4, -26, 18, -2, -32], [0.55, -24, -13, -2, -48], [0.8, -8, -26, 4, -66], [1, -10, 18, 4, -50]]
+// his height: 0.8 of the first drawing, so beside Juno (50 px) he is a head and a neck taller, not twice her size
+const PY = (v) => R(v * 0.8)
 function pike(c, x, y, t) {
   const k = STROKE.findIndex((s) => s[0] > t), a = STROKE[k - 1], b = STROKE[k], u = (t - a[0]) / (b[0] - a[0])
   const [bx, by, hx, hy] = [1, 2, 3, 4].map((i) => R(a[i] + (b[i] - a[i]) * u))
@@ -217,23 +205,23 @@ function pike(c, x, y, t) {
   const tx = R(px1 + (px1 - px0) / len * 22), ty = R(py1 + (py1 - py0) / len * 22)
   c.line(px0, py0, tx, ty, "U"); c.line(px0 + 1, py0, tx + 1, ty, "u")
   for (const lx of [x - 3, x + 2]) {                                                                                   // the legs, the joints, the toes
-    c.vline(lx, y - 30, 30, "h"); c.px(lx, y - 15, "H"); c.px(lx, y - 16, "H"); c.px(lx, y - 29, "H")
-    c.hline(lx - 1, y - 1, 4, "h"); c.px(lx - 2, y, "h"); c.px(lx + 3, y, "h")
+    c.vline(lx, y - PY(30), PY(30), "h"); c.px(lx, y - PY(15), "H"); c.px(lx, y - PY(16), "H"); c.px(lx, y - PY(29), "H")
+    c.hline(lx - 1, y - PY(1), 4, "h"); c.px(lx - 2, y, "h"); c.px(lx + 3, y, "h")
   }
-  c.poly([x - 4, y - 58, x + 5, y - 58, x + 7, y - 42, x + 4, y - 28, x - 9, y - 25, x - 6, y - 44], "H")                // the coat, folded
+  c.poly([x - 4, y - PY(58), x + 5, y - PY(58), x + 7, y - PY(42), x + 4, y - PY(28), x - 9, y - PY(25), x - 6, y - PY(44)], "H")                // the coat, folded
   for (let row = 0; row < 5; row++) {                                                                                  // its feathers, in layers
-    const ry = y - 52 + row * 6
-    for (let fx = x - 7 + row; fx < x + 5 - (row >> 1); fx += 4) { c.px(fx, ry, "h"); c.px(fx + 1, ry + 1, "h"); c.px(fx + 2, ry + 1, "h") }
+    const ry = y - PY(52) + PY(row * 6)
+    for (let fx = x - 7 + row; fx < x + 5 - (row >> 1); fx += 4) { c.px(fx, ry, "h"); c.px(fx + 1, ry + PY(1), "h"); c.px(fx + 2, ry + PY(1), "h") }
   }
-  c.line(x - 9, y - 25, x - 6, y - 44, "h"); c.line(x - 6, y - 44, x - 4, y - 57, "h")                                // its back edge in shade
-  c.rect(x + 4, y - 57, 2, 8, "k"); c.px(x + 6, y - 55, "k")                                                          // the black at the shoulder
-  for (const [ny0, ny1, nx] of [[-66, -58, 3], [-73, -66, 1], [-80, -73, 3]]) { c.rect(x + nx - 1, y + ny0, 3, ny1 - ny0, "w"); c.vline(x + nx - 1, y + ny0, ny1 - ny0, "H") }
-  for (let ny = -76; ny < -58; ny += 3) c.px(x + (ny < -66 && ny >= -73 ? 2 : 4), y + ny, "k")                          // the stripe down the neck
-  c.ellipse(x + 4, y - 82, 3, 2, "w"); c.px(x + 2, y - 81, "H")                                                       // the head
-  c.line(x + 5, y - 83, x + 1, y - 83, "k"); c.line(x + 1, y - 83, x - 8, y - 79, "k"); c.line(x + 1, y - 82, x - 6, y - 79, "k")   // eye streak, crest
-  c.px(x + 5, y - 82, "b")                                                                                             // the eye
-  c.line(x + 7, y - 82, x + 17, y - 81, "b"); c.line(x + 7, y - 81, x + 15, y - 81, "<")                              // the beak, paler above
-  c.line(x + 2, y - 55, px1, py1, "h"); c.line(x + 4, y - 54, px1 + 1, py1 + 1, "H")                                     // his arms on the pole
+  c.line(x - 9, y - PY(25), x - 6, y - PY(44), "h"); c.line(x - 6, y - PY(44), x - 4, y - PY(57), "h")                                // its back edge in shade
+  c.rect(x + 4, y - PY(57), 2, 8, "k"); c.px(x + 6, y - PY(55), "k")                                                          // the black at the shoulder
+  for (const [ny0, ny1, nx] of [[-66, -58, 3], [-73, -66, 1], [-80, -73, 3]]) { c.rect(x + nx - 1, y + PY(ny0), 3, PY(ny1) - PY(ny0), "w"); c.vline(x + nx - 1, y + PY(ny0), PY(ny1) - PY(ny0), "H") }
+  for (let ny = -76; ny < -58; ny += 3) c.px(x + (ny < -66 && ny >= -73 ? 2 : 4), y + PY(ny), "k")                          // the stripe down the neck
+  c.ellipse(x + 4, y - PY(82), 3, 2, "w"); c.px(x + 2, y - PY(81), "H")                                                       // the head
+  c.line(x + 5, y - PY(83), x + 1, y - PY(83), "k"); c.line(x + 1, y - PY(83), x - 8, y - PY(79), "k"); c.line(x + 1, y - PY(82), x - 6, y - PY(79), "k")   // eye streak, crest
+  c.px(x + 5, y - PY(82), "b")                                                                                             // the eye
+  c.line(x + 7, y - PY(82), x + 17, y - PY(81), "b"); c.line(x + 7, y - PY(81), x + 15, y - PY(81), "<")                              // the beak, paler above
+  c.line(x + 2, y - PY(55), px1, py1, "h"); c.line(x + 4, y - PY(54), px1 + 1, py1 + 1, "H")                                     // his arms on the pole
   c.px(px1, py1, "w"); c.px(px1 + 1, py1 + 1, "w")                                                                     // his hands
 }
 const RAFT_X = 112
@@ -241,7 +229,6 @@ function crew(c, f) {
   const bob = (f % 24) < 12 ? 0 : 1                                  // the raft rides the water
   raft(c, RAFT_X, RAFT + bob, f)
   pike(c, RAFT_X + 20, RAFT - 3 + bob, (f % 48) / 48)
-  junoSits(c, RAFT_X + 54, RAFT - 3 + bob)
 }
 
 // ---------------------------------------------------------------- rain: thin streaks, each round the picture 4 times a loop
@@ -265,7 +252,7 @@ function lantern(c, x, y, water, string = 10) {
   c.rect(x - 1, y - 1, 3, 3, "+"); c.px(x, y, "=")
   if (water) for (let k = 0; k < 5; k++) c.hline(x - 2 + (k % 2), water + 2 + k * 3, 4 - (k >> 1), k % 2 ? "*" : "+")   // its double on the water
 }
-// the van, from the side, its cab to the right: x0 its back, b the bottom of its body
+// the van, from the side, its cab to the right: x0 its back, b the bottom of its body. No wheels: it stands on bricks on its pontoon
 function van(c, x0, b) {
   const x1 = x0 + 130, top = b - 50
   // the pontoon it stands on: a deck of boards on a row of blue floats, half in the water, posts and a rail along its edge
@@ -305,13 +292,29 @@ function van(c, x0, b) {
   c.rect(x1, top + 30, 3, 4, "o"); c.dither(x1 + 2, top + 27, 8, 10, ".", "<", 0.4); c.px(x1 + 3, top + 31, "o")
   for (let y = top + 36; y < b - 4; y += 3) c.px(x1 + 2, y, "(")
   c.rect(x1 - 4, b - 4, 9, 4, "A"); c.hline(x1 - 4, b - 4, 9, "s")
+  // no wheels: the empty arches dark, and under each axle a stack of bricks it rests on, on the pontoon's deck
   for (const wx of [x0 + 22, x1 - 22]) {
-    c.ellipse(wx, b - 1, 10, 7, "("); c.ellipse(wx, b, 6, 6, ")"); for (let i = 0; i < 10; i++) c.px(R(wx + 6 * Math.cos(i * 0.63)), R(b + 6 * Math.sin(i * 0.63)), "A")
-    c.ellipse(wx, b, 3, 3, "s"); c.px(wx - 1, b - 1, "S")
+    c.ellipse(wx, b - 1, 10, 7, "("); c.rect(wx - 10, b - 1, 21, 2, "(")
+    for (let row = 0; row < 2; row++) for (let i = 0; i < 3; i++) {
+      const bx = wx - 9 + i * 6 + (row ? 3 : 0), by = b + 3 - row * 3
+      if (bx + 5 > wx + 11) continue
+      c.rect(bx, by, 5, 2, "K"); c.hline(bx, by, 5, "B"); c.px(bx + 5, by, "u"); c.px(bx + 5, by + 1, "u")
+    }
   }
   // rust and moss: streaks under the windows, moss along the roof
   for (const rx of [x0 + 12, x0 + 30, x0 + 80, x0 + 92, x1 - 40]) { const len = 6 + R(hsh(rx) * 6); c.vline(rx, top + 20, len, "i"); c.px(rx + 1, top + 20 + len - 2, "i") }
   for (let x = x0 + 2; x < x1 - 36; x += 2) if (hsh(x * 3) > 0.5) c.px(x, top - 1, hsh(x) > 0.5 ? "{" : "&")
+  // what he added to its grey sides, small and many: a conduit along the body, riveted panels, a vent, a locker on the lower body, a junction
+  // box with its cables, a row of small cyan status lights (tech: the style guide's cyan)
+  c.hline(x0 + 2, top + 22, 34, "A"); c.hline(x0 + 2, top + 21, 34, "S"); c.hline(x0 + 66, top + 22, 34, "A"); c.hline(x0 + 66, top + 21, 34, "S")
+  for (const [gx, gy, gw, gh] of [[x0 + 4, top + 30, 12, 7], [x0 + 72, top + 30, 9, 6], [x1 - 40, top + 29, 8, 5]]) {
+    c.rect(gx, gy, gw, gh, "A"); c.hline(gx, gy, gw, "s"); c.px(gx + 1, gy + 1, "S"); c.px(gx + gw - 2, gy + 1, "S"); c.px(gx + 1, gy + gh - 2, "S"); c.px(gx + gw - 2, gy + gh - 2, "S")
+  }
+  for (let i = 0; i < 4; i++) c.hline(x0 + 84, top + 31 + i * 2, 8, "(")                                              // the vent
+  c.rect(x0 + 18, top + 34, 16, 9, "A"); c.hline(x0 + 18, top + 34, 16, "s"); c.vline(x0 + 26, top + 35, 8, "a"); c.px(x0 + 24, top + 38, "S")   // the locker
+  c.rect(x1 - 52, top + 6, 5, 7, "A"); c.hline(x1 - 52, top + 6, 5, "S"); c.line(x1 - 50, top + 13, x1 - 50, top + 22, "(")                    // a junction box, its cable
+  for (let i = 0; i < 4; i++) c.px(x0 + 6 + i * 3, top + 33, i % 2 ? "v" : "C")                                      // status lights
+  c.px(x1 - 38, top + 31, "v")
   // on the roof: the roof box at the back, the rack with cans and a solar panel, the dish, the mast and the whips, green lights on top
   c.rect(x0 + 2, top - 16, 36, 16, "s"); c.hline(x0 + 2, top - 16, 36, "S"); c.hline(x0 + 2, top - 1, 36, "A")
   c.rect(x0 + 6, top - 12, 12, 8, "t"); c.rect(x0 + 21, top - 12, 12, 8, "t"); c.hline(x0 + 6, top - 12, 12, "T"); c.hline(x0 + 21, top - 12, 12, "T")
@@ -371,9 +374,9 @@ sprite("sumpf_fahrt_near", { w: NEAR_W, h: H }, (c) => c.stamp("_near", 0, 0))
 const FL = { w: 160, h: 146, x: 34, y: 118 }
 anim("sumpf_fahrt_floss", { w: FL.w, h: FL.h, frames: 48, fps: 12 }, (c) => {
   const f = c.frame, bob = (f % 24) < 12 ? 0 : 1
-  raft(c, FL.x, FL.y + bob, f); pike(c, FL.x + 20, FL.y - 3 + bob, f / 48); junoSits(c, FL.x + 54, FL.y - 3 + bob)
+  raft(c, FL.x, FL.y, f); pike(c, FL.x + 20, FL.y - 3, f / 48)
 })
 anim("sumpf_floss", { w: FL.w, h: FL.h, frames: 24, fps: 6 }, (c) => {
   const f = c.frame, bob = (f % 12) < 6 ? 0 : 1
-  raft(c, FL.x, FL.y + bob, f); pike(c, FL.x + 20, FL.y - 3 + bob, 0.85); junoSits(c, FL.x + 54, FL.y - 3 + bob)
+  raft(c, FL.x, FL.y, f); pike(c, FL.x + 20, FL.y - 3, 0.85)
 })

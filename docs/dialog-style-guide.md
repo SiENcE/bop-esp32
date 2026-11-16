@@ -367,7 +367,7 @@ Reiher. Er verkauft Daten pro Gigabyte, bringt Lantern Akkus und Teile und schü
 > „Ich verkauf Daten. Keine Fahrten.“\
 > „Ratz hat eine Endstufe. Aus einem Flutwarnmast. Mir gibt er sie nicht.“\
 > „Ein Reflex. Mehr war das nicht.“\
-> „Setz dich in die Mitte. Und schau nicht ins Wasser.“
+> „Stell dich in die Mitte. Und schau nicht ins Wasser.“
 
 ### Direktorin Selene Aubrecht: die Überzeugte
 
