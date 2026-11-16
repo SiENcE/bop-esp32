@@ -190,8 +190,9 @@ const HANDOVER = [
   "Ich heiß ...",
   L("Sag's nicht. Ich will's nicht wissen müssen."),
 ];
-Cutaway.actor("lantern_k2", { name: "Lantern", color: "#b0f0a0", room: "lantern_versteck", at: AV.lantern, facing: "se", walkTo: AV.talk, face: "nw",
-  costume: { idle: "lantern_feed", walk: "lantern_feed", talk: "lantern_feed" }, voice: { pitch: 46, wave: "square", syllable: 85 },
+// He sits turned to Juno where she stands to talk (south-west), one view only, drawn: never the engine's mirror (art/characters/lantern.px.js)
+Cutaway.actor("lantern_k2", { name: "Lantern", color: "#b0f0a0", room: "lantern_versteck", at: AV.lantern, facing: "sw", walkTo: AV.talk, face: "ne",
+  costume: { idle: { sw: "lantern_sit_sw" }, talk: { sw: "lantern_talk_sw" } }, voice: { pitch: 46, wave: "square", syllable: 85 },
   look: ["Ein grüner Iro, ein Okular über einem Auge, ein Headset mit drei Antennen.", "Um den Hals hängt eine kleine Laterne am Kabel. Sie brennt."],
   talk: [{ if: "lantern_found=ally", then: [L("Du schon wieder. Pass auf, wer dir nachgeht.")], else: [L("Sie schon wieder.")] }, { dialog: "lantern" }],
   with: { stick: ["Hier. Der gehört Ihnen.", ...HANDOVER] } });

@@ -49,9 +49,10 @@ ISO_MAPS.lantern_versteck = {
   spots: {
     arrive: [2.45, 1.85, "ne"], door: [2.45, 2.05, "se"], lantern: [3.6, 0.95, "ne"], talk: [3.2, 1.75, "ne"],
   },
+  // in the game the lamp at his place is his own key, pale and warm, and the screens' green held down, so his poncho stays purple
   lights: [
-    { id: "screens", at: [3.6, 0.3, 1.2], r: 80, power: 0.9, color: "#7cff9a", flicker: 0.08, bake: { reach: 3.0, power: 1.5, floor: 1.4 } },
-    { id: "lantern", at: [3.6, 0.95, 1.3], r: 40, power: 0.6, color: "#ffc860", flicker: 0.15, bake: { reach: 1.2, power: 1.2, at: [4.18, 0.45, 0.95] } },   // in the bake: his storm lantern on the desk
+    { id: "screens", at: [3.6, 0.3, 1.2], r: 80, power: 0.7, color: "#7cff9a", flicker: 0.08, bake: { reach: 3.0, power: 1.5, floor: 1.4 } },
+    { id: "lantern", at: [3.6, 0.95, 1.3], r: 50, power: 1.05, color: "#ffe2bc", flicker: 0.15, bake: { reach: 1.2, power: 1.2, at: [4.18, 0.45, 0.95] } },   // in the bake: his storm lantern on the desk
     { id: "kitchen", at: [1.7, 0.3, 1.7], r: 50, power: 0.5, color: "#ffd58a", bake: { reach: 1.6, power: 0.9 } },
   ],
 };
