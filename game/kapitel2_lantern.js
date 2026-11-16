@@ -1,21 +1,27 @@
 // Nagiwa: Chapter 2, finding Lantern (docs/kapitel2-design.md §3.5, L1–L5), on blocks. On Sunday at ten the big screen on Kowalski Street
-// tears for ten seconds of Lantern's green; the half repair saw that it came by cable, from below; the cable runs down the stairs under the
-// Drain Market, whose chain has a new lock of Nagi·wa's that Ratz opens for a copy of Juno's old pass; at the jetty's end the hook pulls the
-// raft over, and at the cable's end Lantern sits in his hide. Juno can give him the stick there.
+// tears for ten seconds of Lantern's green; the half repair saw that it came by cable, from below; the cable runs into the Drain Market's
+// canal and along it to the raft DATA 1C/GB, which lies out on the water at its rope. The hook pulls it to the edge, and on it stands Pike,
+// Lantern's helper (the heron): he takes Juno along once she brings him the output stage Lantern needs, which only Ratz has and won't sell
+// him; Ratz gives it to Juno for a copy of her old pass. Pike poles her out to the drowned forest, where Lantern lives in a caravan on
+// pontoons. Juno can give him the stick there. (The user's decision, 2026-11-16: before, Ratz opened the chain on the stairs for the pass.)
 //   know_cable     the half repair told her where the screen's words came from (from Sunday 22:00)
-//   stairs_open    Ratz has opened the lock (and the Kassenbuch has his copy of her pass: ledger_ratz)
+//   pike_met       she has pulled Pike's raft to the edge and knows what he wants
+//   ledger_ratz    Ratz has his copy of her pass, and she has the output stage (the item endstufe) until she gives it to Pike
 //   lantern_found  found | ally: she has found his hide; ally once she has brought him the stick (then they say du)
 // The way is checked on its own (off_lantern shuts it in the other runs: the half repair doesn't know, the screen doesn't tear), since its
 // steps would multiply every state of the chapter: tools/check.sh, the run "lantern" (Juno with the stick, the flat and the forgery done).
-// Lantern's voice: dialog-style-guide §6 (a draft). [PLATZHALTER] Lantern in his hide is his feed figure; the rooms are blocks; the words on
-// the screen are a caption over the stutter until the street's picture shows them (§13, 4)
+// Lantern's and Pike's voices: dialog-style-guide §6 (drafts). [PLATZHALTER] Pike is a figure of the market's crowd, the output stage has
+// the tap's icon, the ride is a few lines before the goto (its picture: art/test/sumpf_fahrt_blocks.px.js, for approval), the rooms are
+// blocks, Lantern in his caravan is his feed figure; the words on the screen are a caption over the stutter until the street's picture shows
+// them (§13, 4)
 "use strict";
 
 (function () {
-const AK = Nagiwa.at.kowalski, AS = Nagiwa.at.sumpf, AV = Nagiwa.at.lantern_versteck, AM = Nagiwa.at.drain_market;
+const AS = Nagiwa.at.sumpf, AV = Nagiwa.at.lantern_versteck, AM = Nagiwa.at.drain_market;
 const L = (/** @type {string} */ text) => ({ say: "lantern_k2", text });
 const R = (/** @type {string} */ text) => ({ say: "reparatur", text });
 const RZ = (/** @type {string} */ text) => ({ say: "ratz", text });
+const P = (/** @type {string} */ text) => ({ say: "pike", text });
 const HIJACK_AFTER = { or: ["day=7", ["day=6", "time>=22:00"]] };     // Lantern's ten seconds have been
 
 // ---- L1, Sunday 22:00: the big screen tears in the middle of SLEEP BETTER. Seen from the street; whoever isn't there reads it on Monday
@@ -42,42 +48,78 @@ repair.talk = [{ if: "day<5", then: repair.talk, else: [
       R("Das kam nicht über Funk. Das kam übers Kabel. Von unten."),
       R("Da, das neue Kabel hinterm Schirm. Das geht in den Gully."),
       R("Rechts. Nicht mein Vertrag."),
-      "Von unten. Unter dem Markt geht eine Treppe noch tiefer.",
+      "Von unten. Der Gully geht in den Kanal, und der Kanal geht unter dem Markt durch.",
       { set: "know_cable" },
     ], else: [{ if: "day=5", then: [R("Samstag. Da wird nicht geschraubt, da wird nur geguckt."), "Und was siehst du?", R("Die linke Hälfte. Die läuft.")],
       else: [R("Die Rechte macht heute, was sie will. Die Linke läuft."), "Und morgen?", R("Morgen ist Montag. Da läuft gar nichts.")] }] }] },
 ] }];
 
-// ---- L3: the stairs under the Drain Market, the cable along their rail, the chain with Nagi·wa's lock
+// ---- the stairs under the Drain Market stay shut: the cable doesn't go down there
 const down = Cutaway.room.get("drain_market").hotspots.down;
-down.look = [{ if: ["day>4", "know_cable"], then: ["An ihrem Geländer läuft ein neues Kabel nach unten.", "Davor hängt die Kette, und das Schloss daran blinkt rot."], else: [].concat(down.look) }];
-down.use = [{ if: "day<5", then: down.use, else: [
-  { if: "stairs_open", then: [{ goto: "sumpf", at: AS.arrive, face: "ne" }],
-    else: [{ if: "know_cable", then: ["Am Geländer läuft das Kabel nach unten. Das ist seins.", "Aber die Kette hat ein neues Schloss von Nagi·wa. Das will eine Karte."],
-      else: ["Die Kette ist zu. Und ich will da nicht runter."] }] },
-] }];
+down.use = [{ if: ["day>4", "know_cable"], then: ["Die Kette ist zu. Und das Kabel geht hier nicht runter.", "Es läuft an der Kanalmauer entlang, nach rechts."],
+  else: down.use }];
 
-// ---- L3b: Ratz knows the lock, and he opens it for a copy of Juno's old pass (his colony: the flaps in the pipes under the Crown)
+// ---- L3: the raft DATA 1C/GB lies out on the canal at its rope. The hook pulls it to the edge, and Pike, on it, says what he wants
+Cutaway.actor("pike", { name: "Pike", color: "#a8b4c8", walkTo: AM.pikeTalk, face: "down",
+  costume: { idle: Nagiwa.top("statist_15_idle"), walk: Nagiwa.top("statist_15_idle"), talk: Nagiwa.top("statist_15_idle") },
+  voice: { pitch: 58, range: 4, wave: "triangle", syllable: 95, speed: 0.85 },
+  look: ["Ein langer Mann mit dünnen Beinen, er steht im Regen wie andere im Trockenen.", "Der Hals ist zu lang, das Gesicht läuft spitz zu. Ein Reiher-Mod."],
+  talk: [{ if: "pike_met", then: [{ dialog: "pike" }], else: [
+    { if: "know_cable", then: ["Das Kabel geht zu deinem Floß!", P("Ich verkauf Daten. Keine Fahrten."), "Er ist zu weit draußen. Ich müsste das Floß ranholen."],
+      else: [P("Gigabyte gegen Chits."), "Danke. Ich hab selber welche."] }] }] });
+Cutaway.routine("pike", [{ day: [5, 6, 7], from: "18:00", to: "04:00", room: "drain_market", at: AM.pike, face: "down" }]);
+const market = Cutaway.room.get("drain_market").hotspots;
+market.datenfloss = { name: "DATA 1C/GB", rect: AM.datenflossRect, walkTo: AM.pikeTalk, face: "down", if: "day>4",
+  look: [{ if: "know_cable", then: ["Das Kabel kommt an der Kanalmauer entlang und geht auf das Floß DATA 1C/GB.", "Das Floß liegt draußen an seinem Seil."],
+    else: ["Auf dem Floß DATA 1C/GB verkauft einer Daten. Es liegt draußen an seinem Seil."] }],
+  use: [{ if: "pike_met", then: [{ dialog: "pike" }], else: [{ if: "know_cable", then: ["Zu weit. Mit der Hand komm ich da nicht ran."], else: ["Ich brauch keine Daten. Ich hab selber welche."] }] }],
+  with: { haken: [{ if: "pike_met", then: ["Das Floß liegt schon am Rand."], else: [{ if: "know_cable", then: [
+    "Ich hak den Notschlüssel ins Seil und zieh. Das Floß kommt, ganz langsam.", "Teo hätte das mit einer Hand gemacht.",
+    P("..."), P("Wer zieht, will was."),
+    "Das Kabel geht zu deinem Floß, und dann geht es weiter.", "Ich muss zu dem, der am anderen Ende sitzt.",
+    P("Ich verkauf Daten. Keine Fahrten."),
+    P("..."),
+    P("Ratz hat eine Endstufe. Aus einem Flutwarnmast. Mir gibt er sie nicht."),
+    "Warum nicht?",
+    P("Ratz sagt, ich hätte ihn fressen wollen."), P("Ein Reflex. Mehr war das nicht."),
+    P("Bring mir die Endstufe, dann nehm ich dich mit."),
+    { set: "pike_met" },
+  ], else: ["Warum sollte ich das Floß ranholen? Ich will keine Daten."] }] }] } };
+
+// ---- L4: the ride out to the drowned forest. [PLATZHALTER] a few lines; the ride seen from the side comes once its blocks are approved
+const RIDE = [
+  P("Setz dich in die Mitte. Und schau nicht ins Wasser."),
+  "Er stakt das Floß nach rechts aus dem Markt. Hinter dem Markt wird der Kanal breit.",
+  { goto: "sumpf", at: AS.arrive, face: "ne" },
+  "Über uns hören die Ringe auf. Da ist Himmel. Und es stehen Bäume im Wasser, zwischen den Häusern.",
+];
+Nagiwa.talkTree("pike", [
+  ["„Hier. Die Endstufe.“", [{ remove: "endstufe" }, P("Die mit den Kühlrippen. Gut."), ...RIDE], undefined, "has:endstufe"],
+  ["„Fährst du mich raus?“", [P("Steig auf."), ...RIDE], undefined, ["ledger_ratz", "!has:endstufe"]],
+  ["„Was ist mit Ratz?“", [P("Ratz sagt, ich hätte ihn fressen wollen."), P("Ich frühstücke nie."), P("Und ich ess keine Ratten. Der Hals sieht das manchmal anders.")]],
+], "Später.");
+
+// ---- L3b: Ratz has the output stage, and he gives it to Juno (never to the heron) for a copy of her old pass: his colony, the flaps in the
+// pipes under the Crown. Asked only once Pike has said what he wants (knowledge she lacks before)
 Object.assign(Nagiwa.ledger, { ratz: { to: "RATZ", what: { copy: "eine Kopie meines alten Ausweises" } } });
+Cutaway.item("endstufe", { name: "Endstufe", icon: "inv_tap", look: "Die Endstufe aus einem Flutwarnmast. Sie hat Kühlrippen und ist schwerer, als sie aussieht." });
 const ratz = /** @type {any} */ (Cutaway.actors.get("ratz")).def;
-ratz.talk = [RZ("Kundschaft! Kauf was, oder kauf was anderes."), { if: ["day>4", "know_cable", "!stairs_open"], then: [{ dialog: "ratz_schloss" }], else: [{ dialog: "ratz" }] }];
-Nagiwa.talkTree("ratz_schloss", [
-  ["„Kriegst du das Schloss an der Treppe auf?“", [RZ("Das rote? Das ist ein Nagi·wa-Schloss. Neu."), RZ("Die mögen alte Karten. Hast du eine alte Karte?"), "Vielleicht.",
-    RZ("Eine von drinnen, mit Chip. Nur kurz. Ich mach mir eine Kopie.")], [
+ratz.talk = [RZ("Kundschaft! Kauf was, oder kauf was anderes."), { if: ["day>4", "pike_met", "!ledger_ratz"], then: [{ dialog: "ratz_endstufe" }], else: [{ dialog: "ratz" }] }];
+Nagiwa.talkTree("ratz_endstufe", [
+  ["„Hast du eine Endstufe? Aus einem Flutwarnmast.“", [RZ("Die gute, mit Kühlrippen. Hab ich."), RZ("Wer will das wissen? Der Reiher?"), "Ich will das wissen.",
+    RZ("Der Reiher kriegt nichts von mir. Der hat mich am Schwanz gehabt. Kopfüber, über dem Kanal!"), "Er sagt, das war ein Reflex.",
+    RZ("Ein Schnabel macht nichts von allein."), RZ("Für dich kostet sie was anderes. Eine Karte von drinnen, mit Chip. Nur kurz.")], [
     ["„Hier. Mein alter Ausweis.“", [
       "Er hält ihn an seinen Kragen, und der Kragen piept.",
       RZ("Kopie. Mit der gehen auch die Klappen in den Rohren unter der Krone auf."),
       RZ("Zu meiner Kolonie. Die zählen auf mich."),
-      "Und das Schloss?",
-      RZ("Ist offen. Für Leute mit Karte war es das immer."),
-      { set: "stairs_open" }, { ledger: "ratz", value: "copy" },
+      { ledger: "ratz", value: "copy" }, { give: "endstufe" },
       { if: "window_open", then: ["Das zweite Mal, dass das Ding was aufmacht."], else: ["Das erste Mal, dass das Ding was aufmacht."] },
-      RZ("Unten ist nass. Das Floß hängt weit draußen am Seil. Nimm was Langes mit."),
-      { if: "!has:haken", then: ["Was Langes. Der Notschlüssel vom Aufzug ist lang."] },
-    ], undefined, ["has:ausweis", "!stairs_open"]],
+      RZ("Und sag dem Reiher nicht, von wem."),
+    ], undefined, "has:ausweis"],
     ["„Den hab ich nicht dabei.“", ["Der liegt noch im Karton unter meinem Bett.", RZ("Dann hol ihn. Ich lauf nicht weg. Ich wohn hier.")], undefined, "!has:ausweis"],
-  ], "!stairs_open"],
-  ["„Was willst du da unten?“", [RZ("Ich? Nichts. Unten ist nass."), RZ("Aber in den Rohren über dem Wasser, da wohnen Ratten. Große."), "Deine Kolonie.", RZ("Sag's keinem.")]],
+  ]],
+  ["„Wohin geht das Kabel am Kanal?“", [RZ("Raus. Wo keiner wohnt, der Miete zahlt."), RZ("Da draußen wachsen Bäume. Bäume! Wer braucht Bäume?")]],
 ]);
 
 // ---- the pass and the hook are where they always were, also for whoever never went up on the roof in Chapter 1, and Juno can take them any
@@ -89,26 +131,22 @@ flat.box_old.use = [{ if: ["day>4", "!got_ausweis", "!off_lantern"],
   else: flat.box_old.use }];
 floor14.haken.if = ["!got_haken", { or: ["!off_roof", ["day>4", "!off_lantern"]] }];
 
-// ---- L4: the jetty ends in the water; the raft on its rope is too far, and the hook pulls it over. Once Juno has been over, she pulls
-// herself along the rope. The first time Lantern is there, and doesn't want her to be
-const raft = Cutaway.room.get("sumpf").hotspots.raft;
-const MEET = [
+// ---- L5: the caravan on pontoons at the cable's end. The first time Lantern is there, and doesn't want her to be
+const hide = Cutaway.room.get("sumpf").hotspots;
+hide.wohnwagen.use = [{ if: "lantern_found", then: [{ goto: "lantern_versteck", at: AV.arrive, face: "se" }], else: [
   { goto: "lantern_versteck", at: AV.arrive, face: "se" },
   { set: "lantern_found", value: "found" },
   L("Bleiben Sie da stehen."),
   L("Wer sind Sie? Nein. Sagen Sie's nicht."),
-  L("Wie haben Sie ... Das Kabel. Natürlich das Kabel."),
-  "Der Monteur oben hat's gesehen.",
-  L("Funk hört jeder. Ein Kabel hört nur, wer dran hängt."),
+  L("Wie sind Sie ... Der Reiher. Natürlich der Reiher."),
+  "Er wollte eine Endstufe. Die hab ich ihm besorgt.",
+  L("Dann hat er sie also doch."),
   L("Was wollen Sie?"),
   { dialog: "lantern" },
-];
-raft.use = [{ if: "lantern_found", then: ["Ich zieh mich am Seil rüber.", { goto: "lantern_versteck", at: AV.arrive, face: "se" }],
-  else: ["Zu weit. Mit der Hand komm ich da nicht ran."] }];
-raft.with = { haken: [{ if: "lantern_found", then: raft.use, else: [
-  "Ich hak den Notschlüssel ins Seil und zieh. Das Floß kommt, ganz langsam.", "Teo hätte das mit einer Hand gemacht.", ...MEET] }] };
+] }];
+hide.floss.use = [P("Zurück?"), "Zurück.", { goto: "drain_market", at: AM.pikeTalk, face: "down" }];
 
-// ---- L5: Lantern in his hide, in person (his figure in the feed for now). He says Sie until she has brought him the stick
+// Lantern in person (his figure in the feed for now). He says Sie until she has brought him the stick
 Cutaway.actor("lantern_k2", { name: "Lantern", color: "#b0f0a0", room: "lantern_versteck", at: AV.lantern, facing: "se", walkTo: AV.talk, face: "nw",
   costume: { idle: "lantern_feed", walk: "lantern_feed", talk: "lantern_feed" }, voice: { pitch: 46, wave: "square", syllable: 85 },
   look: ["Ein grüner Iro, ein Okular über einem Auge, ein Headset mit drei Antennen.", "Um den Hals hängt eine kleine Laterne am Kabel. Sie brennt."],
@@ -143,7 +181,7 @@ Nagiwa.talkTree("lantern", [
     ["„Noch nicht.“", [L("Dann gehen Sie. Und lassen Sie sich nicht folgen.")]],
   ], "stick_ines"],
   ["„Was ist das hier?“", [
-    L("Das war mal ein Laden. Jetzt ist es ein Sender."),
+    L("Der Wagen hat mal Urlaub gemacht. Jetzt sendet er."),
     L("Hier ist Lantern. Wer das hier sieht, ist noch wach."),
     L("Das sag ich immer am Anfang. Zehn Sekunden. Länger glaubt einem eh keiner."),
   ]],

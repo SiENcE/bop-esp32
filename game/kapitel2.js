@@ -185,12 +185,16 @@ Cutaway.hints([
   // the stick (game/kapitel2_stick.js): while Juno has it, Lantern can't send
   // ... or he brings it to Lantern himself (game/kapitel2_lantern.js): the way down, step by step, once Juno is on it (the dryer stays the
   // shorter way, so each names it too)
-  { if: ["stick_ines", "lantern_found"], about: ["lantern_k2", "raft", "dryer6"],
-    text: ["Lantern hat seine Wallet. Den Schlüssel hast du.", "Bring ihn ihm. Oder leg ihn in den Trockner, um halb eins holt er ihn.", "Fahr mit dem Floß zu ihm und gib ihm den Stick."] },
-  { if: ["stick_ines", "stairs_open"], about: ["raft", "haken", "down", "dryer6"],
-    text: ["Am Ende vom Steg treibt ein Floß.", "Mit etwas Langem käme man ran. Der Notschlüssel vom Aufzug ist lang.", "Nimm den Haken für das Floß. Hast du ihn nicht, hängt er neben dem Aufzug."] },
-  { if: ["stick_ines", "know_cable"], about: ["ratz", "down", "box_old", "dryer6"],
-    text: ["Die Kette an der Treppe ist neu, und das Schloss ist von Nagi·wa.", "Ratz kennt jedes Schloss hier unten. Frag ihn.", "Ratz will deinen alten Ausweis, nur kurz. Der liegt im Karton unter deinem Bett, wenn du ihn nicht dabeihast."] },
+  { if: ["stick_ines", "lantern_found"], about: ["lantern_k2", "pike", "datenfloss", "wohnwagen", "dryer6"],
+    text: ["Lantern hat seine Wallet. Den Schlüssel hast du.", "Bring ihn ihm. Oder leg ihn in den Trockner, um halb eins holt er ihn.", "Lass dich von Pike rausfahren und gib Lantern den Stick."] },
+  { if: ["stick_ines", "ledger_ratz", "!has:endstufe"], about: ["wohnwagen", "pike", "datenfloss", "dryer6"],
+    text: ["Pike hat seine Endstufe. Jetzt nimmt er dich mit.", "Am Ende vom Kabel steht ein Wohnwagen.", "Geh in den Wohnwagen. Lantern ist da drin."] },
+  { if: ["stick_ines", "has:endstufe"], about: ["pike", "datenfloss", "dryer6"],
+    text: ["Pike wartet auf die Endstufe.", "Er liegt mit seinem Floß am Rand.", "Gib Pike die Endstufe."] },
+  { if: ["stick_ines", "pike_met"], about: ["ratz", "box_old", "dryer6"],
+    text: ["Pike will die Endstufe, und Ratz verkauft ihm nichts.", "Dir verkauft Ratz. Frag ihn, was er dafür will.", "Ratz will deinen alten Ausweis, nur kurz. Der liegt im Karton unter deinem Bett, wenn du ihn nicht dabeihast."] },
+  { if: ["stick_ines", "know_cable"], about: ["datenfloss", "haken", "dryer6"],
+    text: ["Das Kabel geht zu dem Floß da draußen.", "Es liegt zu weit weg. Mit etwas Langem käme man ran.", "Nimm den Haken aus der Tasche. Hast du ihn nicht, hängt er neben dem Aufzug."] },
   { if: ["stick_ines", { or: ["day=7", ["day=6", "time>=22:00"]] }], about: ["reparatur", "dryer6"],
     text: ["Du hast noch ihren Schlüssel. Lantern sucht ihn.", "Er schaut jede Nacht in den Trockner. Oder du findest ihn: Der Monteur weiß, woher der Schirm kam.", "Leg ihn in Trockner sechs zurück. Um halb eins holt er ihn."] },
   { if: ["stick_ines", "day=5"], about: ["dryer6", "bed", "wait", "close", ...HOME],

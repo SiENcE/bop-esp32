@@ -201,7 +201,10 @@ Nagiwa.at = {
   // cables, string lights and lanterns hang over the people. The runtime lamps are the painting's own, so Juno takes on its light
   drain_market: (() => {
     const L = Nagiwa.layouts.drain_market, part = (/** @type {any} */ p) => p.name.slice("drain_market_".length);
-    return { ...L.spots, ...L.rects, walk: L.walk, holes: L.holes, size: L.size, sounds: L.sounds,
+    return { ...L.spots, ...L.rects, walk: [...L.walk, [1176, 358, 1196, 358, 1196, 340, 1204, 340, 1204, 358, 1228, 358, 1228, 378, 1176, 378]], holes: L.holes, size: L.size, sounds: L.sounds,
+      // Pike on the raft DATA 1C/GB in the canal (Chapter 2; its deck is a walk area of its own, joined to the kerb by a slit as Sable's booth has one), and where Juno stands
+      // on the kerb above it (not from the layout: the raft is the painting's, the man on it isn't yet)
+      pike: [1196, 368], pikeTalk: [1200, 343], datenflossRect: [1172, 352, 60, 30],
       props: L.parts.filter((/** @type {any} */ p) => p.layer === "under").map((/** @type {any} */ p) => ({ id: part(p), image: p.name, at: p.at, anchor: [0, 0], baseline: 0 })),
       foreground: [...L.parts.filter((/** @type {any} */ p) => p.layer === "over").map((/** @type {any} */ p) => ({ image: p.name, at: p.at })), { image: "drain_market_over", at: [0, 0] }],
       lamps: L.lamps.map((/** @type {any} */ [x, y, color, r], /** @type {number} */ i) => ({ id: `lamp${i}`, at: [x, y], r, color, power: 1 })),
