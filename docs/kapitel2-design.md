@@ -307,33 +307,126 @@ Lantern kennt Juno nicht (story §10b) und vertraut niemandem. Er ist gejagt, se
 | L4 | der Kanal, die Fahrt | Pike stakt das Floß nach rechts aus dem Markt. Die Fahrt ist **von der Seite** gezeigt (in Iso sähe sie komisch aus): Der Kanal führt hinaus an den Rand, wo über der alten Stadt kein Ring mehr liegt. Dort steht ein ertrunkener Wald zwischen den Hausfronten, Stämme im Wasser, Moos in den Ästen, Wasserlinsen, Spiegelungen, darüber der Nachthimmel und der Schein der Krone, im Regen. Technisch (entschieden von Claude): eine feste Bühne von 320x180 (`sumpf_fahrt`, `game/rooms/sumpf.js`); das Floß steht still, die Ebenen dahinter und davor (die Ferne, die Hausfronten mit den Stämmen, die Wasserlinsen, die großen Stämme vorn) ziehen als Props mit `scroll` in eigenem Tempo vorbei; Juno steht auf dem Floß; beim ersten Mal ganz, danach kurz. Eine Kette ohne Verzweigung, sie kostet den Solver nichts. Pike hebt die Stange und stößt sie wieder ins Wasser. **Während der Fahrt reden Juno und Pike** (unten), dazu spielt eine ruhige, mystische Melodie, und man hört den Sumpf: Frösche, Insekten, Tropfen, das Wasser am Floß, einmal ein Vogel (vom Nutzer gewünscht 2026-11-16). | — |
 | L5 | `sumpf`, `lantern_versteck` | Am Ende des Kabels ein Wohnwagen auf Pontons zwischen den Bäumen (vom Nutzer gewünscht 2026-11-16, nach Vorlagen): ein mystischer Ort, alte knorrige Bäume, die auf ihren Wurzeln im Wasser stehen, dichtes Moos, Nebel über dem Wasser, Seerosenblätter, ein Steg aus Planken auf Pfählen, an dem das Floß festmacht, und kleine grüne Laternen in den Ästen und am Steg, die sich im Wasser spiegeln: Lanterns Lichter. Der Wohnwagen ist ein kastiger alter Campingbus (vom Nutzer nach einer Vorlage gewünscht 2026-11-16): oben silbern, unten dunkelgrau, große dunkle Fenster, vorn die Kabine mit schräger Scheibe und eckigen orangen Scheinwerfern, auf dem Dach eine Dachbox, ein Gepäckträger mit Kanistern und einem Solarpaneel, hohe Antennen (ein Mast mit Querstäben und Abspannseilen, Peitschenantennen, oben grüne Lichter) und eine Schüssel; an den grauen Seiten kleine futuristische Anbauten (eine Leitung, genietete Paneele, ein Lüftungsgitter, ein Staukasten, ein Verteiler, kleine cyanfarbene Statuslichter); keine Räder, er steht auf Stapeln aus Backsteinen, die mit gefüllten Fugen fest auf dem Deck stehen (beides vom Nutzer gewünscht 2026-11-16), auf einem Ponton, einem Bretterdeck auf einer Reihe blauer Schwimmkörper mit Pfosten und Geländer (vom Nutzer nach einer Vorlage gewünscht), die Schiebetür offen auf sein Grün, das Kabel kommt den Steg entlang und geht hinein. **Alles dahinter ist dunkel und mystisch** (ebenso gewünscht): ein tiefer, dunkelgrüner Wald, in der Mitte ein grünes Leuchten im Nebel, riesige Bäume, jeder anders (geneigt, verschieden schlank, manche mit einem schweren Ast), auf einem flachen Fuß aus Brettwurzeln im Wasser, nie hohen Sockeln, Rinde in Rippen, Moos, Ranken von einem Ast, der sich über alles spannt, ein paar orange Dornen, Zypressenknie, schwebende Sporen im Licht. **Der Sumpf ist nie ruhig, er wirkt gefährlich und ungemütlich** (vom Nutzer gewünscht 2026-11-16): dichter Regen in drei Schichten und sein Rauschen, Nebelbänke, die über das Wasser treiben, Lanterns Laternen, die jede für sich flackern und wabern, und unter der Oberfläche zieht ab und zu etwas vorbei, von dem man nur die Bugwelle, Ringe und Blasen sieht (was es ist, bleibt offen); dazu Blasen, knarzendes Holz, ein Platschen, fernes Grollen, und unter der Melodie eine Schicht aus tiefen Tritoni, die an- und abschwillt. Die Fahrt hat dieselbe Stimmung: die Riesen im Dunst, bemooste Hausfronten, der Schein der Krone links gedämpft. **Die Ankunft ist eine Bühne von der Seite** wie die Fahrt (vom Nutzer entschieden 2026-11-16): Juno bleibt auf dem Floß stehen; ein Klick auf den Wohnwagen führt hinein, einer auf Pike zurück. **Drinnen ist der Wohnwagen ein Raum in Iso** (`lantern_versteck`). Drinnen Lantern in seinem Rollstuhl, die Bildschirme, der Sender. Er siezt sie, bricht Sätze ab und will wissen, woher sie kommt. Was Juno ihm sagen kann, ist ein Gespräch mit höchstens vier Antworten (`Nagiwa.talkTree`): „Ich hab gesehen, was passiert ist.“, „Ich hab ihren Schlüssel.“ (wenn sie den Stick hat; den Stick kann sie ihm auch aus der Tasche geben), „Was ist das hier?“ und „Ich geh wieder.“. „Ich hab eine Aufnahme.“ kommt mit Entscheidung 2 (§3.6): Die oberste Ebene ist mit drei Themen und dem Ausweg voll, so wird es ein Unterthema (etwa unter „Ich hab gesehen, was passiert ist.“) oder ersetzt „Was ist das hier?“ [offen]. | `lantern_found` |
 
-**Die Fahrt, das Gespräch** (Entwurf, nach dem Wunsch des Nutzers 2026-11-16): Pike will herausfinden, ob Juno für den Sender ist oder
-gegen ihn. Er fragt, warum sie zu ihm will, was sie sonst tut und ob sie ihn hört; Juno antwortet mit einer Wahl, höchstens vier
-Antworten, ohne Flag: Pikes Meinung über sie ändert nichts, was der Solver sieht. Beim ersten Mal:
+**Die Gespräche im Sumpf** (Entwurf 2026-11-16, nach dem Wunsch des Nutzers: vorsichtig am Anfang, freundlich, mit der Zeit
+vertrauter, nicht knapp; Juno, Pike und Lantern duzen sich). Jede Wahl zeigt höchstens vier Antworten; Pikes Meinung über Juno ist
+kein Flag.
 
-> Pike: „Stell dich in die Mitte.“ (Er stakt. Eine Weile hört man nur das Wasser.) Pike: „Was willst du von ihm?“
-> - „Ich hab gesehen, was mit ihr passiert ist.“ – Pike: „Gesehen. Wo?“ – Juno: „Auf einer Kamera. Ich schau viel auf Kameras.“ –
->   Pike: „Eine Glasserin also. Die verkaufen, was sie sehen.“ – Juno: „Das hier nicht.“
-> - „Ich hab was, das ihm gehört.“ (nur mit dem Stick) – Pike: „Dann gib's mir. Ich bring's ihm.“ – Juno: „Nein. Ihm selbst.“ – Pike: „... Gut.“
-> - „Das sag ich ihm selbst.“ – Pike: „Mhm. Ich stake trotzdem.“
+*Pike, die erste Fahrt.* Auf dem Markt: „Stell dich in die Mitte.“ Im Tunnel: „Kopf runter.“ Draußen, eine Weile nur das Wasser:
+
+> Pike: „Du bist die Erste seit Langem, die freiwillig hier rausfährt.“ – Juno: „Und die anderen?“ – Pike: „Die wollten Daten. Die
+> bleiben am Markt.“ – Pike: „Darf ich dich was fragen?“ – Juno: „Kostet das was?“ – Pike: „Bei mir nicht. Ich bin nicht Sable.“
 >
-> Pike: „Und was machst du sonst? Ohne Grund kauft hier keiner bei Ratz.“
-> - „Ich seh mir Kameras an und verkauf, was ich seh.“ – Pike: „Ehrlich. Das ist selten auf dem Kanal.“
-> - „Nichts Besonderes. Ich wohn im Kessel-Block.“ – Pike: „Da wohnen viele. Die meisten schlafen.“
+> Pike: „Was willst du von ihm?“
+> - „Ich hab gesehen, was mit ihr passiert ist.“ – Pike: „Gesehen. Wo?“ – Juno: „Auf einer Kamera. Ich schau viel auf Kameras.“ –
+>   Pike: „Eine Glasserin.“ – (eine Pause) – Pike: „Die verkaufen, was sie sehen.“ – Juno: „Meistens. Das hier nicht.“ – Pike:
+>   „Warum nicht?“ – Juno: „Weil ich weiß, wie es war. Und die Nachrichten erzählen was anderes.“ – Pike: „Hm.“
+> - „Ich hab was, das ihm gehört.“ (nur mit dem Stick) – Pike: „Dann gib's mir. Ich bring's ihm.“ – Juno: „Nein. Ihm selbst.“ –
+>   Pike: „...“ – Pike: „Gut. Das hätte ich auch gesagt.“
+> - „Das würd ich ihm lieber selbst sagen.“ – Pike: „Mhm. Ist in Ordnung.“ – Pike: „Ich stake trotzdem.“
+>
+> Pike: „Und was machst du, wenn du nicht über Kanäle fährst?“
+> - „Ich seh mir Kameras an und verkauf, was ich seh.“ – Pike: „Ehrlich. Das ist selten auf dem Kanal.“ – Juno: „Ehrlich ist
+>   billig.“ – Pike: „Nicht hier draußen.“
+> - „Nichts Besonderes. Ich wohn im Kessel-Block.“ – Pike: „Da wohnen viele. Die meisten schlafen.“ – Juno: „Ich nicht.“ – Pike:
+>   „Das merkt man.“
 >
 > Pike: „Hörst du ihn manchmal? Den Sender.“
-> - „Ich weiß, was er auf den Schirm geschrieben hat.“ – Pike: „Zehn Sekunden.“ – Juno: „Länger glaubt einem eh keiner.“ – Pike sieht sie an: „Das sagt er auch.“
-> - „Die Nachrichten sagen, er hat sie umgebracht.“ – Die Stange bleibt im Wasser stehen. Pike: „Sagen sie.“ – Juno: „Ich hab gesehen,
->   dass er's nicht war.“ – Pike: „... Dann sag ihm das. Das hört er nicht oft.“
-> - „Nein. Ich hör Kameras, kein Radio.“ – Pike: „Kameras lügen auch.“ – Juno: „Die nicht. Die Leute, die sie schneiden.“
+> - „Ich weiß, was er auf den Schirm geschrieben hat.“ – Pike: „Zehn Sekunden.“ – Juno: „Länger glaubt einem eh keiner.“ – Pike
+>   sieht sie an. – Pike: „Das sagt er auch. Fast genauso.“
+> - „Die Nachrichten sagen, er hat sie umgebracht.“ – Seine Stange bleibt im Wasser stehen. – Pike: „Sagen sie.“ – Juno: „Ich hab
+>   gesehen, dass er's nicht war.“ – Pike: „...“ – Pike: „Dann sag ihm das. Aber nicht gleich. Er braucht eine Weile.“
+> - „Nein. Ich hör Kameras, kein Radio.“ – Pike: „Kameras lügen auch.“ – Juno: „Die nicht. Die Leute, die sie schneiden.“ – Pike:
+>   „Das würde ihm gefallen.“
 >
-> (Die Ringe hören auf, der Wald beginnt.) Juno: „Da ist Himmel. Und Bäume, mitten in der Stadt.“ – Pike: „Da vorn hängen seine Lichter.“
+> (Der Wald.) Juno: „Über uns hören die Ringe auf. Da ist Himmel. Und Bäume, mitten in der Stadt.“ – Pike: „Noch was. Umsonst.“ –
+> Juno: „Ja?“ – Pike: „Geh langsam rein. Er ist lange allein da draußen. Wer zu schnell kommt, kommt nicht weit.“ – Pike: „Da vorn
+> hängen seine Lichter.“
 
 Danach kurz: Pike: „Mitte.“ – Juno: „Ich weiß.“
 
-**Lantern** (Vorschläge; seine Sprechkarte steht seit 2026-11-15 im `dialog-style-guide` §6, als Entwurf): „Wer sind Sie? Nein. Sagen Sie's nicht.“ Beim Stick: „Sie hat gesagt,
+*Lantern, das erste Mal.* Juno steht in der Tür. Sein Ton entscheidet, ob er bleibt:
+
+> Lantern: „Bleib da stehen.“ – Lantern: „Wer bist du? ... Nein. Sag's nicht.“ – Lantern: „Wie bist du ... Der Reiher. Natürlich der
+> Reiher.“ – Juno: „Er hat mich gebracht. Ich hab ihm die Endstufe besorgt.“ – Lantern: „Dann hat er sie also doch.“ – Lantern: „Und
+> jetzt stehst du in meinem Wagen. Was willst du?“
+> - „Erst mal nur reden. Wenn du willst.“ – Lantern: „Reden.“ – Lantern: „Das sagen alle, bevor sie was wollen.“ – Juno: „Ich will
+>   auch was. Aber nicht gleich.“ – Lantern: „... Ehrlich wenigstens.“ (weiter)
+> - „Pike sagt, du bist lange allein hier draußen.“ – Lantern: „Pike redet zu viel. Für einen Reiher.“ – Juno: „Er hat drei Sätze
+>   gesagt.“ – Lantern: „Eben.“ (weiter)
+> - **zu forsch:** „Ich weiß, dass du's nicht warst. Ich hab alles gesehen.“
+> - **zu forsch:** „Ich hab den Schlüssel von Ines.“ (nur mit dem Stick)
+>
+> (weiter) Lantern: „Setz dich. Da, auf die Kiste. Nicht aufs Bett, das ist meins.“ – Er dreht die Laterne an seinem Hals ein wenig heller.
+> - „Was ist das hier alles?“ – Lantern: „Der Wagen hat mal Urlaub gemacht. Jetzt sendet er.“ – Lantern: „Siebenundachtzig sechs.
+>   Nachts.“ – Lantern: „Hier ist Lantern. Wer das hier hört, ist noch wach. Das sag ich immer am Anfang.“ (weiter)
+> - „Wie lange bist du schon hier draußen?“ – Lantern: „Seit dem Unfall. Pumpenhalle drei. Danach ...“ – Lantern: „Hier draußen fragt
+>   keiner, wie man Treppen steigt.“ – Juno: „Und wie steigt man Treppen?“ – Lantern: „Treppen sind ein Argument. Ich hab Düsen.“ (weiter)
+> - **zu forsch:** „Warum zeigen sie überall dich?“
+>
+> (weiter) Lantern: „Und jetzt du. Warum bist du wirklich hier?“
+> - „Ich hab in der Metro zugesehen. Auf einer Kamera. Die ganze Zeit.“ – Lantern sagt lange nichts. – Lantern: „Dann weißt du, dass
+>   ich ...“ – Juno: „Dass du schon weg warst. Ja.“ – Lantern: „...“ – Lantern: „Das hat noch keiner zu mir gesagt.“
+> - „Ich hab was, das ihr gehört hat. Den Schlüssel.“ (nur mit dem Stick) – Lantern: „...“ – Lantern: „Sie hat gesagt, sonst weiß es
+>   keiner.“ – Juno: „Sie konnte mich nicht sehen. Ich war an der Kamera.“ – Lantern: „Dann zeig ihn mir. Langsam.“
+>
+> Danach sein Gespräch wie bisher (die Metro, der Schlüssel oder die Aufnahme, der Wagen, „Ich geh wieder.“), im Du.
+
+**Zu forsch:** Lantern: „Ich weiß nicht, wovon du redest.“ – Lantern: „Ich bin ein alter Mann mit einem Radio.“ – Juno: „So alt bist
+du nicht.“ – Lantern: „Raus.“ – Lantern: „Und sag dem Reiher, er soll keinen mehr bringen.“ (Die Tür geht zu, das grüne Licht wird
+dunkel: `lantern_found=out`.) Draußen, bei Pike: Pike: „Zu schnell?“ – Juno: „Zu schnell.“ – Pike: „Wenn er zu ist, redet er nicht mit
+Leuten. Nur mit dem Sender.“ An der Tür, wenn sie klopft: „Nichts. Nur das Brummen vom Rack.“
+
+**Pikes Reuse:** Pike (wenn Juno ihn fragt oder an der Reuse vorbeikommt): „Meine Reuse hängt da drüben in den Wurzeln. Da geh ich
+nicht hin. Nicht mit dem, was da unten schwimmt.“ Juno macht sie mit dem Haken los: „Ich hak sie los. Am anderen Ende zieht was. Dann
+lässt es los.“ – Pike: „Danke.“ – Pike: „Nimm den hier. Ein Akku aus meiner Bank. Wofür auch immer.“
+
+**Auf Sendung** (mit der richtigen Welle, TX gedrückt). Lantern spricht ruhig, flüssig, ganz da:
+
+> Lantern: „Hier ist Lantern. Wer das hier hört, ist noch wach.“ – Lantern: „Da ist jemand auf meiner Welle. Wer spricht da?“
+> - „Ich bin noch wach.“ – Lantern: „...“ – Lantern: „Dann bist du auf Sendung. Sag, was du sagen willst.“ (weiter)
+> - „Ich bin's. Die von vorhin.“ – Lantern: „Hier draußen gibt's kein vorhin.“ – Es rauscht. Er hat abgeschaltet.
+> - „Mach die Tür auf. Ich will nur reden.“ – Es rauscht. Er hat abgeschaltet.
+>
+> (weiter)
+> - „Ich war zu schnell. Das tut mir leid. Ich hab dich in der Metro gesehen, und du warst weg, bevor er kam.“ – Lantern: „...“ –
+>   Lantern: „Die Tür ist offen.“
+> - „Pike sagt, du redest nur mit dem Sender. Also red ich mit dem Sender.“ – Lantern: „Pike redet zu viel.“ – Lantern: „... Aber er
+>   hat recht. Die Tür ist offen.“
+> - „Mach auf, oder ich geh zu Morrow.“ – Es rauscht. Er hat abgeschaltet.
+
+Auf den anderen Kanälen: die Lull-Werbung („Sleep better. Wake up new.“), NINTH LIVE („... und das war die zweite Stunde, Leute,
+bleibt dran ...“), der Pegelbericht („Pumpe neun: Nennlast. Pegel Ring drei: steigend.“), Rauschen.
+
+**Lantern** (Vorschläge; seine Sprechkarte steht seit 2026-11-15 im `dialog-style-guide` §6, als Entwurf): „Wer bist du? Nein. Sag's nicht.“ Beim Stick: „Sie hat gesagt,
 sonst weiß es keiner.“ Juno: „Sie konnte mich nicht sehen.“ Gibt Juno ihm den Stick, hat er ihn, und er sagt, wann er sendet:
-„Montag. Um eins. Bis dahin stehen die Sender.“ Wird Lantern ihr Verbündeter (Stick oder Clip), wechseln beide zum Du (`dialog-style-guide` §5).
+„Montag. Um eins. Bis dahin stehen die Sender.“ Juno und Lantern duzen sich von Anfang an (vom Nutzer entschieden 2026-11-16).
+
+**Vorsichtig reden, und „Auf Sendung“** (vom Nutzer gewünscht 2026-11-16, nachdem er die Szenen im Sumpf gespielt hat): Pike und
+Lantern reden nicht knapp, sondern richtig: vorsichtig am Anfang, freundlich, und mit jeder ehrlichen Antwort ein wenig vertrauter. Beim
+ersten Mal im Wohnwagen entscheidet Junos Ton. Fängt sie vorsichtig an (wer sie ist, dass Pike sie gebracht hat, was das hier ist),
+erzählt Lantern nach und nach, und das Gespräch geht weiter (`lantern_found=found`). Geht sie zu forsch ran (gleich der Mord, gleich
+„Ich weiß, dass du's nicht warst“, gleich der Schlüssel), gibt er nichts zu, wirft sie hinaus und macht die Tür zu
+(`lantern_found=out`); Klopfen hilft nicht. Pike: „Wenn er zu ist, redet er nicht mit Leuten. Nur mit dem Sender.“ Dann draußen der
+kleine Auftrag **„Auf Sendung“**: Die Ankunft wird breiter und scrollt nach rechts, hinter dem Wohnwagen weiter: Lanterns
+Funkturm, ein schlanker Gittermast mit Antennen im Kreis auf einem Betonklotz, an seinem Fuß ein Kasten mit einem kleinen Schirm, der
+seine Welle zeigt; ein altes Ruderboot, am Heck abgesoffen (nach den Vorlagen des Nutzers, 2026-11-17); Wurzeln im Wasser, wo das Ding
+unter der Oberfläche schwimmt.
+
+1. Auf der vorderen Bank des Boots liegt ein altes Funkgerät, ohne Strom (das Ding `funkgeraet`, jederzeit mitzunehmen).
+2. Pikes Reuse hat sich in den Wurzeln verhakt. Mit dem Haken macht Juno sie los (`reuse_frei`); Pike gibt ihr dafür einen Akku aus
+   seiner Batteriebank (`akku`). Der Akku ins Funkgerät, und es geht (das Ding `funk`).
+3. Das kleine Spiel: Am Funkgerät stellt Juno den Kanal (fünf; 87.6 ist seiner) und die Wellenform (vier), bis ihre Welle der auf dem
+   Schirm am Mast gleicht. Nur Klicks, keine Zeit, kein Ziehen; die Stellung gilt nur, solange das Gerät offen ist.
+4. Sie spricht auf seiner Frequenz. Auf Sendung ist Lantern ruhig und ganz da. Wählt sie ruhige, ehrliche Worte, antwortet er über Funk
+   und macht die Tür wieder auf (`lantern_found=found`); drängt sie, rauscht es, und sie kann es noch einmal versuchen.
+
+Alles das gehört zum Weg zu Lantern und wird mit ihm geprüft (der Lauf mit `off_main`); in den anderen Läufen ist er zu (`off_lantern`).
+**Gebaut** (2026-11-17, auf den freigegebenen Blöcken `art/test/sumpf_rechts_blocks.px.js`, `funk_blocks.px.js`): `game/kapitel2_funk.js`.
+Die Ankunft ist 640 breit und gemalt (`sumpf_bg`), die Tür, die Reuse und das Funkgerät sind Teile, die sich ändern; das Funkgerät von
+nah ist ein Bildschirm für sich (der Raum `funk`, mit dem Schalter PWR legt Juno es weg). Kanal und Welle zählen ab 1 (`funk_ch` 1 bis
+5, `funk_welle` 1 bis 4) und gelten nur, solange es an ist; seine Welle sind die Zacken. Die Klicks: `tools/paths/kapitel2_sendung.json`
+geht den forschen Weg und das Rätsel, `kapitel2_lantern.json` den vorsichtigen. **Platzhalter:** Die Symbole von Funkgerät und Akku sind
+das des Abzweigers.
 
 **Der Schatten:** Weiß die Quiet, wer Juno ist, steht jemand in Weiß auf der Kowalski-Straße, von 19:00 bis 23:00, gegenüber ihrer
 Haustür (§4): nach `e1=sold`, sobald Juno den Clip an Sable, Vesper oder Morrow gegeben hat (gleich, nicht erst am nächsten Abend:

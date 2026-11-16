@@ -241,6 +241,17 @@ Cutaway.hints([
   // the stick (game/kapitel2_stick.js): while Juno has it, Lantern can't send
   // ... or he brings it to Lantern himself (game/kapitel2_lantern.js): the way down, step by step, once Juno is on it (the dryer stays the
   // shorter way, so each names it too)
+  // "Auf Sendung" (game/kapitel2_funk.js): thrown out, he talks only with the sender; step by step to the radio and his frequency
+  { if: ["lantern_found=out", "!got_funk"], about: ["boot", "wohnwagen", "floss"],
+    text: ["Er macht nicht mehr auf. Pike sagt, er redet nur noch mit dem Sender.", "Hinter dem Wagen liegt ein Boot. Da drin liegt was, das senden kann.",
+      "Geh nach rechts zum Boot und nimm das Funkgerät."] },
+  { if: ["lantern_found=out", "has:funkgeraet", "!reuse_frei"], about: ["reuse", "haken", "floss"],
+    text: ["Das Funkgerät hat keinen Strom.", "Pike hat Akkus in seiner Bank. Er hilft dir, wenn du ihm hilfst.", "Mach Pikes Reuse in den Wurzeln mit dem Haken los."] },
+  { if: ["lantern_found=out", "has:funkgeraet", "has:akku"], about: ["akku", "funkgeraet"],
+    text: ["Ein Funkgerät ohne Strom und ein Akku ohne Gerät.", "Steck das eine ins andere.", "Benutz den Akku mit dem Funkgerät."] },
+  { if: ["lantern_found=out", "has:funk"], about: ["antennenmast", "wohnwagen", "funk", "ch_links", "ch_rechts", "welle_links", "welle_rechts", "tx", "pwr"],
+    text: ["Jetzt kannst du senden. Auf seiner Frequenz.", "Siebenundachtzig sechs. Und deine Welle muss aussehen wie seine auf dem Schirm am Mast.",
+      "Schalt das Funkgerät am Mast ein, stell 87.6 und die Zacken ein, drück TX und sag ihm, dass du noch wach bist."] },
   { if: ["stick_ines", "lantern_found"], about: ["lantern_k2", "pike", "datenfloss", "wohnwagen", "dryer6"],
     text: ["Lantern hat seine Wallet. Den Schlüssel hast du.", "Bring ihn ihm. Oder leg ihn in den Trockner, um halb eins holt er ihn.", "Lass dich von Pike rausfahren und gib Lantern den Stick."] },
   { if: ["stick_ines", "ledger_ratz", "!has:endstufe"], about: ["wohnwagen", "pike", "datenfloss", "dryer6"],

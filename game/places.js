@@ -54,10 +54,22 @@ Nagiwa.at = {
   // scrolls), the raft's canvas, where Juno stands on it; and the arrival at the caravan, the raft tied up at the walk, the caravan and
   // the raft to click
   sumpf_fahrt: { far: [0, 0], weed: [0, 142], floss: [78, 32], juno: [170, 151], walk: [[150, 148, 196, 148, 196, 153, 150, 153]] },
-  sumpf: { floss: [6, 42], juno: [100, 161], walk: [[80, 158, 126, 158, 126, 163, 80, 163]],
-    lanterns: [[46, 58], [94, 44], [128, 86], [158, 40], [204, 56], [246, 40], [286, 72], [116, 112], [232, 108]],
+  // The arrival is 640 wide and scrolls ("Auf Sendung", kapitel2-design §3.5): from the raft up onto the caravan's pontoon and along the walk
+  // of planks to the right, past the roots with Pike's trap, the dead tree with Lantern's mast, to the half-sunk boat
+  sumpf: { floss: [6, 42], juno: [100, 161], walk: [[80, 158, 118, 158, 158, 146, 608, 145, 608, 150, 162, 151, 126, 163, 80, 163]],
+    door: [226, 148], reuse: [376, 148], mast: [446, 148], boot: [544, 148],      // (at the mast beside it: its screen stays in view)
+    lanterns: [[46, 58], [94, 44], [128, 86], [158, 40], [204, 56], [246, 40], [286, 72], [116, 112], [232, 108], [350, 50], [424, 76], [556, 46], [612, 88]],
+    screen: [469, 99],                                                               // the small screen on the mast, its green
+    tuerZu: [211, 92], reuseAt: [364, 132], funkAt: [532, 150],                      // the parts that change: the shut door, the trap, the radio
+    // (the trap hangs in the roots, above the bag's bar at the bottom)
+    reusePoly: [362, 134, 386, 132, 388, 148, 362, 148], mastPoly: [452, 8, 472, 8, 476, 146, 448, 146],
+    bootPoly: [510, 145, 530, 147, 578, 157, 578, 172, 526, 170, 512, 154],      // (its raised bow reaches above the bag's bar)
     wohnwagenPoly: [170, 146, 170, 88, 176, 72, 212, 72, 214, 82, 270, 82, 290, 106, 308, 112, 308, 146],
     flossPoly: [40, 170, 40, 150, 52, 150, 54, 70, 72, 70, 74, 150, 88, 150, 90, 126, 104, 126, 106, 150, 138, 150, 138, 170] },
+  // the radio from the boat, close (art/rooms/sumpf.px.js prints its parts' places: FUNK_AT): its display, TX, the arrow keys either side
+  // of CH and WAVE, the power switch that puts it away
+  funk: { screen: [132, 44, 116, 40], tx: [72, 44, 44, 26], chL: [130, 102, 16, 20], chR: [168, 102, 16, 20], waveL: [194, 102, 16, 20],
+    waveR: [232, 102, 16, 20], pwr: [226, 130, 22, 14] },
   // Lantern's hide, on blocks (art/rooms/lantern_versteck.map.js, game/rooms/lantern_versteck.layout.js); he sits at "lantern"
   // where the LED ticker lies over his poster (art/rooms/lantern_versteck.px.js prints it, TICKER_AT, from the poster's opening)
   lantern_versteck: { ...fromLayout(Nagiwa.layouts.lantern_versteck), tickerAt: [88, 45] },

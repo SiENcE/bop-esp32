@@ -5,7 +5,10 @@
 //                       duckweed (768), sumpf_fahrt_near the big trunks passing in front (768): each a prop that scrolls (game/rooms/sumpf.js)
 //   sumpf_fahrt_tunnel  the ride's start: the tunnel under the Ring's last pillar and its portal, slid off to the left as the ride begins
 //   sumpf_fahrt_floss   the raft DATA 1C/GB with Pike poling (48 frames at 12 fps); Juno stands on it as her own figure (game/rooms/sumpf.js)
-//   sumpf_bg            the arrival: the old trees, the mist, Lantern's lanterns, the walk of planks, the caravan on pontoons (320x180)
+//   sumpf_bg            the arrival: the old trees, the mist, Lantern's lanterns, the walk of planks, the caravan on pontoons, and behind
+//                       it to the right the roots, the dead tree with his mast and the half-sunk boat (640x180, it scrolls)
+//   sumpf_funk_bg       the radio from the boat close, over the swamp dimmed: the small game at it (its parts' places: FUNK_AT)
+//   sumpf_tuer_zu       the caravan's door shut; sumpf_reuse Pike's trap in the roots; sumpf_funk the radio in the boat (parts that change)
 //   sumpf_floss         the raft tied up at the walk, Pike resting on his pole (24 frames)
 "use strict"
 pal({
@@ -336,7 +339,122 @@ function van(c, x0, b) {
   for (const [ax, ah] of [[x0 + 36, 56], [x0 + 66, 44], [x0 + 86, 62], [x1 - 40, 36]]) { c.vline(ax, top - 6 - ah, ah, "A"); c.px(ax, top - 7 - ah, "=") }
   c.vline(x0 - 3, top, b - top, "A"); c.vline(x0 - 7, top, b - top, "A"); for (let y = top + 3; y < b; y += 5) c.hline(x0 - 7, y, 5, "A")
 }
-sprite("sumpf_bg", { w: W, h: H }, (c) => {
+// ---------------------------------------------------------------- behind the caravan ("Auf Sendung", kapitel2-design §3.5)
+// The arrival is 640 wide and scrolls (the user approved the block, 2026-11-16: art/test/sumpf_rechts_blocks.px.js): to the right of the
+// caravan the forest goes on, darker away from his glow; the walk of planks goes on from the van's pontoon on its posts. Along it the
+// roots of a giant reaching into the water (Pike's trap caught in them: its own part, sumpf_reuse), his antenna mast lashed to a dead
+// tree, bleached, his cable sagging over to it from the van's roof, on the trunk at eye height a small screen showing his wave (a saw: the
+// one Juno has to match), and an old boat half sunk by the walk, its bow up, a tarp in it (the radio under it: its own part, sumpf_funk).
+const RX = 320, WALK = 144                          // where the right half begins; the walk's top, as the pontoon's deck
+function rightBack(c) {
+  c.rect(RX, 0, 320, H, "!")
+  c.grad(RX + 92, 50, 120, 100, "*&%$~.", "r", 0.3)                                                   // a little of his glow, round the mast's screen
+  for (const [x, w, s] of [[RX + 44, 14, 51], [RX + 118, 18, 52], [RX + 214, 12, 53], [RX + 290, 16, 54]]) giant(c, x, 0, 134, w, 4, x < RX + 160 ? 1 : -1, ["%", "$", "&", "&"], s)
+  for (const [x, w, s] of [[RX + 170, 22, 61], [RX + 262, 20, 62]]) giant(c, x, 0, 140, w, 5, -1, ["$", "~", "%", "%"], s)
+  for (let y = 112; y < 146; y += 2) c.dither(RX, y, 320, 2, ".", y < 128 ? "&" : "%", 0.1 + (y - 112) / 160)
+  c.rect(RX, 146, 320, H - 146, "~")
+  for (let i = 0; i < 30; i++) { const x = RX + R(hsh(i + 900) * 316), y = 148 + R(hsh(i + 950) * 30); c.hline(x, y, 2 + R(hsh(i + 7) * 6), y < 160 ? "%" : "$") }
+}
+function rightFront(c) {
+  // the branch going on over the right half, its vines
+  limb(c, [RX - 4, 14], [640, 26], [RX + 160, -14], 6, 4, "(", "]", 1)
+  for (let i = 0; i < 20; i++) {
+    const x = RX + 8 + i * 16 + R(hsh(i + 800) * 6), y0 = R(bez([RX - 4, 14], [640, 26], [RX + 160, -14], (x - RX + 4) / 324)[1]) + 3, len = 10 + R(hsh(i + 850) * 60)
+    c.vline(x, y0, len, i % 3 ? "(" : ")"); if (i % 4 === 0) for (let k = 0; k < len; k += 6) c.px(x + 1, y0 + k, "&")
+  }
+  // the giant's roots reaching into the water in front of the walk, where the trap is caught
+  for (const [a, b, ctl, r0] of [[[RX + 26, 112], [RX + 44, 178], [RX + 18, 150], 4], [[RX + 40, 116], [RX + 78, 176], [RX + 46, 150], 4], [[RX + 60, 120], [RX + 96, 172], [RX + 84, 136], 3]])
+    limb(c, a, b, ctl, r0 + 1, 1, ")", "{", 1)
+  for (const [x, y] of [[RX + 30, 132], [RX + 52, 140], [RX + 76, 146], [RX + 40, 124]]) c.hline(x, y, 3, "{")
+  // his tower (the user's reference, 2026-11-17: a slim radio tower): a lattice mast on a concrete foot in the water, tapering upward,
+  // its two legs lit on the left, the braces zigzagging between them, a ladder up its middle; at its top two rings of panel antennas round
+  // it, a small dish, a whip with his green light; his cable coming over from the van's roof to it; at its foot a box with the small
+  // screen at eye height showing his wave (a saw: the one Juno has to match)
+  const TX = RX + 142, TB = 146, TT = 12                                // the tower's middle, its foot and its top
+  const half = (y) => 6 - ((TB - y) / (TB - TT)) * 4                     // half its width: 6 at the foot, 2 at the top
+  c.rect(TX - 10, TB - 2, 21, 14, "a"); c.hline(TX - 10, TB - 2, 21, "s"); c.vline(TX - 10, TB - 2, 14, "A")      // the foot
+  for (let x = TX - 9; x < TX + 10; x += 4) c.px(x, TB + 6, "{")
+  for (let y = TT; y < TB - 2; y++) {
+    const h = half(y), xl = Math.round(TX - h), xr = Math.round(TX + h)
+    c.px(xl, y, "s"); c.px(xr, y, "A")                                                                     // the legs
+    if (y % 3 === 0) c.px(TX, y, "a")                                                                      // the ladder's rungs
+  }
+  for (let y = TT + 4; y < TB - 6; y += 8) {                                                               // the braces, a zigzag
+    const h0 = half(y), h1 = half(y + 8)
+    c.line(Math.round(TX - h0), y, Math.round(TX + h1), y + 8, "A"); c.line(Math.round(TX + h0), y, Math.round(TX - h1), y + 8, "a")
+    c.hline(Math.round(TX - h0), y, Math.round(2 * h0) + 1, "A")
+  }
+  for (const ry of [TT + 6, TT + 16]) {                                                                    // the rings of panels
+    c.hline(TX - 9, ry + 4, 19, "A"); c.hline(TX - 9, ry + 5, 19, "a")
+    for (const dx of [-9, -5, 3, 7]) { c.rect(TX + dx, ry - 2, 3, 8, "s"); c.vline(TX + dx, ry - 2, 8, "S"); c.px(TX + dx + 2, ry + 5, "a") }
+  }
+  c.ellipse(TX + 6, TT + 28, 3, 3, "A"); c.ellipse(TX + 6, TT + 28, 2, 2, "s"); c.px(TX + 5, TT + 27, "S")   // a small dish
+  c.vline(TX, 0, TT, "A"); c.px(TX, 0, "="); c.px(TX, 1, "+")                                              // the whip, his light
+  for (let x = 286; x <= TX - 4; x++) { const t = (x - 286) / (TX - 4 - 286); c.px(x, Math.round(70 + t * -36 + Math.sin(t * Math.PI) * 16), "(") }
+  c.line(TX + 2, 34, TX + 3, 92, "(")                                                                      // the cable down to the box
+  // the box at its foot with the small screen at eye height
+  c.rect(TX - 12, 90, 24, 18, "k"); c.rect(TX - 11, 91, 22, 16, "a"); c.hline(TX - 11, 91, 22, "A")
+  c.rect(TX - 9, 93, 18, 11, "("); c.rect(TX - 8, 94, 16, 9, "d")
+  for (let x = 0; x < 16; x++) c.px(TX - 8 + x, 101 - (x % 6), "L")
+  c.px(TX + 8, 105, "y")
+  c.dither(TX - 16, 86, 32, 24, ".", "*", 0.1)
+  // the walk of planks going on from the pontoon on its posts
+  for (let x = 316; x < 612; x += 14) c.vline(x + 4, WALK + 2, 18, ")")
+  c.rect(316, WALK, 296, 4, "U"); for (let x = 316; x < 612; x += 5) c.vline(x, WALK, 4, "u"); c.hline(316, WALK, 296, "W")
+  for (let x = 320; x < 612; x += 23) c.px(x, WALK, "{")                                                  // moss on its boards
+  c.line(316, WALK - 2, 612, WALK - 1, "(")                                                            // the cable along it, on to nowhere
+  // the old rowing boat by the walk (the user's reference, 2026-11-17): weathered grey planks, seen a little from above, its bow raised to
+  // the left and pointed, its stern sunk to the right and full of dark water; the far gunwale above the near one, the inside between them,
+  // two thwarts across, the ribs; the near side's strakes down to the water. The radio sits on the front thwart (a part, sumpf_funk)
+  const BX = RX + 192, BL = 84, WL = 170                                 // its bow's tip, its length, the waterline outside
+  const shape = (x) => {
+    const t = (x - BX) / BL, w = Math.min(1, (x - BX) / 18), up = (1 - w) * 6, mid = 157 + 8 * t - up
+    return { t, w, far: Math.round(mid - 4 * w), near: Math.round(mid + 4 * w), keel: Math.round(mid + 4 * w + 7 * w + 1) }
+  }
+  for (let x = BX; x < BX + BL; x++) {
+    const { w, far, near, keel } = shape(x)
+    for (let y = far + 1; y < near; y++) c.px(x, y, (y - far) % 3 === 0 ? "(" : "a")                       // the inside, its planks
+    c.px(x, far, "s"); c.px(x, far - 1, x % 9 ? "A" : "F")                                                // the far gunwale, worn pale
+    for (let y = near; y <= Math.min(keel, WL); y++) c.px(x, y, y === near ? "s" : (y - near) % 3 === 2 ? "a" : "A")   // the strakes
+    if (w < 1) c.px(x, far - 1, "s")
+  }
+  c.vline(BX, shape(BX).far - 2, 6, "s"); c.px(BX - 1, shape(BX).far - 2, "F")                           // the stem
+  { const { far, keel } = shape(BX + BL - 1); c.vline(BX + BL, far - 1, Math.min(keel, WL) - far + 2, "A"); c.vline(BX + BL + 1, far, Math.min(keel, WL) - far, "a") }   // the transom
+  for (let x = BX + 18; x < BX + BL - 4; x += 8) { const { far, near } = shape(x); c.line(x, far + 1, x + 1, near - 1, "a") }   // the ribs
+  for (const tt of [0.3, 0.56]) {                                                                         // the thwarts
+    const x0 = Math.round(BX + tt * BL), { far, near } = shape(x0)
+    for (let k = 0; k < 5; k++) c.line(x0 + k, far + 1, x0 + k + 2, near - 1, k < 2 ? "F" : k < 4 ? "s" : "(")
+  }
+  // the stern sunk: dark water inside it, level, a pale line where it lies; outside, the water along the near side
+  for (let x = BX + 52; x < BX + BL; x++) { const { far, near } = shape(x); for (let y = Math.max(far + 1, 162); y < near; y++) c.px(x, y, (x * 3 + y) % 7 ? "~" : "%") }
+  c.hline(BX + 56, 162, 26, "&")
+  for (let x = BX + 4; x < BX + BL + 4; x += 2) c.px(x, WL + 3 + (x % 3), x % 4 ? "%" : "&")
+  // cypress knees, his lanterns over this side, fewer and farther; spores
+  for (const [x, h] of [[RX + 110, 7], [RX + 196, 10], [RX + 300, 6]]) knee(c, x, 172, h, "(", "]")
+  for (const [lx, ly, s] of [[RX + 30, 50, 30], [RX + 104, 76, 44], [RX + 236, 46, 26], [RX + 292, 88, 54]]) lantern(c, lx, ly, ly > 100 ? 146 : 0, s)
+  for (let i = 0; i < 8; i++) c.px(RX + 20 + R(hsh(i + 1700) * 280), 60 + R(hsh(i + 1750) * 70), i % 3 ? "+" : "=")
+  mirror(c, RX, 639, 152, 28)
+  for (let y = WALK; y < 158; y += 2) c.dither(RX, y, 320, 2, ".", "&", 0.05)
+}
+// the parts that change: the caravan's door shut when he has thrown her out (over the open door: x0 + 38 .. + 64, top + 6 .. b - 1 of the
+// van at 174, 138), Pike's trap in the roots until it is freed, the radio in the boat until she takes it
+sprite("sumpf_tuer_zu", { w: 28, h: 46 }, (c) => {
+  c.rect(0, 0, 28, 46, "A"); c.rect(1, 1, 26, 44, "s"); c.rect(2, 2, 24, 42, "a")
+  c.vline(13, 2, 42, "A"); c.hline(2, 22, 24, "A"); c.rect(21, 20, 2, 5, "S"); c.dither(2, 34, 24, 10, "a", "U", 0.3)
+  for (const x of [5, 9, 17]) c.vline(x, 26, 6 + (x % 4), "i")
+})
+sprite("sumpf_reuse", { w: 22, h: 18 }, (c) => {
+  c.ellipse(9, 11, 8, 6, "A"); c.ellipse(9, 11, 7, 5, "a")
+  for (let x = 3; x < 16; x += 3) c.vline(x, 6, 10, "A"); for (let y = 8; y < 16; y += 3) c.hline(2, y, 15, "(")
+  c.ellipse(4, 11, 2, 5, "s"); c.rect(17, 2, 4, 4, "o"); c.px(17, 2, "<"); c.line(18, 6, 14, 9, "U")
+  c.line(0, 4, 6, 8, ")"); c.line(14, 17, 21, 12, ")")                                                   // the roots it is caught between
+})
+sprite("sumpf_funk", { w: 14, h: 9 }, (c) => {
+  c.rect(0, 2, 12, 7, "a"); c.rect(1, 3, 10, 5, "A"); c.rect(2, 4, 5, 3, "d"); c.px(9, 4, "C"); c.vline(11, 0, 3, "s")
+})
+
+sprite("sumpf_bg", { w: 640, h: H }, (c) => {
+  rightBack(c)
   // the dark and the glow in the mist, two pale shafts falling through the canopy
   c.rect(0, 0, W, H, "!")
   c.grad(40, 20, 260, 150, "=+*&%$~.", "r", 0.6)
@@ -368,6 +486,8 @@ sprite("sumpf_bg", { w: W, h: H }, (c) => {
   // his lanterns on strings from the branch and the vines, doubled on the water; spores drifting in the light
   for (const [lx, ly, s] of [[46, 58, 30], [94, 44, 24], [128, 86, 50], [158, 40, 22], [204, 56, 34], [246, 40, 20], [286, 72, 52], [116, 112, 16], [232, 108, 14]]) lantern(c, lx, ly, ly > 100 ? 146 : 0, s)
   for (let i = 0; i < 18; i++) c.px(70 + R(hsh(i + 700) * 190), 70 + R(hsh(i + 750) * 70), i % 3 ? "+" : "=")
+
+  rightFront(c)
 })
 
 // ---------------------------------------------------------------- what makes the swamp uneasy (the user's wish, 2026-11-16)
@@ -455,3 +575,49 @@ anim("sumpf_floss", { w: FL.w, h: FL.h, frames: 24, fps: 6 }, (c) => {
   const f = c.frame, bob = (f % 12) < 6 ? 0 : 1
   raft(c, FL.x, FL.y, f); pike(c, FL.x + 20, FL.y - 3, 0.85)
 })
+
+// ---------------------------------------------------------------- the radio from the boat, close (the user approved the block,
+// 2026-11-16: art/test/funk_blocks.px.js): over the swamp dimmed, the old radio for the small game at it. Its printing is the city's
+// tech, English. The game draws what changes on its display (the channel, the wave as set: game/kapitel2_funk.js); here the screen is
+// empty and dark. Its places (FUNK below) are printed for the game: FUNK_AT.
+const FUNK = { x: 60, y: 30, w: 200, h: 120 }
+const FX = FUNK.x, FY = FUNK.y
+const FUNK_PARTS = { screen: [FX + 72, FY + 14, 116, 40], tx: [FX + 12, FY + 14, 44, 26], chL: [FX + 70, FY + 72, 16, 20], chR: [FX + 108, FY + 72, 16, 20],
+  waveL: [FX + 134, FY + 72, 16, 20], waveR: [FX + 172, FY + 72, 16, 20], pwr: [FX + 166, FY + 100, 22, 14] }
+sprite("sumpf_funk_bg", { w: W, h: H }, (c) => {
+  c.stamp("sumpf_bg", -260, 0)
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) if ((x + y) % 2 === 0 || y % 3 === 0) c.px(x, y, "!")
+  // the body: dark plastic, rubber at its corners, scuffed, an aerial up from its top right
+  c.rect(FX + FUNK.w - 26, FY - 30, 5, 32, "a"); c.vline(FX + FUNK.w - 26, FY - 30, 32, "A"); c.rect(FX + FUNK.w - 27, FY - 33, 7, 4, "A")
+  c.rect(FX, FY, FUNK.w, FUNK.h, "k"); c.rect(FX + 1, FY + 1, FUNK.w - 2, FUNK.h - 2, "2"); c.rect(FX + 3, FY + 3, FUNK.w - 6, FUNK.h - 6, "3")
+  c.hline(FX + 3, FY + 3, FUNK.w - 6, "4"); c.vline(FX + 3, FY + 3, FUNK.h - 6, "4")
+  for (const [x, y] of [[FX, FY], [FX + FUNK.w - 8, FY], [FX, FY + FUNK.h - 8], [FX + FUNK.w - 8, FY + FUNK.h - 8]]) { c.rect(x, y, 8, 8, "1"); c.rect(x + 1, y + 1, 6, 6, "2") }
+  for (let i = 0; i < 9; i++) { const x = FX + 20 + R(hsh(i + 2100) * 160), y = FY + 8 + R(hsh(i + 2150) * 100); c.hline(x, y, 2 + R(hsh(i) * 4), "4") }
+  // the display's frame, its glass dark (the game lights it)
+  const [sx, sy, sw, sh] = FUNK_PARTS.screen
+  c.rect(sx - 3, sy - 3, sw + 6, sh + 6, "k"); c.rect(sx - 2, sy - 2, sw + 4, sh + 4, "a"); c.rect(sx, sy, sw, sh, "!")
+  // TX: an amber key, worn at its middle
+  const [tx, ty, tw, th] = FUNK_PARTS.tx
+  c.rect(tx - 1, ty - 1, tw + 2, th + 2, "k"); c.rect(tx, ty, tw, th, "i"); c.rect(tx + 1, ty + 1, tw - 2, th - 3, "o"); c.hline(tx + 1, ty + 1, tw - 2, ">")
+  TXT.draw(c, tx + R(tw / 2) - 4, ty + 9, "TX", "k", { font: "hud" })
+  // the grille over the speaker and the mic
+  for (let i = 0; i < 7; i++) c.rect(FX + 12, FY + 50 + i * 6, 44, 2, "1")
+  // the knobs, CH and WAVE, an arrow key either side of each; their labels
+  for (const [l, r, label] of [[FUNK_PARTS.chL, FUNK_PARTS.chR, "CH"], [FUNK_PARTS.waveL, FUNK_PARTS.waveR, "WAVE"]]) {
+    for (const [k, dir] of [[l, -1], [r, 1]]) {
+      const [x, y, w, h] = k
+      c.rect(x, y, w, h, "k"); c.rect(x + 1, y + 1, w - 2, h - 2, "4"); c.hline(x + 1, y + 1, w - 2, "5")
+      const mx = x + R(w / 2), my = y + R(h / 2)
+      for (let i = 0; i < 4; i++) c.vline(mx + dir * (i - 2), my - (3 - i), (3 - i) * 2 + 1, "S")
+    }
+    const kx = l[0] + l[2] + 3, ky = l[1] + 1, kw = r[0] - kx - 3
+    c.ellipse(kx + R(kw / 2), ky + 9, R(kw / 2), 9, "k"); c.ellipse(kx + R(kw / 2), ky + 9, R(kw / 2) - 1, 8, "5"); c.ellipse(kx + R(kw / 2) - 1, ky + 8, R(kw / 2) - 3, 5, "6")
+    c.vline(kx + R(kw / 2), ky + 2, 6, "S")
+    TXT.draw(c, l[0], l[1] + l[3] + 3, label, "6", { font: "hud" })
+  }
+  // the power switch (it puts the radio away) and a sticker from where it came: the pump hall
+  const [px, py, pw, ph] = FUNK_PARTS.pwr
+  c.rect(px, py, pw, ph, "k"); c.rect(px + 1, py + 1, pw - 2, ph - 2, "2"); c.rect(px + 3, py + 3, 7, ph - 6, "6"); TXT.draw(c, px - 18, py + 4, "PWR", "5", { font: "hud" })
+  c.rect(FX + 12, FY + 98, 54, 12, "F"); c.rect(FX + 13, FY + 99, 52, 10, "S"); TXT.draw(c, FX + 15, FY + 101, "PUMP HALL 3", "a", { font: "hud" })
+})
+console.log("FUNK_AT " + JSON.stringify(FUNK_PARTS))

@@ -21,6 +21,7 @@
     { kind: "rain", rect: [0, 0, 320, 180], count: 110, color: "#41547a", speed: 210, slant: 0.28, length: 5, if: OPEN },
     { kind: "rain", rect: [0, 0, 320, 180], count: 36, color: "#8e9ab0", speed: 320, slant: 0.3, length: 9, if: OPEN },
   ];
+  const WIDE_RAIN = RAIN.map((r) => ({ ...r, rect: [0, 0, 640, 180], count: r.count * 2 }));         // the arrival is twice as wide
   const SOUND = ["sumpf_regen", "sumpf_wasser", "sumpf_grillen"];
   Cutaway.room("sumpf_fahrt", {
     name: "Auf dem Kanal", background: "sumpf_fahrt_bg", buttons: false, lines: "top", label: true, walk: F.walk,
@@ -45,15 +46,22 @@
     hotspots: {},
   });
   Cutaway.room("sumpf", {
-    name: "Bei Lantern", background: "sumpf_bg", lines: "top", label: true, walk: A.walk,
+    name: "Bei Lantern", background: "sumpf_bg", size: [640, 180], lines: "top", label: true, walk: A.walk,
     light: { ambient: 0.66, color: "#dcd8c8", lamps: [{ at: [222, 120], r: 90, power: 0.5, color: "#9ad8a4", flicker: 0.12, rate: 3 },
+      { id: "screen", at: A.screen, r: 40, power: 0.4, color: "#9ad8a4", flicker: 0.1, rate: 4 },
       // his lanterns: each wavers in its own time, a pool and a halo of its own
       ...A.lanterns.map((/** @type {[number, number]} */ at, /** @type {number} */ i) => ({ id: `lantern${i}`, at, r: 22, power: 0.8, color: "#9ad8a4",
         flicker: 0.4, rate: 3 + (i % 4), add: true, glow: { r: 7, strength: 0.45 } }))] },
-    props: [{ id: "wesen", image: "sumpf_wesen", at: [0, 146], anchor: [0, 0], baseline: 3 }, { id: "floss", image: "sumpf_floss", at: A.floss, anchor: [0, 0], baseline: 4 }],
-    fx: [...RAIN,
-      { kind: "mist", image: "sumpf_nebel_a", rect: [0, 100, 320, 60], at: [0, 108], drift: [-5, 0], alpha: 0.17, bob: 2 },
-      { kind: "mist", image: "sumpf_nebel_b", rect: [0, 126, 320, 54], at: [0, 138], drift: [4, 0], alpha: 0.13, bob: 3 }],
+    // (it is 640 wide and scrolls: the thing under the water passes on both halves; the parts that change, "Auf Sendung",
+    // game/kapitel2_funk.js: the door shut while he has thrown her out, Pike's trap until it is freed, the radio until it is taken)
+    props: [{ id: "wesen", image: "sumpf_wesen", at: [0, 146], anchor: [0, 0], baseline: 3 }, { id: "wesen2", image: "sumpf_wesen", at: [320, 150], anchor: [0, 0], baseline: 3 },
+      { id: "floss", image: "sumpf_floss", at: A.floss, anchor: [0, 0], baseline: 4 },
+      { id: "tuer_zu", image: "sumpf_tuer_zu", at: A.tuerZu, anchor: [0, 0], baseline: 5, if: "lantern_found=out" },
+      { id: "reuse_bild", image: "sumpf_reuse", at: A.reuseAt, anchor: [0, 0], baseline: 5, if: "!reuse_frei" },
+      { id: "funk_bild", image: "sumpf_funk", at: A.funkAt, anchor: [0, 0], baseline: 5, if: "!got_funk" }],
+    fx: [...WIDE_RAIN,
+      { kind: "mist", image: "sumpf_nebel_a", rect: [0, 100, 640, 60], at: [0, 108], drift: [-5, 0], alpha: 0.17, bob: 2 },
+      { kind: "mist", image: "sumpf_nebel_b", rect: [0, 126, 640, 54], at: [0, 138], drift: [4, 0], alpha: 0.13, bob: 3 }],
     ambience: SOUND, music: { theme: "sumpf", intensity: 0.65 },
     hotspots: {
       wohnwagen: { name: "Wohnwagen", poly: A.wohnwagenPoly,
@@ -78,7 +86,7 @@
     z: 0,
     update(/** @type {number} */ dt) {
       const id = Cutaway.scene.room?.id;
-      if ((id !== "sumpf" && id !== "sumpf_fahrt") || !Cutaway.audio.ctx) return;
+      if ((id !== "sumpf" && id !== "sumpf_fahrt" && id !== "funk") || !Cutaway.audio.ctx) return;
       for (const k of kinds) {
         if ((k.next -= dt) > 0) continue;
         k.next = between(k.every[0], k.every[1]);

@@ -186,7 +186,7 @@ Die Anrede sagt etwas über Nähe und Abstand, nichts über Geschlecht, Herkunft
 
 | Wer | Was |
 |---|---|
-| Lantern | siezt Juno zuerst, aus Misstrauen; wird Lantern in Kapitel 2 zum Verbündeten, wechseln die beiden zum Du |
+| Lantern | duzt Juno von Anfang an, wie man sich unten duzt (vom Nutzer entschieden 2026-11-16; vorher siezte er sie aus Misstrauen); die Nähe wächst über den Ton, nicht über die Anrede |
 | Pike | duzt Juno wie jeder auf dem Markt |
 | Ashe | bleibt beim Sie, obwohl er und Juno einmal in derselben Halle saßen: Das Sie trägt die Bedrohung |
 | Juno am Feed | sagt du zu denen, die sie beobachtet und die sie nicht hören können („Ines. Geh nach Hause.“) |
@@ -337,12 +337,12 @@ Rollstuhl und seit Jahren unten in den Sümpfen. Er hat zwei Stimmen, und gerade
 - **Humor:** trocken und schwarz, über sich und den Stuhl, nie über andere. „Treppen sind ein Argument. Ich hab Düsen.“
 - **Trauer und Wärme zeigt er im Tun,** nicht in Worten: Er legt die Wallet nicht aus der Hand, er dreht die Laterne heller, wenn jemand
   bleibt. Von Ines redet er in der Gegenwart, bis er sich verbessert.
-- **Du und Sie:** Er siezt Juno, und sie siezt ihn. Wird er ihr Verbündeter (der Stick, der Clip), wechselt er als Erster zum Du,
-  beiläufig, mitten im Satz (§5).
+- **Du:** Er und Juno duzen sich von Anfang an (vom Nutzer entschieden 2026-11-16). Sein Misstrauen hört man im Ton: Er fängt
+  vorsichtig an, fragt zurück, und wird mit jeder ehrlichen Antwort ein wenig wärmer; gesprächig wird er nie, aber freundlich.
 - **Was er nie tut:** Pläne erklären, Technik vortragen, Heldenreden halten, „die Wahrheit“ beschwören (§3, Melodram). Er sagt „senden“,
   nicht „enthüllen“. Er klagt nicht über den Stuhl.
 
-> „Wer sind Sie? Nein. Sagen Sie's nicht.“\
+> „Wer bist du? Nein. Sag's nicht.“\
 > „Zehn Sekunden. Länger glaubt einem eh keiner.“\
 > „Sie hat gesagt, sonst weiß es keiner.“\
 > „Montag. Um eins. Bis dahin stehen die Sender.“
