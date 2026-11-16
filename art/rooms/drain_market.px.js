@@ -23,6 +23,12 @@
 //   drain_market_bg     1280x720, one frame: the floor and everything on it that does not move, with every animated part's
 //                       frame 0 painted in (so the picture is whole without them)
 //   drain_market_over   1280x720, one frame, transparent but for what hangs over the people: cables, strings, lanterns
+//   drain_market_floss  the data raft DATA 1C/GB with its screens rolling, 12 frames: a part of its own (layer "raft"), not in the
+//                       background, so it can leave the market with Pike and Juno on it (game/kapitel2_lantern.js); its sign and the
+//                       bollard its rope is tied to stay on the kerb
+//   at the right edge   the Ring's last pillar over the canal and both banks (the user approved the block, 2026-11-16:
+//                       art/test/tunnel_blocks.px.js): the canal runs in under it, into the dark, on the way out to the swamps; the
+//                       slab hangs over everyone (the over layer), its shadow falls out over the water
 //   drain_market_<part> small anims, 12 frames at 10 fps, each drawn at its top left over the background (DM.PARTS; the list with
 //                       their places and layer, and the runtime lamps, is in drain_market.parts.json, printed by the build as the
 //                       line PARTS, which tools/build_art.sh writes there). An "under" part is opaque
@@ -288,6 +294,8 @@ const DM = (() => {
   const inB = (x, y) => x >= 0 && y >= 0 && x < W && y < H
   const bufPen = (buf, mask) => mkPen((x, y, k) => { if (inB(x, y)) { buf[y * W + x] = k; if (mask) mask[y * W + x] = 0 } }, (x, y) => (inB(x, y) ? buf[y * W + x] : undefined))
   const p = bufPen(BASE, WM)
+  // the data raft is painted into a buffer of its own: it is a part that moves (drain_market_floss), the water stays under it
+  const FLOSS = new Array(W * H), fp = bufPen(FLOSS)
 
   // ---- the water: dark, rippling along the flow, the lights on it in broken streaks. f, amp: a canal part's frame and how
   // much it moves there (0 at a strip's ends, so it meets the still water round it); frame 0 is the still water
@@ -788,12 +796,12 @@ const DM = (() => {
   }
   const drawRafts = () => {
     for (const r of RF) {
-      const { X, Y, W: Wd, H: Hd } = r
+      const { X, Y, W: Wd, H: Hd } = r, q = r.kind === "screens" ? fp : p
       // planks lashed over drums: the drums show at the ends, a rope to a bollard on the kerb
-      for (const dx of [2, Wd - 8]) { p.ell(X + dx + 3, Y + 2, 3, 2, "3"); p.ell(X + dx + 3, Y + Hd - 2, 3, 2, "3") }
-      p.rect(X + 1, Y + 1, Wd, Hd - 2, "k")
-      for (let y = Y; y < Y + Hd - 2; y++) for (let x = X; x < X + Wd; x++) { const c = (x - X) % 6; p.px(x, y, c === 5 ? "o" : lit("opE", 0.38 + (c === 0 ? 0.1 : 0), x, y, 0.45)) }
-      for (const lx of [X + 3, X + Wd - 4]) for (let y = Y; y < Y + Hd - 2; y += 4) p.px(lx, y, "!")
+      for (const dx of [2, Wd - 8]) { q.ell(X + dx + 3, Y + 2, 3, 2, "3"); q.ell(X + dx + 3, Y + Hd - 2, 3, 2, "3") }
+      q.rect(X + 1, Y + 1, Wd, Hd - 2, "k")
+      for (let y = Y; y < Y + Hd - 2; y++) for (let x = X; x < X + Wd; x++) { const c = (x - X) % 6; q.px(x, y, c === 5 ? "o" : lit("opE", 0.38 + (c === 0 ? 0.1 : 0), x, y, 0.45)) }
+      for (const lx of [X + 3, X + Wd - 4]) for (let y = Y; y < Y + Hd - 2; y += 4) q.px(lx, y, "!")
       const kx = X - 6, ky = R(Yw(X - 6) - S * CW - 4)
       p.line(X, Y + 6, kx, ky, "5"); p.disc(kx, ky, 2, "4"); p.px(kx, ky, "6")
       if (r.kind === "noodle") {
@@ -802,8 +810,8 @@ const DM = (() => {
         p.rect(X + 44, Y + 3, 12, 8, "o"); p.rect(X + 45, Y + 4, 10, 6, "p"); for (let i = 0; i < 3; i++) p.disc(X + 47 + i * 3, Y + 15, 1, "h")
         SIGNS["BOAT NOODLE"] = { rect: neon(p, X + Wd / 2, Y + Hd + 4, "BOAT NOODLE", "w", { font: "hud" }), x: X + Wd / 2, y: Y + Hd + 4, hue: "w", font: "hud" }
       } else {
-        p.rect(X + 40, Y + 4, 10, 14, "k"); p.rect(X + 41, Y + 5, 8, 12, "3"); p.hline(X + 41, Y + 6, 8, "4"); p.px(X + 47, Y + 15, "v")   // a battery bank
-        p.line(X + 45, Y + 5, X + 54, Y - 2, "4"); p.px(X + 54, Y - 2, "6")                                               // its aerial
+        q.rect(X + 40, Y + 4, 10, 14, "k"); q.rect(X + 41, Y + 5, 8, 12, "3"); q.hline(X + 41, Y + 6, 8, "4"); q.px(X + 47, Y + 15, "v")   // a battery bank
+        q.line(X + 45, Y + 5, X + 54, Y - 2, "4"); q.px(X + 54, Y - 2, "6")                                               // its aerial
         neon(p, X + Wd / 2, Y + Hd + 4, "DATA 1C/GB", "c", { font: "hud" })
       }
     }
@@ -975,8 +983,14 @@ const DM = (() => {
     for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) { const row = (j + f + seed) % 6; q.px(x + i, y + j, row === 0 ? "v" : (i + seed) % 5 === 0 && row < 3 ? "C" : "c") }
     q.px(x + (f + seed) % w, y + fl(h / 2), "V")
   }
-  for (const [sx, sy] of SCREENS) screen(p, 0, sx, sy + 1, 12, 9, sx)
-  part("raft_screens", SCREENS[0][0] - 1, SCREENS[0][1], 30, 11, "under", (q, f) => SCREENS.forEach(([sx, sy]) => screen(q, f, sx, sy + 1, 12, 9, sx)))
+  // the data raft whole, its screens rolling: a part of its own ("raft": the game lays it over the floor and can move it)
+  {
+    const r = RF[1], fx = r.X - 1, fy = r.Y - 3, fw = r.W + 4, fh = r.H + 4
+    part("floss", fx, fy, fw, fh, "raft", (q, f) => {
+      for (let y = fy; y < fy + fh; y++) for (let x = fx; x < fx + fw; x++) { const k = inB(x, y) ? FLOSS[y * W + x] : undefined; if (k) q.px(x, y, k) }
+      SCREENS.forEach(([sx, sy]) => screen(q, f, sx, sy + 1, 12, 9, sx))
+    })
+  }
   const BOOT = STALLS.find((s) => s.sign?.[0] === "BOOTLEG"), RAM = STALLS.find((s) => s.sign?.[0] === "RAM SIM")
   const bootS = [BOOT.X + 6, BOOT.Y + 14], ramS = [RAM.X + 8, RAM.Y + 26]
   screen(p, 0, bootS[0], bootS[1], 14, 8, 3); screen(p, 0, ramS[0], ramS[1], 12, 8, 7); screen(p, 0, ramS[0] + 16, ramS[1], 12, 8, 2)
@@ -1026,6 +1040,19 @@ const DM = (() => {
   }
   const twin = (x, y) => PARTS.some((P) => P.roofOf && x >= P.x && y >= P.y && x < P.x + P.w && y < P.y + P.h)
   for (let i = 0; i < W * H; i++) if (ROOF[i] && BG[i] && !twin(i % W, fl(i / W))) OVER[i] = BG[i]
+  // the Ring's last pillar at the right edge, over the canal and both banks (art/test/tunnel_blocks.px.js): its shadow falls out over the
+  // water and the floor, dithered toward the market; the slab itself hangs over everyone, a lit concrete lip along its left edge with
+  // pale warning stripes (not Juno's yellow), seams; where the canal goes in under it the dark of the tunnel, a cyan glint on the water
+  {
+    const TX = 1240, TY0 = 300, TY1 = 450, CY0 = 340, CY1 = 395
+    for (let y = TY0; y < TY1; y++) for (let x = TX - 16; x < TX; x++) if ((x + y) % 2 === 0 && x > TX - 12 + ((y * 7) % 5) && inB(x, y)) { BG[y * W + x] = "e"; WM[y * W + x] = 0 }
+    o.rect(TX, TY0, W - TX, TY1 - TY0, "2")
+    o.rect(TX, TY0, 2, TY1 - TY0, "6"); o.rect(TX + 2, TY0, 1, TY1 - TY0, "4")
+    for (let y = TY0 + 4; y < TY1; y += 10) o.rect(TX + 3, y, 2, 5, "!")
+    for (let y = TY0; y < TY1; y += 37) o.hline(TX + 6, y, W - TX - 6, "1")
+    o.rect(TX, CY0, W - TX, CY1 - CY0, "0"); o.rect(TX, CY0, 2, CY1 - CY0, "5"); o.hline(TX + 14, CY0 + 26, 6, "C"); o.hline(TX + 24, CY0 + 32, 4, "C")
+    o.hline(TX, TY0 - 1, W - TX, "k"); o.hline(TX, TY1, W - TX, "k"); o.vline(TX - 1, TY0, TY1 - TY0, "k")
+  }
   // the heavy cables from rim to rim, junction boxes on them; the taps from the pillar to the stalls
   for (const [x0, y0, x1, y1] of [[98, 0, 300, 720], [1244, 0, 1040, 720], [560, 0, 700, 140]]) {
     o.line(x0, y0, x1, y1, "k"); o.line(x0 + 1, y0, x1 + 1, y1, "1")

@@ -13,10 +13,13 @@
 
 (function () {
   const F = Nagiwa.at.sumpf_fahrt, A = Nagiwa.at.sumpf;
+  // in the tunnel at the ride's start it doesn't rain and no mist lies on the water (a view: only what shows; game/kapitel2_lantern.js)
+  Cutaway.state.view("im_tunnel");
+  const OPEN = "!im_tunnel";
   const RAIN = [
-    { kind: "rain", rect: [0, 0, 320, 180], count: 130, color: "#2f3e5a", speed: 140, slant: 0.28, length: 2 },
-    { kind: "rain", rect: [0, 0, 320, 180], count: 110, color: "#41547a", speed: 210, slant: 0.28, length: 5 },
-    { kind: "rain", rect: [0, 0, 320, 180], count: 36, color: "#8e9ab0", speed: 320, slant: 0.3, length: 9 },
+    { kind: "rain", rect: [0, 0, 320, 180], count: 130, color: "#2f3e5a", speed: 140, slant: 0.28, length: 2, if: OPEN },
+    { kind: "rain", rect: [0, 0, 320, 180], count: 110, color: "#41547a", speed: 210, slant: 0.28, length: 5, if: OPEN },
+    { kind: "rain", rect: [0, 0, 320, 180], count: 36, color: "#8e9ab0", speed: 320, slant: 0.3, length: 9, if: OPEN },
   ];
   const SOUND = ["sumpf_regen", "sumpf_wasser", "sumpf_grillen"];
   Cutaway.room("sumpf_fahrt", {
@@ -29,11 +32,16 @@
       { id: "wesen", image: "sumpf_wesen", at: [0, 158], anchor: [0, 0], baseline: 3 },
       { id: "floss", image: "sumpf_fahrt_floss", at: F.floss, anchor: [0, 0], baseline: 4 },
       { id: "near", image: "sumpf_fahrt_near", at: [0, 0], anchor: [0, 0], baseline: 999, scroll: -96 },
+      // the ride begins in the tunnel under the Ring's last pillar: in front of everything, slid off to the left as the raft comes out
+      // (game/kapitel2_lantern.js); every ride begins there, so it stands at its start whenever the room is entered
+      { id: "tunnel", image: "sumpf_fahrt_tunnel", at: [0, 0], anchor: [0, 0], baseline: 1000 },
     ],
     fx: [...RAIN,
-      { kind: "mist", image: "sumpf_nebel_a", rect: [0, 96, 320, 60], at: [0, 100], drift: [-16, 0], alpha: 0.16, bob: 2 },
-      { kind: "mist", image: "sumpf_nebel_b", rect: [0, 120, 320, 60], at: [0, 134], drift: [-26, 0], alpha: 0.12, bob: 3 }],
+      { kind: "mist", image: "sumpf_nebel_a", rect: [0, 96, 320, 60], at: [0, 100], drift: [-16, 0], alpha: 0.16, bob: 2, if: OPEN },
+      { kind: "mist", image: "sumpf_nebel_b", rect: [0, 120, 320, 60], at: [0, 134], drift: [-26, 0], alpha: 0.12, bob: 3, if: OPEN }],
     ambience: SOUND, music: { theme: "sumpf", intensity: 0.65 },
+    // out of the tunnel: slowly at first, while Pike says to keep the head down, then the portal slides away and there is sky
+    enter: [{ move: "tunnel", to: [-480, 0], ms: 5000, ease: "in", wait: false }],
     hotspots: {},
   });
   Cutaway.room("sumpf", {

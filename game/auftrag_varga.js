@@ -64,6 +64,11 @@ Cutaway.actor("sable", { name: "Sable", color: "#ff4fd3", room: "sable_booth", a
   costume: { idle: every("sable_sit"), walk: every("sable_sit"), talk: every("sable_talk") }, voice: { pitch: 56, range: 3, wave: "triangle", syllable: 80, speed: 0.95 },
   look: ["Sable hat einen Mantel, eine Pfeife und eine Preisliste.", "Bei Sable hat alles einen Preis. Das ist das Ehrliche daran."],
   talk: [S("Juno. Kaufst du, oder verkaufst du?"), { dialog: "sable" }] });
+// Chapter 2's decision 2: the clip sold to Sable at the price the main choice named (the four values of ledger_sable_ines)
+const SABLE_CLIP = [{ set: "e2", value: "sable" },
+  { if: "forgery_proven", then: [{ if: "k1a=warned", then: [{ ledger: "sable_ines", value: "proof_warned" }], else: [{ ledger: "sable_ines", value: "proof" }] }],
+    else: [{ if: "k1a=warned", then: [{ ledger: "sable_ines", value: "warned" }], else: [{ ledger: "sable_ines", value: "sold" }] }] },
+  S("Nett."), "Sable fragt nicht, wer sie war. Sable fragt nie.", "Wer sie kauft, sagt Sable auch nicht. Das kostet extra."];
 Cutaway.dialog("sable", {
   main: [
     { text: "„Ich brauch den Code vom Morpheus, CAM 15.“", if: ["varga_step", "!code_cam15"], goto: "code", then: [S("Achtzig. Oder was, das achtzig wert ist.")] },
@@ -79,11 +84,17 @@ Cutaway.dialog("sable", {
     { text: "Bis dann.", silent: true, goto: "end" },
   ],
   clip: [
-    { text: "„Verkauft.“", goto: "end", then: [{ set: "e2", value: "sable" },
-      { if: "forgery_proven", then: [{ if: "k1a=warned", then: [{ ledger: "sable_ines", value: "proof_warned" }], else: [{ ledger: "sable_ines", value: "proof" }] }],
-        else: [{ if: "k1a=warned", then: [{ ledger: "sable_ines", value: "warned" }], else: [{ ledger: "sable_ines", value: "sold" }] }] },
-      S("Nett."), "Sable fragt nicht, wer sie war. Sable fragt nie.", "Wer sie kauft, sagt Sable auch nicht. Das kostet extra."] },
+    { text: "„Verkauft.“", if: "cache_clip_ines_cut", goto: "end", then: SABLE_CLIP },
+    // the whole clip: EVI asks first about the whisper in it (kapitel2-design §3.1)
+    { text: "„Verkauft.“", if: "!cache_clip_ines_cut", goto: "whisper",
+      then: [{ evi: "besorgt" }, { say: "evi", text: "Im Clip ist das Flüstern. Willst du, dass das jemand hört?" }] },
     { text: "„Noch nicht.“", goto: "main", then: [S("Ich hab Zeit. Die Aufnahme nicht.")] },
+  ],
+  whisper: [
+    { text: "„Ja. Ganz.“", goto: "end", then: SABLE_CLIP },
+    { text: "„Nein. Ich schneid's raus.“", if: "!off_lantern", goto: "end",
+      then: [{ cache: "clip_ines_cut" }, { sfx: "glitch" }, "Ich schneid das Flüstern raus. Dann weiß keiner von der Sechs.", ...SABLE_CLIP] },
+    { text: "„Doch nicht.“", goto: "main", then: [S("Ich hab Zeit. Die Aufnahme nicht.")] },
   ],
   code: [
     { text: "„Hier sind achtzig.“", if: "chits>=80", goto: "end", then: [{ inc: "chits", by: -80 }, { set: "code_cam15" }, S("Nett. Das Morpheus ändert ihn nie."), "CAM 15 steht jetzt auf dem Deck."] },

@@ -3,6 +3,9 @@
 // Monday at 00:45 until everything is ready, decision 2 as far as it is built. The end: game/kapitel2_ende.js.
 //   e2              Entscheidung 2: sable | vesper | morrow | lantern | kept (Sable in her booth: game/auftrag_varga.js; Morrow in Jade Row
 //                   at 00:30 on Saturday and Sunday: here and game/auftrag_tide.js; Lantern in his talk: game/kapitel2_lantern.js)
+//   quiet_dryer     the clip went out whole (to Sable, Vesper or Morrow), so Nagi·wa heard Ines' whisper: from the next evening a man in
+//                   white waits in the laundromat (CAM 23), the stick can't be put back, and Lantern, who sees him from the water, no
+//                   longer comes (game/kapitel2_stick.js). Cut out (cache_clip_ines_cut, the clip editor or when she gives it), nobody hears it
 //   (the forgery and PRÜFEN: game/kapitel2_faelschung.js)
 //   (Ines' stick, the key to her wallet, without which Lantern can't send: Juno has it (stick_ines, kept from Chapter 1), it lies in
 //   dryer 6 again (stick_dryer), or Lantern has it, which needs no flag of its own: game/kapitel2_stick.js)
@@ -50,9 +53,19 @@ Object.assign(Nagiwa.ledger, {
   morrow_ines: { to: "MORROW", what: { given: "die Aufnahme" } },
   lantern_ines: { to: "LANTERN", what: { given: "die Aufnahme" } },
 });
+Nagiwa.cache.clip_ines_cut = { kind: "clip", name: "CAM 31, 23:03, GESCHNITTEN", about: "Die alte Metro, ohne ihr Flüstern. Wo der Schlüssel liegt, hört keiner." };
+// before the whole clip goes to Sable, Vesper or Morrow, EVI asks about the whisper in it (kapitel2-design §3.1); cut, nobody hears it
+const WHISPER = [{ evi: "besorgt" }, { say: "evi", text: "Im Clip ist das Flüstern. Willst du, dass das jemand hört?" }];
+// (cutting changes nothing but who learns of the dryer, which only matters on the way to Lantern: the runs with that way shut,
+// off_lantern, leave it out, or it would double every state of theirs; the clicks check it, tools/paths/kapitel2_main.json)
+const CUT_NOW = [{ cache: "clip_ines_cut" }, { sfx: "glitch" }, "Ich schneid das Flüstern raus. Dann weiß keiner von der Sechs."];
 // Morrow at her patrol car in Jade Row, Saturday and Sunday at 00:30 (her round as in Chapter 1; game/auftrag_tide.js puts her there).
 // She says Sie and wants nothing; the clip disappears into Revier 9, and from now on the Quiet knows who Juno is
 const MO = (/** @type {string} */ text) => ({ say: "morrow", text });
+const GIVE_MORROW = [{ set: "e2", value: "morrow" }, { ledger: "morrow_ines", value: "given" },
+  MO("Beweisstück. Kein Geschäft. Ich kümmer mich."),
+  { if: "forgery_proven", then: ["Die im Glass ist gefälscht. Da fehlt eine Minute.", MO("Dann jagen wir den Falschen.")] },
+  "Sie sieht sich mein Gesicht an. Lange.", "Jetzt kennt sie mich. Und Revier 9 auch."];
 Cutaway.dialog("morrow_k2", { main: {
   enter: [MO("Revier 9. Gehen Sie weiter.")],
   choices: [
@@ -61,26 +74,47 @@ Cutaway.dialog("morrow_k2", { main: {
   ] },
   clip: { enter: ["Ines auf der Treppe. Bis er hochsieht.", MO("...")],
     choices: [
-      { text: "„Nehmen Sie sie.“", goto: "end", then: [{ set: "e2", value: "morrow" }, { ledger: "morrow_ines", value: "given" },
-        MO("Beweisstück. Kein Geschäft. Ich kümmer mich."),
-        { if: "forgery_proven", then: ["Die im Glass ist gefälscht. Da fehlt eine Minute.", MO("Dann jagen wir den Falschen.")] },
-        "Sie sieht sich mein Gesicht an. Lange.", "Jetzt kennt sie mich. Und Revier 9 auch."] },
+      { text: "„Nehmen Sie sie.“", if: "cache_clip_ines_cut", goto: "end", then: GIVE_MORROW },
+      { text: "„Nehmen Sie sie.“", if: "!cache_clip_ines_cut", goto: "whisper", then: WHISPER },
       { text: "„Doch nicht.“", silent: true, goto: "end", then: [MO("Dann haben Sie mir nichts gezeigt.")] },
-    ] } });
-Nagiwa.replies.vesper.push({ id: "ines", text: CLIP_LINE, if: ["day>4", "cache_clip_ines_death", "!e2", "!off_main"], use: SOLD_VESPER });
+    ] },
+  whisper: [
+    { text: "„Ja. Ganz.“", goto: "end", then: GIVE_MORROW },
+    { text: "„Nein. Ich schneid's raus.“", if: "!off_lantern", goto: "end", then: [...CUT_NOW, ...GIVE_MORROW] },
+    { text: "„Doch nicht.“", silent: true, goto: "end", then: [MO("Dann haben Sie mir nichts gezeigt.")] },
+  ] });
+Cutaway.dialog("k2_whisper_vesper", { main: { enter: WHISPER, choices: [
+  { text: "„Ja. Ganz.“", goto: "end", then: SOLD_VESPER },
+  { text: "„Nein. Ich schneid's raus.“", if: "!off_lantern", goto: "end", then: [...CUT_NOW, ...SOLD_VESPER] },
+  { text: "„Doch nicht.“", goto: "end", then: ["Dann eben noch nicht."] },
+] } });
+Nagiwa.replies.vesper.push({ id: "ines", text: CLIP_LINE, if: ["day>4", "cache_clip_ines_death", "!e2", "!off_main"],
+  use: [{ if: "cache_clip_ines_cut", then: SOLD_VESPER, else: [{ dialog: "k2_whisper_vesper" }] }] });
+// overnight: a clip that went out whole has told Nagi·wa where the key lay, and the Quiet sits there from the next evening (not in the
+// runs with the way to Lantern shut, off_lantern: there it changes nothing, and it would tell a clip sold on Saturday from one sold on
+// Sunday, doubling their states)
+for (const night of [6, 7]) (Nagiwa.nights[night].passes ??= []).push(
+  { if: [{ or: ["e2=sable", "e2=vesper", "e2=morrow"] }, "!cache_clip_ines_cut", "!off_lantern"], then: [{ set: "quiet_dryer" }] });
 Nagiwa.threads.vesper.push(
   { from: "vesper", if: "day>4", at: "18:05", text: "Man spricht von einer Aufnahme aus der alten Metro. Ich zahle, was sie wert ist." },
-  { from: "juno", if: "e2=vesper", clip: Nagiwa.cache.clip_ines_death.name },
+  { from: "juno", if: ["e2=vesper", "!cache_clip_ines_cut"], clip: Nagiwa.cache.clip_ines_death.name },
+  { from: "juno", if: ["e2=vesper", "cache_clip_ines_cut"], clip: Nagiwa.cache.clip_ines_cut.name },
   { from: "vesper", if: "e2=vesper", text: "Das ist das Echteste, was ich je gesehen habe. 5000." },
 );
 // Monday, 00:45: the deck asks, if nothing has been decided (at most four answers)
 Cutaway.dialog("k2_clip", { main: {
   enter: ["Es ist Viertel vor eins. Und der Clip ist immer noch nur bei mir.", "Was mach ich damit?"],
   choices: [
-    { text: "„An Vesper verkaufen.“", silent: true, if: "cache_clip_ines_death", goto: "end", then: SOLD_VESPER },
+    { text: "„An Vesper verkaufen.“", silent: true, if: ["cache_clip_ines_death", "cache_clip_ines_cut"], goto: "end", then: SOLD_VESPER },
+    { text: "„An Vesper verkaufen.“", silent: true, if: ["cache_clip_ines_death", "!cache_clip_ines_cut"], goto: "whisper", then: WHISPER },
     { text: "„Behalten.“", silent: true, goto: "end", then: KEEP },
     { text: "„Noch nicht.“", silent: true, goto: "end", then: ["Noch nicht. Noch ist Zeit."] },
-  ] } });
+  ] },
+  whisper: [
+    { text: "„Ja. Ganz.“", goto: "end", then: SOLD_VESPER },
+    { text: "„Nein. Ich schneid's raus.“", if: "!off_lantern", goto: "end", then: [...CUT_NOW, ...SOLD_VESPER] },
+    { text: "„Doch nicht.“", goto: "main" },
+  ] });
 
 // ---- Saturday, 18:00: Juno comes home (kapitel2-design §2.1). She couldn't stand it in the flat and walked through the Ninth, the
 // night and the day, until it was evening again: a short sequence without words. [PLATZHALTER] its shots are the city's rooms for
@@ -217,6 +251,10 @@ Cutaway.hints([
     text: ["Pike will die Endstufe, und Ratz verkauft ihm nichts.", "Dir verkauft Ratz. Frag ihn, was er dafür will.", "Ratz will deinen alten Ausweis, nur kurz. Der liegt im Karton unter deinem Bett, wenn du ihn nicht dabeihast."] },
   { if: ["stick_ines", "know_cable"], about: ["datenfloss", "haken", "dryer6"],
     text: ["Das Kabel geht zu dem Floß da draußen.", "Es liegt zu weit weg. Mit etwas Langem käme man ran.", "Nimm den Haken aus der Tasche. Hast du ihn nicht, hängt er neben dem Aufzug."] },
+  // the Quiet sits at the dryer (quiet_dryer): only the way to him by hand is left (in the runs with that way shut the dryer stays open)
+  { if: ["stick_ines", "quiet_dryer", "!off_lantern"], about: ["reparatur", "wait", "bed", "close", ...HOME],
+    text: ["Im Waschsalon sitzt einer in Weiß. In den Trockner kannst du nichts mehr legen.", "Lantern kommt nicht mehr. Du musst ihn finden und ihm den Stick bringen.",
+      "Ab zehn weiß der Monteur auf der Kowalski, woher der Schirm kam. Frag ihn."] },
   { if: ["stick_ines", { or: ["day=7", ["day=6", "time>=22:00"]] }], about: ["reparatur", "dryer6"],
     text: ["Du hast noch ihren Schlüssel. Lantern sucht ihn.", "Er schaut jede Nacht in den Trockner. Oder du findest ihn: Der Monteur weiß, woher der Schirm kam.", "Leg ihn in Trockner sechs zurück. Um halb eins holt er ihn."] },
   { if: ["stick_ines", "day=5"], about: ["dryer6", "bed", "wait", "close", ...HOME],

@@ -134,6 +134,7 @@ Nagiwa.at = {
     const x0 = Math.min(...boxes.map((b) => b[0])), y0 = Math.min(...boxes.map((b) => b[1]));
     const x1 = Math.max(...boxes.map((b) => b[0] + b[2])), y1 = Math.max(...boxes.map((b) => b[1] + b[3]));
     return { shift: S, exposure: 2.2, door: sh(L.spots.door), dryer6: sh(L.spots.dryer6), washer: sh(L.spots.washer), sleeper: sh(L.spots.sleeper), mic: sh(L.spots.dryer6),
+      quiet: sh([176, 150]),      // Chapter 2: the man in white on the open floor, toward dryer 6
       dryers: [x0 + S, y0, x1 - x0, y1 - y0], desk: [c[0] + S, c[1], c[2], c[3]],
       // the hotspots' shapes: the row of dryers round all eight, the counter's own outline (as in the laundromat)
       dryersPoly: hull([1, 2, 3, 4, 5, 6, 7, 8].map((n) => L.props[`dryer${n}`].poly).flat()).map((v, i) => (i % 2 ? v : v + S)),
@@ -174,8 +175,9 @@ Nagiwa.at = {
   jade_row: {
     walk: [[67, 142, 253, 142, 306, 176, 14, 176]], arrive: [292, 172], back: [292, 172], mid: [186, 158], shop: [56, 158], machine: [232, 146], soup: [214, 144], far: [160, 143], parlour: [112, 143], pharmacy: [196, 143],
     backRect: [278, 54, 42, 122], windowRect: [60, 84, 38, 50], doorRect: [36, 84, 24, 78], signRect: [0, 52, 98, 30], machineRect: [232, 84, 28, 57], soupRect: [212, 82, 20, 50],
-    // Chapter 2: Morrow at her patrol car, Saturday and Sunday at 00:30 (the car's foot where CAM 07 sees it, moved back by its shift)
-    morrow: [180, 147], car: [173, 107],
+    // Chapter 2: Morrow before her patrol car, Saturday and Sunday at 00:30; the car a little back down the lane, at its own size there
+    // (streife_nah, the user's choice, 2026-11-16)
+    morrow: [180, 147], car: [196, 128],
     parlourRect: [118, 88, 8, 26], arcadeRect: [100, 90, 16, 32], balconyRect: [44, 20, 58, 46], nightRect: [212, 8, 43, 62], carRect: [168, 92, 24, 17], pharmacyRect: [195, 88, 13, 24], gateRect: [136, 50, 48, 46], screenRect: [136, 4, 48, 44], signsRect: [195, 56, 22, 32],
     // the hotspots' shapes, measured from the blocks' own perspective (art/old/jade_row_blocks.px.js prints JADE_POLYS): what lies on a side
     // wall is a trapezoid here; the machine, the arcade, the gate, the screen, the car and the hanging signs are drawn as rects
@@ -209,12 +211,16 @@ Nagiwa.at = {
   // cables, string lights and lanterns hang over the people. The runtime lamps are the painting's own, so Juno takes on its light
   drain_market: (() => {
     const L = Nagiwa.layouts.drain_market, part = (/** @type {any} */ p) => p.name.slice("drain_market_".length);
-    return { ...L.spots, ...L.rects, walk: [...L.walk, [1192, 340, 1200, 340, 1200, 370, 1192, 370]], holes: L.holes, size: L.size, sounds: L.sounds,
+    return { ...L.spots, ...L.rects, walk: [...L.walk, [1192, 340, 1200, 340, 1200, 370, 1178, 370, 1178, 362, 1192, 362]], holes: L.holes, size: L.size, sounds: L.sounds,
       // Pike on the raft DATA 1C/GB in the canal (Chapter 2; he stands at the end of a slit in the walk area, as Sable does in her booth: an actor stands on walkable floor; the raft's
       // hotspot covers the slit, so nobody walks out onto it), and where Juno stands
-      // on the kerb above it (not from the layout: the raft is the painting's, the man on it isn't yet)
-      pike: [1196, 368], pikeTalk: [1200, 343], datenflossRect: [1172, 352, 60, 30],
-      props: L.parts.filter((/** @type {any} */ p) => p.layer === "under").map((/** @type {any} */ p) => ({ id: part(p), image: p.name, at: p.at, anchor: [0, 0], baseline: 0 })),
+      // on the kerb above it (not from the layout: the raft is the painting's, the man on it isn't yet); he stands at the raft's back end,
+      // where he punts from (the user, 2026-11-16), the slit bending along the raft to him
+      pike: [1182, 366], pikeTalk: [1200, 343], datenflossRect: [1172, 352, 60, 30],
+      // the raft's middle, where Juno stands to ride out ("Stell dich in die Mitte.") and how far it goes: out under the Ring's last pillar
+      flossJuno: [1204, 360], flossOut: 110,
+      // (the data raft floats on the canal's moving water: a step above the floor's parts, under everyone)
+      props: L.parts.filter((/** @type {any} */ p) => p.layer === "under" || p.layer === "raft").map((/** @type {any} */ p) => ({ id: part(p), image: p.name, at: p.at, anchor: [0, 0], baseline: p.layer === "raft" ? 1 : 0 })),
       foreground: [...L.parts.filter((/** @type {any} */ p) => p.layer === "over").map((/** @type {any} */ p) => ({ image: p.name, at: p.at })), { image: "drain_market_over", at: [0, 0] }],
       lamps: L.lamps.map((/** @type {any} */ [x, y, color, r], /** @type {number} */ i) => ({ id: `lamp${i}`, at: [x, y], r, color, power: 1 })),
       // the crowd (generated with the layout, seeded): the vendors at their stools behind the counters (apart: where nobody walks), turned

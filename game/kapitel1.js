@@ -91,7 +91,10 @@ Cutaway.actor("ines", { name: "Frau im Kittel", color: "#f0a0c0",
   talk: [{ if: "end_beat", then: ["Ines. Nicht die Treppe."], else: [{ if: { or: ["tag_ines", "day=4", "off_main"] }, then: ["Die kenn ich."], else: [{ tag: "ines" }, "Das ist Dr. Ines Calder, die vom Foto."] }] }] });
 Nagiwa.people.lantern = { name: "ROLLSTUHL", label: "Jemand im Rollstuhl", speaker: "Jemand im Rollstuhl" };
 Cutaway.actor("lantern", { name: "Jemand im Rollstuhl", color: "#b0f0a0",
-  costume: { idle: "lantern_feed", walk: "lantern_feed", talk: "lantern_feed" }, speed: [14, 10], voice: { pitch: 46, wave: "square", syllable: 85 },
+  // seen from the side, both ways drawn (never mirrored: the ocular on his right, the antennas on his left); driving, his wheels turn
+  costume: { idle: { se: "lantern_feed_r", ne: "lantern_feed_r", sw: "lantern_feed_l", nw: "lantern_feed_l" },
+    walk: { se: "lantern_feed_drive_r", ne: "lantern_feed_drive_r", sw: "lantern_feed_drive_l", nw: "lantern_feed_drive_l" },
+    talk: { se: "lantern_feed_r", ne: "lantern_feed_r", sw: "lantern_feed_l", nw: "lantern_feed_l" } }, speed: [14, 10], voice: { pitch: 46, wave: "square", syllable: 85 },
   look: ["Er trägt einen geflickten Poncho, und an seinem Rollstuhl hängen Schwimmer und Antennen."],
   talk: ["Wer bist du?"] });
 Cutaway.routine("ines", [

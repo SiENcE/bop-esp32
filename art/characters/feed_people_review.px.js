@@ -54,7 +54,7 @@ scene("review_feed_ch1", { w: 430, h: 114, bg: "2" }, (c) => {
   GROUNDS.forEach((k, i) => c.rect(0, 12 + i * STRIP, 430, STRIP, k))
   const FIGS = [[10, "kessler_feed", 0], [28, "ines_feed_front", 0], [44, "ines_feed_front", 1700], [60, "ines_feed_front_walk", 0], [76, "ines_feed_front_walk", 300],
     [92, "ines_feed_back", 0], [108, "ines_feed_back_walk", 300], [130, "ines_feed_give", 0], [160, "ines_feed_give", 450], [192, "ines_feed_down", 0],
-    [224, "lantern_feed", 0], [262, "lantern_feed", 900],
+    [224, "lantern_feed_l", 0], [262, "lantern_feed_drive_r", 220],
     [324, "ashe_feed", 0], [342, "ashe_feed_walk", 200], [362, "ashe_feed", 0], [382, "ashe_feed_look", 0], [402, "ashe_feed_dim", 0], [420, "ashe_feed_dim_walk", 200]]
   GROUNDS.forEach((k, i) => {
     const y = 12 + i * STRIP + STRIP - 3

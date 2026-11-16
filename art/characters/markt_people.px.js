@@ -18,6 +18,8 @@
 //                                still, a look to its left, a shrug, a look to its right
 //   statist_<nn>_walk_<dir>      21x21 (23x23 with the umbrella), 8 frames x 100 ms, the blocks' step
 //                                nn = 01..16, the looks in LOOKS below (a body, a coat, hair or a hood, a thing carried, a glowing thing)
+//   pike_top_idle_<dir>          31x31, 8 frames: still as a heron, his neck jerking once toward something that moves
+//   pike_top_talk_<dir>          31x31, 2 frames x 200 ms: the beak opening;  pike_top_punt_<dir>  31x31, 4 frames: punting
 // <dir>: down, up, right, left. The ground point is in the exact middle of every frame (10,10 / 11,11 / 13,13 / 15,15): the game
 // anchors each at its centre. Bigger canvases only where a thing reaches out: Ratz's tail and plug, the preacher's flasks, an umbrella.
 // About 13 px across an ordinary pair of shoulders, as Juno: the market is drawn at ~40 px a metre.
@@ -365,6 +367,52 @@ const prediger = (c, dir, o) => {
 for (const dir of DIRS) {
   anim(`prediger_top_idle_${dir}`, { w: 27, h: 27, frames: 8, ms: [900, 700, 900, 700, 100, 220, 100, 900] }, (c) => prediger(c, dir, { idle: c.frame }))
   anim(`prediger_top_talk_${dir}`, { w: 27, h: 27, frames: 2, ms: 200 }, (c) => prediger(c, dir, { talk: c.frame }))
+}
+
+// ---------------------------------------------------------------- Pike (Chapter 2), on his raft DATA 1C/GB at the canal
+// Painted on the lines of the block the user approved (2026-11-16: art/test/pike_top_blocks.px.js): made over with the heron, as on the
+// ride (art/rooms/sumpf.px.js). His coat folded like grey wings, the folds over his back, black at the shoulders; the long white neck
+// forward with its black stroke down the front; the small white head, the black streak from the eye into the crest that hangs back over
+// his neck; the long orange-yellow beak, paler along its edge. His punting pole, the raft's wood: standing it leans on his right shoulder,
+// punting he pushes it back along the raft. Idle: he waits, still as a heron, and now and then his neck jerks toward something that
+// moves and comes back (he acts as if nothing had happened); talking: the beak opens. Punting: the pole planted forward, pushed back,
+// lifted (4 frames), the walk while the raft leaves the market.
+const PK = {
+  coat: ["#4a515e", "#6c7484", "#8e96a8", "#b9c0cc"], wing: ["#3a404c", "#565e6c", "#7a8292", "#9aa2b2"],
+  black: ["#0c0e1a", "#1a2337", "#2f3e5a", "#41547a"], white: ["#8e96a8", "#c8ced8", "#e6eaf0", "#ffffff"],
+  beak: ["#a06818", "#e0a030", "#f0c060"], pole: ["#2e2019", "#4e3526", "#74513a", "#9c7048"],
+}
+const pike = (c, dir, o = {}) => {
+  const F = fig(dir), push = o.push ?? 0, jerk = o.jerk ?? 0, talk = !!o.talk
+  const pf = [3, 1, -1, -3][push]
+  F.line(pf + 2, -6, pf - 12, -7, "pole", push ? 1 : 4)
+  F.ell(1, 2, 1.4, 0.8, "boot", 0); F.ell(1, -2, 1.4, 0.8, "boot", 0)
+  F.ell(-3, 0, 2.6, 3.4, "wing", 1)
+  F.ell(0, 0, 3, 5.2, "coat", 2); F.ell(0.5, 4.2, 1.6, 1.2, "black", 2.5); F.ell(0.5, -4.2, 1.6, 1.2, "black", 2.5)
+  F.ell(1.5, 5.6, 1.4, 0.8, "coat", 2); F.ell(pf + 1, -5.6, 1.4, 0.8, "coat", 2)
+  F.ell(2.5, jerk * 0.5, 1.2, 1, "neck", 3); F.put(3, Math.round(jerk * 0.5), "stroke", 3.1)
+  F.ell(4.5, jerk, 1.3, 1.3, "head", 4)
+  if (talk) { F.line(6, jerk, 9, jerk + 1, "beak", 5); F.line(6, jerk, 9, jerk - 1, "beak", 5) } else F.line(6, jerk, 9, jerk, "beak", 5)
+  F.line(4, jerk + 1, 1, 2, "crest", 4.5); F.put(0, 2, "crest", 4.5); F.put(5, jerk + 1, "crest", 4.6)
+  const paint = (e) => {
+    const { p, f, s } = e
+    if (p === "boot") return tone(F, e, BOOTS, { lit: 0.35 })
+    if (p === "pole") return (f + s) % 5 === 0 ? PK.pole[1] : PK.pole[2]
+    if (p === "wing") return f % 2 === 0 ? tone(F, e, PK.wing) : PK.wing[Math.max(0, PK.wing.indexOf(tone(F, e, PK.wing)) - 1)]   // the folds
+    if (p === "coat") return tone(F, e, PK.coat, { hi: 0.75 })
+    if (p === "black") return tone(F, e, PK.black, { noShadow: true })
+    if (p === "neck" || p === "head") return tone(F, e, PK.white, { hi: 0.6, noShadow: true })
+    if (p === "stroke" || p === "crest") return PK.black[1]
+    if (p === "beak") return e.f >= 8 ? PK.beak[2] : tone(F, e, PK.beak, { noShadow: true })
+    return "#ff00ff"
+  }
+  lay(c, F, 15, paint)
+}
+const PIKE_JERK = [0, 0, 0, 0, 1, 0, 0, 0]
+for (const dir of DIRS) {
+  anim(`pike_top_idle_${dir}`, { w: 31, h: 31, frames: 8, ms: [900, 700, 900, 1200, 160, 260, 900, 700] }, (c) => pike(c, dir, { jerk: PIKE_JERK[c.frame] }))
+  anim(`pike_top_talk_${dir}`, { w: 31, h: 31, frames: 2, ms: 200 }, (c) => pike(c, dir, { talk: c.frame === 0 }))
+  anim(`pike_top_punt_${dir}`, { w: 31, h: 31, frames: 4, ms: [300, 250, 250, 300] }, (c) => pike(c, dir, { push: c.frame }))
 }
 
 })()

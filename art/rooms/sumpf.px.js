@@ -3,6 +3,7 @@
 //   sumpf_fahrt_bg      the ride's still part: the sky, the city and the Crown behind, the water (320x180)
 //   sumpf_fahrt_far     the farther rows (384 wide), sumpf_fahrt_mid the drowned house fronts and trunks (768), sumpf_fahrt_weed the
 //                       duckweed (768), sumpf_fahrt_near the big trunks passing in front (768): each a prop that scrolls (game/rooms/sumpf.js)
+//   sumpf_fahrt_tunnel  the ride's start: the tunnel under the Ring's last pillar and its portal, slid off to the left as the ride begins
 //   sumpf_fahrt_floss   the raft DATA 1C/GB with Pike poling (48 frames at 12 fps); Juno stands on it as her own figure (game/rooms/sumpf.js)
 //   sumpf_bg            the arrival: the old trees, the mist, Lantern's lanterns, the walk of planks, the caravan on pontoons (320x180)
 //   sumpf_floss         the raft tied up at the walk, Pike resting on his pole (24 frames)
@@ -412,6 +413,33 @@ anim("sumpf_wesen", { w: W, h: 26, frames: 160, fps: 10 }, (c) => {
 })
 
 // ---------------------------------------------------------------- the game's pictures
+// ---------------------------------------------------------------- out of the tunnel (the user approved the block, 2026-11-16:
+// art/test/tunnel_blocks.px.js): the ride begins in the dark under the Ring's last pillar and comes out into the open. The front plane,
+// 480 wide, that the game slides off to the left (game/kapitel2_lantern.js): the tunnel's ceiling of slabs, its dark, the water with a
+// cyan glint from the raft's screens and a few ripples; the portal, its concrete face wet and lit along the edge toward the open, rust
+// running down from its bolts; the Ring's slab reaching out over it, its underside lit by the sky, pale warning stripes at its edge (not
+// Juno's yellow), drips falling from it.
+sprite("sumpf_fahrt_tunnel", { w: 480, h: H }, (c) => {
+  const PX = 392
+  c.rect(0, 0, PX, H, "n")
+  // the ceiling: slabs with their seams, a pipe along them, water standing in the joints
+  c.rect(0, 0, PX, 22, "2"); c.hline(0, 21, PX, "1"); c.hline(0, 22, PX, "k")
+  for (let x = 0; x < PX; x += 40) { c.vline(x, 0, 22, "1"); c.px(x + 1, 20, "3") }
+  c.hline(0, 14, PX, "1"); c.hline(0, 15, PX, "3"); for (let x = 12; x < PX; x += 56) c.rect(x, 13, 2, 4, "4")
+  // the dark water: the screens' cyan glint, ripples catching it, a drip's ring
+  for (let i = 0; i < 9; i++) { const x = 20 + i * 41, y = 146 + (i % 3) * 5; c.hline(x, y, 8 + (i % 2) * 6, "c"); c.hline(x + 3, y, 3, "C") }
+  for (let i = 0; i < 14; i++) c.hline(8 + i * 27, 160 + (i * 7) % 14, 4, "1")
+  // the portal's face: wet concrete, darker toward the tunnel, its edge lit by the open, rust from its bolts
+  for (let y = 0; y < H; y++) for (let x = PX; x < PX + 22; x++) c.px(x, y, x < PX + 3 ? "2" : (x * 3 + y * 5) % 23 === 0 ? "3" : "4")
+  c.rect(PX + 19, 0, 3, H, "6"); c.vline(PX + 19, 0, H, "5")
+  for (let y = 34; y < 150; y += 28) { c.rect(PX + 8, y, 3, 3, "3"); c.px(PX + 9, y + 1, "O"); c.vline(PX + 9, y + 3, 6, "O") }
+  // the Ring's slab out over the portal: its underside lit by the sky, its edge striped, thinning toward its end
+  c.rect(PX, 0, 480 - PX, 26, "3"); c.hline(PX, 26, 480 - PX, "5"); c.hline(PX, 27, 480 - PX, "k")
+  for (let x = PX; x < 480; x++) if ((x * 7) % 11 === 0) c.px(x, 25, "6")
+  for (let x = PX + 8; x < 480; x += 12) c.rect(x, 22, 5, 2, "S")
+  // drips falling from its edge
+  for (const [x, y] of [[420, 34], [448, 52], [466, 41], [436, 70], [458, 96]]) { c.vline(x, y, 3, "H"); c.px(x, y + 4, "V") }
+})
 sprite("sumpf_fahrt_bg", { w: W, h: H }, (c) => { c.stamp("_sky", 0, 0); c.rect(0, WATER, W, H - WATER, "e") })
 sprite("sumpf_fahrt_far", { w: FAR_W, h: WATER - FAR_Y + 4 }, (c) => c.stamp("_far", 0, 0))
 sprite("sumpf_fahrt_mid", { w: MID_W, h: MID_BASE + 16 }, (c) => c.stamp("_mid", 0, 0))

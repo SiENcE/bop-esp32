@@ -20,7 +20,7 @@
 //   commuter_d      a woman with long hair, a light coat and a shoulder bag (bag 6)
 //   yuen_cook       paper cap 8, apron 7, chopping at his counter
 //   ines            the end of Chapter 1, front and back: the white coat 9, a dark plait cut into it; a wallet with a light
-//   lantern         one profile, in the water, like the wheelchair sign: a thick wheel 8, a poncho 7, antennas with lit tips 9
+//   lantern         the painted Lantern from the side, both ways drawn: the crest 9, the near wheel 7-8, the poncho 6-7, his wheels turning
 //   ashe            front only: a raincoat 8, no face, a burn 9 with no dark rim; the same in the shadow; the look into the camera
 //
 // Walks: 6 frames x 100 ms, the same foot table as juno_feed_walk (the feet step 2 across and 1 up).
@@ -646,29 +646,125 @@ sprite("_i_down", `
   ..........................443`)
 anim("ines_feed_down", { w: 29, h: 7, frames: 1, outline: "1", pivot: "bottom" }, (c) => c.stamp("_i_down", 0, 0))
 
-// ---------------------------------------------------------------- Lantern, 29x30 inside (31x32)
-// A wheelchair is thin lines, and thin lines don't survive the rim, the grain and the scanlines: every drawing of its parts turned
-// to clutter at this size. So this is the sign for a wheelchair instead, a pure profile of flat shapes: the man an L, thighs flat,
-// shins down, a thick wheel over his hip, a caster, two antennas behind. Facing right; the engine mirrors him. One view is enough,
-// since he travels across the picture. He stands larger than the scale, decided by the user: at 24 px the wheel didn't read.
-// No walk: the same sprite when he moves, the pontoon at the waterline staying while the chair bobs.
-const FL = { W: 29, H: 30 }
-const flRing = (c, cx, cy, r0, r1, k) => {
-  for (let y = 0; y < FL.H; y++) for (let x = 0; x < FL.W; x++) { const d = Math.hypot(x - cx, y - cy); if (d >= r0 && d <= r1) c.px(x, y, k) }
+// ---------------------------------------------------------------- Lantern, 33x36 inside (35x38)
+// The painted Lantern (art/characters/lantern.px.js) as the feeds see him crossing the picture, from the side, painted on the lines of
+// the block the user approved (2026-11-16, art/test/lantern_feed_blocks.px.js, docs/characters/lantern_feed_blocks_*): the same measures
+// in metres, at 21 px a metre, larger than the scale as the user chose for him (at 24 px the wheel didn't read). Two views, drawn and
+// never mirrored: to the right we see his right side and the ocular, to the left his left side, the antennas in front of his head and
+// the headset's cup. His accent is the crest, 9; nothing else on him reaches it. Standing: his breath, the antennas' lights in turn, the
+// lantern at his neck flickering; driving: the spokes turning.
+//   lantern_feed_r, lantern_feed_l              standing, 4 x 600 ms
+//   lantern_feed_drive_r, lantern_feed_drive_l  driving, 4 x 110 ms (the wheels a quarter of a spoke's turn a frame)
+const LF = { W: 35, H: 38, K: 21 }
+/** a point of him (metres): f forward, d toward the far side, h up -> px; dir 1 facing right, -1 left */
+const lfAt = (dir, f, d, h) => [Math.round(17 + dir * f * LF.K + d * LF.K * 0.35), Math.round(35 - h * LF.K - d * LF.K * 0.3)]
+/** a filled polygon (scanline); key may be a function of (x, y) */
+function lfPoly(c, pts, k) {
+  const ys = pts.map((p) => p[1]), y0 = Math.min(...ys), y1 = Math.max(...ys)
+  for (let y = y0; y <= y1; y++) {
+    const xs = []
+    for (let i = 0; i < pts.length; i++) {
+      const [ax, ay] = pts[i], [bx, by] = pts[(i + 1) % pts.length]
+      if ((ay <= y + 0.5 && by > y + 0.5) || (by <= y + 0.5 && ay > y + 0.5)) xs.push(ax + ((y + 0.5 - ay) / (by - ay)) * (bx - ax))
+    }
+    xs.sort((a, b) => a - b)
+    for (let i = 0; i + 1 < xs.length; i += 2) for (let x = Math.round(xs[i]); x < Math.round(xs[i + 1]); x++) {
+      const kk = typeof k === "function" ? k(x, y) : k
+      if (kk) c.px(x, y, kk)
+    }
+  }
 }
-anim("lantern_feed", { w: FL.W, h: FL.H, frames: 2, ms: [900, 900], pivot: "bottom" }, (c) => {
-  const b = c.frame
-  for (const [x, top] of [[6, 1], [4, 4]]) { c.rect(x, top + b, 1, 16 - top, "7"); c.rect(x, top + b, 1, 2, "9") }   // the antennas, their tips the brightest on him
-  c.rect(5, 15 + b, 5, 1, "7"); c.rect(7, 15 + b, 1, 6, "7")                 // the push handle, the chair's back
-  c.rect(12, 2 + b, 5, 4, "8"); c.rect(13, 1 + b, 3, 6, "8"); c.rect(15, 3 + b, 2, 3, "6")   // the hood, the face in it
-  c.rect(13, 7 + b, 3, 1, "7"); c.rect(10, 8 + b, 8, 12, "7")                // the poncho
-  c.rect(16, 10 + b, 6, 2, "7"); c.rect(20, 12 + b, 2, 3, "8")               // the arm, the hand on his knee
-  c.rect(13, 16 + b, 13, 4, "6"); c.rect(24, 20 + b, 3, 6, "6"); c.rect(23, 25 + b, 6, 2, "8")   // the thigh, the shin, the shoe
-  flRing(c, 11, 21 + b, 5.8, 8.1, "8"); c.rect(10, 20 + b, 3, 3, "8")        // the wheel over his hip, its tyre and hub
-  flRing(c, 21, 27 + b, 0.9, 1.7, "7")                                       // the caster
-  c.rect(5, 29, 16, 1, "5")                                                  // the pontoon: its bottom is the waterline
-  fpRim(c, FL.W, FL.H, "1")
-})
+/** a part's side face (f0..f1, h0..h1 at depth d), lit along its top row when `top` is given */
+function lfSide(c, dir, f0, f1, h0, h1, d, k, top) {
+  const pts = [lfAt(dir, f0, d, h0), lfAt(dir, f1, d, h0), lfAt(dir, f1, d, h1), lfAt(dir, f0, d, h1)], y0 = Math.min(...pts.map((p) => p[1]))
+  lfPoly(c, pts, top ? (x, y) => (y === y0 ? top : k) : k)
+}
+/** a wheel in the plane of his facing: the tyre lit along its upper arc, the rim, three spokes turned by `turn`, the hub; on the
+ *  near one the push rim inside the tyre */
+function lfWheel(c, dir, f, d, h, r, turn, near) {
+  const [cx, cy] = lfAt(dir, f, d, h), R = r * LF.K
+  for (let y = Math.floor(cy - R - 1); y <= cy + R + 1; y++) for (let x = Math.floor(cx - R - 1); x <= cx + R + 1; x++) {
+    const q = Math.hypot(x + 0.5 - cx, y + 0.5 - cy), up = y + 0.5 < cy - R * 0.35 && x + 0.5 < cx + R * 0.4
+    if (q <= R && q > R - 1.6) c.px(x, y, near ? (up ? "8" : "7") : "4")
+    else if (q <= R - 1.6 && q > R - 2.5) c.px(x, y, near ? "5" : "3")
+  }
+  for (let i = 0; i < 3; i++) {
+    const t = turn + (i / 3) * Math.PI, dx = Math.cos(t) * (R - 2.4), dy = Math.sin(t) * (R - 2.4)
+    c.line(Math.round(cx - dx), Math.round(cy - dy), Math.round(cx + dx), Math.round(cy + dy), near ? "6" : "3")
+  }
+  if (near) for (let i = 0; i < 20; i += 2) {                                         // the push rim, a dotted ring inside the tyre
+    const t = (i / 20) * Math.PI * 2
+    c.px(Math.round(cx + Math.cos(t) * (R - 3.4)), Math.round(cy + Math.sin(t) * (R - 3.4)), "5")
+  }
+  c.rect(Math.round(cx) - (near ? 1 : 0), Math.round(cy) - (near ? 1 : 0), near ? 2 : 1, near ? 2 : 1, near ? "8" : "4")
+}
+/** Lantern in his chair from the side; dir 1 right, -1 left; b his breath; turn the wheels' angle; f the frame */
+function lanternFeed(c, dir, { b = 0, turn = 0, f = 0 } = {}) {
+  const right = dir === 1, hb = b / LF.K
+  // the float under the chair (he comes over the water): its dark hull, a lit seam along its top
+  lfSide(c, dir, -0.38, 0.5, -0.02, 0.06, 0, "3", "5")
+  // the far wheel, the backrest and the push handle
+  lfWheel(c, dir, -0.05, 0.4, 0.36, 0.36, turn, false)
+  lfSide(c, dir, -0.3, -0.25, 0.5, 0.98, 0.1, "4"); lfSide(c, dir, -0.38, -0.25, 0.92, 0.98, 0.1, "6")
+  // the seat, the caster on its fork, the footrest
+  lfSide(c, dir, -0.22, 0.26, 0.45, 0.52, 0, "4", "5")
+  lfSide(c, dir, 0.3, 0.34, 0.08, 0.45, 0, "4"); lfWheel(c, dir, 0.32, -0.05, 0.06, 0.07, turn * 3, true)
+  lfSide(c, dir, 0.36, 0.58, 0.06, 0.1, 0, "5", "6")
+  // the legs: the thigh along the seat lit on top, the shin, the boot with its toe cap worn to steel
+  lfSide(c, dir, -0.05, 0.46, 0.5, 0.64, -0.05, "5", "6"); lfSide(c, dir, 0.36, 0.5, 0.12, 0.6, -0.05, "4")
+  lfSide(c, dir, 0.4, 0.64, 0.05, 0.15, -0.05, "3", "4")
+  { const [x, y] = lfAt(dir, 0.6, -0.05, 0.1); c.px(x, y, "5") }
+  // the poncho from the shoulders over the lap: lit along its back and shoulders, folds falling, the hem darker; the hood thrown back
+  const sh = 1.05 - hb, P = [lfAt(dir, -0.16, 0, sh), lfAt(dir, 0.08, 0, sh), lfAt(dir, 0.24, 0, 0.66), lfAt(dir, -0.2, 0, 0.66)]
+  const top = Math.min(...P.map((p) => p[1])), bot = Math.max(...P.map((p) => p[1])), [bx] = lfAt(dir, -0.16, 0, sh)
+  lfPoly(c, P, (x, y) => (y >= bot - 1 ? "5" : y <= top + 1 || Math.abs(x - bx) <= 1 ? "7" : (x * 2 + y) % 7 === 0 ? "5" : "6"))
+  lfSide(c, dir, -0.24, -0.12, sh - 0.14, sh + 0.02, 0.05, "5", "6")
+  // the patches: one lit (7, its stitches 8), one dark (4), one mid (5)
+  lfSide(c, dir, 0.05, 0.17, 0.7, 0.8, -0.1, "7", "8"); lfSide(c, dir, -0.12, -0.02, 0.82, 0.92, -0.1, "4"); lfSide(c, dir, -0.04, 0.06, 0.68, 0.74, -0.1, "5")
+  // the arm down to the hand on the near wheel's push rim
+  lfSide(c, dir, -0.04, 0.04, 0.6, sh - 0.1, -0.12, "5"); lfSide(c, dir, -0.04, 0.05, 0.53, 0.6, -0.12, "6")
+  // the head: the shaved scalp behind, the face toward his front lit, the jaw in shade; the nose, the mouth
+  lfSide(c, dir, -0.12, 0.12, 1.06 - hb, 1.34 - hb, 0, "5")
+  lfSide(c, dir, 0.0, 0.12, 1.1 - hb, 1.31 - hb, -0.02, "6"); lfSide(c, dir, 0.06, 0.12, 1.14 - hb, 1.3 - hb, -0.02, "7")
+  lfSide(c, dir, 0.0, 0.12, 1.06 - hb, 1.1 - hb, -0.02, "5")
+  { const [x, y] = lfAt(dir, 0.15, -0.02, 1.2 - hb); c.px(x, y, "7") }                 // the nose, a pixel out of the face
+  { const [x, y] = lfAt(dir, 0.11, -0.02, 1.12 - hb); c.px(x, y, "3") }                 // the mouth
+  // the crest (his accent) from the brow to the nape, its spikes along the top
+  lfSide(c, dir, -0.14, 0.1, 1.34 - hb, 1.44 - hb, 0, "9")
+  for (const [ff, hh] of [[-0.11, 1.49], [-0.03, 1.51], [0.05, 1.49]]) { const [x, y] = lfAt(dir, ff, 0, hh - hb); c.px(x, y, "9"); c.px(x, y + 1, "9") }
+  { const [x, y] = lfAt(dir, -0.14, 0, 1.36 - hb); c.px(x, y, "8") }
+  // his right side to us: the ocular over the near eye, its ring and its lens; his left side: the narrowed eye and the headset's cup
+  // over his ear, its light
+  const [ex, ey] = lfAt(dir, 0.1, -0.05, 1.23 - hb)
+  if (right) { c.px(ex, ey, "8"); c.px(ex - dir, ey, "4"); c.px(ex, ey - 1, "4"); c.px(ex - dir, ey - 1, "4") }
+  else {
+    c.px(ex, ey, "2")
+    const [hx, hy] = lfAt(dir, -0.04, -0.12, 1.2 - hb)
+    c.rect(hx - 1, hy - 1, 2, 3, "3"); c.px(hx, hy, f % 4 === 0 ? "7" : "6")
+  }
+  // the lantern at his chest on its cable, its flame flickering
+  const [lx, ly] = lfAt(dir, 0.12, -0.08, 0.92 - hb)
+  c.px(lx, ly - 1, "3"); c.px(lx, ly, f % 3 === 1 ? "7" : "8")
+  // the near wheel over his side
+  lfWheel(c, dir, -0.05, -0.3, 0.36, 0.36, turn, true)
+}
+/** the antennas from the headset on his left ear, leaning back, thin, their lights at the tips in turn */
+function lanternFeedAntennas(c, dir, { b = 0, lit = 0 } = {}) {
+  const [hx, hy] = lfAt(dir, -0.04, dir === 1 ? 0.12 : -0.12, 1.22 - b / LF.K)
+  for (const [i, back, len] of [[0, 2, 9], [1, 4, 11], [2, 6, 8]]) {
+    const x1 = hx - dir * back, y1 = hy - len
+    c.line(hx, hy, x1, y1, "4"); c.px(x1, y1, lit === i ? "8" : "6")
+  }
+}
+const LF_BREATH = [0, 0, 1, 1]
+for (const [dir, n] of /** @type {[number, string][]} */ ([[1, "r"], [-1, "l"]])) {
+  // seeing his left side the antennas stand in front of his head; seeing his right side, behind it (no rim: 1 px stays 1 px)
+  const ant = layer("antennas", { outline: false }, (c) => lanternFeedAntennas(c, dir, { b: LF_BREATH[c.frame % 4], lit: c.frame % 3 }))
+  const stand = (c) => lanternFeed(c, dir, { b: LF_BREATH[c.frame], f: c.frame })
+  const drive = (c) => lanternFeed(c, dir, { turn: dir * c.frame * (Math.PI / 12), f: c.frame })
+  anim(`lantern_feed_${n}`, { w: LF.W, h: LF.H, frames: 4, ms: [600, 600, 600, 600], outline: "1", pivot: "bottom" }, ...(dir === 1 ? [ant, stand] : [stand, ant]))
+  anim(`lantern_feed_drive_${n}`, { w: LF.W, h: LF.H, frames: 4, ms: [110, 110, 110, 110], outline: "1", pivot: "bottom" }, ...(dir === 1 ? [ant, drive] : [drive, ant]))
+}
 
 // ---------------------------------------------------------------- Corvin Ashe, 13x24 inside, 17x26 with the burn
 // Tall and narrow, a belted raincoat long to the calves, 8: a step under Ines's 9, or he reads grey-green instead of white. No

@@ -60,10 +60,12 @@ down.use = [{ if: ["day>4", "know_cable"], then: ["Die Kette ist zu. Und das Kab
   else: down.use }];
 
 // ---- L3: the raft DATA 1C/GB lies out on the canal at its rope. The hook pulls it to the edge, and Pike, on it, says what he wants
-Cutaway.actor("pike", { name: "Pike", color: "#a8b4c8", walkTo: AM.pikeTalk, face: "down",
-  costume: { idle: Nagiwa.top("statist_15_idle"), walk: Nagiwa.top("statist_15_idle"), talk: Nagiwa.top("statist_15_idle") },
+Cutaway.actor("pike", { name: "Pike", color: "#e0a048",      // his beak's orange-yellow, muted beside Juno's yellow (the user, 2026-11-16)
+  walkTo: AM.pikeTalk, face: "down",
+  // from above (art/characters/markt_people.px.js); he only ever moves with his raft, punting, as fast as Juno on the market
+  costume: { idle: Nagiwa.top("pike_top_idle"), walk: Nagiwa.top("pike_top_punt"), talk: Nagiwa.top("pike_top_talk") }, speed: [40, 40],
   voice: { pitch: 58, range: 4, wave: "triangle", syllable: 95, speed: 0.85 },
-  look: ["Ein langer Mann mit dünnen Beinen, er steht im Regen wie andere im Trockenen.", "Der Hals ist zu lang, das Gesicht läuft spitz zu. Ein Reiher-Mod."],
+  look: ["Ein langer Mann mit dünnen Beinen. Er steht so still auf seinem Floß wie ein Reiher im Wasser.", "Der Hals ist zu lang, das Gesicht läuft spitz zu. Ein Reiher-Mod."],
   talk: [{ if: "pike_met", then: [{ dialog: "pike" }], else: [
     { if: "know_cable", then: ["Das Kabel geht zu deinem Floß!", P("Ich verkauf Daten. Keine Fahrten."), "Er ist zu weit draußen. Ich müsste das Floß ranholen."],
       else: [P("Gigabyte gegen Chits."), "Danke. Ich hab selber welche."] }] }] });
@@ -71,7 +73,9 @@ Cutaway.routine("pike", [{ day: [5, 6, 7], from: "18:00", to: "04:00", room: "dr
 const market = Cutaway.room.get("drain_market").hotspots;
 market.datenfloss = { name: "DATA 1C/GB", rect: AM.datenflossRect, walkTo: AM.pikeTalk, face: "down",
   look: [{ if: "know_cable", then: ["Das Kabel kommt an der Kanalmauer entlang und geht auf das Floß DATA 1C/GB.", "Das Floß liegt draußen an seinem Seil."],
-    else: ["Auf dem Floß DATA 1C/GB verkauft einer Daten. Es liegt draußen an seinem Seil."] }],
+    // (Pike is on it from Saturday only: in Chapter 1 it lies there empty, nothing to give away yet)
+    else: [{ if: "day<5", then: ["Das Floß DATA 1C/GB liegt draußen an seinem Seil. Keiner drauf, aber die Bildschirme laufen."],
+      else: ["Auf dem Floß DATA 1C/GB verkauft einer Daten. Es liegt draußen an seinem Seil."] }] }],
   use: [{ if: "pike_met", then: [{ dialog: "pike" }], else: [{ if: "know_cable", then: ["Zu weit. Mit der Hand komm ich da nicht ran."], else: ["Ich brauch keine Daten. Ich hab selber welche."] }] }],
   with: { haken: [{ if: "pike_met", then: ["Das Floß liegt schon am Rand."], else: [{ if: "know_cable", then: [
     "Ich hak den Notschlüssel ins Seil und zieh. Das Floß kommt, ganz langsam.", "Teo hätte das mit einer Hand gemacht.",
@@ -91,15 +95,30 @@ market.datenfloss = { name: "DATA 1C/GB", rect: AM.datenflossRect, walkTo: AM.pi
 // flag (what he thinks of her changes nothing the solver sees). Every later ride ("Fährst du mich raus?") is short; which is which comes
 // from the choice, so it costs no flag
 const AF = Nagiwa.at.sumpf_fahrt, AH = Nagiwa.at.sumpf;
-const RIDE_OUT = ["Ich steig auf. Er stakt das Floß nach rechts, aus dem Markt hinaus.", { goto: "sumpf_fahrt", at: AF.juno, face: "se" }];
-const RIDE_FIRST = [...RIDE_OUT,
-  P("Stell dich in die Mitte."), { wait: 1500 },
-  { dialog: "pike_fahrt" },
+// The way out goes through a tunnel (the user's choice, 2026-11-16): Juno steps onto the raft, Pike pushes off, and raft, Pike and Juno
+// glide right together (the raft a prop of the market, both at the market's walking pace: drain_market.flossOut px in its time) in under
+// the Ring's last pillar, into the dark; the ride begins in that dark, the portal slides off and for the first time there is sky
+const OUT = AM.flossOut, OUT_MS = Math.round(OUT / 40 * 1000);
+const STEP_ON = ["Ich steig auf.", { walk: "juno", to: AM.flossJuno, free: true, face: "right" }];
+const CAST_OFF = [
+  { move: "floss", by: [OUT, 0], ms: OUT_MS, ease: "linear", wait: false },
+  { walk: "pike", to: [AM.pike[0] + OUT, AM.pike[1]], free: true, wait: false },
+  { walk: "juno", to: [AM.flossJuno[0] + OUT, AM.flossJuno[1]], free: true },
+  { fade: "out", ms: 400 },
+  { set: "im_tunnel" },                                // no rain in there (a view, game/rooms/sumpf.js)
+  { goto: "sumpf_fahrt", at: AF.juno, face: "se", transition: false },
+  { fade: "in", ms: 900 },
+  P("Kopf runter."),
+  { wait: 1800 },                                      // the portal slides off meanwhile (sumpf_fahrt's enter, game/rooms/sumpf.js)
+  { unset: "im_tunnel" },
+];
+const RIDE_FIRST = [...STEP_ON, P("Stell dich in die Mitte."), ...CAST_OFF,
   "Über uns hören die Ringe auf. Da ist Himmel. Und Bäume, mitten in der Stadt.",
+  { dialog: "pike_fahrt" },
   P("Da vorn hängen seine Lichter."),
   { goto: "sumpf", at: AH.juno, face: "se" },
 ];
-const RIDE_AGAIN = [...RIDE_OUT, P("Mitte."), "Ich weiß.", { wait: 3000 }, { goto: "sumpf", at: AH.juno, face: "se" }];
+const RIDE_AGAIN = [...STEP_ON, P("Mitte."), "Ich weiß.", ...CAST_OFF, { wait: 1500 }, { goto: "sumpf", at: AH.juno, face: "se" }];
 Cutaway.dialog("pike_fahrt", {
   main: { enter: [P("Was willst du von ihm?")], choices: [
     { text: "„Ich hab gesehen, was mit ihr passiert ist.“", goto: "sonst", then: [P("Gesehen. Wo?"), "Auf einer Kamera. Ich schau viel auf Kameras.",

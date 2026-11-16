@@ -278,7 +278,7 @@ scene("cam31_bg", { w: W, h: H, bg: "0" }, paintBg, signText, lampBox)
 scene("review_cam31", { w: W, h: H, bg: "0" }, paintBg, signText, lampBox, (c) => {
   put(c, "ashe_feed_walk", "midway", 300)
   put(c, "ines_feed_front", "edge")
-  put(c, "lantern_feed", "lantern")
+  put(c, "lantern_feed_l", "lantern")
 })
 // 23:04: she lies where she stood, he stands over her and looks up into the camera; Lantern is gone
 scene("review_cam31_ende", { w: W, h: H, bg: "0" }, paintBg, signText, lampBox, (c) => {
@@ -289,8 +289,8 @@ scene("review_cam31_ende", { w: W, h: H, bg: "0" }, paintBg, signText, lampBox, 
 // at the tunnel's mouth
 scene("review_cam31_wege", { w: W, h: H, bg: "0" }, paintBg, signText, lampBox, (c) => {
   put(c, "ashe_feed_dim", "shadow")
-  c.stamp("lantern_feed", 234, 121, { t: 0 })
-  put(c, "lantern_feed", "tunnel")
+  c.stamp("lantern_feed_drive_r", 234, 121, { t: 0 })
+  put(c, "lantern_feed_drive_r", "tunnel")
 })
 // everything over a dimmed picture: the display's covers (red), the spots (yellow), the ways (cyan), everyone at each spot
 scene("review_cam31_layout", { w: W, h: H, bg: "0" }, (c) => {
@@ -302,8 +302,8 @@ scene("review_cam31_layout", { w: W, h: H, bg: "0" }, (c) => {
   put(c, "ines_feed_front", "stairs")
   put(c, "ashe_feed", "asheMeet")
   put(c, "ines_feed_front", "edge")
-  put(c, "lantern_feed", "lantern")
-  put(c, "lantern_feed", "tunnel")
+  put(c, "lantern_feed_l", "lantern")
+  put(c, "lantern_feed_drive_r", "tunnel")
   for (const [x, y, w, h] of COVERS) { c.hline(x, y, w, "R"); c.hline(x, y + h - 1, w, "R"); c.vline(x, y, h, "R"); c.vline(x + w - 1, y, h, "R") }
   for (const [name, [x, y]] of Object.entries(SPOTS)) { c.px(x, y, "Y"); c.px(x - 1, y, "Y"); c.px(x + 1, y, "Y"); c.px(x, y - 1, "Y"); c.px(x, y + 1, "Y"); c.text(x + 3, y + 1, name.toUpperCase(), "Y") }
 })

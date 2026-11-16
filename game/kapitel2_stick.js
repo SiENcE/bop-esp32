@@ -8,19 +8,25 @@
 // even while Juno sleeps; on Monday, when he has looked already (there is no night after it, and the clock stands at 00:45 in his
 // window), he takes it at once. Juno doesn't know his name until Sunday's news (§3.4, game/kapitel2_faelschung.js): to her he is the one
 // from the metro until then.
-// [PLATZHALTER] Lantern in CAM 23 is his figure from CAM 31 for now, not yet at the laundromat's scale (§10)
+// The Quiet at the dryer (quiet_dryer, game/kapitel2.js): once the whole clip has told Nagi·wa where the key lay, a man in white waits in
+// the laundromat from the next evening; nothing can be put back then, and Lantern, who sees him from the water, no longer comes, so the
+// stick only reaches him by hand (§3.1). (The runs with the way to Lantern shut, off_lantern, keep the dryer open: the way it leaves is
+// shut there, and the run of that way alone shuts the dryer anyway, off_dryer.)
+// [PLATZHALTER] Lantern in CAM 23 is his figure from CAM 31 for now, not yet at the laundromat's scale (§10); the man in white is the
+// Quiet's figure from CAM 25, and in the laundromat itself (street mode) he is only told of, not yet drawn
 "use strict";
 
 (function () {
 const A23 = Nagiwa.at.cam23;
+const DRYER_FREE = { or: ["!quiet_dryer", "off_lantern"] };          // nobody in white sits at the dryer
 
 // ---- his look, each night from half past twelve while the stick isn't his, until he has looked (the scene walks him in and out: a
 // routine's path pauses while a script runs, and once the scene is over he doesn't stand in the door again). Written out night by night,
 // so the Schedule tab edits each
 Cutaway.time.routines.get("lantern").push(
   { day: 5, from: "00:30", to: "00:45", room: "cam23", at: A23.door, face: "se", if: [{ or: ["stick_ines", "stick_dryer"] }, "!moment:lantern_sat"] },
-  { day: 6, from: "00:30", to: "00:45", room: "cam23", at: A23.door, face: "se", if: [{ or: ["stick_ines", "stick_dryer"] }, "!moment:lantern_sun"] },
-  { day: 7, from: "00:30", to: "00:45", room: "cam23", at: A23.door, face: "se", if: [{ or: ["stick_ines", "stick_dryer"] }, "!moment:lantern_mon"] },
+  { day: 6, from: "00:30", to: "00:45", room: "cam23", at: A23.door, face: "se", if: [{ or: ["stick_ines", "stick_dryer"] }, "!moment:lantern_sun", DRYER_FREE] },
+  { day: 7, from: "00:30", to: "00:45", room: "cam23", at: A23.door, face: "se", if: [{ or: ["stick_ines", "stick_dryer"] }, "!moment:lantern_mon", DRYER_FREE] },
 );
 // seen in CAM 23, or it happens unseen as the window ends; the first time Juno sees him come, after that he comes back
 Cutaway.moment("lantern_sat", { room: "cam23", day: 5, from: "00:30", to: "00:45", if: { or: ["stick_ines", "stick_dryer"] }, play: [
@@ -33,7 +39,7 @@ Cutaway.moment("lantern_sat", { room: "cam23", day: 5, from: "00:30", to: "00:45
   { walk: "lantern", to: A23.door, free: true },
   { place: "lantern", room: null },
 ], unseen: [{ if: "stick_dryer", then: [{ unset: "stick_dryer" }] }] });
-Cutaway.moment("lantern_sun", { room: "cam23", day: 6, from: "00:30", to: "00:45", if: { or: ["stick_ines", "stick_dryer"] }, play: [
+Cutaway.moment("lantern_sun", { room: "cam23", day: 6, from: "00:30", to: "00:45", if: [{ or: ["stick_ines", "stick_dryer"] }, DRYER_FREE], play: [
   "Da ist er wieder, pünktlich um halb eins.",
   { walk: "lantern", to: A23.dryer6, free: true },
   { if: "stick_dryer", then: ["Er greift rein und hat ihn.", { unset: "stick_dryer" }, "Jetzt hat er, was sie ihm geben wollte."],
@@ -41,7 +47,7 @@ Cutaway.moment("lantern_sun", { room: "cam23", day: 6, from: "00:30", to: "00:45
   { walk: "lantern", to: A23.door, free: true },
   { place: "lantern", room: null },
 ], unseen: [{ if: "stick_dryer", then: [{ unset: "stick_dryer" }] }] });
-Cutaway.moment("lantern_mon", { room: "cam23", day: 7, from: "00:30", to: "00:45", if: { or: ["stick_ines", "stick_dryer"] }, play: [
+Cutaway.moment("lantern_mon", { room: "cam23", day: 7, from: "00:30", to: "00:45", if: [{ or: ["stick_ines", "stick_dryer"] }, DRYER_FREE], play: [
   "Er kommt wieder. Er gibt nicht auf.",
   { walk: "lantern", to: A23.dryer6, free: true },
   { if: "stick_dryer", then: ["Er greift rein und hat ihn.", { unset: "stick_dryer" }, "Jetzt hat er, was sie ihm geben wollte."],
@@ -61,16 +67,25 @@ const PUT_BACK = [
     else: [{ set: "stick_dryer" }, "So. Keiner weiß, dass ich hier war."] },
 ];
 dryer6.use = [{ if: "day>4", then: [
-  { if: "stick_ines", then: [{ if: "day=5", then: ["Hier lag er. Sie hat ihn für den aus der Metro hiergelassen."], else: ["Hier lag er. Sie hat ihn für Lantern hiergelassen."] },
+  { if: "stick_ines", then: [{ if: DRYER_FREE, then: [
+    { if: "day=5", then: ["Hier lag er. Sie hat ihn für den aus der Metro hiergelassen."], else: ["Hier lag er. Sie hat ihn für Lantern hiergelassen."] },
     { dialog: "stick_zurueck" }],
+    else: ["Da drüben sitzt einer in Weiß und wartet auf keine Wäsche.", "Hier leg ich nichts mehr rein."] }],
     else: [{ if: "stick_dryer", then: ["Er liegt drin. Wer ihn sucht, findet ihn jetzt."], else: ["Er ist kalt und leer. Er hat ihn."] }] },
 ], else: dryer6.use }];
 // (off_dryer shuts putting it back for the solver's run of the way to Lantern, which checks that the stick always reaches him by hand)
-dryer6.with = { ...(dryer6.with ?? {}), stick: [{ if: ["day>4", "stick_ines", "!off_dryer"], then: PUT_BACK, else: ["Der gehört nicht in den Trockner. Noch nicht."] }] };
+dryer6.with = { ...(dryer6.with ?? {}), stick: [{ if: ["day>4", "stick_ines", "!off_dryer", DRYER_FREE], then: PUT_BACK,
+  else: [{ if: { not: DRYER_FREE }, then: ["Nicht, solange der in Weiß da sitzt."], else: ["Der gehört nicht in den Trockner. Noch nicht."] }] }] };
 Cutaway.dialog("stick_zurueck", { main: { choices: [
-  { text: "Zurücklegen.", silent: true, if: "!off_dryer", goto: "end", then: PUT_BACK },
+  { text: "Zurücklegen.", silent: true, if: ["!off_dryer", DRYER_FREE], goto: "end", then: PUT_BACK },
   { text: "Behalten.", silent: true, goto: "end", then: ["Noch nicht."] },
 ] } });
+// ---- the man in white in CAM 23, every evening once the Quiet knows of the dryer: he stands in the middle and looks at dryer 6
+Cutaway.actor("quiet_salon", { name: "In Weiß", color: "#f0f0f0", costume: { idle: "ashe_feed", walk: "ashe_feed_walk", talk: "ashe_feed" },
+  look: ["Ein weißer Regenmantel im Waschsalon, und keine Wäsche.", "Er sitzt da, wo man die Sechs sieht. Die wissen es."],
+  talk: ["Die Markierung rutscht ab. Da ist nichts, woran sie hängen bleibt."] });
+Cutaway.routine("quiet_salon", [{ day: [6, 7], from: "18:00", to: "01:00", if: "quiet_dryer", room: "cam23", at: A23.quiet, face: "ne" }]);
+
 // what she knows of it now: the whisper in CAM 31 told her
 const stick = Cutaway.item.get("stick");
 stick.look = [{ if: "day=5", then: ["Das ist ihr Schlüssel zu der Wallet. Der aus der Metro braucht ihn, sonst kann er nichts damit anfangen."],

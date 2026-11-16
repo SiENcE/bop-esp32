@@ -218,7 +218,7 @@ const sounds = {
   haggle: F.STALLS.filter((s) => s.open).map(front),
   cleaver: ["NOODLE", "DUMPLING", "EEL"].map((n) => front(stall(n))),
   // the other tunes: PACHINKO's jingle from its sign on the roof, the busker, the rafts' radios
-  pachinko: middle("sign_pachinko"), busker, noodleRaft: middle("raft_noodle"), dataRaft: middle("raft_screens"),
+  pachinko: middle("sign_pachinko"), busker, noodleRaft: middle("raft_noodle"), dataRaft: middle("floss"),
 };
 
 // ---- every place someone stands or walks to must be walkable

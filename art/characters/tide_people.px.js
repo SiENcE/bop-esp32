@@ -13,6 +13,7 @@
 //   streife_idle                         Revier 9's patrol car from the front (way C of art/test/streife_blocks.px.js, 2026-11-09): the
 //                                        flood car, high on big wheels, a snorkel beside the windscreen, a wading gauge painted on both
 //                                        posts of the push bar, the mud of the last flood across its body; its two red lights glowing in turn
+//   streife_nah                          the same car near, where Morrow stops in Jade Row in Chapter 2 (20.4 px a metre)
 ;(() => {
 
 pal({
@@ -123,10 +124,54 @@ const car = (c, o = {}) => {
   for (const [px, gx] of [[x - 13, x - 14], [x + 13, x + 14]]) { c.vline(px, 12, 5, "6"); for (let i = 0; i < 5; i++) c.px(gx, 12 + i, i % 2 ? "6" : "y") }
 }
 
+// ================================================================ the patrol car near: in Jade Row itself (Chapter 2)
+// The same car at the size it has where Morrow stops in the lane (approved as a block, 2026-11-16: art/test/streife_nah_blocks.px.js),
+// 20.4 px a metre: 2.0 m wide, the body 0.55 to 1.25 m up, the cabin to 1.95, the snorkel to 2.2. Lit from the upper left like the
+// small one; the mud of the last flood across its body, dribbling; its two red lights glowing in turn.
+const NW = 50, NH = 48, NK = 20.4, NX = 25, NY = 47
+const nX = (m) => Math.round(NX + m * NK), nY = (m) => Math.round(NY - m * NK)
+const nb = (c, x0, h0, x1, h1, k) => c.rect(nX(x0), nY(h1), Math.max(1, nX(x1) - nX(x0)), Math.max(1, nY(h0) - nY(h1)), k)
+const carNear = (c, o = {}) => {
+  const lit = o.lit ?? 0
+  // the tyres, big, their tread lit along the near edge; the dark under the raised body
+  for (const x of [-1.0, 0.62]) {
+    nb(c, x, 0, x + 0.38, 0.75, "k")
+    for (let y = nY(0.72); y < nY(0); y += 3) c.hline(nX(x) + 1, y, nX(x + 0.38) - nX(x) - 2, "2")
+    c.vline(nX(x), nY(0.75), nY(0) - nY(0.75), "2")
+  }
+  nb(c, -0.62, 0.4, 0.62, 0.55, "1")
+  // the body: shaded at its foot, lit on the left and along the bonnet's edge; the mud across it, dribbling down
+  nb(c, -1.0, 0.55, 1.0, 1.25, "5"); nb(c, -1.0, 0.55, 1.0, 0.66, "4")
+  nb(c, -1.0, 1.19, 1.0, 1.25, "7"); nb(c, -1.0, 1.19, -0.1, 1.25, "8")
+  c.vline(nX(-1.0), nY(1.19), nY(0.66) - nY(1.19), "6"); c.vline(nX(1.0) - 1, nY(1.19), nY(0.55) - nY(1.19), "4")
+  c.hline(nX(-1.0), nY(0.78), nX(1.0) - nX(-1.0), "u")
+  for (const [dx, len] of [[-0.9, 2], [-0.7, 4], [-0.45, 1], [0.3, 3], [0.55, 2], [0.85, 4]]) c.vline(nX(dx), nY(0.78) + 1, len, "u")
+  // the grille between the headlights, the headlights in their rims, the plate under the grille
+  nb(c, -0.28, 0.82, 0.28, 1.1, "2"); for (let x = nX(-0.22); x < nX(0.28); x += 2) c.vline(x, nY(1.06), nY(0.86) - nY(1.06), "3")
+  for (const x of [-0.94, 0.6]) { nb(c, x, 0.92, x + 0.34, 1.12, "8"); nb(c, x + 0.07, 0.97, x + 0.27, 1.07, "W") }
+  nb(c, -0.18, 0.6, 0.18, 0.74, "7"); c.hline(nX(-0.1), nY(0.67), 2, "2"); c.hline(nX(0.02), nY(0.67), 3, "2")
+  // the cabin, the dark windscreen with a streak of light across it, two heads behind it, the mirrors
+  nb(c, -0.78, 1.25, 0.78, 1.95, "4"); nb(c, -0.68, 1.31, 0.68, 1.87, "1")
+  c.hline(nX(-0.78), nY(1.95), nX(0.78) - nX(-0.78), "6"); c.hline(nX(-0.78), nY(1.95), 10, "7")
+  for (const x of [-0.42, 0.18]) { nb(c, x, 1.36, x + 0.24, 1.66, "2"); nb(c, x + 0.04, 1.62, x + 0.2, 1.68, "3") }
+  c.line(nX(0.3), nY(1.36), nX(0.55), nY(1.82), "3"); c.line(nX(-0.62), nY(1.42), nX(-0.5), nY(1.66), "3")
+  for (const x of [-0.94, 0.78]) nb(c, x, 1.48, x + 0.16, 1.62, "5")
+  // the roof's rail, the two red lights at its ends, glowing in turn
+  c.hline(nX(-0.7), nY(1.98), nX(0.7) - nX(-0.7), "6")
+  for (const [x, on] of [[-0.62, lit === 0], [0.34, lit === 1]]) { nb(c, x, 1.98, x + 0.28, 2.1, on ? "x" : "d"); c.hline(nX(x) + 1, nY(2.1), 3, on ? "X" : "x") }
+  // the snorkel up beside the windscreen, its clamps, its cap
+  nb(c, 0.82, 1.05, 0.88, 2.18, "7"); nb(c, 0.88, 1.05, 0.93, 2.18, "6"); nb(c, 0.76, 2.14, 0.98, 2.24, "8")
+  for (const h of [1.4, 1.75]) nb(c, 0.8, h, 0.95, h + 0.05, "8")
+  // the push bar and its posts, the wading gauge painted on both posts
+  nb(c, -1.1, 0.5, 1.1, 0.58, "7"); nb(c, -1.1, 0.54, -0.2, 0.58, "8")
+  for (const x of [-1.1, 1.02]) { nb(c, x, 0.58, x + 0.08, 0.98, "6"); for (let i = 0; i < 4; i++) nb(c, x, 0.62 + i * 0.09, x + 0.08, 0.66 + i * 0.09, "y") }
+}
+
 const opts = (w, h, more) => ({ w, h, outline: "k", pivot: "bottom", ...more })
 anim("morrow_idle_se", opts(MW, MH, { frames: 4, ms: [1600, 120, 1400, 900] }), (c) => morrow(c, { blink: c.frame === 1 }))
 anim("morrow_talk_se", opts(MW, MH, { frames: 4, ms: [180, 180, 180, 280] }), (c) => morrow(c, { talk: c.frame % 2 === 0, nod: c.frame === 1 ? 1 : 0 }))
 anim("tideboy_idle_se", opts(BW, BH, { frames: 4, ms: [400, 300, 400, 900] }), (c) => boy(c, { tap: c.frame === 1 ? 1 : 0, glow: c.frame === 3 }))
 anim("tideboy_talk_se", opts(BW, BH, { frames: 4, ms: [180, 180, 180, 280] }), (c) => boy(c, { talk: c.frame % 2 === 0, glow: c.frame === 0 }))
 anim("streife_idle", opts(CW, CH, { frames: 2, ms: [700, 700] }), (c) => car(c, { lit: c.frame }))
+anim("streife_nah", opts(NW, NH, { frames: 2, ms: [700, 700] }), (c) => carNear(c, { lit: c.frame }))
 })()

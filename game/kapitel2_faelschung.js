@@ -26,10 +26,10 @@ const OUT = [A31.asheMeet[0] + 3, A31.asheMeet[1] + 11]; // where the other one 
 /** under each mark, each picture (0 the forgery, 1 hers): [sprite, place, dark] */
 /** @type {[string, number[], boolean?][][][]} */
 const SHOTS = [
-  [[["ines_feed_give", A31.edge], ["lantern_feed", A31.lantern]], [["ines_feed_give", A31.edge], ["lantern_feed", A31.lantern]]],
-  [[["ines_feed_front", A31.edge], ["lantern_feed", A31.lantern]], [["ines_feed_front", A31.edge], ["lantern_feed", OFF]]],
-  [[["ines_feed_front", A31.edge], ["lantern_feed", A31.lantern]], [["ines_feed_back", A31.edge], ["ashe_feed_dim", OUT]]],
-  [[["ines_feed_back", A31.meet], ["lantern_feed", A31.asheMeet, true]], [["ines_feed_back", A31.meet], ["ashe_feed", A31.asheMeet]]],
+  [[["ines_feed_give", A31.edge], ["lantern_feed_l", A31.lantern]], [["ines_feed_give", A31.edge], ["lantern_feed_l", A31.lantern]]],
+  [[["ines_feed_front", A31.edge], ["lantern_feed_l", A31.lantern]], [["ines_feed_front", A31.edge], ["lantern_feed_drive_r", OFF]]],
+  [[["ines_feed_front", A31.edge], ["lantern_feed_l", A31.lantern]], [["ines_feed_back", A31.edge], ["ashe_feed_dim", OUT]]],
+  [[["ines_feed_back", A31.meet], ["lantern_feed_r", A31.asheMeet, true]], [["ines_feed_back", A31.meet], ["ashe_feed", A31.asheMeet]]],
 ];
 /** the time stamp each picture shows under each mark (the forgery's jumps at the cut, and runs a minute and twelve seconds ahead after it) */
 const STAMPS = [["23:01:30", "23:01:30"], ["23:01:58", "23:01:58"], ["23:03:42", "23:02:30"], ["23:04:15", "23:03:03"]];
@@ -87,9 +87,18 @@ function picture(ctx, side, mark, x, y, w, h, bare = false) {
 }
 
 // ---- both clips in the clip editor (hers opens there now too: until Chapter 2 nothing could be done with it)
+// Her whisper (where the key lies) can be cut out of it before she gives it away (kapitel2-design §3.1, decision 2): a cut that takes a
+// moment out (drop) and makes the clip without it, clip_ines_cut; once decision 2 has fallen there is nothing left to cut for
 Nagiwa.clips.clip_ines_death = { cam: "cam31", hour: 23, from: 0.5, to: 4, check: "faelschung",
   picture: (ctx, x, y, w, h) => picture(ctx, 1, 0, x, y, w, h, true),
-  moments: [[0.5, 1.97, "ÜBERGABE"], [1.97, 2.4, "WEG"], [2.4, 3.05, "SCHATTEN"], [3.05, 4, "STURZ"]],
+  moments: [[0.5, 1.6, "ÜBERGABE"], [1.6, 1.97, "FLÜSTERN"], [1.97, 2.4, "WEG"], [2.4, 3.05, "SCHATTEN"], [3.05, 4, "STURZ"]],
+  people: [["ines", 0.5, 3.1], ["lantern", 0.5, 2.1], ["ashe", 2.3, 4]],
+  cut: { moment: 1, drop: true, gives: "clip_ines_cut", if: ["!e2", "!off_main", "!off_lantern"], then: ["Ich schneid das Flüstern raus. Dann weiß keiner von der Sechs.",
+    { evi: "neugierig" }, { say: "evi", text: "Aber du weißt es noch. Und ich auch." }] } };
+// (its CACHE entry: game/kapitel2.js, which reads its name first)
+Nagiwa.clips.clip_ines_cut = { cam: "cam31", hour: 23, from: 0.5, to: 4,
+  picture: (ctx, x, y, w, h) => picture(ctx, 1, 0, x, y, w, h, true),
+  moments: [[0.5, 1.6, "ÜBERGABE"], [1.97, 2.4, "WEG"], [2.4, 3.05, "SCHATTEN"], [3.05, 4, "STURZ"]],
   people: [["ines", 0.5, 3.1], ["lantern", 0.5, 2.1], ["ashe", 2.3, 4]] };
 Nagiwa.clips.clip_forgery = { cam: "cam31", hour: 23, from: 0.5, to: 4, check: "faelschung",
   picture: (ctx, x, y, w, h) => picture(ctx, 0, 0, x, y, w, h, true),

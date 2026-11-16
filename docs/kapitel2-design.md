@@ -169,9 +169,15 @@ es nicht mehr, §7).
   Lantern selbst ist gemalt (2026-11-16, auf dem vom Nutzer freigegebenen Block `art/test/lantern_blocks.px.js`; `art/characters/lantern.px.js`,
   Prüfbilder `docs/characters/lantern_*`; auf Wunsch des Nutzers ein Viertel breiter als der Block, die Beine getrennt, das Gesicht lesbar): im Rollstuhl, zu Juno hin gedreht (nach Südwesten, gezeichnet, nie gespiegelt), atmend, die
   Lichter seiner Antennen nacheinander, die Schrift im Okular läuft, die Laterne am Hals flackert; im Spiel gibt ihm die Lampe an
-  seinem Platz ein blasses warmes Licht, damit der Poncho lila bleibt. **Platzhalter:** Pike ist auf dem Markt eine Figur aus der
-  Menge, die Endstufe hat das Bild des Abzweigers. Vom Markt fährt das Floß noch nicht sichtbar
-  ab (eine Zeile, dann der Wechsel): Dafür muss das gemalte Floß im Markt ein eigenes Teil werden.
+  seinem Platz ein blasses warmes Licht, damit der Poncho lila bleibt. Pike ist auf dem
+  Markt von oben gemalt (2026-11-16, auf dem freigegebenen Block `art/test/pike_top_blocks.px.js`; `art/characters/markt_people.px.js`):
+  er steht am hinteren Ende seines Floßes, still wie ein Reiher, und sein Hals zuckt ab und zu nach etwas, das sich bewegt; nur von
+  Samstag an, in Kapitel 1 liegt das Floß leer da. **Die Abfahrt durch den Tunnel** (vom Nutzer gewünscht 2026-11-16, die Blöcke
+  `art/test/tunnel_blocks.px.js`): Das Floß ist im Markt ein eigenes Teil (`drain_market_floss`). Juno steigt auf, Pike stakt, und Floß,
+  Pike und Juno gleiten zusammen nach rechts unter den letzten Pfeiler des Rings, der am rechten Rand des Marktes über dem Kanal liegt,
+  ins Dunkel. Die Fahrt beginnt in diesem Dunkel (`sumpf_fahrt_tunnel`, ohne Regen: die Ansicht `im_tunnel`), nur die Bildschirme des
+  Floßes spiegeln sich, Pike sagt „Kopf runter.“, dann gleitet das Portal nach links weg, und zum ersten Mal ist Himmel da.
+  **Platzhalter:** Die Endstufe hat das Bild des Abzweigers.
 - Die Hinweise des Kapitels sind seine eigenen (`Cutaway.hints(..., { act: "kapitel2" })`); die von Prolog und Kapitel 1 gelten nur
   noch in ihren Akten. Der Hinweis zur Fälschung gilt nur, während Juno sie im Editor ansieht, und erst nach den Hinweisen des Hauptfadens.
 - Geprüft wird wie in Kapitel 1 der Hauptweg mit geschlossenen Fäden (`off_<thread>`): `node tools/solve-act.mjs kapitel2 --full
@@ -354,9 +360,19 @@ gekauft hat (Sables Verrat).
 
 **Gebaut** (2026-11-16, auf Blöcken, die Preise Platzhalter): alle fünf Wege. Sable in ihrer Bude („Ich hab die Aufnahme aus der alten
 Metro.“, dann „Verkauft.“ oder „Noch nicht.“; die vier Preise als Werte von `ledger_sable_ines`); Morrow am Samstag und Sonntag um
-00:30 in der Jade Row selbst, ihr Streifenwagen hinter ihr, wo `cam07` ihn in Kapitel 1 sah (Morrows Dialog `morrow_k2`, sie siezt);
+00:30 in der Jade Row selbst, ihr Streifenwagen ein Stück hinter ihr in der Gasse, in seiner Größe dort gemalt (`streife_nah`, vom Nutzer
+freigegeben 2026-11-16) (Morrows Dialog `morrow_k2`, sie siezt);
 Lantern in seinem Gespräch (§2.1); Vesper im CHAT; Behalten fragt das Deck am Montag um 00:45. Hat Lantern den Clip, läuft er um 01:00
-mit (§8). Noch nicht gebaut: das Flüstern schneiden (`clip_ines_cut`), EVIs Frage davor und der Mann in Weiß am Trockner (`quiet_dryer`).
+mit (§8). Das Flüstern (§3.1) ist ein eigener Moment
+im Clip-Editor (FLÜSTERN, 22 Sekunden am Ende der Übergabe); SCHNEIDEN nimmt ihn heraus, solange `e2` offen ist, und legt `clip_ines_cut` in den
+CACHE („CAM 31, 23:03, GESCHNITTEN“). Will Juno Sable, Vesper oder Morrow den ganzen Clip geben, fragt EVI vorher („Im Clip ist das Flüstern. Willst
+du, dass das jemand hört?“: „Ja. Ganz.“, „Nein. Ich schneid's raus.“, „Doch nicht.“); wer schon geschnitten hat, gibt den geschnittenen. Ging der
+ganze Clip hinaus, setzt die nächste Nacht `quiet_dryer`: Der Mann in Weiß steht von 18:00 bis 01:00 in `cam23` vor der Sechs, Zurücklegen geht nicht
+mehr, und Lantern kommt nicht mehr an den Trockner; EVIs Hinweis schickt Juno dann zu ihm. (Die Läufe mit `off_lantern` halten den Trockner offen,
+weil dort der Weg zu ihm zu ist, und lassen das Schneiden weg, das dort nichts ändert und jeden Zustand verdoppelte; der Lauf dieses Wegs
+allein schließt den Trockner mit `off_dryer` ohnehin. Das Schneiden prüfen die Klicks: `tools/paths/kapitel2_main.json` schneidet bei
+Vesper, die anderen Pfade geben den ganzen Clip.) **Platzhalter:** Der Mann in Weiß ist die Figur
+aus `cam25`, im Waschsalon selbst (Straßenmodus) wird er nur erzählt.
 
 ### 3.7 Montag, 00:45
 
@@ -572,11 +588,11 @@ wechseln würde, eine eigene Ansicht (Kapitel 1, §10). Lull ist immer die ovale
 | **die Pflegerin an der Aufnahme** | neu | `klinik`, `cam21` (Feed) | Iso SE hinter dem Glas (sitzend), Feed NE und NW auf dem Weg zur Nachtschicht | weißer Kittel wie Ines, aber kurz; kein Lull. Name offen (§14) |
 | **die Quiet** (zwei im Flur, der Schatten, der Mann am Trockner) | neu | `cam25`, `cam23` (Feed), `kowalski` (Iso) | Feed SE, SW, NE, NW mit Kisten; Iso SE, NE, NW stehend | weiße Regenmäntel wie Ashe, die Masken überstrahlen im Feed; im Straßenmodus eine glatte weiße Maske. Ist die Maske symmetrisch, genügt das Spiegeln; trägt einer etwas einseitig (ein Funkgerät), wird NW gezeichnet |
 | **Lantern** (persönlich) | neu in Iso (der Wohnwagen ist ein Iso-Raum, entschieden 2026-11-16) | `lantern_versteck` | Iso sitzend im Rollstuhl an seinem Sender, eine Richtung, mit kleinen Bewegungen: nach Südwesten zu Juno hin gedreht (vom Nutzer freigegeben 2026-11-16), gemalt in `art/characters/lantern.px.js` | das Gesicht aus `docs/portraits/lantern_x4.png` (grüner Iro, das Okular über **einem** Auge, Headset): Er sitzt immer gleich, so braucht er keine Gegenrichtung; das Okular sitzt auf der Seite, auf der es im Porträt sitzt |
-| Lantern im Feed | wieder | `cam23` | wie in `cam31`, im Maßstab des Waschsalons | die Silhouette wie das Piktogramm, gespiegelt beim Wegfahren, wie entschieden (story §10c) |
+| Lantern im Feed | wieder | `cam23` | wie in `cam31`, im Maßstab des Waschsalons | der gemalte Lantern von der Seite, beide Richtungen gezeichnet, die Räder drehen sich (story §10c, 2026-11-16) |
 | **Teo, sitzend von hinten** | neu (Pose) | `dach_sitzen` | eine | neben Juno, die Kapuze unten, der Gehörschutz; von hinten sieht man das Pflaster hinter seinem Ohr, am selben Ohr wie in seinen anderen Ansichten (nicht aus einer gespiegelten Ansicht nehmen) |
 | Teo mit dem Haken | neu (Pose) | `flat`, `sims` | SE, NE, NW wie seine Figur | der lange Haken aus der Pumpenhalle in einer Hand; NW gezeichnet wie bisher |
 | **Vargas Mann** | neu | `kowalski` | Iso SE, NE, NW stehend | nur nach `k1a=lied`; Varga selbst ist nur im Feed gemalt. Name offen |
-| **Pike**, Lanterns Gehilfe | neu | `drain_market` (von oben), die Fahrt (von der Seite) | von oben stehend und stakend; von der Seite auf dem Floß, stakend (die Stange gehoben, gestoßen, geschoben, wieder gehoben) | umgebaut mit dem Reiher, nach dem Graureiher (vom Nutzer gewünscht 2026-11-16): lange dünne Beine, ein Mantel wie gefaltete graue Flügel mit dem Schwarz an der Schulter, ein langer weißer Hals im S mit dem schwarzen Strich vorn, ein kleiner weißer Kopf, der schwarze Strich vom Auge in den Schopf, der nach hinten hängt, ein langer orangegelber Schnabel; aufrecht und still. gemalt in `art/rooms/sumpf.px.js` (die Fahrt und die Ankunft), etwas kleiner als zuerst, damit er neben Juno (50 px) nur um Kopf und Hals größer ist; einseitig trägt er nichts, so genügt das Spiegeln. Seine Farbe ist offen |
+| **Pike**, Lanterns Gehilfe | neu | `drain_market` (von oben), die Fahrt (von der Seite) | von oben stehend und stakend; von der Seite auf dem Floß, stakend (die Stange gehoben, gestoßen, geschoben, wieder gehoben) | umgebaut mit dem Reiher, nach dem Graureiher (vom Nutzer gewünscht 2026-11-16): lange dünne Beine, ein Mantel wie gefaltete graue Flügel mit dem Schwarz an der Schulter, ein langer weißer Hals im S mit dem schwarzen Strich vorn, ein kleiner weißer Kopf, der schwarze Strich vom Auge in den Schopf, der nach hinten hängt, ein langer orangegelber Schnabel; aufrecht und still. gemalt in `art/rooms/sumpf.px.js` (die Fahrt und die Ankunft), etwas kleiner als zuerst, damit er neben Juno (50 px) nur um Kopf und Hals größer ist; einseitig trägt er nichts, so genügt das Spiegeln. Seine Farbe ist das Orangegelb seines Schnabels, gedämpft neben Junos Gelb, `#e0a048` (vom Nutzer entschieden 2026-11-16). Von oben auf dem Markt als Block freigegeben (2026-11-16, `art/test/pike_top_blocks.px.js`): er steht am hinteren Ende seines Floßes |
 | **Kessler mit Gips** | neu (von oben) | `drain_market` | von oben, sitzend | der Gips am Arm ist einseitig: von oben kein Problem, er sitzt immer gleich |
 | **Bao mit Verband** | Variante | `kowalski` | wie Bao | nur nach `k1b=sold`, Montag (Samstag und Sonntag fehlt sein Wagen) |
 | **Frau Haldane, wach an der Tür** | Variante | `kessel_14` | wie ihre Figur (SE, NE, NW) | wach, ohne Lockenwickler? Vorschlag: die Lockenwickler bleiben, die Augen offen, das Pflaster dunkel |

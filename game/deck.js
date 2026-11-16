@@ -73,7 +73,7 @@
    * lays the clip beside another: `check` names the check it opens (Nagiwa.checks, game/pruefen.js). A clip without a picture of its own
    * (`thumb`) may draw one (`picture`).
    * @type {Record<string, {cam?: string, where?: string, hour?: number, from: number, to: number, thumb?: string, moments: [number, number, string][],
-   *   people: [string, number, number][], cut?: {moment: number, gives: string, if?: any, then?: any[]}, anon?: {if?: any, then?: any[]}, check?: string,
+   *   people: [string, number, number][], cut?: {moment: number, drop?: boolean, gives: string, if?: any, then?: any[]}, anon?: {if?: any, then?: any[]}, check?: string,
    *   picture?: (ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number) => void}>} */
   Nagiwa.clips = {};
   /** what other files add to the deck's hotspots once everything is loaded (PRÜFEN, game/pruefen.js) @type {((hs: Record<string, any>) => void)[]} */
@@ -131,7 +131,7 @@
       hs[`cache_${id}`] = { name: c.name, rect: [X + 4, D.cache.y - 3 + i * D.cache.row, WW - 8, D.cache.row - 1], if: [app("cache"), `cache_${id}`], z: 4,
         look: c.about, use: Nagiwa.clips[id] ? [{ set: "deck_app", value: `clip_${id}` }, { sfx: "type" }] : c.about };
     });
-    // the clip editor: cutting keeps one moment and makes a new clip of it
+    // the clip editor: cutting keeps one moment and makes a new clip of it (or, with `drop`, takes that moment out)
     for (const [id, clip] of Object.entries(Nagiwa.clips)) {
       if (!clip.cut) continue;
       hs[`clip_cut_${id}`] = { name: "Schneiden", rect: [X + 8, D.clip.tools, 44, 10], z: 5, if: [`deck_app=clip_${id}`, `!cache_${clip.cut.gives}`, ...(clip.cut.if ? [clip.cut.if] : [])],
@@ -682,10 +682,10 @@
     rect(ctx, C.steel4, lx, ly + 6, lw, 1);
     for (let m = Math.ceil(clip.from); m <= clip.to; m++) { rect(ctx, C.steel5, at(m), ly + 4, 1, 3); small(ctx, mm(m), at(m), ly - 1, C.steel5, m === Math.ceil(clip.from) ? "left" : m === Math.floor(clip.to) ? "right" : "center"); }
     clip.moments.forEach(([a, b, label], i) => {
-      const kept = clip.cut?.moment === i;
-      rect(ctx, kept ? C.cyanDark : C.steel3, at(a) + 1, ly + 9, Math.max(1, at(b) - at(a) - 1), 9);
+      const kept = clip.cut?.moment === i, gone = kept && clip.cut?.drop && cut;      // a moment taken out stays as a dark gap
+      rect(ctx, gone ? C.steel1 : kept ? C.cyanDark : C.steel3, at(a) + 1, ly + 9, Math.max(1, at(b) - at(a) - 1), 9);
       // a moment too short for its name keeps it for the caption under the cut
-      if (hud().measure(t(label).toUpperCase()) + 5 <= at(b) - at(a)) small(ctx, t(label), at(a) + 3, ly + 11, kept ? C.cyanPale : C.steel6);
+      if (!gone && hud().measure(t(label).toUpperCase()) + 5 <= at(b) - at(a)) small(ctx, t(label), at(a) + 3, ly + 11, kept ? C.cyanPale : C.steel6);
     });
     clip.people.forEach(([who, a, b], i) => {
       const y = ly + 21 + i * 8;
