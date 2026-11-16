@@ -6,7 +6,7 @@ include("../lib/iso.js", { palette: true })
 include("../lib/isomap.js")
 include("../rooms/lantern_versteck.map.js")
 include("../lib/isokit.js")
-include("../kit/lantern_versteck.kit.px.js")
+include("../kit/lantern_versteck.kit.px.js", { palette: true })
 include("../kit/flat.kit.px.js", { palette: true })
 
 const LANTERN_VERSTECK = ISOKIT.bake(ISO_MAPS.lantern_versteck, { id: "lantern_versteck", frames: 12, fps: 10 })

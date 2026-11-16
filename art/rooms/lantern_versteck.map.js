@@ -1,8 +1,8 @@
 // lantern_versteck: Lantern's caravan from the inside, his home and his sender (docs/kapitel2-design.md §3.5 L5, §9.2; the user's layout,
 // 2026-11-16), as a map (art/lib/isomap.js has the format). Every length in meters: 5 m from the cab to the back (10 tiles), 2.5 m across
-// (5 tiles). BLOCKS until its look is approved: pieces of Juno's flat (art/kit/flat.kit.px.js) and its own (the kitchen, the rack, the window, the
-// nineties' junk; the dirt and the litter on its floor and walls: art/kit/lantern_versteck.kit.px.js).
-//   wall 1, the back (v)           the bed against it, over it a Lull poster with darts in it
+// (5 tiles). Painted on the approved blocks (the user's layout, 2026-11-16): its own pieces (art/kit/lantern_versteck.kit.px.js), the LED strip
+// from Juno's flat (art/kit/flat.kit.px.js).
+//   wall 1, the back (v)           the bed against it, over it his neon poster against Lull
 //   wall 0, the long side (u)      from the back: the kitchen with its window out, the fridge; then his monitors and his deck, the rack of senders
 //   the front (u = 5, a stub)      the door to the cab, only hinted at (a zone): shut, nobody goes there
 //   the near side (v = 2.5, stub)  the sliding door out to the pontoon in the middle, hinted at (a zone: a gap in a cut wall)
@@ -30,10 +30,10 @@ ISO_MAPS.lantern_versteck = {
     { id: "leds", wall: 0, from: 2.9, to: 4.3, h: [1.65, 1.75], kit: "led_strip" },
   ],
   props: [
-    { id: "bett", kit: "bed_pallet", at: [0.05, 0.3], foot: [0.95, 1.9], h: 0.45 },
+    { id: "bett", kit: "lv_bed", at: [0.05, 0.3], foot: [0.95, 1.9], h: 0.45 },
     { id: "kueche", kit: "lv_kitchen", at: [1.2, 0], foot: [1.0, 0.55], h: 0.9 },
     { id: "fridge", kit: "lv_fridge", at: [2.25, 0], foot: [0.5, 0.5], h: 1.4 },
-    { id: "sender", kit: "deck_rig", at: [2.9, 0], foot: [1.4, 0.6], h: 1.5 },
+    { id: "sender", kit: "lv_desk", at: [2.9, 0], foot: [1.4, 0.6], h: 1.5 },
     { id: "rack", kit: "lv_rack", at: [4.4, 0], foot: [0.5, 0.45], h: 1.7 },
     // the nineties' junk: magazines stacked by the bed, a monitor on a crate of VHS tapes at the front
     { id: "zeitschriften", kit: "lv_magazines", at: [1.08, 1.85], foot: [0.3, 0.24], h: 0.22 },
@@ -51,7 +51,7 @@ ISO_MAPS.lantern_versteck = {
   },
   lights: [
     { id: "screens", at: [3.6, 0.3, 1.2], r: 80, power: 0.9, color: "#7cff9a", flicker: 0.08, bake: { reach: 3.0, power: 1.5, floor: 1.4 } },
-    { id: "lantern", at: [3.6, 0.95, 1.3], r: 40, power: 0.6, color: "#ffc860", flicker: 0.15, bake: { reach: 1.2, power: 1.2 } },
+    { id: "lantern", at: [3.6, 0.95, 1.3], r: 40, power: 0.6, color: "#ffc860", flicker: 0.15, bake: { reach: 1.2, power: 1.2, at: [4.18, 0.45, 0.95] } },   // in the bake: his storm lantern on the desk
     { id: "kitchen", at: [1.7, 0.3, 1.7], r: 50, power: 0.5, color: "#ffd58a", bake: { reach: 1.6, power: 0.9 } },
   ],
 };
