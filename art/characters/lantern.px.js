@@ -28,6 +28,8 @@ const LANTERN_PAL = {
   9: "#a8b4c8", 6: "#617aa0", 5: "#41547a", 4: "#2f3e5a", 1: "#131a2a", 3: "#2a3348", 2: "#1a2337",
   // the ocular's lens and text, the lights (cyan, magenta), the lantern's glow
   L: "#3ac070", l: "#d8ffd0", v: "#62def0", M: "#ff4fd3", y: "#7cff9a",
+  // the white of his eye
+  W: "#e8e2d4",
 }
 pal(LANTERN_PAL)
 
@@ -90,13 +92,16 @@ function lanternSW(c, { b = 0, talk = 0, f = 0 } = {}) {
   // the seat, the front casters on their forks, the footrest
   lnBox(c, -0.22, -0.22, 0.46, 0.46, 0.44, 0.05, "4", "3", "2")
   for (const s of [-0.2, 0.18]) { lnBox(c, 0.3, s, 0, 0.05, 0.03, 0.08, "6", "5", "4"); const [x, y] = LNP(0.32, s + 0.015, 0.02); c.px(R(x), R(y), "1") }
-  lnBox(c, 0.38, -0.16, 0.06, 0.2, 0.32, 0.03, "9", "6", "5")
-  // his legs: the thighs on the seat (the near one lit on its knee), the shins down to the boots on the footrest
-  lnBox(c, -0.05, 0.03, 0.5, 0.45, 0.14, 0.13, "d", "b", "b"); lnBox(c, -0.05, -0.17, 0.5, 0.45, 0.14, 0.13, "D", "d", "b")
-  lnBox(c, 0.36, 0.03, 0.12, 0.1, 0.12, 0.4, "d", "b", "b"); lnBox(c, 0.36, -0.16, 0.12, 0.1, 0.12, 0.4, "D", "d", "b")
-  { const [x, y] = LNP(0.46, -0.1, 0.5); c.px(R(x), R(y), "D"); c.px(R(x) + 1, R(y), "D") }                   // the knee's light
-  lnBox(c, 0.38, -0.17, 0.08, 0.17, 0.15, 0.06, "K", "B", "B"); lnBox(c, 0.38, 0.02, 0.08, 0.17, 0.15, 0.06, "K", "B", "B")
-  { const [x, y] = LNP(0.55, -0.1, 0.11); c.px(R(x), R(y), "6") }                                              // a boot's toe cap, worn to steel
+  lnBox(c, 0.38, -0.22, 0.06, 0.2, 0.44, 0.03, "9", "6", "5")
+  // his legs, apart (the user, 2026-11-16: they ran together): the far one in shade, the near one lit, a dark seam between them;
+  // the thighs on the seat, the shins down to the boots on the footrest
+  lnBox(c, -0.05, 0.05, 0.5, 0.45, 0.15, 0.13, "d", "b", "B"); lnBox(c, 0.36, 0.05, 0.12, 0.1, 0.13, 0.4, "d", "b", "B")
+  lnBox(c, 0.38, 0.04, 0.08, 0.17, 0.16, 0.06, "3", "B", "B")
+  lnBox(c, -0.05, -0.21, 0.5, 0.45, 0.15, 0.13, "D", "D", "d"); lnBox(c, 0.36, -0.2, 0.12, 0.1, 0.13, 0.4, "D", "D", "d")
+  lnBox(c, 0.38, -0.21, 0.08, 0.17, 0.16, 0.06, "K", "K", "B")
+  { const [x0, y0] = LNP(0.46, -0.07, 0.14), [x1, y1] = LNP(0.46, -0.07, 0.62); c.line(R(x0), R(y0), R(x1), R(y1), "B") }   // the seam
+  { const [x, y] = LNP(0.46, -0.16, 0.5); c.px(R(x), R(y), "9"); c.px(R(x) - 1, R(y), "D") }                  // the knee's light
+  { const [x, y] = LNP(0.55, -0.14, 0.11); c.px(R(x), R(y), "6") }                                              // a boot's toe cap, worn to steel
   // the poncho: from the shoulders out over the arms and down over the lap; lit on its top and toward the upper left, in shade
   // toward his near side, folds falling from the shoulders, its hem a shade darker; the hood thrown back behind the neck
   const sh = 1.05 - b / 30
@@ -152,19 +157,23 @@ function lanternSW(c, { b = 0, talk = 0, f = 0 } = {}) {
   }
   // the face: the ocular over his right eye (the far one, to the screen's left): a steel ring, the green lens, its text running, a
   // crack; the left eye narrowed, the stud in its brow; the grin with the steel tooth (open when he talks)
-  const [ox, oy] = LNP(0.11, 0.06, 1.24 - hb), [ex, ey] = LNP(0.11, -0.05, 1.24 - hb), [mx, my] = LNP(0.11, -0.01, 1.14 - hb)
-  const OX = R(ox) - 2, OY = R(oy) - 2
+  // (the user, 2026-11-16: the face didn't read. The face is some six pixels across, so its parts are set by hand round one point, the
+  // bridge of his nose, and not projected: the ocular sticking out on the far side, a pixel of bridge, the eye with its white, the
+  // nose, the mouth dark with the steel tooth, the lip under it lit)
+  const [ax0, ay0] = LNP(0.11, 0, 1.22 - hb), ax = R(ax0), ay = R(ay0)
+  const OX = ax - 4, OY = ay - 2
   c.rect(OX, OY, 4, 4, "4"); c.px(OX, OY, "k"); c.px(OX + 3, OY + 3, "k"); c.px(OX + 1, OY, "6"); c.px(OX, OY + 1, "6")
   c.rect(OX + 1, OY + 1, 2, 2, "L"); c.px(OX + 1 + (f % 2), OY + 1 + (fl2(f / 2) % 2), "l")
   c.px(OX + 2, OY + 2, f % 4 === 3 ? "y" : "L")
   c.line(OX + 3, OY, OX + 2, OY + 1, "k")                                                                    // the crack across it
-  c.px(R(ex), R(ey), "T"); c.px(R(ex) - 1, R(ey), "T"); c.px(R(ex), R(ey) - 2, "9")                          // the eye, the brow's stud
-  if (talk) { c.rect(R(mx) - 1, R(my), 3, 2, "T"); c.px(R(mx), R(my), "9") }
-  else { c.hline(R(mx) - 1, R(my), 3, "T"); c.px(R(mx) + 1, R(my) - 1, "T"); c.px(R(mx), R(my), "9") }      // the crooked grin
+  c.px(ax + 1, ay, "W"); c.px(ax + 2, ay, "k"); c.hline(ax + 1, ay - 1, 2, "T"); c.px(ax + 2, ay - 2, "9")   // the narrowed eye, its brow, the stud
+  c.px(ax, ay, "S"); c.px(ax, ay + 1, "S"); c.px(ax + 1, ay + 1, "t")                                        // the nose, lit, its shadow
+  if (talk) { c.rect(ax - 1, ay + 3, 3, 2, "k"); c.px(ax, ay + 3, "9"); c.hline(ax - 1, ay + 5, 3, "S") }
+  else { c.hline(ax - 1, ay + 3, 3, "k"); c.px(ax + 2, ay + 2, "k"); c.px(ax, ay + 3, "9"); c.hline(ax - 1, ay + 4, 3, "S") }   // the crooked grin
   // the headset on his left ear (the near one): the cup, its light, the band over his crest; the circuit line at the temple
   const [hx, hy] = LNP(-0.02, -0.12, 1.2 - hb)
   c.rect(R(hx) - 1, R(hy) - 2, 3, 4, "2"); c.px(R(hx) - 1, R(hy) - 2, "5"); c.px(R(hx), R(hy), f % 4 === 0 ? "m" : "M")
-  c.px(R(hx) - 1, R(hy) - 3, "v"); c.px(R(hx) - 1, R(hy) - 4, "C")                                            // the circuit line
+  c.px(R(hx) - 1, R(hy) - 3, "C"); c.px(R(hx) - 1, R(hy) - 4, "C")                                            // the circuit line (dark: lit, it read as a second eye)
   // the lantern on its cable at his chest, its flame flickering
   const [lx, ly] = LNP(0.12, 0, 0.92 - hb)
   c.vline(R(lx), R(ly) - 4, 3, "k"); c.rect(R(lx) - 1, R(ly) - 1, 3, 3, "E"); c.px(R(lx), R(ly) - 1, "4")

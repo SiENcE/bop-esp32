@@ -167,7 +167,7 @@ es nicht mehr, §7).
   (Bildschirme mit Kameras, die keiner mehr kennt, ein Mikrofon am Arm, ein Mischpult, seine Sturmlaterne), das Rack der Sender (die
   Röhren der Endstufe, 87.6 in Bernstein, ein VU-Meter, ein Steckfeld); das Grün seiner Bildschirme liegt jetzt auch im Licht.
   Lantern selbst ist gemalt (2026-11-16, auf dem vom Nutzer freigegebenen Block `art/test/lantern_blocks.px.js`; `art/characters/lantern.px.js`,
-  Prüfbilder `docs/characters/lantern_*`; auf Wunsch des Nutzers ein Viertel breiter als der Block): im Rollstuhl, zu Juno hin gedreht (nach Südwesten, gezeichnet, nie gespiegelt), atmend, die
+  Prüfbilder `docs/characters/lantern_*`; auf Wunsch des Nutzers ein Viertel breiter als der Block, die Beine getrennt, das Gesicht lesbar): im Rollstuhl, zu Juno hin gedreht (nach Südwesten, gezeichnet, nie gespiegelt), atmend, die
   Lichter seiner Antennen nacheinander, die Schrift im Okular läuft, die Laterne am Hals flackert; im Spiel gibt ihm die Lampe an
   seinem Platz ein blasses warmes Licht, damit der Poncho lila bleibt. **Platzhalter:** Pike ist auf dem Markt eine Figur aus der
   Menge, die Endstufe hat das Bild des Abzweigers. Vom Markt fährt das Floß noch nicht sichtbar
