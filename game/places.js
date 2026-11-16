@@ -52,9 +52,9 @@ Nagiwa.at = {
   ines_wohnung: fromLayout(Nagiwa.layouts.ines_wohnung),
   // the swamps, two stages seen from the side, on blocks (art/rooms/sumpf.px.js): the ride on Pike's raft, its planes where they start
   // (each scrolls), the raft's canvas; and the arrival at the caravan, the raft tied up at the walk, the caravan and the raft to click
-  sumpf_fahrt: { far: [0, 52], weed: [0, 142], floss: [78, 32] },
+  sumpf_fahrt: { far: [0, 0], weed: [0, 142], floss: [78, 32] },
   sumpf: { floss: [6, 42],
-    wohnwagenPoly: [176, 138, 176, 96, 182, 84, 212, 72, 290, 70, 300, 98, 300, 140],
+    wohnwagenPoly: [170, 146, 170, 88, 176, 72, 212, 72, 214, 82, 270, 82, 290, 106, 308, 112, 308, 146],
     flossPoly: [40, 170, 40, 150, 52, 150, 54, 70, 72, 70, 74, 150, 88, 150, 90, 126, 104, 126, 106, 150, 138, 150, 138, 170] },
   // Lantern's hide, on blocks (art/rooms/lantern_versteck.map.js, game/rooms/lantern_versteck.layout.js); he sits at "lantern"
   lantern_versteck: fromLayout(Nagiwa.layouts.lantern_versteck),

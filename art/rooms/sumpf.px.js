@@ -17,6 +17,9 @@ pal({
   h: "#56606f", H: "#9aa3b2", w: "#e6eaf0", b: "#e0a030",                                                            // Pike the heron: grey, light grey, white, the beak
   L: "#b0f0a0", d: "#3c6a3a",                                                                                        // Lantern's green
   R: "#ffd58a", M: "#5a1f52",                                                                                        // a window, a dead sign
+  "!": "#050c09", "~": "#0a1712", $: "#10231a", "%": "#183324", "&": "#22472f", "*": "#34683f", "+": "#5a9a62", "=": "#9ad8a4",   // the deep forest, its glow
+  "(": "#0e1411", ")": "#18221b", "[": "#253225", "]": "#3a4a35", "{": "#5d7a48", "<": "#6a2e14", ">": "#a8582a",                  // bark, moss, thorns
+  a: "#2a2f36", A: "#474e57", s: "#6f7882", S: "#a9b2bb", t: "#141b26", T: "#2f4766", o: "#ff9a30", i: "#7a4018",                  // the van
 })
 include("../lib/text.js")
 
@@ -27,14 +30,46 @@ const R = Math.round
 // a deterministic hash for picking where things stand along a strip
 const hsh = (n) => { const s = Math.sin(n * 127.1 + 311.7) * 43758.5453; return s - Math.floor(s) }
 
+// ---------------------------------------------------------------- the trees, for the ride and the arrival
+const bez = (a, b, ctl, t) => [(1 - t) * (1 - t) * a[0] + 2 * (1 - t) * t * ctl[0] + t * t * b[0], (1 - t) * (1 - t) * a[1] + 2 * (1 - t) * t * ctl[1] + t * t * b[1]]
+// a thick curve, tapering from r0 to r1: roots, branches
+function limb(c, a, b, ctl, r0, r1, k, lit, side) {
+  for (let t = 0; t <= 1; t += 0.02) {
+    const [x, y] = bez(a, b, ctl, t), r = Math.max(1, R(r0 + (r1 - r0) * t))
+    c.ellipse(R(x), R(y), r, r, k)
+    if (lit) c.px(R(x) + side * r, R(y), lit)
+  }
+}
+// a giant tree: the trunk widening down to its roots, which reach out and down into the water like legs; ridges in the bark, its edge
+// lit on the side toward the glow (side +1: right), moss on the ledges, thorns. ks: [body, ridge, lit edge, moss]
+function giant(c, cx, top, base, w, legs, side, ks, seed, thorns = 0) {
+  const [kb, kr, kl, km] = ks, foot = base - 34
+  c.poly([cx - w / 2, top, cx + w / 2, top, cx + w * 0.75, foot, cx - w * 0.75, foot], kb)
+  for (let i = 0; i < legs; i++) {
+    const u = legs > 1 ? i / (legs - 1) - 0.5 : 0, a = [cx + u * w * 1.1, foot - 6], b = [cx + u * w * 3.2 + (hsh(seed + i) - 0.5) * 10, base + R(hsh(seed * 2 + i) * 6)]
+    limb(c, a, b, [b[0], a[1] + 6], Math.max(3, R(w / 7)), 2, kb, (u * side > 0) ? kl : 0, side)
+  }
+  for (let x = cx - w / 2 + 3; x < cx + w / 2 - 2; x += 4 + R(hsh(seed + x) * 3)) {             // ridges, a little wavy
+    for (let y = top; y < foot; y += 1) c.px(R(x + Math.sin((y + seed * 7) / 9) * 1.5 + (y - top) / (foot - top) * (x - cx) * 0.5), y, kr)
+  }
+  const ex = side > 0 ? cx + w / 2 : cx - w / 2
+  for (let y = top; y < foot; y++) c.px(R(ex + side * (y - top) / (foot - top) * w * 0.25) - side, y, kl)       // the lit edge
+  for (let i = 0; i < 14; i++) { const mx = cx - w / 2 + R(hsh(seed + i * 3) * w), my = top + R(hsh(seed + i * 5) * (foot - top)); c.hline(mx, my, 2 + R(hsh(i) * 3), km) }
+  for (let i = 0; i < thorns; i++) {                                                                  // thorns, a few orange twigs
+    const tx = cx + (hsh(seed + i * 11) - 0.5) * w, ty = top + 20 + R(hsh(seed + i * 13) * (foot - top - 30))
+    for (let j = 0; j < 6; j++) c.line(R(tx), R(ty), R(tx + (hsh(seed + i + j) - 0.5) * 14), R(ty + (hsh(seed + j * 7 + i) - 0.5) * 12), j % 2 ? ">" : "<")
+  }
+}
+function knee(c, x, base, h, k, kl) { c.poly([x - 3, base, x - 1, base - h, x + 1, base - h, x + 3, base], k); c.vline(x + 1, base - h + 1, h - 1, kl) }
 // ---------------------------------------------------------------- sky, the city behind, the Crown (still)
 sprite("_sky", { w: W, h: WATER }, (c) => {
   c.rect(0, 0, W, WATER, "n")
   for (const [k, y0] of [["1", 24], ["2", 56], ["3", 86]]) c.rect(0, y0, W, WATER - y0, k)
   c.dither(0, 21, W, 3, "n", "1", 0.5); c.dither(0, 53, W, 3, "1", "2", 0.5); c.dither(0, 83, W, 3, "2", "3", 0.5)
   // the Crown's glow, left, on the undersides of the clouds and low on the horizon
-  c.grad(0, 30, 200, 82, "Xx3.", "r", 0.5)
-  for (const [y, x0, x1] of [[38, 0, 150], [46, 10, 190], [52, 0, 120], [61, 30, 230], [70, 0, 170]]) c.hline(x0, y, x1 - x0, y < 50 ? "x" : "X")
+  c.grad(0, 30, 170, 82, "x32.", "r", 0.5)
+  for (const [y, x0, x1] of [[38, 0, 120], [46, 10, 150], [52, 0, 100], [61, 30, 170]]) c.hline(x0, y, x1 - x0, "x")
+  c.grad(80, 60, 260, 70, "&%$~.", "r", 0.6)                                                          // the forest's green, low and far
   // the city behind: the Ninth's edge, a black mass, and the rings rising to the Crown (top left), lights in rows
   c.poly([0, 18, 26, 18, 26, 40, 46, 40, 46, 70, 70, 70, 70, WATER, 0, WATER], "k")
   c.poly([6, 0, 18, 0, 18, 18, 6, 18], "1")
@@ -42,53 +77,47 @@ sprite("_sky", { w: W, h: WATER }, (c) => {
   c.rect(4, 2, 16, 3, "C"); c.rect(6, 1, 12, 1, "V")                                                // the Crown's lit rim
 })
 
-// ---------------------------------------------------------------- the farther rows (384 a loop)
-const FAR_W = 384, FAR_Y = 52
-sprite("_far", { w: FAR_W, h: WATER - FAR_Y + 4, wrap: "x" }, (c) => {
-  const B = WATER - FAR_Y
-  for (let i = 0; i < 9; i++) {                                      // roofs: low blocks standing in the water
-    const x = i * 43 + R(hsh(i) * 14), w = 22 + R(hsh(i + 9) * 16), h = 16 + R(hsh(i + 3) * 18)
-    c.rect(x, B - h, w, h, "3"); if (hsh(i + 5) > 0.5) c.rect(x + 3, B - h - 4, 5, 4, "3")
-    if (hsh(i + 7) > 0.7) c.px(x + 6, B - h + 5, "R")
-  }
-  for (let i = 0; i < 12; i++) {                                     // crowns of the trees over them
-    const x = i * 32 + R(hsh(i + 20) * 16), r = 7 + R(hsh(i + 30) * 6), top = B - 26 - R(hsh(i + 40) * 22)
-    c.rect(x, top, 2, B - top, "2"); c.ellipse(x + 1, top, r, R(r * 0.7), "q")
-  }
-  c.rect(0, B, FAR_W, 4, "f")                                        // their reflection, a dark band
-  for (let x = 0; x < FAR_W; x += 2) c.px(x, B + 1, "z")
+// ---------------------------------------------------------------- the farther rows (384 a loop): misty giants on their roots, a few roofs
+const FAR_W = 384, FAR_Y = 0
+sprite("_far", { w: FAR_W, h: WATER + 4, wrap: "x" }, (c) => {
+  const B = WATER
+  for (let i = 0; i < 5; i++) { const x = 20 + i * 76 + R(hsh(i) * 20), w = 22 + R(hsh(i + 9) * 16), h = 14 + R(hsh(i + 3) * 14); c.rect(x, B - h, w, h, "$") }
+  for (const [x, w, sd] of [[40, 12, 61], [120, 9, 62], [200, 14, 63], [290, 10, 64], [350, 8, 65]]) giant(c, x, 0, B, w, 4, -1, ["%", "$", "&", "&"], sd)
+  for (let y = B - 20; y < B; y += 2) c.dither(0, y, FAR_W, 2, ".", "&", 0.1 + (y - B + 20) / 80)     // the mist at their feet
+  c.rect(0, B, FAR_W, 4, "~"); for (let x = 0; x < FAR_W; x += 2) c.px(x, B + 1, "%")
 })
 
 // ---------------------------------------------------------------- house fronts and trunks (768 a loop)
 const MID_W = 768, MID_BASE = 128                                    // the mid water line on the picture
 function trunk(c, x, base, wd, moss, k = "1", rim = "x") {
-  c.rect(x, 0, wd, base, k); c.vline(x, 0, base, rim)               // lit on its left, toward the Crown
-  c.poly([x - 4, base, x, base - 10, x + wd, base - 10, x + wd + 4, base], k)    // the buttress at the water
+  if (wd) { c.rect(x, 0, wd, base, k); c.vline(x, 0, base, rim); c.poly([x - 4, base, x, base - 10, x + wd, base - 10, x + wd + 4, base], k) }   // lit toward the Crown; the buttress
   for (let i = 0; i < 3; i++) {                                      // branches reaching out, left and right
     const by = 4 + i * 16 + R(hsh(x + i * 13) * 8), dir = (i + x) % 2 ? 1 : -1, len = 8 + R(hsh(x * 5 + i) * 10)
     c.line(dir > 0 ? x + wd : x, by + 6, dir > 0 ? x + wd + len : x - len, by, k)
   }
   for (let i = 0; i < moss; i++) {                                   // Spanish moss hanging from its branches
-    const mx = x - 6 + R(hsh(x + i) * (wd + 12)), my = 6 + R(hsh(x * 3 + i) * 40), len = 8 + R(hsh(x + i * 5) * 16)
+    const mx = x - 10 + R(hsh(x + i) * (wd + 20)), my = 6 + R(hsh(x * 3 + i) * 40), len = 8 + R(hsh(x + i * 5) * 16)
     c.vline(mx, my, len, i % 2 ? "G" : "g"); c.vline(mx + 1, my + 2, len - 4, "g")
   }
-  for (let y = base + 1; y < base + 14; y += 2) c.hline(x - 1, y, wd + 2, "z")                  // its reflection
+  if (wd) for (let y = base + 1; y < base + 14; y += 2) c.hline(x - 1, y, wd + 2, "z")          // its reflection
 }
 sprite("_mid", { w: MID_W, h: MID_BASE + 16, wrap: "x" }, (c) => {
   const B = MID_BASE
   // drowned house fronts, two storeys above the water, windows dark, one old sign
   for (const [x, w, h, sign] of [[40, 84, 66, ""], [330, 70, 50, "PHARMACY"], [560, 96, 74, "NOODLE"]]) {
-    c.rect(x, B - h, w, h, "4"); c.hline(x, B - h, w, "5")
+    c.rect(x, B - h, w, h, "2"); c.hline(x, B - h, w, "["); for (let i = 0; i < w; i += 3) if (hsh(x + i) > 0.5) c.px(x + i, B - h - 1, "{")
     for (let wy = B - h + 8; wy < B - 10; wy += 18) for (let wx = x + 8; wx < x + w - 10; wx += 20) {
-      c.rect(wx, wy, 10, 12, "2"); c.hline(wx, wy, 10, "1")
+      c.rect(wx, wy, 10, 12, "!"); c.hline(wx, wy, 10, "(")
       if (hsh(wx + wy) > 0.85) c.rect(wx + 2, wy + 3, 6, 8, "U")                                 // a board nailed over
     }
     if (sign) { c.rect(x + 6, B - 18, w - 12, 9, "1"); TXT.draw(c, x + w / 2, B - 16, sign, "M", { font: "hud", align: "center" }) }
     c.rect(x, B, w, 14, "f"); for (let y = B + 1; y < B + 14; y += 2) c.hline(x + 2, y, w - 4, "z")   // the water to the first floor
   }
   // trunks among them, rising out of the picture, moss in the branches
-  for (const [x, wd, moss] of [[14, 8, 5], [140, 12, 8], [170, 6, 4], [214, 14, 9], [262, 7, 5], [300, 10, 6], [420, 13, 9], [452, 6, 4],
-    [500, 11, 8], [535, 7, 4], [680, 14, 10], [712, 8, 5], [745, 6, 3]]) trunk(c, x, B, wd, moss, "2", "x")
+  for (const [x, wd, sd] of [[18, 10, 71], [150, 16, 72], [236, 12, 73], [290, 9, 74], [440, 18, 75], [520, 11, 76], [700, 16, 77], [748, 8, 78]]) {
+    giant(c, x, 0, B + 4, wd, 4, -1, ["(", ")", "[", "{"], sd)
+    trunk(c, x - 1, 0, 0, 3 + R(wd / 3), "(", "(")                                                     // moss hanging from its branches
+  }
 })
 
 // ---------------------------------------------------------------- the water and the duckweed by the raft (768 a loop)
@@ -96,19 +125,17 @@ const WEED_W = 768
 sprite("_weed", { w: WEED_W, h: H - MID_BASE, wrap: "x" }, (c) => {
   for (let i = 0; i < 40; i++) {
     const x = R(hsh(i + 100) * WEED_W), y = 4 + R(hsh(i + 200) * (H - MID_BASE - 8)), w = 10 + R(hsh(i + 300) * 40), near = y > 26
-    c.ellipse(x, y, w / 2, near ? 2 : 1, near ? "G" : "g")
-    for (let k = 0; k < w / 4; k++) c.px(x - w / 2 + R(hsh(i * 9 + k) * w), y - 1, "l")
+    c.ellipse(x, y, w / 2, near ? 2 : 1, near ? "&" : "%")
+    for (let k = 0; k < w / 4; k++) c.px(x - w / 2 + R(hsh(i * 9 + k) * w), y - 1, "*")
   }
   for (let i = 0; i < 30; i++) c.hline(R(hsh(i + 500) * WEED_W), 2 + R(hsh(i + 600) * 46), 6, "z")   // ripples
 })
 
-// ---------------------------------------------------------------- the big trunks in front (768 wide, 1536 a loop)
+// ---------------------------------------------------------------- the big trunks in front (768 wide, 1536 a loop): giants, dark, lit at the edge
 const NEAR_W = 768
 sprite("_near", { w: NEAR_W, h: H, wrap: "x" }, (c) => {
-  for (const [x, wd] of [[60, 26], [470, 34]]) {
-    c.rect(x, 0, wd, H, "k"); c.vline(x, 0, H, "2"); c.vline(x + 1, 0, H, "1")
-    for (let i = 0; i < 5; i++) { const mx = x - 8 + i * 9, len = 20 + R(hsh(x + i) * 30); c.vline(mx, 0, len, "q"); c.vline(mx + 1, 0, len - 6, "q") }
-  }
+  giant(c, 80, 0, H + 8, 28, 4, -1, ["(", ")", "]", "{"], 81, 1)
+  giant(c, 500, 0, H + 8, 34, 5, -1, ["(", ")", "]", "{"], 82, 2)
 })
 
 // ---------------------------------------------------------------- the raft, Pike, Juno
@@ -167,70 +194,82 @@ function rain(c, f) {
   }
 }
 
-// ---------------------------------------------------------------- the end of the ride: Lantern's caravan on pontoons
-// A mystical place: old gnarled trees standing in the water on their roots, moss hanging thick, mist over the water, lily pads, a walk
-// of planks on posts; small green lanterns in the branches and along the walk (his name: Lantern), each doubled on the water. The caravan
-// an old camper full to its roof: solar panels, a water barrel, a crate of plants, aerials and a dish, laundry on a line, boards strapped
-// over its front, a ladder; the cable comes along the walk and goes in. The raft ties up at the walk (sumpf_floss).
-function bigTree(c, x, base, w, top, seed) {
-  // roots: arches into the water, the trunk widening to them, crooked branches, moss hanging thick
-  for (let i = -2; i <= 2; i++) {
-    const rx = R(x + w / 2 + i * (w * 0.55)), sx = R(x + w / 2 + i * 3)
-    c.line(sx, base - 16, rx, base + 2, "3"); c.line(sx + 1, base - 16, rx + 1, base + 2, "3"); c.px(rx, base + 2, "X")
-  }
-  c.poly([x, top, x + w, top, x + w + 3, base - 18, x + w + 8, base - 6, x - 8, base - 6, x - 3, base - 18], "3")
-  c.vline(x, top, base - top - 18, "X"); c.vline(x + 1, top, base - top - 18, "x")
-  for (let y = top + 8; y < base - 20; y += 13) c.line(x + 4, y, x + w - 6, y + 5, "2")                                  // the bark's twists                                                                  // lit toward the Crown
-  for (let i = 0; i < 5; i++) {
-    const by = top + 6 + i * 11, dir = (i + seed) % 2 ? 1 : -1, len = 14 + R(hsh(seed + i) * 22)
-    const sx = dir > 0 ? x + w : x, ex = sx + dir * len, ey = by - 8 - R(hsh(seed * 3 + i) * 10)
-    c.line(sx, by, ex, ey, "3"); c.line(sx, by + 1, ex, ey + 1, "3")
-    for (let m = 0; m < 6; m++) {
-      const mx = R(sx + (ex - sx) * (m / 6)), my = R(by + (ey - by) * (m / 6)), ml = 6 + R(hsh(seed + i * 7 + m) * 14)
-      c.vline(mx, my, ml, m % 2 ? "G" : "g"); if (m % 3 === 0) c.vline(mx + 1, my + 1, ml - 3, "l")
-    }
-  }
+// ---------------------------------------------------------------- the end of the ride: Lantern's caravan in the drowned forest
+// Deep in the forest the canopy closes over the water and the Crown is gone: dark, and in the middle a green glow in the mist, from his
+// lanterns and the water itself. Giant old trees stand on their roots like on legs, their bark in ridges, moss on every ledge, vines
+// hanging from a branch that arches over everything, a few orange thorns; cypress knees in the water, spores drifting in the light. The
+// caravan: a boxy old camper van from the side, silver above and dark below, big dark windows, the cab to the right with its sloped
+// windscreen and square amber lamps, a roof box and a rack with cans and a panel, his aerials and dish; it stands on drums, its sliding
+// door open on his green. The walk of planks comes from the left; the raft ties up below it (sumpf_floss).
+function lantern(c, x, y, water, string = 10) {
+  c.vline(x, y - string, string - 2, "(")
+  c.dither(x - 5, y - 4, 11, 10, ".", "*", 0.35); c.dither(x - 3, y - 2, 7, 6, ".", "+", 0.5)
+  c.rect(x - 1, y - 1, 3, 3, "+"); c.px(x, y, "=")
+  if (water) for (let k = 0; k < 5; k++) c.hline(x - 2 + (k % 2), water + 2 + k * 3, 4 - (k >> 1), k % 2 ? "*" : "+")   // its double on the water
 }
-function lantern(c, x, y, water) {
-  c.vline(x, y - 9, 7, "1")                                                                 // its string
-  c.dither(x - 4, y - 3, 9, 8, ".", "d", 0.45); c.rect(x - 1, y - 1, 3, 3, "L"); c.px(x, y - 2, "d"); c.px(x, y, "V")
-  if (water) for (let k = 0; k < 4; k++) c.hline(x - 1, water + 2 + k * 3 + (y % 3), 3 - (k >> 1), k % 2 ? "d" : "L")   // its double on the water
+// the van, from the side, its cab to the right: x0 its back, b the bottom of its body
+function van(c, x0, b) {
+  const x1 = x0 + 130, top = b - 50
+  for (const dx of [10, 46, 82, 112]) { c.ellipse(x0 + dx + 6, b + 4, 8, 4, "O"); c.hline(x0 + dx, b + 4, 12, "u") }   // the drums it stands on
+  c.poly([x0, top + 2, x0 + 2, top, x1 - 34, top, x1 - 14, top + 20, x1 + 2, top + 26, x1 + 3, b, x0, b], "s")        // the body, silver
+  c.poly([x0, top + 26, x1 + 2, top + 26, x1 + 3, b, x0, b], "a")                                                     // dark below the belt
+  c.hline(x0 + 2, top, x1 - 36 - x0, "S"); c.line(x1 - 34, top, x1 - 14, top + 20, "S"); c.hline(x0, top + 26, x1 + 2 - x0, "A")
+  c.hline(x0, b - 1, x1 + 3 - x0, "(")
+  // the windows: two on the box, the cab's door window, the windscreen's edge
+  for (const [wx, ww] of [[x0 + 8, 24], [x0 + 74, 22]]) { c.rect(wx, top + 6, ww, 14, "t"); c.line(wx + 4, top + 18, wx + 12, top + 7, "T"); c.line(wx + 8, top + 18, wx + 15, top + 9, "T") }
+  c.poly([x1 - 44, top + 5, x1 - 32, top + 5, x1 - 20, top + 20, x1 - 44, top + 20], "t"); c.line(x1 - 38, top + 18, x1 - 30, top + 8, "T")
+  c.line(x1 - 30, top + 2, x1 - 13, top + 19, "t")
+  // the sliding door open: his green inside, the cable going in
+  c.rect(x0 + 38, top + 6, 26, b - top - 7, "d"); c.rect(x0 + 41, top + 9, 20, b - top - 12, "L"); c.vline(x0 + 37, top + 5, b - top - 5, "A")
+  for (let y = b + 6; y < b + 26; y += 2) c.hline(x0 + 40, y, 22, y % 4 ? "d" : "~")                                 // its light on the water
+  // the cab's front: the lamp, the grille's edge, the bumper, the mirror; the wheel arches with the wheels hanging
+  c.rect(x1, top + 30, 3, 4, "o"); c.dither(x1 + 2, top + 27, 8, 10, ".", "<", 0.4); c.px(x1 + 3, top + 31, "o")
+  for (let y = top + 36; y < b - 4; y += 3) c.px(x1 + 2, y, "(")
+  c.rect(x1 - 4, b - 4, 9, 4, "A"); c.rect(x1 - 26, top + 10, 3, 5, "A")
+  for (const wx of [x0 + 22, x1 - 22]) { c.ellipse(wx, b, 10, 7, "("); c.ellipse(wx, b + 2, 7, 6, ")"); c.ellipse(wx, b + 2, 3, 3, "A") }
+  // rust and moss: streaks under the windows, moss along the roof
+  for (const rx of [x0 + 12, x0 + 30, x0 + 80, x0 + 92]) c.vline(rx, top + 20, 6 + R(hsh(rx) * 5), "i")
+  for (let x = x0 + 2; x < x1 - 36; x += 3) if (hsh(x * 3) > 0.55) c.px(x, top - 1, "{")
+  // on the roof: the roof box at the back, the rack with cans and a solar panel, the dish, his aerials with green tips
+  c.rect(x0 + 2, top - 16, 36, 16, "s"); c.hline(x0 + 2, top - 16, 36, "S"); c.rect(x0 + 6, top - 12, 12, 8, "t"); c.rect(x0 + 21, top - 12, 12, 8, "t")
+  c.hline(x0 + 40, top - 5, 48, "A"); for (const rx of [x0 + 40, x0 + 64, x0 + 88]) c.vline(rx, top - 5, 5, "A")
+  c.rect(x0 + 43, top - 12, 6, 7, "a"); c.rect(x0 + 50, top - 11, 6, 6, "a")
+  c.poly([x0 + 58, top - 6, x0 + 84, top - 14, x0 + 86, top - 10, x0 + 60, top - 5], "c"); for (let i = 1; i < 4; i++) c.line(x0 + 58 + i * 7, top - 6 - i * 2, x0 + 59 + i * 7, top - 5 - i * 2, "4")
+  c.ellipse(x0 + 18, top - 24, 8, 4, "A"); c.ellipse(x0 + 18, top - 24, 6, 2, "a"); c.vline(x0 + 18, top - 20, 4, "A")
+  for (const [ax, ah] of [[x0 + 30, 30], [x0 + 34, 18], [x0 + 70, 26]]) { c.vline(ax, top - 16 - ah, ah, "A"); c.px(ax, top - 17 - ah, "=") }
+  c.vline(x0 - 3, top, b - top, "A"); c.vline(x0 - 7, top, b - top, "A"); for (let y = top + 3; y < b; y += 5) c.hline(x0 - 7, y, 5, "A")
 }
 sprite("sumpf_bg", { w: W, h: H }, (c) => {
-  c.stamp("_sky", 0, 0); c.rect(0, WATER, W, H - WATER, "e")
-  for (const [x, w] of [[90, 18], [150, 12], [205, 22]]) { c.rect(x, 30, w, WATER - 30, "2"); c.dither(x - 4, 30, w + 8, WATER - 30, ".", "x", 0.25) }   // far trunks in the mist
-  for (let y = WATER - 16; y < WATER + 14; y += 3) c.dither(0, y, W, 2, ".", "x", 0.18)                                     // mist over the water
-  bigTree(c, 236, 126, 34, 0, 7)                                                                                   // the old one behind the caravan
-  bigTree(c, 14, 146, 22, 0, 1); bigTree(c, 292, 140, 22, 0, 4)
-  // the walk of planks on posts, from the left to the caravan's door
-  for (let x = 0; x < 196; x += 14) c.vline(x + 4, 136, 16, "u")
-  c.rect(0, 133, 196, 3, "U"); for (let x = 0; x < 196; x += 5) c.px(x, 134, "u")
-  c.line(0, 129, 196, 131, "1"); c.line(0, 130, 196, 132, "x")                                                            // the cable along it
-  // the caravan: an old camper on its pontoons, its cab to the right
-  const X = 178, B = 136
-  for (const dx of [8, 44, 80, 108]) { c.ellipse(X + dx + 6, B + 3, 8, 4, "O"); c.hline(X + dx, B + 3, 12, "u") }
-  c.rect(X, B - 40, 104, 38, "4"); c.hline(X, B - 40, 104, "5"); c.rect(X, B - 40, 2, 38, "5")
-  c.poly([X + 104, B - 40, X + 118, B - 26, X + 120, B - 2, X + 104, B - 2], "4"); c.poly([X + 106, B - 37, X + 116, B - 27, X + 106, B - 27], "c")   // the cab, its windscreen
-  for (let i = 0; i < 4; i++) c.line(X + 108, B - 20 + i * 4, X + 120, B - 22 + i * 4, "U")                              // boards strapped over its front
-  c.ellipse(X + 110, B - 2, 6, 6, "1"); c.ellipse(X + 110, B - 2, 3, 3, "3")                                               // a wheel, half in the water
-  c.rect(X + 10, B - 32, 22, 12, "d"); c.rect(X + 12, B - 30, 18, 8, "L")                                                  // a window in his green
-  c.rect(X + 42, B - 36, 14, 34, "L"); c.rect(X + 44, B - 34, 10, 32, "d")                                                 // the door open, the light inside
-  c.rect(X + 64, B - 32, 30, 10, "2"); c.line(X + 64, B - 32, X + 94, B - 22, "U")                                         // a window boarded
-  for (let y = B + 6; y < B + 24; y += 2) c.hline(X + 42, y, 14, y % 4 ? "d" : "e")                                       // the door's light on the water
-  // on the roof: the solar panels, the barrel, the crate of plants, aerials, a dish, the laundry line; the ladder behind
-  c.poly([X + 4, B - 41, X + 30, B - 52, X + 34, B - 47, X + 8, B - 40], "c")
-  for (let i = 1; i < 4; i++) c.line(X + 4 + i * 7, B - 42 - i * 3, X + 8 + i * 7, B - 41 - i * 3, "4")
-  c.ellipse(X + 46, B - 48, 6, 8, "C"); c.hline(X + 40, B - 50, 13, "c")
-  c.rect(X + 58, B - 48, 20, 8, "U"); for (let i = 0; i < 6; i++) c.px(X + 60 + i * 3, B - 49 - (i % 2), "G"); c.px(X + 66, B - 52, "l")
-  for (const [ax, ah] of [[X + 84, 36], [X + 92, 22], [X + 100, 44]]) { c.vline(ax, B - 40 - ah, ah, "5"); c.px(ax, B - 41 - ah, "L") }
-  c.ellipse(X + 18, B - 60, 8, 4, "5"); c.ellipse(X + 18, B - 60, 6, 2, "3"); c.vline(X + 18, B - 56, 4, "5")
-  c.line(X + 84, B - 58, X + 100, B - 66, "5"); c.rect(X + 88, B - 60, 4, 6, "w"); c.rect(X + 94, B - 63, 3, 5, "6")       // the line, a shirt, a sock
-  c.vline(X - 3, B - 40, 38, "5"); c.vline(X - 7, B - 40, 38, "5"); for (let y = B - 38; y < B; y += 5) c.hline(X - 7, y, 5, "5")
-  // lily pads and the lanterns
-  for (let i = 0; i < 14; i++) { const lx = R(hsh(i + 900) * W), ly = 146 + R(hsh(i + 950) * 30); c.ellipse(lx, ly, 4, 1, "g"); c.px(lx + 2, ly - 1, "e") }
-  for (const [lx, ly] of [[34, 50], [58, 72], [8, 98], [118, 112], [150, 122], [196, 70], [212, 96], [286, 62], [304, 96], [268, 40], [250, 112]]) lantern(c, lx, ly, ly > 100 ? 140 : 0)
+  // the dark and the glow in the mist, two pale shafts falling through the canopy
+  c.rect(0, 0, W, H, "!")
+  c.grad(40, 20, 260, 150, "=+*&%$~.", "r", 0.6)
+  for (const [x0, x1, w] of [[150, 186, 8], [196, 214, 5]]) for (let y = 0; y < 140; y++) c.dither(R(x0 + (x1 - x0) * y / 140), y, w, 1, ".", "*", 0.16 - y / 1400)
+  // far trunks in the glow, paler the farther, standing on their roots
+  for (const [x, w, s] of [[96, 16, 21], [196, 20, 22], [140, 10, 23], [232, 12, 24]]) giant(c, x, 0, 136, w, 4, x < 160 ? 1 : -1, ["&", "%", "*", "*"], s)
+  for (const [x, w, s] of [[60, 22, 31], [262, 26, 32]]) giant(c, x, 0, 140, w, 5, x < 160 ? 1 : -1, ["%", "$", "&", "&"], s)
+  // the mist lying over the water, thick in the glow
+  for (let y = 112; y < 146; y += 2) c.dither(30, y, 260, 2, ".", y < 128 ? "*" : "&", 0.12 + (y - 112) / 140)
+  // the water: dark, the glow on it in broken strokes
+  c.rect(0, 146, W, H - 146, "~")
+  for (let i = 0; i < 40; i++) { const x = 60 + R(hsh(i + 400) * 200), y = 148 + R(hsh(i + 450) * 30); c.hline(x, y, 3 + R(hsh(i) * 8), y < 160 ? "&" : "%") }
+  // the giants in front, left and right, and the branch over everything with its vines
+  giant(c, 8, 0, 176, 30, 4, 1, ["(", ")", "]", "{"], 41, 2); giant(c, 314, 0, 174, 34, 4, -1, ["(", ")", "]", "{"], 42, 2)
+  limb(c, [0, 22], [W, 14], [150, -26], 7, 5, "(", "]", 1)
+  for (let i = 0; i < 26; i++) {
+    const x = 6 + i * 12 + R(hsh(i + 600) * 6), y0 = R(bez([0, 22], [W, 14], [150, -26], x / W)[1]) + 3, len = 14 + R(hsh(i + 650) * 70)
+    c.vline(x, y0, len, i % 3 ? "(" : ")"); if (i % 4 === 0) for (let k = 0; k < len; k += 6) c.px(x + 1, y0 + k, "&")
+  }
+  // cypress knees and roots in the water
+  for (const [x, h] of [[96, 9], [112, 6], [150, 11], [300, 8], [78, 5]]) knee(c, x, 172, h, "(", "]")
+  // the walk of planks on its posts, from the left to the van's door
+  for (let x = 0; x < 214; x += 14) c.vline(x + 4, 140, 16, ")")
+  c.rect(0, 137, 214, 3, "["); for (let x = 0; x < 214; x += 5) c.px(x, 138, ")")
+  c.line(0, 134, 214, 136, "("); c.line(0, 135, 214, 137, "$")                                                  // the cable along it
+  van(c, 174, 138)
+  // his lanterns on strings from the branch and the vines, doubled on the water; spores drifting in the light
+  for (const [lx, ly, s] of [[46, 58, 30], [94, 44, 24], [128, 86, 50], [158, 40, 22], [204, 56, 34], [246, 40, 20], [286, 72, 52], [116, 112, 16], [232, 108, 14]]) lantern(c, lx, ly, ly > 100 ? 146 : 0, s)
+  for (let i = 0; i < 18; i++) c.px(70 + R(hsh(i + 700) * 190), 70 + R(hsh(i + 750) * 70), i % 3 ? "+" : "=")
 })
-
 
 // ---------------------------------------------------------------- the game's pictures
 sprite("sumpf_fahrt_bg", { w: W, h: H }, (c) => { c.stamp("_sky", 0, 0); c.rect(0, WATER, W, H - WATER, "e") })
