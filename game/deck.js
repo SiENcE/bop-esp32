@@ -184,8 +184,9 @@
       });
     });
     // RADIO: a station tuned in with a click (game/radio.js), AUS turns it off
+    // (a station not known yet is a row of noise: no hotspot)
     [...(Nagiwa.radio ?? []), { id: "", name: "Radio aus" }].forEach((st, i) => {
-      hs[`radio_${st.id || "off"}`] = { name: st.name, rect: [X + 6, D.radio.y - 3 + i * D.radio.row, WW - 12, D.radio.row - 1], if: app("radio"), z: 4,
+      hs[`radio_${st.id || "off"}`] = { name: st.name, rect: [X + 6, D.radio.y - 3 + i * D.radio.row, WW - 12, D.radio.row - 1], if: [app("radio"), ...(/** @type {any} */ (st).if ? [/** @type {any} */ (st).if] : [])], z: 4,
         use: [{ radio: st.id || false }] };
     });
     // the files on the desktop (under the window when one is open)
@@ -597,18 +598,20 @@
       L.max = Math.max(0, y + Math.round(L.y) - bottom); L.to = Math.min(L.to, L.max);
       scrollBar(ctx, L, X + WW - 15, top, bottom, false, pointer());
     },
-    /** RADIO: the stations (game/radio.js; Lantern's pirate station comes in Chapter 2), the one on lit; under them what its presenter says */
+    /** RADIO: the stations (game/radio.js; Lantern's pirate station once Juno has found him, until then a row of noise), the one on lit;
+     * under them what its presenter says */
     radio(/** @type {CanvasRenderingContext2D} */ ctx) {
       const [X, , WW, HH] = D.win, on = Nagiwa.radioOn?.() ?? null, p = pointer(), R = D.radio;
       [...(Nagiwa.radio ?? []), null].forEach((st, i) => {
         const y = R.y + i * R.row, hot = inRect(p.x, p.y, [X + 6, y - 3, WW - 12, R.row - 1]), lit = st ? st === on : !on;
         if (lit || hot) rect(ctx, lit ? C.cyanDeep : C.steel2, X + 6, y - 3, WW - 12, R.row - 1);
         if (lit) rect(ctx, C.cyan, X + 6, y - 3, 2, R.row - 1);
-        if (st) { small(ctx, st.freq, X + 12, y + 2, lit ? C.cyanPale : C.steel6); small(ctx, st.name, X + 40, y + 2, lit ? C.cyanPale : C.steel6); }
+        if (st && !Nagiwa.radioKnown(st)) { small(ctx, "--.-", X + 12, y + 2, C.steel3); small(ctx, t("RAUSCHEN"), X + 40, y + 2, C.steel3); }
+        else if (st) { small(ctx, st.freq, X + 12, y + 2, lit ? C.cyanPale : C.steel6); small(ctx, st.name, X + 40, y + 2, lit ? C.cyanPale : C.steel6); }
         else small(ctx, t("AUS"), X + 12, y + 2, lit ? C.cyanPale : C.steel6);
       });
       if (!on) return;
-      const top = R.y + 4 * R.row + 4, line = Nagiwa.radioLine?.() ?? "";
+      const top = R.y + ((Nagiwa.radio ?? []).length + 1) * R.row + 4, line = Nagiwa.radioLine?.() ?? "";
       rect(ctx, C.steel3, X + 6, top, WW - 12, 1);
       if (Math.floor(Cutaway.clock.time / 600) % 2) rect(ctx, C.magenta, X + 8, top + 5, 3, 3);
       small(ctx, `${t("ON AIR")} // ${on.name}`, X + 14, top + 4, C.amber);

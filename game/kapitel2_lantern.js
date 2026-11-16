@@ -174,6 +174,7 @@ hide.wohnwagen.use = [{ if: "lantern_found", then: [{ goto: "lantern_versteck", 
   L("Wie sind Sie ... Der Reiher. Natürlich der Reiher."),
   "Er wollte eine Endstufe. Die hab ich ihm besorgt.",
   L("Dann hat er sie also doch."),
+  L("Wenn Sie mich hören wollen: siebenundachtzig sechs, nachts. Kommen müssen Sie dafür nicht."),
   L("Was wollen Sie?"),
   { dialog: "lantern" },
 ] }];

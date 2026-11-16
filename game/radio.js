@@ -1,5 +1,6 @@
-// Nagiwa: the radio on the deck (kapitel0-design §2.1 RADIO). Three stations (Lantern's pirate station comes in
-// Chapter 2): a click in the RADIO window tunes one in, its music plays through the speaker on the deck and in the
+// Nagiwa: the radio on the deck (kapitel0-design §2.1 RADIO). Three stations, and from Chapter 2 Lantern's pirate station once
+// Juno has found him (the user's decision, 2026-11-16: his caravan in the swamps is his sender; at night he talks in his on-air voice
+// between the noise; before that its row is only noise): a click in the RADIO window tunes one in, its music plays through the speaker on the deck and in the
 // flat (game/music.js: NINTH FM is Juno's theme, NAGI·WA EASY and KESSEL ROOFTOP their own), elsewhere the room's
 // music; AUS turns it off. While the window is open the station's presenter talks between the songs: a line every
 // few seconds, in turn, some only on their evening (written now; a synthesised voice can read them later).
@@ -13,7 +14,8 @@
 
   /**
    * The stations, in the window's order; each one's music and what its presenter says (`day`: only on that game day).
-   * @type {{id: string, name: string, freq: string, music: any, lines: {text: string, day?: number}[]}[]}
+   * `if`: only tuned in while this holds (otherwise its row is noise, so the rows stay where they are).
+   * @type {{id: string, name: string, freq: string, music: any, if?: any, lines: {text: string, day?: number}[]}[]}
    */
   Nagiwa.radio = [
     // NINTH FM: the Ninth's own night show; the presenter knows the street and talks to it (du, ihr)
@@ -50,11 +52,25 @@
       { text: "Wer ich bin, sag ich nicht. Im Haus weiß es eh jeder." },
       { text: "Der Aufzug fährt angeblich dienstags. Ich hab gewartet. Nein.", day: 1 },
     ] },
+    // LANTERN: his pirate station, from the caravan in the swamps (dialog-style-guide §6: on air he is whole and calm, like a presenter
+    // of the old days; no names said aloud; cables, noise, batteries, the water level; never "die Wahrheit"). Juno knows it once she has
+    // found him (lantern_found), not before: a fact of the chapter, no flag of its own
+    { id: "lantern", name: "LANTERN", freq: "87.6", if: "lantern_found", music: { theme: "glass", intensity: 0.2 }, lines: [
+      { text: "Hier ist Lantern. Wer das hier hört, ist noch wach." },
+      { text: "Der Pegel steht bei einem Meter zehn. Wer unten wohnt: Stellt die Akkus hoch." },
+      { text: "Sie sagen, ich hätte sie umgebracht. Ich sage nichts dazu. Ich sende." },
+      { text: "Zehn Sekunden auf dem großen Schirm. Hier hab ich länger. Glauben tut man mir hier auch nicht." },
+      { text: "Wer schläft, hört mich nicht. Das ist in Ordnung. Ich bin für die anderen da." },
+      { text: "Funk hört jeder. Heute ist mir das recht." },
+      { text: "Montag. Heute Nacht um eins sende ich, was sie mir gegeben hat. Bleibt wach.", day: 7 },
+    ] },
   ];
   Cutaway.i18n.declare("radio", ["AUS", "ON AIR", "RAUSCHEN", ...Nagiwa.radio.flatMap((s) => s.lines.map((l) => l.text))]);
 
   /** The station on now, or null. */
-  Nagiwa.radioOn = () => Nagiwa.radio.find((s) => s.id === Cutaway.state.peek("radio")) ?? null;
+  Nagiwa.radioOn = () => Nagiwa.radio.find((s) => s.id === Cutaway.state.peek("radio") && Nagiwa.radioKnown(s)) ?? null;
+  /** Whether a station can be tuned in now (Lantern's only once Juno knows it). @param {any} s */
+  Nagiwa.radioKnown = (s) => !s.if || Cutaway.state.test(s.if);
   /** What the presenter says now (a line every 9 s while the window is open), or "". */
   Nagiwa.radioLine = () => {
     const s = Nagiwa.radioOn(), day = Cutaway.time.now.day;
