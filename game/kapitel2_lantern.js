@@ -11,8 +11,8 @@
 // The way is checked on its own (off_lantern shuts it in the other runs: the half repair doesn't know, the screen doesn't tear), since its
 // steps would multiply every state of the chapter: tools/check.sh, the run "lantern" (Juno with the stick, the flat and the forgery done).
 // Lantern's and Pike's voices: dialog-style-guide §6 (drafts). [PLATZHALTER] Pike is a figure of the market's crowd, the output stage has
-// the tap's icon, the ride and the arrival are blocks (art/rooms/sumpf.px.js, from the sketch art/test/sumpf_fahrt_blocks.px.js), the
-// caravan inside is the old shop's iso block, Lantern in it is his feed figure; the words on the screen are a caption over the stutter until the street's picture shows
+// the tap's icon, the raft doesn't leave the market visibly, the caravan inside is the old shop's iso block, Lantern in it is his feed
+// figure (the ride and the arrival are painted: art/rooms/sumpf.px.js); the words on the screen are a caption over the stutter until the street's picture shows
 // them (§13, 4)
 "use strict";
 

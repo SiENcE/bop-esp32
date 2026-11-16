@@ -157,8 +157,9 @@ es nicht mehr, §7).
   und „Ich geh wieder.“. Gibt Juno ihm den Stick, hat er ihn (wie aus dem Trockner), `lantern_found=ally`, und er wechselt zum Du („Sag's
   nicht. Ich will's nicht wissen müssen.“). „Ich hab eine Aufnahme.“ kommt mit Entscheidung 2. Am Montag fragt das Brett, wer den Schirm
   gesehen hat. Die Hinweise zu diesem Weg gelten, solange Juno den Stick hat, Schritt für Schritt (der Trockner bleibt der kürzere Weg).
-  **Platzhalter:** Pike ist auf dem Markt eine Figur aus der Menge, die Endstufe hat das Bild des Abzweigers, die Fahrt und die Ankunft sind
-  Blöcke, `lantern_versteck` ist noch der Iso-Block des Ladens, Lantern ist seine Feed-Figur. Vom Markt fährt das Floß noch nicht sichtbar
+  **Gemalt** (2026-11-16, nach den Vorlagen des Nutzers, Prüfbilder `docs/rooms/sumpf_*`): die Fahrt und die Ankunft mit Pike, Juno und dem
+  Floß. **Platzhalter:** Pike ist auf dem Markt eine Figur aus der Menge, die Endstufe hat das Bild des Abzweigers, `lantern_versteck` ist
+  noch der Iso-Block des Ladens, Lantern ist seine Feed-Figur. Vom Markt fährt das Floß noch nicht sichtbar
   ab (eine Zeile, dann der Wechsel): Dafür muss das gemalte Floß im Markt ein eigenes Teil werden.
 - Die Hinweise des Kapitels sind seine eigenen (`Cutaway.hints(..., { act: "kapitel2" })`); die von Prolog und Kapitel 1 gelten nur
   noch in ihren Akten. Der Hinweis zur Fälschung gilt nur, während Juno sie im Editor ansieht, und erst nach den Hinweisen des Hauptfadens.
@@ -644,7 +645,7 @@ Archiv einer Kamera, Gegenstände an Hotspots und Fragen mit vier Antworten gibt
   `BECKEN 3` (oder `TINTE`), die Kameranummern `cam25` und `cam51`.
 - **Zeilen:** alles, was hier steht, sind Vorschläge; Lanterns Sprechkarte ist ein Entwurf (2026-11-15), beim Durchspielen zu prüfen.
 - **Preise und Zahlen:** Sable 3000, Vesper 5000, die Zuschauer, Sables Archiv 150, Kessler 50.
-- **Aussehen:** Klinik, Flur, Wohnung, die Fahrt durch den Wald, der Wohnwagen außen und innen, Pike auf seinem Floß (dazu seine Farbe), `cam51` und alle neuen Figuren gehen erst als Blöcke zur Freigabe, ebenso
+- **Aussehen:** Klinik, Flur, Wohnung, der Wohnwagen innen, Pike von oben auf dem Markt (dazu seine Farbe), `cam51` und alle neuen Figuren gehen erst als Blöcke zur Freigabe, ebenso
   die Änderungen an fertigen Bildern: die Bretter an Okonkwos Laden und der dunkle Laden in `cam07v`, `GLASSER LIES` und `WHO TALKED?`,
   das neue Kabel hinter dem großen Schirm, Lanterns grüner Text auf dem Schirm, das Papierboot mit `I.`, das Absperrband an `cam30`,
   das rote Licht der Kamera im 14. Stock aus.

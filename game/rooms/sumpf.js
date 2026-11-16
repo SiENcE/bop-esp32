@@ -1,4 +1,4 @@
-// The swamps (docs/kapitel2-design.md §3.5 L4, L5; decided 2026-11-16), on blocks (art/rooms/sumpf.px.js): two stages seen from the side,
+// The swamps (docs/kapitel2-design.md §3.5 L4, L5; decided 2026-11-16), painted (art/rooms/sumpf.px.js): two stages seen from the side,
 // where Juno sits on Pike's raft and nobody walks (observe: the one played isn't in the picture, she sits on the raft's canvas):
 //   sumpf_fahrt  the ride out of the Drain Market to the drowned forest: the planes scroll past the raft at their own speeds, the talk
 //                runs at the top (what is said: game/kapitel2_lantern.js)
