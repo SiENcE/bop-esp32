@@ -98,6 +98,9 @@ Nagiwa.at = {
       Nagiwa.layouts.kowalski.openings.ad[2] + 6, Nagiwa.layouts.kowalski.openings.ad[3] + 1],
     // Bao's hotspot: his top half over the counter (the cart's own below it), his head and shoulders' shape, no floor beside him
     baoPoly: ((x, y) => [x - 6, y - 49, x + 6, y - 49, x + 9, y - 37, x + 11, y - 23, x - 11, y - 23, x - 9, y - 37])(...Nagiwa.layouts.kowalski.spots.bao),
+    // Chapter 2, the Quiet (game/kapitel2_quiet.js): the shadow at the front before LUCKY STATIC, his back to us, staring at the
+    // Kessel Block's door (the user's choice, 2026-11-17); on Monday the leader there and his two men a step behind him on either side
+    quiet: [128, 168], quietLeft: [106, 160], quietRight: [148, 162],
   },
   // measured from the cameras' projections (docs/cams/cam03_layout.md, cam04_layout.md). No depth `scale`: the
   // feed figures stay at their drawn size (scaling 24 px pixel art by 0.7–1.9 would smear it; the seated
@@ -278,7 +281,8 @@ Nagiwa.at = {
   // asleep behind the counter is a figure of his own (art/characters/schlaefer.px.js, his chair in it) standing at the spot `sleeper`
   laundromat: (() => {
     const at = fromLayout(Nagiwa.layouts.laundromat), P = Nagiwa.layouts.laundromat.props;
-    return { ...at, dryersPoly: hull([1, 2, 3, 4, 5, 6, 7, 8].map((n) => P[`dryer${n}`].poly).flat()) };
+    // (quiet: Chapter 2's man in white on the open floor, looking at dryer 6, where CAM 23 shows him: game/kapitel2_quiet.js)
+    return { ...at, dryersPoly: hull([1, 2, 3, 4, 5, 6, 7, 8].map((n) => P[`dryer${n}`].poly).flat()), quiet: [176, 150] };
   })(),
   cam04: {
     entrance: [100, 43], seatVarga: [149, 132], seatKessler: [156, 94], counter: [176, 69], cook: [182, 50], cookBust: [186, 30],

@@ -435,6 +435,10 @@ so liest der Schatten nur `e1`, `e2` und den Tag und braucht kein eigenes Flag),
 jedem Fall gefunden (§4). Wer in dieser
 Zeit zu Lantern geht, führt die Quiet zu ihm (`led_quiet`; in Kapitel 4 stirbt Lantern dann, story §7). Das ist keine Sperre, aber der
 Spieler weiß es vorher: Auf dem Weg in die Gasse sagt EVI: „Der in Weiß schaut uns nach.“ Vor 19:00 oder nach 23:00 ist die Straße frei.
+**Gebaut** (2026-11-17, `game/kapitel2_quiet.js`, die Figuren gemalt in `art/characters/quiet.px.js`): `led_quiet` setzt das Ablegen von
+Pikes Floß, wenn der Schatten in dieser Zeit steht (die Quiet sieht, wohin Juno fährt; das liest nur Tag, Uhrzeit, `e1` und `e2`, also ohne
+eigenes Flag dafür, ob Juno an ihm vorbeiging). EVI sagt es dreimal vorher: an der Gasse („Der in Weiß schaut uns nach.“), bei Pike („Oben
+steht der in Weiß. Bis elf.“) und beim Ablegen („Der in Weiß oben. Sieht der, wohin wir fahren?“); ihr Hinweis ist der aus §12.
 
 ### 3.6 Entscheidung 2: der Clip
 
@@ -466,7 +470,8 @@ mehr, und Lantern kommt nicht mehr an den Trockner; EVIs Hinweis schickt Juno da
 weil dort der Weg zu ihm zu ist, und lassen das Schneiden weg, das dort nichts ändert und jeden Zustand verdoppelte; der Lauf dieses Wegs
 allein schließt den Trockner mit `off_dryer` ohnehin. Das Schneiden prüfen die Klicks: `tools/paths/kapitel2_main.json` schneidet bei
 Vesper, die anderen Pfade geben den ganzen Clip.) **Platzhalter:** Der Mann in Weiß ist die Figur
-aus `cam25`, im Waschsalon selbst (Straßenmodus) wird er nur erzählt.
+aus `cam25`, im Waschsalon selbst (Straßenmodus) wird er nur erzählt. **Gebaut** (2026-11-17): Er ist einer der Männer der Quiet (B),
+gemalt, im Waschsalon selbst vor der Sechs und in `cam23` dieselbe Figur unter dem Filter.
 
 ### 3.7 Montag, 00:45
 
@@ -495,6 +500,12 @@ Story §7: Kameras in der Nähe von Junos Block fallen eine nach der anderen aus
 | ab Montag, in jedem Fall | Die Quiet hat Juno gefunden, auch nach einer Weigerung und wenn sie den Clip behält (entschieden 2026-11-14): Ihr alter Nagi·wa-Zugang war an Ines' Kameras offen (`cam21`, `cam30`), und als die Quiet sucht, wer dort zugesehen hat, steht ihre Kennung im Protokoll; dazu die Markierungen der Schläfer. Der Schatten steht ab Montag vor dem Haus, und jetzt sind es drei: der Anführer und zwei mit Kapuze (vom Nutzer entschieden 2026-11-17, die Quiet steigert sich). Die Meldung an Revier 9 aus Kapitel 1 spielt keine Rolle: Sie ist dort ein freiwilliger Klick ohne Flag. | „Mein alter Zugang. Die haben die Codes nie geändert. Aber nachgesehen haben sie.“ |
 
 Kein Flag außer dem Wissen, das die Quiet schon hat: Die Kameras gehen über Nacht (`passes`), der Schatten liest `e1`, `e2` und den Tag.
+
+**Gebaut** (2026-11-17, `game/kapitel2_quiet.js`): Der Schatten steht vorn vor dem LUCKY STATIC, erst einer mit Kapuze, am Montag der Anführer
+und zwei mit Kapuze einen Schritt hinter ihm. Ihr Weiß nimmt das Licht des Raums nicht an (die Figur hat `lit: false`, Engine 376a4aa). In GLASS
+sind `cam07` ab Sonntag und `cam14` ab Montag grau mit `KEIN SIGNAL`, ebenso in der Leiste der Feeds; ein Klick sagt nur Junos Zeile. Die Links
+vergisst die Nacht davor, und `cam14` steht ab Montag für jeden auf der Karte (Juno kennt die Kamera über ihrer Treppe). Im Flur ist das rote
+Auge der Kamera am Montag aus: dieselbe Kamera zweimal im Plan von `kessel_14`, die zweite dunkel (`corner_cam_dark`).
 Am Ende von Kapitel 2 weiß die Quiet in jedem Fall, wer Juno ist; Kapitel 3, in dem sie den Block stürmt (story §7), braucht dafür
 kein Flag.
 
@@ -680,7 +691,7 @@ wechseln würde, eine eigene Ansicht (Kapitel 1, §10). Lull ist immer die ovale
 | Wer | Neu oder wieder | Wo | Ansichten | Was zu beachten ist |
 |---|---|---|---|---|
 | **die Pflegerin an der Aufnahme** | neu | `klinik`, `cam21` (Feed) | Iso SE hinter dem Glas (sitzend), Feed NE und NW auf dem Weg zur Nachtschicht | weißer Kittel wie Ines, aber kurz; kein Lull. Name offen (§14) |
-| **die Quiet** (zwei im Flur, der Schatten, der Mann am Trockner) | neu | `cam25`, `cam23` (Feed), `kowalski`, `laundromat` (Iso) | Feed SE, SW, NE, NW mit Kisten; Iso SE, NE stehend (NW gespiegelt) | weiße Regenmäntel wie Ashe, die Masken überstrahlen im Feed; im Straßenmodus eine glatte weiße Maske. **Zwei Ränge** (vom Nutzer entschieden 2026-11-17, Blöcke `art/test/quiet_blocks.px.js`, `docs/characters/quiet_blocks_x4.png`): der **Anführer** (A) im langen Gürtelmantel bis zur Wade mit hochgeschlagenem Kragen wie Ashe, die ovale Maske mit zwei Augenschlitzen, kurzes dunkles Haar, ein rotes Licht am linken Revers; er ist namenlos, nicht Ashe. Die **Untergebenen** (B) im Mantel bis zum Knie mit enger weißer Kapuze und weißen Handschuhen, die glatte Maske mit einer dünnen roten Linie über den Augen. Wie viele wo: der Schatten erst einer (B), am Montag der Anführer mit zwei (B); am Trockner einer (B). Das Licht am Revers zeigt sich nur von vorn: NW ist NE gespiegelt, SW bräuchte eine eigene Ansicht (er sieht nie nach SW). **Ihr Weiß leuchtet** (vom Nutzer entschieden 2026-11-17): Mantel und Maske nehmen das Licht des Raums nicht an, so sind sie das einzige Saubere gegen die Nacht |
+| **die Quiet** (zwei im Flur, der Schatten, der Mann am Trockner) | neu | `cam25`, `cam23` (Feed), `kowalski`, `laundromat` (Iso) | Feed SE, SW, NE, NW mit Kisten; Iso SE, NE stehend (NW gespiegelt) | weiße Regenmäntel wie Ashe, die Masken überstrahlen im Feed; im Straßenmodus eine glatte weiße Maske. **Zwei Ränge** (vom Nutzer entschieden 2026-11-17, Blöcke `art/test/quiet_blocks.px.js`, `docs/characters/quiet_blocks_x4.png`): der **Anführer** (A) im langen Gürtelmantel bis zur Wade mit hochgeschlagenem Kragen wie Ashe, die ovale Maske mit zwei Augenschlitzen, kurzes dunkles Haar, ein rotes Licht am linken Revers; er ist namenlos, nicht Ashe. Die **Untergebenen** (B) im Mantel bis zum Knie mit enger weißer Kapuze und weißen Handschuhen, die glatte Maske mit einer dünnen roten Linie über den Augen. Wie viele wo: der Schatten erst einer (B), am Montag der Anführer mit zwei (B); am Trockner einer (B). Das Licht am Revers zeigt sich nur von vorn: NW ist NE gespiegelt, SW bräuchte eine eigene Ansicht (er sieht nie nach SW). **Ihr Weiß leuchtet** (vom Nutzer entschieden 2026-11-17): Mantel und Maske nehmen das Licht des Raums nicht an, so sind sie das einzige Saubere gegen die Nacht. Gemalt in `art/characters/quiet.px.js` (SE und NE stehend, ein Tropfen am Saum, das rote Licht); **Platzhalter:** die zwei in `cam25` sind noch Ashes Feed-Figur, denn sie gehen und tragen Kisten |
 | **Lantern** (persönlich) | neu in Iso (der Wohnwagen ist ein Iso-Raum, entschieden 2026-11-16) | `lantern_versteck` | Iso sitzend im Rollstuhl an seinem Sender, eine Richtung, mit kleinen Bewegungen: nach Südwesten zu Juno hin gedreht (vom Nutzer freigegeben 2026-11-16), gemalt in `art/characters/lantern.px.js` | das Gesicht aus `docs/portraits/lantern_x4.png` (grüner Iro, das Okular über **einem** Auge, Headset): Er sitzt immer gleich, so braucht er keine Gegenrichtung; das Okular sitzt auf der Seite, auf der es im Porträt sitzt |
 | Lantern im Feed | wieder | `cam23` | wie in `cam31`, im Maßstab des Waschsalons | der gemalte Lantern von der Seite, beide Richtungen gezeichnet, die Räder drehen sich (story §10c, 2026-11-16) |
 | **Teo, sitzend von hinten** | neu (Pose) | `dach_sitzen` | eine | neben Juno, die Kapuze unten, der Gehörschutz; von hinten sieht man das Pflaster hinter seinem Ohr, am selben Ohr wie in seinen anderen Ansichten (nicht aus einer gespiegelten Ansicht nehmen) |
@@ -756,7 +767,8 @@ Archiv einer Kamera, Gegenstände an Hotspots und Fragen mit vier Antworten gibt
    Hotspots, ein Zähler `forgery_cuts`; Montieren als Wahl eines Moments und eines Zeitstempels. Dasselbe Prüfen dient dem Ende (die
    Protokolle als Zeitleiste ohne Bild).
 2. **Eine Kamera nur im Archiv** (`cam51`): wie das Archiv von `cam18`, ohne Live-Bild.
-3. **Kameras, die ausfallen**: `link_cam07` und `link_cam14` über Nacht vergessen, GLASS zeigt sie grau mit `KEIN SIGNAL`.
+3. **Kameras, die ausfallen**: `link_cam07` und `link_cam14` über Nacht vergessen, GLASS zeigt sie grau mit `KEIN SIGNAL` (gebaut: ein Eintrag in
+   `Nagiwa.cams` kann `dead` haben, eine Bedingung, und `deadLine`, was Juno beim Klick sagt).
 4. **Der gekaperte Schirm** auf der Kowalski: ein Teil des Bilds der Straße, das zu bestimmten Zeiten den Text zeigt (gesetzt mit der
    Spielschrift).
 5. **Ein Ausgang mit Auswahl** (das Tor der Jade Row): ein Hotspot, der eine Frage stellt und in einen von zwei Räumen führt.

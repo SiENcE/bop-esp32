@@ -128,7 +128,7 @@ Nagiwa.camRoom("cam14", { background: undefined, color: Nagiwa.PHOSPHOR[0], mic:
   post: [{ exposure: AC.exposure }, ...Nagiwa.FEED_POST],
   props: [
     { id: "floor14", image: "kessel_14_bg", at: [SH, 0], anchor: [0, 0], baseline: -1000 },
-    ...K14.props.filter((/** @type {any} */ p) => p.id !== "corner_cam").map((/** @type {any} */ p) => ({ ...p, at: [p.at[0] + SH, p.at[1]],
+    ...K14.props.filter((/** @type {any} */ p) => p.id !== "corner_cam" && p.id !== "corner_cam_dark").map((/** @type {any} */ p) => ({ ...p, at: [p.at[0] + SH, p.at[1]],
       ...(p.front ? { front: shiftX(p.front) } : {}), ...(p.id === "haken" ? { if: "!got_haken" } : {}) })),
     // the morning's bundle before the mat, left of the rail's post (where the post hid half of it)
     { id: "papers", image: "haldane_papers", at: [AC.mat[0] - 12, AC.mat[1] + 2], if: "time<02:45" },

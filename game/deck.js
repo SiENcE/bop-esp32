@@ -50,7 +50,7 @@
     camBox: 54,                                               // a camera's place on it, as wide as its longest line ("CODE BEKANNT"): keep the cameras this far apart
   };
   Cutaway.i18n.declare("deck", [...Object.values(LABEL), "DECK // J.REYES", "{time}  {date}", "{chits} CHITS", "WARTEN", "ZURÜCK",
-    "KONTAKTE", "KEIN ZUGANG", "CODE BEKANNT", "VERBUNDEN", "NETZKARTE // LOWER NINTH", "CLIP", "NOTIZ", "FOTO", "GELESEN", "online",
+    "KONTAKTE", "KEIN ZUGANG", "KEIN SIGNAL", "CODE BEKANNT", "VERBUNDEN", "NETZKARTE // LOWER NINTH", "CLIP", "NOTIZ", "FOTO", "GELESEN", "online",
     "abwesend", "schläft", "Werbung", "KASSENBUCH", "+{chits}", "KONTOSTAND", "MIETE", "{n} CHITS, FÄLLIG IN 3 TAGEN", "{n} CHITS, FÄLLIG IN 2 TAGEN", "{n} CHITS, FÄLLIG MORGEN", "{n} CHITS, FÄLLIG HEUTE", "{n} CHITS, BEZAHLT", "{n} CHITS, BEZAHLT VON TEO", "DAVON HÜLLENABGABE {n}",
     "BAO", "ANGESCHRIEBEN", "STEUER_2089_NICHT_ÖFFNEN.TXT", "ESSEN!!.TXT", "Noch nichts.", "…",
     "CACHE // {name}", "WO", "WANN", "LÄNGE", "WER", "{cam} // {place}", "{min} MIN", "SCHNEIDEN", "ANONYMISIEREN", "PRÜFEN", "MONTIEREN",
@@ -116,6 +116,9 @@
           else: [{ if: `code_${id}`, then: [{ set: `link_${id}` }, { sfx: "link" }, ...(/** @type {any} */ (cam).linked ?? ["Ich geb den Wartungscode ein. Sie ist verbunden."])],
             else: /** @type {any} */ (cam).tryIt ?? ["Kein Zugang. Ich brauch den Wartungscode der Kamera."] }] }],
       };
+      // a camera that has gone (`dead`, a condition: game/kapitel2_quiet.js): grey on the map, KEIN SIGNAL, and only what Juno says
+      const dead = /** @type {any} */ (cam).dead;
+      if (dead) hs[`cam_${id}`].use = [{ if: dead, then: /** @type {any} */ (cam).deadLine ?? ["Kein Signal."], else: hs[`cam_${id}`].use }];
     }
     // CHAT: the contacts (those that appear later come last, so the rows stay put), the replies
     Object.entries(Nagiwa.contacts).forEach(([id, c], i) => {
@@ -401,6 +404,13 @@
         if (!S().test(cam.if)) continue;
         const x = mx + cam.map[0], y = my + cam.map[1], linked = !!S().flag(`link_${id}`), code = !!S().flag(`code_${id}`);
         const hot = inRect(pointer().x, pointer().y, [x - 4, y - 4, D.camBox, 18]);
+        if (/** @type {any} */ (cam).dead && S().test(/** @type {any} */ (cam).dead)) {      // gone: grey, its label dim
+          rect(ctx, C.steel3, x - 2, y - 2, 5, 5); ctx.fillStyle = C.steel5; ctx.fillRect(x - 1, y, 3, 1);
+          if (hot) { ctx.fillStyle = C.steel6; ctx.fillRect(x - 4, y - 4, 2, 1); ctx.fillRect(x - 4, y - 4, 1, 2); ctx.fillRect(x + 3, y + 4, 2, 1); ctx.fillRect(x + 4, y + 3, 1, 2); }
+          small(ctx, t("CAM {id}", { id: cam.id }), x + 6, y - 2, C.steel5);
+          small(ctx, t("KEIN SIGNAL"), x + 6, y + 5, C.steel5);
+          continue;
+        }
         rect(ctx, linked ? C.cyan : code ? C.cyanDark : C.steel4, x - 2, y - 2, 5, 5);
         if (hot) { ctx.fillStyle = C.cyanPale; ctx.fillRect(x - 4, y - 4, 2, 1); ctx.fillRect(x - 4, y - 4, 1, 2); ctx.fillRect(x + 3, y + 4, 2, 1); ctx.fillRect(x + 4, y + 3, 1, 2); }
         small(ctx, t("CAM {id}", { id: cam.id }), x + 6, y - 2, linked ? C.cyanPale : C.steel6);

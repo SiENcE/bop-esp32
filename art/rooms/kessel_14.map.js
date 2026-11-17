@@ -51,6 +51,8 @@ ISO_MAPS.kessel_14 = {
     // Nagi·wa's camera high on the right wall over the stairwell, looking across the landing at the doors: from there it sees the
     // floor as the picture does (CAM 14 is this picture under the feed's filter, game/stadt.js)
     { id: "corner_cam", kit: "corner_cam", at: [5.0, 0.03], foot: [0.2, 0.42], h: 2.35, face: "v", block: false },
+    // the same camera dark, its red eye out: the game shows it instead from Chapter 2's third evening (game/kapitel2_quiet.js)
+    { id: "corner_cam_dark", kit: "corner_cam", at: [5.0, 0.03], foot: [0.2, 0.42], h: 2.35, face: "v", block: false, dark: true },
     // the lift's emergency key, a long hook, on the wall in the corner left of its doors; a prop of its own, since Juno takes it
     { id: "haken", kit: "emergency_key", at: [0.05, 0.03], foot: [0.2, 0.05], h: 2.3, block: false },
     // the bin bags against the left wall in front, under the neon, waiting for Tuesday

@@ -70,9 +70,9 @@
     if (!strip || S().test(strip)) Object.keys(Nagiwa.cams).forEach((c, i) => {
       const linked = !!S().flag(`link_${c}`);
       if (!(linked || S().flag(`code_${c}`)) || !S().test(Nagiwa.cams[c].if)) return;     // (linked or its code known, and known of: as on the map)
-      const [x, y, w, h] = O.thumb(i), live = c === id;
+      const [x, y, w, h] = O.thumb(i), live = c === id, dead = !!(/** @type {any} */ (Nagiwa.cams[c]).dead && S().test(/** @type {any} */ (Nagiwa.cams[c]).dead));
       ctx.fillStyle = live ? C.phosphorDim : C.ink; ctx.fillRect(x, y, w, h);
-      small(ctx, t("CAM {id}", { id: Nagiwa.cams[c].id }), x + w / 2, y + 3, live ? C.phosphorBright : linked ? C.phosphor : C.steelText, "center");
+      small(ctx, t("CAM {id}", { id: Nagiwa.cams[c].id }), x + w / 2, y + 3, live ? C.phosphorBright : linked && !dead ? C.phosphor : C.steelText, "center");
     });
     // the buttons under the time: buffer (only when it holds something Juno needs), REC, wait, deck
     const buttons = /** @type {[string, number[], boolean][]} */ ([["REC", O.rec, !!S().flag("rec_on")], ["VOR", O.wait, false], ["DECK", O.back, false]]);

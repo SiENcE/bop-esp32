@@ -12,8 +12,8 @@
 // the laundromat from the next evening; nothing can be put back then, and Lantern, who sees him from the water, no longer comes, so the
 // stick only reaches him by hand (§3.1). (The runs with the way to Lantern shut, off_lantern, keep the dryer open: the way it leaves is
 // shut there, and the run of that way alone shuts the dryer anyway, off_dryer.)
-// [PLATZHALTER] Lantern in CAM 23 is his figure from CAM 31 for now, not yet at the laundromat's scale (§10); the man in white is the
-// Quiet's figure from CAM 25, and in the laundromat itself (street mode) he is only told of, not yet drawn
+// [PLATZHALTER] Lantern in CAM 23 is his figure from CAM 31 for now, not yet at the laundromat's scale (§10). The man in white is one of
+// the Quiet's men, in CAM 23 and in the laundromat itself (game/kapitel2_quiet.js gives him his figure and his place in the laundromat)
 "use strict";
 
 (function () {
@@ -80,8 +80,9 @@ Cutaway.dialog("stick_zurueck", { main: { choices: [
   { text: "Zurücklegen.", silent: true, if: ["!off_dryer", DRYER_FREE], goto: "end", then: PUT_BACK },
   { text: "Behalten.", silent: true, goto: "end", then: ["Noch nicht."] },
 ] } });
-// ---- the man in white in CAM 23, every evening once the Quiet knows of the dryer: he stands in the middle and looks at dryer 6
-Cutaway.actor("quiet_salon", { name: "In Weiß", color: "#f0f0f0", costume: { idle: "ashe_feed", walk: "ashe_feed_walk", talk: "ashe_feed" },
+// ---- the man in white in CAM 23, every evening once the Quiet knows of the dryer: he stands in the middle and looks at dryer 6 (his
+// figure, the Quiet's at street size, and the same man in the laundromat itself: game/kapitel2_quiet.js)
+Cutaway.actor("quiet_salon", { name: "In Weiß", color: "#f0f0f0", lit: false, costume: { idle: { se: "quiet_b_idle_se", ne: "quiet_b_idle_ne" } },
   look: ["Ein weißer Regenmantel im Waschsalon, und keine Wäsche.", "Er sitzt da, wo man die Sechs sieht. Die wissen es."],
   talk: ["Die Markierung rutscht ab. Da ist nichts, woran sie hängen bleibt."] });
 Cutaway.routine("quiet_salon", [{ day: [6, 7], from: "18:00", to: "01:00", if: "quiet_dryer", room: "cam23", at: A23.quiet, face: "ne" }]);

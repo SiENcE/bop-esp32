@@ -66,6 +66,8 @@ Nagiwa.buildCamStrip = function () {
       if (c !== id) room.hotspots[`thumb_${c}`] = { name: `CAM ${cam.id}`, rect: Nagiwa.osd.thumb(i), z: 5,
         if: [{ or: [`link_${c}`, `code_${c}`] }, ...(cam.if ? [cam.if] : []), ...(room.strip ? [room.strip] : [])],
         use: [{ if: `link_${c}`, then: [{ goto: c }], else: [{ set: `link_${c}` }, { sfx: "link" }, ...(cam.linked ?? ["Ich geb den Wartungscode ein. Sie ist verbunden."])] }] };
+      // a camera that has gone (game/kapitel2_quiet.js): greyed in the strip, a click only says so
+      if (c !== id && cam.dead) room.hotspots[`thumb_${c}`].use = [{ if: cam.dead, then: cam.deadLine ?? ["Kein Signal."], else: room.hotspots[`thumb_${c}`].use }];
     });
   }
 };

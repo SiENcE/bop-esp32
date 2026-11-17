@@ -101,7 +101,10 @@ const AF = Nagiwa.at.sumpf_fahrt, AH = Nagiwa.at.sumpf;
 // glide right together (the raft a prop of the market, both at the market's walking pace: drain_market.flossOut px in its time) in under
 // the Ring's last pillar, into the dark; the ride begins in that dark, the portal slides off and for the first time there is sky
 const OUT = AM.flossOut, OUT_MS = Math.round(OUT / 40 * 1000);
-const STEP_ON = ["Ich steig auf.", { walk: "juno", to: AM.flossJuno, free: true, face: "right" }];
+// Riding out while the Quiet stands before her house (Nagiwa.quietOut, game/kapitel2.js) leads it to him (led_quiet): EVI has said so on the
+// way into the alley and at Pike's raft, and says it once more as they push off
+const STEP_ON = ["Ich steig auf.", { walk: "juno", to: AM.flossJuno, free: true, face: "right" },
+  { if: [...Nagiwa.quietOut, "!led_quiet"], then: [{ set: "led_quiet" }, { evi: "besorgt" }, { say: "evi", text: "Der in Weiß oben. Sieht der, wohin wir fahren?" }] }];
 const CAST_OFF = [
   { move: "floss", by: [OUT, 0], ms: OUT_MS, ease: "linear", wait: false },
   { walk: "pike", to: [AM.pike[0] + OUT, AM.pike[1]], free: true, wait: false },
@@ -152,12 +155,12 @@ Cutaway.dialog("pike_fahrt", {
 // Pike on his raft, once Juno knows what he wants. A plain dialogue, not a talkTree: the ride ends the talk (a talkTree's topic would
 // come back to its choices, after the ride, in the swamp)
 const PAID = [{ remove: "endstufe" }, P("Die mit den Kühlrippen. Gut."), ...RIDE_FIRST];
-Cutaway.dialog("pike", { main: [
+Cutaway.dialog("pike", { main: { enter: [{ if: [...Nagiwa.quietOut, "!led_quiet"], then: [{ evi: "besorgt" }, { say: "evi", text: "Oben steht der in Weiß. Bis elf." }] }], choices: [
   { text: "„Hier. Die Endstufe.“", if: "has:endstufe", goto: "end", then: PAID },
   { text: "„Fährst du mich raus?“", if: ["ledger_ratz", "!has:endstufe"], goto: "end", then: [P("Steig auf."), ...RIDE_AGAIN] },
   { text: "„Was ist mit Ratz?“", then: [P("Ratz sagt, ich hätte ihn fressen wollen."), P("Ich frühstücke nie.")] },
   { text: "Später.", silent: true, goto: "end" },
-] });
+] } });
 // the output stage handed to him straight from the bag works as well as saying so (what the hint says: give it to Pike)
 const pikeDef = /** @type {any} */ (Cutaway.actors.get("pike")).def;
 pikeDef.with = { endstufe: ["Hier. Die Endstufe.", ...PAID], haken: market.datenfloss.with.haken };

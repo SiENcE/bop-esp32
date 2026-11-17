@@ -356,7 +356,8 @@ const K14 = (() => {
   // behind: the armchair's back toward the door, over it her grey hair in curlers, fallen a little to one
   // side, the Lull point's blue behind her ear; her arm hanging over the armrest, a slipper fallen off
   // Nagi·wa's camera up in the corner: an arm from the ceiling's edge, the housing along the wall, its lens at the end towards the
-  // landing, the red eye blinking on its side
+  // landing, the red eye blinking on its side; `dark: true` the same camera with its eye out (Chapter 2's third evening: the Quiet is in
+  // the house, kapitel2-design §4)
   ISOKIT.prop("corner_cam", {
     frames: 12,
     footprint: () => [],
@@ -365,7 +366,8 @@ const K14 = (() => {
       pen.box(u0 + 0.04, v0 + 0.04, h0 + 0.16, 0.1, 0.1, H - h0 - 0.16, () => "6", () => "4", () => "5")   // the arm
       // the lens on the face it looks out of: +u (toward the lower right), or +v (`face: "v"`, out of a right-hand wall)
       const lens = (/** @type {number} */ a, /** @type {number} */ e, /** @type {any} */ o) => (a >= 2 && a < o.aw - 1 && e >= 1 && e < o.ah - 1 ? (a === 3 && e === 2 ? "!v" : "k") : "4")
-      const side = (/** @type {number} */ a, /** @type {number} */ e, /** @type {any} */ o) => (a === o.aw - 4 && e === 2 ? (f % 6 < 2 ? "!q" : "!r") : e === 0 ? "3" : e >= o.ah - 1 ? "6" : "5")
+      const eye = p.dark ? "5" : f % 6 < 2 ? "!q" : "!r"
+      const side = (/** @type {number} */ a, /** @type {number} */ e, /** @type {any} */ o) => (a === o.aw - 4 && e === 2 ? eye : e === 0 ? "3" : e >= o.ah - 1 ? "6" : "5")
       if (p.face === "v") pen.box(u0, v0, h0, L, W, 0.17, () => "G", side, lens)
       else pen.box(u0, v0, h0, L, W, 0.17, () => "G", lens, side)
     },

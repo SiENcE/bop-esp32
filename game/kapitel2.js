@@ -6,6 +6,8 @@
 //   quiet_dryer     the clip went out whole (to Sable, Vesper or Morrow), so Nagi·wa heard Ines' whisper: from the next evening a man in
 //                   white waits in the laundromat (CAM 23), the stick can't be put back, and Lantern, who sees him from the water, no
 //                   longer comes (game/kapitel2_stick.js). Cut out (cache_clip_ines_cut, the clip editor or when she gives it), nobody hears it
+//   led_quiet       Juno rode out to Lantern while the Quiet stood before her house (19:00 to 23:00, once it knows her): it saw where
+//                   she went, and in Chapter 4 it finds him (story §7); not a bar, EVI says so beforehand (game/kapitel2_quiet.js)
 //   (the forgery and PRÜFEN: game/kapitel2_faelschung.js)
 //   (Ines' stick, the key to her wallet, without which Lantern can't send: Juno has it (stick_ines, kept from Chapter 1), it lies in
 //   dryer 6 again (stick_dryer), or Lantern has it, which needs no flag of its own: game/kapitel2_stick.js)
@@ -14,6 +16,12 @@
 
 (function () {
 const AF = Nagiwa.at.flat, AK = Nagiwa.at.kessel_14, AJ = Nagiwa.at.jade_row, AG = Nagiwa.at.gasse;
+
+// The Quiet knows who Juno is (kapitel2-design §4): she sold the place in Chapter 1, the clip went to Sable, Vesper or Morrow (at once, not
+// the next evening), or it is Monday, when it has found her anyway. Then from 19:00 to 23:00 it stands before her house (game/kapitel2_quiet.js),
+// and whoever rides out to Lantern in that time leads it to him (led_quiet). It reads only e1, e2 and the day: no flag of its own
+Nagiwa.quietKnown = { or: ["e1=sold", "e2=sable", "e2=vesper", "e2=morrow", "day=7"] };
+Nagiwa.quietOut = ["day>4", "time>=19:00", "time<23:00", Nagiwa.quietKnown];
 
 // Saturday's evening has no card of its own: the chapter's card is it (as in Chapter 1)
 // overnight the day's moments are forgotten (whether one was watched no longer matters, and each would double what follows: a moment
@@ -252,6 +260,10 @@ Cutaway.hints([
   { if: ["lantern_found=out", "has:funk"], about: ["antennenmast", "wohnwagen", "funk", "ch_links", "ch_rechts", "welle_links", "welle_rechts", "tx", "pwr"],
     text: ["Jetzt kannst du senden. Auf seiner Frequenz.", "Siebenundachtzig sechs. Und deine Welle muss aussehen wie seine auf dem Schirm am Mast.",
       "Schalt das Funkgerät am Mast ein, stell 87.6 und die Zacken ein, drück TX und sag ihm, dass du noch wach bist."] },
+  // the shadow before the house (game/kapitel2_quiet.js): riding out now leads the Quiet to Lantern; not a bar, the way on is the same
+  // (only before the first ride: once he is found, the way on is in the swamp, and EVI says it again at Pike's raft)
+  { if: [...Nagiwa.quietOut, "!led_quiet", "!off_lantern", "!lantern_found", "stick_ines", { or: ["has:endstufe", "ledger_ratz"] }], about: ["wait", "pike", "datenfloss", "wohnwagen", "dryer6", ...HOME],
+    text: ["Der in Weiß steht wieder unten.", "Wenn er dich sieht, sieht er auch, wohin du gehst.", "Er geht um elf. Warte bis dahin, bevor du zu Lantern gehst."] },
   { if: ["stick_ines", "lantern_found"], about: ["lantern_k2", "pike", "datenfloss", "wohnwagen", "dryer6"],
     text: ["Lantern hat seine Wallet. Den Schlüssel hast du.", "Bring ihn ihm. Oder leg ihn in den Trockner, um halb eins holt er ihn.", "Lass dich von Pike rausfahren und gib Lantern den Stick."] },
   { if: ["stick_ines", "ledger_ratz", "!has:endstufe"], about: ["wohnwagen", "pike", "datenfloss", "dryer6"],
