@@ -7,7 +7,6 @@ include("../lib/isomap.js")
 include("../rooms/klinik.map.js")
 include("../lib/isokit.js")
 include("../kit/klinik.kit.px.js")
-include("../kit/laundromat.kit.px.js", { palette: true })
 
 const KLINIK = ISOKIT.bake(ISO_MAPS.klinik, { id: "klinik", frames: 12, fps: 10 })
 

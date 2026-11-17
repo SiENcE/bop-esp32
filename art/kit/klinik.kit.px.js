@@ -5,9 +5,10 @@
 //
 //   floor    p  pale vinyl tiles, 50 cm, a joint between them
 //   walls    klinik_wall  white wipe-clean panels to 1.2 m, pale paint above, a steel skirting
-//   openings kl_ring (Nagi·wa's ring), kl_screen (SLEEP BETTER), kl_cabin (the cabin's opening), kl_door (the glass door to the street)
+//   openings kl_ring (Nagi·wa's ring), kl_screen (SLEEP BETTER), kl_cabin (the cabin's opening), kl_door (the glass door to the street),
+//            kl_walllamp (the tube on the wall behind the reception)
 //   props    kl_reception (the counter with its glass), kl_seats (a row of four joined seats, their backs to the wall), kl_scanner (the
-//            scanner chair under its hood)
+//            scanner chair under its hood), kl_tube (a tube hanging over the room)
 // Keys "!k" are never lit.
 
 const KIT_KLINIK = (() => {
@@ -61,6 +62,28 @@ const KIT_KLINIK = (() => {
     },
   })
 
+  // the wall lamp behind the reception: a tube in a white housing along the wall over the nurse
+  ISOKIT.opening("kl_walllamp", {
+    paint(s, h, o) {
+      const { a, e, aw, ah } = o
+      if (a < 0 || a >= aw || e < 0 || e >= ah) return null
+      if (e === ah - 1 || a === 0 || a === aw - 1) return "H"
+      return e === 0 ? "!H" : "!V"
+    },
+  })
+  // a tube hanging over the room on two wires, in its steel tray (one of the laundromat's, cold)
+  ISOKIT.prop("kl_tube", {
+    outline: false, footprint: () => [], solid: () => [],
+    draw(pen, p) {
+      const [u0, v0] = p.at, [du] = p.foot
+      const [x0, y0] = pen.P(u0, v0, p.h), [x1, y1] = pen.P(u0 + du, v0, p.h)
+      pen.at(u0, v0, p.h + 0.1, null)
+      pen.vline(x0 + 3, y0 - 30, 28, "k"); pen.vline(x1 - 3, y1 - 30, 28, "k")
+      pen.line(x0, y0 - 2, x1, y1 - 2, "2"); pen.line(x0, y0 - 1, x1, y1 - 1, "4")
+      for (let x = 0; x <= x1 - x0; x++) { pen.px(x0 + x, y0 + Math.floor(x / 2), "!V"); pen.px(x0 + x, y0 + 1 + Math.floor(x / 2), "!H") }
+      pen.at(null)
+    },
+  })
   // the reception: a counter along the left wall, the glass on it up to 1.9 m (only its frame and a few glints, so she shows through),
   // the slot at its foot
   ISOKIT.prop("kl_reception", {
