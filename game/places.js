@@ -50,8 +50,17 @@ Nagiwa.at = {
   // Ines' flat, 4B, on blocks (art/rooms/ines_wohnung.map.js, game/rooms/ines_wohnung.layout.js); the fridge's upper part has the napkin
   // under its magnet, its lower part is the freezer (one hotspot asks which)
   ines_wohnung: fromLayout(Nagiwa.layouts.ines_wohnung),
-  // klinik (art/rooms/klinik.map.js, game/rooms/klinik.layout.js)
-  klinik: fromLayout(Nagiwa.layouts.klinik),
+  // Lull-Klinik 9-Ost from the inside (art/rooms/klinik.map.js, game/rooms/klinik.layout.js). The waiting sit on the seats as props
+  // (art/characters/klinik.px.js: their hips at 2 px right of their figure's foot and 18 px above it): each stands where its hips come
+  // over its seat's spot, drawn after the seats, and in front of whoever stands behind the line of their feet (the seats' front line, 6 px
+  // lower)
+  klinik: (() => {
+    const A = fromLayout(Nagiwa.layouts.klinik), seats = Nagiwa.layouts.klinik.props.seats;
+    const front = seats.front.map((/** @type {number} */ n, /** @type {number} */ i) => (i % 2 ? n + 6 : n));
+    A.waiting = [A.wait1, A.wait2, A.wait4].map((/** @type {number[]} */ p, /** @type {number} */ i) =>
+      ({ id: `wartende_${i + 1}`, image: `wartende_${i + 1}`, at: [p[0] - 2, p[1] + 5], baseline: seats.baseline + 1, front }));
+    return A;
+  })(),
   // the swamps, two stages seen from the side (art/rooms/sumpf.px.js): the ride on Pike's raft, its planes where they start (each
   // scrolls), the raft's canvas, where Juno stands on it; and the arrival at the caravan, the raft tied up at the walk, the caravan and
   // the raft to click

@@ -20,6 +20,7 @@
 //   commuter_d      a woman with long hair, a light coat and a shoulder bag (bag 6)
 //   yuen_cook       paper cap 8, apron 7, chopping at his counter
 //   ines            the end of Chapter 1, front and back: the white coat 9, a dark plait cut into it; a wallet with a light
+//   marit           Chapter 2, the nurse in CAM 21, front, back and looking back: the short coat 9, the scrubs 7, a bun
 //   lantern         the painted Lantern from the side, both ways drawn: the crest 9, the near wheel 7-8, the poncho 6-7, his wheels turning
 //   ashe            front only: a raincoat 8, no face, a burn 9 with no dark rim; the same in the shadow; the look into the camera
 //
@@ -647,6 +648,55 @@ sprite("_i_down", `
 anim("ines_feed_down", { w: 29, h: 7, frames: 1, outline: "1", pivot: "bottom" }, (c) => c.stamp("_i_down", 0, 0))
 
 // ---------------------------------------------------------------- Lantern, 33x36 inside (35x38)
+// Marit Holm, the nurse at the clinic's intake (Chapter 2, kapitel2-design §3.2 K1), painted on the lines of the block the user approved
+// (art/test/klinik_figuren_blocks.px.js, 2026-11-17), at Ines' scale in CAM 21 (13x20 inside): the short coat 9 to the hips, the scrubs
+// 7 below it (Ines' legs are 6 under a long coat), white clogs; ash-blond hair 7 in a bun. She comes to her night shift from the left
+// to the door under the camera, so the feed sees her from the front; twice she looks back over her shoulder (marit_feed_look).
+const FM = { W: 13, H: 20 }
+const FM_LEGS = { W: FM.W, H: FM.H, near: 7, far: 4, hip: 14, lw: 2, sw: 2, leg: "7", shoe: "9", sep: "4" }
+sprite("_m_head_front", `
+  77...
+  7777.
+  78888
+  75858
+  .888.`)                        // the bun at the back of her head (upper left), the face turned to the lower right
+sprite("_m_head_look", `
+  ..77.
+  .7777
+  77777
+  87776
+  .866.`)                        // looking back over her left shoulder: the back of her head, the bun, her cheek's edge
+sprite("_m_head_back", `
+  .777.
+  77677
+  77777
+  67776
+  .666.`)                        // the bun on the back of her head, her hair drawn tight
+function marit(c, o = {}) {
+  const b = o.bob ?? 0, sw = o.swing ?? 0, back = o.back
+  fpLegs(c, FM_LEGS, o.feet ?? fpStand(FM.H), b)
+  // the short coat to the hips, its far side darker; the arms at its sides, the hands swinging
+  c.rect(3, 5 + b, 7, 10, "9"); c.vline(3, 6 + b, 9, "8"); c.hline(3, 14 + b, 7, "8"); c.px(3, 5 + b, "8"); c.px(9, 5 + b, "8")
+  c.rect(2, 6 + b, 1, 6, "8"); c.px(2, 12 + b - sw, "8"); c.px(2, 13 + b - sw, "7")
+  c.rect(10, 6 + b, 1, 6, "9"); c.px(10, 12 + b + sw, "8"); c.px(10, 13 + b + sw, "7")
+  if (back) c.vline(6, 10 + b, 5, "8")                                       // the vent at the back
+  else {
+    c.px(6, 5 + b, "7"); c.px(6, 6 + b, "7"); c.vline(6, 7 + b, 7, "8")      // the scrubs in the coat's V, the coat's opening
+    c.hline(7, 8 + b, 2, "5")                                                  // the name tag
+  }
+  c.stamp(back ? "_m_head_back" : o.look ? "_m_head_look" : "_m_head_front", 4, b)
+}
+anim("marit_feed_front", { w: FM.W, h: FM.H, frames: 1, outline: "1", pivot: "bottom" }, (c) => marit(c))
+anim("marit_feed_back", { w: FM.W, h: FM.H, frames: 1, outline: "1", pivot: "bottom" }, (c) => marit(c, { back: true }))
+// she stops and looks back toward the street, twice
+anim("marit_feed_look", { w: FM.W, h: FM.H, frames: 4, ms: [500, 900, 400, 900], outline: "1", pivot: "bottom" }, (c) => marit(c, { look: c.frame % 2 === 1 }))
+anim("marit_feed_front_walk", { w: FM.W, h: FM.H, frames: 6, fps: 10, outline: "1", pivot: "bottom" }, (c) => {
+  const i = c.frame; marit(c, { bob: FP_BOB[i], swing: FP_SWING[i], feet: fpFeetFront(FM.H, i) })
+})
+anim("marit_feed_back_walk", { w: FM.W, h: FM.H, frames: 6, fps: 10, outline: "1", pivot: "bottom" }, (c) => {
+  const i = c.frame; marit(c, { back: true, bob: FP_BOB[i], swing: FP_SWING[i], feet: fpFeet(FM.H, i) })
+})
+
 // The painted Lantern (art/characters/lantern.px.js) as the feeds see him crossing the picture, from the side, painted on the lines of
 // the block the user approved (2026-11-16, art/test/lantern_feed_blocks.px.js, docs/characters/lantern_feed_blocks_*): the same measures
 // in metres, at 21 px a metre, larger than the scale as the user chose for him (at 24 px the wheel didn't read). Two views, drawn and
