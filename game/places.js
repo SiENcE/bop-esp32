@@ -59,6 +59,7 @@ Nagiwa.at = {
     const front = seats.front.map((/** @type {number} */ n, /** @type {number} */ i) => (i % 2 ? n + 6 : n));
     A.waiting = [A.wait1, A.wait2, A.wait4].map((/** @type {number[]} */ p, /** @type {number} */ i) =>
       ({ id: `wartende_${i + 1}`, image: `wartende_${i + 1}`, at: [p[0] - 2, p[1] + 5], baseline: seats.baseline + 1, front }));
+    A.maritLine = [A.nurse[0], A.nurse[1] - 44];          // her lines over her head (she is a prop: her voice has no figure)
     return A;
   })(),
   // the swamps, two stages seen from the side (art/rooms/sumpf.px.js): the ride on Pike's raft, its planes where they start (each

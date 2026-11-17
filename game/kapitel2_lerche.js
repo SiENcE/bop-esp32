@@ -3,8 +3,8 @@
 //   know_flat     which door is hers: the two from Civic Rest at 4B on Sunday at eight (CAM 25, W3), or the seal on it afterwards (W4)
 //   evi_knows     Juno has found the file in the freezer, and EVI has learned what she is (W6, W7)
 //   (cache_note_serviette, cache_note_civic_rest: what she takes with her)
-// From Sunday 21:00 the flat is open (the Quiet broke the lock and sealed it): a time, no flag. The clinic (§3.2), the other way to
-// know_flat, comes later (its nurse's voice is still to be decided). [PLATZHALTER] the house door's code; the neighbour and the two in white
+// From Sunday 21:00 the flat is open (the Quiet broke the lock and sealed it): a time, no flag. The clinic (§3.2) is the other way to
+// know_flat (game/kapitel2_klinik.js). [PLATZHALTER] the house door's code; the neighbour and the two in white
 // are figures from other feeds; the rooms are blocks (§14)
 "use strict";
 
@@ -35,10 +35,13 @@ cam24.hotspots.rewind = { name: "Puffer", rect: Nagiwa.osd.rewind, z: 5,
   if: [{ or: [["day=5", "moment:nachbar_sat"], ["day=6", "moment:nachbar_sun"], ["day=7", "moment:nachbar_mon"]] }, "!code_lerche", "!off_main"],
   use: ["Ich spul den Puffer zurück auf halb acht.", { replay: "nachbar_sat" }] };
 
-// ---- the gate at the end of Jade Row leads west now, into the clinic's quarter (W2; the clinic comes later)
+// ---- the gate at the end of Jade Row leads west now, into the clinic's quarter (W2): to the clinic (game/kapitel2_klinik.js) or to Lerche.
+// (off_klinik shuts the clinic for the solver's run with the stick: an early know_flat there doubled its states past what a run can hold;
+// the main run checks it)
 const gate = Cutaway.room.get("jade_row").hotspots.gate;
 gate.use = [{ if: "day>4", then: [{ dialog: "k2_tor" }], else: ["Dahinter ist nur noch mehr Neunter. Da will ich heute nicht hin."] }];
 Cutaway.dialog("k2_tor", { main: { choices: [
+  { text: "„Zur Klinik.“", silent: true, if: ["!off_main", "!off_klinik"], goto: "end", then: [{ goto: "klinik", at: Nagiwa.at.klinik.arrive, face: "se" }] },
   { text: "„Zum Wohnblock Lerche.“", silent: true, if: "!off_main", goto: "end", then: [
     { if: "!code_lerche", then: ["Die Haustür hat ein Zahlenfeld. Den Code hab ich nicht."],
       else: [{ if: ["day=6", "time>=20:00", "time<21:00"], then: ["Da oben sind Stimmen. Ich warte."],

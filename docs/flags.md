@@ -46,7 +46,7 @@ Kopf der Datei, die es setzt (`game/nagiwa.js` nennt die Muster).
 | `code_cam25` | `true` | `act kapitel2.start.26` | `room cam03.hotspots.thumb_cam25.if`, `room cam04.hotspots.thumb_cam25.if`, `room cam21.hotspots.thumb_cam25.if`, … (5) |  |
 | `code_cam30` | `true` | `act kapitel1.start.12`, `act kapitel2.start.28` | `room cam03.hotspots.thumb_cam30.if`, `room cam04.hotspots.thumb_cam30.if`, `room cam21.hotspots.thumb_cam30.if`, … (5) |  |
 | `code_cam31` | `true` | `dialog cam31_takt.vier_ok.0.then.3` | `room cam03.hotspots.thumb_cam31.if`, `room cam04.hotspots.thumb_cam31.if`, `room cam21.hotspots.thumb_cam31.if`, … (5) |  |
-| `code_lerche` | `true` | `moment nachbar_sat.play.3` | `room cam24.hotspots.rewind.if`, `dialog k2_tor.main.0.then.0`, `hints.1.if`, … (5) |  |
+| `code_lerche` | `true` | `moment nachbar_sat.play.3` | `room cam24.hotspots.rewind.if`, `dialog k2_tor.main.1.then.0`, `hints.1.if`, … (5) |  |
 | `deck_app` | `buch`, `cache`, `chat`, `chat_becken3`, `chat_imai`, `chat_kessler`, `chat_nagiwa`, `chat_sable`, … (28) | `room flat.enter.0`, `room k2_protokolle.hotspots.protokolle.use.1`, `room k2_protokolle.hotspots.pruef_protokolle_close.use.0`, … (5) | `room k2_protokolle.hotspots.protokolle.if`, `room k2_protokolle.hotspots.pruef_protokolle_close.if`, `room k2_protokolle.hotspots.pruef_protokolle_row_clip_kessler_ring.if`, … (5) |  |
 | `deck_woke` | `true` | `room flat.hotspots.bed.use.0.then.0.else.0.else.3`, `room deck.enter.1.else.0.then.0` | `room deck.enter.1.else.0` |  |
 | `e1` | `refused`, `sold` | `room deck.hotspots.reply_wren_send.use.1`, `room deck.hotspots.reply_wren_refuse.use.1`, `act kapitel2.start.2.then.0`, … (4) | `room kowalski.hotspots.alley.use.0`, `room drain_market.hotspots.datenfloss.with.endstufe.5`, `room deck.hotspots.reply_wren_back.if`, … (5) | kapitel2 |
@@ -75,7 +75,7 @@ Kopf der Datei, die es setzt (`game/nagiwa.js` nennt die Muster).
 | `k1b` | `lied`, `sold`, `warned` | `room deck.hotspots.reply_tide_sold.use.1`, `room deck.hotspots.reply_tide_lied.use.1`, `dialog okonkwo.main.2.then.0` | `room cam07v.hotspots.rewind.if`, `room okonkwo_shop.hotspots.counter.look.0`, `room deck.hotspots.reply_tide_sold.if`, … (5) | kapitel2 |
 | `kessler_gone` |  | `room flat.hotspots.bed.use.0.then.0.else.0.else.2`, `dialog k1a_warn.main.0.then.2` | `room cam15.hotspots.kapsel23.look.0`, `room cam15.hotspots.rewind.if`, `routine kessler2.0.if`, … (4) |  |
 | `know_cable` | `true` | `actor reparatur.talk.0.else.0.else.0.then.6` | `room drain_market.hotspots.down.use.0`, `room drain_market.hotspots.datenfloss.look.0`, `room drain_market.hotspots.datenfloss.use.0.else.0`, … (5) |  |
-| `know_flat` | `true` | `room lerche_flur.hotspots.door_4b.use.0.then.0.then.2`, `moment quiet_flat.play.3` | `room lerche_flur.hotspots.door_4b.use.0.then.0`, `room lerche_flur.hotspots.door_4b.use.0.else.0`, `hints.2.if` |  |
+| `know_flat` | `true` | `room lerche_flur.hotspots.door_4b.use.0.then.0.then.2`, `dialog k2_marit.main.1.then.7`, `moment quiet_flat.play.3` | `room lerche_flur.hotspots.door_4b.use.0.then.0`, `room lerche_flur.hotspots.door_4b.use.0.else.0`, `hints.2.if` |  |
 | `know_ines` | `true` | `act kapitel1.start.18`, `act kapitel2.start.32` |  |  |
 | `know_meeting` | `true` | `moment ines_tide.play.6`, `moment ines_sign.play.1` | `room cam03.hotspots.thumb_cam31.if`, `room cam04.hotspots.thumb_cam31.if`, `room cam21.hotspots.thumb_cam31.if`, … (5) |  |
 | `ladder_down` | `true` | `room sims.hotspots.ladder.with.haken.0.else.3`, `moment teo_monday.unseen.25.else.0` | `room sims.props.ladder.if`, `room sims.hotspots.ladder.look.0`, `room sims.hotspots.ladder.use.0`, … (5) | kapitel2 |
@@ -129,6 +129,7 @@ Kopf der Datei, die es setzt (`game/nagiwa.js` nennt die Muster).
 | `news_who` | `true` | `actor haldane_feed.talk.0.then.4` | `room kessel_14.hotspots.notes.look.0`, `actor haldane_feed.talk.0` |  |
 | `off_dryer` |  | `act kapitel1.start.28`, `act kapitel2.start.40` | `room laundromat.hotspots.dryer6.with.stick.0`, `dialog stick_zurueck.main.0.if` |  |
 | `off_imai` |  | `act kapitel1.start.28`, `act kapitel2.start.40` | `room deck.hotspots.contact_imai.if`, `actor imai.talk.0` |  |
+| `off_klinik` |  | `act kapitel1.start.28`, `act kapitel2.start.40` | `dialog k2_tor.main.0.if` |  |
 | `off_lantern` |  | `act kapitel1.start.28`, `act kapitel2.start.40` | `room flat.hotspots.box_old.use.0`, `room kessel_14.hotspots.haken.if`, `room laundromat.hotspots.dryer6.use.0.then.0.then.0`, … (5) |  |
 | `off_main` |  | `act kapitel1.start.28`, `act kapitel2.start.40` | `room cam03.hotspots.thumb_cam22.if`, `room cam03.hotspots.thumb_cam23.if`, `room cam03.hotspots.thumb_cam30.if`, … (5) |  |
 | `off_motte` |  | `act kapitel1.start.28`, `act kapitel2.start.40` | `actor motte.talk.1` |  |

@@ -235,6 +235,8 @@ geht hinein, setzt sich in die Schlange und wird als Patientin aufgenommen: ein 
 | K2 | `klinik` | Die Aufnahme ab 19:00 (vorher schickt der Schalter in die Schlange: „Nachtaufnahme ab sieben.“): Name (Juno nennt einen falschen), Schlafzeiten. Die Pflegerin bietet Lull an: „Es kostet nichts.“ Sie will noch hinter dem Ohr nachsehen, ob schon etwas sitzt; die innere Stimme DAS IMPLANTAT warnt (gibt es die Stimmen beim Bau noch nicht, Engine C12, denkt Juno es selbst: „Nicht hinters Ohr.“), und Juno zieht die Kapuze wieder hoch: „Nicht heute.“ Kein Scan, keine Spur zu ihr, und nichts nimmt Kapitel 3 vorweg (entschieden 2026-11-14; kein Gegenstand, das Lull bekommt Juno in Kapitel 3, story §7). Die Pflegerin: „Kommen Sie wieder, wenn Sie nicht schlafen können.“ |
 | K3 | `klinik` | Juno fragt nach Dr. Calder. Die Pflegerin senkt die Stimme: Ines hat nachts Protokolle geschrieben, „die keiner bestellt hat“, und sie hat nie das Netz der Klinik benutzt, alles auf Papier. Am Samstagmorgen waren Leute in Weiß da und haben ihren Spind ausgeräumt. Am Samstag: „Morgen um acht räumen sie auch ihre Wohnung. Lerche, vierter Stock.“ Am Sonntag: „Heute um acht …“, am Montag: „Gestern haben sie ihre Wohnung ausgeräumt.“ → `know_flat` |
 
+**Gebaut** (2026-11-17, `game/kapitel2_klinik.js`): K1 als Routine ohne Zustand (19:00 bis 19:30, wo das Warten ohnehin hält; sie bleibt an der Tür stehen und sieht sich zweimal um), die Klinik als zweite Wahl am Tor (`k2_tor`: „Zur Klinik.“, „Zum Wohnblock Lerche.“, „Zurück.“), vor sieben die leere Aufnahme („Nachtaufnahme ab sieben.“), ab sieben Marit mit zwei Themen (`k2_marit`: die Aufnahme, Dr. Calder); beide lassen sich wiederholen, nur `know_flat` ist Zustand. Juno nennt sich „Ada Novak“. Marit duzt Juno erst, als sie sagt: „Wenn du sie gekannt hast, geh nicht hin, solange die da sind.“ Der Hinweis zur Tür nennt die Klinik zuerst. Im Solver-Lauf mit dem Stick ist die Klinik zu (`off_klinik`, technisch entschieden 2026-11-17): Ihr frühes `know_flat` verdoppelte dort jeden Zustand bis Sonntagabend, und der Lauf wuchs über 14 GB; der Hauptlauf prüft sie.
+
 Das ist ein Weg zu Ines' Wohnung, nicht der einzige: Wer die Klinik auslässt, sieht die Quiet am Sonntag in `cam25` die Tür 4B öffnen
 (§3.3). Die Klinik erzählt, wer Ines war, und legt Kapitel 3 an: Juno weiß jetzt, wo es Lull gibt. Dass ihr Implantat dazu passt, erfährt sie erst dort (story §10a).
 
@@ -696,7 +698,7 @@ wechseln würde, eine eigene Ansicht (Kapitel 1, §10). Lull ist immer die ovale
 | Lantern im Feed | wieder | `cam23` | wie in `cam31`, im Maßstab des Waschsalons | der gemalte Lantern von der Seite, beide Richtungen gezeichnet, die Räder drehen sich (story §10c, 2026-11-16) |
 | **Teo, sitzend von hinten** | neu (Pose) | `dach_sitzen` | eine | neben Juno, die Kapuze unten, der Gehörschutz; von hinten sieht man das Pflaster hinter seinem Ohr, am selben Ohr wie in seinen anderen Ansichten (nicht aus einer gespiegelten Ansicht nehmen) |
 | Teo mit dem Haken | neu (Pose) | `flat`, `sims` | SE, NE, NW wie seine Figur | der lange Haken aus der Pumpenhalle in einer Hand; NW gezeichnet wie bisher |
-| **Vargas Mann** | neu | `kowalski` | Iso SE, NE, NW stehend | nur nach `k1a=lied`; Varga selbst ist nur im Feed gemalt. Name offen |
+| **Vargas Mann** | neu | `kowalski` | Iso SE, NE, NW stehend | nur nach `k1a=lied`; Varga selbst ist nur im Feed gemalt. Namenlos; seine Stimme ist „der Schwere“ (vom Nutzer gewählt 2026-11-17, `dialog-style-guide` §6) |
 | **Pike**, Lanterns Gehilfe | neu | `drain_market` (von oben), die Fahrt (von der Seite) | von oben stehend und stakend; von der Seite auf dem Floß, stakend (die Stange gehoben, gestoßen, geschoben, wieder gehoben) | umgebaut mit dem Reiher, nach dem Graureiher (vom Nutzer gewünscht 2026-11-16): lange dünne Beine, ein Mantel wie gefaltete graue Flügel mit dem Schwarz an der Schulter, ein langer weißer Hals im S mit dem schwarzen Strich vorn, ein kleiner weißer Kopf, der schwarze Strich vom Auge in den Schopf, der nach hinten hängt, ein langer orangegelber Schnabel; aufrecht und still. gemalt in `art/rooms/sumpf.px.js` (die Fahrt und die Ankunft), etwas kleiner als zuerst, damit er neben Juno (50 px) nur um Kopf und Hals größer ist; einseitig trägt er nichts, so genügt das Spiegeln. Seine Farbe ist das Orangegelb seines Schnabels, gedämpft neben Junos Gelb, `#e0a048` (vom Nutzer entschieden 2026-11-16). Von oben auf dem Markt als Block freigegeben (2026-11-16, `art/test/pike_top_blocks.px.js`): er steht am hinteren Ende seines Floßes |
 | **Kessler mit Gips** | neu (von oben) | `drain_market` | von oben, sitzend | der Gips am Arm ist einseitig: von oben kein Problem, er sitzt immer gleich |
 | **Bao mit Verband** | Variante | `kowalski` | wie Bao | nur nach `k1b=sold`, Montag (Samstag und Sonntag fehlt sein Wagen) |
@@ -780,7 +782,7 @@ Archiv einer Kamera, Gegenstände an Hotspots und Fragen mit vier Antworten gibt
 
 ## 14. Offen
 
-- **Namen:** Frau Haldanes Sohn, Vargas Mann, die Quiet im Flur (vielleicht ohne Namen), der Kontakt
+- **Namen:** Frau Haldanes Sohn, die Quiet im Flur (vielleicht ohne Namen), der Kontakt
   `BECKEN 3` (oder `TINTE`), die Kameranummern `cam25` und `cam51`.
 - **Zeilen:** alles, was hier steht, sind Vorschläge; Lanterns Sprechkarte ist ein Entwurf (2026-11-15), beim Durchspielen zu prüfen.
 - **Preise und Zahlen:** Sable 3000, Vesper 5000, die Zuschauer, Sables Archiv 150, Kessler 50.
@@ -788,7 +790,7 @@ Archiv einer Kamera, Gegenstände an Hotspots und Fragen mit vier Antworten gibt
   die Änderungen an fertigen Bildern: die Bretter an Okonkwos Laden und der dunkle Laden in `cam07v`, `GLASSER LIES` und `WHO TALKED?`,
   das neue Kabel hinter dem großen Schirm, Lanterns grüner Text auf dem Schirm, das Papierboot mit `I.`, das Absperrband an `cam30`,
   das rote Licht der Kamera im 14. Stock aus.
-- **Sprechkarten** im `dialog-style-guide`: Lantern und Pike stehen als Entwurf, die der Pflegerin Marit Holm ist gewählt (2026-11-17); es fehlen noch Vargas Mann und Frau Imai; die Karte von Frau
+- **Sprechkarten** im `dialog-style-guide`: Lantern und Pike stehen als Entwurf, die der Pflegerin Marit Holm und die von Vargas Mann („der Schwere“) sind gewählt (2026-11-17); es fehlt noch Frau Imai; die Karte von Frau
   Haldane ist zu ergänzen.
 - **`evi_trust`** (wie offen Juno im Prolog zu EVI war) geht mit, bekommt aber erst später eine Aufgabe (vom Nutzer entschieden
   2026-11-14): vielleicht, wenn EVI erfährt, was sie ist (§3.3), oder im Finale, wenn sie richtig lesen muss (story §7, Kap. 6).

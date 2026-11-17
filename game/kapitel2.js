@@ -240,8 +240,9 @@ Cutaway.hints([
   // Ines' flat (game/kapitel2_lerche.js): the house door's code, which door, when it opens, what she left
   { if: ["!evi_knows", "!code_lerche"], about: ["cam_cam24", "thumb_cam24", "rewind", "gate"],
     text: ["Ihr Haus hat ein Zahlenfeld an der Tür.", "Die Klingelkamera hängt direkt daneben.", "Öffne CAM 24 um halb acht. Da kommt ein Nachbar heim."] },
-  { if: ["!evi_knows", "!know_flat", { not: { or: ["day=7", ["day=6", "time>=21:00"]] } }], about: ["cam_cam25", "thumb_cam25", "door_4b"],
-    text: ["Welche Tür ist ihre? An keiner steht ein Name.", "Die von Civic Rest räumen ihre Wohnung aus. Schau in CAM 25.", "Sonntag um acht kommen sie. Öffne dann CAM 25."] },
+  // (the clinic, game/kapitel2_klinik.js, is the other way to which door: never needed, so it is named, the way by CAM 25 told)
+  { if: ["!evi_knows", "!know_flat", { not: { or: ["day=7", ["day=6", "time>=21:00"]] } }], about: ["cam_cam25", "thumb_cam25", "door_4b", "gate", "pflegerin"],
+    text: ["Welche Tür ist ihre? Die Klinik weiß es, oder die von Civic Rest zeigen es dir.", "Die von Civic Rest räumen ihre Wohnung aus. Schau in CAM 25.", "Sonntag um acht kommen sie. Öffne dann CAM 25."] },
   { if: ["!evi_knows", { not: { or: ["day=7", ["day=6", "time>=21:00"]] } }], about: ["door_4b", "fridge", "gate"],
     text: ["Ihre Tür ist zu. Das bleibt sie nicht lange.", "Die von Civic Rest räumen die Wohnung aus. Danach ist sie offen.", "Warte, bis sie weg sind. Sonntag ab neun ist der Flur frei."] },
   { if: "!evi_knows", about: ["fridge", "door_4b", "gate"],

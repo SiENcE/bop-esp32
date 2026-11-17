@@ -411,6 +411,10 @@ Was er sagt, ist ihr Gewissen und ihre Müdigkeit zugleich, nie ein Plan. Sonst 
 ### Geschäftsleute und Nagi·wa
 
 - **Varga** droht wie jemand, der eine Rechnung stellt: „Bis Freitag, Kessler. Sonst holen wir uns mehr als einen Ring.“
+- **Vargas Mann** (Kapitel 2, nach `k1a=lied`; vom Nutzer gewählt 2026-11-17, „der Schwere“, namenlos): langsam und kurz. Er lässt Pausen stehen,
+  und die Pausen sind die Drohung. Er ist groß und weiß das; sein Humor ist trocken, und er lächelt nicht dabei. Er duzt Juno, wie die Straße
+  es tut. Was er nie tut: viele Worte machen, etwas erklären, sich bewegen, wenn er nicht muss.
+  „Die 200, Glasserin.“ · „...“ · „Nicht? Dann schuldest du Varga was.“ · „Ich steh hier gern. Regnet ja nur.“
 - **WREN** schreibt, als wäre alles schon bezahlt, siezt und grüßt nicht: „Wie Sie wollen. Das Angebot bleibt.“
 - **Vesper** ist begeistert vom Echten und merkt nichts: „Ohne Gesichter ist es kein Leben.“
 - **Nagi·wa selbst** ist immer freundlich, immer im Sie und sagt nie etwas: „Nagi·wa dankt Ihnen für Ihren Dienst.“ „Ihre Meldung wird
