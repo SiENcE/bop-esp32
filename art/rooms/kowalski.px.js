@@ -8,6 +8,8 @@
 //                     out of the drain
 //   kowalski_vending, kowalski_cart, kowalski_umbrella, kowalski_bins, kowalski_scaffold, kowalski_lights   the props, pivot
 //                     bottom-centre (the string lights and cables without an outline)
+//   kowalski_no_cable   Chapter 2: the street without the cable to Bao's cart (while it is gone), only what differs, its top-left at
+//                     layout.noCable
 //   kowalski_alley_open   the alley's gate pushed aside (from Chapter 1 on), only what differs from the shut
 //                     one, its top-left at layout.alleyOpen
 //   kowalski_ad_stutter, kowalski_ad_eye, kowalski_ad_juno   the prologue's moment (step 17) on the ad screen,
@@ -80,6 +82,21 @@ const KOWALSKI = ISOKIT.bake(KW_MAP, {
     for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) { const i = y * W + x; if (B.k[i] !== A.k[i] && B.k[i]) c.px(x - x0, y - y0, B.k[i]) }
   })
   KOWALSKI.layout.alleyOpen = [x0, y0]
+}
+
+// ---- Bao's cart gone (Chapter 2, Saturday and Sunday after K1b sold): the street baked again without the cable it ran on; what differs
+// is kowalski_no_cable, laid over the picture at layout.noCable (game/kapitel2_folgen.js). Only frame 0, as the gate's
+{
+  KOW.CABLE_ON.on = false
+  const NONE = ISOKIT.bake(KW_MAP, { id: "kowalski", frames: 1, sheen: { reach: 3.4, map: (u, v) => (KOW.inPuddle(u, v) ? ISO.MIRROR : ISO.SHEEN), keys: (u, v) => KOW.cellAt(u, v) !== "." }, define: false })
+  KOW.CABLE_ON.on = true
+  const A = KOWALSKI.BG[0], B = NONE.BG[0], W = A.W
+  let x0 = Infinity, y0 = Infinity, x1 = -1, y1 = -1
+  for (let i = 0; i < B.k.length; i++) if (B.k[i] !== A.k[i]) { const x = i % W, y = Math.floor(i / W); x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x); y1 = Math.max(y1, y) }
+  sprite("kowalski_no_cable", { w: x1 - x0 + 1, h: y1 - y0 + 1 }, (c) => {
+    for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) { const i = y * W + x; if (B.k[i] !== A.k[i] && B.k[i]) c.px(x - x0, y - y0, B.k[i]) }
+  })
+  KOWALSKI.layout.noCable = [x0, y0]
 }
 
 console.log("ISO_LAYOUT " + JSON.stringify({ id: "kowalski", ...KOWALSKI.layout }))

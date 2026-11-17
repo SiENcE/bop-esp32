@@ -45,7 +45,9 @@
   const LOOK = {
     background: "kowalski_bg", size: /** @type {[number, number]} */ ([416, 180]),
     // the props, and over the ad screen the prologue's moment (hidden until it comes: step 17)
-    props: [...AW.props, { id: "ad_fx", image: "kowalski_ad_stutter", at: [AW.adRect[0], AW.adRect[1]], anchor: [0, 0], baseline: 0, hidden: true },
+    // (the string lights hang 3.5 m over the street: drawn over everything, as they always looked while Bao's umbrella stood under them;
+    // without their front line, or everyone would count as standing before them and be drawn after every prop)
+    props: [...AW.props.map((/** @type {any} */ p) => (p.id === "lights" ? { ...p, baseline: 10000, front: undefined } : p)), { id: "ad_fx", image: "kowalski_ad_stutter", at: [AW.adRect[0], AW.adRect[1]], anchor: [0, 0], baseline: 0, hidden: true },
       // the alley's gate pushed aside from Chapter 1 on (shut on the prologue's night): a condition, no state of its own
       { id: "alley_open", image: "kowalski_alley_open", at: AW.alleyOpen, anchor: [0, 0], baseline: 0, if: "day>=2" }],
     // the map's lamps: the bar's warm light, its sign's magenta, the screen's cyan, the machine, the lantern

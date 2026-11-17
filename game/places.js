@@ -99,6 +99,8 @@ Nagiwa.at = {
     ...fromLayout(Nagiwa.layouts.kowalski),
     // the alley's gate standing open, laid over the picture from Chapter 1 on (art/rooms/kowalski.px.js)
     alleyOpen: Nagiwa.layouts.kowalski.alleyOpen,
+    // Chapter 2: the street without the cable to Bao's cart, laid over the picture while the cart is gone
+    noCable: Nagiwa.layouts.kowalski.noCable,
     // the room's effects, on the screen (from the map's projection): the light hanging in the rain out of
     // LUCKY STATIC's door and under the ad screen, glints on the puddles, drops off an AC unit, the Kessel
     // Block's transom and the cornice by the alley

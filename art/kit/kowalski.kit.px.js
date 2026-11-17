@@ -52,7 +52,9 @@ const KOW = (() => {
   // the cable Bao's cart runs on, stolen from the electrical box on the Kessel Block, across the sidewalk
   // (the box is just inside the passage to Jade Row, on its side wall: the cable comes out along it)
   const CABLE = [[-0.32, 5.07], [0.1, 5.07], [0.5, 4.9], [0.95, 4.1], [1.35, 3.35], [1.8, 2.8], [2.2, 2.55]]
-  const cable = (u, v) => { const d = toLine(u, v, CABLE); return d < 0.022 ? "k" : d < 0.04 && v < CABLE[0][1] && (u + v) % 0.3 < 0.2 ? "1" : null }
+  // (CABLE_ON.on false bakes the street without it: Chapter 2, while Bao's cart is gone, art/rooms/kowalski.px.js)
+  const CABLE_ON = { on: true }
+  const cable = (u, v) => { if (!CABLE_ON.on) return null; const d = toLine(u, v, CABLE); return d < 0.022 ? "k" : d < 0.04 && v < CABLE[0][1] && (u + v) % 0.3 < 0.2 ? "1" : null }
   // the sidewalk: 0.5 m slabs, two ages of them; one cracked across, one sunken with water in it
   ISOKIT.floor("s", (u, v) => {
     const k = cable(u, v); if (k) return k
@@ -795,5 +797,5 @@ const KOW = (() => {
       })
     },
   })
-  return { inPuddle, PUDDLES, cellAt, adScreen }
+  return { inPuddle, PUDDLES, cellAt, adScreen, CABLE_ON }
 })()
