@@ -34,7 +34,7 @@ ISO_MAPS.klinik = {
   // behind the counter is the nurse's
   nowalk: [[0, 0, 0.75, 2.7]],
   props: [
-    { id: "reception", kit: "kl_reception", at: [0.75, 0.35], foot: [0.45, 2.2], h: 1.75 },
+    { id: "reception", kit: "kl_reception", at: [0.75, 0.35], foot: [0.45, 2.2], h: 2.15 },
     { id: "seats", kit: "kl_seats", at: [1.3, 0.05], foot: [2.2, 0.5], h: 0.85 },
     { id: "scanner", kit: "kl_scanner", at: [3.85, -1.0], foot: [0.7, 0.85], h: 1.25, behind: "cabin" },
     { id: "tubes", kit: "lm_tubes", at: [1.0, 1.9], foot: [4.0, 0.06], h: 2.6, block: false },
