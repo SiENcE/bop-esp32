@@ -226,8 +226,8 @@ kann er nicht senden.
 ### 3.2 Die Klinik (optional)
 
 Lull-Klinik 9-Ost, die Klinik aus `cam21`, jetzt von innen (`klinik`, §9). Sie hat auch nachts offen (das NETZ von Donnerstag). Juno
-geht hinein, setzt sich in die Schlange und wird als Patientin aufgenommen: ein kleines Gespräch mit der **Pflegerin an der Aufnahme**
-(neue Figur, §10).
+geht hinein, setzt sich in die Schlange und wird als Patientin aufgenommen: ein kleines Gespräch mit der **Pflegerin an der Aufnahme**,
+**Marit Holm** (neue Figur, §10; Name, Stimme und Farbe vom Nutzer gewählt 2026-11-17: die Routinierte, `dialog-style-guide` §6).
 
 | # | Wo | Was |
 |---|---|---|
@@ -690,7 +690,7 @@ wechseln würde, eine eigene Ansicht (Kapitel 1, §10). Lull ist immer die ovale
 
 | Wer | Neu oder wieder | Wo | Ansichten | Was zu beachten ist |
 |---|---|---|---|---|
-| **die Pflegerin an der Aufnahme** | neu | `klinik`, `cam21` (Feed) | Iso SE hinter dem Glas (sitzend), Feed NE und NW auf dem Weg zur Nachtschicht | weißer Kittel wie Ines, aber kurz; kein Lull. Name offen (§14) |
+| **die Pflegerin an der Aufnahme** | neu | `klinik`, `cam21` (Feed) | Iso SE hinter dem Glas (sitzend), Feed NE und NW auf dem Weg zur Nachtschicht | weißer Kittel wie Ines, aber kurz; kein Lull. **Marit Holm** (vom Nutzer 2026-11-17), Sprecherfarbe Lila `#c8b0e0` (Style Guide §8) |
 | **die Quiet** (zwei im Flur, der Schatten, der Mann am Trockner) | neu | `cam25`, `cam23` (Feed), `kowalski`, `laundromat` (Iso) | Feed SE, SW, NE, NW mit Kisten; Iso SE, NE stehend (NW gespiegelt) | weiße Regenmäntel wie Ashe, die Masken überstrahlen im Feed; im Straßenmodus eine glatte weiße Maske. **Zwei Ränge** (vom Nutzer entschieden 2026-11-17, Blöcke `art/test/quiet_blocks.px.js`, `docs/characters/quiet_blocks_x4.png`): der **Anführer** (A) im langen Gürtelmantel bis zur Wade mit hochgeschlagenem Kragen wie Ashe, die ovale Maske mit zwei Augenschlitzen, kurzes dunkles Haar, ein rotes Licht am linken Revers; er ist namenlos, nicht Ashe. Die **Untergebenen** (B) im Mantel bis zum Knie mit enger weißer Kapuze und weißen Handschuhen, die glatte Maske mit einer dünnen roten Linie über den Augen. Wie viele wo: der Schatten erst einer (B), am Montag der Anführer mit zwei (B); am Trockner einer (B). Das Licht am Revers zeigt sich nur von vorn: NW ist NE gespiegelt, SW bräuchte eine eigene Ansicht (er sieht nie nach SW). **Ihr Weiß leuchtet** (vom Nutzer entschieden 2026-11-17): Mantel und Maske nehmen das Licht des Raums nicht an, so sind sie das einzige Saubere gegen die Nacht. Gemalt in `art/characters/quiet.px.js` (SE und NE stehend, ein Tropfen am Saum, das rote Licht); **Platzhalter:** die zwei in `cam25` sind noch Ashes Feed-Figur, denn sie gehen und tragen Kisten |
 | **Lantern** (persönlich) | neu in Iso (der Wohnwagen ist ein Iso-Raum, entschieden 2026-11-16) | `lantern_versteck` | Iso sitzend im Rollstuhl an seinem Sender, eine Richtung, mit kleinen Bewegungen: nach Südwesten zu Juno hin gedreht (vom Nutzer freigegeben 2026-11-16), gemalt in `art/characters/lantern.px.js` | das Gesicht aus `docs/portraits/lantern_x4.png` (grüner Iro, das Okular über **einem** Auge, Headset): Er sitzt immer gleich, so braucht er keine Gegenrichtung; das Okular sitzt auf der Seite, auf der es im Porträt sitzt |
 | Lantern im Feed | wieder | `cam23` | wie in `cam31`, im Maßstab des Waschsalons | der gemalte Lantern von der Seite, beide Richtungen gezeichnet, die Räder drehen sich (story §10c, 2026-11-16) |
@@ -780,7 +780,7 @@ Archiv einer Kamera, Gegenstände an Hotspots und Fragen mit vier Antworten gibt
 
 ## 14. Offen
 
-- **Namen:** die Pflegerin an der Aufnahme, Frau Haldanes Sohn, Vargas Mann, die Quiet im Flur (vielleicht ohne Namen), der Kontakt
+- **Namen:** Frau Haldanes Sohn, Vargas Mann, die Quiet im Flur (vielleicht ohne Namen), der Kontakt
   `BECKEN 3` (oder `TINTE`), die Kameranummern `cam25` und `cam51`.
 - **Zeilen:** alles, was hier steht, sind Vorschläge; Lanterns Sprechkarte ist ein Entwurf (2026-11-15), beim Durchspielen zu prüfen.
 - **Preise und Zahlen:** Sable 3000, Vesper 5000, die Zuschauer, Sables Archiv 150, Kessler 50.
@@ -788,7 +788,7 @@ Archiv einer Kamera, Gegenstände an Hotspots und Fragen mit vier Antworten gibt
   die Änderungen an fertigen Bildern: die Bretter an Okonkwos Laden und der dunkle Laden in `cam07v`, `GLASSER LIES` und `WHO TALKED?`,
   das neue Kabel hinter dem großen Schirm, Lanterns grüner Text auf dem Schirm, das Papierboot mit `I.`, das Absperrband an `cam30`,
   das rote Licht der Kamera im 14. Stock aus.
-- **Sprechkarten** im `dialog-style-guide`: Lantern und Pike stehen als Entwurf; es fehlen noch die Pflegerin, Vargas Mann und Frau Imai; die Karte von Frau
+- **Sprechkarten** im `dialog-style-guide`: Lantern und Pike stehen als Entwurf, die der Pflegerin Marit Holm ist gewählt (2026-11-17); es fehlen noch Vargas Mann und Frau Imai; die Karte von Frau
   Haldane ist zu ergänzen.
 - **`evi_trust`** (wie offen Juno im Prolog zu EVI war) geht mit, bekommt aber erst später eine Aufgabe (vom Nutzer entschieden
   2026-11-14): vielleicht, wenn EVI erfährt, was sie ist (§3.3), oder im Finale, wenn sie richtig lesen muss (story §7, Kap. 6).

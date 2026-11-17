@@ -284,6 +284,7 @@ Reference: the UI in `docs/mockups/mock_c_iso_x3.png`.
   | Frau Imai | `#c8d8b0` (washed-out green) |
   | the preacher | `#d8c8a0` (coffee with too much milk) |
   | the half repair | `#b0c0b0` (a work coat left out in the rain) |
+  | Marit Holm, the nurse at the clinic's intake | `#c8b0e0` (the lilac of sleeping pills and forms; decided 2026-11-17) |
 
   Every other character gets a fixed colour when first drawn; add it here. Avoid red and cyan for
   anyone harmless (the meanings in §5). EVI is the exception, because she is technology.

@@ -192,6 +192,7 @@ Die Anrede sagt etwas über Nähe und Abstand, nichts über Geschlecht, Herkunft
 | Juno am Feed | sagt du zu denen, die sie beobachtet und die sie nicht hören können („Ines. Geh nach Hause.“) |
 | Teo, die Regenleserin | duzen wie alle; Teo sagt „Ju“, die Regenleserin „Kind“ |
 | Frau Haldane | sie und Juno duzen sich, „Frau Haldane“ bleibt nur als Name |
+| Marit Holm | siezt Juno an der Aufnahme wie ein Amt; wenn sie leise von Ines redet, rutscht sie ins Du und bleibt dabei (vom Nutzer entschieden 2026-11-17) |
 
 ## 6. Die Stimmen
 
@@ -368,6 +369,19 @@ Reiher. Er verkauft Daten pro Gigabyte, bringt Lantern Akkus und Teile und schü
 > „Ratz hat eine Endstufe. Aus einem Flutwarnmast. Mir gibt er sie nicht.“\
 > „Ein Reflex. Mehr war das nicht.“\
 > „Stell dich in die Mitte. Und schau nicht ins Wasser.“
+
+### Marit Holm: die Routinierte
+
+(Vom Nutzer gewählt 2026-11-17; die Zeilen sind zu prüfen beim Durchspielen.) Die Pflegerin an der Aufnahme der Lull-Klinik 9-Ost,
+seit Jahren in der Nachtschicht, Ines' Kollegin. Lull nimmt sie selbst nicht.
+
+- **Sie redet in den Sätzen des Formulars:** schnell, freundlich, ohne aufzusehen. Nagi·was Wörter nimmt sie, weil sie draufstehen
+  („Ruhe-Erschöpfung“), und sie glaubt halb daran. Ihr Mitgefühl ist echt, aber abgenutzt.
+- **Bei Ines bricht das Formular:** Sie wird leise, die Sätze werden kurz, sie sieht zur Tür, und sie duzt Juno auf einmal (§5).
+- **Was sie nie tut:** Lull schlechtreden, Ines beim Vornamen nennen („Dr. Calder“, „die Doktorin“), fragen, warum Juno wirklich da
+  ist. Sie ahnt es und will es nicht wissen.
+
+> „Name. Und wie viele Stunden schlafen Sie?“> „Es kostet nichts. Das fragen alle zuerst.“> „Ich schau nur kurz hinters Ohr. Ob da schon was sitzt.“> „Dr. Calder ist nicht mehr bei uns.“> „Sie hat nachts Protokolle geschrieben. Die hat keiner bestellt.“> „Kommen Sie wieder, wenn Sie nicht schlafen können.“
 
 ### Direktorin Selene Aubrecht: die Überzeugte
 
