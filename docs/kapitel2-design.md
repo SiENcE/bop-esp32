@@ -523,7 +523,7 @@ beim Ansehen, Meis Neuigkeit, Okonkwos Gruß und TIDEs letzte Nachricht. Vargas 
 (technisch entschieden: dieselben Stunden wie der Schatten, so hält das Warten nirgends neu, und kein Klickpfad ändert sich). Kessler
 sitzt ab Sonntag neben Ratz' Stand und fragt nach Geld („Ich bin die Treppe runter. Dreimal.“). Bao und sein fehlender Wagen, die Bretter,
 `GLASSER LIES` (vorerst nur beim Ansehen der Tür) und `WHO TALKED?` kommen mit ihren Bildern. **Platzhalter:** Vargas Mann trägt den
-Tidewater-Jungen, Kessler von oben einen Händler des Markts. Geprüft werden die Fäden wie in Kapitel 1 allein, mit geschlossenem Hauptweg
+Tidewater-Jungen, Kessler von oben einen Händler des Markts. Die Änderungen an fertigen Bildern stehen als **Blöcke zur Freigabe** in `art/test/k2_orte_blocks.px.js` (`docs/rooms/k2_orte_blocks_x2.png`, 2026-11-17): Bretter vor Okonkwos Fenstern und Tür, die Fenster dahinter dunkel; `WHO TALKED?` in Tidewater-Türkis an der dunklen Fassade rechts; in `cam07v` die Bretter von außen, nah und hell, dahinter der dunkle, halb leere Laden; `GLASSER LIES` schräg auf Junos Tür, wie die Wand läuft; die Kowalski ohne Baos Wagen und Schirm; in `cam03` ein Pendler der Feeds an Kesslers Automaten (keine neue Figur); in `cam22` die dampfende Schale auf Ines' leerem Platz; in `cam30` das Absperrband vor dem Abgang; am Denkmal in der Gasse das Papierboot zwischen den Kerzen. Geprüft werden die Fäden wie in Kapitel 1 allein, mit geschlossenem Hauptweg
 (`off_main,evi_knows`), jede Antwort aus Kapitel 1 für sich (`--set k1a=lied`; `solve-act.mjs` nimmt jetzt Werte).
 
 **Varga (K1a, `off_varga`):**
