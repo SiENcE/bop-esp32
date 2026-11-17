@@ -1,7 +1,7 @@
 // The alley baked from its map (art/rooms/gasse.map.js) with its kit (art/kit/gasse.kit.px.js) and the light (art/lib/isokit.js).
 //
 // Exports (the atlas takes gasse_* only): gasse_bg (416x236, it scrolls both ways; 12 frames: the water rippling, the dryers' steam out of the vent) and a
-// sprite for each prop standing in the alley, outlined, pivot bottom-centre.
+// sprite for each prop standing in the alley, outlined, pivot bottom-centre; gasse_papierboot (Chapter 2, at the monument).
 include("../lib/iso.js", { palette: true })
 include("../lib/isomap.js")
 include("../rooms/gasse.map.js")
@@ -74,6 +74,15 @@ const GASSE = ISOKIT.bake(ISO_MAPS.gasse, { id: "gasse", frames: 12, fps: 10, gl
     }
   }, glow("mNvV", { r: 3, strength: 0.3 }))
 }
+
+// Chapter 2 (kapitel2-design §9.1; the approved block in art/test/k2_orte_blocks.px.js): a paper boat among the candles at the monument's
+// foot, bigger and whiter than the others, folded from a clean sheet, a candle in it like the others; I. written on its side, too small to read (the look says it). Its
+// left side takes the candles' warm light, its right turns away; its shadow under it on the wet deck. The game stands it at
+// Nagiwa.at.gasse.papierboot (its top left) from Saturday
+sprite("gasse_papierboot", { w: 8, h: 6 }, (c) => {
+  const K = { W: "#ece2cc", P: "#cfc4ac", p: "#8e8674", i: "#2a2a3a", s: "#0f151f", f: "#eea040", c: "#d8dce8" }
+  ;["...W.f..", "..WWPc..", "WWWWWPPp", ".pWiWiP.", "..pppp..", "..ssss.."].forEach((r, j) => [...r].forEach((ch, i) => { if (ch !== ".") c.px(i, j, K[ch]) }))
+})
 
 // the measured numbers for the game: tools/build_art.sh picks this line up and writes game/rooms/gasse.layout.js
 console.log("ISO_LAYOUT " + JSON.stringify({ id: "gasse", ...GASSE.layout }))

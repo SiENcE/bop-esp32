@@ -32,7 +32,8 @@ const hash = (a, b, s = 0) => { let h = (a * 374761393 + b * 668265263 + s * 214
 /** a tone of a ramp (keys dark to light) for a light level 0..1, dithered between its steps */
 const tone = (ramp, v, x, y) => ramp[clamp(Math.floor(clamp(v, 0, 1) * (ramp.length - 1) + dz(x, y)), 0, ramp.length - 1)]
 /** the bulb's light at a point: bright under it, falling off into the corners */
-const bulb = (x, y, r = 130) => 1 / (1 + (Math.hypot(x - BULB[0], (y - BULB[1]) * 1.15) / r) ** 2 * 2.4)
+let BULB_ON = 1                                                 // (0.1 in Chapter 2's dark shop: only what the lane throws in)
+const bulb = (x, y, r = 130) => BULB_ON / (1 + (Math.hypot(x - BULB[0], (y - BULB[1]) * 1.15) / r) ** 2 * 2.4)
 const fridgeLight = (x, y) => Math.max(0, 1 - Math.hypot(x - 61, (y - 82) * 0.9) / 46)
 
 const WALL = ["k", "b", "B", "d", "D", "E", "F"]
@@ -42,7 +43,9 @@ const CYAN_WALL = ["k", "c", "c", "C"]
 const CYAN_FLOOR = ["k", "e", "t", "T"]
 const MAG_FLOOR = ["e", "i", "i", "I", "M"]
 
-scene("okonkwo_shop_bg", { w: W, h: H, bg: "k" }, (c) => {
+/** the room; dark: after the raid (Chapter 2, K1b sold), the bulb out, half the goods gone, a sack left */
+const paintShop = (c, dark) => {
+  BULB_ON = dark ? 0.1 : 1
   const [L, R] = SHOP.back, T = SHOP.top, F = SHOP.foot
   const sideCeil = (x) => { const d = x < L ? (L - x) / L : (x - R) / (W - R); return T - 16 * d }
   const sideFloor = (x) => { const d = x < L ? (L - x) / L : (x - R) / (W - R); return F + 16 * d }
@@ -126,6 +129,7 @@ scene("okonkwo_shop_bg", { w: W, h: H, bg: "k" }, (c) => {
   for (let r = 0; r < 4; r++) for (let i = 0; i < 5; i++) {
     const x = fx + 4 + i * 5, y = fy + 8 + r * 12, k = CANS[(i * 3 + r * 5) % CANS.length]
     if (r === 3 && i > 2) continue                                                              // the last row sold out
+    if (dark && hash(i, r, 3) < 0.55) continue                                                  // (taken)
     c.rect(x, y, 3, 8, k); c.px(x, y, "V"); c.vline(x + 2, y + 1, 7, k === "V" ? "v" : "k")
   }
   c.vline(fx + fw - 4, fy + 22, 10, "6")                                                        // the handle
@@ -133,7 +137,7 @@ scene("okonkwo_shop_bg", { w: W, h: H, bg: "k" }, (c) => {
   c.rect(fx + 6, fy - 4, 18, 4, "C"); c.hline(fx + 7, fy - 3, 16, "v")                          // its lit sign on top
 
   // ---- sacks of rice, stacked, slumped: cloth, a printed band, tied at the top
-  for (const [x, y, w, h] of [[79, 94, 14, 14], [93, 95, 13, 13], [85, 83, 14, 13]]) {
+  for (const [x, y, w, h] of dark ? [[93, 95, 13, 13]] : [[79, 94, 14, 14], [93, 95, 13, 13], [85, 83, 14, 13]]) {
     for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) {
       const e = Math.hypot((i - (w - 1) / 2) / (w / 2), (j - h * 0.55) / (h * 0.62))
       if (e > 1.05 && j < h - 2) continue
@@ -155,7 +159,7 @@ scene("okonkwo_shop_bg", { w: W, h: H, bg: "k" }, (c) => {
   for (let b = 0; b < 4; b++) {
     const y = sy + 2 + b * 16
     for (let x = sx + 3; x < sx + sw - 6; x += 6) {
-      if (hash(x, b, 5) < 0.12) continue                                                        // a gap where something sold
+      if (hash(x, b, 5) < (dark ? 0.55 : 0.12)) continue                                         // a gap where something sold (or was taken)
       GOODS[(b + (x > 158 ? 1 : 0) + (hash(x, b) < 0.15 ? 2 : 0)) % 4](x, y, x)
     }
     for (let x = sx + 1; x < sx + sw - 1; x++) { c.px(x, y + 11, tone(WOOD, 0.35 + bulb(x, y) * 0.5, x, y)); c.px(x, y + 12, "J"); c.px(x, y + 13, "l") }
@@ -187,12 +191,18 @@ scene("okonkwo_shop_bg", { w: W, h: H, bg: "k" }, (c) => {
   // ---- the bare bulb over the counter, warm, its cord from the ceiling
   c.vline(BULB[0], 0, BULB[1] - 4, "k"); c.vline(BULB[0] + 1, 0, BULB[1] - 4, "1")
   c.rect(BULB[0] - 1, BULB[1] - 4, 4, 2, "2")
-  c.rect(BULB[0] - 2, BULB[1] - 2, 6, 4, "R"); c.rect(BULB[0] - 1, BULB[1] - 2, 4, 3, "W"); c.hline(BULB[0] - 1, BULB[1] + 2, 4, "Q")
-})
+  if (dark) { c.rect(BULB[0] - 2, BULB[1] - 2, 6, 4, "3"); c.rect(BULB[0] - 1, BULB[1] - 2, 2, 2, "5") }                   // out
+  else { c.rect(BULB[0] - 2, BULB[1] - 2, 6, 4, "R"); c.rect(BULB[0] - 1, BULB[1] - 2, 4, 3, "W"); c.hline(BULB[0] - 1, BULB[1] + 2, 4, "Q") }
+  BULB_ON = 1
+}
+scene("okonkwo_shop_bg", { w: W, h: H, bg: "k" }, (c) => paintShop(c, false))
+// Chapter 2 after the raid (kapitel2-design §5, K1b sold; its block in art/test/k2_orte_blocks.px.js): what CAM 07V sees across the lane
+scene("okonkwo_shop_dunkel", { w: W, h: H, bg: "k" }, (c) => paintShop(c, true))
 
 // the counter across the shop (its foot the front's), the register on it with its display toward us, the ledger, a jar of sweets.
 // Drawn where it stands: x from 108, y from 70 in the room (BULB in the room's coordinates)
-sprite("okonkwo_shop_counter", { w: 126, h: 55, pivot: "bottom", outline: "k" }, (c) => {
+const paintCounter = (c, dark) => {
+  BULB_ON = dark ? 0.1 : 1
   const OX = 108, OY = 70, lit = (x, y) => bulb(x + OX, y + OY, 100)
   // the top, lit by the bulb, worn pale where the goods are pushed across
   for (let y = 20; y < 24; y++) for (let x = 0; x < 126; x++) c.px(x, y, tone(WOOD, 0.35 + lit(x, y) * 0.7 + (Math.abs(x - 58) < 18 && y < 23 ? 0.1 : 0), x + OX, y))
@@ -213,6 +223,8 @@ sprite("okonkwo_shop_counter", { w: 126, h: 55, pivot: "bottom", outline: "k" },
   // a jar of sweets
   c.rect(12, 13, 6, 8, "h"); c.rect(13, 14, 4, 6, "H"); for (const [x, y, k] of [[13, 17, "q"], [15, 18, "Q"], [14, 15, "m"], [16, 16, "v"]]) c.px(x, y, k)
   c.rect(12, 12, 6, 2, "6")
+  BULB_ON = 1
+  if (dark) { c.rect(92, 19, 28, 2, "l"); c.rect(100, 18, 6, 1, "L"); return }                   // the register gone, its cable cut, a pale square where it stood
   // the register: its body, the keys toward him, the drawer
   c.rect(92, 12, 28, 8, "5"); c.rect(92, 12, 28, 2, "6"); c.hline(92, 19, 28, "3"); c.rect(94, 15, 24, 3, "4")
   for (let x = 95; x < 117; x += 3) c.px(x, 13, "G")
@@ -221,4 +233,20 @@ sprite("okonkwo_shop_counter", { w: 126, h: 55, pivot: "bottom", outline: "k" },
   c.rect(96, 0, 18, 9, "k"); c.rect(97, 1, 16, 7, "2"); c.rect(98, 2, 14, 5, "c")
   for (let x = 99; x < 111; x += 3) { c.rect(x, 3, 2, 3, "v") }
   c.px(97, 1, "V")
+}
+sprite("okonkwo_shop_counter", { w: 126, h: 55, pivot: "bottom", outline: "k" }, (c) => paintCounter(c, false))
+sprite("okonkwo_shop_counter_dunkel", { w: 126, h: 55, pivot: "bottom", outline: "k" }, (c) => paintCounter(c, true))
+
+// the planks nailed across the window, as CAM 07V sees them from across the lane (on the approved block's lines, run on to the picture's
+// left edge): raw pine lit by the machine's own lamp, the top edge brightest, the lower in shadow, a nail where each crosses a mullion
+sprite("okonkwo_shop_bretter", { w: W, h: H }, (c) => {
+  for (const [y0, y1] of [[30, 44], [70, 62], [104, 112]]) {
+    const at = (x) => y0 + (y1 - y0) * (x - 78) / (W - 78)
+    for (let x = 0; x < W; x++) {
+      const t = Math.round(at(x))
+      c.px(x, t - 1, "k"); c.px(x, t, "K"); c.px(x, t + 1, "F"); c.px(x, t + 2, hash(x >> 3, y0) < 0.2 ? "E" : "F"); c.px(x, t + 3, "E"); c.px(x, t + 4, "D"); c.px(x, t + 5, "o"); c.px(x, t + 6, "k")
+      if (hash(x, y0, 7) < 0.04) c.px(x, t + 2, "D")                                            // a knot in the grain
+    }
+    for (const x of [10, 104, 184, 264, 312]) { const t = Math.round(at(x)); c.px(x, t + 2, "G"); c.px(x, t + 3, "6") }   // the nails
+  }
 })

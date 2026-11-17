@@ -522,9 +522,10 @@ Was allein aus einer Antwort folgt, kostet keinen Zustand: die Zeilen, die das K
 beim Ansehen, Meis Neuigkeit, Okonkwos Gruß und TIDEs letzte Nachricht. Vargas Mann steht von 19:00 bis 23:00 da statt bis 22:00
 (technisch entschieden: dieselben Stunden wie der Schatten, so hält das Warten nirgends neu, und kein Klickpfad ändert sich). Kessler
 sitzt ab Sonntag neben Ratz' Stand und fragt nach Geld („Ich bin die Treppe runter. Dreimal.“). Baos fehlender Wagen ist gebaut (2026-11-17): Samstag und Sonntag nach `k1b=sold` fehlen Wagen, Schirm und Bao, und der Mann der Quiet geht in dieser Zeit langsam vor dem LUCKY STATIC auf und ab und dreht sich an jedem Ende langsam um (vom Nutzer gewünscht; sein Gang `quiet_b_walk_*` in `art/characters/quiet.px.js`, `docs/characters/quiet_b_walk_*`, `docs/rooms/kowalski_ohne_bao_*`; nur Ansicht, dieselben Stunden). Die Graffiti werden rot (vom Nutzer entschieden 2026-11-17: eine Drohung). Bao mit Verband, die Bretter,
-`GLASSER LIES` (vorerst nur beim Ansehen der Tür) und `WHO TALKED?` kommen mit ihren Bildern. **Gemalt** (2026-11-17, auf den freigegebenen Blöcken): Vargas Mann mit dem Kraken-Mod und Kessler von oben in
+`GLASSER LIES` und `WHO TALKED?` kommen mit ihren Bildern. **Gemalt** (2026-11-17, auf den freigegebenen Blöcken): Vargas Mann mit dem Kraken-Mod und Kessler von oben in
 `art/characters/k2_folgen.px.js`, Bao mit Verband am Montag in `art/characters/bao.px.js` (`bao_band_*`, seine Pose in `game/cast.js`); Prüfbilder
-`docs/characters/k2_folgen_x5.png`, `*_im_spiel_*`. Die Änderungen an fertigen Bildern stehen als **Blöcke zur Freigabe** in `art/test/k2_orte_blocks.px.js` (`docs/rooms/k2_orte_blocks_x2.png`, 2026-11-17): Bretter vor Okonkwos Fenstern und Tür, die Fenster dahinter dunkel; `WHO TALKED?` in Tidewater-Türkis an der dunklen Fassade rechts; in `cam07v` die Bretter von außen, nah und hell, dahinter der dunkle, halb leere Laden; `GLASSER LIES` schräg auf Junos Tür, wie die Wand läuft; die Kowalski ohne Baos Wagen und Schirm; in `cam03` ein Pendler der Feeds an Kesslers Automaten (keine neue Figur); in `cam22` die dampfende Schale auf Ines' leerem Platz; in `cam30` das Absperrband vor dem Abgang; am Denkmal in der Gasse das Papierboot zwischen den Kerzen. Geprüft werden die Fäden wie in Kapitel 1 allein, mit geschlossenem Hauptweg
+`docs/characters/k2_folgen_x5.png`, `*_im_spiel_*`. Die Änderungen an fertigen Bildern stehen als **Blöcke zur Freigabe** in `art/test/k2_orte_blocks.px.js` (`docs/rooms/k2_orte_blocks_x2.png`, 2026-11-17): Bretter vor Okonkwos Fenstern und Tür, die Fenster dahinter dunkel; `WHO TALKED?` in Tidewater-Türkis an der dunklen Fassade rechts; in `cam07v` die Bretter von außen, nah und hell, dahinter der dunkle, halb leere Laden; `GLASSER LIES` schräg auf Junos Tür, wie die Wand läuft; die Kowalski ohne Baos Wagen und Schirm; in `cam03` ein Pendler der Feeds an Kesslers Automaten (keine neue Figur); in `cam22` die dampfende Schale auf Ines' leerem Platz; in `cam30` das Absperrband vor dem Abgang; am Denkmal in der Gasse das Papierboot zwischen den Kerzen. **Auch diese Blöcke sind gemalt** (2026-11-18, vom Nutzer freigegeben, die Graffiti rot; Prüfbilder `docs/rooms/k2_orte_*`): In der Jade Row ist das Bild ein zweites Mal gemalt, mit dunklen Fenstern, zugemachter Tür, ohne das Licht des Ladens und mit rohen Brettern quer davor; nur was davon abweicht, liegt bei `k1b=sold` als `jade_row_bretter` über dem Bild (mit dem Zittern der nassen Straße), und die drei Lampen des Ladens gehen aus (`shopLamps`). `WHO TALKED?` steht rot an der Wand des Durchgangs im Torbogen (`jade_row_tag`, bei `k1b=warned`, mit einer Zeile beim Ansehen). `cam07v` zeigt nach dem Überfall den Laden dunkel, halb leer und ohne Kasse (`okonkwo_shop_dunkel`, `okonkwo_shop_counter_dunkel`), davor nah und hell die Bretter (`okonkwo_shop_bretter`); Kasse und Regale haben eigene Zeilen. `GLASSER LIES` steht rot auf Junos Tür, jeder Buchstabe aufrecht, die Zeilen steigen mit der Wand wie NINTH LIVE daneben (`kessel_14_glasser`). In `cam03` steht von Samstag bis Montag von 19:00 bis 23:00 eine Pendlerin am Automaten (`k2_automat`, die Figur `commuter_d`). In `cam22` dampft am Samstag die Schale auf Ines' Platz (`cam22_schale`), in `cam30` hängt ab Samstag das Band (`cam30_tape`), und am Denkmal in der Gasse steht ab Samstag das Papierboot mit Kerze und `I.` (`gasse_papierboot`; §7 sagt „ab Sonntag“, gebaut ist Samstag, wie die Übergabe es wollte). Bao sagt am Montag nach `k1b=sold`: „Eine Woche, sagt der Arzt. Ich sag Montag.“
+Geprüft werden die Fäden wie in Kapitel 1 allein, mit geschlossenem Hauptweg
 (`off_main,evi_knows`), jede Antwort aus Kapitel 1 für sich (`--set k1a=lied`; `solve-act.mjs` nimmt jetzt Werte).
 
 **Varga (K1a, `off_varga`):**
@@ -649,25 +650,25 @@ more than once“).
 |---|---|
 | `flat` | der Anfang (§2.1), Teos Klopfen, das Ende am Deck (§8) |
 | Deck | GLASS mit den grauen Kameras, NETZ, CHAT (Imai, Vesper, `BECKEN 3`), der Clip-Editor mit **Prüfen** und **Montieren**, CACHE, BUCH, RADIO mit den Nachrichten |
-| `kessel_14`, `cam14` | Motte und das Backup, Frau Haldane wach an ihrer Tür; nach `k1b=lied` an Junos Tür `GLASSER LIES`; ab Abend 3 ist `cam14` aus, das rote Licht im Flur dunkel |
+| `kessel_14`, `cam14` | Motte und das Backup, Frau Haldane wach an ihrer Tür; nach `k1b=lied` an Junos Tür `GLASSER LIES` (gemalt, rot); ab Abend 3 ist `cam14` aus, das rote Licht im Flur dunkel |
 | `kessel_lobby` | der Briefkasten, Vargas Zettel |
 | `kowalski` | Bao (oder sein leerer Platz), der Werbebildschirm und Lanterns zehn Sekunden, die halbe Reparatur mit dem Kabel, Vargas Mann, der Schatten in Weiß |
-| `gasse` | der Weg zu Waschsalon und Markt, das Papierboot am Denkmal |
+| `gasse` | der Weg zu Waschsalon und Markt, das Papierboot am Denkmal (gemalt) |
 | `laundromat`, `cam23` | den Stick zurücklegen; Lantern um halb eins; der Mann in Weiß, wenn die Quiet vom Trockner weiß |
 | `lucky_static` | Mei, der Fernseher an allen drei Abenden, der Stammgast, der im Schlaf redet, Frau Imai |
-| `jade_row`, `cam07` | Morrows Flutwagen (Entscheidung 2), nach dem Überfall die Bretter an Okonkwos Laden, `WHO TALKED?`; das **Tor am Ende** führt jetzt zur Klinik und zum Wohnblock Lerche; `cam07` fällt aus |
-| `okonkwo_shop`, `cam07v` | nach dem Überfall zu (die Tür mit Brettern, `cam07v` zeigt den leeren, dunklen Laden); oder Okonkwos Dank |
+| `jade_row`, `cam07` | Morrows Flutwagen (Entscheidung 2), nach dem Überfall die Bretter an Okonkwos Laden, `WHO TALKED?` (beides gemalt); das **Tor am Ende** führt jetzt zur Klinik und zum Wohnblock Lerche; `cam07` fällt aus |
+| `okonkwo_shop`, `cam07v` | nach dem Überfall zu (die Tür mit Brettern, `cam07v` zeigt den leeren, dunklen Laden, gemalt); oder Okonkwos Dank |
 | `drain_market` | Sable, Ratz, der Prediger, Kessler mit Gips, und das **Floß DATA 1C/GB** mit Pike, Lanterns Gehilfen, der Juno in die Sümpfe bringt (§3.5) |
 | `sable_booth` | Entscheidung 2, der Blick ins Archiv des Wohnheims, die Nachricht über den anderen Glasser |
 | `sims`, `dach`, `dach_sitzen`, `dach_blick` | Teo am Montag, die Regenleserin; der Blick nach oben wie in Kapitel 1 |
-| `cam03` | Kessler kommt nicht mehr; am Automaten zieht jemand anderes Nummer 7 (nur Ansehen) |
+| `cam03` | Kessler kommt nicht mehr; am Automaten zieht jemand anderes Nummer 7 (nur Ansehen; gebaut) |
 | `cam04` | Varga sitzt am Samstag um 22:30 wieder bei Yuen's, auf seinem Platz; nach `k1a=lied` redet er über die Glasserin. Kesslers Ring vom Dienstag (der Clip aus dem Prolog) ist die Aufnahme, die das Ende braucht (§8) |
 | `cam15` | nach einem Verkauf am Freitag die offene Kapsel |
 | `cam18` | Frau Imais Kamera am alten Fischmarkt: nur das Archiv wie in Kapitel 1, nichts Neues (Juno hat dort ihren alten Zugang) |
 | `cam21` | die Klinik von außen: Ines kommt nicht mehr, die Pflegerin kommt um 19:00 zur Nachtschicht |
-| `cam22` | Pho Pump: Ines' Platz an der Theke bleibt leer; der Koch stellt trotzdem eine Schale hin, am Samstag |
+| `cam22` | Pho Pump: Ines' Platz an der Theke bleibt leer; der Koch stellt trotzdem eine Schale hin, am Samstag (gemalt) |
 | `cam24` | der Code der Haustür (W1), am Sonntag um 20:00 die Quiet |
-| `cam30` | das Absperrband am Sumpf-Abgang |
+| `cam30` | das Absperrband am Sumpf-Abgang (gemalt) |
 | `cam31` | `KEIN SIGNAL`, im Rauschen das Auge |
 
 ### 9.2 Neu im Straßenmodus
@@ -799,9 +800,9 @@ Archiv einer Kamera, Gegenstände an Hotspots und Fragen mit vier Antworten gibt
 - **Zeilen:** alles, was hier steht, sind Vorschläge; Lanterns Sprechkarte ist ein Entwurf (2026-11-15), beim Durchspielen zu prüfen.
 - **Preise und Zahlen:** Sable 3000, Vesper 5000, die Zuschauer, Sables Archiv 150, Kessler 50.
 - **Aussehen:** Klinik, Flur, Wohnung, der Wohnwagen innen, Pike von oben auf dem Markt (dazu seine Farbe), `cam51` und alle neuen Figuren gehen erst als Blöcke zur Freigabe, ebenso
-  die Änderungen an fertigen Bildern: die Bretter an Okonkwos Laden und der dunkle Laden in `cam07v`, `GLASSER LIES` und `WHO TALKED?`,
-  das neue Kabel hinter dem großen Schirm, Lanterns grüner Text auf dem Schirm, das Papierboot mit `I.`, das Absperrband an `cam30`,
-  das rote Licht der Kamera im 14. Stock aus.
+  die Änderungen an fertigen Bildern: das neue Kabel hinter dem großen Schirm, Lanterns grüner Text auf dem Schirm, das rote Licht der Kamera im 14. Stock aus.
+  (Die Bretter an Okonkwos Laden und der dunkle Laden in `cam07v`, `GLASSER LIES`, `WHO TALKED?`, das Papierboot mit `I.` und das
+  Absperrband an `cam30` sind gemalt, 2026-11-18, §5.)
 - **Sprechkarten** im `dialog-style-guide`: Lantern und Pike stehen als Entwurf, die der Pflegerin Marit Holm und die von Vargas Mann („der Schwere“) sind gewählt (2026-11-17); es fehlt noch Frau Imai; die Karte von Frau
   Haldane ist zu ergänzen.
 - **`evi_trust`** (wie offen Juno im Prolog zu EVI war) geht mit, bekommt aber erst später eine Aufgabe (vom Nutzer entschieden

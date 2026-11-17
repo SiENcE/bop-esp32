@@ -203,7 +203,9 @@ Nagiwa.at = {
     const a = P(5.92, 2.8, 0.7), b = P(5.92, 3.9, 0.3);
     // the cables' hotspot as the user set it in the editor (2026-11-09): over the bundles only, clear of the doors below
     return { ...at, cablesRect: [76, -1, 347, 37], locksRect: [b[0] - 2, a[1] - 2, a[0] - b[0] + 4, b[1] - a[1] + 4], waterPoly: [R[0], R[1], W, R[1], W, H, R[10], R[11]],
-      hazeDoor: cone(1.08, 0.3, 2.25, 0.45), hazeStatue: cone(2.95, 3.65, 3.15, 0.65), adAt: Nagiwa.layouts.gasse.openings.ad.slice(0, 2) };
+      hazeDoor: cone(1.08, 0.3, 2.25, 0.45), hazeStatue: cone(2.95, 3.65, 3.15, 0.65), adAt: Nagiwa.layouts.gasse.openings.ad.slice(0, 2),
+      // Chapter 2: the paper boat with I. among the candles at the monument's foot (its top left; art/rooms/gasse.px.js)
+      papierboot: [198, 173] };
   })(),
   // the lane left of Kowalski Street, down its length (painted on its blocks' lines: art/rooms/jade_row.px.js, art/old/jade_row_blocks.px.js; z = 1 where Juno walks, 30 px to the metre there). She keeps to the near band: her
   // sprite has one size, right for that depth, so the shop's door and the machine are reached from in front of them
@@ -213,6 +215,8 @@ Nagiwa.at = {
     // Chapter 2: Morrow before her patrol car, Saturday and Sunday at 00:30; the car a little back down the lane, at its own size there
     // (streife_nah, the user's choice, 2026-11-16)
     morrow: [180, 147], car: [196, 128],
+    // Chapter 2 after K1b warned: WHO TALKED? on the passage's wall in the arch (art/rooms/jade_row.px.js, the overlay "tag")
+    tagRect: [282, 106, 27, 16],
     parlourRect: [118, 88, 8, 26], arcadeRect: [100, 90, 16, 32], balconyRect: [44, 20, 58, 46], nightRect: [212, 8, 43, 62], carRect: [168, 92, 24, 17], pharmacyRect: [195, 88, 13, 24], gateRect: [136, 50, 48, 46], screenRect: [136, 4, 48, 44], signsRect: [195, 56, 22, 32],
     // the hotspots' shapes, measured from the blocks' own perspective (art/old/jade_row_blocks.px.js prints JADE_POLYS): what lies on a side
     // wall is a trapezoid here; the machine, the arcade, the gate, the screen, the car and the hanging signs are drawn as rects

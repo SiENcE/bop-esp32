@@ -34,6 +34,7 @@ pal({
   o: "#2e2019", p: "#4e3526",         // old wood, lacquer in shadow: frames, the shop's sign, the counter, the gate's roof
   K: "#c8b48c",                       // paper: posters, the coupon
   "¦": "#8c7a62", "¬": "#5f4c3b",     // the sign's paint where it only half covers the board (its letters' soft edge)
+  "ü": "#c89a60", "ö": "#9a7040",     // new planks, raw pine (Chapter 2: nailed across Okonkwo's windows and door)
 })
 
 const JR = (() => {
@@ -52,6 +53,7 @@ const JR = (() => {
     s: "#93583f", S: "#d79676", g: "#565e70", G: "#8e96a8", u: "#30264c", U: "#4d3f78", h: "#7d8ca4", H: "#b9c6d8",
     a: "#2c2026", A: "#4a3026", i: "#2a1636", I: "#46204e", t: "#11303d", T: "#1b495a", w: "#3a4c64", x: "#6c809a",
     b: "#6e4630", d: "#64265e", l: "#1f5e74", o: "#2e2019", p: "#4e3526", K: "#c8b48c", "¦": "#8c7a62", "¬": "#5f4c3b",
+    "ü": "#c89a60", "ö": "#9a7040",
   }
   const RGB = Object.fromEntries(Object.entries(HEX).map(([k, h]) => [k, [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)]]))
 
@@ -63,6 +65,10 @@ const JR = (() => {
   const c = ISO.pen({ px: put, key: get, is: (x, y, ks) => { const k = get(x, y); return !!k && ks.includes(k) } })
   const at = (z) => { CZ = z }
   let F = 0                                                     // the frame being painted
+  // what Chapter 2 changes (kapitel2-design §5), each a variant of the whole picture painted again, the game laying only the pixels that
+  // differ over it: boarded (K1b sold) the shop's lamps out, its windows dark and its door shut, raw planks nailed across them; tag
+  // (K1b warned) WHO TALKED? sprayed on the passage's wall in the arch
+  let VAR = { boarded: false, tag: false }
 
   // ---------------------------------------------------------------- light, in metres: m across, z deep (3.2 m a step), h up
   const LAMPS = []
@@ -73,6 +79,7 @@ const JR = (() => {
   const lightAt = (m, z, h, nm, nh) => {
     const o = { w: 0, m: 0, c: 0 }
     for (const L of LAMPS) {
+      if (L.shop && VAR.boarded) continue
       const dm = L.m - m, dz = (L.z - z) * 3.2, dh = L.h - h, d = Math.hypot(dm, dz, dh)
       if (d >= L.r) continue
       const cos = d > 0.01 ? (dm * nm + dh * nh) / d : 1
@@ -128,6 +135,7 @@ const JR = (() => {
   // ---------------------------------------------------------------- the lamps (the painted sources; the runtime lamps are the big ones)
   lamp(-3.2, 0.74, 1.4, "w", 0.85, 1.8); lamp(-3.2, 1.38, 1.4, "w", 0.85, 1.8)   // Okonkwo's windows, either side of his door
   lamp(-3.1, 0.95, 1.0, "w", 1.15, 2.3)                          // his open door
+  for (const L of LAMPS) L.shop = true                           // (out while the shop is boarded up)
   lamp(-3.3, 1.08, 3.9, "w", 0.7, 1.7)                           // the balcony door over it
   lamp(-3.3, 0.86, 2.95, "w", 0.5, 1.2); lamp(-3.3, 1.3, 2.95, "w", 0.5, 1.2)   // the two small lamps over his sign
   lamp(3.15, 1.66, 1.35, "w", 1.1, 2.8)                          // HOT SOUP
@@ -303,7 +311,7 @@ const JR = (() => {
   // ---------------------------------------------------------------- the walls, column by column (the mock's way): what a point at depth z, height h shows
   const T = { z0: 0.62, z1: 0.88, side: 2.3, rise: 0.62, ceil: 2.75, eye: 70 / 30 }
   /** the arch to Kowalski Street and what the eye sees through it (the mock's, unchanged in its lines) */
-  const tunnel = (z, h) => {
+  const tunnel = (z, h, x, y) => {
     const zc = (T.z0 + T.z1) / 2, hw = (T.z1 - T.z0) / 2, q = (z - zc) / hw
     if (Math.abs(q) > 1.12) return null
     const top = T.side + T.rise * Math.sqrt(Math.max(0, 1 - q * q))
@@ -316,6 +324,7 @@ const JR = (() => {
     if (k === kCeil) return lit > 0.6 && b < 0.3 ? "c" : Math.floor(d * 6) % 3 === 0 ? "2" : "1"
     if (k === kFloor) return d < 0.08 ? "1" : (b < lit * 0.9 ? (lit > 0.7 ? "C" : "c") : Math.floor(d * 14) % 3 === 0 ? "f" : "t")
     const hh = T.eye + k * (h - T.eye)
+    if (VAR.tag) { const g = tagPx(x, y); if (g) return g }
     if (Math.abs(hh - 2.0) < 0.05) return lit > 0.5 ? "C" : "4"                                   // a pipe along the passage
     if (Math.abs(hh - 1.95) < 0.05) return "2"
     if (hh < 0.08) return "1"
@@ -407,10 +416,58 @@ const JR = (() => {
     for (const [a, b] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) if (TAG.g.has(fl(u * TAG.w + a * 0.45) + "," + fl((1 - w) * TAG.h + b * 0.3))) return "U"
     return null
   }
+  // ---------------------------------------------------------------- Chapter 2 (kapitel2-design §5; the approved blocks: art/test/k2_orte_blocks.px.js)
+  // Boarded up after the raid (K1b sold): raw planks across the near window, the door and the window of three panes, each from wall to
+  // wall over its frame (z0, h0 to z1, h1 in metres along the wall), a nail at either end; the planks take the lane's light, the shop none
+  const PLANKS = [
+    [0.6, 1.95, 0.87, 1.62], [0.6, 1.02, 0.87, 1.42], [0.6, 0.66, 0.87, 0.6],
+    [0.83, 1.86, 1.07, 1.76], [0.83, 1.12, 1.07, 1.3], [0.83, 0.58, 1.07, 0.5],
+    [1.03, 1.92, 1.69, 1.66], [1.03, 1.18, 1.69, 1.46], [1.03, 0.64, 1.69, 0.56],
+  ]
+  const boardedPix = (z, h, x, y) => {
+    for (const [z0, h0, z1, h1] of PLANKS) {
+      if (z < z0 || z >= z1) continue
+      const d = h - (h0 + (h1 - h0) * (z - z0) / (z1 - z0))
+      if (Math.abs(d) >= 0.066) continue
+      if (Math.abs(d) < 0.022 && (Math.abs(z - z0 - 0.035) < 0.01 || Math.abs(z1 - 0.035 - z) < 0.01)) return "H"   // the nails
+      if (d > 0.036) return "ü"                                                               // its top edge in the lanterns' light
+      if (d < -0.042) return "p"                                                              // its lower edge in shadow
+      const o = lightAt(-3.45, z, h, 1, 0)
+      return tone(["p", "ö", "ü"], 1.0 + Math.min(1, o.w + o.m + o.c) * 0.8, x, y)
+    }
+    if (box(z, h, DOOR[0], DOOR[1], 0, 2.2)) {                                                // the door shut: its leaf of old wood in two panels, the handle
+      const a = DOOR[0], b = DOOR[1], dd = (b - a) / 0.44, u = (z - a) / (b - a)
+      if (z < a + 0.03 * dd || z >= b - 0.03 * dd || h > 2.14) return "o"
+      if (u > 0.76 && u < 0.84 && h > 1.0 && h < 1.06) return "5"
+      const edge = u < 0.14 || u > 0.88 || Math.abs(h - 1.1) < 0.05 || h < 0.12 || h > 2.02
+      const o = lightAt(-3.45, z, h, 1, 0)
+      return tone(["k", "o", "p"], 0.9 + Math.min(1, o.w + o.m + o.c) * 1.1 + (edge ? -0.6 : 0), x, y)
+    }
+    if (box(z, h, SHOP0, SHOP1, 0.45, 2.1)) {                                                 // the windows dark, the shelves half bare behind them
+      const pane = PANES.findIndex(([a, b]) => z >= a && z < b), u = (z - PANES[pane][0]) / (PANES[pane][1] - PANES[pane][0]), w = (h - 0.45) / 1.65
+      if (u < 0.05 || u > 0.95 || w > 0.97 || Math.abs(h - 1.0) < 0.022) return "o"
+      if (u < 0.09 || w > 0.94 || (h > 1.0 && h < 1.04)) return "p"
+      if (h < 1.0) return pane === 1 && h > 0.94 ? "2" : "1"                                  // the counter's lip; the sacks are gone
+      const shelf = (h - 1.04) % 0.3, row = fl((h - 1.04) / 0.3)
+      if (shelf < 0.035) return "2"
+      if (shelf > 0.05 && shelf < 0.15 && ih(fl(z * 13), row + 7) < 0.4) return fl(z * 26 + row * 3) % 4 === 0 ? "1" : "2"   // what they left
+      return "1"
+    }
+    return null
+  }
+  // WHO TALKED? on the passage's wall in the arch (K1b warned: the boys look for whoever told), sprayed red, dripping; that wall faces us,
+  // so the letters stand upright in the picture (where the wall shows through the arch)
+  const TAG_PX = new Map()
+  for (const [s, x0, y0, drips] of [["WHO", 284, 106, [1, 9]], ["TALKED?", 282, 114, [4, 13, 22]]]) {
+    for (const [px, py] of textPx(s)) TAG_PX.set((x0 + px) + "," + (y0 + py), "q")
+    for (const dx of drips) for (let j = 0; j < 2 + (dx % 3); j++) TAG_PX.set((x0 + dx) + "," + (y0 + 5 + j), j ? "r" : "q")
+  }
+  const tagPx = (x, y) => TAG_PX.get(x + "," + y) ?? null
   const wallPix = (side, z, h, x, y) => {
     const o = lightAt(side * 3.5, z, h, -side, 0)
     if (side < 0) {
       // ---- the left-hand wall
+      if (VAR.boarded) { const k = boardedPix(z, h, x, y); if (k) return k }
       if (box(z, h, 0.97, 1.2, 2.97, 4.85)) {                                                 // the balcony door, open, a curtain blowing in it
         if (box(z, h, 0.97, 0.99, 2.97, 4.85) || box(z, h, 1.18, 1.2, 2.97, 4.85) || h > 4.79) return "o"
         const u = (z - 0.99) / 0.19
@@ -485,7 +542,7 @@ const JR = (() => {
       }
     } else {
       // ---- the right-hand wall
-      if (z >= 0.6 && z < 0.9) { const k = tunnel(z, h); if (k) return k }
+      if (z >= 0.6 && z < 0.9) { const k = tunnel(z, h, x, y); if (k) return k }
       if (box(z, h, 1.28, 2.05, 0.3, 2.2)) {                                                  // HOT SOUP
         const u = (z - 1.28) / 0.77
         if (h > 1.75) return h > 2.15 || h < 1.79 ? "k" : "n"                                  // the band; its letters come after
@@ -814,6 +871,7 @@ const JR = (() => {
     o: "e", p: "o", n: "i", i: "e", t: "e", X: "Z", Z: "z", z: "f", f: "e", e: "e", g: "2", G: "g", x: "w", w: "2" }
   const SHEEN = { m: "d", N: "M", M: "I", v: "l", V: "C", C: "T", Q: "A", R: "b", W: "P", P: "A", d: "i" }
   let SNAP = null
+  const SNAPS = {}
   // inside the wet parts the mirrored light trembles with the frame (outside them it keeps frame 0's, so the picture stays whole)
   const WETPARTS = PARTS.filter((q) => q.name.startsWith("wet"))
   const moving = (x, y) => WETPARTS.some((q) => x >= q.x && x < q.x + q.w && y >= q.y && y < q.y + q.h)
@@ -895,13 +953,31 @@ const JR = (() => {
     return hex
   }
   const CACHE = new Map()
-  const frame = (f) => {
-    if (CACHE.has(f)) return CACHE.get(f)
-    if (!SNAP) { paint(0); SNAP = [KB.slice(), ZB.slice()] }
+  /** frame f of the picture, or of a variant of it ("b" boarded, "t" the tag) */
+  const frame = (f, v = "") => {
+    if (CACHE.has(v + f)) return CACHE.get(v + f)
+    VAR = { boarded: v.includes("b"), tag: v.includes("t") }
+    if (!SNAPS[v]) { paint(0); SNAPS[v] = [KB.slice(), ZB.slice()] }
+    SNAP = SNAPS[v]
     paint(f); mirror()
     const keys = KB.slice(), out = { keys, hex: glow(keys) }
-    CACHE.set(f, out)
+    CACHE.set(v + f, out)
+    VAR = { boarded: false, tag: false }
     return out
+  }
+  /** a variant laid over the picture: the pixels where it differs in any frame of the wet floor's (which it then trembles with, 20
+   *  frames in step with the parts; one frame if none of it lies there), cut to their box */
+  const overlay = (v) => {
+    const N = Math.max(...WETPARTS.map((q) => q.frames)), diff = new Uint8Array(W * H)
+    for (let f = 0; f < N; f++) { const a = frame(f).hex, b = frame(f, v).hex; for (let i = 0; i < W * H; i++) if (a[i] !== b[i]) diff[i] = 1 }
+    let x0 = W, y0 = H, x1 = -1, y1 = -1, wet = false
+    for (let i = 0; i < W * H; i++) if (diff[i]) {
+      const x = i % W, y = fl(i / W)
+      x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x); y1 = Math.max(y1, y)
+      if (moving(x, y)) wet = true
+      else if (PARTS.some((p) => x >= p.x && x < p.x + p.w && y >= p.y && y < p.y + p.h)) console.log(`JR_WARN variant ${v} changes part pixel ${x},${y}`)
+    }
+    return { x: x0, y: y0, w: x1 - x0 + 1, h: y1 - y0 + 1, frames: wet ? N : 1, diff }
   }
   const blit = (cv, hex, x0, y0, w, h) => {
     for (let j = 0; j < h; j++) {
@@ -928,6 +1004,7 @@ const JR = (() => {
     const bad = []; for (let i = 0; i < W * H; i++) if ("rqjyY".includes(frame(0).keys[i])) bad.push(`${i % W},${fl(i / W)}`)
     if (bad.length) console.log(`JR_WARN red or yellow at ${bad.slice(0, 6).join(" ")}`)
   }
+  const OV = { bretter: overlay("b"), tag: overlay("t") }
   console.log("PARTS " + JSON.stringify({
     room: "jade_row", size: [W, H],
     parts: PARTS.map((p) => ({ name: "jade_row_" + p.name, at: [p.x, p.y], size: [p.w, p.h], frames: p.frames, fps: 10, layer: "under" })),
@@ -936,6 +1013,10 @@ const JR = (() => {
       [225, 100, "#eea040", 54], [234, 110, "#62def0", 40], [300, 125, "#62def0", 50], [234, 40, "#ff4fd3", 60], [160, 26, "#62def0", 70],
       [160, 62, "#ff4fd3", 44], [200, 93, "#62def0", 26], [122, 96, "#ff4fd3", 26], [160, 26, "#ff4fd3", 50]],
     lanterns: [...LANTERNS.values()],
+    // Chapter 2's changes, each laid over the picture where it differs (the game's props with their condition); shopLamps: the runtime
+    // lamps (above) that go out with the shop
+    overlays: Object.fromEntries(Object.entries(OV).map(([n, o]) => [n, { name: "jade_row_" + n, at: [o.x, o.y], size: [o.w, o.h], frames: o.frames, fps: 10 }])),
+    shopLamps: [0, 1, 2],
   }))
 
   // ---------------------------------------------------------------- the sprites drawn over the room by the game
@@ -996,10 +1077,19 @@ const JR = (() => {
       else if (v > thick - 0.09 && bay(x, y) < (v - thick + 0.09) / 0.09) c.px(x, y, "5")
     }
   }
-  return { W, H, PARTS, frame, blit, steam, crowd, car, mist }
+  return { W, H, PARTS, OV, frame, blit, steam, crowd, car, mist }
 })()
 
 sprite("jade_row_bg", { w: JR.W, h: JR.H }, (c) => JR.blit(c, JR.frame(0).hex, 0, 0, JR.W, JR.H))
+// Chapter 2's changes over the picture (JR.overlay): only the pixels that differ, the rest left clear
+for (const [n, v] of [["bretter", "b"], ["tag", "t"]]) {
+  const o = JR.OV[n], draw = (c, f) => {
+    const hex = JR.frame(f, v).hex
+    for (let j = 0; j < o.h; j++) for (let i = 0; i < o.w; i++) { const k = (o.y + j) * JR.W + o.x + i; if (o.diff[k]) c.px(i, j, hex[k]) }
+  }
+  if (o.frames > 1) anim("jade_row_" + n, { w: o.w, h: o.h, frames: o.frames, fps: 10 }, (c) => draw(c, c.frame))
+  else sprite("jade_row_" + n, { w: o.w, h: o.h }, (c) => draw(c, 0))
+}
 for (const P of JR.PARTS) anim("jade_row_" + P.name, { w: P.w, h: P.h, frames: P.frames, fps: 10 }, (c) => JR.blit(c, JR.frame(c.frame ?? 0).hex, P.x, P.y, P.w, P.h))
 anim("jade_row_steam", { w: 48, h: 64, frames: 12, fps: 10 }, JR.steam)
 anim("jade_row_crowd", { w: 320, h: 32, frames: 1, fps: 1 }, JR.crowd)

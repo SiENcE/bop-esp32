@@ -181,4 +181,19 @@ console.log("CAM22_LAYOUT " + JSON.stringify(CAM22_LAYOUT))
 
 // ================================================================ the scenes
 scene("cam22_bg", { w: W, h: H, bg: "0" }, (c) => paintFeed(c, BAKE()), cookFig, steam)
+// Chapter 2, Saturday (kapitel2-design §9.1; the approved block in art/test/k2_orte_blocks.px.js): Ines's place stays empty, and the cook
+// has put a bowl there anyway. The game stands it at her place (cam22.seat, its foot's middle there): the rim lit by the lamps over
+// the counter, the broth a little darker inside it, the belly turning away into shadow; three thin threads of steam rising and
+// curling, each going out before the top
+anim("cam22_schale", { w: 16, h: 20, frames: 12, fps: 8, pivot: "bottom" }, (c) => {
+  const f = c.frame ?? 0
+  for (const [y, x0, x1, k] of [[14, 3, 12, "9"], [15, 2, 13, "9"], [16, 2, 13, "9"], [17, 3, 12, "9"], [18, 4, 11, "8"], [19, 5, 10, "7"]]) c.hline(x0, y, x1 - x0 + 1, k)
+  c.hline(3, 15, 10, "7"); c.hline(4, 15, 3, "6")                                       // the broth, the near rim's shadow on it
+  c.px(13, 16, "8"); c.px(12, 17, "8"); c.px(11, 18, "7"); c.px(4, 19, "4"); c.px(11, 19, "4")
+  for (const [x0, ph] of [[5, 0], [8, 4], [11, 8]]) for (let t = 0; t < 13; t++) {
+    if ((t + 12 - f + ph) % 12 >= 5) continue                                              // a wisp of it, moving up
+    const x = x0 + Math.round(Math.sin((t + ph) * 0.7) * (0.4 + t * 0.08)), y = 13 - t
+    c.px(x, y, t < 4 ? "9" : t < 9 ? "8" : "7")
+  }
+})
 scene("review_cam22", { w: W, h: H, bg: "0" }, (c) => paintFeed(c, BAKE()), cookFig, steam, (c) => reviewFx(c, W, H))

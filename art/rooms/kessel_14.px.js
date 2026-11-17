@@ -8,6 +8,7 @@
 //   kessel_14_chair_empty   what differs when her armchair stands empty (baked again with the kit's armchair_empty): CAM 14 lays it
 //                     over the picture at layout.chairEmpty while she sleepwalks to the papers (game/stadt.js), so she is never
 //                     in two places at once (the user, 2026-11-13); 12 frames, as the TV's light on the chair flickers
+//   kessel_14_glasser  Chapter 2: GLASSER LIES sprayed on Juno's door (after K1b lied), laid over at layout.glasser
 // KESSEL_14.layout has the measured numbers (walk area, front lines, spots, lamps; tools/iso-layout.mjs
 // writes the same for the game).
 include("../lib/iso.js", { palette: true })
@@ -38,6 +39,20 @@ const KESSEL_14 = ISOKIT.bake(ISO_MAPS.kessel_14, {
     for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) { const i = y * W + x; if (B.k[i] && B.k[i] !== A.k[i]) c.px(x - x0, y - y0, B.k[i]) }
   })
   KESSEL_14.layout.chairEmpty = [x0, y0]
+}
+
+// ---- Chapter 2 after K1b lied (kapitel2-design §5; the approved block in art/test/k2_orte_blocks.px.js): GLASSER LIES sprayed across
+// Juno's door in red, a threat; each letter upright, the lines rising with the wall (one up for two across, as NINTH LIVE beside it),
+// paint running down from a few. The game lays it over the picture at layout.glasser while the answer holds (game/kapitel2_folgen.js)
+{
+  const LINES = [["GLASSER", 1, 20, [5]], ["LIES", 1, 27, [1, 3]]]
+  sprite("kessel_14_glasser", { w: 30, h: 36 }, (c) => {
+    for (const [s, x0, y0, drips] of LINES) {
+      [...s].forEach((ch, n) => { const x = x0 + n * 4; TXT.draw(c, x, y0 - (x >> 1), ch, "q", { font: "hud" }) })
+      for (const n of drips) { const x = x0 + n * 4 + (n % 2), y = y0 - (x >> 1) + 5; for (let j = 0; j < 2 + (n % 3); j++) c.px(x, y + j, j ? "r" : "q") }
+    }
+  })
+  KESSEL_14.layout.glasser = [79, 37]
 }
 
 console.log("ISO_LAYOUT " + JSON.stringify({ id: "kessel_14", ...KESSEL_14.layout }))
