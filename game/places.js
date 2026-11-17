@@ -50,6 +50,8 @@ Nagiwa.at = {
   // Ines' flat, 4B, on blocks (art/rooms/ines_wohnung.map.js, game/rooms/ines_wohnung.layout.js); the fridge's upper part has the napkin
   // under its magnet, its lower part is the freezer (one hotspot asks which)
   ines_wohnung: fromLayout(Nagiwa.layouts.ines_wohnung),
+  // klinik (art/rooms/klinik.map.js, game/rooms/klinik.layout.js)
+  klinik: fromLayout(Nagiwa.layouts.klinik),
   // the swamps, two stages seen from the side (art/rooms/sumpf.px.js): the ride on Pike's raft, its planes where they start (each
   // scrolls), the raft's canvas, where Juno stands on it; and the arrival at the caravan, the raft tied up at the walk, the caravan and
   // the raft to click
