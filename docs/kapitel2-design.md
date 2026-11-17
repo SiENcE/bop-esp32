@@ -177,7 +177,7 @@ es nicht mehr, §7).
   Pike und Juno gleiten zusammen nach rechts unter den letzten Pfeiler des Rings, der am rechten Rand des Marktes über dem Kanal liegt,
   ins Dunkel. Die Fahrt beginnt in diesem Dunkel (`sumpf_fahrt_tunnel`, ohne Regen: die Ansicht `im_tunnel`), nur die Bildschirme des
   Floßes spiegeln sich, Pike sagt „Kopf runter.“, dann gleitet das Portal nach links weg, und zum ersten Mal ist Himmel da.
-  **Platzhalter:** Die Endstufe hat das Bild des Abzweigers.
+  Die Endstufe hat ihr eigenes Symbol, ein Modul mit Kühlrippen (vom Nutzer gewählt 2026-11-17, `art/test/inventar_k2_blocks.px.js`, Weg A).
 - Die Hinweise des Kapitels sind seine eigenen (`Cutaway.hints(..., { act: "kapitel2" })`); die von Prolog und Kapitel 1 gelten nur
   noch in ihren Akten. Der Hinweis zur Fälschung gilt nur, während Juno sie im Editor ansieht, und erst nach den Hinweisen des Hauptfadens.
 - Geprüft wird wie in Kapitel 1 der Hauptweg mit geschlossenen Fäden (`off_<thread>`): `node tools/solve-act.mjs kapitel2 --full
@@ -425,8 +425,8 @@ Alles das gehört zum Weg zu Lantern und wird mit ihm geprüft (der Lauf mit `of
 Die Ankunft ist 640 breit und gemalt (`sumpf_bg`), die Tür, die Reuse und das Funkgerät sind Teile, die sich ändern; das Funkgerät von
 nah ist ein Bildschirm für sich (der Raum `funk`, mit dem Schalter PWR legt Juno es weg). Kanal und Welle zählen ab 1 (`funk_ch` 1 bis
 5, `funk_welle` 1 bis 4) und gelten nur, solange es an ist; seine Welle sind die Zacken. Die Klicks: `tools/paths/kapitel2_sendung.json`
-geht den forschen Weg und das Rätsel, `kapitel2_lantern.json` den vorsichtigen. **Platzhalter:** Die Symbole von Funkgerät und Akku sind
-das des Abzweigers.
+geht den forschen Weg und das Rätsel, `kapitel2_lantern.json` den vorsichtigen. Funkgerät, Akku und das Funkgerät mit Akku
+haben ihre eigenen Symbole (vom Nutzer gewählt 2026-11-17: das Funkgerät B gerade von vorn mit Griff, mit Akku leuchtet sein Schirm grün; der Akku A).
 
 **Der Schatten:** Weiß die Quiet, wer Juno ist, steht jemand in Weiß auf der Kowalski-Straße, von 19:00 bis 23:00, vorn vor dem LUCKY
 STATIC, mit dem Rücken zu uns, und starrt auf ihre Haustür (§4; vom Nutzer entschieden 2026-11-17). Erst ist es einer mit Kapuze, am Montag

@@ -10,6 +10,12 @@
 //   inv_tap      Ratz's tap: the box with its light and grille, two cables, a crocodile clip on each
 //   inv_reis     Okonkwo's rice: a roll in kraft paper tied twice, a tear with rice in it, two batteries
 //   inv_suppe    Bao's broth: the white bowl with its domed lid and knob, the amber band, a twist of steam
+// Chapter 2 (the blocks the user chose, art/test/inventar_k2_blocks.px.js, 2026-11-17: the radio B, the battery A, the output stage A):
+//   inv_funkgeraet  the old radio from the boat, no power: straight on, rubber corners, a handle, the aerial at its side, the amber TX
+//                   key, the screen dark
+//   inv_funk        the same radio with Pike's battery in it: the screen lit green with his zigzag wave, a cyan light on
+//   inv_akku        a battery from Pike's bank: a block with its poles (the red plus), a cyan charge bar
+//   inv_endstufe    the output stage from a flood warning mast: a module with its cooling fins on top, a socket at its side, an amber band
 //
 // One frame each (anims, as the engine's item icons are), no pivot: the bar draws them by their top left.
 // The review sheets are in items_review.px.js.
@@ -22,7 +28,8 @@ pal({
   O: "#552b1c", P: "#b0602a", Q: "#eea040", R: "#ffd58a",                        // amber
   T: "#c89a64", U: "#a07448", u: "#6e4a2e", e: "#e8c890", E: "#b0905e",          // kraft paper; the string
   c: "#123c4e", C: "#1f88a4", v: "#62def0", V: "#dafcff",                        // screen cyan: tech
-  r: "#7e1420", q: "#ff3a3a",                                                    // red: the system says no
+  r: "#7e1420", q: "#ff3a3a",                                                    // red: the system says no (and a battery's plus pole)
+  h: "#0e1a16", f: "#2a5a42", F: "#8acfae",                                      // the radio's screen: dark glass, lit, its wave
   s: "#93583f", S: "#d79676", i: "#f0a0c0", I: "#a85878", j: "#ffd8e8",          // skin; Ines' pink
 })
 
@@ -123,3 +130,67 @@ INV_ICON("inv_suppe", `
   ...BBBBBBBbbbbD...
   ....bbbbbbbbDD....
   ......DDDDDD......`)
+
+// ---------------------------------------------------------------- Chapter 2: the radio from the boat, without power and with it
+const RADIO = `
+  ..................
+  ....gGGGGGGg......
+  ....g......g...L..
+  .22222222222222G2.
+  .24444444444444G2.
+  .23RQ3hhhhhdhh3G2.
+  .23QP3hhhhdhhh3g2.
+  .2333333333333332.
+  .23663G3G33G3G332.
+  .23663g3g33g3g332.
+  .2333333333333332.
+  .2222222222222222.
+  ..................`
+INV_ICON("inv_funkgeraet", RADIO)
+// powered: the screen lit with his zigzag wave, a cyan light by the key
+INV_ICON("inv_funk", `
+  ..................
+  ....gGGGGGGg......
+  ....g......g...L..
+  .22222222222222G2.
+  .24444444444444G2.
+  .23RQ3fFfffFff3G2.
+  .23QP3FfFfFfFf3g2.
+  .2v33333333333332.
+  .23663G3G33G3G332.
+  .23663g3g33g3g332.
+  .2333333333333332.
+  .2222222222222222.
+  ..................`)
+
+// ---------------------------------------------------------------- Pike's battery
+INV_ICON("inv_akku", `
+  ..................
+  ..................
+  ....q.......d.....
+  ...rqr.....ddd....
+  ..GLLLLLLLLLLLLG..
+  ..LLLLLLLLLLLLLG..
+  ..g44444444444Gg..
+  ..g4CCCCvv4444Gg..
+  ..g4cccccc4444Gg..
+  ..g44444444444Gg..
+  ..g44444444444Gg..
+  ..gggggggggggggg..
+  ..................`)
+
+// ---------------------------------------------------------------- the output stage from the flood warning mast
+INV_ICON("inv_endstufe", `
+  ..................
+  ..L.L.L.L.L.L.L...
+  ..G.G.G.G.G.G.G...
+  ..G.G.G.G.G.G.G...
+  .GGGGGGGGGGGGGGG..
+  .L66666666666664..
+  .L6QRQRQRQ666664..
+  .L66666666666v64GL
+  .L66666666666664gG
+  .L6555555666666gG.
+  .L66666666666664..
+  .444444444444444..
+  ..................`)

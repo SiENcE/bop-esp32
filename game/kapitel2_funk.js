@@ -9,8 +9,7 @@
 //   funk_ch       the radio's channel while it is open, 1..5 (84.2, 85.9, 87.6, 89.1, 91.3); funk_welle its wave, 1..4 (a sine, a saw, a
 //                 square, pulses); both set when it is switched on and gone when it is put away, so they only count while it is open (from 1:
 //                 a flag at 0 counts as unset)
-// All of it is the way to Lantern's own (checked in its run; off_lantern shuts the way in the others). [PLATZHALTER] the items' icons are
-// the tap's, as the output stage's
+// All of it is the way to Lantern's own (checked in its run; off_lantern shuts the way in the others). The items' icons: art/ui/items.px.js
 "use strict";
 
 (function () {
@@ -24,10 +23,10 @@ Cutaway.actor("funk_stimme", { name: "Funk", color: "#62def0", voice: { pitch: 5
 // ---- the things: the radio without power, the battery, the radio working
 const POWER = [{ remove: "funkgeraet" }, { remove: "akku" }, { give: "funk" }, { sfx: "type" },
   "Der Akku passt, wenn man drückt. Es rauscht. Es lebt."];
-Cutaway.item("funkgeraet", { name: "Funkgerät", icon: "inv_tap", look: ["Ein altes Funkgerät aus dem Boot. PUMP HALL 3 steht drauf.", "Kein Strom drin."],
+Cutaway.item("funkgeraet", { name: "Funkgerät", icon: "inv_funkgeraet", look: ["Ein altes Funkgerät aus dem Boot. PUMP HALL 3 steht drauf.", "Kein Strom drin."],
   combine: { akku: POWER } });
-Cutaway.item("akku", { name: "Akku", icon: "inv_tap", look: "Ein Akku aus Pikes Batteriebank. Schwer, und noch warm." });
-Cutaway.item("funk", { name: "Funkgerät", icon: "inv_tap", look: ["Das Funkgerät aus dem Boot, mit Pikes Akku.", "Es rauscht leise. Am besten geht's am Mast."] });
+Cutaway.item("akku", { name: "Akku", icon: "inv_akku", look: "Ein Akku aus Pikes Batteriebank. Schwer, und noch warm." });
+Cutaway.item("funk", { name: "Funkgerät", icon: "inv_funk", look: ["Das Funkgerät aus dem Boot, mit Pikes Akku.", "Es rauscht leise. Am besten geht's am Mast."] });
 
 // ---- the swamp behind the caravan: the trap in the roots, the mast with its screen, the boat
 const hide = Cutaway.room.get("sumpf").hotspots;

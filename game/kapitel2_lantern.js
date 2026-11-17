@@ -12,8 +12,7 @@
 //                  brings her back in as found); ally once she has brought him the stick or her recording
 // The way is checked on its own (off_lantern shuts it in the other runs: the half repair doesn't know, the screen doesn't tear), since its
 // steps would multiply every state of the chapter: tools/check.sh, the run "lantern" (Juno with the stick, the flat and the forgery done).
-// Lantern's and Pike's voices: dialog-style-guide §6 (drafts). [PLATZHALTER] Pike is a figure of the market's crowd, the output stage has
-// the tap's icon, the raft doesn't leave the market visibly, the caravan inside is the old shop's iso block, Lantern in it is his feed
+// Lantern's and Pike's voices: dialog-style-guide §6 (drafts). [PLATZHALTER] Pike is a figure of the market's crowd, the raft doesn't leave the market visibly, the caravan inside is the old shop's iso block, Lantern in it is his feed
 // figure (the ride and the arrival are painted: art/rooms/sumpf.px.js); the words on the screen are a caption over the stutter until the street's picture shows
 // them (§13, 4)
 "use strict";
@@ -169,7 +168,7 @@ market.datenfloss.with.endstufe = pikeDef.with.endstufe;
 // ---- L3b: Ratz has the output stage, and he gives it to Juno (never to the heron) for a copy of her old pass: his colony, the flaps in the
 // pipes under the Crown. Asked only once Pike has said what he wants (knowledge she lacks before)
 Object.assign(Nagiwa.ledger, { ratz: { to: "RATZ", what: { copy: "eine Kopie meines alten Ausweises" } } });
-Cutaway.item("endstufe", { name: "Endstufe", icon: "inv_tap", look: "Die Endstufe aus einem Flutwarnmast. Sie hat Kühlrippen und ist schwerer, als sie aussieht." });
+Cutaway.item("endstufe", { name: "Endstufe", icon: "inv_endstufe", look: "Die Endstufe aus einem Flutwarnmast. Sie hat Kühlrippen und ist schwerer, als sie aussieht." });
 const ratz = /** @type {any} */ (Cutaway.actors.get("ratz")).def;
 ratz.talk = [RZ("Kundschaft! Kauf was, oder kauf was anderes."), { if: ["day>4", "pike_met", "!ledger_ratz"], then: [{ dialog: "ratz_endstufe" }], else: [{ dialog: "ratz" }] }];
 Nagiwa.talkTree("ratz_endstufe", [
