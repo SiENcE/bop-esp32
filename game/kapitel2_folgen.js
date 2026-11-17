@@ -6,8 +6,8 @@
 //   ledger_kessler_alms   given: Kessler begging on the Drain Market from Sunday (K1a sold, or no answer: Varga found him himself)
 // What follows from an answer alone is no state: the Kassenbuch's lines written at the act's start or overnight (the same for everyone with
 // that answer), the looks, Mei's news, Okonkwo's greeting, TIDE's last message, WREN's deleted contact.
-// [PLATZHALTER] figures and pictures until their blocks are approved (§14): Varga's man wears the Tidewater boy, Kessler from above a
-// vendor of the market; the boards on Okonkwo's shop, GLASSER LIES, WHO TALKED?, Bao away and with his bandage are not drawn yet
+// Painted (art/characters/k2_folgen.px.js): Varga's man with his octopus mod, Kessler from above; Bao's bandage (art/characters/bao.px.js).
+// [PLATZHALTER] the boards on Okonkwo's shop, GLASSER LIES, WHO TALKED? and the echoes of §9.1 are approved blocks, not yet painted
 "use strict";
 
 (function () {
@@ -43,7 +43,7 @@ kapsel23.look = [{ if: "day>4", then: [
 // doesn't know Juno; she can give him fifty or walk on
 const K = (/** @type {string} */ text) => ({ say: "kessler_markt", text });
 Cutaway.actor("kessler_markt", { name: "Kessler", color: "#b8c890", walkTo: AM.kesslerTalk, face: "up",
-  costume: { idle: { down: "haendler_top_3_idle_down" }, walk: { down: "haendler_top_3_idle_down" }, talk: { down: "haendler_top_3_talk_down" } },
+  costume: { idle: { down: "kessler_top_idle_down" }, walk: { down: "kessler_top_idle_down" }, talk: { down: "kessler_top_talk_down" } },
   voice: { pitch: 48, range: 3, wave: "triangle", syllable: 85, speed: 0.9 },
   look: ["Das ist Kessler. Der Arm ist in Gips, und er sitzt schief, wegen der Rippen.", "Er sieht mich an wie jeden anderen. Er weiß nicht, wer ich bin."],
   talk: [{ dialog: "k2_kessler" }] });
@@ -60,7 +60,7 @@ Cutaway.dialog("k2_kessler", { main: {
 // lied: Varga's man waits beside the Kessel Block's door on Saturday and Sunday evening. „Die 200, Glasserin.“ He blocks no way
 const VM = (/** @type {string} */ text) => ({ say: "vargas_mann", text });
 Cutaway.actor("vargas_mann", { name: "Vargas Mann", color: "#a89888", walkTo: AW.arrive, face: "sw",
-  costume: { idle: { se: "tideboy_idle_se" }, walk: { se: "tideboy_idle_se" }, talk: { se: "tideboy_talk_se" } },
+  costume: { idle: { se: "vargas_mann_idle_se", ne: "vargas_mann_idle_ne" }, walk: { se: "vargas_mann_idle_se", ne: "vargas_mann_idle_ne" }, talk: { se: "vargas_mann_talk_se", ne: "vargas_mann_idle_ne" } },
   voice: { pitch: 34, range: 2, wave: "triangle", syllable: 110, speed: 0.75 },
   look: ["Der ist breit wie die Tür. Er lehnt an der Wand und wartet.", "Auf mich. Varga hat sein Geld nicht vergessen."],
   talk: [{ dialog: "k2_vargas_mann" }] });
@@ -94,6 +94,7 @@ for (const p of kowalski.props) if (p.id === "cart" || p.id === "umbrella") p.if
 kowalski.props.push({ id: "no_cable", image: "kowalski_no_cable", at: AW.noCable, anchor: [0, 0], baseline: 0, if: BAO_AWAY });
 for (const id of ["bao", "cart"]) { const h = kowalski.hotspots[id]; h.if = h.if ? [h.if, { not: BAO_AWAY }] : { not: BAO_AWAY }; }
 (Nagiwa.nights[7].passes ??= []).push({ if: "k1b=sold", then: [{ place: "bao", room: "kowalski", at: AW.bao, face: "sw" }] });
+// (on Monday he stands there all the same, with his bandage: his pose in game/cast.js)
 // lied: the boys failed at the safe; from Saturday GLASSER LIES on Juno's door. warned: Okonkwo greets her like a guest
 const doorJuno = Cutaway.room.get("kessel_14").hotspots.door_juno, doorLook = doorJuno.look;
 doorJuno.look = [{ if: ["day>4", "k1b=lied", TIDE], then: ["Auf meiner Tür steht GLASSER LIES. Gesprüht, in Grün.", "Die Tidewater Boys haben gemerkt, dass der Code falsch war."], else: [doorLook] }];

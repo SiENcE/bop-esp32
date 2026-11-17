@@ -108,6 +108,16 @@ const bao = (c, o = {}) => {
   c.stamp("_b_head", 9, 1 + nod)
   if (o.blink) c.stamp("_b_blink", 9, 1 + nod)
   if (o.talk) c.stamp("_b_mouth", 9, 10 + nod)
+  if (o.bandage) bandage(c, 9, 1 + nod)
+}
+// Chapter 2, Monday after K1b sold (kapitel2-design §5, §10; the user's sketch, 2026-11-17): the bandage as it is wrapped, across his brow
+// and round the far side over his ear and temple, its turns grey lines; his bald crown free above it, his eyes and the near cheek free.
+// Only over the head, never its outline (the head's own top left at x, y)
+const bandage = (c, x, y) => {
+  const on = (i, j) => { const k = c.key(x + i, y + j); return k && k !== "." && k !== "k" }
+  for (let j = 2; j <= 3; j++) for (let i = 0; i <= 10; i++) if (on(i, j)) c.px(x + i, y + j, (i + 2 * j) % 5 === 0 ? "w" : "W")
+  for (let j = 4; j <= 7; j++) for (let i = 0; i <= 2; i++) if (on(i, j)) c.px(x + i, y + j, i === 2 ? "w" : "W")
+  for (let i = 1; i <= 10; i++) if (on(i, 3)) c.px(x + i, y + 3, "w")                      // the band's lower edge over the brows
 }
 
 const opts = (more) => ({ w: IW, h: IH, outline: "k", pivot: "bottom", ...more })
@@ -118,5 +128,8 @@ for (const [dir, flip] of [["se", null], ["sw", "x"]]) {
   const o = flip ? { flip } : {}
   anim(`bao_idle_${dir}`, opts({ frames: 8, fps: 6, ...o }), (c) => bao(c, { hand: STIR[c.frame], blink: c.frame === 6 }))
   anim(`bao_talk_${dir}`, opts({ frames: 4, ms: [160, 160, 160, 260], ...o }), (c) => bao(c, { talk: c.frame % 2 === 0, nod: c.frame === 1 || c.frame === 2 ? 1 : 0 }))
+  // with his bandage (Chapter 2, Monday after K1b sold)
+  anim(`bao_band_idle_${dir}`, opts({ frames: 8, fps: 6, ...o }), (c) => bao(c, { hand: STIR[c.frame], blink: c.frame === 6, bandage: true }))
+  anim(`bao_band_talk_${dir}`, opts({ frames: 4, ms: [160, 160, 160, 260], ...o }), (c) => bao(c, { talk: c.frame % 2 === 0, nod: c.frame === 1 || c.frame === 2 ? 1 : 0, bandage: true }))
 }
 })()

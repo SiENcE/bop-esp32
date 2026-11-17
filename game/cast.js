@@ -57,6 +57,10 @@ Cutaway.actor("bao", {
     walk: { se: "bao_idle_sw", sw: "bao_idle_sw", ne: "bao_idle_sw", nw: "bao_idle_sw" },
     talk: { se: "bao_talk_sw", sw: "bao_talk_sw", ne: "bao_talk_sw", nw: "bao_talk_sw" },
   },
+  // Chapter 2, Monday after K1b sold: back at his cart with a bandage round his head (kapitel2-design §5; art/characters/bao.px.js)
+  poses: [{ if: ["day=7", "k1b=sold"], idle: { se: "bao_band_idle_sw", sw: "bao_band_idle_sw", ne: "bao_band_idle_sw", nw: "bao_band_idle_sw" },
+    walk: { se: "bao_band_idle_sw", sw: "bao_band_idle_sw", ne: "bao_band_idle_sw", nw: "bao_band_idle_sw" },
+    talk: { se: "bao_band_talk_sw", sw: "bao_band_talk_sw", ne: "bao_band_talk_sw", nw: "bao_band_talk_sw" } }],
   voice: { pitch: 44, range: 5, wave: "triangle", syllable: 78, speed: 0.85 },
 });
 
