@@ -10,7 +10,8 @@
 //   cam03        someone else at the machine where Kessler stood, pulling number 7 (Kessler buys his noodles elsewhere now): one of the
 //                feed's commuters, no new figure
 //   cam22        Saturday: Ines' place at the counter empty, and the cook has put a bowl there anyway, steaming
-//   cam30        the police tape across the way down to the old station, under the sign LINE 31 – CLOSED
+//   cam30        the police tape across the way down to the old station, in the camera's own perspective (art/cams/cam30.px.js,
+//                cam30_tape), and the sign's words fixed along its edge
 //   gasse        a paper boat at the monument among the candles, I. written on its side (too small to read: the look says it)
 //   k2_orte_<place>   each place 320x180
 "use strict"
@@ -67,7 +68,7 @@ scene("k2_orte_cam07v", { w: 320, h: 180 }, (c) => {
   for (let y = 26; y < 150; y++) for (let x = 80; x < 320; x++) if ((x + y) % 2 === 0) c.px(x, y, "1")
   for (const [x, y, w] of [[106, 38, 30], [150, 52, 40], [118, 70, 26], [176, 70, 30]]) c.rect(x, y, w, 5, "1")
   // the planks across the window, near the camera: lit by the machine's own light
-  for (const [y0, y1] of [[30, 44], [70, 62], [104, 112], [138, 132]]) {
+  for (const [y0, y1] of [[30, 44], [70, 62], [104, 112]]) {
     c.line(78, y0, 320, y1, "6"); c.line(78, y0 + 1, 320, y1 + 1, "6"); c.line(78, y0 + 2, 320, y1 + 2, "5"); c.line(78, y0 + 3, 320, y1 + 3, "3")
     c.line(78, y0 + 4, 320, y1 + 4, "3")
   }
@@ -75,7 +76,7 @@ scene("k2_orte_cam07v", { w: 320, h: 180 }, (c) => {
 scene("k2_orte_kessel_14", { w: 320, h: 180 }, (c) => {
   c.stamp("_bg_kessel_14", 0, 0)
   // GLASSER LIES across her door, along the wall's slope
-  c.stamp("_k2o_glasser", 79, 30)
+  c.stamp("_k2o_glasser", 79, 37)
 })
 scene("k2_orte_kowalski", { w: 320, h: 180 }, (c) => { c.stamp("_bg_kowalski", 0, 0) })   // (shot without the cart, see the game's shot)
 sprite("_k2o_someone", { png: "../../build/art/characters/anims/commuter_d_feed.png", area: [0, 0, 13, 22] })
@@ -89,14 +90,10 @@ scene("k2_orte_cam22", { w: 320, h: 180 }, (c) => {
   c.rect(154, 104, 12, 3, "8"); c.hline(155, 107, 10, "6"); c.hline(156, 103, 8, "9")
   for (const [x, y] of [[157, 99], [158, 97], [161, 98], [162, 96], [160, 94]]) c.px(x, y, "7")
 })
+sprite("_k2o_tape", { png: "../../build/art/cams/scenes/cam30_tape.png", area: [0, 0, 320, 180] })
 scene("k2_orte_cam30", { w: 320, h: 180 }, (c) => {
   c.stamp("_bg_cam30", 0, 0)
-  // two strands of tape across the way down, from the rail to the sign's post, striped
-  for (const dy of [0, 8]) for (let i = 0; i <= 64; i++) {
-    const x = 92 + i, y = 126 + dy - Math.round(i * 0.42)
-    c.px(x, y, Math.floor(i / 3) % 2 ? "9" : "3"); c.px(x, y + 1, Math.floor(i / 3) % 2 ? "8" : "2")
-  }
-  c.vline(92, 120, 16, "7"); c.vline(156, 92, 16, "7")                          // the posts it is tied to
+  c.stamp("_k2o_tape", 0, 0)                                                     // the tape from the camera's own art (art/cams/cam30.px.js)
 })
 scene("k2_orte_gasse", { w: 320, h: 180 }, (c) => {
   c.stamp("_bg_gasse", 0, 0)

@@ -75,11 +75,44 @@ const WORLD = feedWorld({ prims: PRIMS, lights: LIGHTS, materials: MATS, ground:
 const BAKE = () => bakeFeed(CAM, WORLD, { exposure: 1.4, key: "cam30" })
 
 // ---------------------------------------------------------------- hand drawing on top
-// the sign's letters along its face, each where its place on the sign lands; the board's two lines
+// Letters along a face of the world, readable: each glyph pixel stays one screen pixel, but the line runs the way the face's edge runs on
+// the screen (the projected direction of U at the text's middle M, scaled to one pixel across), and its columns stay upright, as the signs
+// in the iso rooms are drawn (from this high the face's own uprights lie nearly flat, and letters leaning with them can't be read)
+const glyphOf = (ch) => { const g = NAGIWA_GLYPHS.hud[ch] ?? NAGIWA_GLYPHS.hud["?"]; return Array.isArray(g) ? g : g.rows }
+const widthOf = (text) => [...text].reduce((w, ch) => w + glyphOf(ch)[0].length + 1, -1)
+function centred(c, M, U, V, text, key) {
+  const m = project(CAM, M), pu = project(CAM, add(M, mul(U, 0.1)))
+  let du = [pu[0] - m[0], pu[1] - m[1]], dv
+  du = [du[0] / Math.abs(du[0]), du[1] / Math.abs(du[0])]                       // one pixel across per glyph pixel
+  dv = [0, 1]                                                                    // the columns stay upright (from above the face's uprights lie nearly flat)
+  const w = widthOf(text), x0 = m[0] - (w / 2) * du[0] - 2.5 * dv[0], y0 = m[1] - (w / 2) * du[1] - 2.5 * dv[1]
+  let gx = 0
+  for (const ch of text) {
+    const rows = glyphOf(ch)
+    rows.forEach((row, gy) => [...row].forEach((on, i) => {
+      if (on === "#") c.px(Math.round(x0 + (gx + i) * du[0] + gy * dv[0]), Math.round(y0 + (gx + i) * du[1] + gy * dv[1]), key)
+    }))
+    gx += rows[0].length + 1
+  }
+}
+// the sign's words in its face (the face toward the camera, z = -0.15); the board's two lines in its own
 const words = (c) => {
-  const T = "LINE 31 - CLOSED", y0 = 2.52
-  ;[...T].forEach((ch, i) => { if (ch === " ") return; const [x, y] = at(CAM, [((i + 0.5) / T.length - 0.5) * (2 * HALF) * 0.86, y0, -0.16]); TXT.draw(c, x, y - 2, ch, "1", { font: "hud", align: "center" }) })
-  for (const [line, yy] of [["TIDE", 1.92], ["23:00", 1.62]]) { const [x, y] = at(CAM, [BOARD[0], yy, BOARD[1] - 0.06]); TXT.draw(c, x, y - 2, line, "2", { font: "hud", align: "center" }) }
+  centred(c, [0, 2.525, -0.16], [1, 0, 0], [0, -1, 0], "LINE 31 - CLOSED", "1")
+  centred(c, [BOARD[0], 1.92, BOARD[1] - 0.06], [1, 0, 0], [0, -1, 0], "TIDE", "2")
+  centred(c, [BOARD[0], 1.62, BOARD[1] - 0.06], [1, 0, 0], [0, -1, 0], "23:00", "2")
+}
+// Chapter 2 (kapitel2-design §9.1): police tape across the stair's head, from the railing's first post on one side to the other's, two
+// strands sagging a little, striped light and dark; a picture of its own laid over the feed while it is there
+const tape = (c) => {
+  for (const [h, sag] of [[0.92, 0.08], [0.6, 0.06]]) {
+    const A = [-HALF - 0.15, h, 0.4], B = [HALF + 0.15, h, 0.4], n = 90
+    for (let i = 0; i <= n; i++) {
+      const t = i / n, P = add(add(mul(A, 1 - t), mul(B, t)), [0, -sag * 4 * t * (1 - t), 0])
+      const stripe = Math.floor(t * (2 * HALF + 0.3) / 0.22) % 2 ? "9" : "4"
+      const [x, y] = at(CAM, P)
+      c.px(x, y, stripe); c.px(x, y + 1, stripe)                                // two pixels wide, so it reads from up here
+    }
+  }
 }
 
 // ================================================================ what the game needs (game/places.js cam30)
@@ -102,3 +135,5 @@ console.log("CAM30_LAYOUT " + JSON.stringify(CAM30_LAYOUT))
 // ================================================================ the scenes
 scene("cam30_bg", { w: W, h: H, bg: "0" }, (c) => paintFeed(c, BAKE()), words)
 scene("review_cam30", { w: W, h: H, bg: "0" }, (c) => paintFeed(c, BAKE()), words, (c) => reviewFx(c, W, H))
+scene("cam30_tape", { w: W, h: H }, tape)
+scene("review_cam30_tape", { w: W, h: H, bg: "0" }, (c) => paintFeed(c, BAKE()), words, tape)
