@@ -113,6 +113,9 @@ Nagiwa.at = {
     // Chapter 2, the Quiet (game/kapitel2_quiet.js): the shadow at the front before LUCKY STATIC, his back to us, staring at the
     // Kessel Block's door (the user's choice, 2026-11-17); on Monday the leader there and his two men a step behind him on either side
     quiet: [128, 168], quietLeft: [106, 160], quietRight: [148, 162],
+    // Chapter 2, Varga's man (game/kapitel2_folgen.js): beside the Kessel Block's door, his back to its wall; Juno talks to him from
+    // where she comes out
+    vargasMann: [160, 94],
   },
   // measured from the cameras' projections (docs/cams/cam03_layout.md, cam04_layout.md). No depth `scale`: the
   // feed figures stay at their drawn size (scaling 24 px pixel art by 0.7–1.9 would smear it; the seated
@@ -238,7 +241,8 @@ Nagiwa.at = {
   // cables, string lights and lanterns hang over the people. The runtime lamps are the painting's own, so Juno takes on its light
   drain_market: (() => {
     const L = Nagiwa.layouts.drain_market, part = (/** @type {any} */ p) => p.name.slice("drain_market_".length);
-    return { ...L.spots, ...L.rects, walk: [...L.walk, [1192, 340, 1200, 340, 1200, 370, 1178, 370, 1178, 362, 1192, 362]], holes: L.holes, size: L.size, sounds: L.sounds,
+    // (kessler: Chapter 2, Kessler with his arm in plaster begging beside Ratz's stall, game/kapitel2_folgen.js)
+    return { ...L.spots, kessler: [478, 298], kesslerTalk: [470, 322], ...L.rects, walk: [...L.walk, [1192, 340, 1200, 340, 1200, 370, 1178, 370, 1178, 362, 1192, 362]], holes: L.holes, size: L.size, sounds: L.sounds,
       // Pike on the raft DATA 1C/GB in the canal (Chapter 2; he stands at the end of a slit in the walk area, as Sable does in her booth: an actor stands on walkable floor; the raft's
       // hotspot covers the slit, so nobody walks out onto it), and where Juno stands
       // on the kerb above it (not from the layout: the raft is the painting's, the man on it isn't yet); he stands at the raft's back end,

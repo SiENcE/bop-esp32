@@ -127,12 +127,15 @@ jade.hotspots.door = { name: "Okonkwos Laden", poly: AJ.doorPoly, walkTo: AJ.sho
 Cutaway.actor("okonkwo", { name: "Okonkwo", color: "#d8b890", room: "okonkwo_shop", at: AO.okonkwo, facing: "sw", walkTo: AO.front, face: "ne",
   costume: { idle: IDLE, walk: IDLE, talk: TALK }, voice: { pitch: 46, range: 3, wave: "triangle", syllable: 90, speed: 0.85 },
   look: ["Das ist Okonkwo mit seiner Strickjacke und der Lesebrille. Er rechnet noch auf Papier.", "Unter der Jacke wölbt sich sein Panzer. Den hat er schon, solange ich ihn kenne."],
-  talk: [O("Juno. Guten Abend."), { dialog: "okonkwo" }] });
+  talk: [{ if: ["day>4", "k1b=warned"], then: [O("Juno! Komm rein, komm rein."), O("Für dich ist hier immer offen.")], else: [O("Juno. Guten Abend.")] }, { dialog: "okonkwo" }] });
 Nagiwa.talkTree("okonkwo", [
   ["„Wie läuft's?“", [
     { if: "day=2", then: [O("Batterien gehen. Reis geht. Zigaretten gehen immer."), "Und du?", O("Ich gehe um eins.")] },
     { if: "day=3", then: [O("Draußen steht ein Wagen und wartet. Der wartet nicht auf mich.")] },
     { if: "day=4", then: [O("Heute ist es ruhig. Zu ruhig für einen Freitag.")] },
+    // Chapter 2 (kapitel2-design §5): after a false code the boys stood at his door on Friday night; warned, he has a new one
+    { if: "day>4", then: [{ if: "k1b=lied", then: [O("Freitagnacht waren welche an meiner Tür. Mit einem Zettel in der Hand."), O("Der Zettel hat nicht gestimmt. Dann sind sie gegangen.")],
+      else: [{ if: "k1b=warned", then: [O("Neuer Code. Neuer Riegel. Ich schlaf wieder.")], else: [O("Batterien gehen. Reis geht. Wie immer.")] }] }] },
   ]],
   ["„Das Foto da?“", [O("Meine Familie. Am Strand, vor dem Wasser."), "Hier unten war ein Strand?", O("Da, wo jetzt der Drain-Markt ist. Wir hatten Handtücher.")]],
   ["„Die Tidewater Boys wollen deinen Tresor.“", [{ set: "k1b", value: "warned" }, { ledger: "okonkwo", value: "warned" }, O("..."), O("Woher weißt du das?"), "Die haben mich nach dem Code gefragt.",

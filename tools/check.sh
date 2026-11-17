@@ -39,6 +39,13 @@ for v in main stick lantern; do
   out=$(node tools/solve-act.mjs kapitel2 --full --set "$r" 2>&1)
   s=$(echo "$out" | grep -E "states in|soft-lock|SOFT|HINTS|^hints|UNSOLV" | tr '\n' ' '); line "kapitel2 solve: $v" "$s"; need "kapitel2 solve: $v" "$s" "no soft-locks"; need "kapitel2 solve: $v" "$s" "every state on the way"
 done
+# Chapter 2's threads that Chapter 1 hands on (kapitel2-design §5): each alone with the main way shut (its flat taken as done: evi_knows),
+# once for each answer of Chapter 1 that changes what happens (Varga: lied, sold, none; the corner shop: sold, lied, warned, none)
+k2t="off_roof,off_zeitung,off_imai,off_traeger,off_motte,off_vesper,off_lantern,off_klinik,off_main,evi_knows"
+for v in "off_tide,k1a=lied" "off_tide,k1a=sold" "off_tide" "off_varga,k1b=sold" "off_varga,k1b=lied" "off_varga,k1b=warned" "off_varga"; do
+  out=$(node tools/solve-act.mjs kapitel2 --full --set "$k2t,$v" 2>&1)
+  s=$(echo "$out" | grep -E "states in|soft-lock|SOFT|HINTS|^hints|UNSOLV" | tr '\n' ' '); line "kapitel2 solve: $v" "$s"; need "kapitel2 solve: $v" "$s" "no soft-locks"; need "kapitel2 solve: $v" "$s" "every state on the way"
+done
 for p in tools/paths/kapitel2_*.json; do
   n=$(basename "$p" .json); out=$(node lib/cutaway/tools/play.mjs index.html --act kapitel2 --path "$p" 2>&1 | tail -1); line "clicks: $n" "$out"; need "clicks: $n" "$out" "all passed"
 done

@@ -321,6 +321,11 @@ Cutaway.act("kapitel2", {
     // what Frau Kessler got on Tuesday: the prologue's answer, which the flat's door, the chat and Sable's contact read, is the Kassenbuch's
     // line kept from it (the same values), so it needs no flag of its own across the chapter line
     ...["full", "cut", "nothing"].map((v) => ({ if: `ledger_kessler=${v}`, then: [{ set: "p1", value: v }] })),
+    // what the Kassenbuch writes by itself on Saturday (kapitel2-design §5, game/kapitel2_folgen.js): WREN had it from someone else; the
+    // raid on Okonkwo's shop on Friday night; Kessler, whom Varga's people found on Friday night
+    { if: "e1=refused", then: [{ ledger: "wren_other", value: "other" }] },
+    { if: "k1b=sold", then: [{ ledger: "okonkwo_robbed", value: "robbed" }, { ledger: "bao_hurt", value: "hurt" }] },
+    { if: "k1a=sold", then: [{ ledger: "kessler_hurt", value: "begging" }] },
     // what she has in her bag (a stick left in the dryer Lantern took on Friday night, kapitel2-design §3.1)
     { if: "got_ausweis", then: [{ give: "ausweis" }] }, { if: "got_haken", then: [{ give: "haken" }] },
     { if: "stick_ines", then: [{ give: "stick" }] },

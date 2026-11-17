@@ -15,7 +15,10 @@ Cutaway.actor("mei", { name: "Mei", color: "#ff9a7a", room: "lucky_static", at: 
   costume: { idle: { se: "mei_idle_sw", sw: "mei_idle_sw", ne: "mei_idle_sw", nw: "mei_idle_sw" }, walk: { se: "mei_idle_sw", sw: "mei_idle_sw", ne: "mei_idle_sw", nw: "mei_idle_sw" },
     talk: { se: "mei_talk_sw", sw: "mei_talk_sw", ne: "mei_talk_sw", nw: "mei_talk_sw" } }, voice: { pitch: 58, range: 4, wave: "triangle", syllable: 75, speed: 1.05 },
   look: ["Mei trägt die Haare hoch und einen Bleistift drin, für die Tafel.", "Sie sieht jeden, der reinkommt, und fragt keinen was."],
-  talk: [{ if: "day=4", then: [M("Juno. Heute tropft's nicht mal.")], else: [M("Juno. Setz dich irgendwo hin, wo's nicht tropft.")] }, { dialog: "mei" }] });
+  talk: [{ if: "day=4", then: [M("Juno. Heute tropft's nicht mal.")], else: [M("Juno. Setz dich irgendwo hin, wo's nicht tropft.")] },
+    // Chapter 2 (kapitel2-design §5): after the raid Juno hears of it here, like everyone (no flag: she hears it each time she asks)
+    { if: ["day>4", "day<7", "k1b=sold", "!off_tide"], then: [M("Okonkwo haben sie ausgeräumt. Freitagnacht."), M("Bao ist dazwischen. Gehirnerschütterung. Er sagt, Montag steht er wieder.")] },
+    { dialog: "mei" }] });
 Nagiwa.talkTree("mei", [
   ["„Ein Bier. Schreib's an.“", [M("Schreib ich."), "Sie macht einen Strich an die Tafel. In meiner Reihe stehen schon ein paar.", M("Die laufen nicht weg. Du ja auch nicht.")], [
     ["„Warum lässt du mich eigentlich anschreiben?“", [M("Wer anschreibt, kommt wieder."), M("Die bar zahlen, seh ich nie wieder.")]],

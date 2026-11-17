@@ -515,6 +515,17 @@ kein Flag.
 
 Jede Folge liest nur Flags aus Kapitel 1 und den Tag; die Fäden bleiben getrennt (`off_varga`, `off_tide`).
 
+**Gebaut** (2026-11-17, `game/kapitel2_folgen.js`; die Bilder folgen auf Blöcken): Zustand ist nur, was Juno noch wählt, `ledger_varga2`
+(paid | owed, statt eines eigenen `varga2`: der Eintrag im Kassenbuch ist das Flag) und `ledger_kessler_alms` (die fünfzig für Kessler).
+Was allein aus einer Antwort folgt, kostet keinen Zustand: die Zeilen, die das Kassenbuch beim Start des Akts selbst schreibt
+(`ledger_wren_other`, `ledger_okonkwo_robbed`, `ledger_bao_hurt`, `ledger_kessler_hurt`), WRENs gelöschter Kontakt (eine Ansicht), die Zeilen
+beim Ansehen, Meis Neuigkeit, Okonkwos Gruß und TIDEs letzte Nachricht. Vargas Mann steht von 19:00 bis 23:00 da statt bis 22:00
+(technisch entschieden: dieselben Stunden wie der Schatten, so hält das Warten nirgends neu, und kein Klickpfad ändert sich). Kessler
+sitzt ab Sonntag neben Ratz' Stand und fragt nach Geld („Ich bin die Treppe runter. Dreimal.“). Bao und sein fehlender Wagen, die Bretter,
+`GLASSER LIES` (vorerst nur beim Ansehen der Tür) und `WHO TALKED?` kommen mit ihren Bildern. **Platzhalter:** Vargas Mann trägt den
+Tidewater-Jungen, Kessler von oben einen Händler des Markts. Geprüft werden die Fäden wie in Kapitel 1 allein, mit geschlossenem Hauptweg
+(`off_main,evi_knows`), jede Antwort aus Kapitel 1 für sich (`--set k1a=lied`; `solve-act.mjs` nimmt jetzt Werte).
+
 **Varga (K1a, `off_varga`):**
 
 | K1a | In Kapitel 2 |
@@ -522,7 +533,7 @@ Jede Folge liest nur Flags aus Kapitel 1 und den Tag; die Fäden bleiben getrenn
 | **nichts geantwortet** | Varga hat Kessler selbst gefunden (Kapitel 1, A1): ab Sonntag sitzt Kessler mit Gips auf dem Drain-Markt wie nach einem Verkauf, aber ohne Eintrag im Kassenbuch. |
 | **verkauft** | Am Freitag verkauft: am Samstag in `cam15` die offene Kapsel 23 und die zerbrochene Brille (Kapitel 1, §3). Ab Sonntag sitzt Kessler mit Gips auf dem Drain-Markt neben Ratz' Stand und bettelt, von oben gezeichnet wie alle dort. Er kennt Juno nicht. Sie kann ihm 50 Chits geben oder weitergehen. Das Kassenbuch ergänzt sich selbst: „Kessler: zwei Rippen, ein Arm. Bettelt.“ |
 | **gewarnt** | Sable zahlt schlechter (§3.6, „Varga redet.“). Die Postkarte an Frau Kessler kommt erst im Epilog. |
-| **gelogen** | Am Samstag und Sonntag von 19:00 bis 22:00 wartet **Vargas Mann** vor der Haustür des Kessel-Blocks auf der Kowalski-Straße, im Straßenmodus. Kapitel 1 nannte das einen Feed-Moment; keine Kamera sieht die Haustür, deshalb steht er auf der Straße. „Die 200, Glasserin.“ Juno kann zahlen, sagen, dass sie es nicht hat („Dann schuldest du Varga was.“), oder an ihm vorbeigehen; er sperrt keinen Weg. Am Montag liegt ein Zettel im Briefkasten. Kessler zieht seine Nudeln jetzt woanders. Flag `varga2` = paid \| owed; Vargas Faden endet in Kapitel 2, nichts davon geht weiter. |
+| **gelogen** | Am Samstag und Sonntag von 19:00 bis 22:00 wartet **Vargas Mann** vor der Haustür des Kessel-Blocks auf der Kowalski-Straße, im Straßenmodus. Kapitel 1 nannte das einen Feed-Moment; keine Kamera sieht die Haustür, deshalb steht er auf der Straße. „Die 200, Glasserin.“ Juno kann zahlen, sagen, dass sie es nicht hat („Dann schuldest du Varga was.“), oder an ihm vorbeigehen; er sperrt keinen Weg. Am Montag liegt ein Zettel im Briefkasten. Kessler zieht seine Nudeln jetzt woanders. Flag `ledger_varga2` = paid \| owed; Vargas Faden endet in Kapitel 2, nichts davon geht weiter. |
 
 **Der Eckladen (K1b, `off_tide`):**
 
@@ -698,10 +709,10 @@ wechseln würde, eine eigene Ansicht (Kapitel 1, §10). Lull ist immer die ovale
 | Lantern im Feed | wieder | `cam23` | wie in `cam31`, im Maßstab des Waschsalons | der gemalte Lantern von der Seite, beide Richtungen gezeichnet, die Räder drehen sich (story §10c, 2026-11-16) |
 | **Teo, sitzend von hinten** | neu (Pose) | `dach_sitzen` | eine | neben Juno, die Kapuze unten, der Gehörschutz; von hinten sieht man das Pflaster hinter seinem Ohr, am selben Ohr wie in seinen anderen Ansichten (nicht aus einer gespiegelten Ansicht nehmen) |
 | Teo mit dem Haken | neu (Pose) | `flat`, `sims` | SE, NE, NW wie seine Figur | der lange Haken aus der Pumpenhalle in einer Hand; NW gezeichnet wie bisher |
-| **Vargas Mann** | neu | `kowalski` | Iso SE, NE, NW stehend | nur nach `k1a=lied`; Varga selbst ist nur im Feed gemalt. Namenlos; seine Stimme ist „der Schwere“ (vom Nutzer gewählt 2026-11-17, `dialog-style-guide` §6) |
+| **Vargas Mann** | neu | `kowalski` | Iso SE, NE, NW stehend | nur nach `k1a=lied`; Varga selbst ist nur im Feed gemalt. Namenlos; seine Stimme ist „der Schwere“ (vom Nutzer gewählt 2026-11-17, `dialog-style-guide` §6). **Mit einem Kraken-Mod** (vom Nutzer gewählt 2026-11-17, Weg B der Blöcke `art/test/k2_folgen_blocks.px.js`, `docs/characters/k2_folgen_blocks_x4.png`): der Kopf ein Krakenmantel mit Schlitzpupillen, Tentakel wie ein Bart über der Brust, Tentakel statt Händen, ein schwerer dunkler Ledermantel; 1,90 m, breit wie die Tür. Er trägt nichts auf einer Seite: NW ist NE gespiegelt |
 | **Pike**, Lanterns Gehilfe | neu | `drain_market` (von oben), die Fahrt (von der Seite) | von oben stehend und stakend; von der Seite auf dem Floß, stakend (die Stange gehoben, gestoßen, geschoben, wieder gehoben) | umgebaut mit dem Reiher, nach dem Graureiher (vom Nutzer gewünscht 2026-11-16): lange dünne Beine, ein Mantel wie gefaltete graue Flügel mit dem Schwarz an der Schulter, ein langer weißer Hals im S mit dem schwarzen Strich vorn, ein kleiner weißer Kopf, der schwarze Strich vom Auge in den Schopf, der nach hinten hängt, ein langer orangegelber Schnabel; aufrecht und still. gemalt in `art/rooms/sumpf.px.js` (die Fahrt und die Ankunft), etwas kleiner als zuerst, damit er neben Juno (50 px) nur um Kopf und Hals größer ist; einseitig trägt er nichts, so genügt das Spiegeln. Seine Farbe ist das Orangegelb seines Schnabels, gedämpft neben Junos Gelb, `#e0a048` (vom Nutzer entschieden 2026-11-16). Von oben auf dem Markt als Block freigegeben (2026-11-16, `art/test/pike_top_blocks.px.js`): er steht am hinteren Ende seines Floßes |
-| **Kessler mit Gips** | neu (von oben) | `drain_market` | von oben, sitzend | der Gips am Arm ist einseitig: von oben kein Problem, er sitzt immer gleich |
-| **Bao mit Verband** | Variante | `kowalski` | wie Bao | nur nach `k1b=sold`, Montag (Samstag und Sonntag fehlt sein Wagen) |
+| **Kessler mit Gips** | neu (von oben) | `drain_market` | von oben, sitzend | der Gips am Arm ist einseitig: von oben kein Problem, er sitzt immer gleich. Als Block (2026-11-17): auf einem platten Karton, die Beine nach vorn, der Arm in Gips in einer Schlinge vor der Brust, sein Strickschal, die Mütze für Münzen mit etwas Abstand vor seinen Füßen (vom Nutzer so gewünscht) |
+| **Bao mit Verband** | Variante | `kowalski` | wie Bao | nur nach `k1b=sold`, Montag (Samstag und Sonntag fehlt sein Wagen). Als Block (2026-11-17, nach der Skizze des Nutzers): ein Band über der Stirn, das an der Seite über Ohr und Schläfe geht, die Wicklungen als graue Linien; der kahle Scheitel bleibt frei, sonst sieht es aus wie eine weiße Mütze |
 | **Frau Haldane, wach an der Tür** | Variante | `kessel_14` | wie ihre Figur (SE, NE, NW) | wach, ohne Lockenwickler? Vorschlag: die Lockenwickler bleiben, die Augen offen, das Pflaster dunkel |
 | **der Nachbar an der Haustür** | neu (Feed) | `cam24` | Feed SE, dazu die Nahaufnahme seiner Finger am Zahlenfeld (Zoom) | kommt jeden Abend um 19:30 heim; die Zahlen im Zoom mit der Spielschrift |
 | **die Wartenden in der Klinik** | neu | `klinik` | Iso sitzend nach SW auf der Stuhlreihe an der rechten Wand, von vorn wie Lantern in seinem Wohnwagen: der Oberkörper frontal, die Oberschenkel kurz nach links unten, die Schienbeine senkrecht (vom Nutzer korrigiert 2026-11-17) | müde, Lull-Pflaster, wie die Schlange in `cam21`. Als Block (2026-11-17): ein alter Mann in grauer Strickjacke, vornübergesunken; eine Frau in Hafenjacke, den Kopf an der Wand, die Augen zu; ein junger Mann im dunklen Hoodie, die Ellbogen auf den Knien. Das Pflaster sitzt jeweils hinter dem Ohr, das zu uns zeigt (nach SW gezeichnet, nie gespiegelt). **Gemalt** (2026-11-17) in `art/characters/klinik.px.js` (`wartende_1` bis `wartende_3`, sie atmen, der alte Mann nickt ein): die Strickjacke mit Knöpfen über einem hellen Kragen, die Hafenjacke mit Reflexstreifen und Zopf, der Hoodie mit seinen Bändeln und weißen Sohlen; im Raum Requisiten auf ihren Sitzen (`Nagiwa.at.klinik.waiting`) |
@@ -738,7 +749,7 @@ mit dem Hauptfaden (`off_main` und `know_flat` für die Fäden allein, wie in Ka
 **Der Zustand:** neu im Hauptfaden `stick_dryer`, `quiet_dryer`, `know_flat`, `code_lerche`, `cache_note_serviette`,
 `cache_note_civic_rest`, `evi_knows`, `cache_clip_forgery` (bei jedem ab Sonntag 18:00, also kein Zustand für sich), `forgery_cuts` (1–2,
 der Reihe nach; eine Ansicht, kein Zustand: Zustand ist erst `forgery_proven`, das der dritte Fund setzt) und `forgery_proven` mit seiner Notiz,
-`know_cable`, `pike_met` (statt `stairs_open`), `lantern_found`, `led_quiet`, `e2`, `clip_ines_cut`; in den Fäden `varga2`, `imai2`,
+`know_cable`, `pike_met` (statt `stairs_open`), `lantern_found`, `led_quiet`, `e2`, `clip_ines_cut`; in den Fäden `ledger_varga2` und `ledger_kessler_alms`, `imai2`,
 `haldane` und ein Schritt je Faden. Weiter gehen davon nur die Flags, die §2.1 nennt. Die Kameras, die ausfallen, und alles in §7 kosten nichts.
 
 ## 12. Hinweise

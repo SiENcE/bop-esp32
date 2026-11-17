@@ -1,6 +1,6 @@
 // Solve one act alone, from its start (the whole game would multiply every act by what the ones before leave):
 //   node tools/solve-act.mjs kapitel1 [--full] [--max N] [--set flag,flag] [--workers N] [--json path.json]
-// --set: flags for its start: one kept from the act before, or off_<thread> to shut a side story (CLAUDE.md, checks);
+// --set: flags for its start: one kept from the act before (with its value: k1a=lied), or off_<thread> to shut a side story (CLAUDE.md, checks);
 // --workers: threads that search, default one less than the cores, at most 12.
 import { writeFileSync } from "node:fs";
 import { availableParallelism } from "node:os";
@@ -13,7 +13,11 @@ if (!act) { console.error("usage: node tools/solve-act.mjs <act> [--full] [--max
 const kept = opt("--set");
 
 // alone: going on to the next act ends the search there, as a demo ends after its last act
-const setup = { page: "index.html", options: { act, demo: { acts: [act] } }, start: kept ? kept.split(",").map((f) => ({ set: f })) : [] };
+const setup = { page: "index.html", options: { act, demo: { acts: [act] } }, start: kept ? kept.split(",").map((f) => {
+  // flag, or flag=value (an answer kept from the act before: k1a=lied)
+  const [k, v] = f.split("=");
+  return v === undefined ? { set: k } : { set: k, value: Number.isNaN(Number(v)) ? v : Number(v) };
+}) : [] };
 const solver = await makeSolver(loadFor(setup), { workers: Number(opt("--workers", String(Math.min(12, availableParallelism() - 1)))), setup });
 const t0 = Date.now();
 let shown = 0;
