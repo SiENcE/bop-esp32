@@ -7,7 +7,7 @@
 //   walking), and twice she looks back over her shoulder (the head turned to the upper left); NE for her back, NW = NE mirrored (nothing
 //   one-sided on her from behind). Ines' scale in that picture (13x20 inside): the short coat 9 to the hips, the scrubs 7 below it (Ines'
 //   legs are 6 under a long coat), the bun a bright knot on top.
-//   The waiting (§10): three tired people on the joined seats along the right wall, facing the room (SW), each with Lull behind the ear
+//   The waiting (§10): three tired people sitting on the joined seats along the right wall, facing the room (SW), each with Lull behind the ear
 //   that faces us (the oval pale disc with its darker rim and brighter stripe, as Teo's); drawn facing SW, never mirrored:
 //     W1 an old man in a grey cardigan, slumped forward, his head down, bald with a grey fringe
 //     W2 a woman in a dock worker's jacket, her head back against the wall, eyes shut, hair tied back
@@ -85,37 +85,51 @@ function nurseFeed(c, o) {
 for (const [name, o] of [["se", {}], ["se_back", { lookBack: true }], ["ne", { back: true }]])
   sprite(`kfb_nurse_feed_${name}`, { w: FW, h: FH, outline: "q", pivot: "bottom" }, (c) => nurseFeed(c, o))
 
-// ================================================================ the waiting, sitting SW on the joined seats (22x40)
-/** a tired person sitting facing SW: o = { shirt, shirtD, legs, skin, skinD, hair, droop (head forward and down), lean (shoulders
- *  forward), back (head back against the wall), elbows (forearms on the knees), bald } */
+// ================================================================ the waiting, sitting SW on the joined seats (20x44)
+// As Lantern sits in his caravan (art/characters/lantern.px.js): the torso from the front, turned a little to the lower left, the
+// thighs a short block forward and down to the left, the shins straight down, the feet pointing left. The hips sit at (12, 26), on the
+// seat; the feet stand about a quarter meter in front of it.
+/** a tired person sitting facing SW: o = { shirt, shirtD, legs, legsD, skin, skinD, hair, droop (head forward and down), lean
+ *  (shoulders forward and down), back (head back against the wall), elbows (forearms on the knees), bald, shut } */
 function waiting(c, o) {
-  // shoes and shins, the thighs from the hip (right, on the seat) forward to the knee (left)
-  c.rect(2, 36, 6, 3, "d"); c.rect(4, 30, 3, 6, o.legs); c.vline(6, 30, 6, "d")
-  c.poly([5, 28, 14, 23, 18, 27, 7, 32], o.legs)
-  // the torso: hips on the seat, the shoulders leaning forward by `lean`
-  const L = o.lean ?? 0, top = 12 + (o.back ? -1 : 0)
-  c.poly([10 - L, top, 19 - L, top, 19, 27, 11, 27], o.shirt); c.vline(19 - L, top, 27 - top, o.shirtD)
-  // the arms: on the thighs, or the forearms on the knees with the hands hanging
-  if (o.elbows) { c.poly([9 - L, top + 2, 12 - L, top + 2, 9, 27, 6, 26], o.shirtD); c.rect(4, 26, 3, 2, o.skin) }
-  else { c.poly([9 - L, top + 2, 12 - L, top + 2, 11, 24, 8, 24], o.shirtD); c.rect(7, 24, 3, 2, o.skin) }
-  // the neck and head: down and forward (droop), or back against the wall
-  const hx = 13 - L - (o.droop ?? 0), hy = top - 5 + (o.droop ?? 0) - (o.back ? 1 : 0)
-  c.rect(hx, hy + 4, 3, 3, o.skinD)
-  c.ellipse(hx + 1, hy, 4, 5, o.skin)
-  // the face to the lower left: the eyes shut (a line) or open (dots); the hair over the crown and the back (right)
-  if (o.bald) { c.hline(hx + 2, hy - 1, 3, o.hair); c.vline(hx + 5, hy - 2, 4, o.hair); c.px(hx + 4, hy - 4, "S") }
-  else { c.ellipse(hx + 2, hy - 2, 4, 3, o.hair); c.vline(hx + 5, hy - 2, 5, o.hair) }
-  if (o.shut) c.hline(hx - 2, hy + 1, 2, o.skinD); else { c.px(hx - 2, hy + 1, "k"); c.px(hx, hy + 1, "k") }
-  c.px(hx - 3, hy + 2, o.skinD)                                                 // the nose
-  // Lull behind the ear toward us (their left ear, at the back of the head on the screen's right)
-  lull(c, hx + 4, hy + 1)
+  const L = o.lean ?? 0
+  // the shins straight down from the knees, the far one (right) in shade; the shoes pointing left
+  c.rect(6, 31, 3, 9, o.legsD); c.rect(1, 32, 3, 9, o.legs)
+  c.rect(5, 40, 5, 3, "d"); c.rect(0, 41, 5, 3, "d"); c.hline(0, 41, 3, "3")
+  // the thighs: forward and down to the left, from the seat to the knees
+  c.poly([6, 24, 17, 24, 17, 28, 10, 33, 1, 33, 1, 30], o.legs); c.line(9, 33, 17, 27, o.legsD)
+  // the torso from the front, leaning forward by L (the shoulders lower and further left)
+  const top = 11 + L
+  c.poly([5 - L, top, 17 - L, top, 17, 26, 6, 26], o.shirt); c.vline(17 - L, top, 26 - top, o.shirtD); c.vline(16 - L, top + 1, 25 - top, o.shirtD)
+  // the arms: the hands on the thighs, or the forearms on the knees with the hands hanging between them
+  if (o.elbows) {
+    c.poly([3 - L, top + 1, 6 - L, top + 1, 6, 30, 3, 30], o.shirtD); c.poly([16 - L, top + 1, 19 - L, top + 1, 10, 30, 7, 30], o.shirtD)
+    c.rect(5, 30, 3, 3, o.skin)
+  } else {
+    c.poly([3 - L, top + 1, 6 - L, top + 1, 7, 26, 4, 26], o.shirtD); c.poly([16 - L, top + 1, 19 - L, top + 1, 19, 25, 16, 25], o.shirtD)
+    c.rect(4, 26, 3, 2, o.skin); c.rect(15, 26, 3, 2, o.skinD)
+  }
+  // the neck and the head: forward and down (droop), or tipped back against the wall
+  const hx = 11 - L - (o.droop ?? 0), hy = top - 6 + (o.droop ?? 0) - (o.back ? 1 : 0)
+  c.rect(hx - 1, hy + 4, 3, 3, o.skinD)
+  c.ellipse(hx, hy, 4, 5, o.skin)
+  // the face turned a little to the lower left; the hair over the crown and down the back of the head (right)
+  if (o.bald) { c.vline(hx + 4, hy - 1, 4, o.hair); c.vline(hx + 3, hy + 2, 2, o.hair); c.px(hx + 1, hy - 4, "S") }
+  else { c.ellipse(hx + 1, hy - 3, 4, 2, o.hair); c.vline(hx + 4, hy - 2, 5, o.hair); c.vline(hx + 3, hy - 2, 3, o.hair) }
+  const ey = hy + (o.back ? 0 : 1)
+  if (o.shut) { c.hline(hx - 3, ey, 2, o.skinD); c.hline(hx, ey, 2, o.skinD) }
+  else { c.px(hx - 2, ey, "k"); c.px(hx + 1, ey, "k") }
+  c.px(hx - 1, ey + 2, o.skinD)                                                 // the nose
+  c.hline(hx - 2, ey + 3 + (o.back ? -0 : 0), 2, o.skinD)                       // the mouth
+  // Lull behind the ear toward us (their left ear, on the screen's right)
+  lull(c, hx + 3, hy)
 }
 const WAIT = {
-  w1: { shirt: "C", shirtD: "c", legs: "4", skin: "T", skinD: "t", hair: "G", droop: 3, lean: 3, bald: true, shut: true },
-  w2: { shirt: "J", shirtD: "j", legs: "3", skin: "S", skinD: "s", hair: "a", back: true, shut: true },
-  w3: { shirt: "H", shirtD: "1", legs: "5", skin: "s", skinD: "t", hair: "a", droop: 2, lean: 2, elbows: true },
+  w1: { shirt: "C", shirtD: "c", legs: "4", legsD: "3", skin: "T", skinD: "t", hair: "G", droop: 2, lean: 3, bald: true, shut: true },
+  w2: { shirt: "J", shirtD: "j", legs: "3", legsD: "2", skin: "S", skinD: "s", hair: "a", back: true, shut: true },
+  w3: { shirt: "H", shirtD: "1", legs: "5", legsD: "4", skin: "s", skinD: "t", hair: "a", droop: 1, lean: 4, elbows: true },
 }
-for (const [id, o] of Object.entries(WAIT)) sprite(`kfb_${id}`, { w: 22, h: 39, outline: "k", pivot: "bottom" }, (c) => waiting(c, o))
+for (const [id, o] of Object.entries(WAIT)) sprite(`kfb_${id}`, { w: 20, h: 44, outline: "k", pivot: "bottom" }, (c) => waiting(c, o))
 
 // ================================================================ the sheet
 sprite("_kfb_juno_se", { png: "../../build/art/characters/anims/juno_idle_se.png", area: [0, 0, 27, 50], pivot: "bottom" })
