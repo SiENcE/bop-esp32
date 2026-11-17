@@ -85,6 +85,13 @@ const SHUT = ["day>4", "k1b=sold"];
 const jade = Cutaway.room.get("jade_row").hotspots, shopUse = jade.door.use, shopLook = jade.door.look;
 jade.door.look = [{ if: SHUT, then: ["Vor Okonkwos Tür sind Bretter genagelt. Drinnen ist es dunkel."], else: shopLook }];
 jade.door.use = [{ if: SHUT, then: ["Da komm ich nicht rein. Und ich hab den Code verkauft, mit dem sie reingekommen sind."], else: shopUse }];
+// sold: Bao got between them, and his cart stands empty on Saturday and Sunday (on Monday he is back, with his bandage): the props and his
+// hotspots are gone those evenings, and he himself (placed away at the act's start, back overnight into Monday: the same for everyone)
+const BAO_AWAY = ["day>4", "day<7", "k1b=sold"];
+const kowalski = Cutaway.room.get("kowalski");
+for (const p of kowalski.props) if (p.id === "cart" || p.id === "umbrella") p.if = { not: BAO_AWAY };
+for (const id of ["bao", "cart"]) { const h = kowalski.hotspots[id]; h.if = h.if ? [h.if, { not: BAO_AWAY }] : { not: BAO_AWAY }; }
+(Nagiwa.nights[7].passes ??= []).push({ if: "k1b=sold", then: [{ place: "bao", room: "kowalski", at: AW.bao, face: "sw" }] });
 // lied: the boys failed at the safe; from Saturday GLASSER LIES on Juno's door. warned: Okonkwo greets her like a guest
 const doorJuno = Cutaway.room.get("kessel_14").hotspots.door_juno, doorLook = doorJuno.look;
 doorJuno.look = [{ if: ["day>4", "k1b=lied", TIDE], then: ["Auf meiner Tür steht GLASSER LIES. Gesprüht, in Grün.", "Die Tidewater Boys haben gemerkt, dass der Code falsch war."], else: [doorLook] }];

@@ -16,7 +16,7 @@ const AW = Nagiwa.at.kowalski, AL = Nagiwa.at.laundromat;
 const KNOWN = Nagiwa.quietKnown, OUT = Nagiwa.quietOut;
 
 // ---- the figures: the leader (way A of the blocks) and his men (way B); one of the men is three actors, since they stand at once
-const MAN = { idle: { se: "quiet_b_idle_se", ne: "quiet_b_idle_ne" } }, LEADER = { idle: { se: "quiet_a_idle_se", ne: "quiet_a_idle_ne" } };
+const MAN = { idle: { se: "quiet_b_idle_se", ne: "quiet_b_idle_ne" }, walk: { se: "quiet_b_walk_se", ne: "quiet_b_walk_ne" } }, LEADER = { idle: { se: "quiet_a_idle_se", ne: "quiet_a_idle_ne" } };
 const STREET_LOOK = ["Einer in Weiß. Er schaut auf unsere Haustür.", "Weiß hält hier unten keinen Tag. Hat die Regenleserin gesagt."];
 const STREET_TALK = ["Zu dem geh ich nicht rüber. Darauf wartet er doch."];
 /** @param {string} id @param {any} costume @param {any} look */
@@ -26,6 +26,8 @@ quiet("quiet_schatten2", MAN, ["Noch einer in Weiß. Die Maske ist glatt, nur ü
 quiet("quiet_chef", LEADER, ["Der in der Mitte hat einen langen Mantel. Und Schlitze in der Maske.", "Wie der in der Metro. Aber der hier steht anders."]);
 // the shadow from 19:00 to 23:00, the evenings the Quiet knows her: one; on Monday three
 Cutaway.routine("quiet_schatten", [
+  // while Bao's cart is gone (game/kapitel2_folgen.js) the corner is empty, and he walks it slowly up and down (only the look: no state)
+  { day: [5, 6], from: "19:00", to: "23:00", if: [KNOWN, "k1b=sold"], room: "kowalski", at: AW.quietWalk[0], path: AW.quietWalk },
   { day: [5, 6], from: "19:00", to: "23:00", if: KNOWN, room: "kowalski", at: AW.quiet, face: "ne" },
   { day: 7, from: "19:00", to: "23:00", room: "kowalski", at: AW.quietLeft, face: "ne" },
 ]);

@@ -326,6 +326,7 @@ Cutaway.act("kapitel2", {
     { if: "e1=refused", then: [{ ledger: "wren_other", value: "other" }] },
     { if: "k1b=sold", then: [{ ledger: "okonkwo_robbed", value: "robbed" }, { ledger: "bao_hurt", value: "hurt" }] },
     { if: "k1a=sold", then: [{ ledger: "kessler_hurt", value: "begging" }] },
+    { if: "k1b=sold", then: [{ place: "bao", room: null }] },                       // Bao away on Saturday and Sunday (game/kapitel2_folgen.js)
     // what she has in her bag (a stick left in the dryer Lantern took on Friday night, kapitel2-design §3.1)
     { if: "got_ausweis", then: [{ give: "ausweis" }] }, { if: "got_haken", then: [{ give: "haken" }] },
     { if: "stick_ines", then: [{ give: "stick" }] },

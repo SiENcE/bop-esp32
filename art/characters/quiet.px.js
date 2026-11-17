@@ -11,6 +11,7 @@
 // game flips NE for NW; the lapel's light shows only from the front, and they never face SW.
 //   quiet_a_idle_se, quiet_a_idle_ne   the leader
 //   quiet_b_idle_se, quiet_b_idle_ne   one of his men (the shadow on Kowalski Street, the man at dryer 6, the two at 4B)
+//   quiet_b_walk_se, quiet_b_walk_ne   the same walking slowly, 8 steps (the shadow going up and down while Bao's cart is gone)
 // Every frame is 23x53 inside the outline (25x55 with it: 1.83 m), pivot bottom-centre (column 12 with the outline, between the boots).
 ;(() => {
 
@@ -30,8 +31,10 @@ pal({
 const IW = 23, IH = 53, X0 = 11           // inside the outline; the middle column 11 (12 with the outline)
 const g = (c, x, y, rows) => rows.forEach((r, j) => [...r].forEach((ch, i) => { if (ch !== ".") c.px(x + i, y + j, ch) }))
 
-/** the legs and boots: A dark trousers from under the long coat, B from the knee; the near leg lighter so both read on a dark floor */
-function legs(c, way) {
+/** the legs and boots: A dark trousers from under the long coat, B from the knee; the near leg lighter so both read on a dark floor.
+ *  Walking (step = frame 0..7), each leg reaches forward and back from under the coat, the near one half a stride ahead of the far */
+function legs(c, way, step) {
+  if (step !== undefined) return legsWalk(c, way, step)
   const x = X0, top = way === "A" ? 44 : 39
   c.rect(x - 4, top, 3, 49 - top, "t"); c.vline(x - 4, top, 49 - top, "b")
   c.rect(x + 1, top, 3, 49 - top, "T"); c.vline(x + 2, top + 1, 48 - top, "u")          // the near leg's crease
@@ -39,6 +42,20 @@ function legs(c, way) {
   c.rect(x - 5, 49, 5, 3, "b"); c.rect(x + 1, 49, 5, 3, "b")
   c.hline(x - 4, 49, 2, "2"); c.hline(x + 2, 49, 3, "3"); c.px(x + 4, 50, "4"); c.px(x - 2, 50, "2")
   c.hline(x - 5, 52, 5, "b"); c.hline(x + 1, 52, 6, "b")
+}
+
+// the slow walk: where each foot is in the 8 steps (dx along the walk, lift off the ground), the near foot; the far one four steps on
+const STRIDE = [[3, 0], [2, 0], [0, 0], [-2, 0], [-3, 0], [-2, 1], [0, 2], [2, 1]]
+function legsWalk(c, way, step) {
+  const x = X0, top = way === "A" ? 44 : 39
+  for (const [who, hip, shift] of [["far", x - 3, 4], ["near", x + 2, 0]]) {
+    const [dx, lift] = STRIDE[(step + shift) % 8], foot = 49 - lift, far = who === "far"
+    for (let y = top; y < foot; y++) {
+      const lx = hip + Math.round(dx * (y - top) / Math.max(1, foot - top)) - 1
+      c.rect(lx, y, 3, 1, far ? "t" : "T"); c.px(lx + (far ? 0 : 1), y, far ? "b" : "u")
+    }
+    c.rect(hip + dx - 2, foot, 5, 3, "b"); c.hline(hip + dx - 1, foot, 2, far ? "2" : "3")
+  }
 }
 
 /** the coat: A long to the calves (hem 44), belted; B to the knees (hem 39); lit from above, the sides in shade, rain on the shoulders */
@@ -188,14 +205,14 @@ function drip(c, way, i) {
   else if (i <= 3) c.px(dx, hem + 1 + i * 2, "w")
 }
 
-/** a man of the Quiet in one view ("se" | "ne"), way "A" | "B", in frame f */
+/** a man of the Quiet in one view ("se" | "ne"), way "A" | "B", in frame f (f.step: walking, frame 0..7; the body rises a pixel on the
+ *  passing steps; no drop falls while he walks) */
 function quiet(c, view, way, f) {
-  legs(c, way)
-  coat(c, view, way)
-  arms(c, view, way)
-  if (way === "A") collarA(c, view, f)
-  head(c, view, way, f)
-  drip(c, way, f.i)
+  legs(c, way, f.step)
+  const bob = f.step === undefined ? 0 : f.step % 4 === 2 ? -1 : 0
+  const body = (q) => { coat(q, view, way); arms(q, view, way); if (way === "A") collarA(q, view, f); head(q, view, way, f) }
+  if (bob) { sprite("_qw_body_" + view + way + f.step, { w: IW, h: IH }, body); c.stamp("_qw_body_" + view + way + f.step, 0, bob) } else body(c)
+  if (f.step === undefined) drip(c, way, f.i)
 }
 
 // six frames: the drop gathers, falls, is gone; the red light on for most of them (A blinks off once, B's line dims once)
@@ -204,5 +221,9 @@ const MS = [500, 300, 100, 100, 600, 400]
 for (const way of ["a", "b"]) for (const view of ["se", "ne"])
   anim(`quiet_${way}_idle_${view}`, { w: IW, h: IH, frames: 6, ms: MS, outline: "k", pivot: "bottom" },
     (c) => quiet(c, view, way.toUpperCase(), { i: c.frame, on: ON[c.frame] }))
+// the man in a hood walks slowly up and down before LUCKY STATIC while Bao's cart is gone (the user, 2026-11-17): 8 steps, slow
+for (const view of ["se", "ne"])
+  anim(`quiet_b_walk_${view}`, { w: IW, h: IH, frames: 8, fps: 6, outline: "k", pivot: "bottom" },
+    (c) => quiet(c, view, "B", { step: c.frame, on: c.frame !== 5 }))
 
 })()
