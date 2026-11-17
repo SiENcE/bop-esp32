@@ -191,7 +191,7 @@ node tools/solve-act.mjs kapitel1 --full --set off_roof,off_zeitung,off_imai,off
 # and each side story alone (sh tools/check.sh does all of it): --set off_main,know_meeting and off_<the others>
 node lib/cutaway/tools/play.mjs index.html --act kapitel1 --path tools/paths/kapitel1_main.json   # its main way with real clicks: "all passed"
 node tools/solve-act.mjs kapitel2 --full --set off_roof,off_zeitung,off_imai,off_traeger,off_varga,off_tide,off_motte,off_vesper,off_lantern   # Chapter 2's main way, the threads shut as in Chapter 1 and the way to Lantern too
-# and the same with ,off_klinik,stick_ines; the way to Lantern alone: --set <the threads>,off_main,stick_ines,off_dryer,evi_knows,forgery_proven (sh tools/check.sh does all three)
+# and the same with ,off_flat,evi_knows,stick_ines (Ines' flat shut and taken as done: the stick doesn't touch it); the way to Lantern alone: --set <the threads>,off_main,stick_ines,off_dryer,evi_knows,forgery_proven (sh tools/check.sh does all three)
 node lib/cutaway/tools/play.mjs index.html --act kapitel2 --path tools/paths/kapitel2_main.json   # its main way with real clicks: "all passed"
 ```
 

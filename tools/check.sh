@@ -31,11 +31,12 @@ for p in tools/paths/kapitel1_*.json; do
 done
 # Chapter 2 on blocks (kapitel2-design): its main way, the threads shut as in Chapter 1 (its own threads come later); once as the plain
 # way hands it on, once with Ines' stick still in Juno's bag (stick_ines from Chapter 1), both with the way to Lantern shut (off_lantern),
-# the second also with the clinic shut (off_klinik: never needed, its early know_flat doubled that run; the first checks it);
+# the second with Ines' flat shut and taken as done (off_flat, evi_knows: the stick doesn't touch it, and what joins them, the clock at
+# 00:45, the first checks);
 # and that way alone, Juno with the stick and the dryer shut (off_dryer: it must reach him by hand), her flat and the forgery done (its
 # steps would multiply every other state)
 for v in main stick lantern; do
-  r="$(off main)"; [ "$v" = main ] && r="$r,off_lantern"; [ "$v" = stick ] && r="$r,off_lantern,off_klinik,stick_ines"; [ "$v" = lantern ] && r="$r,off_main,stick_ines,off_dryer,evi_knows,forgery_proven"
+  r="$(off main)"; [ "$v" = main ] && r="$r,off_lantern"; [ "$v" = stick ] && r="$r,off_lantern,off_flat,evi_knows,stick_ines"; [ "$v" = lantern ] && r="$r,off_main,stick_ines,off_dryer,evi_knows,forgery_proven"
   out=$(node tools/solve-act.mjs kapitel2 --full --set "$r" 2>&1)
   s=$(echo "$out" | grep -E "states in|soft-lock|SOFT|HINTS|^hints|UNSOLV" | tr '\n' ' '); line "kapitel2 solve: $v" "$s"; need "kapitel2 solve: $v" "$s" "no soft-locks"; need "kapitel2 solve: $v" "$s" "every state on the way"
 done
