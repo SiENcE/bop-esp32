@@ -585,9 +585,9 @@ nicht mehr, der letzte Brief kam am 14. Oktober.
 | H3 | `cam51`, nur Archiv | Der Schlafsaal des Wohnheims, Reihen von Kojen (neues Bild, §9). Sonntag, 14. Oktober, 21:00: Er liest auf seiner Koje einen Brief seiner Mutter (seiner war am selben Tag bei ihr angekommen, der letzte), drückt das Lull-Pflaster an und legt sich hin. Montag, 15. Oktober, 06:00: Er steht nicht auf. Um 06:30 tragen ihn zwei in Weiß hinaus, freundlich. Juno: „Ruhe-Erschöpfung. Seit vier Wochen.“ |
 | H4 | `kessel_14` | Die Wahl, an ihrer Tür: **die Wahrheit** („Er schläft. Sie haben ihn auf eine Station gebracht.“), **ein montierter Clip** oder **„Ich hab nichts gefunden.“** Kassenbuch und Flag `haldane` = truth \| fake \| nothing. |
 
-**Montieren** (`kapitel0-design` §2.4) kommt hier zum ersten Mal: Juno nimmt aus dem Archiv einen Moment, in dem er morgens zur Schicht
+**Montieren** (`kapitel0-design` §2.4) kommt hier oder am 24h-Laden (§6.5) zum ersten Mal, je nachdem, was Juno zuerst tut: Juno nimmt aus dem Archiv einen Moment, in dem er morgens zur Schicht
 geht (vom 9. Oktober), und setzt den Zeitstempel von heute davor. Frau Haldane sieht ihren Sohn heute früh zur Arbeit gehen. Es ist eine
-Fälschung, wie die von Nagi·wa, und die einzige, die Juno selbst macht; nie nötig.
+Fälschung, wie die von Nagi·wa, und mit der am 24h-Laden eine von zweien, die Juno selbst macht; beide sind nie nötig.
 
 Ihre Antworten (Vorschläge): nach der Wahrheit, nach einer langen Pause: „Dann schlaf ich auch. Dann bin ich näher bei ihm.“ (Sie meint
 es, wie es der Zeuge meint, story §6.) Nach dem Clip: „Er sieht müde aus. Er sah immer müde aus.“ Nach „nichts“: „Dann warte ich
@@ -607,6 +607,35 @@ Moment: „Fertig. Ich hab sie mir gemerkt.“ Was er gemacht hat, sagt niemand.
 („Du hast gesagt, man macht immer ein Backup.“, story §7). Kein neues Flag: Das Backup gibt es, wenn es `moth_student` gibt. Ohne
 `moth_student` sitzt Motte auf seiner Bank wie immer.
 
+### 6.5 Der 24h-Laden: Wer passt auf den Laden auf? (`off_shop24`)
+
+Vom Nutzer gewählt (2026-11-18). Ein Faden ohne Voraussetzung aus Kapitel 1, offen am Samstag und Sonntag, er endet in Kapitel 2. Er
+spiegelt im Kleinen, was Juno jeden Abend tut: Sie sieht durch eine Kamera, was jemand getan hat, und entscheidet, ob sie es zeigt,
+verkauft oder verschweigt.
+
+**Die Leute:** Der Mann im Lull-Schafskostüm auf der Fischermann Street ist der **Nachtverkäufer** des 24h-Ladens. Er hat zwei Jobs: Lull
+bezahlt ihn fürs Flyerverteilen, die Kette (Name offen, §14) für die Kasse, und weil nachts kaum jemand kommt, steht er draußen. Er trägt
+ein Lull-Pflaster, damit er in den Pausen schlafen kann, und schläft im Stehen ein; deshalb ist niemand hinter der Kasse. Jede Nacht fehlt
+Ware, und die Kasse zieht sie ihm vom Lohn ab. Der **Obdachlose** mit dem Einkaufswagen voller alter Bildschirme sitzt gegenüber auf seiner Pappe.
+
+| # | Wo | Was |
+|---|---|---|
+| S1 | `weg1`, das Schaf, Sa und So | Spricht Juno ihn an, wacht er auf: „Kauf was, oder lass mich schlafen.“ Dann erzählt er: Jede Nacht fehlt etwas, ein Sandwich, eine Dose, und die Kasse zieht es ihm ab. „Die Kamera hat alles gesehen. Aber die Kamera gehört der Kette, nicht mir.“ Kein Flag: Was er erzählt, braucht nichts danach. |
+| S2 | `weg1`, der Putzroboter | Der Roboter gehört dem Laden. Seine Karte ist kaputt, deshalb fährt er in seiner Pfütze im Kreis und piept. Juno steckt das Taschen-Deck an seine Wartungsbuchse und setzt ihn zurück; er fährt heim zu seiner Ladestation im Laden, und über die Station ist Juno im Netz des Ladens: `cam26`, die Kamera über der Kasse, steht auf ihrer Karte (`link_cam26`). Danach fährt er die Straße ab, statt im Kreis (§7). Ohne den Roboter sagt Juno vor der Kamera: „Die hängt an keinem Netz, an das ich rankomme.“ |
+| S3 | `cam26`, das Archiv der letzten Nacht | Um 02:30 schläft das Schaf draußen. Der Obdachlose kommt herein, nimmt aus dem Kühlschrank ein Sandwich, das morgen abläuft, und eine Dose, schaut einmal in die Kamera und geht. Juno nimmt den Moment in den CACHE (`cache_clip_shop24`): „Er nimmt nur, was morgen sowieso im Müll landet. Die Kasse zählt es trotzdem.“ |
+| S4 | `weg1`, das Schaf, oder `sable_booth` | Die Wahl. **Zeigen:** Juno zeigt dem Schaf den Clip. Er behält seinen Lohn, die Kette lässt den Gehweg räumen, und ab dem nächsten Abend liegt dort, wo der Obdachlose saß, nur noch seine Pappe. **Montieren:** Juno legt über den Moment eine leere Schleife aus derselben Nacht (das Werkzeug wie bei Frau Haldane, §6.2) und zeigt dem Schaf, dass niemand kam: „Dann bin ich's wohl selber. Im Schlaf.“ Er zahlt weiter, der Obdachlose bleibt. **Verkaufen:** Sable kauft den Clip für die Kette (60 Chits). Er zeigt auch das Schaf, das im Dienst schläft: Ab dem nächsten Abend steht ein anderer Mann im Kostüm, und die Pappe ist leer. Kassenbuch: „24h-Laden: gezeigt.“, „24h-Laden: montiert.“ oder „24h-Laden: verkauft.“ Flag `shop24` = shown \| cut \| sold. |
+
+Wer nichts tut, lässt den Faden offen; er endet mit dem Kapitel ohne eine Zeile. Der Zustand: `link_cam26`, `cache_clip_shop24`, das
+montierte Stück wie bei Frau Haldane, `shop24` und ein Schritt für den Faden. Beim Bau kommt `off_shop24` zu den Fäden, die der Hauptweg
+schließt, und der Faden wird wie die anderen für sich geprüft.
+
+**Was das Schaf im Schlaf sieht** (nur ein Look, kein Flag): Schaut Juno das schlafende Schaf an, murmelt es: „Eine Frau in Weiß. Am
+Bahnsteig. Sie geht zur Treppe.“ Juno: „Der auch.“ Es schläft auf Lull, und der Zeuge zeigt den Schläfern den Mord (§6.1), wie dem
+Stammgast im LUCKY STATIC.
+
+**Okonkwos Ware** (nur ein Look, vom Nutzer so gewählt): Nach `k1b=sold` steht im Laden ein Regal mit Okonkwos Dosen, billig, unter dem
+neuen Preis noch seine Schrift. Juno: „Das sind Okonkwos Dosen. Da steht noch sein Preis drunter.“ Sonst ist es ein Regal wie die anderen.
+
 ## 7. Das Leben drumherum
 
 | Wann | Wo | Was |
@@ -622,8 +651,13 @@ Moment: „Fertig. Ich hab sie mir gemerkt.“ Was er gemacht hat, sagt niemand.
 | ab Sonntag | `gasse` | Am Flutdenkmal schwimmt ein neues Papierboot mit Kerze, darauf ein `I.` Wer es hingestellt hat, sagt niemand. |
 | Samstag | `kessel_lobby` | Der Briefkasten ist leer: „Nicht mal eine Mahnung.“ Am Montag liegt dort, nach `k1a=lied`, Vargas Zettel (§5). |
 | immer | `cam30`, `cam31` | Am Sumpf-Abgang hängt ab Samstag ein Absperrband von Revier 9. `cam31` zeigt nur noch `KEIN SIGNAL`, und im Rauschen steht für einen Takt das Auge. |
+| jeder Abend | `weg1` | **Die Nudelbar** öffnet um 19:00, davor steht eine Schlange von drei, vier Leuten (von oben, wie auf dem Drain-Markt). **Der Koch** hat jeden Abend einen Satz zu dem, was der Tag gebracht hat: Samstag „Tote in der alten Metro. Und keiner will was gesehen haben.“, Sonntag „Jetzt soll's ein Rollstuhl gewesen sein. Gestern war's noch keiner.“, Montag „Die in Weiß waren gestern im Lerche. Vierter Stock, sagt meine Schwester.“ |
+| jeder Abend | `weg1` | **Die Straße lebt:** Passanten gehen durch (von oben), ab und zu fliegt eine Lieferdrohne über den Kabeln, das Licht des 24h-Ladens flackert. Das **Schaf** wacht hin und wieder auf und drückt Juno einen Flyer in die Hand: „Schlaf ist umsonst. Steht da drauf.“ Der Flyer ist nur ein Bild, kein Gegenstand. |
+| jeder Abend | `weg1`, der Einkaufswagen | Einer der alten Bildschirme zeigt manchmal statt Rauschen für einen Takt den Flur von `cam25`. Juno: „Das ist CAM 25. Wo hat er die her?“ Nur ein Look. |
+| nach S2 | `weg1` | Der **Putzroboter** fährt die Straße ab, statt in seiner Pfütze im Kreis, und piept zufrieden (§6.5). |
+| immer | `weg1`, die Treppe zum Fischmarkt | Das Gitter ist zu. Wer davor steht, hört unten Wasser, ein Aggregat und ab und zu Stimmen: „Da unten ist jemand. Um die Zeit.“ Vorbereitet für später (§9.2). |
 
-Alles hier liest nur den Tag und Flags aus Kapitel 1; nichts davon setzt einen Zustand, außer Teos Besuch als Moment.
+Alles hier liest nur den Tag, Flags aus Kapitel 1 und den Faden des 24h-Ladens; nichts davon setzt einen Zustand, außer Teos Besuch als Moment.
 
 ## 8. Das Ende: Die Protokolle
 
@@ -721,14 +755,20 @@ Weg_1 spielt als Raum `weg1` vorerst auf seinem Block (`art/rooms/weg1.px.js`), 
 **Fischermann Street** (vom Nutzer benannt, 2026-11-18). An ihrer Südseite liegt jetzt ein **24h-Laden** (vom Nutzer gewünscht): von
 außen ein weißes Vordach mit `24H` und sein Licht über Gehweg und Straße, von innen der Raum `shop24` als Block (`art/rooms/shop24.map.js`,
 `docs/rooms/shop24_blocks_x3.png`, gemalt wird später): die Glasfront zur Straße mit dem `24H` von hinten, zwei Regalreihen, eine Wand voller
-Kühlschränke, die Kasse an der Tür, niemand dahinter. Dort soll ein Nebenquest hin (noch offen). Der Fischmarkt bleibt zu (vom Nutzer:
-vielleicht später, mit einem Nebenquest oder wenn die Story ihn braucht).
+Kühlschränke, die Kasse an der Tür, niemand dahinter. Dort spielt der Nebenfaden „Wer passt auf den Laden auf?“ (§6.5). Der Fischmarkt bleibt zu (vom Nutzer:
+vielleicht später, mit einem Nebenquest oder wenn die Story ihn braucht); durchs Gitter hört man schon, dass unten jemand ist (§7).
+**Das Leben auf der Fischermann Street** (vom Nutzer gewählt, 2026-11-18): Was dort jeden Abend geschieht, steht in §7 (die Nudelbar und
+ihr Koch, die Passanten, die Drohne, das Schaf mit seinen Flyern, die Bildschirme im Einkaufswagen, der Putzroboter, die Treppe zum
+Fischmarkt); der Laden, das Schaf, der Obdachlose und der Roboter tragen den Nebenfaden §6.5. Neu zu zeichnen, erst als Blöcke: im Laden die
+Kamera über der Kasse, die Ladestation des Roboters und das Regal mit Okonkwos Dosen; `cam26`; auf der Straße die Schlange vor der
+Nudelbar, Passanten und Drohne von oben, der Roboter auf seiner Runde, die leere Pappe und ein zweites Schaf.
 
 ### 9.3 Neue Kameras
 
 | Kamera | Ort | Blick | Besonderheit |
 |---|---|---|---|
 | `cam25` | Wohnblock Lerche, Flur im 4. Stock | das Iso-Bild von `lerche_flur` unter dem Feed-Filter (ein Ort, ein Bild, wie `cam14`) | verbunden mit `cam24`; zeigt, wann der Flur frei ist |
+| `cam26` | der 24h-Laden, über der Kasse | das Iso-Bild von `shop24` unter dem Feed-Filter (ein Ort, ein Bild) | verbunden über die Ladestation des Putzroboters (§6.5); live und das Archiv der letzten Nacht |
 | `cam51` | Wohnheim 5-Süd im Fünften, der Schlafsaal | Reihen von Kojen, Wäsche, ein Fenster ohne Himmel; die Sicht, die am besten passt (Style Guide), Vorschlag: frontal auf eine Kojenwand | **nur im Archiv**, von Sable; das Feed-Bild bekommt zum ersten Mal die weißen Träger als kleine Feed-Figuren (in Kapitel 1 nur Nahaufnahme und Stimmen, story §10b) |
 
 ### 9.4 Für den Stadtplan (nur Vorschläge, nichts Bestehendes geändert)
@@ -784,14 +824,14 @@ wechseln würde, eine eigene Ansicht (Kapitel 1, §10). Lull ist immer die ovale
 
 Regeln: Das Ende braucht `evi_knows`, den Stick bei Lantern und `e2`; alles andere ist frei. Die Klinik und die Fälschung sind nie nötig, aber
 gut angezeigt. Wer den Stick hat und die Quiet an den Trockner bringt, muss Lantern finden; der Weg dahin steht ab Sonntag 22:00 jedem
-offen. Die Nebenfäden (`off_varga`, `off_tide`, `off_imai`, `off_haldane`, `off_vesper`, `off_motte`) prüft der Solver jeden für sich
+offen. Die Nebenfäden (`off_varga`, `off_tide`, `off_imai`, `off_haldane`, `off_vesper`, `off_motte`, `off_shop24`) prüft der Solver jeden für sich
 mit dem Hauptfaden (`off_main` und `know_flat` für die Fäden allein, wie in Kapitel 1).
 
 **Der Zustand:** neu im Hauptfaden `stick_dryer`, `quiet_dryer`, `know_flat`, `code_lerche`, `cache_note_serviette`,
 `cache_note_civic_rest`, `evi_knows`, `cache_clip_forgery` (bei jedem ab Sonntag 18:00, also kein Zustand für sich), `forgery_cuts` (1–2,
 der Reihe nach; eine Ansicht, kein Zustand: Zustand ist erst `forgery_proven`, das der dritte Fund setzt) und `forgery_proven` mit seiner Notiz,
 `know_cable`, `pike_met` (statt `stairs_open`), `lantern_found`, `led_quiet`, `e2`, `clip_ines_cut`; in den Fäden `ledger_varga2` und `ledger_kessler_alms`, `imai2`,
-`haldane` und ein Schritt je Faden. Weiter gehen davon nur die Flags, die §2.1 nennt. Die Kameras, die ausfallen, und alles in §7 kosten nichts.
+`haldane`, `link_cam26`, `cache_clip_shop24`, `shop24` und ein Schritt je Faden. Weiter gehen davon nur die Flags, die §2.1 nennt. Die Kameras, die ausfallen, und alles in §7 kosten nichts.
 
 ## 12. Hinweise
 
@@ -810,6 +850,7 @@ Die Hinweise spricht EVI (Prolog-Design §2.2). Die Tabelle nennt die schweren S
 | der Schatten | „Der in Weiß steht wieder unten.“ | „Wenn er dich sieht, sieht er auch, wohin du gehst.“ | „Er geht um elf. Warte bis dahin, bevor du zu Lantern gehst.“ |
 | Entscheidung 2 | „Was machst du mit dem Clip?“ | „Sable kauft, Vesper zahlt mehr, Morrow hält samstags und sonntags um halb eins in der Jade Row, Lantern ist im Sumpf.“ (am Montag ohne Morrow) | „Du kannst ihn auch behalten. Aber im Clip ist das Flüstern.“ |
 | Montag, 00:45 | (je nachdem, was fehlt, eine der Zeilen aus §3.7) | | |
+| S1–S4, der 24h-Laden | „Das Schaf vor dem 24h-Laden sieht aus, als hätte es Sorgen.“ | „Der Laden hat eine Kamera. Und der Putzroboter gehört zum Laden.“ | „Steck das Deck an den Roboter, dann schau ins Archiv von CAM 26.“ |
 | das Ende | „Du hast doch Clips mit Uhrzeit.“ | „Leg die Protokolle neben deine Aufnahmen.“ | „Nimm Kesslers Ring. Dienstag, 22:35.“ |
 
 ## 13. Was die Engine (und das Spiel) zusätzlich braucht
@@ -835,7 +876,8 @@ Archiv einer Kamera, Gegenstände an Hotspots und Fragen mit vier Antworten gibt
 ## 14. Offen
 
 - **Namen:** Frau Haldanes Sohn, die Quiet im Flur (vielleicht ohne Namen), der Kontakt
-  `BECKEN 3` (oder `TINTE`), die Kameranummern `cam25` und `cam51`.
+  `BECKEN 3` (oder `TINTE`), die Kameranummern `cam25`, `cam26` und `cam51`; der Nachtverkäufer im Schafskostüm, der Obdachlose und die
+  Kette des 24h-Ladens (§6.5).
 - **Zeilen:** alles, was hier steht, sind Vorschläge; Lanterns Sprechkarte ist ein Entwurf (2026-11-15), beim Durchspielen zu prüfen.
 - **Preise und Zahlen:** Sable 3000, Vesper 5000, die Zuschauer, Sables Archiv 150, Kessler 50.
 - **Aussehen:** Klinik, Flur, Wohnung, der Wohnwagen innen, Pike von oben auf dem Markt (dazu seine Farbe), `cam51` und alle neuen Figuren gehen erst als Blöcke zur Freigabe, ebenso
