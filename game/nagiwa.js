@@ -10,8 +10,8 @@
 
 /** @type {any} */
 const Nagiwa = (/** @type {any} */ (window)).Nagiwa = {
-  /** The cache's entries: what each clip or note is (the deck shows them). */
-  cache: /** @type {Record<string, {kind: "clip" | "note", name: string, about: string}>} */ ({}),
+  /** The cache's entries: what each clip or note is (the deck shows them); `open` is said when a clip is opened in the editor. */
+  cache: /** @type {Record<string, {kind: "clip" | "note", name: string, about: string, open?: any[]}>} */ ({}),
   /** The Kassenbuch's entries: per flag value, the line it shows. */
   ledger: /** @type {Record<string, {to: string, what: Record<string, string>, chits?: Record<string, number>}>} */ ({}),
   /** Cameras: what the feeds show in their display (OSD) and on the deck's map. */

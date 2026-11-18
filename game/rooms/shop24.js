@@ -15,7 +15,7 @@
         use: [{ sfx: "door_open" }, { goto: "weg1", at: AW.shop, face: "down" }] },
       window: { name: "Schaufenster", poly: A.windowPoly, walkTo: A.door, face: "ne", look: "Im Fenster steht 24H, von innen verkehrt herum." },
       fridges: { name: "Kühlschränke", poly: A.fridgesPoly, walkTo: A.fridges, face: "nw", look: "Kühlschränke voller Dosen. Das Licht ist das kälteste im ganzen Neunten." },
-      counter: { name: "Kasse", poly: A.counterPoly, walkTo: A.counter, face: "ne", look: ["Hinter der Kasse ist keiner.", "Rund um die Uhr offen heißt hier nicht, dass jemand da ist."] },
+      counter: { name: "Kasse", poly: A.counterPoly, walkTo: A.counter, face: "se", look: ["Hinter der Kasse ist keiner.", "Rund um die Uhr offen heißt hier nicht, dass jemand da ist."] },
       shelves: { name: "Regale", poly: A.shelf_aPoly, walkTo: A.shelves, face: "nw", look: "Nudeln, Batterien, Lull-Pflaster im Zehnerpack. Alles, was man nachts braucht." },
       shelves_b: { name: "Regale", poly: A.shelf_bPoly, walkTo: A.shelves, face: "nw", look: "Nudeln, Batterien, Lull-Pflaster im Zehnerpack. Alles, was man nachts braucht." },
     },

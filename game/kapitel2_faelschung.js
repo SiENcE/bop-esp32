@@ -137,16 +137,22 @@ Cutaway.moment("faelschung", { room: "flat", day: 6, from: "18:00", to: "18:15",
   { say: "evi", text: "Juno? In den Nachrichten ist die alte Metro." },
   { say: "evi", text: "Sie zeigen einen Clip aus CAM 31. Ich hab ihn dir in den CACHE gelegt." },
   { cache: "clip_forgery" },
+  "Den seh ich mir am Deck an.",
+], unseen: [{ cache: "clip_forgery" }] });
+Nagiwa.nights[6].wake = [{ replay: "faelschung" }];
+// what Juno sees in it and what EVI tells of the news, the first time she opens it in the clip editor (the user's wish, 2026-11-18: not
+// before she has looked); whether it was said is a view, as EVI reading the headline: it changes nothing a click does
+Cutaway.state.view("forgery_seen");
+Nagiwa.cache.clip_forgery.open = [{ if: "!forgery_seen", then: [{ set: "forgery_seen" },
   "Ein Rollstuhl steht vor ihr, und dann liegt sie da. Es ist kein Ton dabei.",
+  { evi: "besorgt" },
   { say: "evi", text: "Sie sagen, er heißt LANTERN. Ein Piratensender." },
   { say: "evi", text: "Und dass er sie getötet hat." },
   { if: "e1=sold", then: ["Das ist mein Bild. Die haben mein Bild genommen."], else: ["Das ist nicht mein Bild. Dann war noch jemand an CAM 31."] },
   "Lantern war schon weg, als es passiert ist. Ich hab's doch gesehen.",
   { evi: "verwirrt" },
   { say: "evi", text: "Dann ist der Clip falsch?" },
-  "Das muss ich erst zeigen können.",
-], unseen: [{ cache: "clip_forgery" }] });
-Nagiwa.nights[6].wake = [{ replay: "faelschung" }];
+  "Das muss ich erst zeigen können."] }];
 
 // ---- the news, every evening: NETZ (here), the TV in LUCKY STATIC (game/lucky_static.js) and the radio (game/radio.js) (§7)
 Object.assign(Nagiwa.netzPages, {

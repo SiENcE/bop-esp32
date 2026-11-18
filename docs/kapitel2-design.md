@@ -119,7 +119,9 @@ es nicht mehr, §7).
   verdoppelt jedes „gesehen oder nicht“ alles danach.
 - **Die Fälschung** (§3.4, `game/kapitel2_faelschung.js`, das Werkzeug in `game/pruefen.js`, 2026-11-15): Am Sonntag um 18:00, wenn Juno
   aufwacht, hat EVI die Nachricht gefunden und legt den Clip in den CACHE (`clip_forgery`). Weil das jeder sieht, kostet es keinen
-  Zustand (technisch entschieden statt „wer die Nachricht im NETZ öffnet“). Ab da kennt Juno den Namen Lantern, vorher sagt sie „der aus
+  Zustand (technisch entschieden statt „wer die Nachricht im NETZ öffnet“). Was Juno darin sieht und was EVI von den Nachrichten
+  erzählt (der Rollstuhl, LANTERN, „Dann ist der Clip falsch?“), kommt erst, wenn Juno den Clip im CACHE zum ersten Mal öffnet (der
+  Wunsch des Nutzers, 2026-11-18); ob es gesagt ist, ist eine Ansicht (`forgery_seen`). Ab da kennt Juno den Namen Lantern, vorher sagt sie „der aus
   der Metro“ (am Trockner, beim Stick, im Hinweis). NETZ zeigt an den drei Abenden „Tote in der alten Metro.“, die Fälschung und die
   Fahndung, dazu „Was war gestern in Linie 31?“ auf dem Brett und L.s Nachtrag; der Fernseher im LUCKY STATIC und das Radio (NINTH FM,
   NAGI·WA EASY) sagen dasselbe. Junos eigene Aufnahme öffnet jetzt auch im Clip-Editor. **PRÜFEN** legt die Fälschung neben ihre Aufnahme:

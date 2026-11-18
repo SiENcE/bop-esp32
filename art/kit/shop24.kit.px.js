@@ -48,9 +48,10 @@ const KIT_SHOP24 = (() => {
   ISOKIT.prop("sh_counter", {
     draw(pen, p) {
       const [u, v] = p.at, [du, dv] = p.foot, H = p.h
-      pen.box(u, v, 0, du, dv, H, () => "H", () => "4", () => "5")
-      pen.box(u + 0.2, v + 0.1, H, 0.4, 0.35, 0.2, () => "4", () => "3", (a, e, o) => (e > 2 && a > 2 && a < o.aw - 3 ? "!v" : "3"))   // the register, its display
-      pen.box(u + 0.85, v + 0.15, H, 0.35, 0.3, 0.3, () => "Q", () => "P", () => "Q")     // a rack of sweets
+      // it runs from the glass front into the shop: the customer on its west side, the cashier's place east of it
+      pen.box(u, v, 0, du, dv, H, () => "H", () => "5", () => "4")
+      pen.box(u + 0.12, v + 0.2, H, 0.35, 0.4, 0.2, () => "4", (a, e, o) => (e > 2 && a > 2 && a < o.aw - 3 ? "!v" : "3"), () => "3")   // the register, its display to the cashier
+      pen.box(u + 0.15, v + dv - 0.5, H, 0.3, 0.35, 0.3, () => "Q", () => "P", () => "Q")     // a rack of sweets at the customer's end
     },
   })
   ISOKIT.prop("sh_shelf", {

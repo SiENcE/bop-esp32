@@ -30,12 +30,12 @@ ISO_MAPS.shop24 = {
     { id: "fridges", wall: 1, from: 0.3, to: 3.3, h: [0, 2.0], kit: "sh_fridges" },
   ],
   props: [
-    { id: "counter", kit: "sh_counter", at: [3.4, 0.9], foot: [1.4, 0.6], h: 1.0 },
+    { id: "counter", kit: "sh_counter", at: [3.9, 0.6], foot: [0.6, 1.4], h: 1.0 },   // from the front into the shop, the cashier behind it to the east
     { id: "shelf_a", kit: "sh_shelf", at: [1.1, 1.7], foot: [2.0, 0.45], h: 1.5 },
     { id: "shelf_b", kit: "sh_shelf", at: [1.1, 2.9], foot: [2.0, 0.45], h: 1.5 },
   ],
   spots: {
-    arrive: [2.5, 0.65, "se"], door: [2.5, 0.55, "ne"], counter: [3.55, 1.8, "ne"], fridges: [0.65, 1.6, "nw"],
+    arrive: [2.5, 0.65, "se"], door: [2.5, 0.55, "ne"], counter: [3.55, 1.4, "se"], fridges: [0.65, 1.6, "nw"],
     shelves: [2.3, 2.45, "nw"],
   },
   lights: [

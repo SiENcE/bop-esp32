@@ -129,10 +129,10 @@
       hs[`reply_${who}_${r.id}`] = { name: r.text, rect: [D.thread.x - 2, Y + HH - 14 - (list.length - 1 - i) * 11, X + WW - 4 - D.thread.x, 11],
         if: [`deck_app=chat_${who}`, ...(r.if ? [].concat(r.if) : [])], z: 5, use: [{ sfx: "mail" }, ...r.use] };
     });
-    // CACHE: what Juno has; looking at an entry says what it is
+    // CACHE: what Juno has; looking at an entry says what it is, opening a clip says what its entry's `open` says
     Object.entries(Nagiwa.cache).forEach(([id, c], i) => {
       hs[`cache_${id}`] = { name: c.name, rect: [X + 4, D.cache.y - 3 + i * D.cache.row, WW - 8, D.cache.row - 1], if: [app("cache"), `cache_${id}`], z: 4,
-        look: c.about, use: Nagiwa.clips[id] ? [{ set: "deck_app", value: `clip_${id}` }, { sfx: "type" }] : c.about };
+        look: c.about, use: Nagiwa.clips[id] ? [{ set: "deck_app", value: `clip_${id}` }, { sfx: "type" }, ...(c.open ?? [])] : c.about };
     });
     // the clip editor: cutting keeps one moment and makes a new clip of it (or, with `drop`, takes that moment out)
     for (const [id, clip] of Object.entries(Nagiwa.clips)) {
