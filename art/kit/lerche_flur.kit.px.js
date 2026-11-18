@@ -8,7 +8,8 @@
 //   walls    lf_wall  olive oil paint to 1.2 m with its dark edge, yellowish distemper above, a dark skirting
 //   openings lf_door (a flat's wooden door: frame, leaf, number plate, peephole, handle; op.lit: someone home, light under it;
 //            op.sealed: the seal across it, CIVIC REST - SEALED, from Sunday 21:00: drawn only while LF_SEALED is set, for the
-//            bake's variant), lf_meters (the electricity meters' cabinet), lf_window (the stairs' window, the street's light)
+//            bake's variant), lf_meters (the electricity meters' cabinet), lf_window (the stairs' window, the street's light),
+//            lf_lift (the lift, which runs: the same place on every floor; art/rooms/lerche_eg.map.js has it too)
 //   props    lf_shoes (two pairs before 4C, a child's among them), lf_mat (the doormat before 4A)
 pal({ "ä": "#3f3d29", "Ä": "#5a5737", "ë": "#7a7548", "ö": "#2f3a24", "Ö": "#455534" })
 
@@ -80,6 +81,30 @@ const KIT_LERCHE_FLUR = (() => {
       const col = fl(a / 5), row = fl(e / 6)
       if (a % 5 && e % 6 > 1 && ISO.ihash(col, row) < 0.22) return ISO.ihash(row, col) < 0.5 ? "!Q" : "!C"
       return e < ah * 0.3 ? "!2" : "!1"
+    },
+  })
+
+  // the lift: it runs (unlike the Kessel's), on every floor at the same place of the right back wall (u 1.25 to 1.95): old brown-painted
+  // steel doors, the floor display over them lit amber with the floor's own number (op.floor), the call button lit beside the frame
+  ISOKIT.opening("lf_lift", {
+    pad: [0.08, 0, 0.16, 0.3],
+    paint(s, h, o) {
+      const { a, e, aw, ah } = o, mid = fl(aw / 2)
+      if (e >= ah + 2) {
+        if (e >= ah + 3 && e <= ah + 8 && a >= mid - 4 && a <= mid + 3) {
+          if (e === ah + 3 || e === ah + 8 || a === mid - 4 || a === mid + 3) return "4"
+          return a >= mid - 1 && a <= mid && e >= ah + 4 && e <= ah + 7 ? "!Q" : "k"   // the floor's number (a block for now)
+        }
+        return null
+      }
+      if (a >= aw + 2) return a <= aw + 3 && e >= 30 && e <= 34 ? (a === aw + 2 && e === 32 ? "!Q" : "6") : null
+      if (a < 0 || a >= aw || e >= ah) {
+        if (a < -2 || a > aw + 1 || e > ah + 1) return null
+        return a === -2 || a === aw + 1 || e === ah + 1 ? "3" : "5"
+      }
+      if (a === mid || a === mid - 1) return a === mid ? "2" : "4"                       // the seam
+      if (e < 3) return "3"
+      return a % 4 === 1 ? "O" : "A"                                                    // painted steel, brown, its ribs
     },
   })
 

@@ -9,9 +9,12 @@
 //   walls    iw_wall  pale plaster over a skirting, paler squares where her posters hung, the pins' holes
 //   openings iw_window (the street: the block across with its windows, a Lull screen's cyan, rain), iw_door (the door to the landing,
 //            its lock broken out), iw_socket (the socket by the clean square, the computer's cables cut off short)
-//   props    iw_fridge (old, white, the freezer compartment on top; the napkin under a magnet on its door), iw_shelves (empty boards,
-//            one cup left), iw_mattress (bare, on the floor), iw_chair (a kitchen chair facing nothing), iw_plant (a pot with its
-//            leaves hanging, nobody waters it), iw_box (a cardboard box tipped over, empty)
+//   props    iw_fridge (old, white, the freezer compartment on top; the napkin under a magnet on its door), iw_counter (a short counter,
+//            an espresso machine of chrome on it, a cup), iw_shelves (real wood, empty, one cup left), iw_bed (a low platform bed of oak,
+//            the mattress bare, the bedding pulled off onto the floor), iw_armchair (cognac leather, worn), iw_arclamp (a designer's arc
+//            lamp over the armchair, off), iw_officechair (an ergonomic chair before the clean square), iw_plant (a big plant in a glazed
+//            pot, its leaves hanging: nobody waters it), iw_box (a cardboard box tipped over, empty)
+// "Both mixed" (the user's choice, 2026-11-18): a plain flat in the Ninth, and a few good things in it that say she had money; the rug.
 pal({ "ĝ": "#3e5a3a", "Ĝ": "#5f7d4a", "ŵ": "#8a8678" })
 
 const KIT_INES_WOHNUNG = (() => {
@@ -25,11 +28,21 @@ const KIT_INES_WOHNUNG = (() => {
       const du = u - pu, dv = v - pv, a = Math.cos(r) * du + Math.sin(r) * dv, b = -Math.sin(r) * du + Math.cos(r) * dv
       if (Math.abs(a) < 0.1 && Math.abs(b) < 0.14) return Math.abs(a) > 0.085 || Math.abs(b) > 0.125 ? "h" : "H"
     }
+    if (u > 2.6 && u < 4.4 && v > 1.85 && v < 3.35) {                                   // the rug: deep red, a border, a pattern
+      const b = u < 2.68 || u > 4.32 || v < 1.93 || v > 3.27
+      return b ? "I" : (fl(u * 8) + fl(v * 8)) % 3 === 0 ? "n" : "i"
+    }
     const clean = u < 0.62 && v > 0.95 && v < 1.75                                       // where the computer stood
     if (clean && near(v, 1.3, 0.012) && u < 0.5) return "1"                             // the cable's mark
     if (near(v * 5, Math.round(v * 5), 1 / 16)) return "e"                               // the boards' joints
     if (near((u + fl(v * 5) * 0.37) % 1.2, 0, 1 / 40)) return "e"
     return clean ? (u > 0.58 || v < 0.99 || v > 1.71 ? "Z" : "X") : "z"
+  })
+  // the balcony: grey tiles, wet, a drain in the corner, a puddle mirroring the sky's glow
+  ISOKIT.floor("b", (u, v) => {
+    if (Math.hypot(u - 7.6, v - 2.1) < 0.06) return "1"
+    if (Math.hypot((u - 7.1) / 1.6, v - 1.0) < 0.22) return "Z"
+    return near(u * 3, Math.round(u * 3), 1 / 20) || near(v * 3, Math.round(v * 3), 1 / 20) ? "e" : "f"
   })
   ISOKIT.wall("iw_wall", (s, h, o) => {
     if (h < 0.08) return h >= 0.055 ? "4" : "1"
@@ -109,27 +122,65 @@ const KIT_INES_WOHNUNG = (() => {
       pen.box(u + du * 0.7, v + 0.08, 0.95, 0.08, 0.08, 0.1, () => "h", () => "G", () => "H")   // one cup left
     },
   })
-  ISOKIT.prop("iw_mattress", {
+  ISOKIT.prop("iw_counter", {
     draw(pen, p) {
       const [u, v] = p.at, [du, dv] = p.foot, H = p.h
-      pen.box(u, v, 0, du, dv, H, (lu, lv) => (near(lv % 0.3, 0, 0.015) ? "h" : "G"), () => "g", () => "g")
+      pen.box(u, v, 0, du, dv, H - 0.04, () => "4", () => "3", (a) => (a % 14 === 0 ? "2" : "4"))   // two cupboard doors
+      pen.box(u, v, H - 0.04, du, dv, 0.04, () => "G", () => "g", () => "g")                  // the worktop, pale stone
+      pen.box(u + 0.1, v + 0.08, H, 0.32, 0.28, 0.38, () => "H", () => "G", (a, e, o) => (e > o.ah * 0.5 && a > 2 && a < o.aw - 3 ? "1" : "H"))   // the espresso machine, chrome
+      pen.box(u + 0.55, v + 0.2, H, 0.08, 0.08, 0.09, () => "h", () => "G", () => "H")       // a cup
     },
   })
-  ISOKIT.prop("iw_chair", {
+  ISOKIT.prop("iw_bed", {
     draw(pen, p) {
       const [u, v] = p.at, [du, dv] = p.foot
-      for (const [a, b] of [[0, 0], [du - 0.04, 0], [0, dv - 0.04], [du - 0.04, dv - 0.04]]) pen.box(u + a, v + b, 0, 0.04, 0.04, 0.45, () => "a", () => "a", () => "A")
-      pen.box(u, v, 0.45, du, dv, 0.04, () => "A", () => "a", () => "a")
-      pen.box(u + du - 0.04, v, 0.49, 0.04, dv, 0.42, () => "A", () => "a", () => "A")         // the back toward the window
+      pen.box(u - 0.05, v - 0.05, 0, du + 0.1, dv + 0.1, 0.14, () => "A", () => "a", () => "A")   // the platform, oak
+      pen.box(u, v, 0.14, du, dv, 0.18, (lu, lv) => (near(lv % 0.25, 0, 0.012) ? "h" : "G"), () => "g", () => "g")   // the mattress, bare
+      pen.box(u + 0.05, v + dv + 0.08, 0, du * 0.35, 0.4, 0.12, (lu, lv) => (fl(lu * 9 + lv * 5) % 3 ? "H" : "h"), () => "h", () => "h")   // the bedding, pulled off onto the floor
+    },
+  })
+  ISOKIT.prop("iw_armchair", {
+    draw(pen, p) {
+      const [u, v] = p.at, [du, dv] = p.foot
+      pen.box(u, v, 0, du, dv, 0.08, () => "1", () => "1", () => "1")
+      pen.box(u + 0.05, v + 0.05, 0.08, du - 0.1, dv - 0.1, 0.32, (lu) => (lu > du * 0.6 ? "P" : "O"), () => "O", () => "P")   // the seat, cognac leather, worn pale
+      pen.box(u + du - 0.18, v + 0.05, 0.4, 0.13, dv - 0.1, 0.45, () => "P", () => "O", () => "P")   // the back
+      for (const b of [0.05, dv - 0.17]) pen.box(u + 0.05, v + b, 0.4, du - 0.2, 0.12, 0.18, () => "P", () => "O", () => "O")   // the arms
+    },
+  })
+  ISOKIT.prop("iw_arclamp", {
+    footprint: () => [],
+    outline: false,
+    draw(pen, p) {
+      const [u, v] = p.at
+      pen.box(u, v, 0, 0.14, 0.14, 0.04, () => "1", () => "1", () => "1")                    // the marble foot
+      pen.box(u + 0.06, v + 0.06, 0.04, 0.02, 0.02, 1.85, () => "G", () => "g", () => "G")    // the pole
+      for (let t = 0; t <= 1; t += 0.04) {                                                  // the arc out over the armchair
+        const q = [u + 0.07 - t * 0.5, v + 0.07 + t * 0.2, 1.9 + Math.sin(t * Math.PI) * 0.25 - t * 0.35], [x, y] = pen.P(...q)
+        pen.at(q[0], q[1], q[2], null); pen.px(x, y, "G")
+      }
+      const [x, y] = pen.P(u - 0.43, v + 0.27, 1.5)
+      pen.at(u - 0.43, v + 0.27, 1.5, null)
+      pen.grid(x - 3, y - 1, ["..GG..", ".GHHG.", "gggggg"])                                // the shade, off
+      pen.at(null)
+    },
+  })
+  ISOKIT.prop("iw_officechair", {
+    draw(pen, p) {
+      const [u, v] = p.at, [du, dv] = p.foot, cu = u + du / 2, cv = v + dv / 2
+      for (let i = 0; i < 5; i++) { const t = i / 5 * Math.PI * 2; pen.box(cu + Math.cos(t) * 0.18 - 0.02, cv + Math.sin(t) * 0.18 - 0.02, 0, 0.04, 0.04, 0.06, () => "1", () => "1", () => "1") }
+      pen.box(cu - 0.03, cv - 0.03, 0.06, 0.06, 0.06, 0.38, () => "4", () => "3", () => "4")   // the column
+      pen.box(u + 0.03, v + 0.03, 0.44, du - 0.06, dv - 0.06, 0.08, () => "2", () => "1", () => "2")   // the seat, black mesh
+      pen.box(u + du - 0.08, v + 0.05, 0.52, 0.05, dv - 0.1, 0.5, () => "2", () => "1", (a, e) => ((a + e) % 2 ? "2" : "1"))   // the back
     },
   })
   ISOKIT.prop("iw_plant", {
     draw(pen, p) {
       const [u, v] = p.at, [du, dv] = p.foot
-      pen.box(u + 0.04, v + 0.04, 0, du - 0.08, dv - 0.08, 0.28, () => "1", () => "O", () => "P")
-      const [x, y] = pen.P(u + du / 2, v + dv / 2, 0.28)
-      pen.at(u + du / 2, v + dv / 2, 0.5, null)
-      pen.grid(x - 6, y - 12, [
+      pen.box(u + 0.04, v + 0.04, 0, du - 0.08, dv - 0.08, 0.38, () => "1", () => "c", () => "C")   // a glazed pot
+      const [x, y] = pen.P(u + du / 2, v + dv / 2, 0.38)
+      pen.at(u + du / 2, v + dv / 2, 0.7, null)
+      for (const [dx, dy] of [[0, 0], [-5, 4], [5, 3]]) pen.grid(x - 6 + dx, y - 12 + dy, [
         "....ĝ.......",
         "...ĝĜ..ĝ....",
         "..ĝ.Ĝ.ĝĜ....",
@@ -144,6 +195,36 @@ const KIT_INES_WOHNUNG = (() => {
         ".....ĝ......",
       ])
       pen.at(null)
+    },
+  })
+  // a railing along u or v (its foot's long side): posts every 40 cm, a top rail, a bar near the floor
+  ISOKIT.prop("iw_railing", {
+    footprint: () => [],
+    solid: () => [],
+    draw(pen, p) {
+      const [u, v] = p.at, [du, dv] = p.foot, H = p.h, along = du > dv, L = along ? du : dv
+      for (let t = 0; t <= L + 0.001; t += 0.4) pen.box(along ? u + Math.min(t, L - 0.04) : u, along ? v : v + Math.min(t, L - 0.04), 0, 0.04, 0.04, H, () => "5", () => "3", () => "4")
+      pen.box(u, v, H - 0.05, along ? L : 0.05, along ? 0.05 : L, 0.05, () => "6", () => "4", () => "5")
+      pen.box(u, v, 0.12, along ? L : 0.04, along ? 0.04 : L, 0.03, () => "4", () => "3", () => "3")
+    },
+  })
+  // a folding chair on the balcony, its seat dark with the rain
+  ISOKIT.prop("iw_deckchair", {
+    draw(pen, p) {
+      const [u, v] = p.at, [du, dv] = p.foot
+      for (const [a, b] of [[0, 0], [du - 0.04, 0], [0, dv - 0.04], [du - 0.04, dv - 0.04]]) pen.box(u + a, v + b, 0, 0.03, 0.03, 0.42, () => "5", () => "4", () => "5")
+      pen.box(u, v, 0.42, du, dv, 0.03, () => "w", () => "4", () => "4")
+      pen.box(u, v, 0.45, 0.04, dv, 0.38, () => "w", () => "4", () => "x")
+    },
+  })
+  // two pots of herbs against the railing, one gone to seed
+  ISOKIT.prop("iw_herbs", {
+    draw(pen, p) {
+      const [u, v] = p.at
+      for (const [du, k] of [[0, "Ĝ"], [0.27, "ĝ"]]) {
+        pen.box(u + du, v, 0, 0.22, 0.22, 0.18, () => "1", () => "O", () => "P")
+        pen.box(u + du + 0.03, v + 0.03, 0.18, 0.16, 0.16, 0.16, () => k, () => k, () => "ĝ")
+      }
     },
   })
   ISOKIT.prop("iw_box", {

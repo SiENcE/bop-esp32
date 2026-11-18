@@ -50,6 +50,8 @@ Nagiwa.at = {
   // Ines' flat, 4B, on blocks (art/rooms/ines_wohnung.map.js, game/rooms/ines_wohnung.layout.js); the fridge's upper part has the napkin
   // under its magnet, its lower part is the freezer (one hotspot asks which)
   ines_wohnung: fromLayout(Nagiwa.layouts.ines_wohnung),
+  // lerche_eg (art/rooms/lerche_eg.map.js, game/rooms/lerche_eg.layout.js)
+  lerche_eg: fromLayout(Nagiwa.layouts.lerche_eg),
   // Lull-Klinik 9-Ost from the inside (art/rooms/klinik.map.js, game/rooms/klinik.layout.js). The waiting sit on the seats as props
   // (art/characters/klinik.px.js: their hips at 2 px right of their figure's foot and 18 px above it): each stands where its hips come
   // over its seat's spot, drawn after the seats, and in front of whoever stands behind the line of their feet (the seats' front line, 6 px
