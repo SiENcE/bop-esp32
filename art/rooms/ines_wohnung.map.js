@@ -49,10 +49,11 @@ ISO_MAPS.ines_wohnung = {
     { id: "plant", kit: "iw_plant", at: [5.9, 0.1], foot: [0.4, 0.4], h: 1.0 },
     { id: "chair", kit: "iw_officechair", at: [0.75, 1.15], foot: [0.45, 0.45], h: 1.05 },
     { id: "box", kit: "iw_box", at: [1.3, 3.0], foot: [0.5, 0.4], h: 0.35 },
-    // the balcony: the railing round it (along its back edge, its right end, its near edge), a folding chair, two pots of herbs
-    { id: "rail_back", kit: "iw_railing", at: [6.55, 0], foot: [1.45, 0.05], h: 1.0, block: false },
-    { id: "rail_end", kit: "iw_railing", at: [7.95, 0], foot: [0.05, 2.5], h: 1.0, block: false },
-    { id: "rail_near", kit: "iw_railing", at: [6.55, 2.45], foot: [1.45, 0.05], h: 1.0, block: false },
+    // the balcony: the railing round it (along its back edge, its right end, its near edge: it blocks, so Juno keeps off it and the floor's
+    // edge), a folding chair, two pots of herbs
+    { id: "rail_back", kit: "iw_railing", at: [6.55, 0], foot: [1.45, 0.05], h: 1.0 },
+    { id: "rail_end", kit: "iw_railing", at: [7.95, 0], foot: [0.05, 2.5], h: 1.0 },
+    { id: "rail_near", kit: "iw_railing", at: [6.55, 2.45], foot: [1.45, 0.05], h: 1.0 },
     { id: "deckchair", kit: "iw_deckchair", at: [7.3, 1.5], foot: [0.5, 0.55], h: 0.8 },
     { id: "herbs", kit: "iw_herbs", at: [6.6, 0.1], foot: [0.5, 0.25], h: 0.4 },
   ],

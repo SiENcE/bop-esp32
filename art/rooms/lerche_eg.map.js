@@ -34,7 +34,7 @@ ISO_MAPS.lerche_eg = {
     { id: "mailboxes", wall: 0, from: 5.3, to: 6.4, h: [0.9, 1.7], kit: "le_mailboxes" },
     { id: "board", wall: 0, from: 6.55, to: 7.05, h: [1.0, 1.7], kit: "notice_board" },
     { id: "neon", wall: 0, from: 5.4, to: 6.8, h: [1.95, 2.5], kit: "neon_ninth" },
-    { id: "screen", wall: 1, from: 1.4, to: 3.2, h: [1.2, 2.05], kit: "kl_screen" },
+    { id: "screen", wall: 1, from: 1.4, to: 3.2, h: [1.15, 2.1], kit: "kl_screen" },   // as tall as the clinic's: its lines are set for that
   ],
   props: [
     // the Kessel lobby's flight, as it stands there (art/rooms/kessel_lobby.map.js): its upper flight under the landing's well upstairs
@@ -43,6 +43,8 @@ ISO_MAPS.lerche_eg = {
     { id: "pram", kit: "le_pram", at: [5.75, 0.9], foot: [0.45, 0.7], h: 0.75 },
     { id: "flyers", kit: "flyers", at: [5.4, 0.08], foot: [0.4, 0.6], h: 0.05, block: false },
   ],
+  // the stairs' landing and lower flight (the kit's footprint, which the walk area doesn't know): nobody walks over the steps to the lift
+  nowalk: [[3.83, 0, 1.4, 2.65]],
   spots: {
     arrive: [7.75, 3.55, "nw"], door: [7.75, 3.75, "se"], mailboxes: [5.85, 0.6, "ne"], board: [6.8, 0.65, "ne"],
     lift: [1.1, 0.55, "ne"], stairs: [4.55, 2.75, "ne"], pram: [6.0, 2.0, "ne"], arcade: [7.75, 1.05, "ne"], screen: [0.6, 2.3, "nw"],

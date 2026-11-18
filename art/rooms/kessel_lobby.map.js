@@ -42,8 +42,10 @@ ISO_MAPS.kessel_lobby = {
     { id: "sign", kit: "wet_sign", at: [1.15, 2.6], foot: [0.3, 0.2], h: 0.6 },
     { id: "flyers", kit: "flyers", at: [0.05, 0.85], foot: [0.4, 0.6], h: 0.05, block: false },
   ],
+  // the stairs' landing and lower flight (the kit's footprint, which the walk area doesn't know): nobody walks over the steps
+  nowalk: [[4.8, 0, 1.2, 2.65]],
   spots: {
-    arrive: [5.45, 2.75, "sw"], stairs: [5.45, 2.7, "ne"], lift: [0.85, 0.55, "ne"], poster: [5.05, 1.25, "ne"],
+    arrive: [5.45, 2.75, "sw"], stairs: [5.45, 2.7, "ne"], lift: [0.85, 0.55, "ne"], poster: [4.6, 1.3, "ne"],
     mailboxes: [0.55, 1.2, "nw"], board: [0.55, 2.35, "nw"], door: [0.45, 3.35, "nw"], street: [0.6, 3.35, "se"],
     sign: [1.6, 2.7, "nw"],
   },

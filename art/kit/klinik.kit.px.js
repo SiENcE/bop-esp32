@@ -55,6 +55,7 @@ const KIT_KLINIK = (() => {
     },
   })
   // the Lull ad on a flat screen: the patch (the oval pale disc, its rim, its stripe) and SLEEP BETTER, LULL IS FREE under it
+  // (its lines are set for a screen 0.95 m tall: lower, LULL IS FREE runs into BETTER)
   ISOKIT.opening("kl_screen", {
     paint(s, h, o) {
       o.memo.screen ??= ISOKIT.raster(o.aw, o.ah, (c) => {
