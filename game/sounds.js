@@ -10,6 +10,7 @@
 //                               one-shots from its stalls (haggling, cleavers, the wok tossed, the loudspeaker)
 //   the swamps                  the rain, the water and the insects as loops; frogs, drops, bubbles, creaking wood, a splash, a rumble
 //                               and a bird far off by chance (rooms/sumpf.js)
+//   SUMP RUNNER                 the cabinet's square bleeps: start, a step, the cable reeled in, a wall, a spark, the light on, drowned
 // Hear them all at once: node tools/render-sounds.mjs (writes build/sounds/).
 "use strict";
 
@@ -151,6 +152,17 @@
   S("durchsage", { tone: [{ wave: "sine", from: "E5", ms: 420, gain: 0.12 }, { wave: "sine", from: "C5", ms: 620, gain: 0.12, at: 380 },
     ...babble(5, 210, 14, -0.05).tone.map((t) => ({ ...t, wave: /** @type {OscillatorType} */ ("square"), gain: 0.03, at: t.at + 1150 }))],
     noise: { filter: "bandpass", from: 1400, q: 3, ms: 2600, gain: 0.03, at: 1100 } });
+
+  // ---------------------------------------------------------------- SUMP RUNNER's cabinet (game/sump_runner.js): an old arcade's square bleeps
+  S("sr_start", { tone: [{ wave: "square", from: "C5", ms: 70, gain: 0.05 }, { wave: "square", from: "E5", ms: 70, gain: 0.05, at: 80 },
+    { wave: "square", from: "G5", ms: 70, gain: 0.05, at: 160 }, { wave: "square", from: "C6", ms: 140, gain: 0.05, at: 240 }] });
+  S("sr_step", { tone: { wave: "square", from: 330, to: 440, ms: 35, gain: 0.04 } });
+  S("sr_reel", { tone: { wave: "square", from: 440, to: 300, ms: 45, gain: 0.04 } });
+  S("sr_block", { tone: { wave: "square", from: 110, ms: 60, gain: 0.05 } });
+  S("sr_spark", { tone: [{ wave: "square", from: "A5", ms: 40, gain: 0.04 }, { wave: "square", from: "E6", ms: 70, gain: 0.04, at: 45 }] });
+  S("sr_light", { tone: [{ wave: "square", from: "G5", ms: 90, gain: 0.05 }, { wave: "square", from: "C6", ms: 90, gain: 0.05, at: 100 },
+    { wave: "square", from: "E6", ms: 90, gain: 0.05, at: 200 }, { wave: "triangle", from: "G6", ms: 320, gain: 0.07, at: 300 }] });
+  S("sr_drown", { tone: { wave: "square", from: 520, to: 70, ms: 620, gain: 0.05 }, noise: { filter: "lowpass", from: 900, to: 200, ms: 500, gain: 0.08, at: 120 } });
 
   // ---------------------------------------------------------------- when they play
   // a room change: by its kind (transitions.js); only where the change is shown (not in the tools)

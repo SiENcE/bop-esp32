@@ -87,6 +87,11 @@ Nagiwa.at = {
   // of CH and WAVE, the power switch that puts it away
   funk: { screen: [132, 44, 116, 40], tx: [72, 44, 44, 26], chL: [130, 102, 16, 20], chR: [168, 102, 16, 20], waveL: [194, 102, 16, 20],
     waveR: [232, 102, 16, 20], pwr: [226, 130, 22, 14] },
+  // SUMP RUNNER's cabinet, close (game/sump_runner.js, on blocks): the marquee, the screen, the playfield's grid on it (its top left, a
+  // cell's size, columns and rows), the side panel, and the control panel's buttons under it
+  sump_runner: { marquee: [40, 2, 240, 16], screen: [44, 24, 232, 126], grid: [52, 30, 12, 9, 10], side: [170, 30, 100, 116],
+    left: [90, 160, 20, 14], up: [112, 160, 20, 14], down: [134, 160, 20, 14], right: [156, 160, 20, 14], start: [194, 160, 36, 14],
+    quit: [238, 160, 40, 14] },
   // Lantern's hide, on blocks (art/rooms/lantern_versteck.map.js, game/rooms/lantern_versteck.layout.js); he sits at "lantern"
   // where the LED ticker lies over his poster (art/rooms/lantern_versteck.px.js prints it, TICKER_AT, from the poster's opening)
   lantern_versteck: { ...fromLayout(Nagiwa.layouts.lantern_versteck), tickerAt: [88, 45] },

@@ -16,8 +16,9 @@
       board: { name: "Aushang", poly: A.boardPoly, walkTo: A.board, face: "ne", look: "Am Brett hängen die Hausordnung und ein Zettel, den keiner mehr liest." },
       neon: { name: "NINTH LIVE", poly: A.neonPoly, walkTo: A.mailboxes, face: "ne", look: "NINTH LIVE leuchtet sogar hier im Hausflur. Die sind überall, wo jemand wartet." },
       screen: { name: "Bildschirm", poly: A.screenPoly, walkTo: A.screen, face: "nw", look: "SLEEP BETTER. LULL IS FREE. Sogar im Hausflur sagen sie mir, dass ich schlafen soll." },
-      arcade: { name: "SUMP RUNNER", poly: A.arcadePoly, walkTo: A.arcade, face: "ne", look: ["Ein SUMP-RUNNER-Automat, im Hausflur.", "Den hat einer aus der Jade Row hergeschleppt, oder er stand schon immer hier."],
-        use: ["Drei Chits für drei Leben.", "Nicht jetzt. Aber ich komm wieder."] },
+      arcade: { name: "SUMP RUNNER", poly: A.arcadePoly, walkTo: A.arcade, face: "ne", look: ["Ein SUMP-RUNNER-Automat, im Hausflur.", "Den hat einer aus der Jade Row hergeschleppt, oder er stand schon immer hier.", "Der Münzschlitz klemmt. Er läuft umsonst."],
+        // the game, on a screen of its own (game/sump_runner.js)
+        use: [{ sfx: "type" }, { goto: "sump_runner", transition: "dissolve" }] },
       pram: { name: "Kinderwagen", poly: A.pramPoly, walkTo: A.pram, face: "ne", look: "Ein Kinderwagen. Der gehört zu den kleinen Schuhen oben vor der Tür." },
     },
   });
