@@ -51,7 +51,8 @@ Nagiwa.at = {
   // under its magnet, its lower part is the freezer (one hotspot asks which)
   ines_wohnung: fromLayout(Nagiwa.layouts.ines_wohnung),
   // lerche_eg (art/rooms/lerche_eg.map.js, game/rooms/lerche_eg.layout.js)
-  lerche_eg: fromLayout(Nagiwa.layouts.lerche_eg),
+  // (the street door is a gap in the near wall, south-east: its hotspot drawn on it from the map, u 7.3 to 8.2 at v 4, up to 2 m)
+  lerche_eg: { ...fromLayout(Nagiwa.layouts.lerche_eg), doorPoly: [250, 265, 278, 279, 278, 219, 250, 205] },
   // Lull-Klinik 9-Ost from the inside (art/rooms/klinik.map.js, game/rooms/klinik.layout.js). The waiting sit on the seats as props
   // (art/characters/klinik.px.js: their hips at 2 px right of their figure's foot and 18 px above it): each stands where its hips come
   // over its seat's spot, drawn after the seats, and in front of whoever stands behind the line of their feet (the seats' front line, 6 px
@@ -94,6 +95,20 @@ Nagiwa.at = {
     return { shift: S, exposure: 2.2, mic: L.spots.door_4b, door_4b: L.spots.door_4b, door_4b2: [L.spots.door_4b[0] + 14, L.spots.door_4b[1] + 6],
       stairs: L.spots.stairs, doorPoly: L.openingPolys.door_4b };
   })(),
+  // Weg_1 from above (art/rooms/weg1.px.js, its blocks: the street between the facades at y 120 and 290 from x 60, the arm to the gate
+  // between x 790 and 930 down to y 505, what stands in the way in W1.OCC); Juno's sprite from above is anchored in its middle, so the
+  // walk area keeps half her size from the facades. Spots face up, down, left or right
+  weg1: {
+    size: [960, 540],
+    walk: [[64, 130, 922, 130, 922, 500, 798, 500, 798, 282, 64, 282]],
+    holes: [[296, 130, 344, 130, 344, 156, 296, 156], [596, 254, 654, 254, 654, 282, 596, 282], [501, 254, 552, 254, 552, 282, 501, 282],
+      [798, 296, 826, 296, 826, 334, 798, 334], [880, 406, 922, 406, 922, 444, 880, 444], [664, 190, 696, 190, 696, 220, 664, 220], [170, 190, 190, 190, 190, 210, 170, 210]],
+    gate: [860, 492], lerche: [760, 140], fish: [72, 205], homelessTalk: [527, 246], sheepTalk: [650, 205], robotTalk: [206, 200],
+    noodles: [210, 262], trash: [320, 166], steam: [348, 215],
+    gateRect: [784, 505, 152, 35], fishRect: [0, 140, 60, 130], homelessRect: [505, 262, 43, 22], noodlesRect: [150, 268, 120, 20], lercheRect: [728, 120, 57, 14],
+    sheepPoly: [668, 193, 692, 193, 694, 205, 692, 217, 668, 217, 666, 205], trashPoly: [295, 122, 340, 122, 340, 148, 295, 148],
+    steamPoly: [361, 206, 370, 203, 379, 206, 382, 215, 379, 224, 370, 227, 361, 224, 358, 215], robotPoly: [173, 196, 176, 193, 184, 193, 187, 196, 187, 204, 184, 207, 176, 207, 173, 204],
+  },
   // Kowalski Street (art/rooms/kowalski.map.js, game/rooms/kowalski.layout.js)
   kowalski: {
     fromGasse: [346, 170],
@@ -207,7 +222,9 @@ Nagiwa.at = {
     return { ...at, cablesRect: [76, -1, 347, 37], locksRect: [b[0] - 2, a[1] - 2, a[0] - b[0] + 4, b[1] - a[1] + 4], waterPoly: [R[0], R[1], W, R[1], W, H, R[10], R[11]],
       hazeDoor: cone(1.08, 0.3, 2.25, 0.45), hazeStatue: cone(2.95, 3.65, 3.15, 0.65), adAt: Nagiwa.layouts.gasse.openings.ad.slice(0, 2),
       // Chapter 2: the paper boat with I. among the candles at the monument's foot (its top left; art/rooms/gasse.px.js)
-      papierboot: [198, 173] };
+      papierboot: [198, 173],
+      // Chapter 2: the walkway on west out of the picture, to the cross street and the clinic (the city plan, steg_west)
+      steg: [28, 214], stegPoly: [0, 186, 26, 199, 26, 236, 0, 236] };
   })(),
   // the lane left of Kowalski Street, down its length (painted on its blocks' lines: art/rooms/jade_row.px.js, art/old/jade_row_blocks.px.js; z = 1 where Juno walks, 30 px to the metre there). She keeps to the near band: her
   // sprite has one size, right for that depth, so the shop's door and the machine are reached from in front of them

@@ -12,9 +12,9 @@ Cutaway.actor("juno", {
     walk: { se: "juno_walk_se", ne: "juno_walk_ne" },
     talk: { se: "juno_talk_se", ne: "juno_talk_ne" },
   },
-  // in the Drain Market she is seen straight down (art/characters/juno_top.px.js, her own left drawn) and goes faster (kapitel1-design
+  // in the Drain Market and on Weg_1 she is seen straight down (art/characters/juno_top.px.js, her own left drawn) and goes faster (kapitel1-design
   // §9: about 40 px a second; from above the floor isn't foreshortened); indoors the hood is down (style guide §6)
-  poses: [{ if: "at:juno=drain_market", speed: [40, 40],
+  poses: [{ if: { or: ["at:juno=drain_market", "at:juno=weg1"] }, speed: [40, 40],
     idle: { down: "juno_top_idle_down", up: "juno_top_idle_up", right: "juno_top_idle_right", left: "juno_top_idle_left" },
     walk: { down: "juno_top_walk_down", up: "juno_top_walk_up", right: "juno_top_walk_right", left: "juno_top_walk_left" },
     talk: { down: "juno_top_talk_down", up: "juno_top_talk_up", right: "juno_top_talk_right", left: "juno_top_talk_left" } },

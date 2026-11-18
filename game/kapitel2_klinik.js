@@ -1,7 +1,7 @@
 // Nagiwa: Chapter 2, Lull-Klinik 9-Ost (docs/kapitel2-design.md §3.2, K1–K3). Never needed: a second way to know_flat, and who Ines was.
 //   K1  CAM 21 from Saturday: at seven Ines no longer comes out; Marit comes to her night shift instead and looks back twice (a routine:
 //       no state, between 19:00 and 19:30, where waiting stops anyway)
-//   K2  the clinic from the inside (the room klinik, through the gate at the end of Jade Row): the intake from seven; Juno gives a false
+//   K2  the clinic from the inside (the room klinik, along the alley's walkway to the cross street): the intake from seven; Juno gives a false
 //       name, Marit offers Lull and wants to look behind her ear, Juno pulls her hood up. No scan, no item, nothing of Chapter 3
 //   K3  Juno asks about Dr. Calder: the protocols nobody ordered, her locker emptied, and the flat, by the day → know_flat
 // Marit sits behind the glass as a prop (game/rooms/klinik.js); her voice is an actor without a figure, its lines over her head. Her card:
@@ -62,11 +62,18 @@ Nagiwa.talkTree("k2_marit", [
   ["„Ich suche Dr. Calder.“", CALDER],
 ], "„Schon gut.“");
 
+// the way there, as the user drew it in the city plan (2026-11-18): the alley's walkway runs on west out of its picture to the cross street,
+// where the clinic stands across from Pho Pump (CAM 21, CAM 22). From Chapter 2 on Juno goes along it. (off_klinik shuts the clinic for the
+// solver's run with the stick: an early know_flat there doubled its states past what a run can hold; the main run checks it)
+Cutaway.room.get("gasse").hotspots.steg = { name: "Zur Querstraße", poly: Nagiwa.at.gasse.stegPoly, walkTo: Nagiwa.at.gasse.steg, face: "sw",
+  look: "Der Steg geht weiter zur Querstraße. Da ist die Klinik, gegenüber von Pho Pump.",
+  use: [{ if: ["day>4", "!off_main", "!off_flat", "!off_klinik"], then: [{ goto: "klinik", at: AK.arrive, face: "se" }],
+    else: ["Zur Klinik will ich heute nicht."] }] };
 const klinik = Cutaway.room.get("klinik");
 Object.assign(klinik, { name: "Lull-Klinik 9-Ost", ambience: ["neon_buzz"] });
 Object.assign(klinik.hotspots, {
   door: { name: "Tür", poly: AK.doorPoly, walkTo: AK.door, face: "nw", look: "Draußen regnet es. Hier drin riecht es nach Desinfektion.",
-    use: [{ goto: "jade_row", at: AJ.far, face: "sw" }] },
+    use: [{ goto: "gasse", at: Nagiwa.at.gasse.steg, face: "ne" }] },
   // before seven nobody sits behind the glass; from seven Marit (the same shape: the counter and its glass, she is behind it)
   aufnahme: { name: "Aufnahme", poly: AK.receptionPoly, walkTo: AK.reception, face: "nw", if: "time<19:00",
     look: "Hinter dem Glas ist keiner. Auf dem Schalter steht: NACHTAUFNAHME AB SIEBEN.",

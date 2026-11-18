@@ -36,24 +36,36 @@ cam24.hotspots.rewind = { name: "Puffer", rect: Nagiwa.osd.rewind, z: 5,
   if: [{ or: [["day=5", "moment:nachbar_sat"], ["day=6", "moment:nachbar_sun"], ["day=7", "moment:nachbar_mon"]] }, "!code_lerche", "!off_main", "!off_flat"],
   use: ["Ich spul den Puffer zurück auf halb acht.", { replay: "nachbar_sat" }] };
 
-// ---- the gate at the end of Jade Row leads west now, into the clinic's quarter (W2): to the clinic (game/kapitel2_klinik.js) or to Lerche.
-// (off_klinik shuts the clinic for the solver's run with the stick: an early know_flat there doubled its states past what a run can hold;
-// the main run checks it)
+// ---- the way there, as the user drew it in the city plan (2026-11-18): the gate at the end of Jade Row opens onto Weg_1 (the room weg1,
+// seen from above), and there the Wohnblock Lerche's door has the keypad (W1's code); inside, the hall (lerche_eg) with the stairs and the
+// lift up to the 4th floor's landing (lerche_flur). The clinic lies elsewhere: off the alley's walkway (game/kapitel2_klinik.js).
+// (off_main and off_flat shut the house for the solver's runs that take the flat as done)
+const AE = Nagiwa.at.lerche_eg, AG1 = Nagiwa.at.weg1;
 const gate = Cutaway.room.get("jade_row").hotspots.gate;
-gate.use = [{ if: "day>4", then: [{ dialog: "k2_tor" }], else: ["Dahinter ist nur noch mehr Neunter. Da will ich heute nicht hin."] }];
-Cutaway.dialog("k2_tor", { main: { choices: [
-  { text: "„Zur Klinik.“", silent: true, if: ["!off_main", "!off_flat", "!off_klinik"], goto: "end", then: [{ goto: "klinik", at: Nagiwa.at.klinik.arrive, face: "se" }] },
-  { text: "„Zum Wohnblock Lerche.“", silent: true, if: ["!off_main", "!off_flat"], goto: "end", then: [
-    { if: "!code_lerche", then: ["Die Haustür hat ein Zahlenfeld. Den Code hab ich nicht."],
-      else: [{ if: ["day=6", "time>=20:00", "time<21:00"], then: ["Da oben sind Stimmen. Ich warte."],
-        else: [{ goto: "lerche_flur", at: AL.arrive, face: "sw" }] }] }] },
-  { text: "„Zurück.“", silent: true, goto: "end", then: [] },
-] } });
+gate.use = [{ if: "day>4", then: [{ goto: "weg1", at: AG1.gate, face: "up" }], else: ["Dahinter ist nur noch mehr Neunter. Da will ich heute nicht hin."] }];
+Cutaway.room.get("weg1").hotspots.lerche.use = [{ if: ["!off_main", "!off_flat"],
+  then: [{ if: "!code_lerche", then: ["Die Haustür hat ein Zahlenfeld. Den Code hab ich nicht."],
+    else: [{ sfx: "type" }, "Vier, sieben, eins, neun.", { sfx: "door_open" }, { goto: "lerche_eg", at: AE.arrive, face: "nw" }] }],
+  else: ["Da will ich heute nicht rein."] }];
+const hall = Cutaway.room.get("lerche_eg").hotspots, landing = Cutaway.room.get("lerche_flur").hotspots;
+hall.door = { name: "Haustür", poly: AE.doorPoly, walkTo: AE.door, face: "se", look: "Draußen ist Weg_1. Das Neon kommt durch die Tür.",
+  use: [{ sfx: "door_shut" }, { goto: "weg1", at: AG1.lerche, face: "down" }] };
+// up and down: four floors by the stairs (steps and the floors counting by) or by the lift (it runs, unlike the Kessel's); on Sunday from
+// eight to nine there are voices upstairs, and Juno waits
+const VOICES = ["day=6", "time>=20:00", "time<21:00"];
+const floorBy = (/** @type {string} */ sfx, /** @type {number} */ n, /** @type {number} */ ms) => [{ sfx }, { caption: String(n), at: "c", ms }];
+const UP = (/** @type {string} */ sfx, /** @type {string} */ to) => [{ if: VOICES, then: ["Da oben sind Stimmen. Ich warte."],
+  else: [{ fade: "out", ms: 300 }, ...floorBy(sfx, 1, 300), ...floorBy(sfx, 2, 300), ...floorBy(sfx, 3, 300), ...floorBy(sfx, 4, 500),
+    { goto: "lerche_flur", at: Nagiwa.at.lerche_flur[to], face: to === "lift" ? "se" : "sw" }, { fade: "in", ms: 300 }] }];
+const DOWN = (/** @type {string} */ sfx, /** @type {string} */ to) => [{ fade: "out", ms: 300 }, ...floorBy(sfx, 3, 260), ...floorBy(sfx, 2, 260), ...floorBy(sfx, 1, 260),
+  { goto: "lerche_eg", at: AE[to], face: to === "lift" ? "sw" : "sw" }, { fade: "in", ms: 300 }];
+hall.stairs.use = UP("steps_metal", "arrive");
+hall.lift.use = [{ sfx: "motor" }, ...UP("motor", "lift")];
+landing.stairs.use = DOWN("steps_metal", "stairs");
+landing.lift.use = [{ sfx: "motor" }, ...DOWN("motor", "lift")];
 // the seal across 4B once they have gone (the landing baked again with it, art/rooms/lerche_flur.px.js: only what differs, laid over it)
 const SEAL = { id: "seal", image: "lerche_flur_seal", at: Nagiwa.layouts.lerche_flur.sealAt, anchor: [0, 0], baseline: 0.5, if: OPEN };
 Cutaway.room.get("lerche_flur").props.push(SEAL);
-// back down the stairs and out at the gate
-Cutaway.room.get("lerche_flur").hotspots.stairs.use = [{ goto: "jade_row", at: AJ.far, face: "sw" }];
 
 // ---- 4B (W4): which door, and when it opens
 Cutaway.room.get("lerche_flur").hotspots.door_4b.use = [{ if: OPEN,
@@ -61,7 +73,7 @@ Cutaway.room.get("lerche_flur").hotspots.door_4b.use = [{ if: OPEN,
     { if: "!visited:ines_wohnung", then: ["Unter dem Siegel ist das Schloss aufgebrochen.", "Ich reiß es ab."] },
     { goto: "ines_wohnung", at: AW.arrive, face: "se" }],
   else: [{ if: "know_flat", then: ["Abgeschlossen. Ich bin keine Einbrecherin. Jedenfalls nicht so eine."],
-    else: ["Hier wohnen zwölf Leute, und an keiner Tür steht Calder."] }] }];
+    else: ["Auf 4B steht kein Name. Ob sie hier gewohnt hat, weiß ich nicht."] }] }];
 
 // ---- CAM 25: the landing from its corner, linked with CAM 24 (the same house). On Sunday at eight two in white raincoats open 4B and carry it
 // out, the computer too, until nine; then they seal it (W3)
@@ -92,7 +104,7 @@ Nagiwa.camRoom("cam25", { background: undefined, color: Nagiwa.PHOSPHOR[0], mic:
     { ...SEAL, at: [SEAL.at[0] + A25.shift, SEAL.at[1]] },
   ],
   hotspots: {
-    door_4b: { name: "4B", poly: A25.doorPoly, look: [{ if: OPEN, then: ["Über 4B klebt ein Siegel. Von hier oben ist es nur ein heller Streifen."], else: ["Das ist ihre Tür, 4B. Oder eine von denen."] }] },
+    door_4b: { name: "4B", poly: A25.doorPoly, look: [{ if: OPEN, then: ["Über 4B klebt ein Siegel. Von hier oben ist es nur ein heller Streifen."], else: ["Das ist 4B. Ob das ihre ist, sehe ich von hier nicht."] }] },
   } });
 
 // ---- in 4B (W5, W6, W7): the napkin under the magnet, the file in the freezer, and what EVI learns from it
