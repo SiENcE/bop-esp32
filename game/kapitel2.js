@@ -291,6 +291,12 @@ Cutaway.hints([
     about: ["clip_check_clip_forgery", "clip_check_clip_ines_death", "pruef_faelschung_zeit", "pruef_faelschung_regen", "pruef_faelschung_licht",
       "bed", "wait", "close", ...CLIP_WAYS, ...HOME],
     text: ["Das ist nicht das, was wir gesehen haben.", "Leg die beiden Clips nebeneinander. PRÜFEN.", "Schau der Reihe nach auf die Uhrzeit, den Regen und das Licht."] },
+  // the 24-hour shop (game/kapitel2_laden.js): never needed, so no `about` (as Chapter 1's threads); only while it is under way, and
+  // not on Monday, when decision 2 is what EVI talks about
+  { if: ["!off_shop24", "day<7", "link_cam26", "!cache_clip_shop24", "!ledger_shop24"],
+    text: ["Der Putzroboter hat dich ins Netz vom Laden gebracht.", "Die Kamera über der Kasse hat ein Archiv. Was war letzte Nacht?", "Öffne CAM 26 und drück PUFFER."] },
+  { if: ["!off_shop24", "day<7", "cache_clip_shop24", "!ledger_shop24"],
+    text: ["Du weißt jetzt, wer im Laden nimmt. Das Schaf weiß es noch nicht.", "Zeig es ihm. Oder leg eine leere Schleife drüber. Oder Sable kauft es.", "Geh zum Schaf auf der Fischermann Street."] },
   { if: ["day=7", "time>=00:45", "!e2", "!off_main"], about: ["wait", ...CLIP_WAYS, ...HOME],
     text: ["Was machst du mit dem Clip?", "Vesper zahlt am meisten. Er ist im CHAT.", "Du kannst ihn auch behalten. Drück WARTEN, dann fragt das Deck."] },
   { if: ["day=7", "time>=00:45", { or: ["e2", "off_main"] }], about: ["wait", "protokolle", ...HOME],

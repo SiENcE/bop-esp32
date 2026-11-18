@@ -36,14 +36,15 @@ done
 # and that way alone, Juno with the stick and the dryer shut (off_dryer: it must reach him by hand), her flat and the forgery done (its
 # steps would multiply every other state)
 for v in main stick lantern; do
-  r="$(off main)"; [ "$v" = main ] && r="$r,off_lantern"; [ "$v" = stick ] && r="$r,off_lantern,off_flat,evi_knows,stick_ines"; [ "$v" = lantern ] && r="$r,off_main,stick_ines,off_dryer,evi_knows,forgery_proven"
+  r="$(off main),off_shop24"; [ "$v" = main ] && r="$r,off_lantern"; [ "$v" = stick ] && r="$r,off_lantern,off_flat,evi_knows,stick_ines"; [ "$v" = lantern ] && r="$r,off_main,stick_ines,off_dryer,evi_knows,forgery_proven"
   out=$(node tools/solve-act.mjs kapitel2 --full --set "$r" 2>&1)
   s=$(echo "$out" | grep -E "states in|soft-lock|SOFT|HINTS|^hints|UNSOLV" | tr '\n' ' '); line "kapitel2 solve: $v" "$s"; need "kapitel2 solve: $v" "$s" "no soft-locks"; need "kapitel2 solve: $v" "$s" "every state on the way"
 done
 # Chapter 2's threads that Chapter 1 hands on (kapitel2-design §5): each alone with the main way shut (its flat taken as done: evi_knows),
-# once for each answer of Chapter 1 that changes what happens (Varga: lied, sold, none; the corner shop: sold, lied, warned, none)
+# once for each answer of Chapter 1 that changes what happens (Varga: lied, sold, none; the corner shop: sold, lied, warned, none);
+# and Chapter 2's own, the 24-hour shop (§6.5, off_shop24), alone with both of those shut (the robbery only changes a look there)
 k2t="off_roof,off_zeitung,off_imai,off_traeger,off_motte,off_vesper,off_lantern,off_klinik,off_main,evi_knows"
-for v in "off_tide,k1a=lied" "off_tide,k1a=sold" "off_tide" "off_varga,k1b=sold" "off_varga,k1b=lied" "off_varga,k1b=warned" "off_varga"; do
+for v in "off_tide,off_shop24,k1a=lied" "off_tide,off_shop24,k1a=sold" "off_tide,off_shop24" "off_varga,off_shop24,k1b=sold" "off_varga,off_shop24,k1b=lied" "off_varga,off_shop24,k1b=warned" "off_varga,off_shop24" "off_varga,off_tide"; do
   out=$(node tools/solve-act.mjs kapitel2 --full --set "$k2t,$v" 2>&1)
   s=$(echo "$out" | grep -E "states in|soft-lock|SOFT|HINTS|^hints|UNSOLV" | tr '\n' ' '); line "kapitel2 solve: $v" "$s"; need "kapitel2 solve: $v" "$s" "no soft-locks"; need "kapitel2 solve: $v" "$s" "every state on the way"
 done

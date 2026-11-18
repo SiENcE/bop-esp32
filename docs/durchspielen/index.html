@@ -1,6 +1,8 @@
 <!doctype html>
-<!-- Der Spielplan zum Durchspielen von Hand. Ein neues Kapitel oder ein anderer Weg: ein weiteres <section class="weg">
-     mit <ol class="schritte"> anhängen und oben im <nav> verlinken. Jeder Schritt: <b>was man tut</b>, <span>was passiert</span>.
+<!-- Der Spielplan zum Durchspielen von Hand, nach Kapiteln geordnet: erst der Prolog, dann je Kapitel sein Hauptweg und gleich dahinter
+     seine Nebenwege (<section class="weg neben">, über dem Titel <small>Kapitel N · Nebenweg</small>). Ein neuer Weg: eine <section class="weg">
+     mit <ol class="schritte"> an seinem Platz und oben im <nav> in der Zeile seines Kapitels verlinken. Was nur im Design steht, ist ein
+     Platzhalter (<section class="weg neben geplant">, „noch nicht gebaut“), bis es gebaut ist. Jeder Schritt: <b>was man tut</b>, <span>was passiert</span>.
      Bilder sparsam, in img/ (node lib/cutaway/tools/play.mjs ... --shots build/shots/k1 macht nach jedem Zug eins). -->
 <html lang="de">
 <head>
@@ -20,6 +22,13 @@
   p { margin: 8px 0; }
   .matt { color: var(--matt); }
   nav a { color: var(--cyan); }
+  nav { margin-top: 10px; }
+  nav div { margin: 3px 0; }
+  section.neben { margin-left: 4px; padding-left: 16px; border-left: 2px solid var(--linie); }
+  section.neben h2 { margin-top: 36px; font-size: 22px; }
+  section.geplant h2, a.geplant { color: var(--matt); }
+  section.geplant { border-left-style: dashed; }
+  h2 small { display: block; margin-bottom: 2px; color: var(--matt); font-size: 13px; font-weight: 400; letter-spacing: 0.04em; }
   .kasten { margin: 18px 0; padding: 12px 16px; background: var(--flaeche); border-left: 3px solid var(--cyan); }
   .kasten code { color: var(--gelb); }
   ol.schritte { list-style: none; counter-reset: schritt; margin: 0; padding: 0; }
@@ -37,7 +46,11 @@
 <body>
 <header>
   <h1>Glass Sister: Spielplan</h1>
-  <nav><a href="#prolog">Prolog</a> · <a href="#k1">Kapitel 1</a> · <a href="#k1a">Auftrag A: Kessler</a> · <a href="#k1b">Auftrag B: der Eckladen</a> · <a href="#k1m">Mottes Lektionen</a> · <a href="#k1v">Vesper</a> · <a href="#k1l">LUCKY STATIC</a> · <a href="#k1d">Das Dach</a> · <a href="#k1z">Der Zeitungskrieg</a> · <a href="#k1i">Frau Imai</a> · <a href="#k1t">Die weißen Träger</a> · <a href="#k2">Kapitel 2</a></nav>
+  <nav>
+    <div><b>Prolog:</b> <a href="#prolog">Nachtschicht</a></div>
+    <div><b>Kapitel 1:</b> <a href="#k1">Hauptweg</a> · <span class="matt">Nebenwege:</span> <a href="#k1a">Auftrag A: Kessler</a> · <a href="#k1b">Auftrag B: der Eckladen</a> · <a href="#k1m">Mottes Lektionen</a> · <a href="#k1v">Vesper</a> · <a href="#k1l">LUCKY STATIC</a> · <a href="#k1d">Das Dach</a> · <a href="#k1z">Der Zeitungskrieg</a> · <a href="#k1i">Frau Imai</a> · <a href="#k1t">Die weißen Träger</a></div>
+    <div><b>Kapitel 2:</b> <a href="#k2">Hauptweg</a> · <span class="matt">Nebenwege:</span> <a href="#k2f">Lantern finden</a> · <a href="#k2k">Die Klinik</a> · <a href="#k2e">Die anderen Wege für den Clip</a> · <a href="#k2n">Was aus Kapitel 1 nachkommt</a> · <a href="#k2l">Der 24h-Laden</a> · <span class="matt">geplant:</span> <a class="geplant" href="#k2i">Frau Imai</a> · <a class="geplant" href="#k2h">Frau Haldanes Sohn</a> · <a class="geplant" href="#k2m">Motte und das Backup</a></div>
+  </nav>
   <div class="kasten">
     <b>Warten:</b> am Deck <kbd>WARTEN</kbd>, in einer Kamera <kbd>VOR</kbd>. Es springt jeweils zum nächsten Ereignis; nur das bewegt die Uhr, Laufen nicht.<br>
     <b>Zurück:</b> aus einer Kamera mit <kbd>DECK</kbd>, vom Deck in die Wohnung mit <kbd>ZURÜCK</kbd>.<br>
@@ -116,9 +129,121 @@
   </ol>
 </section>
 
+<section class="weg neben" id="k1a">
+  <h2><small>Kapitel 1 · Nebenweg</small>Auftrag A: Der verschwundene Schuldner</h2>
+  <p class="matt">Mittwochs oder donnerstags, ganz freiwillig. Varga will Kessler finden. Hier: verkaufen.</p>
+  <ol class="schritte">
+    <li><b>Deck, <kbd>CHAT</kbd>, G. VARGA.</b><span>„Kessler ist weg. Finde ihn. 400.“ Annehmen muss man nichts.</span></li>
+    <li><b><kbd>GLASS</kbd>, CAM 03, <kbd>VOR</kbd> bis 22:15, die Kapuze am Nudelautomaten anklicken.</b><span>Nummer 7, Huhn scharf, und am Finger ein heller Streifen, wo der Ring war. Kessler geht zum Kapselhotel Morpheus: CAM 15 steht auf der Karte, aber ohne Code.</span></li>
+    <li><b>Zu Fuß zum Drain-Markt: Tür, Treppe, Haustür, Gasse, Drain-Markt. Den Vorhang ganz rechts unten am Südufer anklicken.</b><span>Erst der Blick die Treppe hinunter (ein Klick überspringt ihn), dann der Markt von oben, größer als der Bildschirm. Hinter dem Vorhang sitzt Sable.</span></li>
+    <li><b>Sable: „Ich brauch den Code vom Morpheus, CAM 15.“, dann „Hier sind achtzig.“</b><span>Oder im Tausch gegen die Notiz über Kesslers Schulden.</span></li>
+    <li><b>Nach Hause, Deck, <kbd>GLASS</kbd>, CAM 15, <kbd>VOR</kbd> bis 22:30, die Kapuze anklicken.</b><span>Er kriecht in Kapsel 23. Verpasst: <kbd>PUFFER</kbd>.</span></li>
+    <li><b><kbd>DECK</kbd>, <kbd>CHAT</kbd>, G. VARGA, „Kapsel 23 senden.“</b><span>400 Chits. Die anderen Wege: einen falschen Ort senden, oder Kapsel 23 in CAM 15 anklicken und ihn warnen.</span></li>
+  </ol>
+</section>
+
+<section class="weg neben" id="k1b">
+  <h2><small>Kapitel 1 · Nebenweg</small>Auftrag B: Der Eckladen</h2>
+  <p class="matt">Mittwochs oder donnerstags vor 01:00, freiwillig. TIDE will den Tresorcode von Okonkwo. Hier: verkaufen, alles an einem Abend.</p>
+  <ol class="schritte">
+    <li><b>Deck, <kbd>CHAT</kbd>, TIDE.</b><span>„Okonkwo, Jade Row. Wir wollen den Tresorcode. 500. Keine Fragen.“</span></li>
+    <li><b>Zu Fuß: Tür, Treppe, Haustür, Gasse, Drain-Markt. Ratz anklicken, die Kabelratte auf der Kiste hinter dem Stand mit Elektroschrott (JUNK), rechts unterhalb der Treppe.</b><span>„Was hast du da?“, „Hast du einen Abzweiger?“, „Hier sind sechzig.“ Der Abzweiger ist in der Tasche.</span></li>
+    <li><b>Zurück zur Kowalski-Straße und am linken Ende durch in die Jade Row.</b><span>Links Okonkwos Laden, rechts gegenüber der Automat SMILE FOR A COUPON.</span>
+      <figure><img src="img/k1_jade_row.png" alt="Die Jade Row, rechts der Automat, links Okonkwos Laden"><figcaption>Die Jade Row. Der Automat steht rechts am Bordstein.</figcaption></figure></li>
+    <li><b>Die Tasche öffnen, den Abzweiger anklicken, dann den Automaten.</b><span>Eine Drohne zieht vorbei, Juno wartet sie ab und zapft an. CAM 07V ist auf dem Deck.</span></li>
+    <li><b>Nach Hause, Deck, <kbd>GLASS</kbd>, CAM 07V, <kbd>VOR</kbd> bis 01:00, Okonkwo anklicken.</b><span>Er tippt an der Kasse, ihr Kundendisplay zeigt jede Taste. Im Zoom: 41709. Verpasst: <kbd>PUFFER</kbd>, in derselben Nacht.</span>
+      <figure><img src="img/k1_tresor.png" alt="CAM 07V: der Zoom auf das Kundendisplay der Kasse, 41709"><figcaption>Die Automatenkamera sieht auf Augenhöhe, was CAM 07 von oben nicht sieht.</figcaption></figure></li>
+    <li><b><kbd>DECK</kbd>, <kbd>CHAT</kbd>, TIDE, „Den Code senden.“</b><span>500 Chits. Die anderen Wege: einen falschen Code senden (250), oder vor 01:00 in Okonkwos Laden gehen und „Die Tidewater Boys wollen deinen Tresor.“ sagen. Dafür gibt es eine Stange Reis, und das geht auch ganz ohne den Code.</span></li>
+    <li><b>Nebenbei: CAM 07 um 00:30.</b><span>Ein Streifenwagen, ein Tidewater-Junge, Lt. Morrow nimmt einen Umschlag: „Freitag fährt keiner die Kowalski.“ Juno kann es aufnehmen.</span></li>
+  </ol>
+</section>
+
+<section class="weg neben" id="k1m">
+  <h2><small>Kapitel 1 · Nebenweg</small>Mottes Lektionen</h2>
+  <p class="matt">Nur wenn Juno im Prolog freundlich zu Motte war (ohne Prolog ist sie das). Eine Lektion pro Abend.</p>
+  <ol class="schritte">
+    <li><b>Mittwoch: Tür, Motte auf der Bank anklicken, „Was ist eine Kamera?“</b><span>„Ein Auge, das nichts vergisst.“</span></li>
+    <li><b>Donnerstag: Motte, „Wie findet man einen Code?“</b><span>Hat Juno noch keinen Abzweiger, baut er ihr einen aus seinem Tideboy. Damit geht Auftrag B ohne Ratz.</span></li>
+    <li><b>Freitag: Motte, „Warum glasst man den eigenen Block nicht?“</b><span>„Jetzt bin ich Glasser.“ Das merkt sich das Spiel für Kapitel 3.</span></li>
+  </ol>
+</section>
+
+<section class="weg neben" id="k1v">
+  <h2><small>Kapitel 1 · Nebenweg</small>Vesper</h2>
+  <p class="matt">Nie nötig. Ab Donnerstag.</p>
+  <ol class="schritte">
+    <li><b>Donnerstag: Deck, CHAT, VESPER</b><span>Er zahlt das Doppelte von Sable für jeden rohen Clip. EVI kann Gesichter wegmachen.</span></li>
+    <li><b>„Kesslers Ring senden.“</b><span>240 Chits. Morrows Umschlag (300) und die weißen Träger (400) gehen auch, wenn Juno sie aufgenommen hat.</span>
+      <figure><img src="img/k1_vesper.png" alt="Der Chat mit Vesper: der Clip ist geschickt"><figcaption>Der Clip ist bei Vesper.</figcaption></figure></li>
+    <li><b>Freitag: BUCH</b><span>„VESPER: Ring, 31.200 sahen zu“. Und Vesper dankt im Namen der Krone.</span></li>
+    <li><b>Oder: CACHE, den Clip öffnen, ANONYMISIEREN</b><span>Dann sieht niemand mehr ein Gesicht, und Vesper bekommt ihn nicht.</span>
+      <figure><img src="img/k1_anonym.png" alt="Der Clip-Editor: Kesslers Ring, anonymisiert"><figcaption>Anonymisiert: das Bild ein Mosaik, die Namen weg.</figcaption></figure></li>
+  </ol>
+</section>
+
+<section class="weg neben" id="k1l">
+  <h2><small>Kapitel 1 · Nebenweg</small>Im LUCKY STATIC</h2>
+  <p class="matt">Nichts davon ist nötig. Von Mittwoch an jeden Abend: Kowalski-Straße, die Tür des LUCKY STATIC.</p>
+  <ol class="schritte">
+    <li><b>Mei hinter der Theke</b><span>Sie lässt Juno anschreiben und erzählt, was man hört; am Donnerstag vom Sohn des Fischmanns, der nicht aufgewacht ist.</span></li>
+    <li><b>Der Fernseher über der Theke</b><span>Nagi·was Nachrichten, jeden Abend andere.</span></li>
+    <li><b>Die üblichen zwei auf den Hockern</b><span>Er schläft, sie erzählt ihm trotzdem was.</span></li>
+    <li><b>Die Karaoke-Maschine</b><span>OUT OF ORDER, bis Mei sagt, wo man draufhauen muss. Drei Lieder; an jeder Lücke wählt man ein Wort, und ein falsches Reimwort kommentieren Mei oder die Stammgästin.</span></li>
+    <li><b>Frau Imai an ihrem Tisch</b><span>Ihre eigene Geschichte, siehe unten.</span></li>
+  </ol>
+</section>
+
+<section class="weg neben" id="k1d">
+  <h2><small>Kapitel 1 · Nebenweg</small>Das Dach</h2>
+  <p class="matt">Nie nötig, an jedem Abend und schon im Prolog. Aufs Dach, wo Juno zuletzt mit Teo war.</p>
+  <ol class="schritte">
+    <li><b>Im Flur neben dem Aufzug den Notschlüssel anklicken.</b><span>Ein langer Haken. Juno nimmt ihn mit.</span></li>
+    <li><b>In der Wohnung den Karton anklicken.</b><span>Darin liegt Junos alter Nagi·wa-Ausweis. Er ist flach und hart, und sie steckt ihn ein.</span></li>
+    <li><b>Die Tasche öffnen, den Ausweis anklicken, dann das Fenster.</b><span>Der Riegel geht auf, und Juno steht draußen auf dem Sims.</span></li>
+    <li><b>Den Notschlüssel auf die Leiter.</b><span>Die Leiter kommt herunter, und Juno klettert aufs Dach.</span></li>
+    <li><b>Die Regenleserin anklicken.</b><span>Sie kostet den Regen und sagt, von welchem Ring er kommt, jeden Abend etwas anderes. Man kann sie alles fragen, und vieles davon zählt erst später.</span></li>
+    <li><b>Unser Platz, Die Ringe.</b><span>Eine Erinnerung an Teo, und der Blick nach oben zur Krone.</span></li>
+    <li><b>Zurück: die Leiter nach unten, dann das Fenster.</b></li>
+  </ol>
+</section>
+
+<section class="weg neben" id="k1z">
+  <h2><small>Kapitel 1 · Nebenweg</small>Der Zeitungskrieg</h2>
+  <p class="matt">Mittwochs oder donnerstags. Auf dem Flur streiten 14C und 14A per Zettel, wer die Zeitung klaut.</p>
+  <ol class="schritte">
+    <li><b>Im Flur den Zettel anklicken.</b><span>WER KLAUT MEINE ZEITUNG?? Darunter: NIEMAND LIEST ZEITUNG.</span></li>
+    <li><b>Frau Haldanes offene Tür anklicken.</b><span>Sie schläft im Sessel. Hinter ihr liegt ein Stapel Zeitungen, und um jedes Gesicht darin sind vier kleine Ecken, so, wie Juno markiert.</span></li>
+    <li><b>Die Kamera über der Treppe anklicken, „Nur dieses eine Mal.“ wählen.</b><span>Den eigenen Block glasst man nicht. Juno tut es trotzdem: CAM 14 ist auf dem Deck.</span></li>
+    <li><b>Deck, <kbd>GLASS</kbd>, CAM 14, <kbd>VOR</kbd> bis 02:30, die Person im Morgenmantel anklicken.</b><span>Es ist Frau Haldane. Sie schläft und holt sich die Zeitungen, ihre eigene und die von 14A.</span></li>
+    <li><b>Zurück in den Flur, den Zettel ansehen (Rechtsklick).</b><span>Jetzt steht Junos Antwort darunter: ES IST NIEMAND. 14B.</span></li>
+  </ol>
+</section>
+
+<section class="weg neben" id="k1i">
+  <h2><small>Kapitel 1 · Nebenweg</small>Frau Imai</h2>
+  <p class="matt">Ab Mittwoch. Eine Frau hat im Schlaf einen Mord gesehen, in einer Straße, in der sie nie war.</p>
+  <ol class="schritte">
+    <li><b>Deck, <kbd>CHAT</kbd>, R. IMAI.</b><span>Sie will wissen, ob sie verrückt ist, und sitzt abends im LUCKY STATIC.</span></li>
+    <li><b>Tür, Treppe, Haustür, das LUCKY STATIC, Frau Imai anklicken.</b><span>Sie erzählt von einer Treppe mit einem großen Fisch auf den Stufen, von links regnet es, und sie hat von oben draufgeschaut. Juno kennt die Treppe: CAM 18 am alten Fischmarkt.</span></li>
+    <li><b>Nach Hause, Deck, <kbd>GLASS</kbd>, CAM 18, <kbd>PUFFER</kbd>.</b><span>Ältere Nächte liegen im Archiv. Am 29. Oktober um 03:12 fällt einer die Treppe hinunter, genau so, wie sie es gesehen hat. Um die Zeit hat sie geschlafen.</span></li>
+    <li><b>Zurück ins LUCKY STATIC, Frau Imai: „Sie sind nicht verrückt.“ oder „Das war ein Traum.“</b><span>Die Wahrheit macht ihr Angst, und sie traut sich nicht mehr zu schlafen. Die Lüge lässt sie schlafen, und EVI weiß, dass es die Treppe gibt.</span></li>
+  </ol>
+</section>
+
+<section class="weg neben" id="k1t">
+  <h2><small>Kapitel 1 · Nebenweg</small>Die weißen Träger</h2>
+  <p class="matt">Nur Donnerstagnacht.</p>
+  <ol class="schritte">
+    <li><b>Am Deck <kbd>WARTEN</kbd> bis 23:30, dann auf die Kowalski-Straße.</b><span>Vor dem Haus gegenüber steht ein weißer Wagen ohne Schild. Zwei Leute in Weiß, sehr freundlich, tragen jemanden heraus, der schläft. In der Tür steht seine Tochter.</span>
+      <figure><img src="img/k1_traeger.png" alt="Die Nahaufnahme: der weiße Wagen, die Träger mit der Trage, das Mädchen in der Tür"><figcaption>Die Rollos gegenüber gehen runter.</figcaption></figure></li>
+    <li><b>Zusehen, Filmen oder „Zu dem Mädchen gehen.“</b><span>Wer filmt, kann den Clip später an Vesper verkaufen (400).</span></li>
+    <li><b>Nebenbei, jeden Abend: der Monteur auf dem Gerüst und der Prediger auf dem Drain-Markt.</b><span>Der eine repariert nur die linke Hälfte des großen Schirms, der andere ist seit neun Tagen wach. Jeden Abend sagen sie etwas anderes.</span></li>
+  </ol>
+</section>
+
 <section class="weg" id="k2">
   <h2>Kapitel 2: Aufnahme</h2>
-  <p class="matt">Auf Blöcken: die drei Abende, der Heimweg, Ines' Wohnung, die Fälschung, Teos Besuch, Entscheidung 2 am Deck und das Ende. Lantern, die übrigen Wege für den Clip und die Klinik kommen Stück für Stück dazu.</p>
+  <p class="matt">Auf Blöcken, zum Teil schon gemalt: die drei Abende, der Heimweg, Ines' Wohnung, die Fälschung, Teos Besuch, Entscheidung 2 am Deck und das Ende. Lantern, die Klinik, die anderen Wege für den Clip und was aus Kapitel 1 nachkommt stehen unten als Nebenwege.</p>
   <div class="kasten"><b>Start:</b> Nach Kapitel 1 geht es von selbst weiter. Zum Testen allein: <code>index.html?act=kapitel2</code> (beginnt mit den Antworten des Wegs durch Kapitel 1: WREN den Ort gesendet, den Stick zurückgelegt, die Miete bezahlt).</div>
 
   <h3>Samstag <small>18:00, der erste Abend</small></h3>
@@ -137,11 +262,11 @@
   </ol>
   <div class="kasten"><b>Freiwillig: die Fälschung zerschneiden.</b> Im <kbd>CACHE</kbd> den Clip „NAGI·WA NEWS, CAM 31“ öffnen, dann <kbd>PRÜFEN</kbd>. Oben stehen beide Bilder nebeneinander, darunter die Zeitleiste mit vier Stellen. Der Reihe nach: bei <b>01:58</b> auf die Uhrzeit im linken Bild (sie springt auf 23:03:10), bei <b>02:30</b> in den Regen im linken Bild (er läuft in einer Schleife), bei <b>03:03</b> auf den dunklen Rollstuhl (bei Juno brennt dort die Maske weiß durch). Danach liegt im CACHE die Notiz „Die Fälschung, zerschnitten“. Nötig ist das nie.</div>
 
-  <div class="kasten"><b>Freiwillig: Lantern finden</b> (ab Sonntag 22:00; nötig erst, wenn Juno den Stick behält). Um 22:00 reißt auf der Kowalski-Straße der große Schirm ab: „I DIDN'T KILL HER. – LANTERN“. Danach sagt der Monteur auf dem Gerüst, dass es übers Kabel kam, von unten. Mitnehmen (jederzeit): den alten Ausweis aus dem Karton unter dem Bett und den Notschlüssel neben dem Aufzug im 14. Stock. Gasse, Drain-Markt, ganz rechts am Kanal das Floß DATA 1C/GB: den Notschlüssel auf das Floß. Darauf steht Pike, und er will die Endstufe, die nur Ratz hat. Ratz: „Hast du eine Endstufe?“, dann „Hier. Mein alter Ausweis.“ Zurück zu Pike: „Hier. Die Endstufe.“ Er stakt Juno hinaus durch den ertrunkenen Wald und fragt unterwegs, was sie von Lantern will (jede Antwort geht). Die Endstufe kann man ihm auch aus der Tasche geben, den Stick ebenso Lantern. Bei seinem Wohnwagen den Wohnwagen anklicken. Drinnen sitzt Lantern. Wer den Stick hat: „Ich hab ihren Schlüssel.“, dann „Hier. Der gehört Ihnen.“</div>
+  <div class="kasten"><b>Freiwillig: Lantern finden</b> (ab Sonntag 22:00; nötig erst, wenn Juno den Stick behält): unten bei den Nebenwegen, <a href="#k2f">Lantern finden</a>.</div>
 
   <h3>Montag <small>18:00, der letzte Abend</small></h3>
   <ol class="schritte">
-    <li><b>Zur Wohnung: Tür, Treppe, Haustür, nach links in die Jade Row, durch das Tor am Ende auf Weg_1, dort die Haustür des Wohnblocks Lerche, im Erdgeschoss der Aufzug.</b><span>Der Code vom Samstag öffnet die Haustür. Im vierten Stock klebt an 4B ein Siegel von Civic Rest, darunter ist das Schloss aufgebrochen.</span></li>
+    <li><b>Zur Wohnung: Tür, Treppe, Haustür, nach links in die Jade Row, durch das Tor am Ende auf die Fischermann Street, dort die Haustür des Wohnblocks Lerche, im Erdgeschoss der Aufzug.</b><span>Der Code vom Samstag öffnet die Haustür. Im vierten Stock klebt an 4B ein Siegel von Civic Rest, darunter ist das Schloss aufgebrochen.</span></li>
     <li><b>4B, dann den Kühlschrank: „Das Gefrierfach aufmachen.“</b><span>In einem Gefrierbeutel liegt die Akte aus Civic Rest: AUTO-EVAL eingestellt, Trainingsdaten J. REYES. EVI fragt: „Wer dann?“ Die Serviette am Kühlschrank kann man auch ansehen, nötig ist sie nicht.</span></li>
     <li><b>Irgendwo <kbd>WARTEN</kbd>.</b><span>Um 18:30 klopft Teo. Er hat einen Haken aus der Pumpenhalle dabei, und sie gehen aufs Dach. Er erzählt von Tinte, der Krake im Filterbecken, und schläft an Junos Schulter ein.</span></li>
     <li><b>Weiter <kbd>WARTEN</kbd>, bis es 01:00 ist.</b><span>Die Uhr hält um 00:45, solange etwas fehlt: die Wohnung, der Stick bei Lantern oder Entscheidung 2 (dann fragt das Deck: „An Vesper verkaufen.“, „Behalten.“ oder „Noch nicht.“).</span></li>
@@ -149,119 +274,86 @@
   </ol>
 </section>
 
-<section class="weg" id="k1a">
-  <h2>Kapitel 1, Auftrag A: Der verschwundene Schuldner</h2>
-  <p class="matt">Nebenweg, mittwochs oder donnerstags, ganz freiwillig. Varga will Kessler finden. Hier: verkaufen.</p>
+<section class="weg neben" id="k2f">
+  <h2><small>Kapitel 2 · Nebenweg</small>Lantern finden</h2>
+  <p class="matt">Ab Sonntag 22:00. Nötig erst, wenn Juno Ines' Stick behalten hat: Dann muss er zu Lantern, von Hand. Sonst ein Weg für den Clip.</p>
   <ol class="schritte">
-    <li><b>Deck, <kbd>CHAT</kbd>, G. VARGA.</b><span>„Kessler ist weg. Finde ihn. 400.“ Annehmen muss man nichts.</span></li>
-    <li><b><kbd>GLASS</kbd>, CAM 03, <kbd>VOR</kbd> bis 22:15, die Kapuze am Nudelautomaten anklicken.</b><span>Nummer 7, Huhn scharf, und am Finger ein heller Streifen, wo der Ring war. Kessler geht zum Kapselhotel Morpheus: CAM 15 steht auf der Karte, aber ohne Code.</span></li>
-    <li><b>Zu Fuß zum Drain-Markt: Tür, Treppe, Haustür, Gasse, Drain-Markt. Den Vorhang ganz rechts unten am Südufer anklicken.</b><span>Erst der Blick die Treppe hinunter (ein Klick überspringt ihn), dann der Markt von oben, größer als der Bildschirm. Hinter dem Vorhang sitzt Sable.</span></li>
-    <li><b>Sable: „Ich brauch den Code vom Morpheus, CAM 15.“, dann „Hier sind achtzig.“</b><span>Oder im Tausch gegen die Notiz über Kesslers Schulden.</span></li>
-    <li><b>Nach Hause, Deck, <kbd>GLASS</kbd>, CAM 15, <kbd>VOR</kbd> bis 22:30, die Kapuze anklicken.</b><span>Er kriecht in Kapsel 23. Verpasst: <kbd>PUFFER</kbd>.</span></li>
-    <li><b><kbd>DECK</kbd>, <kbd>CHAT</kbd>, G. VARGA, „Kapsel 23 senden.“</b><span>400 Chits. Die anderen Wege: einen falschen Ort senden, oder Kapsel 23 in CAM 15 anklicken und ihn warnen.</span></li>
+    <li><b>Sonntag um 22:00 auf der Kowalski-Straße sein.</b><span>Der große Schirm reißt mitten in der Lull-Werbung ab: „I DIDN'T KILL HER. – LANTERN“. Wer nicht da ist, liest es danach im NETZ.</span></li>
+    <li><b>Den Monteur auf dem Gerüst anklicken.</b><span>„Das kam nicht über Funk. Das kam übers Kabel. Von unten.“ Das neue Kabel geht hinter dem Schirm in den Gully.</span></li>
+    <li><b>Mitnehmen, jederzeit: den alten Ausweis aus dem Karton unter dem Bett und den Notschlüssel neben dem Aufzug im 14. Stock.</b><span>Beides braucht Juno gleich.</span></li>
+    <li><b>Gasse, Drain-Markt, ganz rechts am Kanal das Floß DATA 1C/GB: den Notschlüssel auf das Floß.</b><span>Juno zieht es an den Rand. Darauf steht Pike, Lanterns Gehilfe mit den Reiherbeinen. Er will eine Endstufe aus einem Flutwarnmast, und die hat nur Ratz.</span></li>
+    <li><b>Ratz: „Hast du eine Endstufe? Aus einem Flutwarnmast.“, dann „Hier. Mein alter Ausweis.“</b><span>Ratz liest den Chip aus und behält die Kopie. „Das zweite Mal, dass das Ding was aufmacht.“</span></li>
+    <li><b>Zurück zu Pike: „Hier. Die Endstufe.“</b><span>Er stakt Juno aus dem Markt hinaus durch den ertrunkenen Wald und fragt unterwegs, was sie von Lantern will. Jede Antwort geht.</span></li>
+    <li><b>Beim Wohnwagen den Wohnwagen anklicken und vorsichtig anfangen: „Erst mal nur reden. Wenn du willst.“</b><span>Lantern erzählt nach und nach. Wer den Stick hat: „Ich hab ihren Schlüssel.“, dann „Hier. Der gehört dir.“ Wer die Aufnahme aus CAM 31 ihm geben will: „Ich hab eine Aufnahme.“</span></li>
+  </ol>
+  <div class="kasten"><b>Zu forsch?</b> Wer gleich mit dem Mord oder dem Schlüssel anfängt, fliegt raus, und die Tür bleibt zu. Dann <b>Auf Sendung</b>: rechts hinter dem Wohnwagen im Boot das Funkgerät nehmen, mit dem Notschlüssel Pikes Reuse aus den Wurzeln lösen (Pike gibt dafür einen Akku), den Akku ins Funkgerät stecken, das Funkgerät am Mast benutzen, den Kanal auf 87.6 stellen und die Welle wie auf dem Schirm am Mast, dann <kbd>TX</kbd>: „Ich bin noch wach.“ und ruhig weiterreden, etwa „Ich war zu schnell. Das tut mir leid. …“ Dann macht er wieder auf.</div>
+</section>
+
+<section class="weg neben" id="k2k">
+  <h2><small>Kapitel 2 · Nebenweg</small>Die Klinik</h2>
+  <p class="matt">Ab Samstag, nie nötig. Der zweite Weg zu der Frage, welche Tür Ines' war.</p>
+  <ol class="schritte">
+    <li><b>Deck, <kbd>GLASS</kbd>, CAM 21 um 19:00.</b><span>Ines kommt nicht mehr heraus. Stattdessen kommt die Pflegerin zur Nachtschicht und sieht sich zweimal nach der Tür um.</span></li>
+    <li><b>Zu Fuß: Tür, Treppe, Haustür, Gasse, dort den Steg nach links „Zur Querstraße“.</b><span>Die Lull-Klinik 9-Ost, gegenüber von Pho Pump. Vor sieben ist die Aufnahme leer: „Nachtaufnahme ab sieben.“</span></li>
+    <li><b>Ab 19:00 Marit an der Aufnahme: „Ich kann nicht schlafen.“</b><span>Juno nennt einen falschen Namen. Lull kostet nichts. Hinter dem Ohr nachsehen lässt Juno sie nicht: „Nicht heute.“</span></li>
+    <li><b>„Ich suche Dr. Calder.“</b><span>Ines hat nachts Protokolle geschrieben, die keiner bestellt hat, alles auf Papier. „Lerche, vierter Stock.“ Ab jetzt weiß Juno, welche Tür.</span></li>
   </ol>
 </section>
 
-<section class="weg" id="k1b">
-  <h2>Kapitel 1, Auftrag B: Der Eckladen</h2>
-  <p class="matt">Nebenweg, mittwochs oder donnerstags vor 01:00, freiwillig. TIDE will den Tresorcode von Okonkwo. Hier: verkaufen, alles an einem Abend.</p>
+<section class="weg neben" id="k2e">
+  <h2><small>Kapitel 2 · Nebenweg</small>Die anderen Wege für den Clip</h2>
+  <p class="matt">Entscheidung 2: Der Hauptweg verkauft an Vesper. Wer will, entscheidet anders, bis Montag 00:45.</p>
   <ol class="schritte">
-    <li><b>Deck, <kbd>CHAT</kbd>, TIDE.</b><span>„Okonkwo, Jade Row. Wir wollen den Tresorcode. 500. Keine Fragen.“</span></li>
-    <li><b>Zu Fuß: Tür, Treppe, Haustür, Gasse, Drain-Markt. Ratz anklicken, die Kabelratte auf der Kiste hinter dem Stand mit Elektroschrott (JUNK), rechts unterhalb der Treppe.</b><span>„Was hast du da?“, „Hast du einen Abzweiger?“, „Hier sind sechzig.“ Der Abzweiger ist in der Tasche.</span></li>
-    <li><b>Zurück zur Kowalski-Straße und am linken Ende durch in die Jade Row.</b><span>Links Okonkwos Laden, rechts gegenüber der Automat SMILE FOR A COUPON.</span>
-      <figure><img src="img/k1_jade_row.png" alt="Die Jade Row, rechts der Automat, links Okonkwos Laden"><figcaption>Die Jade Row. Der Automat steht rechts am Bordstein.</figcaption></figure></li>
-    <li><b>Die Tasche öffnen, den Abzweiger anklicken, dann den Automaten.</b><span>Eine Drohne zieht vorbei, Juno wartet sie ab und zapft an. CAM 07V ist auf dem Deck.</span></li>
-    <li><b>Nach Hause, Deck, <kbd>GLASS</kbd>, CAM 07V, <kbd>VOR</kbd> bis 01:00, Okonkwo anklicken.</b><span>Er tippt an der Kasse, ihr Kundendisplay zeigt jede Taste. Im Zoom: 41709. Verpasst: <kbd>PUFFER</kbd>, in derselben Nacht.</span>
-      <figure><img src="img/k1_tresor.png" alt="CAM 07V: der Zoom auf das Kundendisplay der Kasse, 41709"><figcaption>Die Automatenkamera sieht auf Augenhöhe, was CAM 07 von oben nicht sieht.</figcaption></figure></li>
-    <li><b><kbd>DECK</kbd>, <kbd>CHAT</kbd>, TIDE, „Den Code senden.“</b><span>500 Chits. Die anderen Wege: einen falschen Code senden (250), oder vor 01:00 in Okonkwos Laden gehen und „Die Tidewater Boys wollen deinen Tresor.“ sagen. Dafür gibt es eine Stange Reis, und das geht auch ganz ohne den Code.</span></li>
-    <li><b>Nebenbei: CAM 07 um 00:30.</b><span>Ein Streifenwagen, ein Tidewater-Junge, Lt. Morrow nimmt einen Umschlag: „Freitag fährt keiner die Kowalski.“ Juno kann es aufnehmen.</span></li>
+    <li><b>Sable: Drain-Markt, der Vorhang, „Ich hab die Aufnahme aus der alten Metro.“, dann „Verkauft.“</b><span>3000 Chits, mit bewiesener Fälschung mehr. Vorher fragt EVI nach dem Flüstern im Clip; wer will, schneidet es heraus.</span></li>
+    <li><b>Morrow: samstags und sonntags um 00:30 an ihrem Streifenwagen in der Jade Row.</b><span>„Beweisstück. Kein Geschäft.“ Der Clip verschwindet in Revier 9, und die Quiet weiß ab jetzt, wer Juno ist.</span></li>
+    <li><b>Lantern, sobald er gefunden ist: „Ich hab eine Aufnahme.“, dann „Hier. Mit ihren Protokollen.“</b><span>Er sendet sie am Montag um eins.</span></li>
+    <li><b>Behalten: am Montag um 00:45 am Deck „Behalten.“</b><span>„Der bleibt bei mir. Da weiß keiner was davon.“</span></li>
   </ol>
 </section>
 
-<section class="weg" id="k1m">
-  <h2>Kapitel 1: Mottes Lektionen</h2>
-  <p class="matt">Nebenweg, nur wenn Juno im Prolog freundlich zu Motte war (ohne Prolog ist sie das). Eine Lektion pro Abend.</p>
+<section class="weg neben" id="k2n">
+  <h2><small>Kapitel 2 · Nebenweg</small>Was aus Kapitel 1 nachkommt</h2>
+  <p class="matt">Was Juno in Kapitel 1 geantwortet hat, holt sie ab Samstag ein. Nichts davon ist nötig; das meiste sieht man nur.</p>
   <ol class="schritte">
-    <li><b>Mittwoch: Tür, Motte auf der Bank anklicken, „Was ist eine Kamera?“</b><span>„Ein Auge, das nichts vergisst.“</span></li>
-    <li><b>Donnerstag: Motte, „Wie findet man einen Code?“</b><span>Hat Juno noch keinen Abzweiger, baut er ihr einen aus seinem Tideboy. Damit geht Auftrag B ohne Ratz.</span></li>
-    <li><b>Freitag: Motte, „Warum glasst man den eigenen Block nicht?“</b><span>„Jetzt bin ich Glasser.“ Das merkt sich das Spiel für Kapitel 3.</span></li>
+    <li><b>Auftrag A gelogen: samstags und sonntags von 19:00 bis 23:00 Vargas Mann vor der Haustür auf der Kowalski-Straße.</b><span>„Die 200, Glasserin.“ „Hier.“, „Hab ich nicht.“ oder „Später.“ Am Montag liegt im Briefkasten unten sein Zettel.</span></li>
+    <li><b>Auftrag A verkauft (oder keine Antwort): ab Sonntag Kessler auf dem Drain-Markt.</b><span>Zwei Rippen, ein Arm. Er bettelt, und wer will, gibt ihm etwas.</span></li>
+    <li><b>Auftrag B verkauft: Okonkwos Laden in der Jade Row ist mit Brettern zu, Bao fehlt.</b><span>Mei erzählt im LUCKY STATIC vom Überfall. Am Montag steht Bao trotzdem da, mit Verband. Im 24h-Laden liegen Okonkwos Dosen im Korb.</span></li>
+    <li><b>Auftrag B mit falschem Code: an Junos Tür steht GLASSER LIES. Gewarnt: in der Jade Row WHO TALKED?</b><span>Keine Antwort: TIDE schreibt einmal „Dann eben ohne dich.“</span></li>
   </ol>
 </section>
 
-<section class="weg" id="k1v">
-  <h2>Kapitel 1: Vesper</h2>
-  <p class="matt">Nebenweg, nie nötig. Ab Donnerstag.</p>
+<section class="weg neben" id="k2l">
+  <h2><small>Kapitel 2 · Nebenweg</small>Wer passt auf den Laden auf?</h2>
+  <p class="matt">An jedem Abend, nie nötig. Auf der Fischermann Street schläft ein Mann im Schafskostüm, und im 24h-Laden fehlt jede Nacht etwas. Hier: der Clip montiert.</p>
   <ol class="schritte">
-    <li><b>Donnerstag: Deck, CHAT, VESPER</b><span>Er zahlt das Doppelte von Sable für jeden rohen Clip. EVI kann Gesichter wegmachen.</span></li>
-    <li><b>„Kesslers Ring senden.“</b><span>240 Chits. Morrows Umschlag (300) und die weißen Träger (400) gehen auch, wenn Juno sie aufgenommen hat.</span>
-      <figure><img src="img/k1_vesper.png" alt="Der Chat mit Vesper: der Clip ist geschickt"><figcaption>Der Clip ist bei Vesper.</figcaption></figure></li>
-    <li><b>Freitag: BUCH</b><span>„VESPER: Ring, 31.200 sahen zu“. Und Vesper dankt im Namen der Krone.</span></li>
-    <li><b>Oder: CACHE, den Clip öffnen, ANONYMISIEREN</b><span>Dann sieht niemand mehr ein Gesicht, und Vesper bekommt ihn nicht.</span>
-      <figure><img src="img/k1_anonym.png" alt="Der Clip-Editor: Kesslers Ring, anonymisiert"><figcaption>Anonymisiert: das Bild ein Mosaik, die Namen weg.</figcaption></figure></li>
+    <li><b>Zu Fuß zur Fischermann Street: Tür, Treppe, Haustür, Jade Row, das Tor am Ende. Das Schaf anklicken.</b><span>Er ist der Nachtverkäufer. Jede Nacht fehlt etwas, und die Kasse zieht es ihm ab. „Die Kamera hat alles gesehen. Aber die Kamera gehört der Kette, nicht mir.“</span></li>
+    <li><b>Den Putzroboter in der Pfütze links anklicken.</b><span>Juno setzt seine Karte mit dem Taschen-Deck zurück. Er fährt heim an seine Ladestation im Laden, und über sie ist CAM 26 verbunden.</span></li>
+    <li><b>Nach Hause, Deck, <kbd>GLASS</kbd>, CAM 26, <kbd>PUFFER</kbd>.</b><span>Um halb drei nimmt der Mann mit dem Einkaufswagen ein Sandwich, das morgen abläuft, und eine Dose. Der Clip liegt im CACHE.</span></li>
+    <li><b><kbd>CACHE</kbd>, den Clip öffnen, <kbd>MONTIEREN</kbd>.</b><span>Eine leere Schleife aus derselben Nacht liegt über ihm. Die anderen Wege: dem Schaf den echten Clip zeigen, oder ihn Sable für sechzig Chits verkaufen.</span></li>
+    <li><b>Zurück zum Schaf: „Ich hab nachgesehen. Da war keiner.“</b><span>„Dann bin ich's wohl selber. Im Schlaf.“ Gezeigt oder verkauft, ist am nächsten Abend der Gehweg geräumt.</span></li>
+    <li><b>Nebenbei: die Nudelbar ab 19:00 anklicken, und im Erdgeschoss des Wohnblocks Lerche den Automaten.</b><span>Der Koch sagt jeden Abend etwas zu den Nachrichten. Der Automat ist SUMP RUNNER, Mottes Spiel, umsonst: mit den Pfeilen oder einem Klick ins Raster das Kabel bis zur Lampe ziehen, bevor das Wasser steigt.</span></li>
   </ol>
 </section>
 
-<section class="weg" id="k1l">
-  <h2>Kapitel 1: Im LUCKY STATIC</h2>
-  <p class="matt">Nichts davon ist nötig. Von Mittwoch an jeden Abend: Kowalski-Straße, die Tür des LUCKY STATIC.</p>
-  <ol class="schritte">
-    <li><b>Mei hinter der Theke</b><span>Sie lässt Juno anschreiben und erzählt, was man hört; am Donnerstag vom Sohn des Fischmanns, der nicht aufgewacht ist.</span></li>
-    <li><b>Der Fernseher über der Theke</b><span>Nagi·was Nachrichten, jeden Abend andere.</span></li>
-    <li><b>Die üblichen zwei auf den Hockern</b><span>Er schläft, sie erzählt ihm trotzdem was.</span></li>
-    <li><b>Die Karaoke-Maschine</b><span>OUT OF ORDER, bis Mei sagt, wo man draufhauen muss. Drei Lieder; an jeder Lücke wählt man ein Wort, und ein falsches Reimwort kommentieren Mei oder die Stammgästin.</span></li>
-    <li><b>Frau Imai an ihrem Tisch</b><span>Ihre eigene Geschichte, siehe unten.</span></li>
-  </ol>
+<section class="weg neben geplant" id="k2i">
+  <h2><small>Kapitel 2 · Nebenweg · noch nicht gebaut</small>Frau Imai, zweiter Teil</h2>
+  <p class="matt">Nur, wenn Juno ihr in Kapitel 1 geantwortet hat.</p>
+  <div class="kasten"><b>Platzhalter.</b> Frau Imai hat wieder etwas gesehen, im Schlaf: eine Frau in Weiß auf einem Bahnsteig, und einen Mann, der zu ihr hochschaut. Samstag und Sonntag von 20 bis 23 Uhr im LUCKY STATIC; Juno sagt ihr die Wahrheit oder, dass es ein Traum war (<code>kapitel2-design</code> §6.1).</div>
 </section>
 
-<section class="weg" id="k1d">
-  <h2>Kapitel 1: Das Dach</h2>
-  <p class="matt">Nebenweg, nie nötig, an jedem Abend und schon im Prolog. Aufs Dach, wo Juno zuletzt mit Teo war.</p>
-  <ol class="schritte">
-    <li><b>Im Flur neben dem Aufzug den Notschlüssel anklicken.</b><span>Ein langer Haken. Juno nimmt ihn mit.</span></li>
-    <li><b>In der Wohnung den Karton anklicken.</b><span>Darin liegt Junos alter Nagi·wa-Ausweis. Er ist flach und hart, und sie steckt ihn ein.</span></li>
-    <li><b>Die Tasche öffnen, den Ausweis anklicken, dann das Fenster.</b><span>Der Riegel geht auf, und Juno steht draußen auf dem Sims.</span></li>
-    <li><b>Den Notschlüssel auf die Leiter.</b><span>Die Leiter kommt herunter, und Juno klettert aufs Dach.</span></li>
-    <li><b>Die Regenleserin anklicken.</b><span>Sie kostet den Regen und sagt, von welchem Ring er kommt, jeden Abend etwas anderes. Man kann sie alles fragen, und vieles davon zählt erst später.</span></li>
-    <li><b>Unser Platz, Die Ringe.</b><span>Eine Erinnerung an Teo, und der Blick nach oben zur Krone.</span></li>
-    <li><b>Zurück: die Leiter nach unten, dann das Fenster.</b></li>
-  </ol>
+<section class="weg neben geplant" id="k2h">
+  <h2><small>Kapitel 2 · Nebenweg · noch nicht gebaut</small>Frau Haldanes Sohn</h2>
+  <p class="matt">Ab Sonntag, dem Brieftag.</p>
+  <div class="kasten"><b>Platzhalter.</b> Frau Haldanes Sohn schreibt nicht mehr. Sable verkauft einen Blick ins Archiv seines Wohnheims im Fünften (CAM 51), und dort sieht Juno, was mit ihm geschehen ist. Dann die Wahl an ihrer Tür: die Wahrheit, ein montierter Clip (mit <kbd>MONTIEREN</kbd>, wie beim 24h-Laden) oder „Ich hab nichts gefunden.“ (<code>kapitel2-design</code> §6.2).</div>
 </section>
 
-<section class="weg" id="k1z">
-  <h2>Kapitel 1: Der Zeitungskrieg</h2>
-  <p class="matt">Nebenweg, mittwochs oder donnerstags. Auf dem Flur streiten 14C und 14A per Zettel, wer die Zeitung klaut.</p>
-  <ol class="schritte">
-    <li><b>Im Flur den Zettel anklicken.</b><span>WER KLAUT MEINE ZEITUNG?? Darunter: NIEMAND LIEST ZEITUNG.</span></li>
-    <li><b>Frau Haldanes offene Tür anklicken.</b><span>Sie schläft im Sessel. Hinter ihr liegt ein Stapel Zeitungen, und um jedes Gesicht darin sind vier kleine Ecken, so, wie Juno markiert.</span></li>
-    <li><b>Die Kamera über der Treppe anklicken, „Nur dieses eine Mal.“ wählen.</b><span>Den eigenen Block glasst man nicht. Juno tut es trotzdem: CAM 14 ist auf dem Deck.</span></li>
-    <li><b>Deck, <kbd>GLASS</kbd>, CAM 14, <kbd>VOR</kbd> bis 02:30, die Person im Morgenmantel anklicken.</b><span>Es ist Frau Haldane. Sie schläft und holt sich die Zeitungen, ihre eigene und die von 14A.</span></li>
-    <li><b>Zurück in den Flur, den Zettel ansehen (Rechtsklick).</b><span>Jetzt steht Junos Antwort darunter: ES IST NIEMAND. 14B.</span></li>
-  </ol>
+<section class="weg neben geplant" id="k2m">
+  <h2><small>Kapitel 2 · Nebenweg · noch nicht gebaut</small>Motte und das Backup</h2>
+  <p class="matt">Nur, wenn Juno ihn in Kapitel 1 unterrichtet hat.</p>
+  <div class="kasten"><b>Platzhalter.</b> Samstag oder Sonntag an seiner Bank im 14. Stock: „Darf ich EVI mal Hallo sagen?“ Er steckt seinen Tideboy an das Taschen-Deck. Was er gemacht hat, sagt niemand; in Kapitel 4 wird es wichtig (<code>kapitel2-design</code> §6.4).</div>
 </section>
 
-<section class="weg" id="k1i">
-  <h2>Kapitel 1: Frau Imai</h2>
-  <p class="matt">Nebenweg, ab Mittwoch. Eine Frau hat im Schlaf einen Mord gesehen, in einer Straße, in der sie nie war.</p>
-  <ol class="schritte">
-    <li><b>Deck, <kbd>CHAT</kbd>, R. IMAI.</b><span>Sie will wissen, ob sie verrückt ist, und sitzt abends im LUCKY STATIC.</span></li>
-    <li><b>Tür, Treppe, Haustür, das LUCKY STATIC, Frau Imai anklicken.</b><span>Sie erzählt von einer Treppe mit einem großen Fisch auf den Stufen, von links regnet es, und sie hat von oben draufgeschaut. Juno kennt die Treppe: CAM 18 am alten Fischmarkt.</span></li>
-    <li><b>Nach Hause, Deck, <kbd>GLASS</kbd>, CAM 18, <kbd>PUFFER</kbd>.</b><span>Ältere Nächte liegen im Archiv. Am 29. Oktober um 03:12 fällt einer die Treppe hinunter, genau so, wie sie es gesehen hat. Um die Zeit hat sie geschlafen.</span></li>
-    <li><b>Zurück ins LUCKY STATIC, Frau Imai: „Sie sind nicht verrückt.“ oder „Das war ein Traum.“</b><span>Die Wahrheit macht ihr Angst, und sie traut sich nicht mehr zu schlafen. Die Lüge lässt sie schlafen, und EVI weiß, dass es die Treppe gibt.</span></li>
-  </ol>
-</section>
-
-<section class="weg" id="k1t">
-  <h2>Kapitel 1: Die weißen Träger</h2>
-  <p class="matt">Nebenweg, nur Donnerstagnacht.</p>
-  <ol class="schritte">
-    <li><b>Am Deck <kbd>WARTEN</kbd> bis 23:30, dann auf die Kowalski-Straße.</b><span>Vor dem Haus gegenüber steht ein weißer Wagen ohne Schild. Zwei Leute in Weiß, sehr freundlich, tragen jemanden heraus, der schläft. In der Tür steht seine Tochter.</span>
-      <figure><img src="img/k1_traeger.png" alt="Die Nahaufnahme: der weiße Wagen, die Träger mit der Trage, das Mädchen in der Tür"><figcaption>Die Rollos gegenüber gehen runter.</figcaption></figure></li>
-    <li><b>Zusehen, Filmen oder „Zu dem Mädchen gehen.“</b><span>Wer filmt, kann den Clip später an Vesper verkaufen (400).</span></li>
-    <li><b>Nebenbei, jeden Abend: der Monteur auf dem Gerüst und der Prediger auf dem Drain-Markt.</b><span>Der eine repariert nur die linke Hälfte des großen Schirms, der andere ist seit neun Tagen wach. Jeden Abend sagen sie etwas anderes.</span></li>
-  </ol>
-</section>
-
-<footer>Stand: 15. November 2026. Alle Wege sind mit echten Klicks durchgespielt: das ganze Spiel vom Titelbild bis zum Ende von Kapitel 2 folgt <code>tools/paths/spiel.json</code>, Kapitel 2 allein <code>tools/paths/kapitel2_main.json</code>, Kapitel 1 allein <code>tools/paths/kapitel1_main.json</code>, Auftrag A <code>kapitel1_varga_sold.json</code>, Auftrag B <code>kapitel1_tide_sold.json</code>, Mottes Lektionen <code>kapitel1_motte.json</code>, Vesper <code>kapitel1_vesper.json</code>, das Dach <code>kapitel1_dach.json</code>, der Zeitungskrieg <code>kapitel1_zeitung.json</code>, Frau Imai <code>kapitel1_imai.json</code> und <code>kapitel1_imai_traum.json</code>, die weißen Träger <code>kapitel1_traeger.json</code>.</footer>
+<footer>Stand: 18. November 2026. Alle Wege sind mit echten Klicks durchgespielt: das ganze Spiel vom Titelbild bis zum Ende von Kapitel 2 folgt <code>tools/paths/spiel.json</code>, Kapitel 2 allein <code>tools/paths/kapitel2_main.json</code>, Lantern <code>kapitel2_lantern.json</code>, Auf Sendung <code>kapitel2_sendung.json</code>, die Fälschung <code>kapitel2_faelschung.json</code>, der 24h-Laden <code>kapitel2_laden.json</code>, Kapitel 1 allein <code>tools/paths/kapitel1_main.json</code>, Auftrag A <code>kapitel1_varga_sold.json</code>, Auftrag B <code>kapitel1_tide_sold.json</code>, Mottes Lektionen <code>kapitel1_motte.json</code>, Vesper <code>kapitel1_vesper.json</code>, das Dach <code>kapitel1_dach.json</code>, der Zeitungskrieg <code>kapitel1_zeitung.json</code>, Frau Imai <code>kapitel1_imai.json</code> und <code>kapitel1_imai_traum.json</code>, die weißen Träger <code>kapitel1_traeger.json</code>.</footer>
 </main>
 </body>
 </html>

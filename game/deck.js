@@ -45,7 +45,7 @@
     buch: { y: 30, row: 12 },
     radio: { y: 24, row: 15 },
     netz: { tabs: 24, tab: 37, title: 38, rows: 50, row: 13, back: 270, search: [34, 14, 114] },   // NETZ: the bookmarks, a page's title, its rows (a link each), SUCHE's buttons [y, row, column]                                // RADIO's stations, then AUS, then what the presenter says
-    clip: { pic: [82, 23, 96, 56], meta: 185, line: [84, 90, 224], tools: 137, anon: [48, 60], check: [112, 32] },   // the clip editor: picture, who/where, timeline, tools (ANONYMISIEREN, PRÜFEN: [after SCHNEIDEN, wide])
+    clip: { pic: [82, 23, 96, 56], meta: 185, line: [84, 90, 224], tools: 137, anon: [48, 60], check: [112, 32], montage: [148, 44] },   // the clip editor: picture, who/where, timeline, tools (ANONYMISIEREN, PRÜFEN, MONTIEREN: [after SCHNEIDEN, wide])
     map: [82, 22, 228, 124],                                  // GLASS's map inside the window
     camBox: 54,                                               // a camera's place on it, as wide as its longest line ("CODE BEKANNT"): keep the cameras this far apart
   };
@@ -54,7 +54,7 @@
     "abwesend", "schläft", "Werbung", "KASSENBUCH", "+{chits}", "KONTOSTAND", "MIETE", "{n} CHITS, FÄLLIG IN 3 TAGEN", "{n} CHITS, FÄLLIG IN 2 TAGEN", "{n} CHITS, FÄLLIG MORGEN", "{n} CHITS, FÄLLIG HEUTE", "{n} CHITS, BEZAHLT", "{n} CHITS, BEZAHLT VON TEO", "DAVON HÜLLENABGABE {n}",
     "BAO", "ANGESCHRIEBEN", "STEUER_2089_NICHT_ÖFFNEN.TXT", "ESSEN!!.TXT", "Noch nichts.", "…",
     "CACHE // {name}", "WO", "WANN", "LÄNGE", "WER", "{cam} // {place}", "{min} MIN", "SCHNEIDEN", "ANONYMISIEREN", "PRÜFEN", "MONTIEREN",
-    "SCHNITT {s} S", "GESCHNITTEN", "KAP. {n}", "ANONYMISIERT", "GLASSER-BRETT"]);
+    "SCHNITT {s} S", "GESCHNITTEN", "KAP. {n}", "ANONYMISIERT", "MONTIERT", "NIEMAND", "SCHLEIFE", "GLASSER-BRETT"]);
 
   // what is open is a view, not game state: the solver opens whatever window a move needs (engine state.view)
   Cutaway.state.view("deck_app");
@@ -69,11 +69,13 @@
   /** The clip editor's clips (docs/kapitel0-design.md §2.4), by cache id: the camera, the minutes it runs
    * (22:31 is 31), its moments and who is in it, what a cut keeps and makes (a new cache entry), the script
    * after the cut. A clip from another hour gives it (`hour`, 22 by default); one Juno filmed herself has no camera, only a place
-   * (`where`). Anonymising (from Chapter 1, while `anon.if` holds) blurs every face for good: the flag `anon_<cache id>`. PRÜFEN (Chapter 2)
+   * (`where`). Anonymising (from Chapter 1, while `anon.if` holds) blurs every face for good: the flag `anon_<cache id>`. Montage (Chapter 2,
+   * kapitel0-design §2.4: a fake Juno makes herself) lays an empty stretch of the same night over a moment (`montage.moment`): the flag
+   * `mont_<cache id>`, nobody in it any more. PRÜFEN (Chapter 2)
    * lays the clip beside another: `check` names the check it opens (Nagiwa.checks, game/pruefen.js). A clip without a picture of its own
    * (`thumb`) may draw one (`picture`).
    * @type {Record<string, {cam?: string, where?: string, hour?: number, from: number, to: number, thumb?: string, moments: [number, number, string][],
-   *   people: [string, number, number][], cut?: {moment: number, drop?: boolean, gives: string, if?: any, then?: any[]}, anon?: {if?: any, then?: any[]}, check?: string,
+   *   people: [string, number, number][], cut?: {moment: number, drop?: boolean, gives: string, if?: any, then?: any[]}, anon?: {if?: any, then?: any[]}, montage?: {moment: number, if?: any, then?: any[]}, check?: string,
    *   picture?: (ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number) => void}>} */
   Nagiwa.clips = {};
   /** what other files add to the deck's hotspots once everything is loaded (PRÜFEN, game/pruefen.js) @type {((hs: Record<string, any>) => void)[]} */
@@ -146,6 +148,13 @@
       hs[`clip_anon_${id}`] = { name: "Anonymisieren", rect: [X + 8 + D.clip.anon[0], D.clip.tools, D.clip.anon[1], 10], z: 5,
         if: [`deck_app=clip_${id}`, `!anon_${id}`, ...(clip.anon.if ? [].concat(clip.anon.if) : [])],
         use: [{ sfx: "glitch" }, { set: `anon_${id}` }, ...(clip.anon.then ?? [])] };
+    }
+    // montage: an empty stretch laid over the moment, in Juno's copy for good (its button after PRÜFEN)
+    for (const [id, clip] of Object.entries(Nagiwa.clips)) {
+      if (!clip.montage) continue;
+      hs[`clip_montage_${id}`] = { name: "Montieren", rect: [X + 8 + D.clip.montage[0], D.clip.tools, D.clip.montage[1], 10], z: 5,
+        if: [`deck_app=clip_${id}`, `!mont_${id}`, ...(clip.montage.if ? [].concat(clip.montage.if) : [])],
+        use: [{ sfx: "glitch" }, { set: `mont_${id}` }, ...(clip.montage.then ?? [])] };
     }
     // PRÜFEN: the check the clip opens, while it is awake (game/pruefen.js adds the check's own hotspots: Nagiwa.deckParts)
     for (const [id, clip] of Object.entries(Nagiwa.clips)) {
@@ -664,6 +673,7 @@
     if (!clip) return;
     const cam = clip.cam ? Nagiwa.cams[clip.cam] : null, cut = clip.cut && S().flag(`cache_${clip.cut.gives}`), anon = !!S().flag(`anon_${id}`);
     const anonOn = !!clip.anon && !anon && S().test(clip.anon.if);
+    const mont = !!S().flag(`mont_${id}`), montOn = !!clip.montage && !mont && S().test(clip.montage.if);
     // the picture: the moment the cut keeps, in the feed's phosphor, with the implant's tags
     const [px, py, pw, ph] = E.pic;
     rect(ctx, C.ink, px - 1, py - 1, pw + 2, ph + 2);
@@ -680,12 +690,13 @@
       ctx.restore();
       small(ctx, t("ANONYMISIERT"), px + pw / 2, py + ph - 7, "#d4f7e2", "center");
     }
+    if (mont) small(ctx, t("MONTIERT"), px + pw / 2, py + ph - 7, "#d4f7e2", "center");
     small(ctx, cam ? t("CAM {id}", { id: cam.id }) : t(clip.where ?? ""), px + 2, py + 2, "#d4f7e2");
     // where, when, how long, who
     const hh = String(clip.hour ?? 22).padStart(2, "0"), mm = (/** @type {number} */ m) => `${hh}:${String(Math.floor(m)).padStart(2, "0")}`;
     const meta = [["WO", cam ? t("{cam} // {place}", { cam: t("CAM {id}", { id: cam.id }), place: t(cam.place) }) : t(clip.where ?? "")],
       ["WANN", `${mm(clip.from)}-${mm(clip.to)}`], ["LÄNGE", t("{min} MIN", { min: `${Math.floor(clip.to - clip.from)}:${String(Math.round(((clip.to - clip.from) % 1) * 60)).padStart(2, "0")}` })],
-      ["WER", anon ? t("ANONYMISIERT") : clip.people.map(([who]) => t(Nagiwa.people[who]?.name ?? who)).join(", ")]];
+      ["WER", anon ? t("ANONYMISIERT") : mont ? t("NIEMAND") : clip.people.map(([who]) => t(Nagiwa.people[who]?.name ?? who)).join(", ")]];
     meta.forEach(([k, v], i) => { small(ctx, t(k), E.meta, py + 1 + i * 15, C.steel6); small(ctx, fit(v, X + WW - 6 - E.meta, hud()), E.meta, py + 8 + i * 15, C.cyanPale); });
     // the timeline: the minutes, the moments, who is in the picture when; the cut in brackets
     const [lx, ly, lw] = E.line, at = (/** @type {number} */ m) => Math.round(lx + (m - clip.from) / (clip.to - clip.from) * lw);
@@ -695,9 +706,10 @@
       const kept = clip.cut?.moment === i, gone = kept && clip.cut?.drop && cut;      // a moment taken out stays as a dark gap
       rect(ctx, gone ? C.steel1 : kept ? C.cyanDark : C.steel3, at(a) + 1, ly + 9, Math.max(1, at(b) - at(a) - 1), 9);
       // a moment too short for its name keeps it for the caption under the cut
-      if (!gone && hud().measure(t(label).toUpperCase()) + 5 <= at(b) - at(a)) small(ctx, t(label), at(a) + 3, ly + 11, kept ? C.cyanPale : C.steel6);
+      const shown = mont && clip.montage?.moment === i ? "SCHLEIFE" : label;            // a montaged moment: the empty stretch laid over it
+      if (!gone && hud().measure(t(shown).toUpperCase()) + 5 <= at(b) - at(a)) small(ctx, t(shown), at(a) + 3, ly + 11, kept ? C.cyanPale : C.steel6);
     });
-    clip.people.forEach(([who, a, b], i) => {
+    if (!mont) clip.people.forEach(([who, a, b], i) => {
       const y = ly + 21 + i * 8;
       small(ctx, anon ? "???" : t(Nagiwa.people[who]?.name ?? who), lx, y, C.steel6);
       rect(ctx, C.steel4, Math.max(at(a), lx + 34), y + 1, at(b) - Math.max(at(a), lx + 34), 3);
@@ -708,11 +720,11 @@
       small(ctx, `${t(label)}: ${t(cut ? "GESCHNITTEN" : "SCHNITT {s} S", { s: Math.round((b - a) * 60) })}`, Math.round((at(a) + at(b)) / 2), ly + 40, C.cyan, "center");
       rect(ctx, C.yellow, Math.round((at(a) + at(b)) / 2), ly + 2, 1, 36);                     // the playhead: where Juno looks
     }
-    // the tools: cutting from the prologue, anonymising from Chapter 1, checking from Chapter 2; montage comes later (locked). The first
-    // three have fixed places, as their hotspots do (the room's, D.clip.anon and .check)
+    // the tools: cutting from the prologue, anonymising from Chapter 1, checking and montage from Chapter 2 (montage only on a clip that
+    // offers it). Each has a fixed place, as its hotspot does (the room's, D.clip.anon, .check and .montage)
     let bx = X + 8;
     const checkOn = !!clip.check && Nagiwa.checkAwake(clip.check).every((c) => S().test(c));
-    const tools = /** @type {[string, boolean, number | null][]} */ ([["SCHNEIDEN", !!clip.cut && !cut && S().test(clip.cut.if), E.anon[0] - 4], ["ANONYMISIEREN", anonOn, E.anon[1]], ["PRÜFEN", checkOn, E.check[1]], ["MONTIEREN", false, null]]);
+    const tools = /** @type {[string, boolean, number | null][]} */ ([["SCHNEIDEN", !!clip.cut && !cut && S().test(clip.cut.if), E.anon[0] - 4], ["ANONYMISIEREN", anonOn, E.anon[1]], ["PRÜFEN", checkOn, E.check[1]], ["MONTIEREN", montOn, E.montage[1]]]);
     for (const [label, on, fixed] of tools) {
       const w = fixed ?? hud().measure(t(label)) + 8, r = [bx, E.tools, w, 10], hot = on && inRect(p.x, p.y, r), dim = !on;
       chamfer(ctx, bx, E.tools, w, 10, 2, hot ? C.cyanDark : on ? C.cyanDeep : C.steel1, dim ? C.steel3 : C.cyan, dim ? C.steel4 : C.cyanPale);

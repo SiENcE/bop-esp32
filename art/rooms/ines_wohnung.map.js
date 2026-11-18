@@ -45,7 +45,7 @@ ISO_MAPS.ines_wohnung = {
     { id: "shelves", kit: "iw_shelves", at: [1.65, 0], foot: [0.65, 0.32], h: 1.9 },
     { id: "bed", kit: "iw_bed", at: [2.45, 0.1], foot: [1.6, 1.0], h: 0.32 },
     { id: "armchair", kit: "iw_armchair", at: [4.75, 0.9], foot: [0.65, 0.6], h: 1.0 },   // a wingback (the user's model, 2026-11-18)
-    { id: "lamp", kit: "iw_arclamp", at: [5.55, 1.15], foot: [0.14, 0.14], h: 1.9, block: false },
+    { id: "lamp", kit: "iw_arclamp", at: [5.75, 0.7], foot: [0.14, 0.14], h: 1.9, block: false },
     { id: "plant", kit: "iw_plant", at: [5.9, 0.1], foot: [0.4, 0.4], h: 1.0 },
     { id: "desk", kit: "iw_desk", at: [0.04, 1.4], foot: [0.62, 1.4], h: 0.75 },   // her work table (the user's wish, 2026-11-18), the computer gone from it
     { id: "chair", kit: "iw_officechair", at: [0.78, 1.85], foot: [0.45, 0.45], h: 1.05 },
@@ -56,7 +56,7 @@ ISO_MAPS.ines_wohnung = {
     { id: "rail_end", kit: "iw_railing", at: [7.95, 0], foot: [0.05, 2.5], h: 1.0 },
     { id: "rail_near", kit: "iw_railing", at: [6.55, 2.45], foot: [1.45, 0.05], h: 1.0 },
     { id: "deckchair", kit: "iw_deckchair", at: [7.3, 1.5], foot: [0.5, 0.55], h: 0.8 },
-    { id: "herbs", kit: "iw_herbs", at: [6.6, 0.25], foot: [0.5, 0.25], h: 0.4 },   // a little out from under the railing (the user)
+    { id: "herbs", kit: "iw_herbs", at: [6.65, 0.4], foot: [0.5, 0.25], h: 0.4 },   // a little out from under the railing (the user)
   ],
   spots: {
     arrive: [0.5, 3.85, "se"], door: [0.4, 3.85, "nw"], fridge: [0.35, 0.95, "ne"], counter: [1.05, 0.95, "ne"], chair: [1.5, 2.3, "nw"],

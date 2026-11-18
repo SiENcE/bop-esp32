@@ -102,6 +102,9 @@ Nagiwa.at = {
     return { shift: S, exposure: 2.2, mic: L.spots.door_4b, door_4b: L.spots.door_4b, door_4b2: [L.spots.door_4b[0] + 14, L.spots.door_4b[1] + 6],
       stairs: L.spots.stairs, doorPoly: L.openingPolys.door_4b };
   })(),
+  // CAM 26 is the 24-hour shop's own picture under the feed's filter (one place, one picture, as CAM 25 is the landing's), the camera
+  // left out of its own picture (the side thread "Wer passt auf den Laden auf?", game/kapitel2_laden.js)
+  cam26: { exposure: 1.6 },
   // Weg_1 from above (art/rooms/weg1.px.js, its blocks: the street between the facades at y 120 and 290 from x 60, the arm to the gate
   // between x 790 and 930 down to y 505, what stands in the way in W1.OCC); Juno's sprite from above is anchored in its middle, so the
   // walk area keeps half her size from the facades. Spots face up, down, left or right
@@ -120,6 +123,7 @@ Nagiwa.at = {
     // [x, y, look, facing]); two people passing along the street and back; a delivery drone crossing high over it (px a second, ms it rests at each end)
     homelessAt: [504, 261], sheepAt: [665, 190],
     robotRing: [[180, 193], [192, 197], [194, 203], [180, 207], [166, 203], [166, 197]],
+    robotRounds: [[180, 207], [520, 207], [760, 214], [770, 246], [420, 246], [110, 236]],       // its round once it knows its way again
     queue: [[172, 257, "03", "down"], [188, 253, "07", "down"], [204, 256, "11", "left"], [221, 252, "14", "down"]],
     walkers: [{ look: "05", at: [90, 216], path: [[740, 228]], pause: 1200 }, { look: "12", at: [700, 168], path: [[110, 172]], pause: 2000 }],
     drone: { at: [70, 150], path: [[915, 176]], speed: 70, rest: 6000 },

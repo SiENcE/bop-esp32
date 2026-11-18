@@ -72,7 +72,8 @@ const SABLE_CLIP = [{ set: "e2", value: "sable" },
 Cutaway.dialog("sable", {
   main: [
     { text: "„Ich brauch den Code vom Morpheus, CAM 15.“", if: ["varga_step", "!code_cam15"], goto: "code", then: [S("Achtzig. Oder was, das achtzig wert ist.")] },
-    { text: "„Du hast Varga meinen Namen gegeben.“", then: [S("Verkauft. Geben tu ich nichts."), "Für wie viel?", S("Das kostet extra.")] },
+    // (Chapter 1's, where Varga's thread plays: in Chapter 2 its place is the 24-hour shop's clip, so no more than four show)
+    { text: "„Du hast Varga meinen Namen gegeben.“", if: "day<5", then: [S("Verkauft. Geben tu ich nichts."), "Für wie viel?", S("Das kostet extra.")] },
     { text: "„Was verkaufst du sonst?“", then: [S("Steht an der Wand. Namen, Adressen."), "Und Geheimnisse?", S("Frag. Fragen kostet schon.")] },
     // Chapter 2's decision 2 (kapitel2-design §3.6): Sable buys the clip and sells it on to Nagi·wa (the code above is Chapter 1's only)
     { text: "„Ich hab die Aufnahme aus der alten Metro.“", if: ["day>4", "cache_clip_ines_death", "!e2", "!off_main"], goto: "clip",
@@ -81,7 +82,14 @@ Cutaway.dialog("sable", {
         { if: "k1a=warned", then: [S("Varga redet. Tausend weniger.")] },
         { if: "forgery_proven", then: [{ if: "k1a=warned", then: [S("3000.")], else: [S("4000.")] }],
           else: [{ if: "k1a=warned", then: [S("2000.")], else: [S("3000.")] }] }] },
+    // the 24-hour shop's thread (kapitel2-design §6.5, game/kapitel2_laden.js): she buys the night's clip for the shop's chain
+    { text: "„Ich hab was aus einem 24h-Laden.“", if: ["day>4", "cache_clip_shop24", "!mont_clip_shop24", "!ledger_shop24", "!off_shop24"], goto: "shop24",
+      then: [S("Zeig."), "Der Mann mit dem Wagen, um halb drei. Und draußen schläft das Schaf, das auf den Laden aufpassen soll.", S("Die Kette zahlt für so was. Sechzig.")] },
     { text: "Bis dann.", silent: true, goto: "end" },
+  ],
+  shop24: [
+    { text: "„Verkauft.“", goto: "end", then: [{ ledger: "shop24", value: "sold" }, S("Nett."), "Die Kette sieht jetzt beide. Den, der nimmt, und den, der schläft."] },
+    { text: "„Noch nicht.“", goto: "main", then: [S("Sechzig. Morgen vielleicht noch fünfzig.")] },
   ],
   clip: [
     { text: "„Verkauft.“", if: "cache_clip_ines_cut", goto: "end", then: SABLE_CLIP },

@@ -66,8 +66,9 @@ const KIT_INES_WOHNUNG = (() => {
   ISOKIT.wall("iw_wall", (s, h, o) => {
     if (h < 0.08) return h >= 0.055 ? "4" : "1"
     const right = o.wall && o.wall.from[1] === o.wall.to[1]
-    // the posters gone: paler squares, a pin hole in each corner
-    for (const [s0, s1, h0, h1] of right ? [[0.95, 1.55, 1.35, 2.15], [1.65, 1.95, 1.55, 1.95]] : [[0.4, 1.0, 1.3, 2.0], [2.15, 2.6, 1.5, 2.1]]) {
+    // the posters gone: paler squares, a pin hole in each corner; only on the right back wall (the user took the left wall's out:
+    // over the desk it read as a hole)
+    for (const [s0, s1, h0, h1] of right ? [[0.95, 1.55, 1.35, 2.15], [1.65, 1.95, 1.55, 1.95]] : []) {
       if (s >= s0 && s < s1 && h >= h0 && h < h1) return (near(s, s0 + 0.03, 0.01) || near(s, s1 - 0.03, 0.01)) && (near(h, h0 + 0.03, 0.01) || near(h, h1 - 0.03, 0.01)) ? "2" : "4"
     }
     if (right) {
@@ -253,21 +254,29 @@ const KIT_INES_WOHNUNG = (() => {
     draw(pen, p) {
       const [u, v] = p.at
       pen.box(u, v, 0, 0.14, 0.14, 0.04, () => "H", () => "h", () => "G")                    // the marble foot, white with its veins
-      pen.box(u + 0.06, v + 0.06, 0.04, 0.02, 0.02, 1.85, () => "G", () => "g", () => "G")    // the pole, brushed steel
-      for (let t = 0; t <= 1; t += 0.04) {                                                  // the arc out over the armchair
-        const q = [u + 0.07 - t * 0.5, v + 0.07 + t * 0.2, 1.9 + Math.sin(t * Math.PI) * 0.25 - t * 0.35], [x, y] = pen.P(...q)
-        pen.at(q[0], q[1], q[2], null); pen.px(x, y, "G")
-      }
-      const [x, y] = pen.P(u - 0.43, v + 0.27, 1.5)
-      pen.at(u - 0.43, v + 0.27, 1.5, null)
-      pen.grid(x - 3, y - 1, ["..GG..", ".GHHG.", "gg12gg"])                                // the shade, off, its bulb dark
+      pen.box(u + 0.055, v + 0.055, 0.04, 0.03, 0.03, 1.85, () => "G", () => "g", () => "G")  // the pole, brushed steel
+      // the arc out over the armchair, two pixels thick, lit along its top
+      const arc = (t) => [u + 0.07 - t * 0.5, v + 0.07 + t * 0.2, 1.89 + Math.sin(t * Math.PI) * 0.25 - t * 0.34]
+      for (let t = 0; t <= 1; t += 0.01) { const q = arc(t), [x, y] = pen.P(...q); pen.at(...q, null); pen.px(x, y, "H"); pen.px(x, y + 1, "g") }
+      pen.at(null)
+      // the shade hanging from its end: brushed steel, narrow at the top, wide at the rim, the bulb dark under it (off)
+      const [eu, ev, eh] = arc(1)
+      pen.box(eu - 0.03, ev - 0.03, eh - 0.06, 0.06, 0.06, 0.06, () => "H", () => "G", () => "H")
+      pen.box(eu - 0.09, ev - 0.09, eh - 0.16, 0.18, 0.18, 0.1, (lu, lv) => (lu + lv < 0.12 ? "H" : "G"), (a2, e) => (e === 0 ? "g" : "G"), (a2, e) => (e === 0 ? "g" : "H"))
+      pen.box(eu - 0.03, ev - 0.03, eh - 0.19, 0.06, 0.06, 0.03, () => "2", () => "1", () => "2")
       pen.at(null)
     },
   })
   ISOKIT.prop("iw_officechair", {
     draw(pen, p) {
       const [u, v] = p.at, [du, dv] = p.foot, cu = u + du / 2, cv = v + dv / 2
-      for (let i = 0; i < 5; i++) { const t = i / 5 * Math.PI * 2; pen.box(cu + Math.cos(t) * 0.18 - 0.02, cv + Math.sin(t) * 0.18 - 0.02, 0, 0.04, 0.04, 0.06, () => "1", () => "1", () => "1") }
+      // the star base: five struts out from the column, a caster under each end
+      for (let i = 0; i < 5; i++) {
+        const t = i / 5 * Math.PI * 2, eu = Math.cos(t) * 0.19, ev = Math.sin(t) * 0.19
+        for (let k = 0; k <= 1; k += 0.05) { const q = [cu + eu * k, cv + ev * k, 0.07], [x, y] = pen.P(...q); pen.at(...q, null); pen.px(x, y, "3"); pen.px(x, y + 1, "1") }
+        pen.box(cu + eu - 0.02, cv + ev - 0.02, 0, 0.04, 0.04, 0.05, () => "1", () => "k", () => "1")
+      }
+      pen.at(null)
       pen.box(cu - 0.03, cv - 0.03, 0.06, 0.06, 0.06, 0.38, () => "5", () => "3", () => "4")   // the column
       pen.box(u + 0.03, v + 0.03, 0.44, du - 0.06, dv - 0.06, 0.08, () => "2", () => "1", () => "2")   // the seat, black
       pen.box(u + du - 0.08, v + 0.05, 0.52, 0.05, dv - 0.1, 0.5, () => "2", () => "1", (a, e, o) => (e === o.ah - 1 || a === 0 || a === o.aw - 1 ? "3" : (a + e) % 2 ? "2" : "1"))   // the back, mesh in its frame

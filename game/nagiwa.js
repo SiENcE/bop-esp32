@@ -4,6 +4,7 @@
 //   tag_<who>        a person she has tagged in a feed
 //   code_<cam>       she knows a camera's access code; link_<cam>: it is linked
 //   cache_<id>       a clip or note in her cache (the deck's inventory)
+//   anon_<id>, mont_<id>  a clip in her cache anonymised (every face blurred), montaged (an empty stretch over a moment): for good
 //   ledger_<id>      an entry in the Kassenbuch (its value picks the text in Nagiwa.ledger)
 //   rec_on           the REC button of the feeds is pressed
 "use strict";
@@ -86,7 +87,7 @@ Cutaway.script.action("tag", async (s) => {
 }, { sets: (s) => [`tag_${s.tag}`] });
 
 // { solo: true } says which threads tools/solve-act.mjs can shut, one flag each (--set off_roof); in the game they stay open
-Cutaway.script.action("solo", () => {}, { sets: () => ["off_main", "off_roof", "off_zeitung", "off_imai", "off_traeger", "off_varga", "off_tide", "off_motte", "off_vesper", "off_lantern", "off_dryer", "off_klinik", "off_flat"] });
+Cutaway.script.action("solo", () => {}, { sets: () => ["off_main", "off_roof", "off_zeitung", "off_imai", "off_traeger", "off_varga", "off_tide", "off_motte", "off_vesper", "off_lantern", "off_dryer", "off_klinik", "off_flat", "off_shop24"] });
 
 // { been_to: ["flat", ...] } rooms Juno knows already, when a chapter begins (nobody asks; each one left open would double the solver's states)
 Cutaway.script.action("been_to", (s) => { for (const room of s.been_to) Cutaway.state.visit(room); });
