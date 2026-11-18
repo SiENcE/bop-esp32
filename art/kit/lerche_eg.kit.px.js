@@ -5,7 +5,7 @@
 //
 //   floor    x  the hall's old terrazzo, wet footprints from the street door in the south-east corner toward the stairs
 //   openings le_door (a street door of wood and wired glass; not used while the door is a gap in the near wall), le_mailboxes (twelve, one with its name taped over)
-//   props    le_pram (a pram parked by the stairs: 4C's child), le_bike (a bicycle chained to a pipe)
+//   props    le_pram (a pram parked by the stairs: 4C's child), le_arcade (a SUMP RUNNER cabinet, playable)
 
 const KIT_LERCHE_EG = (() => {
   const near = (x, c, w = 1 / 48) => Math.abs(x - c) < w, fl = Math.floor, ih = ISO.ihash
@@ -13,10 +13,10 @@ const KIT_LERCHE_EG = (() => {
   ISOKIT.floor("x", (u, v) => {
     // wet footprints from the street door (in the south-east corner, u 7.3 to 8.2) toward the stairs
     for (let i = 0; i < 9; i++) {
-      const t = i / 8, fu = 7.6 - t * 3.4, fv = 2.6 - t * 0.5 + (i % 2 ? 0.07 : -0.07)
+      const t = i / 8, fu = 7.6 - t * 3.0, fv = 3.6 - t * 0.9 + (i % 2 ? 0.07 : -0.07)
       if (Math.hypot(u - fu, (v - fv) * 1.6) < 0.06) return i < 4 ? "2" : "3"
     }
-    if (u > 7.25 && u < 8.25 && v > 2.45) return ih(fl(u * 20), fl(v * 20)) < 0.35 ? "e" : "f"   // the wet patch inside the door
+    if (u > 7.25 && u < 8.25 && v > 3.45) return ih(fl(u * 20), fl(v * 20)) < 0.35 ? "e" : "f"   // the wet patch inside the door
     return ih(fl(u * 30), fl(v * 30)) < 0.08 ? "Z" : near(u % 1, 0, 1 / 40) || near(v % 1, 0, 1 / 40) ? "f" : "z"   // terrazzo, its brass strips
   })
 
@@ -63,19 +63,27 @@ const KIT_LERCHE_EG = (() => {
       pen.box(u + 0.1, v + dv - 0.2, 0.9, du - 0.2, 0.04, 0.04, () => "6", () => "5", () => "6")         // the bar
     },
   })
-  // a bicycle chained to the pipe on the wall: two wheels, its frame, the chain
-  ISOKIT.prop("le_bike", {
-    draw(pen, p) {
-      const [u, v] = p.at, [du] = p.foot
-      for (const cu of [u + 0.3, u + du - 0.3]) {
-        const [x, y] = pen.P(cu, v + 0.1, 0.33); pen.at(cu, v + 0.1, 0.33, "u")
-
-        for (let t = 0; t < 6.3; t += 0.25) pen.px(Math.round(x + Math.cos(t) * 9), Math.round(y + Math.sin(t) * 10), "4")
+  // a SUMP RUNNER cabinet (the arcade game of Jade Row and the alley's ad; the user's wish: Juno can play it), its back to the north wall:
+  // a dark body with magenta stripes down its sides, the lit marquee on top, the screen toward the room with the little diver on it, the
+  // control panel with its stick and two buttons, the coin door's lit slot; its screen runs through its attract loop
+  ISOKIT.prop("le_arcade", {
+    frames: 12,
+    draw(pen, p, f) {
+      const [u, v] = p.at, [du, dv] = p.foot, H = p.h
+      const side = (a, e, o) => (a < 2 || a > o.aw - 3 ? "M" : "1")
+      const front = (a, e, o) => {
+        if (e > o.ah - 7) return e > o.ah - 2 ? "1" : "!m"
+        if (e > o.ah * 0.48 && e < o.ah - 9 && a > 2 && a < o.aw - 3) {
+          const sx = a - 3, sy = o.ah - 10 - e
+          if (sy === 6 && sx > 3 && sx < 6) return "!y"
+          if (sy > 12 && (sx + f) % 5 === 0) return "!c"
+          return f % 6 === 5 && sy < 3 ? "!V" : "!v"
+        }
+        return a < 2 || a > o.aw - 3 ? "M" : "1"
       }
-      const [a, ay] = pen.P(u + 0.3, v + 0.1, 0.33), [b, by] = pen.P(u + du - 0.3, v + 0.1, 0.33), [c, cy] = pen.P(u + du * 0.45, v + 0.1, 0.75)
-      pen.at(u + du / 2, v + 0.1, 0.5, "u"); pen.line(a, ay, c, cy, "U"); pen.line(c, cy, b, by, "U"); pen.line(a, ay, b, by, "u")
-      pen.line(b, by, b - 2, by - 14, "u"); pen.hline(b - 5, by - 14, 6, "4")
-      pen.at(null)
+      pen.box(u, v, 0, du, dv - 0.2, H, () => "2", side, front)
+      pen.box(u, v + dv - 0.2, 0.85, du, 0.2, 0.08, (lu, lv) => (Math.hypot(lu - du * 0.3, lv - 0.1) < 0.04 ? "1" : Math.hypot(lu - du * 0.65, lv - 0.1) < 0.035 ? "!q" : Math.hypot(lu - du * 0.8, lv - 0.1) < 0.035 ? "!y" : "3"), () => "2", () => "3")
+      pen.box(u + 0.05, v + dv - 0.2, 0, du - 0.1, 0.2, 0.85, () => "2", () => "1", (a, e, o) => (e === o.ah - 2 && a > 3 && a < o.aw - 4 ? "!Q" : "1"))
     },
   })
   return {}

@@ -8,6 +8,8 @@ include("../rooms/lerche_eg.map.js")
 include("../lib/isokit.js")
 include("../kit/kessel_lobby.kit.px.js", { palette: true })
 include("../kit/lerche_flur.kit.px.js", { palette: true })
+include("../kit/kessel_14.kit.px.js", { palette: true })
+include("../kit/klinik.kit.px.js")
 include("../kit/lerche_eg.kit.px.js")
 
 const LERCHE_EG = ISOKIT.bake(ISO_MAPS.lerche_eg, { id: "lerche_eg", frames: 12, fps: 10 })

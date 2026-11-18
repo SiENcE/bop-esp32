@@ -695,9 +695,11 @@ voller alter Bildschirme, einer zeigt noch Rauschen, (5) zum Lachen: Lulls Masko
 schläft, seine Flyer um ihn auf dem Boden, (6) ebenfalls zum Lachen: ein Putzroboter, der in einer Pfütze im Kreis fährt und piept,
 (7) Dampf aus einem Gully, (8) Müllsäcke, (9) das Tor zur Jade Row am Fuß des Arms. Dazu das **Erdgeschoss** des Wohnblocks als Iso-Raum
 `lerche_eg` (Block, `docs/rooms/lerche_eg_blocks_*`), nach dem Plan des Nutzers und seiner Wahl (2026-11-18) über das ganze Haus,
-8,5 x 3 m, gesehen aus Südosten: an der Nordwand weit im Nordwesten der Aufzug, der fährt, im Nordosten des Flurteils die Treppe nach
+8,5 x 4 m (nach Süden einen Meter tiefer, vom Nutzer gewünscht, damit die Treppe nicht vor der Wand endet), gesehen aus Südosten: an der Nordwand weit im Nordwesten der Aufzug, der fährt, im Nordosten des Flurteils die Treppe nach
 oben, die der Lobby des Kessel-Blocks in ihren Maßen (vom Nutzer so gewünscht: was ähnlich ist, wird wiederverwendet), östlich davon unter
-Ines' Wohnung die Briefkästen (4B mit rotem Band überklebt), das Brett und die Flyer der Kessel-Lobby, ein Fahrrad am Rohr angekettet, der Kinderwagen von 4C; die Haustür in der Südost-Ecke als Lücke in der vorderen Wand, das Neon
+Ines' Wohnung die Briefkästen (4B mit rotem Band überklebt), das Brett und die Flyer der Kessel-Lobby, darüber NINTH LIVE in Neon (das
+aus dem 14. Stock), ein Spielautomat SUMP RUNNER statt des Fahrrads (vom Nutzer gewünscht: man soll ihn wirklich spielen können, ein
+Minispiel; noch nicht gebaut), an der Westwand Lulls Schirm aus der Klinik, der Kinderwagen von 4C; die Haustür in der Südost-Ecke als Lücke in der vorderen Wand, das Neon
 von Weg_1 fällt herein, nasse Fußspuren von dort zur Treppe. Juno kann Treppe oder Aufzug nehmen; beide stehen oben im Flur an derselben
 Stelle. Auf Weg_1 nimmt der Wohnblock die ganze Nordseite ein, seine Haustür liegt dort, wo der Arm zur Jade Row abbiegt. Offen: wo die Klinik liegt (der Plan hat sie an der Querstraße, das Spiel erreicht sie durch
 dasselbe Tor), und ob man den Fischmarkt betreten kann.

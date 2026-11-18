@@ -11,7 +11,7 @@
 // The hud font is capitals only: TXT upper-cases text for it, as the game does.
 include("../../game/glyphs.js")
 
-const TXT = {
+var TXT = {                                                                        // (var: kits that each include this file can be baked together)
   LINE: { nagiwa: 10, hud: 7 },
   /** @param {string} s @param {string} [font] */
   measure(s, font = "nagiwa") {

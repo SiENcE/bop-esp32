@@ -12,7 +12,7 @@
 "use strict";
 
 /** @type {{nagiwa: Record<string, string[] | {dy: number, rows: string[]}>, hud: Record<string, string[] | {dy: number, rows: string[]}>}} */
-const NAGIWA_GLYPHS = (function () {
+var NAGIWA_GLYPHS = (function () {     // (var: the art includes it once per kit that writes text)
   /** @param {string} s rows separated by spaces */
   const g = (s) => s.split(" ");
   /** @param {number} dy @param {string} s */
