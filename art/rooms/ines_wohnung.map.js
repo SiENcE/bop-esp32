@@ -25,7 +25,7 @@ ISO_MAPS.ines_wohnung = {
     "mmmmmmmmmmmmm...",
   ],
   walls: [
-    { from: [0, 0], to: [6.5, 0], h: 2.6, kit: "iw_wall" },          // 0: the right back wall (kitchen, shelf, the windows)
+    { from: [0, 0], to: [6.5, 0], h: 2.6, kit: "iw_wall", end: "flush" },   // 0: the right back wall (kitchen, shelf, the windows); it ends where the balcony begins
     { from: [0, 0], to: [0, 4.5], h: 2.6, kit: "iw_wall" },          // 1: the left back wall (the socket, the door)
     { from: [0, 4.5], to: [6.5, 4.5], h: 2.6, kit: "iw_wall", stub: true },
     { from: [6.5, 2.5], to: [6.5, 4.5], h: 2.6, kit: "iw_wall", stub: true },
@@ -44,7 +44,7 @@ ISO_MAPS.ines_wohnung = {
     { id: "counter", kit: "iw_counter", at: [0.6, 0], foot: [0.9, 0.6], h: 0.9 },
     { id: "shelves", kit: "iw_shelves", at: [1.65, 0], foot: [0.65, 0.32], h: 1.9 },
     { id: "bed", kit: "iw_bed", at: [2.45, 0.1], foot: [1.6, 1.0], h: 0.32 },
-    { id: "armchair", kit: "iw_armchair", at: [4.75, 0.9], foot: [0.65, 0.6], h: 0.85 },
+    { id: "armchair", kit: "iw_armchair", at: [4.75, 0.9], foot: [0.65, 0.6], h: 1.0 },   // a wingback (the user's model, 2026-11-18)
     { id: "lamp", kit: "iw_arclamp", at: [5.55, 1.15], foot: [0.14, 0.14], h: 1.9, block: false },
     { id: "plant", kit: "iw_plant", at: [5.9, 0.1], foot: [0.4, 0.4], h: 1.0 },
     { id: "chair", kit: "iw_officechair", at: [0.75, 1.15], foot: [0.45, 0.45], h: 1.05 },

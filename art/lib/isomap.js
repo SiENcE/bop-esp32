@@ -10,7 +10,8 @@
 //   screen: [w, h]      the picture's size (the room may be bigger than the screen: it scrolls)
 //   walls: [{ from: [u, v], to: [u, v], h, kit, stub }]
 //                       a wall on a line of constant u or v; its inner face is the one toward the viewer
-//                       (+u or +v); `stub`: a near wall cut to the slab (drawn a few px high)
+//                       (+u or +v); `stub`: a near wall cut to the slab (drawn a few px high); `end: "flush"`: a back wall ends at
+//                       its `to` with its end in section, instead of reaching over the corner of a wall that meets it (where none does)
 //   openings: [{ wall: i, from, to, h: [h0, h1], kit, id }]
 //                       a door or a window in wall i, from..to meters along it
 //   props: [{ id, kit, at: [u, v], foot: [du, dv], h, block }]

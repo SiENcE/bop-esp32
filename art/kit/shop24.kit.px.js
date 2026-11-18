@@ -80,7 +80,7 @@ const KIT_SHOP24 = (() => {
     draw(pen, p) {
       const [u, v] = p.at, [du, dv] = p.foot
       pen.box(u, v, 0, du, dv, 0.02, (lu, lv) => ((Math.floor(lu * 10) + Math.floor(lv * 10)) % 2 ? "4" : "6"), () => "3", () => "3")   // the plate
-      pen.box(u + du - 0.12, v, 0, 0.12, dv, 0.3, () => "4", () => "3", (a, e) => (e > 6 && e < 9 && a > 2 && a < 6 ? "!v" : "2"))     // the dock, its light
+      pen.box(u, v, 0, 0.12, dv, 0.3, () => "4", (a, e) => (e > 6 && e < 9 && a > 2 && a < 6 ? "!v" : "3"), () => "2")     // the dock in the corner, its light to the plate (turned, the user's wish)
     },
   })
   ISOKIT.prop("sh_bin", {

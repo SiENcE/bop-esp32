@@ -582,13 +582,17 @@ const ISOKIT = (() => {
           return
         }
         const ops = (map.openings ?? []).filter((o) => o.wall === wi).map((o) => openings[o.id])
-        // the wall's body: its cut top (thickness outward), its cut end toward the viewer
+        // the wall's body: its cut top (thickness outward), its cut end toward the viewer. It reaches a wall's thickness past its end,
+        // over the corner of the wall that meets it there; `end: "flush"` (no wall meets it, only a stub or the open air of a balcony)
+        // ends it at its end, the end cut in section as its top is (the user saw a dark pillar there, 2026-11-18)
+        const ext = w.end === "flush" ? 0 : thick
+        const endKey = (o, dark) => (o.h < slab ? "1" : w.end === "flush" ? cap(false) : dark)
         if (alongU) {
-          G.top(B, a0 - thick, fix - thick, a1 + thick, fix, w.h, (u, v) => cap(v > fix - 0.07))
-          G.faceU(B, a1 + thick, fix - thick, fix, -slab, w.h, (a, e, o) => (o.h < slab ? "1" : "3"), "u")
+          G.top(B, a0 - thick, fix - thick, a1 + ext, fix, w.h, (u, v) => cap(v > fix - 0.07))
+          G.faceU(B, a1 + ext, fix - thick, fix, -slab, w.h, (a, e, o) => endKey(o, "3"), "u")
         } else {
-          G.top(B, fix - thick, a0 - thick, fix, a1 + thick, w.h, (u, v) => cap(u > fix - 0.07))
-          G.faceV(B, a1 + thick, fix - thick, fix, -slab, w.h, (a, e, o) => (o.h < slab ? "1" : "2"), "v")
+          G.top(B, fix - thick, a0 - thick, fix, a1 + ext, w.h, (u, v) => cap(u > fix - 0.07))
+          G.faceV(B, a1 + ext, fix - thick, fix, -slab, w.h, (a, e, o) => endKey(o, "2"), "v")
         }
         // the inner face: the wall's kit, the openings over it
         const shade = (s, h, o) => {

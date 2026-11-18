@@ -18,7 +18,7 @@ ISO_MAPS.shop24 = {
     "ssssssssss",
   ],
   walls: [
-    { from: [0, 0], to: [5, 0], h: 2.6, kit: "sh_wall" },          // 0: the north wall, the glass front onto the street
+    { from: [0, 0], to: [5, 0], h: 2.6, kit: "sh_wall", end: "flush" },   // 0: the north wall, the glass front onto the street
     { from: [0, 0], to: [0, 4], h: 2.6, kit: "sh_wall" },          // 1: the west wall, the fridges
     { from: [0, 4], to: [5, 4], h: 2.6, kit: "sh_wall", stub: true },
     { from: [5, 0], to: [5, 4], h: 2.6, kit: "sh_wall", stub: true },

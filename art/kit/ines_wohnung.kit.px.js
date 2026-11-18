@@ -17,7 +17,7 @@
 //   props    iw_fridge (old, white, yellowed, rust at its foot; the freezer on top; the napkin under a magnet on its door), iw_counter
 //            (two cupboards, a worktop of pale stone, an espresso machine of chrome, a cup), iw_shelves (real wood, empty, the dust's
 //            outlines of what stood there, one cup left), iw_bed (a low platform bed of oak, the mattress bare with its quilting, the
-//            bedding pulled off onto the floor), iw_armchair (cognac leather, creased, worn pale on the arms), iw_arclamp (a designer's
+//            bedding pulled off onto the floor), iw_armchair (a wingback in cognac leather, creased, worn pale on the arms), iw_arclamp (a designer's
 //            arc lamp over the armchair, off), iw_officechair (an ergonomic chair before the clean square, its mesh), iw_plant (a big
 //            plant in a glazed pot, its leaves hanging, two fallen and yellow), iw_box (a cardboard box tipped over, its tape torn)
 //            iw_railing, iw_deckchair (its wooden slats dark with rain), iw_herbs (two pots: one gone to seed, white flowers)
@@ -200,17 +200,26 @@ const KIT_INES_WOHNUNG = (() => {
     },
   })
   ISOKIT.prop("iw_armchair", {
+    // a wingback armchair in cognac leather (the user's model, 2026-11-18): its back to the window, facing into the room; four dark legs,
+    // the seat's cushion worn pale where she sat, the tall back with its wings standing forward at the top, rolled arms under them.
+    // Drawn back to front: the far parts first, the near ones over them
     draw(pen, p) {
-      const [u, v] = p.at, [du, dv] = p.foot
-      // its back to the window, facing into the room (the user found it hard to read turned the other way, 2026-11-18)
-      const crease = (a, e) => (Math.sin(a * 1.3 + e * 0.8) > 0.88 ? "O" : null)
-      pen.box(u + 0.04, v + 0.04, 0, du - 0.08, dv - 0.08, 0.08, () => "1", () => "1", () => "1")   // its feet in the shadow
-      pen.box(u + 0.04, v + 0.04, 0.4, du - 0.08, 0.15, 0.5, (lu, lv) => (lv < 0.04 ? "Q" : "P"), (a, e) => crease(a, e) ?? "O",
-        (a, e, o) => ((a + e * 2) % 9 === 0 && e > 4 && e < o.ah - 3 && a > 3 && a < o.aw - 3 ? "O" : crease(a, e) ?? "P"))   // the back, its buttons
-      pen.box(u + 0.04, v + 0.04, 0.08, du - 0.08, dv - 0.08, 0.32,
-        (lu, lv) => (Math.hypot(lu - du / 2, lv - dv * 0.6) < 0.13 ? "Q" : "P"),            // the seat, worn pale where she sat
-        (a, e) => crease(a, e) ?? "O", (a, e) => crease(a, e) ?? "P")
-      for (const a of [0.04, du - 0.18]) pen.box(u + a, v + 0.04, 0.4, 0.14, dv - 0.08, 0.2, (lu, lv) => (lv > dv - 0.2 ? "Q" : "P"), (a2, e) => crease(a2, e) ?? "O", () => "Q")   // the arms, worn to pale at their ends
+      const [u, v] = p.at, [du, dv] = p.foot, H = p.h, A = 0.13                             // A: an arm's (and a wing's) width
+      const crease = (a, e) => (Math.sin(a * 1.3 + e * 0.8) > 0.9 ? "O" : null)
+      for (const [lu, lv] of [[0.06, 0.06], [du - 0.1, 0.06], [0.06, dv - 0.1], [du - 0.1, dv - 0.1]]) pen.box(u + lu, v + lv, 0, 0.04, 0.04, 0.1, () => "1", () => "k", () => "1")
+      // the back, tall, the light on its front, its buttons
+      pen.box(u + 0.03, v + 0.03, 0.1, du - 0.06, 0.15, H - 0.1, (lu) => (lu < 0.05 || lu > du - 0.11 ? "R" : "Q"), (a, e) => crease(a, e) ?? "O",
+        (a, e, o) => (e > o.ah * 0.45 && (a + e * 2) % 9 === 0 && a > 3 && a < o.aw - 3 ? "O" : crease(a, e) ?? "P"))
+      // the far arm and wing (west), the seat, then the near arm and wing (east)
+      const side = (lu) => {
+        pen.box(u + lu, v + 0.12, 0.1, A, dv - 0.15, 0.48, (x, y) => (y > dv - 0.24 ? "R" : "Q"), (a, e) => crease(a, e) ?? "O", () => "P")   // the arm, rolled, its front worn pale
+        pen.box(u + lu, v + 0.12, 0.58, A, 0.2, H - 0.68, () => "Q", (a, e) => crease(a, e) ?? "O", () => "P")                            // the wing over it
+      }
+      side(0.03)
+      pen.box(u + 0.03 + A, v + 0.16, 0.1, du - 0.06 - 2 * A, dv - 0.19, 0.3,
+        (lu, lv) => (Math.hypot(lu - (du - 0.06 - 2 * A) / 2, lv - (dv - 0.19) * 0.55) < 0.1 ? "R" : near(lv, dv - 0.2, 0.025) ? "P" : "Q"),   // the cushion, worn where she sat
+        (a, e) => crease(a, e) ?? "O", (a, e) => (e === 3 ? "O" : "P"))
+      side(du - 0.03 - A)
     },
   })
   ISOKIT.prop("iw_arclamp", {
