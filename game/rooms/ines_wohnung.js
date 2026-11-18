@@ -17,7 +17,7 @@
       armchair: { name: "Sessel", poly: A.armchairPoly, walkTo: A.armchair, face: "ne", look: ["Ein Ledersessel, abgewetzt an den Lehnen. Darüber eine Lampe, die mehr gekostet hat als meine Miete.", "Hier hat sie gelesen. Papier, nicht Bildschirm."] },
       counter: { name: "Küchenzeile", poly: A.counterPoly, walkTo: A.counter, face: "ne", look: ["Eine Espressomaschine aus Chrom, in einer Wohnung im Neunten.", "Sie hatte Geld. Sie hat nur nichts gezeigt, was man sieht."] },
       chair: { name: "Stuhl", poly: A.chairPoly, walkTo: A.chair, face: "nw", look: ["Ein guter Stuhl vor einem leeren Tisch.", "Die Kabel an der Steckdose sind abgeschnitten. Die hatten es eilig."] },
-      desk: { name: "Schreibtisch", poly: A.deskPoly, walkTo: A.chair, face: "nw", look: ["Ihr Schreibtisch. Im Staub sind drei saubere Rechtecke: zwei Bildschirme und eine Tastatur.", "Den Rechner haben sie mitgenommen. Die Schublade steht offen, und drin ist nichts mehr."] },
+      desk: { name: "Schreibtisch", poly: A.deskPoly, walkTo: A.chair, face: "nw", look: ["Ihr Schreibtisch. Im Staub sind saubere Rechtecke: der Rechner, zwei Bildschirme, die Tastatur.", "Den Rechner haben sie mitgenommen. Die Schublade steht offen, und drin ist nichts mehr."] },
       window2: { name: "Fenster", poly: A.window2Poly, walkTo: A.window2, face: "ne", look: "Draußen ist das Licht der Straße, kalt und blau." },
       view: { name: "Geländer", poly: A.rail_backPoly, walkTo: A.view, face: "ne", z: 1,
         look: ["Von hier sieht man über die Dächer bis aufs Wasser.", { zoom: "look_balkon" }, "Dahinter ist der Sumpf. Da brennen zwei grüne Lichter, wo eigentlich keiner wohnt.", { zoom: false }] },

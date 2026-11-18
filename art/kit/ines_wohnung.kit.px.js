@@ -18,8 +18,8 @@
 //            outlines of what stood there, one cup left), iw_bed (a low platform bed of oak, the mattress bare with its quilting, the
 //            bedding pulled off onto the floor), iw_armchair (a wingback in cognac leather, creased, worn pale on the arms), iw_arclamp (a designer's
 //            arc lamp over the armchair, off), iw_desk (her work table by the left wall, the user's
-//            wish 2026-11-18: an oak top on steel legs, a pedestal of drawers pulled open; on the top the clean squares in the dust where
-//            the computer and its screens stood), iw_officechair (an ergonomic chair before the desk, its mesh), iw_plant (a big
+//            wish 2026-11-18: an oak top on steel legs, a pedestal of drawers pulled open; on the top the clean rectangles in the dust where
+//            the computer, its two screens and the keyboard stood), iw_officechair (an ergonomic chair before the desk, its mesh), iw_plant (a big
 //            plant in a glazed pot, its leaves hanging, two fallen and yellow), iw_box (a cardboard box tipped over, its tape torn)
 //            iw_railing, iw_deckchair (its wooden slats dark with rain), iw_herbs (two pots: one gone to seed, white flowers)
 pal({ "ĝ": "#3e5a3a", "Ĝ": "#5f7d4a", "ŵ": "#8a8678" })
@@ -208,15 +208,18 @@ const KIT_INES_WOHNUNG = (() => {
       const pv = v + dv - 0.34
       pen.box(u + 0.04, pv, 0, du - 0.1, 0.3, H - T - 0.02, () => "3", (a, e, o) => (e % fl(o.ah / 3) === 0 ? "2" : a === fl(o.aw / 2) && e % fl(o.ah / 3) === fl(o.ah / 6) ? "6" : "3"),
         (a, e, o) => (e % fl(o.ah / 3) === 0 ? "2" : "3"))
-      pen.box(u + 0.06, pv + 0.3, H - T - 0.2, du - 0.14, 0.16, 0.14, () => "1", () => "2", () => "3")   // the drawer pulled out, nothing in it
-      // the top: oak, dust on it but where the computer and two screens stood, the cable's way to the back edge
+      pen.box(u + du - 0.07, pv + 0.04, H - T - 0.17, 0.17, 0.22, 0.12, () => "1", (a, e, o) => (a === fl(o.aw / 2) && e === fl(o.ah / 2) ? "6" : "3"), () => "2")   // the top drawer pulled out toward the chair, nothing in it
+      // the top: oak, dust on it but where the computer and two screens stood, the cable's way to the back edge (laid out on the middle
+      // of the top, whatever its length)
+      const m = dv / 2
       pen.box(u, v, H - T, du, dv, T, (lu, lv) => {
         const box = (u0, v0, u1, v1) => lu > u0 && lu < u1 && lv > v0 && lv < v1
         const edge = (u0, v0, u1, v1) => box(u0, v0, u1, v1) && !box(u0 + 0.02, v0 + 0.02, u1 - 0.02, v1 - 0.02)
-        if (edge(0.06, 0.06, 0.3, 0.36) || edge(0.06, 0.4, 0.3, 0.7) || edge(0.36, 0.12, 0.5, 0.64)) return "O"   // the outlines in the dust
-        if (box(0.06, 0.06, 0.3, 0.36) || box(0.06, 0.4, 0.3, 0.7) || box(0.36, 0.12, 0.5, 0.64)) return "A"      // two screens, the keyboard
-        if (near(lv, 0.38, 0.012) && lu < 0.12) return "1"                                     // the cable's mark to the back
-        return ih(fl(lu * 60), fl(lv * 60)) < 0.4 ? "A" : "ŵ"                                   // the dust, the oak through it
+        const S1 = [0.06, m - 0.34, 0.3, m - 0.04], S2 = [0.06, m + 0.0, 0.3, m + 0.3], KB = [0.36, m - 0.26, 0.5, m + 0.24], PC = [0.06, dv - 0.32, 0.4, dv - 0.08]
+        if ([S1, S2, KB, PC].some((r) => edge(...r))) return "O"                              // the outlines in the dust
+        if ([S1, S2, KB, PC].some((r) => box(...r))) return "A"                               // two screens, the keyboard, the computer
+        if (near(lv, m - 0.02, 0.012) && lu < 0.12) return "1"                                 // the cable's mark to the back
+        return ih(fl(lu * 60), fl(lv * 60)) < 0.18 ? "A" : "ŵ"                                   // the dust, the oak through it
       }, oak, oak)
       leg(0.03, dv - 0.08); leg(du - 0.08, dv - 0.08)
     },

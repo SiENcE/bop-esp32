@@ -47,8 +47,8 @@ ISO_MAPS.ines_wohnung = {
     { id: "armchair", kit: "iw_armchair", at: [4.75, 0.9], foot: [0.65, 0.6], h: 1.0 },   // a wingback (the user's model, 2026-11-18)
     { id: "lamp", kit: "iw_arclamp", at: [5.55, 1.15], foot: [0.14, 0.14], h: 1.9, block: false },
     { id: "plant", kit: "iw_plant", at: [5.9, 0.1], foot: [0.4, 0.4], h: 1.0 },
-    { id: "desk", kit: "iw_desk", at: [0.04, 0.95], foot: [0.6, 0.85], h: 0.75 },   // her work table (the user's wish, 2026-11-18), the computer gone from it
-    { id: "chair", kit: "iw_officechair", at: [0.75, 1.15], foot: [0.45, 0.45], h: 1.05 },
+    { id: "desk", kit: "iw_desk", at: [0.04, 1.4], foot: [0.62, 1.4], h: 0.75 },   // her work table (the user's wish, 2026-11-18), the computer gone from it
+    { id: "chair", kit: "iw_officechair", at: [0.78, 1.85], foot: [0.45, 0.45], h: 1.05 },
     { id: "box", kit: "iw_box", at: [1.3, 3.0], foot: [0.5, 0.4], h: 0.35 },
     // the balcony: the railing round it (along its back edge, its right end, its near edge: it blocks, so Juno keeps off it and the floor's
     // edge), a folding chair, two pots of herbs
@@ -59,7 +59,7 @@ ISO_MAPS.ines_wohnung = {
     { id: "herbs", kit: "iw_herbs", at: [6.6, 0.25], foot: [0.5, 0.25], h: 0.4 },   // a little out from under the railing (the user)
   ],
   spots: {
-    arrive: [0.5, 3.85, "se"], door: [0.4, 3.85, "nw"], fridge: [1.0, 0.9, "nw"], counter: [1.05, 0.95, "ne"], chair: [1.5, 1.9, "nw"],
+    arrive: [0.5, 3.85, "se"], door: [0.4, 3.85, "nw"], fridge: [0.35, 0.95, "ne"], counter: [1.05, 0.95, "ne"], chair: [1.5, 2.3, "nw"],
     shelves: [1.95, 0.75, "ne"], bed: [3.25, 1.55, "ne"], window: [3.05, 1.5, "ne"], window2: [5.1, 1.9, "ne"], armchair: [4.4, 1.9, "se"],
     plant: [6.0, 0.95, "ne"], box: [1.7, 3.6, "ne"], balcony_door: [6.1, 1.6, "se"], balcony: [7.0, 0.85, "ne"], view: [7.4, 0.7, "ne"],
   },
