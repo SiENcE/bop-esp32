@@ -19,7 +19,7 @@
       chair: { name: "Stuhl", poly: A.chairPoly, walkTo: A.chair, face: "nw", look: ["Ein Stuhl vor nichts.", "Davor ist ein heller Fleck auf dem Boden. Da stand der Rechner, und den haben sie mitgenommen.", "Die Kabel an der Steckdose sind abgeschnitten. Die hatten es eilig."] },
       window2: { name: "Fenster", poly: A.window2Poly, walkTo: A.window2, face: "ne", look: "Draußen ist das Licht der Straße, kalt und blau." },
       view: { name: "Geländer", poly: A.rail_backPoly, walkTo: A.view, face: "ne", z: 1,
-        look: ["Von hier sieht man über die Dächer bis aufs Wasser.", "Dahinter ist der Sumpf. Da brennen zwei grüne Lichter, wo eigentlich keiner wohnt."] },
+        look: ["Von hier sieht man über die Dächer bis aufs Wasser.", { zoom: "look_balkon" }, "Dahinter ist der Sumpf. Da brennen zwei grüne Lichter, wo eigentlich keiner wohnt.", { zoom: false }] },
       deckchair: { name: "Klappstuhl", poly: A.deckchairPoly, walkTo: A.balcony, face: "se", look: "Ein Klappstuhl, nass vom Regen. Hier hat sie gesessen und rausgeschaut." },
       herbs: { name: "Kräuter", poly: A.herbsPoly, walkTo: A.balcony, face: "ne", look: "Zwei Töpfe mit Kräutern. Der Basilikum ist schon in die Blüte gegangen." },
       shelves: { name: "Regal", poly: A.shelvesPoly, walkTo: A.shelves, face: "ne", look: ["Ein Regal aus echtem Holz, leer. Nur eine Tasse haben sie stehen lassen.", "Was hier stand, ist jetzt in einer Kiste von Civic Rest."] },

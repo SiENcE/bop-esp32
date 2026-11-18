@@ -22,8 +22,8 @@ ISO_MAPS.lerche_eg = {
     "xxxxxxxxxxxxxxxxx",
   ],
   walls: [
-    { from: [0, 0], to: [8.5, 0], h: 2.6, kit: "lf_wall" },        // 0: the north wall (the lift, the stairs, the mailboxes, the board)
-    { from: [0, 0], to: [0, 4], h: 2.6, kit: "lf_wall" },          // 1: the west wall (Lull's screen)
+    { from: [0, 0], to: [8.5, 0], h: 2.6, kit: "lf_wall", marks: { hands: [1.45, 1.8], stain: [7.7, 0.9] } },   // 0: the north wall (the lift, the stairs, the mailboxes, the board)
+    { from: [0, 0], to: [0, 4], h: 2.6, kit: "lf_wall", marks: { crack: 0.75, ghost: [3.35, 1.3, 0.36, 0.46] } },   // 1: the west wall (Lull's screen)
     // the south wall toward Weg_1, cut: the street door's gap in the south-east corner
     { from: [0, 4], to: [7.3, 4], h: 2.6, kit: "lf_wall", stub: true },
     { from: [8.2, 4], to: [8.5, 4], h: 2.6, kit: "lf_wall", stub: true },

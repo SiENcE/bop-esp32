@@ -22,13 +22,13 @@ ISO_MAPS.lerche_flur = {
     "qqqqqq",
   ],
   walls: [
-    { from: [0, 0], to: [3, 0], h: 2.6, kit: "lf_wall" },        // 0: the east wall, running south (4B, the meters)
-    { from: [0, 0], to: [0, 4], h: 2.6, kit: "lf_wall" },        // 1: the north wall, running west (the stairwell, the lift)
+    { from: [0, 0], to: [3, 0], h: 2.6, kit: "lf_wall", marks: { stain: [0.55, 0.8], hands: [1.38, 1.6] } },   // 0: the east wall, running south (4B, the meters)
+    { from: [0, 0], to: [0, 4], h: 2.6, kit: "lf_wall", marks: { crack: 2.15, ghost: [1.65, 1.4, 0.36, 0.46] } },   // 1: the north wall, running west (the stairwell, the lift)
     { from: [0, 4], to: [3, 4], h: 2.6, kit: "lf_wall", stub: true },
     { from: [3, 0], to: [3, 4], h: 2.6, kit: "lf_wall", stub: true },
   ],
   openings: [
-    { id: "door_4b", wall: 0, from: 1.6, to: 2.45, h: [0, 2.05], kit: "lf_door", sealed: true },
+    { id: "door_4b", wall: 0, from: 1.6, to: 2.45, h: [0, 2.05], kit: "lf_door", sealed: true, label: "4B" },
     { id: "meters", wall: 0, from: 2.55, to: 2.95, h: [1.0, 1.9], kit: "lf_meters" },
     { id: "lift", wall: 1, from: 2.6, to: 3.3, h: [0, 2.05], kit: "lf_lift", floor: 4 },
     { id: "tube", wall: 1, from: 1.6, to: 3.4, h: [2.42, 2.48], kit: "neon_tube" },
