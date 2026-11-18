@@ -154,13 +154,20 @@ const KIT_INES_WOHNUNG = (() => {
     draw(pen, p) {
       const [u, v] = p.at, [du, dv] = p.foot, H = p.h
       const grain = (a, e) => (Math.sin(e * 0.9 + a * 0.2) > 0.85 ? "O" : "A")
+      pen.box(u, v, 0, du, 0.02, H, () => "A", () => "O", () => "O")                        // the back panel
       pen.box(u, v, 0, 0.03, dv, H, () => "A", grain, grain)
-      pen.box(u + du - 0.03, v, 0, 0.03, dv, H, () => "A", grain, grain)
-      // the boards: on each the dust's outline of what stood there, books in a row, a frame
-      for (let i = 0; i < 5; i++) pen.box(u + 0.03, v, 0.06 + i * 0.44, du - 0.06, dv, 0.03,
+      // the boards: on each the dust's outline of what stood there
+      for (let i = 0; i < 5; i++) pen.box(u + 0.03, v + 0.02, 0.06 + i * 0.44, du - 0.06, dv - 0.02, 0.03,
         (lu, lv) => (lv < dv - 0.04 && ((i % 2 === 0 && lu > 0.05 && lu < 0.4 && lv > 0.05) || (i === 3 && lu > 0.45 && lu < 0.55)) ? (near(lu, 0.05, 0.015) || near(lu, 0.4, 0.015) ? "a" : "O") : "A"),
         () => "a", () => "O")
+      // what the Quiet left (they took the computers and the papers): a few books leaning, a stack lying flat, a box, a vase, one cup
+      const SPINES = ["q", "C", "P", "G", "M", "4", "Q"]
+      for (let b = 0; b < 5; b++) pen.box(u + 0.42 + b * 0.035, v + 0.06, 0.09, 0.03, 0.2, 0.26 - (b % 3) * 0.03, () => "h", () => "1", () => SPINES[b])   // books on the lowest board
+      for (let b = 0; b < 3; b++) pen.box(u + 0.06, v + 0.06, 0.53 + b * 0.04, 0.3 - b * 0.03, 0.22, 0.04, () => SPINES[b + 3], () => "W", () => SPINES[b + 3])   // a stack lying flat
+      pen.box(u + 0.38, v + 0.08, 0.97, 0.2, 0.18, 0.14, () => "G", () => "g", (a, e) => (e === 6 && a > 2 && a < 8 ? "h" : "G"))   // a box with a label
+      pen.box(u + 0.1, v + 0.1, 1.41, 0.08, 0.08, 0.2, () => "1", () => "t", () => "T")      // a vase, empty
       pen.box(u + du * 0.7, v + 0.08, 0.95, 0.08, 0.08, 0.1, () => "h", () => "G", (a, e) => (e === 3 && a > 1 ? "q" : "H"))   // one cup left, a red band on it
+      pen.box(u + du - 0.03, v, 0, 0.03, dv, H, () => "A", grain, grain)                    // the right side last, so it covers the boards' ends
     },
   })
   ISOKIT.prop("iw_counter", {
@@ -195,14 +202,15 @@ const KIT_INES_WOHNUNG = (() => {
   ISOKIT.prop("iw_armchair", {
     draw(pen, p) {
       const [u, v] = p.at, [du, dv] = p.foot
+      // its back to the window, facing into the room (the user found it hard to read turned the other way, 2026-11-18)
       const crease = (a, e) => (Math.sin(a * 1.3 + e * 0.8) > 0.88 ? "O" : null)
-      pen.box(u, v, 0, du, dv, 0.08, () => "1", () => "1", () => "1")                      // its feet in the shadow
-      pen.box(u + 0.05, v + 0.05, 0.08, du - 0.1, dv - 0.1, 0.32,
-        (lu, lv) => (lu > du * 0.6 ? "P" : Math.hypot(lu - du * 0.35, lv - dv * 0.5) < 0.14 ? "Q" : "O"),   // the seat, worn pale where she sat
+      pen.box(u + 0.04, v + 0.04, 0, du - 0.08, dv - 0.08, 0.08, () => "1", () => "1", () => "1")   // its feet in the shadow
+      pen.box(u + 0.04, v + 0.04, 0.4, du - 0.08, 0.15, 0.5, (lu, lv) => (lv < 0.04 ? "Q" : "P"), (a, e) => crease(a, e) ?? "O",
+        (a, e, o) => ((a + e * 2) % 9 === 0 && e > 4 && e < o.ah - 3 && a > 3 && a < o.aw - 3 ? "O" : crease(a, e) ?? "P"))   // the back, its buttons
+      pen.box(u + 0.04, v + 0.04, 0.08, du - 0.08, dv - 0.08, 0.32,
+        (lu, lv) => (Math.hypot(lu - du / 2, lv - dv * 0.6) < 0.13 ? "Q" : "P"),            // the seat, worn pale where she sat
         (a, e) => crease(a, e) ?? "O", (a, e) => crease(a, e) ?? "P")
-      pen.box(u + du - 0.18, v + 0.05, 0.4, 0.13, dv - 0.1, 0.45, (lu, lv) => (lu < 0.04 ? "Q" : "P"), (a, e) => crease(a, e) ?? "O",
-        (a, e, o) => ((a + e) % 7 === 0 && e > 3 && e < o.ah - 3 ? "O" : "P"))             // the back, its buttons
-      for (const b of [0.05, dv - 0.17]) pen.box(u + 0.05, v + b, 0.4, du - 0.2, 0.12, 0.18, (lu) => (lu < 0.12 ? "Q" : "P"), () => "O", () => "O")   // the arms, worn to pale at their ends
+      for (const a of [0.04, du - 0.18]) pen.box(u + a, v + 0.04, 0.4, 0.14, dv - 0.08, 0.2, (lu, lv) => (lv > dv - 0.2 ? "Q" : "P"), (a2, e) => crease(a2, e) ?? "O", () => "Q")   // the arms, worn to pale at their ends
     },
   })
   ISOKIT.prop("iw_arclamp", {

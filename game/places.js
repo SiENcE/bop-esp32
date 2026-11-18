@@ -117,12 +117,12 @@ Nagiwa.at = {
     steamPoly: [361, 206, 370, 203, 379, 206, 382, 215, 379, 224, 370, 227, 361, 224, 358, 215], robotPoly: [173, 196, 176, 193, 184, 193, 187, 196, 187, 204, 184, 207, 176, 207, 173, 204],
     // the street's life (design §7) and the 24-hour shop's thread (§6.5), on blocks: the homeless man and the sheep as sprites over the
     // picture (their top left); the robot going round its puddle (no hole: it moves, and steps aside); the queue at the noodle bar from 19:00 (the market's people from above,
-    // [x, y, look, facing]); two people passing along the street and back; a delivery drone crossing high over it
+    // [x, y, look, facing]); two people passing along the street and back; a delivery drone crossing high over it (px a second, ms it rests at each end)
     homelessAt: [504, 261], sheepAt: [665, 190],
     robotRing: [[180, 193], [192, 197], [194, 203], [180, 207], [166, 203], [166, 197]],
     queue: [[172, 257, "03", "down"], [188, 253, "07", "down"], [204, 256, "11", "left"], [221, 252, "14", "down"]],
     walkers: [{ look: "05", at: [90, 216], path: [[740, 228]], pause: 1200 }, { look: "12", at: [700, 168], path: [[110, 172]], pause: 2000 }],
-    drone: { at: [70, 150], path: [[915, 176]] },
+    drone: { at: [70, 150], path: [[915, 176]], speed: 70, rest: 6000 },
   },
   // Kowalski Street (art/rooms/kowalski.map.js, game/rooms/kowalski.layout.js)
   kowalski: {

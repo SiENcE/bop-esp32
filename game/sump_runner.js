@@ -19,8 +19,10 @@
   const JUNO = "JUNO";
   Cutaway.i18n.declare("sump runner", ["PRESS START", "GAME OVER", "LIGHTS ON", "DROWNED", "LEVEL", "SCORE", "HI-SCORE", "START",
     "EXIT", JUNO]);
-  const LINES = Cutaway.i18n.declare("sump runner", ["Motte hätte gelacht.", "Platz zwei hinter Motte. Das erzähl ich ihm nicht.",
-    "Ich hab Motte geschlagen. Das glaubt er mir nie."]);
+  // no new best: the first; a new best: by the place it takes on the table (1 to 5: past Motte, behind him, past Bao, past K9, last)
+  const LINES = Cutaway.i18n.declare("sump runner", ["Motte hätte gelacht.", "Ich hab Motte geschlagen. Das glaubt er mir nie.",
+    "Platz zwei hinter Motte. Das erzähl ich ihm nicht.", "Platz drei. Das wird Bao nicht gefallen.", "Platz vier. Wenigstens bin ich vor K9.",
+    "Ganz unten, sogar hinter K9. Motte hätte gelacht."]);
 
   /** a small random of its own, so a house is the same each time it is tried again @param {number} seed */
   const rng = (seed) => () => { seed = (seed + 0x6d2b79f5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
@@ -133,13 +135,14 @@
     else if (G.phase === "drowned") restart();
   }
 
-  /** what Juno says at the end of a game: a new best is kept (a view), and it is measured against Motte's */
+  /** what Juno says at the end of a game: a new best is kept (a view), and she says the place it takes on the table */
   async function over(/** @type {any} */ ctx) {
     const best = Number(Cutaway.state.flag("sump_best") ?? 0);
     if (G.score <= best || G.score === 0) return Cutaway.script.exec([LINES[0]], ctx);
     G.best = true;
     await Cutaway.script.exec([{ set: "sump_best", value: G.score }], ctx);
-    return Cutaway.script.exec([G.score > TABLE[0][1] ? LINES[2] : LINES[1]], ctx);
+    const place = 1 + TABLE.filter(([, s]) => s >= G.score).length;
+    return Cutaway.script.exec([LINES[place]], ctx);
   }
 
   // { sump: "left" | "right" | "up" | "down" | "grid" | "start" } plays: an arrow or a click on the grid (one step towards the cell clicked:

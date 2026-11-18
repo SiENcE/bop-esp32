@@ -21,8 +21,6 @@
       ...A.queue.map((/** @type {any} */ [x, y, nn, dir]) => ({ costume: { idle: Nagiwa.top(`statist_${nn}_idle`) }, at: [x, y], facing: dir, turns: false, if: "time>=19:00" })),
       ...A.walkers.map((/** @type {any} */ w) => ({ costume: { idle: Nagiwa.top(`statist_${w.look}_idle`), walk: Nagiwa.top(`statist_${w.look}_walk`) },
         at: w.at, path: w.path, loop: "back", speed: [30, 30], pause: w.pause })),
-      { costume: { idle: "weg1_drone", walk: "weg1_drone" }, at: A.drone.at, path: A.drone.path, loop: "back", speed: [70, 70], pause: 6000,
-        lit: false, turns: false, notice: 0, give: 0, side: 0 },
     ],
     fx: [
       { kind: "rain", rect: [0, 0, A.size[0], A.size[1]], count: 160, color: "#41547a", speed: 160, slant: 0.15, length: 3 },
@@ -49,5 +47,15 @@
       lerche: { name: "Wohnblock Lerche", rect: A.lercheRect, walkTo: A.lerche, face: "up",
         look: ["Die Haustür vom Wohnblock Lerche. Neben der Klingel sitzt das Zahlenfeld.", "Und die Linse, durch die ich in CAM 24 schaue."] },
     },
+  });
+
+  // the delivery drone flies over everyone and waits for nobody: not an extra (those keep to the floor and wait for the way to clear) but
+  // drawn after the room, over all of it, back and forth along its line with a rest at each end
+  Cutaway.events.on("scene.drawn", (/** @type {CanvasRenderingContext2D} */ ctx) => {
+    if (Cutaway.scene.room?.id !== "weg1") return;
+    const [[x0, y0], [x1, y1]] = [A.drone.at, A.drone.path[0]], go = Math.hypot(x1 - x0, y1 - y0) / A.drone.speed * 1000, rest = A.drone.rest;
+    const t = Cutaway.clock.time % (2 * (go + rest)), leg = t < go + rest ? t : t - go - rest, k = Math.min(1, leg / go), there = t >= go + rest;
+    const f = there ? 1 - k : k;
+    Cutaway.assets.draw(ctx, "weg1_drone", Math.round(x0 + (x1 - x0) * f), Math.round(y0 + (y1 - y0) * f), { t: Cutaway.clock.time });
   });
 })();

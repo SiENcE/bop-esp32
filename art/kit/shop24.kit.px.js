@@ -8,7 +8,7 @@
 //            glass door, its push bar), sh_fridges (drink fridges in a row along the wall, their cyan light, the cans)
 //   props    sh_counter (the counter with the register), sh_shelf (a row of shelves, both sides full); for the side thread (design §6.5,
 //            blocks 2026-11-18): sh_cam (CAM 26's dome on its arm over the register, its red light), sh_dock (the cleaning robot's
-//            charging dock under the window by the door, its plate on the floor, a cyan light), sh_bin (a wire bin of cheap tins
+//            charging dock on the north wall in the corner by the fridges, its plate on the floor, a cyan light), sh_bin (a wire bin of cheap tins in the corner
 //            with a card on a stick: after the robbery Okonkwo's, his old price under the new)
 // Keys "!k" are never lit.
 

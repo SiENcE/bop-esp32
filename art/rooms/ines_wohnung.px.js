@@ -14,10 +14,11 @@ include("../kit/ines_wohnung.kit.px.js", { palette: true })
 // on the lines of the approved block, as the look over the railing (art/ui/look_balkon.px.js) shows it close.
 const IW_VIEW = (c) => {
   const f = c.frame ?? 0, B = INES_WOHNUNG.BG[f], [W, H] = ISO_MAPS.ines_wohnung.screen, X0 = 360, bay = ISO.bay, ih = ISO.ihash
+  const FILL = 330                                                                          // from here every pixel the bake left empty (the user saw a hole between the wall's end and X0)
   const back = (x) => 86 + (x - 160) / 2                                                    // the balcony's back edge (v 0) on the screen
   const crown = (x) => 129 - Math.round(ih(x >> 1, 7) * 3 + Math.sin(x / 5) * 1.5)           // the drowned forest's crowns against the haze
   const roof = (x) => (x < X0 + 22 ? 160 : x < X0 + 41 ? 166 : x < X0 + 58 ? 157 : 163)      // the roofs of the Ninth stepping down
-  for (let y = 0; y < H; y++) for (let x = X0; x < W; x++) {
+  for (let y = 0; y < H; y++) for (let x = FILL; x < W; x++) {
     if (B.k[y * W + x]) continue
     let k
     if (y > back(x)) k = (x * 5 + y * 11) % 47 === 0 ? "P" : y % 7 === 0 ? "e" : "k"            // below the balcony: the street far down
