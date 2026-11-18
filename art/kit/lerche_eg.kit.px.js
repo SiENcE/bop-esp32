@@ -3,21 +3,20 @@
 // art/kit/lerche_flur.kit.px.js, the flight up from the Kessel's lobby kit). Registered with ISOKIT (art/lib/isokit.js has the calls), drawn
 // in room meters, lit by the bake; keys of the world palette (art/lib/iso.js). A kit's names are global in a bake: keep this one's prefixed.
 //
-//   floor    x  the hall's old terrazzo, wet footprints from the street door in
-//   openings le_door (the street door: wood and wired glass, Weg_1's neon blurred behind it, the keypad's glow beside it outside),
-//            le_mailboxes (twelve, one with its name taped over), le_board (the house rules and a lost cat)
-//   props    le_pram (a pram parked under the mailboxes: 4C's child), le_flyers (Lull flyers on the floor)
+//   floor    x  the hall's old terrazzo, wet footprints from the street door in the south-east corner toward the stairs
+//   openings le_door (a street door of wood and wired glass; not used while the door is a gap in the near wall), le_mailboxes (twelve, one with its name taped over), le_board (the house rules and a lost cat)
+//   props    le_pram (a pram parked by the stairs: 4C's child), le_flyers (Lull flyers on the floor), le_bike (a bicycle chained to a pipe)
 
 const KIT_LERCHE_EG = (() => {
   const near = (x, c, w = 1 / 48) => Math.abs(x - c) < w, fl = Math.floor, ih = ISO.ihash
 
   ISOKIT.floor("x", (u, v) => {
-    // wet footprints from the door (on the left wall, v 0.9 to 1.9) into the room
-    for (let i = 0; i < 7; i++) {
-      const t = i / 6, fu = 0.3 + t * 2.4, fv = 1.4 - t * 0.6 + (i % 2 ? 0.08 : -0.08)
-      if (Math.hypot((u - fu) * 1.6, v - fv) < 0.06) return i < 3 ? "2" : "3"
+    // wet footprints from the street door (in the south-east corner, u 7.3 to 8.2) toward the stairs
+    for (let i = 0; i < 9; i++) {
+      const t = i / 8, fu = 7.6 - t * 3.4, fv = 2.6 - t * 0.5 + (i % 2 ? 0.07 : -0.07)
+      if (Math.hypot(u - fu, (v - fv) * 1.6) < 0.06) return i < 4 ? "2" : "3"
     }
-    if (u < 0.5 && v > 0.95 && v < 1.85) return ih(fl(u * 20), fl(v * 20)) < 0.35 ? "e" : "f"   // the wet patch inside the door
+    if (u > 7.25 && u < 8.25 && v > 2.45) return ih(fl(u * 20), fl(v * 20)) < 0.35 ? "e" : "f"   // the wet patch inside the door
     return ih(fl(u * 30), fl(v * 30)) < 0.08 ? "Z" : near(u % 1, 0, 1 / 40) || near(v % 1, 0, 1 / 40) ? "f" : "z"   // terrazzo, its brass strips
   })
 
@@ -73,6 +72,21 @@ const KIT_LERCHE_EG = (() => {
       pen.box(u + 0.1, v + dv - 0.2, 0.52, 0.03, 0.03, 0.4, () => "5", () => "4", () => "5")              // the handle's arms
       pen.box(u + du - 0.13, v + dv - 0.2, 0.52, 0.03, 0.03, 0.4, () => "5", () => "4", () => "5")
       pen.box(u + 0.1, v + dv - 0.2, 0.9, du - 0.2, 0.04, 0.04, () => "6", () => "5", () => "6")         // the bar
+    },
+  })
+  // a bicycle chained to the pipe on the wall: two wheels, its frame, the chain
+  ISOKIT.prop("le_bike", {
+    draw(pen, p) {
+      const [u, v] = p.at, [du] = p.foot
+      for (const cu of [u + 0.3, u + du - 0.3]) {
+        const [x, y] = pen.P(cu, v + 0.1, 0.33); pen.at(cu, v + 0.1, 0.33, "u")
+
+        for (let t = 0; t < 6.3; t += 0.25) pen.px(Math.round(x + Math.cos(t) * 9), Math.round(y + Math.sin(t) * 10), "4")
+      }
+      const [a, ay] = pen.P(u + 0.3, v + 0.1, 0.33), [b, by] = pen.P(u + du - 0.3, v + 0.1, 0.33), [c, cy] = pen.P(u + du * 0.45, v + 0.1, 0.75)
+      pen.at(u + du / 2, v + 0.1, 0.5, "u"); pen.line(a, ay, c, cy, "U"); pen.line(c, cy, b, by, "U"); pen.line(a, ay, b, by, "u")
+      pen.line(b, by, b - 2, by - 14, "u"); pen.hline(b - 5, by - 14, 6, "4")
+      pen.at(null)
     },
   })
   ISOKIT.prop("le_flyers", {

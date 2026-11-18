@@ -5,7 +5,7 @@
 (function () {
   const A = Nagiwa.at.lerche_eg;
   Cutaway.room("lerche_eg", {
-    name: "Wohnblock Lerche", background: "lerche_eg_bg",
+    name: "Wohnblock Lerche", background: "lerche_eg_bg", size: /** @type {[number, number]} */ ([400, 272]),
     walk: A.walk, holes: A.holes, props: A.props,
     light: { ambient: 0.8, lamps: A.lamps.map((/** @type {any} */ { bake, zone, ...lamp }) => lamp) },
     hotspots: {},
