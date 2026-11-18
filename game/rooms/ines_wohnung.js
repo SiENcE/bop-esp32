@@ -14,7 +14,10 @@
         use: [{ goto: "lerche_flur", at: Nagiwa.at.lerche_flur.door_4b, face: "sw" }] },
       window: { name: "Fenster", poly: A.windowPoly, walkTo: A.window, face: "ne", look: ["Draußen ist das Licht der Straße.", "Das ist das Einzige, was sie ihr nicht mitnehmen konnten."] },
       bed: { name: "Matratze", poly: A.bedPoly, walkTo: A.bed, face: "se", look: ["Eine Matratze auf dem Boden, ohne Bettzeug.", "Mehr hat sie zum Schlafen nicht gebraucht. Vielleicht hat sie auch kaum geschlafen."] },
-      chair: { name: "Stuhl", poly: A.chairPoly, walkTo: A.chair, face: "ne", look: ["Ein Stuhl vor nichts.", "Davor ist ein heller Fleck auf dem Boden. Da stand der Rechner, und den haben sie mitgenommen."] },
+      chair: { name: "Stuhl", poly: A.chairPoly, walkTo: A.chair, face: "nw", look: ["Ein Stuhl vor nichts.", "Davor ist ein heller Fleck auf dem Boden. Da stand der Rechner, und den haben sie mitgenommen.", "Die Kabel an der Steckdose sind abgeschnitten. Die hatten es eilig."] },
+      shelves: { name: "Regal", poly: A.shelvesPoly, walkTo: A.shelves, face: "ne", look: ["Die Regale sind leer. Nur eine Tasse haben sie stehen lassen.", "Was hier stand, ist jetzt in einer Kiste von Civic Rest."] },
+      plant: { name: "Pflanze", poly: A.plantPoly, walkTo: A.plant, face: "se", look: "Die Pflanze lässt die Blätter hängen. Die gießt keiner mehr." },
+      box: { name: "Karton", poly: A.boxPoly, walkTo: A.box, face: "ne", look: "Ein Karton, umgekippt und leer. Den haben sie dagelassen." },
       fridge: { name: "Kühlschrank", poly: A.fridgePoly, walkTo: A.fridge, face: "ne", look: ["Der Kühlschrank brummt noch. Den wollten sie nicht.", "Oben hängt ein Zettel unter einem Magneten."] },
     },
   });

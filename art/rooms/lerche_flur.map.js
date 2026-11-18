@@ -1,36 +1,41 @@
 // lerche_flur: the 4th floor's landing in the Wohnblock Lerche, where Ines lived (docs/kapitel2-design.md §3.3, §9.2), as a map (art/lib/isomap.js
-// has the format), made by tools/new-room.mjs. Every length in meters. BLOCKS: pieces of the Kessel Block's 14th floor
-// (art/kit/kessel_14.kit.px.js) stand in until its own kit is approved and painted (§14): the stairs down at the back,
-// three doors (4A and 4B on the right wall, 4C on the left), the camera in the corner that is CAM 25.
+// has the format), made by tools/new-room.mjs. Every length in meters. BLOCKS for the user's approval (its own kit, art/kit/lerche_flur.kit.px.js;
+// the stairs, their rail, the tube and the camera are the Kessel Block's pieces): on the right wall 4A (a doormat before it) and 4B, then the
+// stairs down with a window over them; on the left wall the meters' cabinet and 4C with shoes before it; the camera in the corner over the
+// stairs is CAM 25. 4B's seal is a variant of the bake (art/rooms/lerche_flur.px.js).
 "use strict";
 
 ISO_MAPS.lerche_flur = {
   size: [5, 3], cell: 0.5, at: [128, 86], screen: [320, 180], margin: 0.2,
-  // "c" screed (the 14th floor's), "." no floor: the stairwell
+  // "q" linoleum, "." no floor: the stairwell
   floor: [
-    "ccccccc...",
-    "ccccccc...",
-    "cccccccccc",
-    "cccccccccc",
-    "cccccccccc",
-    "cccccccccc",
+    "qqqqqqq...",
+    "qqqqqqq...",
+    "qqqqqqqqqq",
+    "qqqqqqqqqq",
+    "qqqqqqqqqq",
+    "qqqqqqqqqq",
   ],
   walls: [
-    { from: [0, 0], to: [5, 0], h: 2.6, kit: "concrete_green" },        // 0: the right back wall (4A, 4B)
-    { from: [0, 0], to: [0, 3], h: 2.6, kit: "concrete_green" },        // 1: the left back wall (4C)
-    { from: [0, 3], to: [5, 3], h: 2.6, kit: "concrete_green", stub: true },
-    { from: [5, 0], to: [5, 3], h: 2.6, kit: "concrete_green", stub: true },
+    { from: [0, 0], to: [5, 0], h: 2.6, kit: "lf_wall" },        // 0: the right back wall (4A, 4B, the stairs' window)
+    { from: [0, 0], to: [0, 3], h: 2.6, kit: "lf_wall" },        // 1: the left back wall (the meters, 4C)
+    { from: [0, 3], to: [5, 3], h: 2.6, kit: "lf_wall", stub: true },
+    { from: [5, 0], to: [5, 3], h: 2.6, kit: "lf_wall", stub: true },
   ],
   openings: [
-    { id: "door_4a", wall: 0, from: 0.3, to: 1.2, h: [0, 2.05], kit: "door_14b" },
-    { id: "door_4b", wall: 0, from: 1.8, to: 2.7, h: [0, 2.05], kit: "door_14b" },
-    { id: "door_4c", wall: 1, from: 1.2, to: 2.1, h: [0, 2.05], kit: "door_14b" },
+    { id: "door_4a", wall: 0, from: 0.3, to: 1.2, h: [0, 2.05], kit: "lf_door", lit: true },
+    { id: "door_4b", wall: 0, from: 1.8, to: 2.7, h: [0, 2.05], kit: "lf_door", sealed: true },
+    { id: "door_4c", wall: 1, from: 1.2, to: 2.1, h: [0, 2.05], kit: "lf_door", lit: true },
+    { id: "meters", wall: 1, from: 0.25, to: 0.85, h: [1.0, 1.9], kit: "lf_meters" },
+    { id: "window", wall: 0, from: 3.85, to: 4.7, h: [1.0, 1.95], kit: "lf_window" },
     { id: "tube", wall: 0, from: 0.3, to: 3.2, h: [2.42, 2.48], kit: "neon_tube" },
   ],
   stairs: { id: "stairs", kit: "stairs_concrete", from: [3.5, 0], to: [5.0, 1.0], down: "+u", rise: 0.18, tread: 0.3 },
   props: [
     { id: "cam", kit: "corner_cam", at: [3.25, 0.03], foot: [0.2, 0.42], h: 2.35, face: "v", block: false },
     { id: "rail", kit: "stair_rail", at: [3.5, 1.0], foot: [1.5, 0.06], h: 0.95 },
+    { id: "shoes", kit: "lf_shoes", at: [0.06, 2.2], foot: [0.3, 0.26], h: 0.1, block: false },
+    { id: "mat", kit: "lf_mat", at: [0.4, 0.05], foot: [0.7, 0.4], h: 0.02, block: false },
   ],
   spots: {
     arrive: [3.1, 0.6, "sw"], stairs: [3.1, 0.45, "ne"],

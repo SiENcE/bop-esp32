@@ -6,8 +6,7 @@ include("../lib/iso.js", { palette: true })
 include("../lib/isomap.js")
 include("../rooms/ines_wohnung.map.js")
 include("../lib/isokit.js")
-include("../kit/ines_wohnung.kit.px.js")
-include("../kit/flat.kit.px.js", { palette: true })
+include("../kit/ines_wohnung.kit.px.js", { palette: true })
 
 const INES_WOHNUNG = ISOKIT.bake(ISO_MAPS.ines_wohnung, { id: "ines_wohnung", frames: 12, fps: 10 })
 

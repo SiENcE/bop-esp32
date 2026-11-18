@@ -49,6 +49,9 @@ Cutaway.dialog("k2_tor", { main: { choices: [
         else: [{ goto: "lerche_flur", at: AL.arrive, face: "sw" }] }] }] },
   { text: "„Zurück.“", silent: true, goto: "end", then: [] },
 ] } });
+// the seal across 4B once they have gone (the landing baked again with it, art/rooms/lerche_flur.px.js: only what differs, laid over it)
+const SEAL = { id: "seal", image: "lerche_flur_seal", at: Nagiwa.layouts.lerche_flur.sealAt, anchor: [0, 0], baseline: 0.5, if: OPEN };
+Cutaway.room.get("lerche_flur").props.push(SEAL);
 // back down the stairs and out at the gate
 Cutaway.room.get("lerche_flur").hotspots.stairs.use = [{ goto: "jade_row", at: AJ.far, face: "sw" }];
 
@@ -86,6 +89,7 @@ Nagiwa.camRoom("cam25", { background: undefined, color: Nagiwa.PHOSPHOR[0], mic:
   props: [
     { id: "room", image: "lerche_flur_bg", at: [A25.shift, 0], anchor: [0, 0], baseline: -1000 },
     ...LR.props.filter((/** @type {any} */ p) => p.id !== "cam"),
+    { ...SEAL, at: [SEAL.at[0] + A25.shift, SEAL.at[1]] },
   ],
   hotspots: {
     door_4b: { name: "4B", poly: A25.doorPoly, look: [{ if: OPEN, then: ["Über 4B klebt ein Siegel. Von hier oben ist es nur ein heller Streifen."], else: ["Das ist ihre Tür, 4B. Oder eine von denen."] }] },
