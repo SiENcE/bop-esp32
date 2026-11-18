@@ -6,7 +6,10 @@
 //   walls    sh_wall  white panels, a dark skirting
 //   openings sh_window (the glass front: the street's night behind it; op.sign: the 24H sign seen from behind, mirrored; op.door: a
 //            glass door, its push bar), sh_fridges (drink fridges in a row along the wall, their cyan light, the cans)
-//   props    sh_counter (the counter with the register), sh_shelf (a row of shelves, both sides full)
+//   props    sh_counter (the counter with the register), sh_shelf (a row of shelves, both sides full); for the side thread (design §6.5,
+//            blocks 2026-11-18): sh_cam (CAM 26's dome on its arm over the register, its red light), sh_dock (the cleaning robot's
+//            charging dock under the window by the door, its plate on the floor, a cyan light), sh_bin (a wire bin of cheap tins
+//            with a card on a stick: after the robbery Okonkwo's, his old price under the new)
 // Keys "!k" are never lit.
 
 const KIT_SHOP24 = (() => {
@@ -62,6 +65,30 @@ const KIT_SHOP24 = (() => {
         if (row < 2) return "5"                                                          // the boards
         return ["q", "v", "Q", "m", "C", "y", "N"][fl(a / 3 + e / 12) % 7]               // the goods, every colour
       })
+    },
+  })
+
+  ISOKIT.prop("sh_cam", {
+    footprint: () => [], solid: () => [],
+    draw(pen, p) {
+      const [u, v] = p.at, H = p.h
+      pen.box(u, v, H + 0.05, 0.04, 0.2, 0.04, () => "3", () => "2", () => "3")                    // the arm out of the wall
+      pen.box(u - 0.06, v + 0.16, H - 0.06, 0.14, 0.14, 0.12, () => "5", () => "4", (a, e) => (a === 2 && e === 2 ? "!q" : "3"))   // the dome, its red light
+    },
+  })
+  ISOKIT.prop("sh_dock", {
+    draw(pen, p) {
+      const [u, v] = p.at, [du, dv] = p.foot
+      pen.box(u, v, 0, du, dv, 0.02, (lu, lv) => ((Math.floor(lu * 10) + Math.floor(lv * 10)) % 2 ? "4" : "6"), () => "3", () => "3")   // the plate
+      pen.box(u + du - 0.12, v, 0, 0.12, dv, 0.3, () => "4", () => "3", (a, e) => (e > 6 && e < 9 && a > 2 && a < 6 ? "!v" : "2"))     // the dock, its light
+    },
+  })
+  ISOKIT.prop("sh_bin", {
+    draw(pen, p) {
+      const [u, v] = p.at, [du, dv] = p.foot, H = p.h
+      pen.box(u, v, 0, du, dv, H, (lu, lv) => ((Math.floor(lu * 14) + Math.floor(lv * 14)) % 3 ? "G" : "Q"), (a, e) => (a % 4 === 0 || e % 4 === 0 ? "5" : "2"), (a, e) => (a % 4 === 0 || e % 4 === 0 ? "5" : "2"))   // wire, the tins' lids
+      pen.box(u + du / 2 - 0.02, v + dv / 2, H, 0.03, 0.03, 0.35, () => "4", () => "4", () => "4")    // the stick
+      pen.box(u + du / 2 - 0.12, v + dv / 2, H + 0.3, 0.25, 0.02, 0.15, () => "H", () => "H", (a, e) => (e === 4 && a > 1 ? "q" : e === 1 && a > 2 ? "3" : "H"))   // the card: the new price, the old one under it
     },
   })
 

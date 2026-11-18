@@ -141,6 +141,8 @@ room() {
     fi
     # the Drain Market from above is painted, not baked: its numbers come from its approved layout and these parts
     if [ "$id" = drain_market ]; then node tools/market-layout.mjs --out game/rooms/drain_market.layout.js; fi
+    # Fischermann Street's robot and drone go about as extras seen from above: their anchor in the middle, as the market's people
+    if [ "$id" = weg1 ]; then for n in weg1_robot weg1_drone; do node -e 'const fs=require("fs"),f=process.argv[1];const s=Object.values(JSON.parse(fs.readFileSync(f+".json","utf8")).frames)[0].sourceSize;fs.writeFileSync(f+".anchor.json",JSON.stringify({anchor:[s.w>>1,s.h>>1]}))' "build/art/rooms/weg1/anims/$n"; done; fi
     # pages are 1024 px unless a still picture is wider (the Drain Market from above is 1280x720; animations go frame by frame)
     max=$(node -e 'const fs=require("fs"),p=require("path");let m=0;const w=(d)=>{for(const f of fs.readdirSync(d)){const q=p.join(d,f);if(fs.statSync(q).isDirectory())w(q);else if(f.endsWith(".png")){const b=fs.readFileSync(q);m=Math.max(m,b.readUInt32BE(16),b.readUInt32BE(20))}}};if(fs.existsSync(process.argv[1]))w(process.argv[1]);console.log(m>1000?2048:1024)' "build/art/rooms/$id/sprites")
     $ATLAS "build/art/rooms/$id" "assets/room_$id.js" --only "${id}_*" --max "$max"

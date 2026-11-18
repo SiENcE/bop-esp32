@@ -10,6 +10,20 @@
   Cutaway.room("weg1", {
     name: "Fischermann Street", background: "weg1_bg", size: /** @type {[number, number]} */ (A.size), walk: A.walk, holes: A.holes,
     light: { ambient: 1 },
+    // the people and the robot apart from the picture, so they can come and go (on blocks: art/rooms/weg1.px.js)
+    props: [
+      { id: "homeless", image: "weg1_homeless", at: A.homelessAt, anchor: [0, 0], baseline: A.homelessAt[1] + 23 },
+      { id: "sheep", image: "weg1_sheep", at: A.sheepAt, anchor: [0, 0], baseline: A.sheepAt[1] + 27 },
+      { id: "sheep2", image: "weg1_sheep2", at: A.sheepAt, anchor: [0, 0], baseline: A.sheepAt[1] + 27, hidden: true },
+    ],
+    extras: [
+      { costume: { idle: "weg1_robot", walk: "weg1_robot" }, at: A.robotRing[0], path: A.robotRing.slice(1), speed: [14, 14], lit: false, turns: false, notice: 0, give: 0, side: 0 },
+      ...A.queue.map((/** @type {any} */ [x, y, nn, dir]) => ({ costume: { idle: Nagiwa.top(`statist_${nn}_idle`) }, at: [x, y], facing: dir, turns: false, if: "time>=19:00" })),
+      ...A.walkers.map((/** @type {any} */ w) => ({ costume: { idle: Nagiwa.top(`statist_${w.look}_idle`), walk: Nagiwa.top(`statist_${w.look}_walk`) },
+        at: w.at, path: w.path, loop: "back", speed: [30, 30], pause: w.pause })),
+      { costume: { idle: "weg1_drone", walk: "weg1_drone" }, at: A.drone.at, path: A.drone.path, loop: "back", speed: [70, 70], pause: 6000,
+        lit: false, turns: false, notice: 0, give: 0, side: 0 },
+    ],
     fx: [
       { kind: "rain", rect: [0, 0, A.size[0], A.size[1]], count: 160, color: "#41547a", speed: 160, slant: 0.15, length: 3 },
       { kind: "rain", rect: [0, 0, A.size[0], A.size[1]], count: 40, color: "#8e9ab0", speed: 240, slant: 0.15, length: 5 },

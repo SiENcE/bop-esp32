@@ -33,10 +33,14 @@ ISO_MAPS.shop24 = {
     { id: "counter", kit: "sh_counter", at: [3.9, 0.6], foot: [0.6, 1.4], h: 1.0 },   // from the front into the shop, the cashier behind it to the east
     { id: "shelf_a", kit: "sh_shelf", at: [1.1, 1.7], foot: [2.0, 0.45], h: 1.5 },
     { id: "shelf_b", kit: "sh_shelf", at: [1.1, 2.9], foot: [2.0, 0.45], h: 1.5 },
+    // the side thread (design §6.5): CAM 26 over the register, the robot's dock under the window by the door (it goes out through it), the bin of tins (Okonkwo's after k1b=sold)
+    { id: "cam", kit: "sh_cam", at: [4.82, 0.03], foot: [0.2, 0.2], h: 2.2, block: false },
+    { id: "dock", kit: "sh_dock", at: [1.35, 0.06], foot: [0.45, 0.4], h: 0.3, block: false },
+    { id: "bin", kit: "sh_bin", at: [3.35, 2.2], foot: [0.4, 0.4], h: 0.7 },
   ],
   spots: {
     arrive: [2.5, 0.65, "se"], door: [2.5, 0.55, "ne"], counter: [3.55, 1.4, "se"], fridges: [0.65, 1.6, "nw"],
-    shelves: [2.3, 2.45, "nw"],
+    shelves: [2.3, 2.45, "nw"], bin: [3.0, 2.5, "se"], dock: [1.6, 0.75, "ne"],
   },
   lights: [
     { id: "tubes", at: [2.5, 2.0, 2.55], r: 200, power: 1.1, color: "#d8f0ff", flicker: 0.04,

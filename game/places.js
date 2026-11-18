@@ -109,12 +109,20 @@ Nagiwa.at = {
     size: [960, 540],
     walk: [[64, 130, 922, 130, 922, 500, 798, 500, 798, 282, 64, 282]],
     holes: [[296, 130, 344, 130, 344, 156, 296, 156], [596, 254, 654, 254, 654, 282, 596, 282], [501, 254, 552, 254, 552, 282, 501, 282],
-      [798, 296, 826, 296, 826, 334, 798, 334], [880, 406, 922, 406, 922, 444, 880, 444], [664, 190, 696, 190, 696, 220, 664, 220], [170, 190, 190, 190, 190, 210, 170, 210]],
+      [798, 296, 826, 296, 826, 334, 798, 334], [880, 406, 922, 406, 922, 444, 880, 444], [664, 190, 696, 190, 696, 220, 664, 220]],
     gate: [860, 492], lerche: [760, 140], fish: [72, 205], homelessTalk: [527, 246], sheepTalk: [650, 205], robotTalk: [206, 200],
     noodles: [210, 262], trash: [320, 166], steam: [348, 215], shop: [720, 268], shopRect: [662, 274, 116, 14],
     gateRect: [784, 505, 152, 35], fishRect: [0, 140, 60, 130], homelessRect: [505, 262, 43, 22], noodlesRect: [150, 268, 120, 20], lercheRect: [728, 120, 57, 14],
     sheepPoly: [668, 193, 692, 193, 694, 205, 692, 217, 668, 217, 666, 205], trashPoly: [295, 122, 340, 122, 340, 148, 295, 148],
     steamPoly: [361, 206, 370, 203, 379, 206, 382, 215, 379, 224, 370, 227, 361, 224, 358, 215], robotPoly: [173, 196, 176, 193, 184, 193, 187, 196, 187, 204, 184, 207, 176, 207, 173, 204],
+    // the street's life (design §7) and the 24-hour shop's thread (§6.5), on blocks: the homeless man and the sheep as sprites over the
+    // picture (their top left); the robot going round its puddle (no hole: it moves, and steps aside); the queue at the noodle bar from 19:00 (the market's people from above,
+    // [x, y, look, facing]); two people passing along the street and back; a delivery drone crossing high over it
+    homelessAt: [504, 261], sheepAt: [665, 190],
+    robotRing: [[180, 193], [192, 197], [194, 203], [180, 207], [166, 203], [166, 197]],
+    queue: [[172, 257, "03", "down"], [188, 253, "07", "down"], [204, 256, "11", "left"], [221, 252, "14", "down"]],
+    walkers: [{ look: "05", at: [90, 216], path: [[740, 228]], pause: 1200 }, { look: "12", at: [700, 168], path: [[110, 172]], pause: 2000 }],
+    drone: { at: [70, 150], path: [[915, 176]] },
   },
   // Kowalski Street (art/rooms/kowalski.map.js, game/rooms/kowalski.layout.js)
   kowalski: {

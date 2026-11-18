@@ -766,6 +766,17 @@ ihr Koch, die Passanten, die Drohne, das Schaf mit seinen Flyern, die Bildschirm
 Fischmarkt); der Laden, das Schaf, der Obdachlose und der Roboter tragen den Nebenfaden §6.5. Neu zu zeichnen, erst als Blöcke: im Laden die
 Kamera über der Kasse, die Ladestation des Roboters und das Regal mit Okonkwos Dosen; `cam26`; auf der Straße die Schlange vor der
 Nudelbar, Passanten und Drohne von oben, der Roboter auf seiner Runde, die leere Pappe und ein zweites Schaf.
+**Als Block zur Freigabe** (2026-11-18): im Laden `sh_cam` (die Kuppel von `cam26` am Arm auf dem Wandstück neben dem rechten Fenster),
+`sh_dock` (die Ladestation unter dem linken Fenster an der Tür, durch die der Roboter hinausfährt) und `sh_bin` (ein Drahtkorb mit Dosen
+am Ende der Regale, ein Preisschild auf dem Stab; nach `k1b=sold` Okonkwos Dosen), Prüfbild `docs/rooms/shop24_faden_blocks_x3.png`. Auf
+der Straße sind der Obdachlose mit seinem Wagen, das Schaf und der Roboter jetzt eigene Bilder über dem Hintergrund (`weg1_homeless`,
+`weg1_sheep`; Pappe und Flyer bleiben im Bild): ein Bildschirm im Wagen zeigt für einen Takt den Flur von CAM 25 in Phosphorgrün; das
+zweite Schaf (`weg1_sheep2`) trägt den Schafskopf unter dem Arm, sein eigener Kopf ist nackt, einen Flyer hält es hin; der Roboter
+(`weg1_robot`, stahlgrau mit cyanfarbenem Licht, nicht mehr in Junos Gelb) fährt als Statist um seine Pfütze; eine Lieferdrohne
+(`weg1_drone`, ein bernsteinfarbenes Paket unter vier Rotoren) quert die Straße; die Schlange vor der Nudelbar ab 19:00 und zwei
+Passanten sind die Leute des Drain-Markts von oben (wiederverwendet); vor der Treppe zum Fischmarkt ein Gitter mit Vorhängeschloss.
+Prüfbilder `docs/rooms/weg1_leben_blocks_west_x3.png`, `_laden_x3.png`, `_nachher_x3.png` (der Obdachlose fort, das andere Schaf),
+`_drohne_x3.png`.
 
 ### 9.3 Neue Kameras
 
