@@ -1,10 +1,11 @@
-// Weg_1, the street the user drew in the city plan (2026-11-18): from the gate at the end of Jade Row north, then west past the Wohnblock
+// Fischermann Street (the user's name for it; Weg_1 in the city plan, drawn by the user on 2026-11-18): from the gate at the end of Jade Row north, then west past the Wohnblock
 // Lerche (the whole north side, its door where the arm turns) to the stairs down to the Old Fish Market. Seen straight down as the Drain
 // Market is, at its size (about 40 px a metre, Juno 13 px across, art/characters/juno_top.px.js). On its approved BLOCKS for now (the user
 // approved them 2026-11-18; the review sheets with their numbered labels: art/test/weg1_blocks.px.js), to be painted on their lines.
 //   weg1_bg   960x540, 3x3 screens: the roofs, the wet street, the neon over the south sidewalk, the cables with their lanterns, the
 //             noodle bar, the homeless man with his cart of screens, Lull's sheep asleep on his feet, the cleaning robot in its puddle,
-//             the steam, the rubbish, Lerche's door with its canopy and keypad, the gate's roof at the arm's foot
+//             the steam, the rubbish, Lerche's door with its canopy and keypad, the 24-hour shop's awning and light (Juno can go in),
+//             the gate's roof at the arm's foot
 // W1.walk(x, y) says where Juno can stand (game/places.js takes its shapes from W1's numbers, printed as WEG1_LAYOUT).
 include("../lib/iso.js", { palette: true })
 include("../lib/text.js")
@@ -49,9 +50,9 @@ const W1 = (() => {
 
   const things = (c) => {
     const box = (x, y, w, h, k, edge = "k") => { c.rect(x - 1, y - 1, w + 2, h + 2, edge); c.rect(x, y, w, h, k) }
-    const glow = (x, y, r, k) => { for (let j = -r; j <= r; j++) for (let i = -r; i <= r; i++) { const d = Math.hypot(i, j) / r; if (d < 1 && bay(x + i, y + j) < (1 - d) * 0.6) c.px(x + i, y + j, k) } }
+    const glow = (x, y, r, k, below = 1e9) => { for (let j = -r; j <= r; j++) for (let i = -r; i <= r; i++) { const d = Math.hypot(i, j) / r; if (d < 1 && y + j < below && bay(x + i, y + j) < (1 - d) * 0.6) c.px(x + i, y + j, k) } }   // (below: not past a facade)
     // neon signs sticking out of the facades over the sidewalks: from above only their top edge, the light pool under them
-    for (const [x, y, len, k, pool, side] of [[160, SF, 34, "m", "M", -1], [380, SF, 30, "v", "C", -1], [240, SF, 30, "Q", "P", -1], [700, SF, 26, "m", "M", -1], [AX0, 420, 26, "v", "C", 0]]) {
+    for (const [x, y, len, k, pool, side] of [[160, SF, 34, "m", "M", -1], [380, SF, 30, "v", "C", -1], [240, SF, 30, "Q", "P", -1], [AX0, 420, 26, "v", "C", 0]]) {
       if (side === 0) { glow(x + 30, 430, 26, pool); box(x, 418, len, 4, k) }
       else { glow(x + 2, y + side * 30, 28, pool); box(x, side > 0 ? y : y - len, 4, len, k) }
     }
@@ -60,6 +61,11 @@ const W1 = (() => {
     // the noodle bar's awning on the south side (amber), the shut shop's shutter beside it with a tag
     box(150, SF - 22, 120, 20, "P"); for (let x = 152; x < 268; x += 8) c.rect(x, SF - 21, 4, 18, "Q")
     box(420, SF - 8, 160, 6, "4")
+    // the 24-hour shop on the south side (the user's wish, 2026-11-18: Juno can go in; a side quest there later): its white light
+    // spilling far over the sidewalk and into the road, the awning over its glass front with 24H on it, the door's gap in the middle
+    glow(720, SF - 26, 44, "C", SF - 3); glow(720, SF - 14, 26, "V", SF - 3)
+    box(662, SF - 16, 116, 14, "H"); c.rect(662, SF - 3, 116, 2, "V"); c.rect(712, SF - 3, 16, 3, "c")
+    TXT.draw(c, 720, SF - 13, "24H", "C", { font: "hud", align: "center" })
     // Lerche's door in the house's south-east corner (the user's plan): a canopy over it, the keypad and the doorbell camera beside it
     // (CAM 24), the doormat
     box(735, NF, 50, 14, "5"); box(728, NF + 2, 4, 6, "C"); c.px(729, NF + 4, "q")

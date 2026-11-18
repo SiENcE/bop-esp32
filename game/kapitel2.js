@@ -336,7 +336,7 @@ Cutaway.act("kapitel2", {
     { cache: "note_kessler_photo" }, { cache: "note_obs_handbook" },
     { set: "know_ines" }, { set: "saw_varga" }, { set: "read_kessler" },
     { set: "fridge_empty" }, { set: "rent_notice" }, { set: "moth_met" }, { set: "bao_soup" },
-    { been_to: ["flat", "deck", "kessel_14", "kessel_lobby", "kowalski", "gasse", "laundromat", "sims", "dach", "dach_blick", "dach_sitzen", "lucky_static", "jade_row", "okonkwo_shop", "drain_market", "sable_booth", "cam15", "signal_lost", "flat_danach", "cam03", "cam04", "cam07", "cam07v", "cam14", "cam18", "cam21", "cam22", "cam23", "cam24", "cam25", "cam30", "cam31", "sumpf", "sumpf_fahrt", "lantern_versteck", "drain_arrival", "weg1", "lerche_eg"] },
+    { been_to: ["flat", "deck", "kessel_14", "kessel_lobby", "kowalski", "gasse", "laundromat", "sims", "dach", "dach_blick", "dach_sitzen", "lucky_static", "jade_row", "okonkwo_shop", "drain_market", "sable_booth", "cam15", "signal_lost", "flat_danach", "cam03", "cam04", "cam07", "cam07v", "cam14", "cam18", "cam21", "cam22", "cam23", "cam24", "cam25", "cam30", "cam31", "sumpf", "sumpf_fahrt", "lantern_versteck", "drain_arrival", "weg1", "lerche_eg", "shop24"] },
     { solo: true },
   ],
 });

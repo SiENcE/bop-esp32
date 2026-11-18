@@ -48,7 +48,7 @@ Cutaway.room.get("weg1").hotspots.lerche.use = [{ if: ["!off_main", "!off_flat"]
     else: [{ sfx: "type" }, "Vier, sieben, eins, neun.", { sfx: "door_open" }, { goto: "lerche_eg", at: AE.arrive, face: "nw" }] }],
   else: ["Da will ich heute nicht rein."] }];
 const hall = Cutaway.room.get("lerche_eg").hotspots, landing = Cutaway.room.get("lerche_flur").hotspots;
-hall.door = { name: "Haustür", poly: AE.doorPoly, walkTo: AE.door, face: "se", look: "Draußen ist Weg_1. Das Neon kommt durch die Tür.",
+hall.door = { name: "Haustür", poly: AE.doorPoly, walkTo: AE.door, face: "se", look: "Draußen ist die Fischermann Street. Das Neon kommt durch die Tür.",
   use: [{ sfx: "door_shut" }, { goto: "weg1", at: AG1.lerche, face: "down" }] };
 // up and down: four floors by the stairs (steps and the floors counting by) or by the lift (it runs, unlike the Kessel's); on Sunday from
 // eight to nine there are voices upstairs, and Juno waits

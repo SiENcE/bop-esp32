@@ -704,7 +704,11 @@ aus dem 14. Stock), ein Spielautomat SUMP RUNNER statt des Fahrrads (vom Nutzer 
 Minispiel; noch nicht gebaut), an der Westwand Lulls Schirm aus der Klinik, der Kinderwagen von 4C; die Haustür in der Südost-Ecke als Lücke in der vorderen Wand, das Neon
 von Weg_1 fällt herein, nasse Fußspuren von dort zur Treppe. Juno kann Treppe oder Aufzug nehmen; beide stehen oben im Flur an derselben
 Stelle. Auf Weg_1 nimmt der Wohnblock die ganze Nordseite ein, seine Haustür liegt dort, wo der Arm zur Jade Row abbiegt. Die Blöcke hat der Nutzer am 2026-11-18 freigegeben, Lull-Schaf und Putzroboter bleiben beide.
-Weg_1 spielt als Raum `weg1` vorerst auf seinem Block (`art/rooms/weg1.px.js`), Juno von oben. Der Fischmarkt bleibt zu (vom Nutzer:
+Weg_1 spielt als Raum `weg1` vorerst auf seinem Block (`art/rooms/weg1.px.js`), Juno von oben. Die Straße heißt
+**Fischermann Street** (vom Nutzer benannt, 2026-11-18). An ihrer Südseite liegt jetzt ein **24h-Laden** (vom Nutzer gewünscht): von
+außen ein weißes Vordach mit `24H` und sein Licht über Gehweg und Straße, von innen der Raum `shop24` als Block (`art/rooms/shop24.map.js`,
+`docs/rooms/shop24_blocks_x3.png`, gemalt wird später): die Glasfront zur Straße mit dem `24H` von hinten, zwei Regalreihen, eine Wand voller
+Kühlschränke, die Kasse an der Tür, niemand dahinter. Dort soll ein Nebenquest hin (noch offen). Der Fischmarkt bleibt zu (vom Nutzer:
 vielleicht später, mit einem Nebenquest oder wenn die Story ihn braucht).
 
 ### 9.3 Neue Kameras

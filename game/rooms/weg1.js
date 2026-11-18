@@ -1,4 +1,4 @@
-// weg1: Weg_1, the street the user drew in the city plan (2026-11-18), seen straight down as the Drain Market is (art/rooms/weg1.px.js, on
+// weg1: Fischermann Street (the user's name; Weg_1 in the city plan, where the user drew it on 2026-11-18), seen straight down as the Drain Market is (art/rooms/weg1.px.js, on
 // its approved blocks for now): from the gate at the end of Jade Row north, then west past the Wohnblock Lerche (its door where the arm
 // turns: the keypad, CAM 24's doorbell lens) to the stairs down to the Old Fish Market, shut for now (the user: maybe later, with a side
 // quest). Juno is seen from above here (game/cast.js). Its people (the homeless man, Lull's sheep, the cleaning robot) are in the picture
@@ -8,7 +8,7 @@
 (function () {
   const A = Nagiwa.at.weg1, AJ = Nagiwa.at.jade_row;
   Cutaway.room("weg1", {
-    name: "Weg_1", background: "weg1_bg", size: /** @type {[number, number]} */ (A.size), walk: A.walk, holes: A.holes,
+    name: "Fischermann Street", background: "weg1_bg", size: /** @type {[number, number]} */ (A.size), walk: A.walk, holes: A.holes,
     light: { ambient: 1 },
     fx: [
       { kind: "rain", rect: [0, 0, A.size[0], A.size[1]], count: 160, color: "#41547a", speed: 160, slant: 0.15, length: 3 },
@@ -29,6 +29,9 @@
       noodles: { name: "Nudelbar", rect: A.noodlesRect, walkTo: A.noodles, face: "down", look: "Die Nudelbar hat noch auf. Riecht nach Brühe und nassem Karton." },
       trash: { name: "Müll", poly: A.trashPoly, walkTo: A.trash, face: "up", look: "Müllsäcke vor dem Wohnblock. Die holt hier keiner." },
       steam: { name: "Gully", poly: A.steamPoly, walkTo: A.steam, face: "right", look: "Aus dem Gully dampft es. Darunter läuft irgendwas Warmes." },
+      // the 24-hour shop (the user's wish, 2026-11-18): Juno can go in from Chapter 2 on; a side quest is planned there
+      shop: { name: "24h-Laden", rect: A.shopRect, walkTo: A.shop, face: "down", look: ["Ein 24h-Laden. Das Licht fällt bis auf die Straße.", "Drinnen sieht man Regale, aber keinen Menschen."],
+        use: [{ if: "day>4", then: [{ sfx: "door_open" }, { goto: "shop24", at: Nagiwa.at.shop24.arrive, face: "se" }], else: ["Heute nicht."] }] },
       lerche: { name: "Wohnblock Lerche", rect: A.lercheRect, walkTo: A.lerche, face: "up",
         look: ["Die Haustür vom Wohnblock Lerche. Neben der Klingel sitzt das Zahlenfeld.", "Und die Linse, durch die ich in CAM 24 schaue."] },
     },

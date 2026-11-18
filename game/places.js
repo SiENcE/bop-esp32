@@ -50,6 +50,8 @@ Nagiwa.at = {
   // Ines' flat, 4B, on blocks (art/rooms/ines_wohnung.map.js, game/rooms/ines_wohnung.layout.js); the fridge's upper part has the napkin
   // under its magnet, its lower part is the freezer (one hotspot asks which)
   ines_wohnung: fromLayout(Nagiwa.layouts.ines_wohnung),
+  // shop24 (art/rooms/shop24.map.js, game/rooms/shop24.layout.js)
+  shop24: fromLayout(Nagiwa.layouts.shop24),
   // lerche_eg (art/rooms/lerche_eg.map.js, game/rooms/lerche_eg.layout.js)
   // (the street door is a gap in the near wall, south-east: its hotspot drawn on it from the map, u 7.3 to 8.2 at v 4, up to 2 m)
   lerche_eg: { ...fromLayout(Nagiwa.layouts.lerche_eg), doorPoly: [250, 265, 278, 279, 278, 219, 250, 205] },
@@ -104,7 +106,7 @@ Nagiwa.at = {
     holes: [[296, 130, 344, 130, 344, 156, 296, 156], [596, 254, 654, 254, 654, 282, 596, 282], [501, 254, 552, 254, 552, 282, 501, 282],
       [798, 296, 826, 296, 826, 334, 798, 334], [880, 406, 922, 406, 922, 444, 880, 444], [664, 190, 696, 190, 696, 220, 664, 220], [170, 190, 190, 190, 190, 210, 170, 210]],
     gate: [860, 492], lerche: [760, 140], fish: [72, 205], homelessTalk: [527, 246], sheepTalk: [650, 205], robotTalk: [206, 200],
-    noodles: [210, 262], trash: [320, 166], steam: [348, 215],
+    noodles: [210, 262], trash: [320, 166], steam: [348, 215], shop: [720, 268], shopRect: [662, 274, 116, 14],
     gateRect: [784, 505, 152, 35], fishRect: [0, 140, 60, 130], homelessRect: [505, 262, 43, 22], noodlesRect: [150, 268, 120, 20], lercheRect: [728, 120, 57, 14],
     sheepPoly: [668, 193, 692, 193, 694, 205, 692, 217, 668, 217, 666, 205], trashPoly: [295, 122, 340, 122, 340, 148, 295, 148],
     steamPoly: [361, 206, 370, 203, 379, 206, 382, 215, 379, 224, 370, 227, 361, 224, 358, 215], robotPoly: [173, 196, 176, 193, 184, 193, 187, 196, 187, 204, 184, 207, 176, 207, 173, 204],

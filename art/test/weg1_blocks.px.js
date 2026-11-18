@@ -13,7 +13,7 @@ const W1S = (() => {
     name(c, 30, 205, "1", "W"); name(c, 30, 90, "TREPPE ZUM", "6"); name(c, 30, 98, "FISCHMARKT", "6")
     name(c, 300, 60, "2 WOHNBLOCK LERCHE", "W"); name(c, 760, 100, "TÜR + CAM 24", "6"); name(c, 135, 66, "AUFZUG", "6"); name(c, 420, 50, "TREPPE", "6")
     name(c, 210, 300, "3 NUDELBAR", "W"); name(c, 527, 300, "4 OBDACHLOSER", "W"); name(c, 680, 236, "5 LULL-SCHAF", "W"); name(c, 180, 216, "6 PUTZROBOTER", "W")
-    name(c, 370, 236, "7 DAMPF", "6"); name(c, 316, 160, "8 MÜLL", "6"); name(c, 860, 528, "9 TOR ZUR JADE ROW", "W"); name(c, 175, 300, "NEON", "m"); name(c, 395, 300, "NEON", "v")
+    name(c, 370, 236, "7 DAMPF", "6"); name(c, 316, 160, "8 MÜLL", "6"); name(c, 860, 528, "9 TOR ZUR JADE ROW", "W"); name(c, 175, 300, "NEON", "m"); name(c, 395, 300, "NEON", "v"); name(c, 720, 300, "10 24H-LADEN", "W")
   }
 
   const scene0 = (c) => { W1.ground(c); W1.things(c); labels(c); c.stamp("juno_top_idle_up", 850, 470) }

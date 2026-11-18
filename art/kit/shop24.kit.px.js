@@ -1,0 +1,68 @@
+// The kit pieces shop24 needs (art/rooms/shop24.map.js), made by tools/new-room.mjs. BLOCKS of the 24-hour shop on Fischermann Street
+// (2026-11-18; painted later): plain shapes in a shop's cold white light. Registered with ISOKIT (art/lib/isokit.js has the calls), drawn in
+// room meters, lit by the bake; keys of the world palette (art/lib/iso.js). A kit's names are global in a bake: keep this one's prefixed.
+//
+//   floor    s  pale tiles, 50 cm, a joint between them
+//   walls    sh_wall  white panels, a dark skirting
+//   openings sh_window (the glass front: the street's night behind it; op.sign: the 24H sign seen from behind, mirrored; op.door: a
+//            glass door, its push bar), sh_fridges (drink fridges in a row along the wall, their cyan light, the cans)
+//   props    sh_counter (the counter with the register), sh_shelf (a row of shelves, both sides full)
+// Keys "!k" are never lit.
+
+const KIT_SHOP24 = (() => {
+  const near = (x, c, w = 1 / 48) => Math.abs(x - c) < w, fl = Math.floor
+
+  ISOKIT.floor("s", (u, v) => (near(u * 2, Math.round(u * 2), 1 / 24) || near(v * 2, Math.round(v * 2), 1 / 24) ? "5" : "6"))
+  ISOKIT.wall("sh_wall", (s, h) => (h < 0.08 ? (h >= 0.055 ? "4" : "2") : "G"))
+
+  ISOKIT.opening("sh_window", {
+    pad: [0.05, 0, 0.05, 0.05],
+    pass: () => true,
+    paint(s, h, o) {
+      const { a, e, aw, ah } = o, op = o.op ?? {}
+      if (a < 0 || a >= aw || e >= ah) return a < -1 || a > aw || e > ah ? null : "4"
+      if (op.door && e > 26 && e < 29) return "6"                                        // the push bar
+      if (op.door && (a === fl(aw / 2))) return "4"
+      // the 24H sign seen from behind (mirrored), its tubes lit
+      if (op.sign && e > ah - 16 && e < ah - 6 && a > 8 && a < aw - 8) {
+        const t = (aw - 1 - a) % 12
+        return t < 2 || (t > 4 && t < 6) ? "!N" : "!n"
+      }
+      return (a + e) % 13 === 0 ? "!h" : e < 6 ? "!2" : "!1"                            // the street's night, a drop of rain
+    },
+  })
+  ISOKIT.opening("sh_fridges", {
+    paint(s, h, o) {
+      const { a, e, aw, ah } = o
+      if (a < 0 || a >= aw || e >= ah) return null
+      const door = a % 24
+      if (door < 1 || e < 4 || e > ah - 4) return "4"                                   // the frames, the kick plate, the top
+      if (door === 20) return "6"                                                        // a handle
+      const shelf = (e - 4) % 11
+      if (shelf < 1) return "!C"
+      if (shelf > 3 && (a * 3 + e) % 5 < 3) return ["!q", "!v", "!Q", "!m", "!V"][fl(a / 4 + e / 11) % 5]   // cans and bottles
+      return "!c"
+    },
+  })
+
+  ISOKIT.prop("sh_counter", {
+    draw(pen, p) {
+      const [u, v] = p.at, [du, dv] = p.foot, H = p.h
+      pen.box(u, v, 0, du, dv, H, () => "H", () => "4", () => "5")
+      pen.box(u + 0.2, v + 0.1, H, 0.4, 0.35, 0.2, () => "4", () => "3", (a, e, o) => (e > 2 && a > 2 && a < o.aw - 3 ? "!v" : "3"))   // the register, its display
+      pen.box(u + 0.85, v + 0.15, H, 0.35, 0.3, 0.3, () => "Q", () => "P", () => "Q")     // a rack of sweets
+    },
+  })
+  ISOKIT.prop("sh_shelf", {
+    draw(pen, p) {
+      const [u, v] = p.at, [du, dv] = p.foot, H = p.h
+      pen.box(u, v, 0, du, dv, H, () => "4", () => "3", (a, e, o) => {
+        const row = e % 12
+        if (row < 2) return "5"                                                          // the boards
+        return ["q", "v", "Q", "m", "C", "y", "N"][fl(a / 3 + e / 12) % 7]               // the goods, every colour
+      })
+    },
+  })
+
+  return {}
+})()
