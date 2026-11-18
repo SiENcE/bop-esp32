@@ -73,6 +73,7 @@ ui() {
     $PXL build art/ui/items.px.js --out build/art/ui --no-preview | tail -n 1          # what is in the bag (Chapter 1)
     $PXL build art/ui/look_zeitung.px.js --out build/art/ui --no-preview | tail -n 1   # Frau Haldane's newspaper, every face marked (Chapter 1)
     $PXL build art/ui/look_traeger.px.js --out build/art/ui --no-preview | tail -n 1   # the white carriers at the house opposite (Chapter 1)
+    $PXL build art/ui/sump_runner.px.js --out build/art/ui --no-preview | tail -n 1   # the SUMP RUNNER cabinet and its game's pieces (Chapter 2)
     $ATLAS build/art/ui assets/ui.js --only "zoom_*,ui_*,look_*,inv_*"
 }
 

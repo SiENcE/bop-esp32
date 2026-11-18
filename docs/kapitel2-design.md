@@ -740,8 +740,8 @@ aus dem 14. Stock), ein Spielautomat SUMP RUNNER statt des Fahrrads (vom Nutzer 
 Minispiel; gebaut auf Blöcken, siehe unten), an der Westwand Lulls Schirm aus der Klinik, der Kinderwagen von 4C; die Haustür in der Südost-Ecke als Lücke in der vorderen Wand, das Neon
 von Weg_1 fällt herein, nasse Fußspuren von dort zur Treppe. Juno kann Treppe oder Aufzug nehmen; beide stehen oben im Flur an derselben
 Stelle. Auf Weg_1 nimmt der Wohnblock die ganze Nordseite ein, seine Haustür liegt dort, wo der Arm zur Jade Row abbiegt. Die Blöcke hat der Nutzer am 2026-11-18 freigegeben, Lull-Schaf und Putzroboter bleiben beide.
-**SUMP RUNNER** (vom Nutzer entschieden, 2026-11-18; `game/sump_runner.js`, auf Blöcken in Code gezeichnet, gemalt wird nach der
-Freigabe): Mottes Spiel als Automat. Ein Haus im Schnitt, seine Rohre auf einem Raster von 9 x 10 Feldern; die Kabelratte kriecht mit
+**SUMP RUNNER** (vom Nutzer entschieden, 2026-11-18; `game/sump_runner.js`; **gemalt** am selben Tag auf den freigegebenen Blöcken, `art/ui/sump_runner.px.js`, Prüfbilder
+`docs/rooms/sump_runner_x3.png`, `sump_runner_titel_x3.png`, `sump_runner_licht_x3.png`, `sump_runner_ertrunken_x3.png`): Mottes Spiel als Automat. Ein Haus im Schnitt, seine Rohre auf einem Raster von 9 x 10 Feldern; die Kabelratte kriecht mit
 jedem Zug ein Feld weiter und zieht das Kabel hinter sich her, das sie nicht kreuzen kann, nur zurückspulen, indem sie darauf
 zurücktritt. Mit jedem Zug steigt unten das Wasser ein Stück; an der Lampe oben geht das Licht an, im Seitenfeld leuchtet ein Fenster
 des Hauses auf, und im nächsten Haus kommt das Wasser schneller (aber nie so schnell, dass ein einziger Schritt daneben schon ertränkt).
@@ -749,7 +749,11 @@ Funken in den Seitenrohren bringen Punkte und kosten Züge. Drei Leben. Alles in
 Schritt dorthin, dazu die vier Pfeile am Bedienfeld (für den Controller) und die Pfeiltasten. Ein eigener Bildschirm wie das
 Funkgerät (`sump_runner`): der Bildschirm des Automaten füllt das Bild, darüber das Marquee, darunter das Bedienfeld mit START und
 EXIT. Gratis (der Münzschlitz klemmt) und ohne Flag; Junos bester Lauf ist eine Ansicht (`sump_best`) auf der Highscore-Tafel unter
-MOTTE (6400), LIL, BAO und K9. Die Schrift auf dem Schirm ist die der Stadt (Englisch).
+MOTTE (6400), LIL, BAO und K9. Die Schrift auf dem Schirm ist die der Stadt (Englisch). Gemalt: das Gehäuse mit abgegriffenen
+Magenta-Streifen und Wasser auf den Seitenbildern, das hinterleuchtete Marquee mit Tropfen unter dem Namen und einer Ratte an jedem Ende,
+die Blende mit Schrauben, das Glas mit Zeilen und einem Glanz; das Haus im Schnitt mit Ziegeln, Decken und Feuchte unten, die Rohre mit
+Bögen, Abzweigen und Kappen, die Ratte mit Stirnlampe in vier Richtungen, das Kabel und die Lampe in Bernstein (nie Gelb), die Funken
+weißglühend, das Wasser mit Wellenkamm und Blasen; daneben das Haus mit Tank und Antenne, dessen Fenster angehen.
 Das Erdgeschoss ist **gemalt** (2026-11-18, auf den freigegebenen Blöcken; `art/kit/lerche_eg.kit.px.js`, Prüfbilder `docs/rooms/lerche_eg_x3.png`, `lerche_eg_nw_x3.png`): Terrazzo mit Steinsplittern und matten Messingleisten, ein Riss über zwei Felder, die nassen Fußspuren von der Tür und die Pfütze mit dem Magenta von Weg_1; Wände, Sockel und Aufzug wie oben (die Anzeige zeigt `G`); der Kinderwagen mit einer Strickdecke über der Seite; der Automat zeigt auf seinem Schirm das Wartebild des Spiels (Rohre, das Kabel klettert, das Wasser steigt), die Münzklappe mit ihrem Schlitz.
 Weg_1 spielt als Raum `weg1` vorerst auf seinem Block (`art/rooms/weg1.px.js`), Juno von oben. Die Straße heißt
 **Fischermann Street** (vom Nutzer benannt, 2026-11-18). An ihrer Südseite liegt jetzt ein **24h-Laden** (vom Nutzer gewünscht): von

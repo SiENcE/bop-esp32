@@ -6,7 +6,8 @@
 // In turns, never timing: a click is a move (on the grid: one step towards it), and the same moves lie on the panel's arrows (a
 // controller later) and on the arrow keys. A screen of its own, as Lantern's radio (the room sump_runner): the cabinet's screen fills the
 // picture. Free (its coin slot is stuck) and without a flag: flavour the solver walks through and finds nothing new in; Juno's best run
-// is a view (sump_best), on the high-score table under MOTTE. ON BLOCKS for the user's approval: drawn in code here, painted later.
+// is a view (sump_best), on the high-score table under MOTTE. Painted on the blocks the user approved (2026-11-18): the cabinet and the
+// game's pieces are art/ui/sump_runner.px.js (in assets/ui.js), put together here; its words are the game's (i18n).
 "use strict";
 
 (function () {
@@ -16,7 +17,7 @@
   /** the table on the cabinet (Juno's best goes in where it belongs) */
   const TABLE = [["MOTTE", 6400], ["LIL", 3800], ["BAO", 2100], ["K9", 900]];
   const JUNO = "JUNO";
-  Cutaway.i18n.declare("sump runner", ["SUMP RUNNER", "PRESS START", "GAME OVER", "LIGHTS ON", "DROWNED", "LEVEL", "SCORE", "HI-SCORE", "START",
+  Cutaway.i18n.declare("sump runner", ["PRESS START", "GAME OVER", "LIGHTS ON", "DROWNED", "LEVEL", "SCORE", "HI-SCORE", "START",
     "EXIT", JUNO]);
   const LINES = Cutaway.i18n.declare("sump runner", ["Motte hätte gelacht.", "Platz zwei hinter Motte. Das erzähl ich ihm nicht.",
     "Ich hab Motte geschlagen. Das glaubt er mir nie."]);
@@ -29,10 +30,11 @@
   /**
    * The game, kept out of the state on purpose (it is flavour): the house (its pipes as joins between cells, the lamp, the sparks), the
    * rat's cable (the cells she has crossed, the last one where she is), the moves made in this house, how fast the water rises (moves a
-   * row), the level, the score, the lives, and the phase it is in: title, play, lit, drowned, over.
+   * row), the level, the score, the lives, the way the rat faces (0 right, 1 left, 2 up, 3 down: ui_sr_rat's frames by two), and the
+   * phase it is in: title, play, lit, drowned, over.
    */
   const G = {
-    phase: "title", level: 1, score: 0, lives: 3, moves: 0, per: 3, since: 0, best: false, game: 0,
+    phase: "title", level: 1, score: 0, lives: 3, moves: 0, per: 3, since: 0, best: false, game: 0, face: 2,
     /** @type {Set<string>} */ pipes: new Set(), lamp: [0, 0], /** @type {number[][]} */ sparks: [], /** @type {number[][]} */ cable: [],
   };
   Nagiwa.sumpRunner = G;   // for the tools and a look in the console
@@ -93,7 +95,7 @@
     restart();
   }
   /** the house again from its start: the cable reeled in, the water down */
-  function restart() { G.cable = [START.slice()]; G.moves = 0; G.phase = "play"; G.since = Cutaway.clock.time; }
+  function restart() { G.cable = [START.slice()]; G.moves = 0; G.face = 2; G.phase = "play"; G.since = Cutaway.clock.time; }
 
   /** @param {string} sfx */
   const bleep = (sfx) => Cutaway.events.emit("sfx", { sfx });
@@ -102,6 +104,7 @@
    * @param {number} dx @param {number} dy @returns {string | null} what came of it ("light", "drown"), or null */
   function move(dx, dy) {
     const [x, y] = G.cable[G.cable.length - 1], nx = x + dx, ny = y + dy;
+    G.face = dx > 0 ? 0 : dx < 0 ? 1 : dy < 0 ? 2 : 3;
     if (nx < 0 || ny < 0 || nx >= COLS || ny >= ROWS || !joined(id(x, y), id(nx, ny))) { bleep("sr_block"); return null; }
     const back = G.cable[G.cable.length - 2];
     if (back && back[0] === nx && back[1] === ny) { G.cable.pop(); bleep("sr_reel"); }
@@ -182,88 +185,89 @@
     Cutaway.script.run([{ sump: KEYS[e.code] }]);
   });
 
-  // ---- the picture, on blocks: the cabinet's dark body with its magenta stripes, the marquee, the screen and on it the game, the panel
-  const C = { body: "#0d0b16", stripe: "#a8238a", neon: "#ff4fd3", bezel: "#232638", glass: "#04050a", pipe: "#2a6f86", pipeLit: "#62def0",
-    cable: "#ffcf4a", rat: "#c8c8d8", water: "#1d3f8a", waterTop: "#4f7fe0", lamp: "#ffe27a", dim: "#41547a", text: "#d8e6ff", spark: "#ff8a3d" };
-  /** @param {CanvasRenderingContext2D} ctx @param {number[]} r @param {string} c */
-  const box = (ctx, [x, y, w, h], c) => { ctx.fillStyle = c; ctx.fillRect(x, y, w, h); };
+  // ---- the picture, painted (art/ui/sump_runner.px.js, on the lines of the approved blocks): the cabinet, then on its screen the
+  // house and its pipes, the lamp, the sparks, the cable, the rat, the water, the side field; the game's words drawn over it all
+  const C = { neon: "#ff4fd3", pale: "#ffc0f2", cable: "#eea040", cableDark: "#552b1c", water: "#1d3f8a", lamp: "#ffd58a", dim: "#617aa0",
+    text: "#dafcff", juno: "#ffd83a", bubble: "#4f7fe0" };
+  const sprite = (/** @type {CanvasRenderingContext2D} */ ctx, /** @type {string} */ name, /** @type {number} */ x, /** @type {number} */ y, /** @type {any} */ o = {}) => {
+    if (Cutaway.assets.has(name)) Cutaway.assets.draw(ctx, name, x, y, { anchor: [0, 0], frame: 0, ...o });
+  };
+  /** the pipe's joins at a cell (1 up, 2 right, 4 down, 8 left): the frame of ui_sr_pipe @param {number} x @param {number} y */
+  const joins = (x, y) => {
+    const c = id(x, y);
+    return (y > 0 && joined(c, id(x, y - 1)) ? 1 : 0) | (x < COLS - 1 && joined(c, id(x + 1, y)) ? 2 : 0)
+      | (y < ROWS - 1 && joined(c, id(x, y + 1)) ? 4 : 0) | (x > 0 && joined(c, id(x - 1, y)) ? 8 : 0);
+  };
   Cutaway.events.on("frame.screen", (/** @type {CanvasRenderingContext2D} */ ctx) => {
     if (Cutaway.scene.room?.id !== "sump_runner") return;
-    const t = Nagiwa.t, hud = Cutaway.font.get("hud"), big = Cutaway.font.get("nagiwa"), now = Cutaway.clock.time;
+    const t = Nagiwa.t, hud = Cutaway.font.get("hud"), now = Cutaway.clock.time;
     if ((G.phase === "lit" || G.phase === "drowned") && now - G.since > 1600) onward();   // a pause goes on by itself after a while too
-    // the body and its stripes
-    box(ctx, [0, 0, 320, 180], C.body);
-    for (const x of [10, 16, 302, 308]) box(ctx, [x, 0, 3, 180], C.stripe);
-    // the marquee
-    box(ctx, A.marquee, "#2a0f2a"); box(ctx, [A.marquee[0], A.marquee[1] + A.marquee[3] - 1, A.marquee[2], 1], C.stripe);
-    big.draw(ctx, t("SUMP RUNNER"), 160, 5, { color: C.neon, align: "center" });
-    // the screen in its bezel
+    sprite(ctx, "ui_sr_cabinet", 0, 0, { frame: undefined, t: now });
     const [SX, SY, SW, SH] = A.screen;
-    box(ctx, [SX - 4, SY - 3, SW + 8, SH + 6], C.bezel); box(ctx, A.screen, C.glass);
-    // the house's pipes: a join between two cells is a pipe between their middles
+    sprite(ctx, "ui_sr_house", GX, GY);
     const mid = (/** @type {number} */ c) => [GX + (c % COLS) * CELL + CELL / 2, GY + Math.floor(c / COLS) * CELL + CELL / 2];
-    ctx.fillStyle = G.phase === "title" ? C.dim : C.pipe;
-    for (const k of G.pipes) {
-      const [a, b] = k.split("-").map(Number), [ax, ay] = mid(a), [bx, by] = mid(b);
-      ctx.fillRect(Math.min(ax, bx) - 2, Math.min(ay, by) - 2, Math.abs(ax - bx) + 4, Math.abs(ay - by) + 4);
-    }
     if (G.phase === "title" || !G.pipes.size) {
-      // the table and PRESS START
+      // the table and PRESS START over the empty house
       hud.draw(ctx, t("HI-SCORE"), GX + 54, GY + 14, { color: C.neon, align: "center" });
       const best = Number(Cutaway.state.flag("sump_best") ?? 0);
       const rows = [...TABLE, ...(best ? [[JUNO, best]] : [])].sort((a, b) => Number(b[1]) - Number(a[1])).slice(0, 5);
       rows.forEach(([n, s], i) => {
-        const c = n === JUNO ? C.cable : C.text;
+        const c = n === JUNO ? C.juno : C.text;
         hud.draw(ctx, `${i + 1}. ${n === JUNO ? t(JUNO) : n}`, GX + 14, GY + 30 + i * 11, { color: c });
         hud.draw(ctx, String(s), GX + 96, GY + 30 + i * 11, { color: c, align: "right" });
       });
       if (Math.floor(now / 500) % 2) hud.draw(ctx, t("PRESS START"), GX + 54, GY + 98, { color: C.lamp, align: "center" });
     } else {
-      // the lamp, the sparks, the cable from the start to the rat, the rat, then the water over all of it
-      const [lx, ly] = mid(id(G.lamp[0], G.lamp[1])), lit = G.phase === "lit";
-      box(ctx, [lx - 4, ly - 5, 9, 8], lit ? C.lamp : "#5a5030"); box(ctx, [lx - 2, ly + 3, 5, 2], C.dim);
-      if (lit) { ctx.fillStyle = C.lamp; for (const [dx, dy] of [[-7, -1], [7, -1], [0, -9], [-6, -7], [6, -7]]) ctx.fillRect(lx + dx, ly + dy, 1, 1); }
-      for (const [x, y] of G.sparks) { const [px, py] = mid(id(x, y)); box(ctx, [px - 1, py - 1, 3, 3], Math.floor(now / 250) % 2 ? C.spark : C.lamp); }
-      ctx.fillStyle = C.cable;
+      // the pipes cell by cell, the sparks, the lamp, the cable from the start to the rat, the rat, then the water over all of it
+      for (let y = 0; y < ROWS; y++) for (let x = 0; x < COLS; x++) { const m = joins(x, y); if (m) sprite(ctx, "ui_sr_pipe", GX + x * CELL, GY + y * CELL, { frame: m }); }
+      for (const [x, y] of G.sparks) sprite(ctx, "ui_sr_spark", GX + x * CELL + 1, GY + y * CELL + 1, { frame: (Math.floor(now / 120) + x) % 4 });
+      const [lx, ly] = mid(id(G.lamp[0], G.lamp[1]));
+      sprite(ctx, "ui_sr_lamp", lx - 10, ly - 12, { frame: G.phase === "lit" ? 1 + (Math.floor(now / 140) % 3) : 0 });
       for (let i = 1; i < G.cable.length; i++) {
         const [ax, ay] = mid(id(G.cable[i - 1][0], G.cable[i - 1][1])), [bx, by] = mid(id(G.cable[i][0], G.cable[i][1]));
-        ctx.fillRect(Math.min(ax, bx), Math.min(ay, by), Math.abs(ax - bx) + 1, Math.abs(ay - by) + 1);
+        const x = Math.min(ax, bx) - 1, y = Math.min(ay, by) - 1, w = Math.abs(ax - bx) + 2, h = Math.abs(ay - by) + 2;
+        ctx.fillStyle = C.cableDark; ctx.fillRect(x + 1, y + 1, w, h);
+        ctx.fillStyle = C.cable; ctx.fillRect(x, y, w, h);
       }
-      const [rx, ry] = G.cable[G.cable.length - 1], [px, py] = mid(id(rx, ry));
-      box(ctx, [px - 3, py - 2, 6, 4], C.rat); box(ctx, [px + 2, py - 3, 2, 2], C.rat); box(ctx, [px + 3, py - 1, 1, 1], "#ff4f6a");   // the rat, her ear, her eye
-      const top = GY + Math.max(0, surface()) * CELL;
-      if (top < GY + ROWS * CELL) {
-        ctx.globalAlpha = 0.75; box(ctx, [GX, Math.round(top), CELL * COLS, GY + ROWS * CELL - Math.round(top)], C.water); ctx.globalAlpha = 1;
-        for (let x = 0; x < CELL * COLS; x += 2) if ((x + Math.floor(now / 200)) % 6 < 4) box(ctx, [GX + x, Math.round(top), 2, 1], C.waterTop);
+      const [rx, ry] = G.cable[G.cable.length - 1];
+      sprite(ctx, "ui_sr_rat", GX + rx * CELL, GY + ry * CELL, { frame: G.face * 2 + (G.moves % 2) });
+      const top = Math.round(GY + Math.max(0, surface()) * CELL), bottom = GY + ROWS * CELL;
+      if (top < bottom) {
+        ctx.globalAlpha = 0.72; ctx.fillStyle = C.water; ctx.fillRect(GX, top, CELL * COLS, bottom - top); ctx.globalAlpha = 1;
+        const f = Math.floor(now / 160) % 4;
+        for (let x = 0; x < CELL * COLS; x += 12) sprite(ctx, "ui_sr_wave", GX + x, top - 2, { frame: f });
+        // a few bubbles rising from the drowned pipes
+        ctx.fillStyle = C.bubble;
+        for (let i = 0; i < 6; i++) {
+          const bx = GX + 8 + ((i * 37) % (CELL * COLS - 16)), span = bottom - top - 3;
+          if (span > 4) ctx.fillRect(bx, bottom - 2 - ((Math.floor(now / 90) + i * 11) % span), 1, 1);
+        }
       }
       const say = G.phase === "lit" ? "LIGHTS ON" : G.phase === "drowned" ? "DROWNED" : G.phase === "over" ? "GAME OVER" : null;
-      if (say) { box(ctx, [GX + 14, GY + 52, 80, 14], C.glass); hud.draw(ctx, t(say), GX + 54, GY + 56, { color: say === "LIGHTS ON" ? C.lamp : C.neon, align: "center" }); }
+      if (say) {
+        sprite(ctx, "ui_sr_plate", GX + 12, GY + 51, { frame: say === "LIGHTS ON" ? 1 : 0 });
+        hud.draw(ctx, t(say), GX + 54, GY + 56, { color: say === "LIGHTS ON" ? C.lamp : C.neon, align: "center" });
+      }
     }
-    // the side panel: the level, the score, the lives, the house whose windows light up level by level
+    // the side field: the level, the score, the lives, the house whose windows light up level by level
     const [PX, PY] = A.side;
     hud.draw(ctx, t("LEVEL"), PX, PY, { color: C.dim }); hud.draw(ctx, String(G.phase === "title" ? 0 : G.level), PX + 96, PY, { color: C.text, align: "right" });
     hud.draw(ctx, t("SCORE"), PX, PY + 12, { color: C.dim }); hud.draw(ctx, String(G.score), PX + 96, PY + 12, { color: C.text, align: "right" });
-    for (let i = 0; i < 3; i++) { const c = i < (G.phase === "title" ? 3 : G.lives) ? C.rat : "#2a2c3a"; box(ctx, [PX + i * 12, PY + 26, 7, 4], c); box(ctx, [PX + i * 12 + 6, PY + 25, 2, 2], c); }
-    box(ctx, [PX + 20, PY + 46, 56, 66], "#14172a"); box(ctx, [PX + 18, PY + 44, 60, 3], "#1f2338");
+    for (let i = 0; i < 3; i++) {
+      if (i >= (G.phase === "title" ? 3 : G.lives)) ctx.globalAlpha = 0.25;
+      sprite(ctx, "ui_sr_rat", PX - 1 + i * 13, PY + 20, { frame: 0 }); ctx.globalAlpha = 1;
+    }
+    sprite(ctx, "ui_sr_tower", PX + 18, PY + 32);
     for (let w = 0; w < 12; w++) {
       const on = G.phase !== "title" && w < G.level - 1 + (G.phase === "lit" ? 1 : 0);
-      box(ctx, [PX + 26 + (w % 3) * 16, PY + 52 + Math.floor(w / 3) * 15, 10, 9], on ? C.lamp : "#22263a");
+      sprite(ctx, "ui_sr_window", PX + 26 + (w % 3) * 16, PY + 52 + Math.floor(w / 3) * 15, { frame: on ? 1 : 0 });
     }
-    // the control panel: the four arrows, START, EXIT
-    box(ctx, [40, 154, 240, 26], "#15121f"); box(ctx, [40, 154, 240, 1], C.stripe);
-    /** @param {number[]} r @param {string} c */
-    const key = (r, c) => { box(ctx, r, "#262238"); box(ctx, [r[0], r[1] + r[3] - 2, r[2], 2], "#0a0912"); ctx.fillStyle = c; return r; };
-    const tri = (/** @type {number[]} */ [x, y, w, h], /** @type {string} */ dir) => {
-      const cx = x + Math.floor(w / 2), cy = y + Math.floor((h - 2) / 2);
-      for (let i = 0; i < 4; i++) {
-        if (dir === "up") ctx.fillRect(cx - i, cy - 2 + i, i * 2 + 1, 1);
-        if (dir === "down") ctx.fillRect(cx - i, cy + 2 - i, i * 2 + 1, 1);
-        if (dir === "left") ctx.fillRect(cx - 2 + i, cy - i, 1, i * 2 + 1);
-        if (dir === "right") ctx.fillRect(cx + 2 - i, cy - i, 1, i * 2 + 1);
-      }
-    };
-    for (const d of ["left", "up", "down", "right"]) tri(key(A[d], C.pipeLit), d);
-    key(A.start, C.neon); hud.draw(ctx, t("START"), A.start[0] + A.start[2] / 2, A.start[1] + 4, { color: C.neon, align: "center" });
-    key(A.quit, C.text); hud.draw(ctx, t("EXIT"), A.quit[0] + A.quit[2] / 2, A.quit[1] + 4, { color: C.text, align: "center" });
+    // the tube: faint scan lines and the hall's light caught on the glass
+    ctx.globalAlpha = 0.22; ctx.fillStyle = "#000";
+    for (let y = SY + 1; y < SY + SH; y += 2) ctx.fillRect(SX, y, SW, 1);
+    ctx.globalAlpha = 0.35; sprite(ctx, "ui_sr_glare", SX, SY); ctx.globalAlpha = 1;
+    // the panel's words over its painted keys
+    hud.draw(ctx, t("START"), A.start[0] + A.start[2] / 2, A.start[1] + 4, { color: C.pale, align: "center" });
+    hud.draw(ctx, t("EXIT"), A.quit[0] + A.quit[2] / 2, A.quit[1] + 4, { color: C.text, align: "center" });
   });
 })();
