@@ -28,18 +28,19 @@ ISO_MAPS.lerche_eg = {
   ],
   openings: [
     { id: "lift", wall: 0, from: 0.75, to: 1.45, h: [0, 2.05], kit: "lf_lift", floor: 0 },
-    { id: "mailboxes", wall: 0, from: 5.0, to: 6.1, h: [0.9, 1.7], kit: "le_mailboxes" },
-    { id: "board", wall: 0, from: 6.3, to: 6.9, h: [1.0, 1.6], kit: "le_board" },
+    { id: "mailboxes", wall: 0, from: 5.3, to: 6.4, h: [0.9, 1.7], kit: "le_mailboxes" },
+    { id: "board", wall: 0, from: 6.55, to: 7.05, h: [1.0, 1.7], kit: "notice_board" },
   ],
   props: [
-    { id: "stairs", kit: "stairs_up_turn", at: [2.9, 0], foot: [0.6, 0.95], landing: [0.6, 0.95], lower: 1.2, h: 2.6, steps: 16 },
+    // the Kessel lobby's flight, as it stands there (art/rooms/kessel_lobby.map.js): its upper flight under the landing's well upstairs
+    { id: "stairs", kit: "stairs_up_turn", at: [2.53, 0], foot: [1.5, 0.95], landing: [1.0, 0.95], lower: 1.5, h: 2.6, steps: 14 },
     { id: "bike", kit: "le_bike", at: [7.1, 0.05], foot: [1.2, 0.2], h: 0.8 },
-    { id: "pram", kit: "le_pram", at: [4.6, 0.6], foot: [0.45, 0.7], h: 0.75 },
-    { id: "flyers", kit: "le_flyers", at: [5.1, 0.08], foot: [0.9, 0.4], h: 0.01, block: false },
+    { id: "pram", kit: "le_pram", at: [5.75, 0.9], foot: [0.45, 0.7], h: 0.75 },
+    { id: "flyers", kit: "flyers", at: [5.4, 0.08], foot: [0.4, 0.6], h: 0.05, block: false },
   ],
   spots: {
-    arrive: [7.75, 2.55, "nw"], door: [7.75, 2.75, "se"], mailboxes: [5.55, 0.65, "ne"], board: [6.6, 0.65, "ne"],
-    lift: [1.1, 0.55, "ne"], stairs: [3.8, 2.5, "ne"], pram: [4.85, 1.75, "ne"], bike: [7.7, 0.75, "ne"],
+    arrive: [7.75, 2.55, "nw"], door: [7.75, 2.75, "se"], mailboxes: [5.85, 0.6, "ne"], board: [6.8, 0.65, "ne"],
+    lift: [1.1, 0.55, "ne"], stairs: [4.55, 2.75, "ne"], pram: [6.0, 2.0, "ne"], bike: [7.7, 0.75, "ne"],
   },
   lights: [
     { id: "bulb", at: [2.2, 1.4, 2.5], r: 200, power: 1.0, color: "#e8e0a0", flicker: 0.06,

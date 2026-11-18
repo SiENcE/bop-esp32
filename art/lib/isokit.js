@@ -494,8 +494,21 @@ const ISOKIT = (() => {
     function drawStairs(B, f) {
       const s = map.stairs, k = KIT.stairs[s.kit] ?? {}, [u0, v0] = s.from, [u1, v1] = s.to
       B.whoNow = pick({ kind: "stairs", id: s.id, kit: s.kit })
-      const n = Math.ceil((u1 - u0) / s.tread) + 1, deep = (n + 1) * s.rise
       const well = k.well ?? (() => "1"), riser = k.riser ?? (() => "2"), tread = k.tread ?? (() => "3")
+      // down "-v": the top step at v1, the flight going down toward v0 along a wall at u0 (the Wohnblock Lerche's landing): the well's
+      // side under that wall and its deep end (v0) face the camera; the risers face away, so only the treads show, deepest first
+      if (s.down === "-v") {
+        const n = Math.ceil((v1 - v0) / s.tread) + 1, deep = (n + 1) * s.rise
+        G.faceU(B, u0, v0, v1, -deep, 0, (a, e, o) => well(o.s, o.h - deep, { x: o.x, y: o.y, f }))
+        G.faceV(B, v0, u0, u1, -deep, 0, (a, e, o) => well(o.s, o.h - deep, { x: o.x, y: o.y, f }))
+        for (let i = n - 1; i >= 0; i--) {
+          const b = v1 - (i + 1) * s.tread, top = -(i + 1) * s.rise
+          // (each step's lit edge wider and its tone alternating: seen from above with no risers, the steps must part by their tops)
+          G.top(B, u0, Math.max(v0, b), u1, b + s.tread, top, (u, v, x, y) => (b + s.tread - v < 0.07 ? "!6" : i % 2 ? "!X" : "!Z"))
+        }
+        return
+      }
+      const n = Math.ceil((u1 - u0) / s.tread) + 1, deep = (n + 1) * s.rise
       G.faceV(B, v0, u0, u1 + s.tread, -deep, 0, (a, e, o) => well(o.s, o.h - deep, { x: o.x, y: o.y, f }))
       for (let i = 0; i < n; i++) {
         const a = u0 + i * s.tread, top = -(i + 1) * s.rise

@@ -1,11 +1,11 @@
 // The kit pieces lerche_eg needs (art/rooms/lerche_eg.map.js), made by tools/new-room.mjs. BLOCKS for the user's approval (2026-11-18):
 // the Wohnblock Lerche's hall on the ground floor, the same house as the landing upstairs (its floor, walls and lift come from
-// art/kit/lerche_flur.kit.px.js, the flight up from the Kessel's lobby kit). Registered with ISOKIT (art/lib/isokit.js has the calls), drawn
+// art/kit/lerche_flur.kit.px.js; the flight up, the notice board and the flyers from the Kessel's lobby kit: what is alike is reused). Registered with ISOKIT (art/lib/isokit.js has the calls), drawn
 // in room meters, lit by the bake; keys of the world palette (art/lib/iso.js). A kit's names are global in a bake: keep this one's prefixed.
 //
 //   floor    x  the hall's old terrazzo, wet footprints from the street door in the south-east corner toward the stairs
-//   openings le_door (a street door of wood and wired glass; not used while the door is a gap in the near wall), le_mailboxes (twelve, one with its name taped over), le_board (the house rules and a lost cat)
-//   props    le_pram (a pram parked by the stairs: 4C's child), le_flyers (Lull flyers on the floor), le_bike (a bicycle chained to a pipe)
+//   openings le_door (a street door of wood and wired glass; not used while the door is a gap in the near wall), le_mailboxes (twelve, one with its name taped over)
+//   props    le_pram (a pram parked by the stairs: 4C's child), le_bike (a bicycle chained to a pipe)
 
 const KIT_LERCHE_EG = (() => {
   const near = (x, c, w = 1 / 48) => Math.abs(x - c) < w, fl = Math.floor, ih = ISO.ihash
@@ -51,17 +51,6 @@ const KIT_LERCHE_EG = (() => {
       return "5"
     },
   })
-  ISOKIT.opening("le_board", {
-    paint(s, h, o) {
-      const { a, e, aw, ah } = o
-      if (a < 0 || a >= aw || e < 0 || e >= ah) return null
-      if (a === 0 || e === 0 || a === aw - 1 || e === ah - 1) return "O"
-      if (a > 2 && a < aw * 0.55 && e > 3 && e < ah - 3) return e % 3 === 0 ? "h" : "H"     // the house rules
-      if (a > aw * 0.6 && a < aw - 2 && e > ah * 0.4 && e < ah - 3) return Math.hypot(a - aw * 0.78, e - ah * 0.7) < 2.5 ? "1" : "W"   // a lost cat
-      return "P"
-    },
-  })
-
   ISOKIT.prop("le_pram", {
     draw(pen, p) {
       const [u, v] = p.at, [du, dv] = p.foot
@@ -89,15 +78,5 @@ const KIT_LERCHE_EG = (() => {
       pen.at(null)
     },
   })
-  ISOKIT.prop("le_flyers", {
-    footprint: () => [],
-    solid: () => [],
-    outline: false,
-    draw(pen, p) {
-      const [u, v] = p.at, [du, dv] = p.foot
-      pen.box(u, v, 0, du, dv, 0.01, (lu, lv) => (ih(fl(lu * 14), fl(lv * 14)) < 0.45 ? (ih(fl(lv * 14), fl(lu * 14)) < 0.3 ? "C" : "H") : null), () => null, () => null)
-    },
-  })
-
   return {}
 })()

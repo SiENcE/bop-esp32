@@ -21,7 +21,7 @@
 //                       front line runs along the top's back edge), while its order among the props
 //                       stays that of its foot; the person's place is a spot with h, and the actor needs
 //                       a walkTo on the floor
-//   stairs: { id, kit, from: [u, v], to: [u, v], down: "+u", rise, tread }
+//   stairs: { id, kit, from: [u, v], to: [u, v], down: "+u" | "-v", rise, tread }   ("-v": along a wall at u = from[0], the top step at to[1])
 //                       a flight going down through a hole in the floor (its cells "."), from the top step
 //                       at from[0] along +u and on under the floor past the hole (the bake draws it; the
 //                       walk area ends at its edge)

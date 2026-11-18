@@ -12,8 +12,6 @@
     ambience: ["neon_buzz", "fridge_hum"], music: { theme: "juno", intensity: 0.25 },
     hotspots: {
       stairs: { name: "Treppe", poly: A.railPoly, walkTo: A.stairs, face: "ne", look: "Die Treppe geht runter auf die Straße, zurück zur Jade Row." },
-      door_4a: { name: "4A", poly: A.door_4aPoly, walkTo: A.door_4a, face: "nw", look: "Auf 4A steht kein Name, nur ein Aufkleber von Nagi·wa: SLEEP BETTER.", use: "Da wohnt jemand anderes." },
-      door_4c: { name: "4C", poly: A.door_4cPoly, walkTo: A.door_4c, face: "nw", look: "Vor 4C stehen Schuhe. Wer da wohnt, ist zu Hause.", use: "Da wohnt jemand anderes." },
       door_4b: { name: "4B", poly: A.door_4bPoly, walkTo: A.door_4b, face: "ne", look: "Das ist 4B." },
       lift: { name: "Aufzug", poly: A.liftPoly, walkTo: A.lift, face: "nw", look: "Der Aufzug hier fährt. In diesem Haus funktioniert noch was." },
       meters: { name: "Zählerkasten", poly: A.metersPoly, walkTo: A.meters, face: "ne", look: "Das sind die Stromzähler vom ganzen Stock. Einer davon steht still." },

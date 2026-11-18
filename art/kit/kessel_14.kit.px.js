@@ -309,8 +309,19 @@ const K14 = (() => {
   // kick bar); its top section by the first step is broken off, only a stub post left (`stub`: where)
   ISOKIT.prop("stair_rail", {
     solid: (p) => [[p.at[0], p.at[1], p.h - 0.06, p.foot[0], p.foot[1], 0.06]],
-    footprint: (p) => [[p.at[0], p.at[1], 0.06, p.foot[1]], [p.at[0] + p.foot[0] - 0.06, 0, 0.06, p.at[1]]],
+    footprint: (p) => (p.along === "v" ? [[p.at[0], p.at[1], 0.06, p.foot[1]]] : [[p.at[0], p.at[1], 0.06, p.foot[1]], [p.at[0] + p.foot[0] - 0.06, 0, 0.06, p.at[1]]]),
     draw(pen, p) {
+      // along: "v" (the Wohnblock Lerche's landing): the same rail run along v at u = at[0], over a well whose deep end is a wall, so no return
+      if (p.along === "v") {
+        const [U, va] = p.at, L = p.foot[1], H = p.h, vb = va + L
+        const postV = (v, w) => pen.box(U, v, 0, 0.05, w, H - 0.04, () => "6", () => "5", () => "4")
+        postV(va, 0.06)
+        for (let v = va + 0.5; v < vb - 0.1; v += 0.5) postV(v, 0.04)
+        postV(vb - 0.06, 0.06)
+        pen.box(U - 0.01, va, H - 0.05, 0.07, L, 0.06, () => "G", () => "6", () => "5")
+        pen.box(U, va, 0.1, 0.05, L, 0.03, () => "5", () => "4", () => "4")
+        return
+      }
       const [u0, v0] = p.at, L = p.foot[0], H = p.h, u1 = u0 + L
       const postU = (u, w) => pen.box(u, v0, 0, w, 0.05, H - 0.04, () => "6", () => "4", () => "5")
       // the return to the wall at the far end (behind the front run, so drawn first)

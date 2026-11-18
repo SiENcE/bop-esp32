@@ -10,7 +10,6 @@
 //            op.sealed: the seal across it, CIVIC REST - SEALED, from Sunday 21:00: drawn only while LF_SEALED is set, for the
 //            bake's variant), lf_meters (the electricity meters' cabinet), lf_window (the stairs' window, the street's light),
 //            lf_lift (the lift, which runs: the same place on every floor; art/rooms/lerche_eg.map.js has it too)
-//   props    lf_shoes (two pairs before 4C, a child's among them), lf_mat (the doormat before 4A), lf_railing (round the stairwell)
 pal({ "ä": "#3f3d29", "Ä": "#5a5737", "ë": "#7a7548", "ö": "#2f3a24", "Ö": "#455534" })
 
 /** the seal on 4B: set by art/rooms/lerche_flur.px.js for the bake's variant only */
@@ -105,38 +104,6 @@ const KIT_LERCHE_FLUR = (() => {
       if (a === mid || a === mid - 1) return a === mid ? "2" : "4"                       // the seam
       if (e < 3) return "3"
       return a % 4 === 1 ? "O" : "A"                                                    // painted steel, brown, its ribs
-    },
-  })
-
-  // ---------------------------------------------------------------- props
-  // a railing along u or v (its foot's long side): posts every 40 cm, the handrail, a bar near the floor (round the stairwell)
-  ISOKIT.prop("lf_railing", {
-    footprint: () => [],
-    solid: () => [],
-    draw(pen, p) {
-      const [u, v] = p.at, [du, dv] = p.foot, H = p.h, along = du > dv, L = along ? du : dv
-      for (let t = 0; t <= L + 0.001; t += 0.4) pen.box(along ? u + Math.min(t, L - 0.05) : u, along ? v : v + Math.min(t, L - 0.05), 0, 0.05, 0.05, H, () => "6", () => "4", () => "5")
-      pen.box(u, v, H - 0.06, along ? L : 0.06, along ? 0.06 : L, 0.06, () => "G", () => "5", () => "6")
-      pen.box(u, v, 0.1, along ? L : 0.05, along ? 0.05 : L, 0.03, () => "5", () => "4", () => "4")
-    },
-  })
-  // two pairs of shoes before 4C: a man's boots, a child's trainers
-  ISOKIT.prop("lf_shoes", {
-    draw(pen, p) {
-      const [u, v] = p.at
-      for (const [du, dv, k, l, w] of [[0, 0, "1", "2", 0.11], [0, 0.13, "1", "2", 0.11], [0.16, 0.02, "U", "x", 0.08], [0.16, 0.13, "U", "x", 0.08]]) {
-        pen.box(u + du, v + dv, 0, 0.26 * (w / 0.11), w, 0.09, () => l, () => k, () => k)
-      }
-    },
-  })
-  // the doormat before 4A
-  ISOKIT.prop("lf_mat", {
-    footprint: () => [],
-    solid: () => [],
-    outline: false,
-    draw(pen, p) {
-      const [u, v] = p.at, [du, dv] = p.foot
-      pen.box(u, v, 0, du, dv, 0.02, (lu, lv) => (lu < 0.04 || lv < 0.04 || lu > du - 0.04 || lv > dv - 0.04 ? "a" : "O"), () => "a", () => "a")
     },
   })
 
