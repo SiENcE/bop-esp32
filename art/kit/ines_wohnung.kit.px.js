@@ -5,8 +5,7 @@
 // (art/lib/isokit.js has the calls), drawn in room meters, lit by the bake; keys of the world palette (art/lib/iso.js) and the few
 // below. A kit's names are global in a bake: keep this one's prefixed.
 //
-//   floor    m  laminate boards along the window's wall, each board its own shade; where the computer stood by the left wall the boards
-//            are paler (a clean square in the dust), the cable's mark across it; papers dropped where they emptied the shelves, their
+//   floor    m  laminate boards along the window's wall, each board its own shade; papers dropped where they emptied the shelves, their
 //            lines of print; the rug (deep red, its border, its pattern); a pot's ring by the plant; the boots' wet way from the door
 //            b  the balcony's grey tiles, wet: a drain in the corner, a puddle mirroring the sky's glow, moss in the joints by the wall
 //   walls    iw_wall  pale plaster over a skirting, paler squares where her posters hung with the pins' holes, a picture hook left in
@@ -18,7 +17,9 @@
 //            (two cupboards, a worktop of pale stone, an espresso machine of chrome, a cup), iw_shelves (real wood, empty, the dust's
 //            outlines of what stood there, one cup left), iw_bed (a low platform bed of oak, the mattress bare with its quilting, the
 //            bedding pulled off onto the floor), iw_armchair (a wingback in cognac leather, creased, worn pale on the arms), iw_arclamp (a designer's
-//            arc lamp over the armchair, off), iw_officechair (an ergonomic chair before the clean square, its mesh), iw_plant (a big
+//            arc lamp over the armchair, off), iw_desk (her work table by the left wall, the user's
+//            wish 2026-11-18: an oak top on steel legs, a pedestal of drawers pulled open; on the top the clean squares in the dust where
+//            the computer and its screens stood), iw_officechair (an ergonomic chair before the desk, its mesh), iw_plant (a big
 //            plant in a glazed pot, its leaves hanging, two fallen and yellow), iw_box (a cardboard box tipped over, its tape torn)
 //            iw_railing, iw_deckchair (its wooden slats dark with rain), iw_herbs (two pots: one gone to seed, white flowers)
 pal({ "ĝ": "#3e5a3a", "Ĝ": "#5f7d4a", "ŵ": "#8a8678" })
@@ -45,12 +46,9 @@ const KIT_INES_WOHNUNG = (() => {
     if (Math.hypot(u - 6.05, v - 0.62) < 0.25 && Math.hypot(u - 6.05, v - 0.62) > 0.21) return "f"   // the pot's ring, from years of watering
     // the boots' wet way from the door, drying out into the room
     for (let i = 0; i < 4; i++) if (Math.hypot(u - (0.55 + i * 0.32), (v - (3.85 - i * 0.18 + (i % 2) * 0.08)) * 1.6) < 0.05) return "e"
-    const clean = u < 0.62 && v > 0.95 && v < 1.75                                       // where the computer stood
-    if (clean && near(v, 1.3, 0.012) && u < 0.5) return "1"                             // the cable's mark
     if (near(v * 5, Math.round(v * 5), 1 / 16)) return "e"                               // the boards' long joints
     const row = fl(v * 5), off = row * 0.37
     if (near((u + off) % 1.2, 0, 1 / 40)) return "e"                                     // their ends
-    if (clean) return u > 0.58 || v < 0.99 || v > 1.71 ? "Z" : "X"
     // each board its own shade; the grain a long thin streak along it now and then
     const board = fl((u + off) / 1.2), tone = ih(board, row)
     if (near((v * 5) % 1, 0.3 + tone * 0.4, 0.03) && ih(fl(u * 6), row) < 0.4) return "f"
@@ -197,6 +195,30 @@ const KIT_INES_WOHNUNG = (() => {
       // the bedding pulled off onto the floor: a duvet in a heap, its folds, a pillow
       pen.box(u + 0.05, v + dv + 0.08, 0, du * 0.35, 0.4, 0.12, (lu, lv) => (Math.sin(lu * 22 + lv * 9) > 0.6 ? "h" : "H"), (a, e) => (e > 2 && Math.sin(a * 0.9) > 0.5 ? "h" : "H"), () => "h")
       pen.box(u + 0.08 + du * 0.35, v + dv + 0.12, 0, 0.32, 0.22, 0.09, () => "H", () => "h", () => "h")   // the pillow
+    },
+  })
+  ISOKIT.prop("iw_desk", {
+    // her work table: drawn from its parts, back to front (the far legs, the pedestal, the top, the near legs)
+    draw(pen, p) {
+      const [u, v] = p.at, [du, dv] = p.foot, H = p.h, T = 0.035
+      const oak = (a, e) => (Math.sin(a * 0.6 + e * 2.3) > 0.85 ? "O" : "A")
+      const leg = (lu, lv) => pen.box(u + lu, v + lv, 0, 0.04, 0.04, H - T, () => "5", () => "4", () => "5")
+      leg(0.03, 0.03); leg(du - 0.08, 0.03)
+      // the pedestal at the near end, its three drawers, the top one pulled open and empty
+      const pv = v + dv - 0.34
+      pen.box(u + 0.04, pv, 0, du - 0.1, 0.3, H - T - 0.02, () => "3", (a, e, o) => (e % fl(o.ah / 3) === 0 ? "2" : a === fl(o.aw / 2) && e % fl(o.ah / 3) === fl(o.ah / 6) ? "6" : "3"),
+        (a, e, o) => (e % fl(o.ah / 3) === 0 ? "2" : "3"))
+      pen.box(u + 0.06, pv + 0.3, H - T - 0.2, du - 0.14, 0.16, 0.14, () => "1", () => "2", () => "3")   // the drawer pulled out, nothing in it
+      // the top: oak, dust on it but where the computer and two screens stood, the cable's way to the back edge
+      pen.box(u, v, H - T, du, dv, T, (lu, lv) => {
+        const box = (u0, v0, u1, v1) => lu > u0 && lu < u1 && lv > v0 && lv < v1
+        const edge = (u0, v0, u1, v1) => box(u0, v0, u1, v1) && !box(u0 + 0.02, v0 + 0.02, u1 - 0.02, v1 - 0.02)
+        if (edge(0.06, 0.06, 0.3, 0.36) || edge(0.06, 0.4, 0.3, 0.7) || edge(0.36, 0.12, 0.5, 0.64)) return "O"   // the outlines in the dust
+        if (box(0.06, 0.06, 0.3, 0.36) || box(0.06, 0.4, 0.3, 0.7) || box(0.36, 0.12, 0.5, 0.64)) return "A"      // two screens, the keyboard
+        if (near(lv, 0.38, 0.012) && lu < 0.12) return "1"                                     // the cable's mark to the back
+        return ih(fl(lu * 60), fl(lv * 60)) < 0.4 ? "A" : "ŵ"                                   // the dust, the oak through it
+      }, oak, oak)
+      leg(0.03, dv - 0.08); leg(du - 0.08, dv - 0.08)
     },
   })
   ISOKIT.prop("iw_armchair", {
