@@ -2,7 +2,7 @@
 // on its approved blocks, 2026-11-19): from the gate at the end of Jade Row north, then west past the Wohnblock Lerche (its door where the arm
 // turns: the keypad, CAM 24's doorbell lens) to the stairs down to the Old Fish Market, shut for now (the user: maybe later, with a side
 // quest). Juno is seen from above here (game/cast.js). Its people (the homeless man, Lull's sheep, the cleaning robot) are sprites of
-// their own over the picture, still on their blocks; their looks are here. What its doors do is in game/kapitel2_lerche.js.
+// their own over the picture, painted; their looks are here. What its doors do is in game/kapitel2_lerche.js.
 "use strict";
 
 (function () {
@@ -12,11 +12,15 @@
     // the painting's street lamps as the runtime light: Juno takes on the shops' and the signs' colours (art/rooms/weg1.px.js)
     light: { ambient: 0.85, lamps: P.lamps.map((/** @type {any} */ [x, y, color, r], /** @type {number} */ i) => ({ id: `lamp${i}`, at: [x, y], r, color, power: 1 })) },
     // what hangs over the people: the cables and their lanterns, the strings of bulbs, the awnings, the blade signs
-    foreground: [{ image: "weg1_over", at: [0, 0] }],
+    // (and over it the steam from the gully, 24H's failing H, the shut shop's tube, the noodle bar's blade sign stuttering)
+    foreground: [{ image: "weg1_over", at: [0, 0] }, ...P.parts.filter((/** @type {any} */ p) => p.layer === "over").map((/** @type {any} */ p) => ({ image: p.name, at: p.at }))],
     // the people and the robot apart from the picture, so they can come and go (on blocks: art/rooms/weg1.px.js). The night after the
     // clip went to the shop's chain (shop24_gone, game/kapitel2_laden.js) the homeless man is gone, his cardboard left; after it was sold
     // through Sable another man stands in the costume; the robot goes round its puddle until Juno resets it, then round the street
     props: [
+      // what moves in the picture (art/rooms/weg1.px.js): the roof signs stuttering, MAHJONG's bulbs, Lull's projection, the water running
+      // west, the kitchen's exhaust, the machine's flicker; under everyone
+      ...P.parts.filter((/** @type {any} */ p) => p.layer === "under").map((/** @type {any} */ p) => ({ id: p.name, image: p.name, at: p.at, anchor: [0, 0], baseline: 0 })),
       { id: "homeless", image: "weg1_homeless", at: A.homelessAt, anchor: [0, 0], baseline: A.homelessAt[1] + 23, if: "!shop24_gone" },
       { id: "sheep", image: "weg1_sheep", at: A.sheepAt, anchor: [0, 0], baseline: A.sheepAt[1] + 27, if: { not: ["shop24_gone", "ledger_shop24=sold"] } },
       { id: "sheep2", image: "weg1_sheep2", at: A.sheepAt, anchor: [0, 0], baseline: A.sheepAt[1] + 27, if: ["shop24_gone", "ledger_shop24=sold"] },

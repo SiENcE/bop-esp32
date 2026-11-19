@@ -14,13 +14,19 @@
 //   weg1_over 960x540, transparent but for what hangs over the people (game/rooms/weg1.js lays it as the room's foreground): the
 //             cables across the street with their paper lanterns, the strings of bulbs, the awnings and the canopy, the blade signs,
 //             the AC units on the facades
+//   weg1_<part>  what moves (14 parts, PARTS below; game/rooms/weg1.parts.js): NINTH LIVE, TIDE MODS, KARAOKE and HOT POT stuttering,
+//             MAHJONG's chase bulbs, Lull's projection rolling, the water running west in the road's middle and down the stairs, the
+//             kitchen's exhaust, the machine's flicker (under the people); the gully's steam, 24H's failing H, the shut shop's tube, the
+//             noodle bar's blade sign (over the over layer)
 //   The people and the robot are sprites of their own, so they can come and go (the side thread "Wer passt auf den Laden auf?",
-//   design §6.5, and the street's life, §7; still on their BLOCKS of 2026-11-18):
-//   weg1_homeless  45x24, 6 frames: the homeless man asleep on his cardboard (the cardboard is the picture's), his cart of old screens:
-//                  one shows static, and for a beat CAM 25's landing (its phosphor green, the door a bright dot)
-//   weg1_sheep     30x30, 4 frames: Lull's sheep asleep on his feet, breathing, his head nodding
+//   design §6.5, and the street's life, §7), painted on the lines of their blocks of 2026-11-18 (2026-11-19):
+//   weg1_homeless  45x24, 6 frames: the homeless man asleep on his cardboard (the cardboard is the picture's), curled under his blanket,
+//                  beanie and grey beard, a hand on his cart of old screens: monitors' backs, a battery, one screen showing static,
+//                  and for a beat CAM 25's landing (its phosphor green, the door a bright dot)
+//   weg1_sheep     30x30, 4 frames: Lull's sheep asleep on his feet, the wool grey in the rain, the mask's ears and black muzzle, Lull's
+//                  oval on his chest, breathing, his head nodding
 //   weg1_sheep2    30x30, 2 frames: another man in the costume, awake, the sheep's head under his arm, his own head bare, a flyer held out
-//   weg1_robot     15x15, 4 frames: the cleaning robot, steel, its cyan light going round (not yellow: that is Juno's)
+//   weg1_robot     15x15, 4 frames: the cleaning robot, a steel shell, its brushes spinning, its cyan light going round (not yellow)
 //   weg1_drone     21x21, 4 frames: a delivery drone from above, its four rotors a blur, an amber parcel under it, its light blinking
 // Light (style guide §5, §7): the lamps summed per pixel per hue, the street's and the roofs' apart (a sign on a roof doesn't light the
 // street 15 m below); a pixel takes the strongest hue's ramp in a few hard steps, dithered only at a pool's outer edge. The street's key
@@ -165,9 +171,8 @@ const W1 = (() => {
   // ---- buffers and pens
   const BASE = new Array(W * H), OVER = new Array(W * H)
   const inB = (x, y) => x >= 0 && y >= 0 && x < W && y < H
-  const mkPen = (buf) => {
-    const put = (x, y, k) => { if (k && inB(x, y)) buf[y * W + x] = k }
-    const get = (x, y) => (inB(R(x), R(y)) ? buf[R(y) * W + R(x)] : undefined)
+  const mkPen = (buf) => penOf((x, y, k) => { if (k && inB(x, y)) buf[y * W + x] = k }, (x, y) => (inB(R(x), R(y)) ? buf[R(y) * W + R(x)] : undefined))
+  const penOf = (put, get) => {
     const p = {
       px: (x, y, k) => put(R(x), R(y), k),
       rect: (x, y, w, h, k) => { x = R(x); y = R(y); for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) put(x + i, y + j, k) },
@@ -197,6 +202,9 @@ const W1 = (() => {
     const y0 = z === 1 ? NF : KS + 4, rh = 18, j = fl((y - y0) / rh), off = j % 2 ? 10 : 0, i = fl((x - 60 + off) / 20)
     return [i, j, (x - 60 + off) % 20 === 0 || (y - y0) % rh === 0]
   }
+  const CHN = new Array(W * H), CHG = new Array(W * H)
+  const glintAt = (x, y, f) => (x + 2 * f + y * 3) % 16 === 0
+  const stairGlint = (x, y, f) => (y * 7 + fl(x / 6) + f) % 8 === 0
   const ground = () => {
     for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
       const i = y * W + x, z = ZN[i]
@@ -216,7 +224,7 @@ const W1 = (() => {
         if (hs(seed, 3) < 0.12 && !edge && !kerb && ((x * 3 + y * 5 + seed) % 23 === 0 || (x - y + seed) % 17 === 0 && hs(seed, 9) < 0.5)) v -= 0.1   // a crack in a broken slab
         key = litKey("walk", v, x, y)
       } else if (z === 2 || z === 4) {                                    // the road and the arm
-        let mat = "road", v = 0.32
+        let mat = "road", v = 0.32, chan = false
         if (z === 4) {                                                    // the arm: old setts in rows, a channel down its middle
           const row = fl((y - KS) / 7), sx = (x - AX0 + (row % 2) * 5) % 10
           v = 0.36 + (hs(fl((x - AX0 + (row % 2) * 5) / 10), row, 4) - 0.5) * 0.08
@@ -225,7 +233,7 @@ const W1 = (() => {
         } else {
           for (const [px, py, pw, ph] of PATCHES) if (x >= px && x < px + pw && y >= py && y < py + ph) { v += x === px || y === py || x === px + pw - 1 || y === py + ph - 1 ? -0.1 : 0.05; break }
           if (Math.abs(y - 205) <= 2) v -= 0.06                            // the road dips to its middle: the water runs there, west
-          if (x < AX0 && Math.abs(y - 205) <= 2 && (x + y * 3) % 19 === 0) v += 0.18
+          chan = x < AX0 && Math.abs(y - 205) <= 2
           // the old tram's rails, still in the road from when the fish came up this way, gone under the patches
           const inPatch = PATCHES.some(([px, py, pw, ph]) => x >= px && x < px + pw && y >= py && y < py + ph)
           if (!inPatch && x > 64 && (y === 186 || y === 187 || y === 223 || y === 224)) v = (y === 186 || y === 223) ? 0.62 : 0.5
@@ -236,16 +244,22 @@ const W1 = (() => {
         const L = lightAt(x, y)
         // the wet asphalt catches the light in streaks along the street
         if (!pud && L.hue !== "n" && L.best > 0.12 && y % 3 === 0 && ((x + fl(hs(y, 23) * 50)) % 23) < 2 + L.best * 4) v += 0.12
-        key = litKey(mat, v, x, y, L)
-        // a puddle mirrors the light over it as broken strokes
-        if (pud && !inPuddle(x - 1, y - 1)) key = "X"                                              // the rim catches the sky's glow
-        else if (pud && L.hue !== "n" && L.best > 0.04 && (y & 1) === 0 && ((x + fl(hs(y, 17) * 60)) % 9) < 1 + L.best * 8) key = BR[L.hue][clamp(fl(L.best * 2.6), 0, 2)]
-        else if (pud && (y % 3) === 0 && ((x + fl(hs(y, 19) * 40)) % 15) === 0) key = "X"
+        const fin = (vv) => {
+          let k = litKey(mat, vv, x, y, L)
+          // a puddle mirrors the light over it as broken strokes
+          if (pud && !inPuddle(x - 1, y - 1)) k = "X"                                              // the rim catches the sky's glow
+          else if (pud && L.hue !== "n" && L.best > 0.04 && (y & 1) === 0 && ((x + fl(hs(y, 17) * 60)) % 9) < 1 + L.best * 8) k = BR[L.hue][clamp(fl(L.best * 2.6), 0, 2)]
+          else if (pud && (y % 3) === 0 && ((x + fl(hs(y, 19) * 40)) % 15) === 0) k = "X"
+          return k
+        }
+        // the water in the middle glints as it runs west (weg1_water moves the glints)
+        if (chan) { CHN[i] = fin(v); CHG[i] = fin(v + 0.18) }
+        key = chan ? (glintAt(x, y, 0) ? CHG[i] : CHN[i]) : fin(v)
       } else if (z === 5) {                                               // the stairs down to the fish market: each step lower, darker
         const step = fl(x / 6), v = 0.2 + step * 0.035 + (x % 6 === 0 ? -0.1 : 0) + (x % 6 === 5 ? 0.06 : 0)
         const side = y < NF + 24 || y >= SF - 24
         key = side ? litKey("walk", 0.5, x, y) : litKey("walk", v, x, y)
-        if (!side && (x % 6 === 2) && (y * 7 + step) % 11 === 0) key = "4"                       // the water running down, a glint on each step
+        if (!side && x % 6 === 2) { CHN[i] = key; CHG[i] = "4"; if (stairGlint(x, y, 0)) key = "4" }       // the water running down, a glint on each step
       } else if (z === 6) key = "k"
       else key = roofGround(x, y, z - 10)
       BASE[i] = key
@@ -271,6 +285,7 @@ const W1 = (() => {
     return litKey("roof", v, x, y)
   }
   ground()
+  const G0 = BASE.slice()                                                // the ground as it was, before anything lay on it
 
   // ---- small helpers
   const NEON = BR
@@ -393,6 +408,16 @@ const W1 = (() => {
   { const [bx, by, bw, bh] = SIGNRECT.MAHJONG; for (let i = 0; i < bw; i += 4) { p.px(bx + i, by - 2, i % 8 ? "P" : "R"); p.px(bx + i, by + bh + 1, i % 8 ? "R" : "P") } for (let j = 0; j < bh; j += 4) { p.px(bx - 2, by + j, j % 8 ? "P" : "R"); p.px(bx + bw + 1, by + j, j % 8 ? "R" : "P") } }
 
   // ======== on the street: what lies, stands and leaks there ========
+  const snap = (x, y, w, h) => { const o = []; for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) o.push(BASE[(y + j) * W + x + i]); return o }
+  const PROJ_RECT = [466, 193, 125, 27]
+  let PROJ_UNDER = null
+  /** Lull's projection: its scan lines roll (weg1_projection), and now and then it drops a line */
+  const projection = (pen, f) => {
+    const cx = 486, cy = 206, on = (Y) => (Y + 40 + f) % 3 !== 0 && !(f === 4 && (Y + 40) % 7 === 0)
+    for (let j = -11; j <= 11; j++) for (let i = -17; i <= 17; i++) { const d = (i * i) / 289 + (j * j) / 121; if (d <= 1 && d > 0.62 && on(cy + j)) pen.px(cx + i, cy + j, d > 0.82 ? "v" : "C") }
+    for (let j = -5; j <= 5; j++) for (let i = -9; i <= 9; i++) { const d = (i * i) / 81 + (j * j) / 25; if (d <= 1 && on(cy + j)) pen.px(cx + i, cy + j, d > 0.6 ? "V" : "v") }
+    TXT.draw({ px: (X, Y) => { if (on(Y)) pen.px(X, Y, "v") } }, 508, 202, "SLEEP IS FREE", "", { font: "nagiwa" })
+  }
   const street = () => {
     // the drainpipes' feet on Lerche, the rain from them running over the sidewalk to the gutter
     for (const x of [96, 236, 356, 476, 596, 716]) { p.rect(x - 2, NF, 5, 3, "k"); p.rect(x - 1, NF, 3, 2, "5"); for (let y = NF + 3; y < KN + 3; y++) { darken(x + R(Math.sin(y * 0.4) * 1.5), y); if (y % 5 === 0) p.px(x + R(Math.sin(y * 0.4) * 1.5), y, "X") } }
@@ -406,10 +431,8 @@ const W1 = (() => {
     for (let a = 0; a < 6.28; a += 0.08) { const rx = R(180 + Math.cos(a) * 15), ry = R(200 + Math.sin(a) * 7); const k = p.key(rx, ry); if (k && !"mMNnvVCc90".includes(k)) p.px(rx, ry, k === "f" ? "z" : k === "e" ? "f" : k) }
     // Lull's projection on the road from a box on Lerche's facade: the patch's oval, SLEEP IS FREE, the lines of its scan
     p.rect(522, NF, 10, 4, "k"); p.rect(523, NF, 8, 3, "3"); p.px(527, NF + 3, "V")
-    { const cx = 486, cy = 206
-      for (let j = -11; j <= 11; j++) for (let i = -17; i <= 17; i++) { const d = (i * i) / 289 + (j * j) / 121; if (d <= 1 && d > 0.62 && (j + 40) % 3) p.px(cx + i, cy + j, d > 0.82 ? "v" : "C") }
-      for (let j = -5; j <= 5; j++) for (let i = -9; i <= 9; i++) { const d = (i * i) / 81 + (j * j) / 25; if (d <= 1 && (j + 40) % 3) p.px(cx + i, cy + j, d > 0.6 ? "V" : "v") }
-      TXT.draw({ px: (X, Y) => { if ((Y + 40) % 3) p.px(X, Y, "v") } }, 508, 202, "SLEEP IS FREE", "", { font: "nagiwa" }) }
+    PROJ_UNDER = snap(...PROJ_RECT)
+    projection(p, 0)
     // oil and grease on the road, a sheen on the wet over it (violet, cyan: the film, not a light)
     for (const [cx, cy, r] of [[262, 240, 5], [452, 172, 4], [702, 184, 5], [838, 236, 4], [880, 470, 4]]) {
       for (let j = -r; j <= r; j++) for (let i = -r - 2; i <= r + 2; i++) { const d = Math.hypot(i / 1.4, j) / r + 0.25 * Math.sin(i * 1.3 + j * 0.7); if (d < 0.7) darken(cx + i, cy + j); else if (d < 1 && (i + j) % 3 === 0) p.px(cx + i, cy + j, (i + j * 3) % 4 === 0 ? "b" : "t") }
@@ -502,8 +525,11 @@ const W1 = (() => {
     q.rect(661, 273, 118, 17, "k"); q.rect(662, 274, 116, 15, "H"); q.hline(662, 274, 116, "V"); for (let x = 664; x < 778; x += 12) q.vline(x, 275, 13, "h")
     { const w = TXT.measure("24H", "nagiwa"); q.rect(720 - (w >> 1) - 3, 276, w + 6, 11, "V"); TXT.draw(q, 720, 278, "24H", "C", { font: "nagiwa", align: "center" }) }
     q.hline(662, 289, 116, "v")
-    // Lerche's canopy over its door: a concrete slab, its drip edge, a lamp under it seen as a glow at the edge
-    q.rect(734, NF, 52, 15, "k"); q.rect(735, NF, 50, 14, lit("456", 0.4, 760, 128)); q.hline(735, NF + 13, 50, "6"); q.px(760, NF + 13, "R"); q.px(759, NF + 13, "Q"); q.px(761, NF + 13, "Q")
+    // Lerche's canopy over its door: a concrete slab, its drip edge, a lamp under it seen as a glow at the edge; on it the house's
+    // name in lit letters on a dark band (the user's wish, 2026-11-19)
+    q.rect(733, NF, 57, 15, "k"); q.rect(734, NF, 55, 14, lit("456", 0.4, 760, 128)); q.hline(734, NF + 13, 55, "6"); q.px(760, NF + 13, "R"); q.px(759, NF + 13, "Q"); q.px(761, NF + 13, "Q")
+    q.rect(735, NF + 2, 51, 9, "k"); q.rect(736, NF + 3, 49, 7, "1")
+    TXT.draw(q, 761, NF + 4, "LERCHE BLOCK", "R", { font: "hud", align: "center" }); TXT.draw({ px: (X, Y) => { if (Y === NF + 4) q.px(X, Y, "W") } }, 761, NF + 4, "LERCHE BLOCK", "", { font: "hud", align: "center" })
     // blade signs sticking out from the facades: from above their top edge, the tube on it, a cap of light
     const blade = (x, y, dx, dy, len, hue) => {
       const N = NEON[hue], x1 = x + dx * len, y1 = y + dy * len, wx = dx ? 0 : 1, wy = dy ? 0 : 1
@@ -526,56 +552,180 @@ const W1 = (() => {
   }
   over()
 
+  // ======== what moves: parts drawn over the picture at their top left (under the people) or over the over layer ========
+  const PARTS = []
+  const part = (name, x, y, w, h, frames, layer, draw) => PARTS.push({ name: "weg1_" + name, x, y, w, h, frames, layer, draw })
+  const charX = (s, i) => (i ? TXT.measure(s.slice(0, i), "nagiwa") + 1 : 0)
+  /** a roof sign's letters again: some of them off (dark tubes), or all dim */
+  const signState = (pen, t, offs, dim) => {
+    const [, y, , hue] = ROOFSIGNS.find((r) => r[2] === t), N = NEON[hue], x = SIGNRECT[t.split(" ")[0]][0] + 6
+    const idx = dim ? [...t].map((_, i) => i) : offs
+    for (const i of idx) if (t[i] !== " ") big(pen, x + charX(t, i) * 2, y, t[i], dim ? N[1] : N[0])
+  }
+  for (const [t, frames, offs, dimAt] of [["NINTH LIVE", 36, { 22: [8], 23: [8], 24: [8, 9] }, [30]], ["TIDE MODS", 36, { 5: [5], 6: [5], 14: [5] }, []],
+    ["KARAOKE", 24, {}, [10, 12]], ["HOT POT", 36, { 3: [6], 4: [6], 5: [6], 19: [6] }, []]]) {
+    const [x, y, w, h] = SIGNRECT[t.split(" ")[0]]
+    part("sign_" + t.split(" ")[0].toLowerCase(), x, y, w, h, frames, "under", (pen, f) => { if (dimAt.includes(f)) signState(pen, t, [], true); else if (offs[f]) signState(pen, t, offs[f], false) })
+  }
+  { const [bx, by, bw, bh] = SIGNRECT.MAHJONG
+    part("mahjong_bulbs", bx - 2, by - 2, bw + 4, bh + 4, 4, "under", (pen, f) => {
+      const k = (n) => ((n + fl(f / 2)) % 2 ? "P" : "R")
+      for (let i = 0; i < bw; i += 4) { pen.px(bx + i, by - 2, k(i / 4)); pen.px(bx + i, by + bh + 1, k(i / 4 + 1)) }
+      for (let j = 0; j < bh; j += 4) { pen.px(bx - 2, by + j, k(j / 4 + 1)); pen.px(bx + bw + 1, by + j, k(j / 4)) }
+    }) }
+  part("projection", ...PROJ_RECT, 6, "under", (pen, f) => { const [x0, y0, w] = PROJ_RECT; PROJ_UNDER.forEach((k, n) => pen.px(x0 + (n % w), y0 + fl(n / w), k)); projection(pen, f) })
+  // the water running west in the road's middle and down the stairs: only where nothing lies on it
+  const water = (pen, f, x0, y0, w, h, stairs) => { for (let y = y0; y < y0 + h; y++) for (let x = x0; x < x0 + w; x++) { const i = y * W + x; if (CHN[i] === undefined || BASE[i] !== G0[i]) continue; pen.px(x, y, (stairs ? stairGlint(x, y, f) : glintAt(x, y, f)) ? CHG[i] : CHN[i]) } }
+  part("water", 60, 203, AX0 - 60, 5, 8, "under", (pen, f) => water(pen, f, 60, 203, AX0 - 60, 5, false))
+  part("stairs", 0, NF + 24, 56, SF - NF - 48, 8, "under", (pen, f) => water(pen, f, 0, NF + 24, 56, SF - NF - 48, true))
+  /** steam: puffs growing and thinning as they drift with the wind (east), never two the same */
+  const steam = (pen, f, sx, sy, n, reach, dy) => {
+    for (let k = 0; k < n; k++) {
+      const t = ((f / 12) + k / n) % 1, cx = sx + t * reach, cy = sy + t * dy, r = R(5 + t * 14), dens = 0.25 + (1 - t) * 0.7
+      for (let j = -r; j <= r; j++) for (let i = -r; i <= r; i++) { const d = Math.hypot(i, j * 1.2) / r; if (d < 1 && bay(R(cx + i) + k * 3, R(cy + j) + f) < dens * (1 - d)) pen.px(cx + i, cy + j, d < 0.45 && t < 0.5 ? "H" : "h") }
+    }
+  }
+  part("steam", 350, 178, 66, 56, 12, "over", (pen, f) => steam(pen, f, 370, 213, 4, 26, -6))
+  part("exhaust", 222, 284, 60, 44, 12, "under", (pen, f) => steam(pen, f, 233, 309, 3, 26, -6))
+  // the machine's screen light along its front, a flicker
+  part("vending", 819, 300, 3, 30, 12, "under", (pen, f) => { if (f === 7) { pen.vline(821, 300, 30, "C"); pen.vline(820, 302, 26, "c") } })
+  // over the people: 24H's H failing, the shut shop's one tube coming on now and then, the noodle bar's magenta blade stuttering
+  { const w = TXT.measure("24H", "nagiwa"), x0 = 720 - (w >> 1)
+    part("24h", x0 - 3, 276, w + 6, 11, 36, "over", (pen, f) => { if ([17, 18, 26].includes(f)) TXT.draw(pen, x0 + charX("24H", 2), 278, "H", "v", { font: "nagiwa" }) }) }
+  part("tube", 463, SF - 18, 7, 18, 24, "over", (pen, f) => { const on = [3, 4, 15].includes(f); pen.vline(466, SF - 9, 6, on ? "0" : "8"); if (on) pen.px(466, SF - 6, "7") })
+  part("blade", 159, SF - 33, 7, 37, 36, "over", (pen, f) => { if (f === 9 || f === 10) for (let t = 0; t <= 30; t++) pen.px(162, SF - t, "M") })
+  const renderPart = (c, P, f) => {
+    const buf = P.layer === "under" ? BASE : OVER
+    for (let j = 0; j < P.h; j++) for (let i = 0; i < P.w; i++) { const k = buf[(P.y + j) * W + P.x + i]; if (k) c.px(i, j, k) }
+    P.draw(penOf((x, y, k) => { const X = x - P.x, Y = y - P.y; if (k && X >= 0 && Y >= 0 && X < P.w && Y < P.h) c.px(X, Y, k) }, (x, y) => (inB(R(x), R(y)) ? buf[R(y) * W + R(x)] : undefined)), f)
+  }
+
   // the street's lamps as the runtime light, so Juno takes on the neon she walks under (the roofs' own stay in the picture)
   const HEX = { w: "#eea040", m: "#ff4fd3", c: "#62def0", p: "#a87cff" }
   const RUNTIME = LAMPS.filter(([, , , r, st, lv]) => lv === "s" && st >= 0.3).map(([x, y, hue, r, st, lv, hw, hh]) => [x, y, HEX[hue], R(r + Math.max(hw, hh) * 0.6)])
-  return { W, H, NF, SF, AX0, AX1, OCC, walk, BASE, OVER, inB, RUNTIME }
+  return { W, H, NF, SF, AX0, AX1, OCC, walk, BASE, OVER, inB, RUNTIME, PARTS, renderPart }
 })()
 
+// ======== the street's figures, from above as the market's people (painted on the lines of their blocks of 2026-11-18) ========
+pal({ "(": "#2a2a3e", ")": "#3e3c58", "[": "#5c5a7c" })                                  // the homeless man's blanket, grey-violet wool
 {
   const ih = ISO.ihash, bay = ISO.bay
-  const blob = (c, x, y, rx, ry, k) => { c.ellipse(x, y, rx + 1, ry + 1, "k"); c.ellipse(x, y, rx, ry, k) }
+  const gr = (c, x, y, rows) => rows.forEach((r, j) => [...r].forEach((ch, i) => { if (ch !== ".") c.px(x + i, y + j, ch) }))
+  // the homeless man asleep on his cardboard (the cardboard is the picture's), curled on his side under a blanket, his head to the north,
+  // his beanie pulled down, his grey beard; one hand out on his cart so nobody takes it in the night. The cart of old screens beside
+  // him, its handle to the north: monitors' backs, a car battery that keeps one alive, its static, and for a beat CAM 25's landing
+  const MAN = [
+    "......kkkkk..........",
+    ".....k&&&&&k.........",
+    "....k&&[&&&&k........",
+    "....k&&&&&&+k........",
+    "....k+&+&&++k........",
+    "....kkSsShSkk........",
+    "...k)khShhhk)k.......",
+    "..k))[khhhk)))kkkkkk.",
+    ".k)[[[)kkk))))gggggSk",
+    ".k)[[[[))))))gggggsSk",
+    "k)[[[[[[))))))kkkkkk.",
+    "k)[[[[[))))))((k.....",
+    "k)[[[[))))))((((k....",
+    "k))[[)))))((((((k....",
+    "k)))))))((((((((k....",
+    ".k))))))(((((((k.....",
+    ".k)))))(((((((k......",
+    "..k)))((((((kkk......",
+    "..kkkk((((kkopk......",
+    "......kkkk.kooppk....",
+    "...........kkkkk.....",
+  ]
   anim("weg1_homeless", { w: 45, h: 24, ms: [500, 500, 500, 500, 500, 260] }, (c) => {
     const f = c.frame ?? 0
-    // he lies on his side under a blanket, his head to the west, his knees drawn up
-    c.rect(5, 4, 17, 17, "k"); c.rect(6, 5, 15, 15, "u"); c.rect(7, 6, 13, 3, f === 2 ? "U" : "u")
-    for (let y = 7; y < 19; y += 3) c.hline(8, y, 11, "o")
-    blob(c, 13, 5, 3, 3, "s"); c.px(12, 4, "1"); c.px(14, 4, "1")
-    // the cart, its handle to him, the old screens in it
-    c.rect(28, 2, 17, 22, "k"); c.rect(29, 3, 15, 20, "4"); c.hline(27, 1, 19, "5")
-    for (const [x, y] of [[31, 5], [37, 5], [31, 13], [37, 13]]) { c.rect(x, y, 5, 6, "k"); c.rect(x, y, 4, 5, "1") }
-    if (f === 5) { c.rect(37, 13, 4, 5, "J"); c.hline(37, 16, 4, "F"); c.px(39, 14, "K") }       // CAM 25's landing, for a beat
-    else for (let y = 13; y < 18; y++) for (let x = 37; x < 41; x++) c.px(x, y, ih(x + f * 7, y) < 0.45 ? "6" : "3")   // static
+    MAN.forEach((row, j) => [...row].forEach((ch, i) => { if (ch !== ".") c.px(3 + i, 2 + j, ch) }))
+    if (f === 1 || f === 2) { c.px(4, 12, "["); c.px(5, 14, "["); c.px(9, 9, ")"); c.px(10, 10, "[") }     // breathing: the blanket rises
+    // the cart: a wire basket on four castors, the handle bar along its north edge
+    c.rect(27, 1, 18, 23, "k"); c.rect(28, 3, 16, 20, "1")
+    for (let x = 29; x < 44; x += 2) c.vline(x, 3, 20, "3"); for (let y = 4; y < 23; y += 3) c.hline(28, y, 16, "3")
+    c.hline(27, 1, 18, "6"); c.hline(27, 2, 18, "k"); c.rect(32, 1, 8, 1, "4")
+    for (const [x, y] of [[27, 23], [44, 23], [27, 3], [44, 3]]) c.px(x, y, "5")
+    // the monitors' backs (vents, a cable), a dead screen face up, the battery with its LED
+    for (const [x, y] of [[29, 4], [36, 4]]) { c.rect(x, y, 7, 7, "k"); c.rect(x + 1, y + 1, 5, 5, "3"); c.hline(x + 1, y + 1, 5, "4"); for (let i = 1; i < 5; i += 2) c.px(x + 1 + i, y + 3, "2") }
+    c.rect(29, 12, 6, 6, "k"); c.rect(30, 13, 4, 4, "2"); c.px(30, 13, "4")
+    c.rect(29, 19, 6, 4, "k"); c.rect(30, 20, 4, 2, "4"); c.px(31, 20, f % 2 ? "C" : "v")
+    c.line(34, 20, 37, 18, "k")
+    // the live screen face up: static, or CAM 25's landing in its phosphor green (the door a bright dot)
+    c.rect(36, 12, 8, 8, "k"); c.rect(37, 13, 6, 6, "3")
+    if (f === 5) { c.rect(37, 13, 6, 6, "J"); c.hline(37, 16, 6, "F"); c.vline(40, 13, 3, "F"); c.px(41, 14, "K") }
+    else for (let y = 13; y < 19; y++) for (let x = 37; x < 43; x++) c.px(x, y, ih(x + f * 7, y + f) < 0.42 ? "6" : ih(x, y + f * 5) < 0.3 ? "H" : "3")
   })
-  const sheep = (c, f, awake) => {
-    blob(c, 15, 16, awake ? 12 : 12 + (f % 2), 11, "H")                                         // the woolly body
-    for (let y = 6; y < 27; y++) for (let x = 4; x < 27; x++) if (c.key(x, y) === "H" && bay(x, y) < 0.18) c.px(x, y, "G")
-    if (!awake) {
-      const ny = f === 3 ? 8 : 7
-      blob(c, 15, ny, 6, 5, "1"); c.px(9, ny - 4, "H"); c.px(21, ny - 4, "H"); c.px(10, ny - 3, "H"); c.px(20, ny - 3, "H")   // the sheep's head, its ears
-      c.px(13, ny + 2, "3"); c.px(17, ny + 2, "3")                                                 // its button eyes, shut
-    } else {
-      blob(c, 15, 8, 4, 4, "o"); c.px(14, 6, "p")                                                 // his own head, bare: dark hair
-      blob(c, 26, 18, 4, 4, "H"); c.ellipse(27, 18, 2, 2, "1")                                    // the sheep's head under his arm
-      const fx = f ? 0 : 2; c.rect(fx, 21, 6, 5, "k"); c.rect(fx + 1, 22, 4, 3, "C")              // a flyer held out
+
+  // Lull's sheep: a man in the mascot's costume asleep on his feet, from above. The wool gone grey in the rain, curls along its edge,
+  // the mask's woolly top with its floppy ears and button eyes on its face (to the south), Lull's oval on the chest, the hooves of the
+  // costume's arms at his sides. Breathing; now and then the head nods
+  const wool = (c, cx, cy, r, f) => {
+    for (let y = cy - r - 2; y <= cy + r + 2; y++) for (let x = cx - r - 2; x <= cx + r + 2; x++) {
+      const a = Math.atan2(y - cy, x - cx), rr = r + (Math.cos(a * 9 + 0.5) > 0.3 ? 1 : 0)        // the curls scallop its edge
+      const d = Math.hypot(x - cx, y - cy)
+      if (d > rr + 1) continue
+      if (d > rr) { c.px(x, y, "k"); continue }
+      const lit = -(x - cx) * 0.6 - (y - cy) * 0.8, curl = (x * 5 + y * 3) % 7 === 0 || (x * 3 + y * 7) % 11 === 0
+      c.px(x, y, curl ? (lit > 0 ? "h" : "6") : lit > r * 0.4 ? "H" : lit > -r * 0.3 ? "h" : "6")
     }
   }
-  anim("weg1_sheep", { w: 30, h: 30, ms: [900, 900, 900, 500] }, (c) => sheep(c, c.frame ?? 0, false))
-  anim("weg1_sheep2", { w: 30, h: 30, ms: [700, 700] }, (c) => sheep(c, c.frame ?? 0, true))
+  const lullBadge = (c, x, y) => { gr(c, x, y, [".kkk.", "kCvCk", "kvVvk", ".kkk."]) }
+  const sheepMask = (c, cx, cy, eyesShut) => {
+    // the floppy ears out to the sides, pink inside; the woolly top; the black muzzle over the chest with its button eyes
+    gr(c, cx - 10, cy - 1, [".kkk", "k22sk", "k2ssk", ".kkk"]); gr(c, cx + 6, cy - 1, ["kkk.", "ks22k", "kss2k", ".kkk"])
+    // the head over the body: its shadow on the wool below it, then the head with its own ink edge
+    for (let y = cy; y <= cy + 9; y++) for (let x = cx - 9; x <= cx + 9; x++) { const d = Math.hypot(x - cx, y - cy + 1); if (d > 6 && d <= 8.5 && "Hh".includes(c.key(x, y) ?? "")) c.px(x, y, c.key(x, y) === "H" ? "h" : "6") }
+    wool(c, cx, cy - 1, 5, 0)
+    gr(c, cx - 3, cy + 3, [".kkkkk.", "k12121k", eyesShut ? "k31113k" : "kH111Hk", "k11s11k", ".kk1kk.", "...k..."])
+  }
+  const sheepBody = (c, f, awake) => {
+    const br = awake ? 0 : f % 2
+    wool(c, 15, 17, 10 + br, f)
+    // the costume's arms down his sides, hooves
+    for (const [x, s] of [[3, 1], [27, -1]]) { c.rect(x - 1, 16, 3, 7, "k"); c.vline(x, 17, 5, "h"); c.rect(x - 1, 22, 3, 3, "k"); c.px(x, 23, "2") }
+    lullBadge(c, 13, 21)
+  }
+  anim("weg1_sheep", { w: 30, h: 30, ms: [900, 900, 900, 500] }, (c) => {
+    const f = c.frame ?? 0
+    sheepBody(c, f, false)
+    sheepMask(c, 15, f === 3 ? 9 : 8, true)
+  })
+  // the other man in the costume, awake: his own head bare (dark hair from above, his brow and nose to the south), the sheep's head under
+  // his left arm, a flyer held out to whoever passes
+  anim("weg1_sheep2", { w: 30, h: 30, ms: [700, 700] }, (c) => {
+    const f = c.frame ?? 0
+    sheepBody(c, f, true)
+    gr(c, 11, 4, ["..kkkkk..", ".kopppok.", "kopppppok", "kpoppoppk", "kooppppok", ".kSssssk.", "..kSsSk..", "...kkk..."])
+    // the mask under his arm, on its side: its wool, the black face, an ear, a button eye looking up
+    wool(c, 26, 19, 3, 0); c.rect(24, 21, 5, 4, "k"); c.rect(25, 22, 3, 2, "1"); c.px(26, 22, "H"); gr(c, 27, 15, ["kk", "k2k"])
+    const fx = f ? 0 : 2
+    c.rect(fx, 22, 7, 6, "k"); c.rect(fx + 1, 23, 5, 4, "H"); c.px(fx + 2, 24, "C"); c.px(fx + 3, 24, "v"); c.px(fx + 4, 24, "C"); c.hline(fx + 1, 26, 5, "h")
+    c.line(fx + 6, 24, 6, 21, "h")
+  })
+
+  // the cleaning robot: a round steel shell, its bumper, the dirty-water tank's lid, two brushes at the front spinning, a sticker, its
+  // cyan light going round the rim (not yellow: that is Juno's)
   anim("weg1_robot", { w: 15, h: 15, frames: 4, fps: 6 }, (c) => {
     const f = c.frame ?? 0
-    blob(c, 7, 7, 6, 6, "5"); c.ellipse(7, 7, 4, 4, "6"); c.ellipse(6, 6, 1, 1, "H")
-    const [lx, ly] = [[7, 2], [12, 7], [7, 12], [2, 7]][f]; c.px(lx, ly, "V"); c.px(7, 7, "v")   // its light going round
+    c.ellipse(7, 7, 7, 7, "k"); c.ellipse(7, 7, 6, 6, "3"); c.ellipse(7, 7, 5, 5, "5"); c.ellipse(6, 6, 3, 3, "6"); c.px(5, 5, "G"); c.px(4, 6, "G")
+    c.hline(4, 9, 7, "4"); c.rect(6, 10, 3, 2, "2"); c.px(9, 4, "u")
+    for (const [bx, by] of [[3, 12], [11, 12]]) { const a = f * 0.8; for (let s = 0; s < 3; s++) c.px(bx + Math.round(Math.cos(a + s * 2.1) * 1.5), by + Math.round(Math.sin(a + s * 2.1) * 1.5), "h"); c.px(bx, by, "k") }
+    const [lx, ly] = [[7, 1], [13, 7], [7, 13], [1, 7]][f]; c.px(lx, ly, "V"); c.px(7, 7, f % 2 ? "v" : "C")
   })
+
+  // a delivery drone from above: four rotors a pale blur round their hubs, the carbon arms, its body with the amber parcel tied under it,
+  // its light blinking
   anim("weg1_drone", { w: 21, h: 21, frames: 4, fps: 12 }, (c) => {
     const f = c.frame ?? 0
-    for (const [x, y] of [[4, 4], [16, 4], [4, 16], [16, 16]]) {                               // the rotors, a pale blur with an ink edge
-      c.ellipse(x, y, 4, 4, "k"); c.ellipse(x, y, 3, 3, f % 2 ? "6" : "5"); c.px(x + (f % 2 ? 2 : -2), y + (f < 2 ? -2 : 2), "H")
+    for (const [x, y] of [[4, 4], [16, 4], [4, 16], [16, 16]]) {
+      for (let j = -4; j <= 4; j++) for (let i = -4; i <= 4; i++) { const d = Math.hypot(i, j); if (d <= 4.2 && bay(x + i + f, y + j) < (d > 3.4 ? 0.7 : 0.35)) c.px(x + i, y + j, d > 3.4 ? "5" : "G") }
+      const a = f * 0.9 + (x + y) * 0.1; c.line(x - Math.round(Math.cos(a) * 3), y - Math.round(Math.sin(a) * 3), x + Math.round(Math.cos(a) * 3), y + Math.round(Math.sin(a) * 3), "6")
+      c.ellipse(x, y, 1, 1, "k"); c.px(x, y, "4")
     }
-    c.line(5, 5, 15, 15, "k"); c.line(15, 5, 5, 15, "k"); c.line(6, 5, 15, 14, "G"); c.line(14, 5, 5, 14, "G")   // the arms
-    for (const [x, y] of [[4, 4], [16, 4], [4, 16], [16, 16]]) c.px(x, y, "G")                // the hubs
-    c.rect(7, 7, 7, 7, "k"); c.rect(8, 8, 5, 5, "P"); c.hline(8, 10, 5, "O"); c.vline(10, 8, 5, "O")   // the parcel, tied
-    if (f === 0) c.px(10, 6, "v")                                                               // its light
+    c.line(5, 5, 15, 15, "k"); c.line(15, 5, 5, 15, "k"); c.line(6, 6, 14, 14, "3"); c.line(14, 6, 6, 14, "3")
+    c.rect(6, 6, 9, 9, "k"); c.rect(7, 7, 7, 7, "P"); c.rect(7, 7, 7, 2, "Q"); c.hline(7, 10, 7, "O"); c.vline(10, 7, 7, "O"); c.px(8, 8, "R")
+    c.rect(9, 4, 3, 2, "k"); c.px(10, 5, f === 0 || f === 1 ? "V" : "c")
   })
 }
 
@@ -593,5 +743,6 @@ const W1 = (() => {
   // both together, to look at (not built into the game: the atlas takes weg1_bg and weg1_over)
   scene("_weg1_view", { w: W1.W, h: W1.H, bg: "k" }, (c) => { blit(c, W1.BASE); blit(c, W1.OVER) })
 }
-console.log("PARTS " + JSON.stringify({ room: "weg1", size: [W1.W, W1.H], parts: [], lamps: W1.RUNTIME }))
+for (const P of W1.PARTS) anim(P.name, { w: P.w, h: P.h, frames: P.frames, fps: 10 }, (c) => W1.renderPart(c, P, c.frame ?? 0))
+console.log("PARTS " + JSON.stringify({ room: "weg1", size: [W1.W, W1.H], parts: W1.PARTS.map((P) => ({ name: P.name, at: [P.x, P.y], size: [P.w, P.h], frames: P.frames, fps: 10, layer: P.layer })), lamps: W1.RUNTIME }))
 console.log("WEG1_LAYOUT " + JSON.stringify({ size: [W1.W, W1.H], NF: W1.NF, SF: W1.SF, AX: [W1.AX0, W1.AX1], occ: W1.OCC }))
