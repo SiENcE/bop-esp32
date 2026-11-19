@@ -37,7 +37,11 @@ const LNW = 36, LNH = 60, LCX = 17, LGY = 56
 // a quarter wider across than the block (the user, 2026-11-16: in the room he looked narrow); his depth and height are the block's
 const LNWIDE = 1.25
 /** a point of him (meters): f forward (toward the lower left), s to his right (the upper left), h up -> the sprite's px */
-const LNP = (f, s, h) => [LCX - 16 * (f + s * LNWIDE), LGY + 8 * (f - s * LNWIDE) - 30 * h]
+// his heading: forward and to his right as screen vectors per meter (2:1). SW is the caravan's (the approved view); the others turn the same
+// painting for CAM 23 (2026-11-19, the user: reuse what is painted, only add to it)
+const LNHEAD = { sw: { F: [-16, 8], S: [-16, -8] }, se: { F: [16, 8], S: [-16, 8] }, ne: { F: [16, -8], S: [16, 8] }, nw: { F: [-16, -8], S: [16, -8] } }
+let LNH0 = LNHEAD.sw
+const LNP = (f, s, h) => [LCX + LNH0.F[0] * f + LNH0.S[0] * s * LNWIDE, LGY + LNH0.F[1] * f + LNH0.S[1] * s * LNWIDE - 30 * h]
 const R = Math.round
 /** a filled convex shape round the points (their hull); where(x, y) may pick the key per pixel */
 function lnHull(c, pts, k) {
@@ -64,19 +68,20 @@ function lnBox(c, f0, s0, h0, df, ds, dh, top, front, side) {
   if (front) lnHull(c, [LNP(f1, s0, h0), LNP(f1, s1, h0), LNP(f1, s0, h1), LNP(f1, s1, h1)], front)
   if (top) lnHull(c, [LNP(f0, s0, h1), LNP(f1, s0, h1), LNP(f0, s1, h1), LNP(f1, s1, h1)], top)
 }
-/** a wheel standing in the plane of his facing: the tyre (lit along its upper left), the rim, spokes, the push rim, the hub */
-function lnWheel(c, f, s, h, r, near) {
+/** a wheel standing in the plane of his facing: the tyre (lit along its upper left), the rim, spokes, the push rim (outside), the hub;
+ *  spin turns the spokes (radians: driving) */
+function lnWheel(c, f, s, h, r, near, spin = 0) {
   const ring = (rr) => { const pts = []; for (let i = 0; i < 24; i++) { const t = (i / 24) * Math.PI * 2; pts.push(LNP(f + rr * Math.cos(t), s, h + rr * Math.sin(t))) } return pts }
   const [cx, cy] = LNP(f, s, h)
   lnHull(c, ring(r), (x, y) => (x + 0.5 - cx) * -0.5 + (y + 0.5 - cy) * -1 > r * 26 ? "3" : "1")   // the tyre, its tread lit up there
   lnHull(c, ring(r - 0.05), near ? "6" : "5")
   lnHull(c, ring(r - 0.07), "2")
   for (let i = 0; i < 6; i++) {                                                                       // the spokes
-    const t = (i / 6) * Math.PI * 2 + 0.3, [x1, y1] = LNP(f + (r - 0.07) * Math.cos(t), s, h + (r - 0.07) * Math.sin(t))
+    const t = (i / 6) * Math.PI * 2 + 0.3 + spin, [x1, y1] = LNP(f + (r - 0.07) * Math.cos(t), s, h + (r - 0.07) * Math.sin(t))
     c.line(R(cx), R(cy), R(x1), R(y1), near ? "5" : "4")
   }
   if (near) for (let i = 0; i < 24; i++) {                                                            // the push rim, outside the spokes
-    const t = (i / 24) * Math.PI * 2, [x, y] = LNP(f + (r - 0.09) * Math.cos(t), s - 0.03, h + (r - 0.09) * Math.sin(t))
+    const t = (i / 24) * Math.PI * 2, [x, y] = LNP(f + (r - 0.09) * Math.cos(t), s + 0.03 * Math.sign(s), h + (r - 0.09) * Math.sin(t))
     c.px(R(x), R(y), t > Math.PI * 0.4 && t < Math.PI * 1.3 ? "9" : "6")
   }
   c.rect(R(cx) - 1, R(cy) - 1, 2, 2, near ? "9" : "6"); c.px(R(cx), R(cy), "4")
@@ -201,3 +206,115 @@ anim("lantern_sit_sw", { w: LNW, h: LNH, frames: 8, ms: Array(8).fill(250), outl
 anim("lantern_talk_sw", { w: LNW, h: LNH, frames: 2, ms: [200, 200], outline: "k", pivot: "bottom" },
   layer("antennas", { outline: false }, (c) => lanternAntennas(c, { lit: c.frame })),
   (c) => lanternSW(c, { talk: c.frame, f: c.frame * 2 }))
+
+// ================================================================ CAM 23: the same Lantern turned (2026-11-19)
+// He drives into the laundromat at half past twelve, to dryer 6, a hand into its drum, and out again; only when nobody is inside (the
+// user's choice), so only CAM 23 sees him, the laundromat's own picture under the filter (one place, one picture: the street's size).
+// His painting above, turned by LNHEAD: the same boxes, wheels, poncho and crest; what only one side shows is placed by side: the ocular on
+// his RIGHT eye, the headset with its antennas on his LEFT ear (the portrait), the antennas rising from the headset's cup.
+//   lantern_drive_se   driving in (toward the lower right): his front, his right side near; the wheels turning, 4 frames
+//   lantern_reach_ne   at dryer 6 (toward the upper right): his back, his right arm out into the drum and back, 4 frames
+//   lantern_drive_nw   driving out (toward the upper left): his back, his left side near, the headset on the near ear; 4 frames
+function lanternView(c, view, { f = 0, spin = 0, reach = 0 } = {}) {
+  LNH0 = LNHEAD[view]
+  const front = view === "se", rightNear = view === "se" || view === "ne"
+  const farS = rightNear ? -0.3 : 0.3, nearS = -farS
+  const back = () => {
+    lnBox(c, -0.27, -0.22, 0.5, 0.04, 0.44, 0.45, "5", "3", "2")                                  // the backrest
+    for (const s of [-0.22, 0.2]) lnBox(c, -0.3, s, 0.88, 0.06, 0.03, 0.1, "6", "1", "1")       // the push handles
+  }
+  const seat = () => lnBox(c, -0.22, -0.22, 0.46, 0.46, 0.44, 0.05, "4", "3", "2")
+  const fore = () => {
+    for (const s of [-0.2, 0.18]) { lnBox(c, 0.3, s, 0, 0.05, 0.03, 0.08, "6", "5", "4"); const [x, y] = LNP(0.32, s + 0.015, 0.02); c.px(R(x), R(y), "1") }
+    lnBox(c, 0.38, -0.22, 0.06, 0.2, 0.44, 0.03, "9", "6", "5")
+  }
+  const legs = () => {
+    const legsOf = [[0.05, "d", "b", "B", "3"], [-0.21, "D", "D", "d", "K"]]
+    for (const [s0, t, fr, sd, boot] of rightNear ? legsOf.slice().reverse() : legsOf) {
+      lnBox(c, -0.05, s0, 0.5, 0.45, 0.15, 0.13, t, fr, sd); lnBox(c, 0.36, s0, 0.12, 0.1, 0.13, 0.4, t, fr, sd)
+      lnBox(c, 0.38, s0 - 0.01, 0.08, 0.17, 0.16, 0.06, boot, "B", "B")
+    }
+  }
+  const poncho = () => {
+    const sh = 1.05
+    const PON = [LNP(-0.15, 0.24, sh), LNP(0.08, 0.24, sh), LNP(-0.15, -0.24, sh), LNP(0.08, -0.24, sh),
+      LNP(-0.2, 0.32, 0.58), LNP(0.24, 0.3, 0.55), LNP(-0.2, -0.32, 0.58), LNP(0.24, -0.3, 0.55)]
+    const [nx, ny] = LNP(-0.03, 0, sh), ponY1 = Math.max(...PON.map((p) => p[1]))
+    lnHull(c, PON, (x, y) => {
+      if (y >= ponY1 - 1.5) return "U"                                                                  // the hem
+      if (x - nx > 4.5) return "U"                                                                      // the side away from the light (the right)
+      if ((x + y) % 7 === 0 && Math.abs(x - nx) > 2) return "V"                                         // a fold
+      if (y - ny < 3 && x - nx < 1) return "P"                                                          // the shoulders, lit from the upper left
+      return "u"
+    })
+    // the hood thrown back behind his neck
+    lnHull(c, [LNP(-0.2, 0.1, sh + 0.02), LNP(-0.2, -0.1, sh + 0.02), LNP(-0.26, 0.08, sh - 0.12), LNP(-0.26, -0.08, sh - 0.12)], (x, y) => ((x + y) % 4 === 0 ? "V" : "U"))
+    if (front) {
+      for (const [pf, ps, ph, df, ds, dh, k1, k2] of [[0.1, -0.3, 0.62, 0.12, 0.12, 0.16, "m", "n"], [0.1, 0.12, 0.7, 0.12, 0.14, 0.16, "c", "C"],
+        [0.15, -0.08, 0.58, 0.1, 0.12, 0.1, "o", "O"], [0.08, -0.18, 0.85, 0.08, 0.1, 0.1, "e", "E"]]) lnBox(c, pf, ps, ph, df, ds, dh, k1, k1, k2)
+    } else lnBox(c, -0.24, 0.02, 0.62, 0.04, 0.14, 0.16, "c", "c", "C")                                // a patch on his back
+  }
+  const head = () => {
+    lnBox(c, -0.05, -0.05, 1.0, 0.08, 0.1, 0.1, "t", "s", "t")                                       // the neck
+    const HEAD = []
+    for (const [f0, f1, h0, h1] of [[-0.13, 0.11, 1.07, 1.35], [0.0, 0.11, 1.09, 1.33]])
+      for (const ff of [f0, f1]) for (const ss of [-0.11, 0.11]) for (const hh of [h0, h1]) HEAD.push(LNP(ff, ss, hh))
+    const hT = Math.min(...HEAD.map((p) => p[1])), hy1 = Math.max(...HEAD.map((p) => p[1])), [fx] = LNP(0.11, 0, 1.2), [mx] = LNP(-0.01, 0, 1.2)
+    lnHull(c, HEAD, (x, y) => {
+      if (y < hT + 2.5) return "z"                                                                     // the shaved scalp
+      if (y > hy1 - 2.5) return "t"
+      if (!front) return x - mx > 1 ? "t" : "s"                                                        // the back of his head, its right in shade
+      return Math.abs(x - fx) < 4 ? (y < hT + 5.5 ? "S" : "s") : "t"                                  // his face toward us, the side in shade
+    })
+    // the crest from his brow back to the nape, its spikes
+    const CR = [LNP(-0.15, -0.03, 1.33), LNP(0.11, -0.03, 1.33), LNP(-0.15, 0.03, 1.33), LNP(0.11, 0.03, 1.33),
+      LNP(-0.15, -0.03, 1.49), LNP(0.11, -0.03, 1.49), LNP(-0.15, 0.03, 1.49), LNP(0.11, 0.03, 1.49)]
+    const [qx, qy] = LNP(-0.02, 0, 1.41)
+    lnHull(c, CR, (x, y) => (x + 0.5 > qx + 1.5 ? "H" : y + 0.5 < qy - 1 ? "g" : "G"))
+    for (const [sf, sh2, k] of [[0.1, 1.53, "w"], [0.02, 1.56, "g"], [-0.06, 1.55, "g"], [-0.13, 1.51, "G"]]) {
+      const [x, y] = LNP(sf, 0, sh2), [x2, y2] = LNP(sf, 0, 1.47)
+      c.line(R(x), R(y), R(x2), R(y2), k)
+    }
+    if (front) {
+      // the face, set by hand round the bridge of his nose as in the caravan: his right eye (the ocular) is the near one now, to the left
+      const [ax0, ay0] = LNP(0.11, 0, 1.22), ax = R(ax0), ay = R(ay0), OX = ax - 4, OY = ay - 2
+      c.rect(OX, OY, 4, 4, "4"); c.px(OX, OY, "k"); c.px(OX + 3, OY + 3, "k"); c.px(OX + 1, OY, "6"); c.px(OX, OY + 1, "6")
+      c.rect(OX + 1, OY + 1, 2, 2, "L"); c.px(OX + 1 + (f % 2), OY + 1 + (fl2(f / 2) % 2), "l"); c.line(OX + 3, OY, OX + 2, OY + 1, "k")
+      c.px(ax + 1, ay, "W"); c.px(ax + 2, ay, "k"); c.hline(ax + 1, ay - 1, 2, "T"); c.px(ax + 2, ay - 2, "9")
+      c.px(ax, ay, "S"); c.px(ax, ay + 1, "S"); c.hline(ax - 1, ay + 3, 3, "k"); c.px(ax, ay + 3, "9"); c.hline(ax - 1, ay + 4, 3, "S")
+      const [lx, ly] = LNP(0.12, 0, 0.92)
+      c.vline(R(lx), R(ly) - 4, 3, "k"); c.rect(R(lx) - 1, R(ly) - 1, 3, 3, "E"); c.px(R(lx), R(ly) - 1, "4"); c.px(R(lx), R(ly), f % 3 === 1 ? "g" : "y"); c.px(R(lx), R(ly) + 1, "e")
+    }
+    // the headset on his LEFT ear: the cup and its magenta light, where that ear shows (in SE it is behind his head)
+    if (view !== "se") { const [hx, hy] = LNP(-0.02, -0.12, 1.2); c.rect(R(hx) - 1, R(hy) - 2, 3, 4, "2"); c.px(R(hx) - 1, R(hy) - 2, "5"); c.px(R(hx), R(hy), f % 4 === 0 ? "m" : "M") }
+  }
+  const nearHand = () => lnBox(c, 0.0, nearS + (nearS < 0 ? -0.01 : -0.03), 0.5, 0.07, 0.04, 0.07, "S", "s", "t")
+  const arm = () => {
+    // at the dryer his right arm goes out forward into the drum; in SE the left rests on his knee
+    if (view === "ne") { const d = 0.35 + reach * 0.15; lnBox(c, 0.0, 0.14, 0.82, d, 0.11, 0.11, "P", "u", "U"); lnBox(c, d, 0.15, 0.83, 0.09, 0.08, 0.07, "S", "s", "t") }
+    else if (front) lnBox(c, 0.3, -0.15, 0.6, 0.07, 0.07, 0.05, "S", "s", "t")
+  }
+  lnWheel(c, -0.05, farS, 0.3, 0.3, false, spin)
+  if (front) { back(); seat(); fore(); legs(); poncho(); arm(); head() }
+  else { fore(); legs(); seat(); poncho(); head(); arm(); back() }
+  lnWheel(c, -0.05, nearS, 0.3, 0.3, true, spin)
+  if (view !== "ne") nearHand()                                                                     // his hand on the near push rim
+  LNH0 = LNHEAD.sw
+}
+/** the antennas rising from the headset's cup on his LEFT ear, leaning back and out; their lights one after another */
+function lanternAntennasView(c, view, lit = 0) {
+  LNH0 = LNHEAD[view]
+  for (const [i, back, out, up, tip] of [[0, 0.02, 0.05, 0.45, "v"], [1, 0.08, 0.07, 0.55, "M"], [2, 0.14, 0.05, 0.42, "g"]]) {
+    const [x0, y0] = LNP(-0.02 - i * 0.02, -0.13, 1.24), [x1, y1] = LNP(-0.02 - back, -0.13 - out, 1.24 + up)
+    c.line(R(x0), R(y0), R(x1), R(y1), "5"); c.px(R(x1), R(y1), lit === i ? "w" : tip)
+  }
+  LNH0 = LNHEAD.sw
+}
+const SPIN = [0, 0.26, 0.52, 0.78]
+for (const [name, view, o] of [["lantern_drive_se", "se", (i) => ({ f: i, spin: SPIN[i] })], ["lantern_drive_nw", "nw", (i) => ({ f: i, spin: -SPIN[i] })],
+  ["lantern_reach_ne", "ne", (i) => ({ f: i, reach: [0, 1, 1, 0][i] })]]) {
+  const behind = view === "se"                                                                   // facing us, the antennas behind his head
+  anim(name, { w: LNW, h: LNH, frames: 4, ms: view === "ne" ? [500, 400, 600, 400] : [110, 110, 110, 110], outline: "k", pivot: "bottom" },
+    ...(behind ? [layer("antennas", { outline: false }, (c) => lanternAntennasView(c, view, c.frame % 3)), (c) => lanternView(c, view, o(c.frame))]
+      : [(c) => lanternView(c, view, o(c.frame)), layer("antennas", { outline: false }, (c) => lanternAntennasView(c, view, c.frame % 3))]))
+}
