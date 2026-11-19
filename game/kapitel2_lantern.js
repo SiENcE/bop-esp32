@@ -25,18 +25,9 @@ const P = (/** @type {string} */ text) => ({ say: "pike", text });
 const HIJACK_AFTER = { or: ["day=7", ["day=6", "time>=22:00"]] };     // Lantern's ten seconds have been
 
 // ---- L1, Sunday 22:00: for ten seconds a voice breaks into every station in the Ninth (the user, 2026-11-19: over the radio, not the big
-// screen): through the noise only "... Nagi·wa ... lügt ...", and nobody can say yet who it was or what he means. Heard live in Kowalski
-// Street from the half repair's radio on his scaffold, and on the deck's RADIO (a look: game/radio.js); otherwise people talk about it
-// (the half repair, the stations on Monday, the board in NETZ). Forgotten overnight (game/kapitel2.js), so heard or not doesn't double Monday
-Cutaway.actor("funkstimme", { name: "Stimme im Radio", color: "#8e9ab0", voice: { pitch: 46, wave: "square", syllable: 85 } });
-Cutaway.moment("hijack", { room: "kowalski", day: 6, from: "22:00", to: "22:15", if: "!off_lantern", unseen: [], play: [
-  { sfx: "static", gain: 0.6 },
-  "Das Radio der halben Reparatur rauscht. Mitten im Lied.",
-  { say: "funkstimme", text: "... Nagi·wa ... lügt ..." },
-  { sfx: "static", gain: 0.4 },
-  "Dann wieder Musik.",
-  "Wer war das? Und worüber lügt Nagi·wa?",
-] });
+// screen): through the noise only "... Nagi·wa ... lügt ...", and nobody can say yet who it was or what he means. Heard live only on the
+// deck's RADIO (a look: game/radio.js), not in the street (the user, the same day: under Nagi·wa's own screen it felt wrong); otherwise
+// people talk about it: the half repair, the stations on Monday, the board in NETZ
 
 // ---- L2: the half repair, on his scaffold every evening of this chapter too, his radio beside him. From Sunday ten he knows where the voice
 // in it came from
@@ -45,7 +36,7 @@ const repair = /** @type {any} */ (Cutaway.actors.get("reparatur")).def;
 repair.talk = [{ if: "day<5", then: repair.talk, else: [
   { if: "know_cable", then: [R("Das Kabel geht in den Gully. Weiter unten bin ich nicht zuständig.")],
     else: [{ if: [HIJACK_AFTER, "!off_lantern"], then: [
-      { if: "day=6", then: [R("Hast du's gehört? Eben, mitten im Lied. Rauschen, und dann sagt einer: Nagi·wa lügt.")],
+      { if: "day=6", then: [R("Hast du's gehört? Vorhin, mitten im Lied. Rauschen, und dann sagt einer: Nagi·wa lügt.")],
         else: [R("Hast du's gehört? Gestern um zehn, mitten im Lied. Rauschen, und dann sagt einer: Nagi·wa lügt.")] },
       "Wo kam das her?",
       R("Das kam nicht über Funk. Das kam übers Kabel. Die Radios hier hängen alle am Verstärker hinterm großen Schirm."),

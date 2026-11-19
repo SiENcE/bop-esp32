@@ -29,7 +29,7 @@ Nagiwa.quietOut = ["day>4", "time>=19:00", "time<23:00", Nagiwa.quietKnown];
 const FORGET = (/** @type {string[]} */ ids) => ids.map((id) => ({ unset: `~moment.${id}` }));
 Object.assign(Nagiwa.nights, {
   6: { date: "Sonntag, 11. November", evening: "Abend 2", passes: FORGET(["nachbar_sat", "lantern_sat"]) },
-  7: { date: "Montag, 12. November", evening: "Abend 3", last: true, passes: FORGET(["nachbar_sun", "lantern_sun", "quiet_flat", "hijack"]) },
+  7: { date: "Montag, 12. November", evening: "Abend 3", last: true, passes: FORGET(["nachbar_sun", "lantern_sun", "quiet_flat"]) },
 });
 
 // ---- the clock: on Monday it stops at 00:45 until everything is ready (kapitel2-design §3.7): Juno has been in Ines' flat, Lantern has the
