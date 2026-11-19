@@ -174,8 +174,9 @@ Cutaway.moment("heimkehr", { room: "flat", day: 5, from: "18:00", to: "18:15", i
 
 // ---- Monday, 18:30: Teo's last visit awake (kapitel2-design §7), on blocks. A knock wherever Juno is waiting, as on Wednesday; then
 // up on to the roof, where for the first time someone sits beside her. A scene without choices: it costs the solver its moment only.
-// He has a long hook from the pump hall: if the ladder still hangs up there, he pulls it down. [PLATZHALTER] his poses with the hook and
-// sitting from behind (§10) are still to be drawn; the lines are the design's proposals
+// He takes the lift's emergency key, the long hook on the 14th floor (or asks Juno for it, if she took it): if the ladder still hangs up
+// there, he pulls it down (the user, 2026-11-19: not a hook from the pump hall, the one by the lift is there). On the roof he sits at her
+// right, his head on her shoulder (dach_teo over the picture); the lines are the design's proposals
 const T = (/** @type {string} */ text) => ({ say: "teo", text });
 // while he sits beside her, the place's own memories keep quiet (only a look: no state for the solver)
 Cutaway.state.view("teo_up");
@@ -201,7 +202,8 @@ Cutaway.moment("teo_monday", { room: "deck", day: 7, from: "18:00", to: "18:30",
   { if: "rent=teo", then: ["Die Miete. Danke.", T("Hab gesagt, sag nichts.")] },
   T("Gehen wir rauf, Ju? Wie früher."),
   "Mit was willst du an die Leiter?",
-  T("Mit dem hier. Der ist aus der Pumpenhalle. Da hängt keiner dran."),
+  { if: "got_haken", then: [T("Hast du den Notschlüssel vom Aufzug noch?"), "Ja. Hier."],
+    else: [T("Mit dem Notschlüssel vom Aufzug. Der hängt da noch, wie früher.")] },
   { fade: "out", ms: 700 },
   { place: "teo", room: null },
   { close: "flat/door_leaf" },

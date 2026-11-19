@@ -92,7 +92,7 @@ deck() {
     $PXL build art/ui/deck.px.js --out build/art/deck --no-preview | tail -n 1
     $PXL build art/ui/deck_wallpaper.px.js --out build/art/deck --no-preview | tail -n 1
     # the roof of today comes from the old photo's code (the room dach)
-    $ATLAS build/art/deck assets/deck.js --only "deck_*,evi_*,dach_bg,dach_heute"
+    $ATLAS build/art/deck assets/deck.js --only "deck_*,evi_*,dach_bg,dach_heute,dach_teo"
 }
 
 intro() {

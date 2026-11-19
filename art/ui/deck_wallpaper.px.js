@@ -466,6 +466,71 @@ pal({
   const today = (c, sitting) => { const p = pen(sitting ? WIDE : W), from = sitting ? SIT_FROM : 0; paint(p, c.frame, true, sitting); for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) c.px(x, y, p.buf[y][x + from]) }
   anim("dach_bg", { w: W, h: H, frames: FRAMES, fps: 10 }, (c) => today(c, false))
   anim("dach_heute", { w: W, h: H, frames: FRAMES, fps: 10 }, (c) => today(c, true))
+  // Teo grown up beside her on Monday evening, the last time he is awake (kapitel2-design §7): at her right, where the boy sat, his head on
+  // her shoulder, from behind. Painted (2026-11-19) on the lines of the block the user approved (art/test/k2_leih_blocks.px.js, TEO_BACK):
+  // tousled black hair caught on top by the glow ahead, the nape, the gills glowing on it, the ear defenders' band across it, the Lull patch
+  // behind his LEFT ear (the oval disc, bright in Lull's beat, Nagiwa.lullBeat), the orange work vest with its reflective stripe over the
+  // navy shirt, lit from the left as Juno is. Laid over dach_heute at (109, 106) while he is up there (game/kapitel2.js, the view teo_up).
+  const TEO_BACK = [
+    ".......kkkkkkk...............",
+    ".....kkhhhhhhhkk.............",
+    "....khhhhhHhhhhhk............",
+    "...khhhhhhhhhHhhhk...........",
+    "..khhhhhhhhhhhhhhk...........",
+    "..khhhhhhhhhhhhhhhk..........",
+    ".kLLhhhhhhhhhhhhhhk..........",
+    ".klLLhhhhhhhhhhhhhk..........",
+    ".kllLshhhhhhhhhhhk...........",
+    "..klsssshhhhhhhhhk...........",
+    "...ksssvsshhhhhssk...........",
+    "....kssvssssssssskkk.........",
+    "....kgggggggggggggggkk.......",
+    "...keeeOOOOOOOOOOOOOOOkk.....",
+    "..keeeOOOOOOOOOOOOOOOOOOk....",
+    ".keeeOOOOOOOOOOOOOOOOOOOOk...",
+    ".keeOOOOOOOOOOOOOOOOOOOOOPk..",
+    "keeeOOOOOOOOOOOOOOOOOOOOOPek.",
+    "keeeOOOOOOOOOOOOOOOOOOOOOPek.",
+    "keeeOOOOOOOOOOOOOOOOOOOOOPeek",
+    "keeerrrrrrrrrrrrrrrrrrrrrreek",
+    "keeerrrrrrrrrrrrrrrrrrrrrreek",
+    "keeeOOOOOOOOOOOOOOOOOOOOOPeek",
+    "keeeOOOOOOOOOOOOOOOOOOOOOPeek",
+    "keeeOOOOOOOOOOOOOOOOOOOOOPeek",
+    "keeeOOOOOOOOOOOOOOOOOOOOOPeek",
+    "keeeOOOOOOOOOOOOOOOOOOOOOPeek",
+    "keeePPPPPPPPPPPPPPPPPPPPPPeek",
+    "keeeeeeeeeeeeeeeeeeeeeeeeeeek",
+    "keeeeeeeeeeeeeeeeeeeeeeeeeeek",
+    "kkkkkkkkkkkkkkkkkkkkkkkkkkkkk",
+  ]
+  const teoNow = (c, on) => {
+    const at = (x, y) => TEO_BACK[y]?.[x] ?? "."
+    TEO_BACK.forEach((row, y) => [...row].forEach((ch, x) => {
+      if (ch === ".") return
+      const up = at(x, y - 1), left = at(x - 1, y), right = at(x + 1, y)
+      let k = ch
+      if (ch === "h" || ch === "H" || "Ll".includes(ch)) {
+        // the hair: its top caught by the glow ahead and the screen up left, strands, the side away in shade
+        k = up === "k" || up === "." ? (x < 12 ? "5" : "4") : ch === "H" ? "4" : left === "k" ? "3" : right === "k" ? "1"
+          : (x + y) % 6 === 0 && y < 9 ? "3" : (x + y) % 6 === 1 && y > 2 ? "1" : "2"                     // strands falling from the crown
+      } else if (ch === "s") k = up === "h" || up === "H" ? "s" : x < 8 ? "S" : "s"
+      else if (ch === "v") k = y === 10 ? "V" : "v"
+      else if (ch === "g") k = x < 11 ? "5" : x % 4 === 0 ? "3" : "4"                    // the ear defenders' band
+      else if (ch === "O") k = x < 7 || y === 13 ? "Q" : right === "P" || right === "k" ? "O" : x === 14 ? "O" : "P"   // the vest: its lit side, the seam down the back
+      else if (ch === "P") k = "O"
+      else if (ch === "r") k = (x + 1) % 3 === 0 ? "W" : "6"                            // the reflective stripe catching every light
+      else if (ch === "e") k = left === "k" ? "4" : right === "k" || right === "e" && at(x + 2, y) === "k" ? "2" : "3"
+      c.px(x, y, k)
+    }))
+    // the patch behind his left ear, the side toward her: the oval disc, bright in the beat, dimmer between
+    const P = on ? [".C.", "CVC", "CWC", ".C."] : [".c.", "cCc", "cvc", ".c."]
+    P.forEach((row, j) => [...row].forEach((ch, i) => { if (ch !== ".") c.px(2 + i, 5 + j, ch) }))
+  }
+  // Lull's beat (Nagiwa.lullBeat): lit 0-800, 1100-1350, 1650-1900, 2200-3000 of every 3600 ms; a frame for each, the even ones lit
+  const TEO_CUTS = [0, 800, 1100, 1350, 1650, 1900, 2200, 3000, 3600]
+  anim("dach_teo", { w: 29, h: 31, frames: 8, ms: TEO_CUTS.slice(1).map((t, i) => t - TEO_CUTS[i]) }, (c) => teoNow(c, c.frame % 2 === 0))
+  scene("_dach_teo_view", { w: W, h: H, bg: "k" }, stamp("dach_heute", 0, 0), stamp("dach_teo", 109, 106))
   const PHOTOS = []
   const photo = (f) => (PHOTOS[f] ??= (() => { const p = pen(); paint(p, f); return p.buf })())
   anim("deck_photo", { w: W, h: H, frames: FRAMES, fps: 10 }, (c) => { const P = photo(c.frame); for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) c.px(x, y, P[y][x]) })
