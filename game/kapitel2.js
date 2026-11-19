@@ -297,6 +297,9 @@ Cutaway.hints([
     text: ["Der Putzroboter hat dich ins Netz vom Laden gebracht.", "Die Kamera über der Kasse hat ein Archiv. Was war letzte Nacht?", "Öffne CAM 26 und drück PUFFER."] },
   { if: ["!off_shop24", "day<7", "cache_clip_shop24", "!ledger_shop24"],
     text: ["Du weißt jetzt, wer im Laden nimmt. Das Schaf weiß es noch nicht.", "Zeig es ihm. Oder leg eine leere Schleife drüber. Oder Sable kauft es.", "Geh zum Schaf auf der Fischermann Street."] },
+  // Frau Imai's second part (game/kapitel2_imai.js): the same, only on Saturday and Sunday, when she tells it
+  { if: ["!off_imai", "day<7", "imai_told", "!imai2"],
+    text: ["Frau Imai hat wieder geschrieben. Sie hat noch etwas gesehen.", "Sie sitzt abends im LUCKY STATIC an ihrem Tisch.", "Geh ins LUCKY STATIC und sprich mit Frau Imai."] },
   { if: ["day=7", "time>=00:45", "!e2", "!off_main"], about: ["wait", ...CLIP_WAYS, ...HOME],
     text: ["Was machst du mit dem Clip?", "Vesper zahlt am meisten. Er ist im CHAT.", "Du kannst ihn auch behalten. Drück WARTEN, dann fragt das Deck."] },
   { if: ["day=7", "time>=00:45", { or: ["e2", "off_main"] }], about: ["wait", "protokolle", ...HOME],

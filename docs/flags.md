@@ -10,8 +10,8 @@ Kopf der Datei, die es setzt (`game/nagiwa.js` nennt die Muster).
 | `anon_clip_morrow_bribe` | `true` | `room deck.hotspots.clip_anon_clip_morrow_bribe.use.1` | `room deck.hotspots.reply_vesper_morrow.if`, `room deck.hotspots.clip_anon_clip_morrow_bribe.if` | kapitel2 |
 | `anon_clip_traeger` | `true` | `room deck.hotspots.clip_anon_clip_traeger.use.1` | `room deck.hotspots.reply_vesper_traeger.if`, `room deck.hotspots.clip_anon_clip_traeger.if` | kapitel2 |
 | `ashe_lit` | `true` | `moment ines_death.play.2` | `actor ashe.poses.1.if` |  |
-| `bao_paid` | `true` | `dialog bao.main.1.then.1` | `room kowalski.hotspots.bao.talk.0.then.0.then.0`, `room kowalski.hotspots.cart.use.0.then.0.then.0` | kapitel1 |
-| `bao_soup` | `true` | `dialog bao.main.0.then.9`, `dialog bao.main.1.then.13`, `act kapitel1.start.24`, … (4) | `room kowalski.hotspots.bao.talk.0.else.0`, `room kowalski.hotspots.bao.talk.0.else.0.then.1`, `room kowalski.hotspots.cart.use.0.else.0`, … (5) |  |
+| `bao_paid` | `true` | `dialog bao.main.1.then.1` | `room kowalski.hotspots.bao.talk.0.else.0.then.0.then.0`, `room kowalski.hotspots.cart.use.0.else.0.then.0.then.0` | kapitel1 |
+| `bao_soup` | `true` | `dialog bao.main.0.then.9`, `dialog bao.main.1.then.13`, `act kapitel1.start.24`, … (4) | `room kowalski.hotspots.bao.talk.0.else.0.else.0`, `room kowalski.hotspots.bao.talk.0.else.0.else.0.then.1`, `room kowalski.hotspots.cart.use.0.else.0.else.0`, … (5) |  |
 | `bed_closed` |  | `room flat.hotspots.bed.use.0.then.0.else.0.else.5`, `room flat.enter.2.then.1` | `room flat.hotspots.bed.use.0.then.0` |  |
 | `cache_clip_forgery` |  | `moment faelschung.play.3`, `moment faelschung.unseen.0` | `room k2_protokolle.hotspots.pruef_protokolle_row_clip_forgery.if`, `room deck.hotspots.cache_clip_forgery.if`, `room deck.hotspots.clip_check_clip_ines_death.if`, … (4) |  |
 | `cache_clip_ines_cut` |  | `room deck.hotspots.clip_cut_clip_ines_death.use.1`, `dialog sable.whisper.1.then.0`, `dialog morrow_k2.whisper.1.then.0`, … (5) | `room deck.hotspots.reply_vesper_ines.use.1`, `room deck.hotspots.cache_clip_ines_cut.if`, `room deck.hotspots.clip_cut_clip_ines_death.if`, … (5) |  |
@@ -19,6 +19,7 @@ Kopf der Datei, die es setzt (`game/nagiwa.js` nennt die Muster).
 | `cache_clip_kessler_cut` |  | `room deck.hotspots.clip_cut_clip_kessler_ring.use.1` | `room k2_protokolle.hotspots.pruef_protokolle_row_clip_kessler_cut.if`, `room deck.hotspots.reply_kessler_cut.if`, `room deck.hotspots.cache_clip_kessler_cut.if`, … (4) | kapitel1, kapitel2 |
 | `cache_clip_kessler_ring` |  | `room cam04.hotspots.rewind.use.3`, `act kapitel1.start.5.then.4`, `act kapitel2.start.2.then.8`, … (4) | `room cam04.hotspots.rewind.if`, `room k2_protokolle.hotspots.pruef_protokolle_row_clip_kessler_ring.if`, `room deck.hotspots.reply_kessler_full.if`, … (5) | kapitel1, kapitel2 |
 | `cache_clip_morrow_bribe` |  | `dialog morrow_bribe.main.0.then.3` | `room k2_protokolle.hotspots.pruef_protokolle_row_clip_morrow_bribe.if`, `room deck.hotspots.reply_vesper_morrow.if`, `room deck.hotspots.cache_clip_morrow_bribe.if`, … (4) | kapitel2 |
+| `cache_clip_shop24` |  | `room cam26.hotspots.rewind.use.5` | `room weg1.hotspots.sheep.use.0.else.0.else.0.else.0.else.0`, `room cam26.hotspots.rewind.if`, `room deck.hotspots.cache_clip_shop24.if`, … (5) |  |
 | `cache_clip_traeger` |  | `dialog traeger_wahl.main.1.then.1` | `room k2_protokolle.hotspots.pruef_protokolle_row_clip_traeger.if`, `room deck.hotspots.reply_vesper_traeger.if`, `room deck.hotspots.cache_clip_traeger.if` | kapitel2 |
 | `cache_note_civic_rest` |  | `dialog k2_kuehlschrank.main.1.then.5` | `room deck.hotspots.cache_note_civic_rest.if` |  |
 | `cache_note_forgery` |  | `room deck.hotspots.pruef_faelschung_licht.use.4` | `room deck.hotspots.cache_note_forgery.if` |  |
@@ -26,28 +27,29 @@ Kopf der Datei, die es setzt (`game/nagiwa.js` nennt die Muster).
 | `cache_note_imai_street` |  | `room cam18.hotspots.rewind.use.7` | `room deck.hotspots.cache_note_imai_street.if` |  |
 | `cache_note_kessler_debt` |  | `room cam04.hotspots.rewind.use.6`, `act kapitel1.start.5.then.5`, `moment kessler_ring.play.11` | `room deck.hotspots.reply_sable_sold.if`, `room deck.hotspots.cache_note_kessler_debt.if`, `dialog sable.code.1.if` | kapitel1 |
 | `cache_note_kessler_hideout` |  | `room cam15.hotspots.rewind.use.3`, `actor kessler2.talk.0.then.0.else.2` | `room cam15.hotspots.kapsel23.if`, `room cam15.hotspots.rewind.if`, `room deck.hotspots.reply_varga_sold.if`, … (5) |  |
-| `cache_note_kessler_photo` |  | `act prolog.start.6`, `act kapitel1.start.8`, `act kapitel2.start.33` | `room deck.hotspots.cache_note_kessler_photo.if` |  |
-| `cache_note_obs_handbook` |  | `act kapitel1.start.9`, `act kapitel2.start.34` | `room deck.hotspots.cache_note_obs_handbook.if` |  |
+| `cache_note_kessler_photo` |  | `act prolog.start.6`, `act kapitel1.start.8`, `act kapitel2.start.34` | `room deck.hotspots.cache_note_kessler_photo.if` |  |
+| `cache_note_obs_handbook` |  | `act kapitel1.start.9`, `act kapitel2.start.35` | `room deck.hotspots.cache_note_obs_handbook.if` |  |
 | `cache_note_safe_code` |  | `room cam07v.hotspots.rewind.use.6`, `actor okonkwo_safe.talk.0.else.0.else.5` | `room cam07v.hotspots.rewind.if`, `room deck.hotspots.reply_tide_sold.if`, `room deck.hotspots.reply_tide_lied.if`, … (5) |  |
 | `cache_note_serviette` |  | `dialog k2_kuehlschrank.main.0.then.5` | `room k2_protokolle.hotspots.pruef_protokolle_spike0_clip_kessler_ring.use.3`, `room k2_protokolle.hotspots.pruef_protokolle_spike0_clip_kessler_cut.use.3`, `room deck.hotspots.cache_note_serviette.if`, … (5) |  |
-| `call_missed` | `true` | `moment kessler_call.unseen.0.then.0` | `room cam03.hotspots.rewind.if`, `hints.49.if`, `hints.50.if`, … (5) |  |
+| `call_missed` | `true` | `moment kessler_call.unseen.0.then.0` | `room cam03.hotspots.rewind.if`, `hints.52.if`, `hints.53.if`, … (5) |  |
 | `chits` |  | `room deck.hotspots.reply_kessler_full.use.2`, `room deck.hotspots.reply_kessler_cut.use.2`, `room deck.hotspots.reply_kessler_nothing.use.2`, … (5) | `room deck.hotspots.reply_wren_back.if`, `dialog bao.main.1.if`, `dialog sable.code.0.if`, … (5) | kapitel1, kapitel2 |
-| `code_cam03` | `true` | `act prolog.start.4`, `act kapitel1.start.6`, `act kapitel2.start.13` | `room cam04.hotspots.thumb_cam03.if`, `room cam21.hotspots.thumb_cam03.if`, `room cam22.hotspots.thumb_cam03.if`, … (5) |  |
-| `code_cam04` | `true` | `room cam03.hotspots.mast.use.4`, `act kapitel2.start.15` | `room cam03.hotspots.thumb_cam04.if`, `room cam21.hotspots.thumb_cam04.if`, `room cam22.hotspots.thumb_cam04.if`, … (5) |  |
-| `code_cam07` | `true` | `act kapitel1.start.16`, `act kapitel2.start.17` | `room cam03.hotspots.thumb_cam07.if`, `room cam04.hotspots.thumb_cam07.if`, `room cam21.hotspots.thumb_cam07.if`, … (5) |  |
+| `code_cam03` | `true` | `act prolog.start.4`, `act kapitel1.start.6`, `act kapitel2.start.14` | `room cam04.hotspots.thumb_cam03.if`, `room cam21.hotspots.thumb_cam03.if`, `room cam22.hotspots.thumb_cam03.if`, … (5) |  |
+| `code_cam04` | `true` | `room cam03.hotspots.mast.use.4`, `act kapitel2.start.16` | `room cam03.hotspots.thumb_cam04.if`, `room cam21.hotspots.thumb_cam04.if`, `room cam22.hotspots.thumb_cam04.if`, … (5) |  |
+| `code_cam07` | `true` | `act kapitel1.start.16`, `act kapitel2.start.18` | `room cam03.hotspots.thumb_cam07.if`, `room cam04.hotspots.thumb_cam07.if`, `room cam21.hotspots.thumb_cam07.if`, … (5) |  |
 | `code_cam07v` | `true` | `room jade_row.hotspots.machine.with.abzweiger.0.then.9` | `room cam03.hotspots.thumb_cam07v.if`, `room cam04.hotspots.thumb_cam07v.if`, `room cam21.hotspots.thumb_cam07v.if`, … (5) |  |
 | `code_cam14` | `true` | `dialog zeitung_cam.main.0.then.0` | `room cam03.hotspots.thumb_cam14.if`, `room cam04.hotspots.thumb_cam14.if`, `room cam21.hotspots.thumb_cam14.if`, … (5) |  |
 | `code_cam15` | `true` | `dialog sable.code.0.then.1`, `dialog sable.code.1.then.1` | `room cam03.hotspots.thumb_cam15.if`, `room cam04.hotspots.thumb_cam15.if`, `room cam21.hotspots.thumb_cam15.if`, … (5) |  |
-| `code_cam18` | `true` | `act kapitel1.start.14`, `act kapitel2.start.19` | `room cam03.hotspots.thumb_cam18.if`, `room cam04.hotspots.thumb_cam18.if`, `room cam21.hotspots.thumb_cam18.if`, … (5) |  |
-| `code_cam21` | `true` | `act kapitel1.start.10`, `act kapitel2.start.21` | `room cam03.hotspots.thumb_cam21.if`, `room cam04.hotspots.thumb_cam21.if`, `room cam22.hotspots.thumb_cam21.if`, … (5) |  |
-| `code_cam22` | `true` | `room cam21.hotspots.menu.use.0.else.1`, `act kapitel2.start.23` | `room cam03.hotspots.thumb_cam22.if`, `room cam04.hotspots.thumb_cam22.if`, `room cam21.hotspots.thumb_cam22.if`, … (5) |  |
-| `code_cam23` | `true` | `room deck.hotspots.cam_cam23.use.0.else.0.else.1`, `act kapitel2.start.25` | `room cam03.hotspots.thumb_cam23.if`, `room cam04.hotspots.thumb_cam23.if`, `room cam21.hotspots.thumb_cam23.if`, … (5) |  |
-| `code_cam24` |  | `room flat.hotspots.bed.use.0.then.0.else.0.else.2`, `act kapitel2.start.27` | `room cam03.hotspots.thumb_cam24.if`, `room cam04.hotspots.thumb_cam24.if`, `room cam21.hotspots.thumb_cam24.if`, … (5) |  |
-| `code_cam25` | `true` | `act kapitel2.start.29` | `room cam03.hotspots.thumb_cam25.if`, `room cam04.hotspots.thumb_cam25.if`, `room cam21.hotspots.thumb_cam25.if`, … (5) |  |
-| `code_cam30` | `true` | `act kapitel1.start.12`, `act kapitel2.start.31` | `room cam03.hotspots.thumb_cam30.if`, `room cam04.hotspots.thumb_cam30.if`, `room cam21.hotspots.thumb_cam30.if`, … (5) |  |
+| `code_cam18` | `true` | `act kapitel1.start.14`, `act kapitel2.start.20` | `room cam03.hotspots.thumb_cam18.if`, `room cam04.hotspots.thumb_cam18.if`, `room cam21.hotspots.thumb_cam18.if`, … (5) |  |
+| `code_cam21` | `true` | `act kapitel1.start.10`, `act kapitel2.start.22` | `room cam03.hotspots.thumb_cam21.if`, `room cam04.hotspots.thumb_cam21.if`, `room cam22.hotspots.thumb_cam21.if`, … (5) |  |
+| `code_cam22` | `true` | `room cam21.hotspots.menu.use.0.else.1`, `act kapitel2.start.24` | `room cam03.hotspots.thumb_cam22.if`, `room cam04.hotspots.thumb_cam22.if`, `room cam21.hotspots.thumb_cam22.if`, … (5) |  |
+| `code_cam23` | `true` | `room deck.hotspots.cam_cam23.use.0.else.0.else.1`, `act kapitel2.start.26` | `room cam03.hotspots.thumb_cam23.if`, `room cam04.hotspots.thumb_cam23.if`, `room cam21.hotspots.thumb_cam23.if`, … (5) |  |
+| `code_cam24` |  | `room flat.hotspots.bed.use.0.then.0.else.0.else.2`, `act kapitel2.start.28` | `room cam03.hotspots.thumb_cam24.if`, `room cam04.hotspots.thumb_cam24.if`, `room cam21.hotspots.thumb_cam24.if`, … (5) |  |
+| `code_cam25` | `true` | `act kapitel2.start.30` | `room cam03.hotspots.thumb_cam25.if`, `room cam04.hotspots.thumb_cam25.if`, `room cam21.hotspots.thumb_cam25.if`, … (5) |  |
+| `code_cam26` | `true` | `room weg1.hotspots.robot.use.0.else.4` | `room cam03.hotspots.thumb_cam26.if`, `room cam04.hotspots.thumb_cam26.if`, `room cam21.hotspots.thumb_cam26.if`, … (5) |  |
+| `code_cam30` | `true` | `act kapitel1.start.12`, `act kapitel2.start.32` | `room cam03.hotspots.thumb_cam30.if`, `room cam04.hotspots.thumb_cam30.if`, `room cam21.hotspots.thumb_cam30.if`, … (5) |  |
 | `code_cam31` | `true` | `dialog cam31_takt.vier_ok.0.then.3` | `room cam03.hotspots.thumb_cam31.if`, `room cam04.hotspots.thumb_cam31.if`, `room cam21.hotspots.thumb_cam31.if`, … (5) |  |
-| `code_lerche` | `true` | `moment nachbar_sat.play.3` | `room cam24.hotspots.rewind.if`, `dialog k2_tor.main.1.then.0`, `hints.1.if`, … (5) |  |
-| `deck_app` | `buch`, `cache`, `chat`, `chat_becken3`, `chat_imai`, `chat_kessler`, `chat_nagiwa`, `chat_sable`, … (29) | `room flat.enter.0`, `room k2_protokolle.hotspots.protokolle.use.1`, `room k2_protokolle.hotspots.pruef_protokolle_close.use.0`, … (5) | `room k2_protokolle.hotspots.protokolle.if`, `room k2_protokolle.hotspots.pruef_protokolle_close.if`, `room k2_protokolle.hotspots.pruef_protokolle_row_clip_kessler_ring.if`, … (5) |  |
+| `code_lerche` | `true` | `moment nachbar_sat.play.3` | `room cam24.hotspots.rewind.if`, `room weg1.hotspots.lerche.use.0.then.0`, `hints.1.if`, … (5) |  |
+| `deck_app` | `buch`, `cache`, `chat`, `chat_becken3`, `chat_imai`, `chat_kessler`, `chat_nagiwa`, `chat_sable`, … (30) | `room flat.enter.0`, `room k2_protokolle.hotspots.protokolle.use.1`, `room k2_protokolle.hotspots.pruef_protokolle_close.use.0`, … (5) | `room k2_protokolle.hotspots.protokolle.if`, `room k2_protokolle.hotspots.pruef_protokolle_close.if`, `room k2_protokolle.hotspots.pruef_protokolle_row_clip_kessler_ring.if`, … (5) |  |
 | `deck_woke` | `true` | `room flat.hotspots.bed.use.0.then.0.else.0.else.3`, `room deck.enter.1.else.0.then.0` | `room deck.enter.1.else.0` |  |
 | `e1` | `refused`, `sold` | `room deck.hotspots.reply_wren_send.use.1`, `room deck.hotspots.reply_wren_refuse.use.1`, `act kapitel2.start.2.then.0`, … (4) | `room kowalski.hotspots.alley.use.0`, `room drain_market.hotspots.datenfloss.with.endstufe.5`, `room deck.hotspots.contact_wren_k2.if`, … (5) | kapitel2 |
 | `e2` | `kept`, `lantern`, `morrow`, `sable`, `vesper` | `room deck.hotspots.reply_vesper_ines.use.1.then.0`, `dialog sable.clip.0.then.0`, `dialog sable.whisper.0.then.0`, … (5) | `room kowalski.hotspots.alley.use.0`, `room drain_market.hotspots.datenfloss.with.endstufe.5`, `room deck.hotspots.reply_vesper_ines.if`, … (5) |  |
@@ -58,7 +60,8 @@ Kopf der Datei, die es setzt (`game/nagiwa.js` nennt die Muster).
 | `evi_trust` |  | `dialog evi_cut.main.0.then.0`, `dialog evi_cut.main.1.then.0` |  | kapitel1, kapitel2 |
 | `forgery_cuts` | `1`, `2` | `room deck.hotspots.pruef_faelschung_zeit.use.1`, `room deck.hotspots.pruef_faelschung_regen.use.1` | `room deck.hotspots.pruef_faelschung_mark0_0.if`, `room deck.hotspots.pruef_faelschung_mark0_1.if`, `room deck.hotspots.pruef_faelschung_mark0_2.if`, … (5) |  |
 | `forgery_proven` | `true` | `room deck.hotspots.pruef_faelschung_licht.use.3` | `room deck.hotspots.clip_check_clip_ines_death.if`, `room deck.hotspots.clip_check_clip_forgery.if`, `room deck.hotspots.pruef_faelschung_mark0_0.if`, … (5) |  |
-| `fridge_empty` | `true` | `room flat.hotspots.fridge.use.0`, `act kapitel1.start.21`, `act kapitel2.start.38` | `room flat.hotspots.door.use.0.else.0`, `hints.57.if`, `hints.58.if`, … (5) |  |
+| `forgery_seen` | `true` | `room deck.hotspots.cache_clip_forgery.use.2.then.0` | `room deck.hotspots.cache_clip_forgery.use.2` |  |
+| `fridge_empty` | `true` | `room flat.hotspots.fridge.use.0`, `act kapitel1.start.21`, `act kapitel2.start.39` | `room flat.hotspots.door.use.0.else.0`, `hints.60.if`, `hints.61.if`, … (5) |  |
 | `funk_ch` | `1`, `2`, `3`, `4`, `5` | `room sumpf.hotspots.wohnwagen.with.funk.0`, `room sumpf.hotspots.antennenmast.with.funk.0`, `room funk.hotspots.ch_links.use.0.then.0`, … (5) | `room funk.hotspots.ch_links.use.0`, `room funk.hotspots.ch_links.use.0.else.0`, `room funk.hotspots.ch_links.use.0.else.0.else.0`, … (5) |  |
 | `funk_welle` | `1`, `2`, `3`, `4` | `room sumpf.hotspots.wohnwagen.with.funk.1`, `room sumpf.hotspots.antennenmast.with.funk.1`, `room funk.hotspots.welle_links.use.0.then.0`, … (5) | `room funk.hotspots.welle_links.use.0`, `room funk.hotspots.welle_links.use.0.else.0`, `room funk.hotspots.welle_links.use.0.else.0.else.0`, … (5) |  |
 | `got_ausweis` | `true` | `room flat.hotspots.box_old.use.0.then.3`, `room flat.hotspots.box_old.use.0.else.0.then.3` | `room flat.hotspots.box_old.look.1`, `room flat.hotspots.box_old.use.0`, `room flat.hotspots.box_old.use.0.else.0`, … (5) | kapitel1, kapitel2 |
@@ -67,16 +70,17 @@ Kopf der Datei, die es setzt (`game/nagiwa.js` nennt die Muster).
 | `got_tap` | `true` | `dialog motte_lektion.main.1.then.3.then.4`, `dialog ratz.main.0.0.0.then.2` | `dialog motte_lektion.main.1.then.3`, `dialog ratz.main.0.0.if`, `dialog ratz.main.0.0.0.if`, … (5) |  |
 | `heard_yuens` | `true` | `room cam03.hotspots.rewind.use.6`, `moment kessler_call.play.4` | `room cam03.hotspots.rewind.if`, `room cam03.hotspots.thumb_cam04.if`, `room cam21.hotspots.thumb_cam04.if`, … (5) |  |
 | `im_tunnel` | `true` | `room drain_market.hotspots.datenfloss.with.endstufe.11`, `room drain_market.hotspots.datenfloss.with.endstufe.16`, `actor pike.with.endstufe.11`, … (5) | `room sumpf_fahrt.fx.0.if`, `room sumpf_fahrt.fx.1.if`, `room sumpf_fahrt.fx.2.if`, … (5) |  |
-| `imai_step` | `0`, `1`, `2`, `3` | `room cam18.hotspots.rewind.use.8`, `actor imai.talk.0.then.11`, `dialog imai_wahl.main.0.then.0`, … (5) | `room cam03.hotspots.thumb_cam18.if`, `room cam04.hotspots.thumb_cam18.if`, `room cam21.hotspots.thumb_cam18.if`, … (5) |  |
-| `imai_told` | `dream`, `truth` | `dialog imai_wahl.main.0.then.1`, `dialog imai_wahl.main.1.then.1` | `actor imai.talk.3`, `actor imai.talk.4` | kapitel2 |
+| `imai2` | `dream`, `truth` | `dialog imai2_wahl.main.0.then.0`, `dialog imai2_wahl.main.1.then.0` | `actor imai.talk.0.else.0.then.0`, `actor imai.talk.0.else.0.then.0.else.0`, `hints.22.if` |  |
+| `imai_step` | `0`, `1`, `2`, `3` | `room cam18.hotspots.rewind.use.8`, `actor imai.talk.0.then.0.then.11`, `dialog imai_wahl.main.0.then.0`, … (5) | `room cam03.hotspots.thumb_cam18.if`, `room cam04.hotspots.thumb_cam18.if`, `room cam21.hotspots.thumb_cam18.if`, … (5) |  |
+| `imai_told` | `dream`, `truth` | `dialog imai_wahl.main.0.then.1`, `dialog imai_wahl.main.1.then.1` | `room deck.hotspots.contact_imai.if`, `actor imai.talk.0.then.3`, `actor imai.talk.0.then.4`, … (5) | kapitel2 |
 | `ines_down` | `true` | `moment ines_death.play.11.then.3`, `moment ines_death.play.11.else.4` | `room cam31.hotspots.rec.if`, `actor ines.poses.2.if` |  |
 | `ines_gives` | `true` | `moment ines_meeting.play.10`, `moment ines_meeting.play.12` | `actor ines.poses.3.if` |  |
 | `k1a` | `lied`, `sold`, `warned` | `room deck.hotspots.reply_varga_sold.use.1`, `room deck.hotspots.reply_varga_lied.use.1`, `dialog k1a_warn.main.0.then.0` | `room kessel_lobby.hotspots.mailboxes.use.0`, `room cam15.hotspots.kapsel23.if`, `room cam15.hotspots.kapsel23.look.0.then.0`, … (5) | kapitel2 |
-| `k1b` | `lied`, `sold`, `warned` | `room deck.hotspots.reply_tide_sold.use.1`, `room deck.hotspots.reply_tide_lied.use.1`, `dialog okonkwo.main.2.then.0` | `room kessel_14.hotspots.door_juno.look.0`, `room jade_row.hotspots.door.look.0`, `room jade_row.hotspots.door.use.0`, … (5) | kapitel2 |
+| `k1b` | `lied`, `sold`, `warned` | `room deck.hotspots.reply_tide_sold.use.1`, `room deck.hotspots.reply_tide_lied.use.1`, `dialog okonkwo.main.2.then.0` | `room kessel_14.props.glasser.if`, `room kessel_14.hotspots.door_juno.look.0`, `room kowalski.props.cart.if`, … (5) | kapitel2 |
 | `kessler_gone` |  | `room flat.hotspots.bed.use.0.then.0.else.0.else.2`, `dialog k1a_warn.main.0.then.2` | `room cam15.hotspots.kapsel23.look.0.else.0`, `room cam15.hotspots.rewind.if`, `routine kessler2.0.if`, … (4) |  |
 | `know_cable` | `true` | `actor reparatur.talk.0.else.0.else.0.then.6` | `room drain_market.hotspots.down.use.0`, `room drain_market.hotspots.datenfloss.look.0`, `room drain_market.hotspots.datenfloss.use.0.else.0`, … (5) |  |
 | `know_flat` | `true` | `room lerche_flur.hotspots.door_4b.use.0.then.0.then.2`, `dialog k2_marit.main.1.then.7`, `moment quiet_flat.play.3` | `room lerche_flur.hotspots.door_4b.use.0.then.0`, `room lerche_flur.hotspots.door_4b.use.0.else.0`, `hints.2.if` |  |
-| `know_ines` | `true` | `act kapitel1.start.18`, `act kapitel2.start.35` |  |  |
+| `know_ines` | `true` | `act kapitel1.start.18`, `act kapitel2.start.36` |  |  |
 | `know_meeting` | `true` | `moment ines_tide.play.6`, `moment ines_sign.play.1` | `room cam03.hotspots.thumb_cam31.if`, `room cam04.hotspots.thumb_cam31.if`, `room cam21.hotspots.thumb_cam31.if`, … (5) |  |
 | `ladder_down` | `true` | `room sims.hotspots.ladder.with.haken.0.else.3`, `moment teo_monday.unseen.25.else.0` | `room sims.props.ladder.if`, `room sims.hotspots.ladder.look.0`, `room sims.hotspots.ladder.use.0`, … (5) | kapitel2 |
 | `lantern_found` | `ally`, `found`, `out` | `actor lantern_k2.with.stick.3`, `dialog lantern_erst.main.2.then.6`, `dialog lantern_erst.main.3.then.6`, … (5) | `room sumpf.props.tuer_zu.if`, `room sumpf.hotspots.wohnwagen.use.0`, `room sumpf.hotspots.wohnwagen.use.0.else.0`, … (5) |  |
@@ -84,6 +88,7 @@ Kopf der Datei, die es setzt (`game/nagiwa.js` nennt die Muster).
 | `ledger_bao_hurt` |  | `act kapitel2.start.7.then.1` | `code the deck's BUCH` |  |
 | `ledger_cam31` |  | `dialog k2_clip.main.2.then.1` | `code the deck's BUCH` |  |
 | `ledger_imai` |  | `dialog imai_wahl.main.0.then.2`, `dialog imai_wahl.main.1.then.2` | `code the deck's BUCH` | kapitel2 |
+| `ledger_imai2` |  | `dialog imai2_wahl.main.0.then.1`, `dialog imai2_wahl.main.1.then.1` | `code the deck's BUCH` |  |
 | `ledger_ines` |  | `act kapitel2.start.2.then.6`, `moment ines_death.play.22.then.1` | `code the deck's BUCH` | kapitel2 |
 | `ledger_kessler` |  | `room deck.hotspots.reply_kessler_full.use.2`, `room deck.hotspots.reply_kessler_cut.use.2`, `room deck.hotspots.reply_kessler_nothing.use.2`, … (5) | `act kapitel2.start.3`, `act kapitel2.start.4`, `act kapitel2.start.5`, … (4) | kapitel1, kapitel2 |
 | `ledger_kessler_alms` |  | `dialog k2_kessler.main.0.then.0` | `dialog k2_kessler.main.0.if`, `dialog k2_kessler.main.2.then.0`, `code the deck's BUCH` |  |
@@ -96,6 +101,7 @@ Kopf der Datei, die es setzt (`game/nagiwa.js` nennt die Muster).
 | `ledger_ratz` |  | `dialog ratz_endstufe.main.0.0.then.3` | `actor ratz.talk.1`, `dialog pike.main.1.if`, `dialog ratz_endstufe.main.0.if`, … (5) |  |
 | `ledger_sable_ines` |  | `dialog sable.clip.0.then.1.then.0.then.0`, `dialog sable.clip.0.then.1.then.0.else.0`, `dialog sable.clip.0.then.1.else.0.then.0`, … (5) | `code the deck's BUCH` |  |
 | `ledger_sable_kessler` |  | `room deck.hotspots.reply_sable_sold.use.1`, `dialog sable.code.1.then.0` | `room deck.hotspots.reply_sable_sold.if`, `dialog sable.code.1.if`, `code the deck's BUCH` | kapitel1, kapitel2 |
+| `ledger_shop24` |  | `dialog sable.shop24.0.then.0`, `dialog shop24_wahl.main.0.then.3`, `dialog shop24_wahl.main.1.then.3` | `room weg1.props.sheep.if`, `room weg1.props.sheep2.if`, `room weg1.hotspots.sheep.if`, … (5) |  |
 | `ledger_tide` |  | `room deck.hotspots.reply_tide_sold.use.2`, `room deck.hotspots.reply_tide_lied.use.2` | `code the deck's BUCH` | kapitel2 |
 | `ledger_varga` |  | `room deck.hotspots.reply_varga_sold.use.2`, `room deck.hotspots.reply_varga_lied.use.2` | `code the deck's BUCH` | kapitel2 |
 | `ledger_varga2` |  | `dialog k2_vargas_mann.main.0.then.0`, `dialog k2_vargas_mann.main.1.then.2` | `room kessel_lobby.hotspots.mailboxes.use.0.then.0`, `room kessel_lobby.hotspots.mailboxes.use.0.then.1`, `room kessel_lobby.hotspots.mailboxes.use.0.then.2`, … (5) |  |
@@ -119,40 +125,46 @@ Kopf der Datei, die es setzt (`game/nagiwa.js` nennt die Muster).
 | `link_cam23` | `true` | `room cam03.hotspots.thumb_cam23.use.0.else.0`, `room cam04.hotspots.thumb_cam23.use.0.else.0`, `room cam21.hotspots.thumb_cam23.use.0.else.0`, … (5) | `room cam03.hotspots.thumb_cam23.if`, `room cam03.hotspots.thumb_cam23.use.0`, `room cam04.hotspots.thumb_cam23.if`, … (5) |  |
 | `link_cam24` |  | `room cam03.hotspots.thumb_cam24.use.0.else.0`, `room cam04.hotspots.thumb_cam24.use.0.else.0`, `room flat.hotspots.bed.use.0.then.0.else.0.else.2`, … (5) | `room cam03.hotspots.thumb_cam24.if`, `room cam03.hotspots.thumb_cam24.use.0`, `room cam04.hotspots.thumb_cam24.if`, … (5) |  |
 | `link_cam25` | `true` | `room cam03.hotspots.thumb_cam25.use.0.else.0`, `room cam04.hotspots.thumb_cam25.use.0.else.0`, `room cam21.hotspots.thumb_cam25.use.0.else.0`, … (5) | `room cam03.hotspots.thumb_cam25.if`, `room cam03.hotspots.thumb_cam25.use.0`, `room cam04.hotspots.thumb_cam25.if`, … (5) |  |
+| `link_cam26` | `true` | `room cam03.hotspots.thumb_cam26.use.0.else.0`, `room cam04.hotspots.thumb_cam26.use.0.else.0`, `room cam21.hotspots.thumb_cam26.use.0.else.0`, … (5) | `room cam03.hotspots.thumb_cam26.if`, `room cam03.hotspots.thumb_cam26.use.0`, `room cam04.hotspots.thumb_cam26.if`, … (5) |  |
 | `link_cam30` | `true` | `room cam03.hotspots.thumb_cam30.use.0.else.0`, `room cam04.hotspots.thumb_cam30.use.0.else.0`, `room cam21.hotspots.thumb_cam30.use.0.else.0`, … (5) | `room cam03.hotspots.thumb_cam30.if`, `room cam03.hotspots.thumb_cam30.use.0`, `room cam04.hotspots.thumb_cam30.if`, … (5) |  |
 | `link_cam31` | `true` | `room cam03.hotspots.thumb_cam31.use.0.else.0`, `room cam04.hotspots.thumb_cam31.use.0.else.0`, `room cam21.hotspots.thumb_cam31.use.0.else.0`, … (5) | `room cam03.hotspots.thumb_cam31.if`, `room cam03.hotspots.thumb_cam31.use.0`, `room cam04.hotspots.thumb_cam31.if`, … (5) |  |
 | `markt_gesehen` | `true` | `sequence drain_arrival_first.steps.0`, `sequence drain_arrival_first.after.0` | `room gasse.hotspots.market.use.0` |  |
+| `mont_clip_shop24` | `true` | `room deck.hotspots.clip_montage_clip_shop24.use.1` | `room deck.hotspots.clip_montage_clip_shop24.if`, `dialog sable.main.4.if`, `dialog shop24_wahl.main.0.if`, … (4) |  |
+| `moth_backup` | `true` | `room kessel_14.enter.2.then.0` | `room kessel_14.enter.2` |  |
 | `moth_brushed` | `true` | `dialog motte.main.2.then.1` | `actor motte.talk.1.else.0.else.0.else.0` | kapitel1 |
 | `moth_kind` | `true` | `dialog motte.main.0.then.1`, `act kapitel1.start.5.then.0` | `actor motte.talk.1`, `actor motte.talk.1.else.0.else.0` | kapitel1 |
 | `moth_lesson` | `1`, `2`, `3` | `dialog motte_lektion.main.0.then.6`, `dialog motte_lektion.main.1.then.4`, `dialog motte_lektion.main.2.then.8` | `actor motte.talk.1`, `dialog motte_lektion.main.0.if`, `dialog motte_lektion.main.1.if`, … (4) |  |
 | `moth_met` | `true` | `dialog motte.main.0.then.0`, `dialog motte.main.1.then.0`, `dialog motte.main.2.then.0`, … (5) | `room kessel_14.hotspots.stairs.use.0`, `actor motte.talk.1.else.0` |  |
-| `moth_student` | `true` | `dialog motte_lektion.main.2.then.5` |  | kapitel2 |
+| `moth_student` | `true` | `dialog motte_lektion.main.2.then.5` | `room kessel_14.enter.2` | kapitel2 |
 | `moth_today` | `true` | `dialog motte_lektion.main.0.then.7`, `dialog motte_lektion.main.1.then.5`, `dialog motte_lektion.main.2.then.9` | `actor motte.talk.1`, `actor motte.talk.1.then.1` |  |
 | `netz_from` | `start`, `such_0`, `such_1`, `such_2`, `such_5`, `such_7` | `room deck.hotspots.app_netz.use.3`, `room deck.hotspots.netz_tab_start.use.1`, `room deck.hotspots.netz_tab_nagiwa.use.1`, … (5) |  |  |
 | `netz_page` | `abzweiger`, `archiv`, `aufzug`, `automat`, `brett`, `faelschung`, `fahndung`, `flut`, … (31) | `room deck.hotspots.app_netz.use.2`, `room deck.hotspots.netz_tab_start.use.0`, `room deck.hotspots.netz_tab_nagiwa.use.0`, … (5) | `room deck.hotspots.netz_back_lull.if`, `room deck.hotspots.netz_back_rekordtief.if`, `room deck.hotspots.netz_back_huelle.if`, … (5) |  |
 | `netz_read` | `2`, `3`, `4`, `5`, `7` | `room deck.hotspots.app_netz.use.4.then.0`, `room deck.hotspots.app_netz.use.5.then.0`, `room deck.hotspots.app_netz.use.6.then.0`, … (5) | `room deck.hotspots.app_netz.use.4`, `room deck.hotspots.app_netz.use.5`, `room deck.hotspots.app_netz.use.6`, … (5) |  |
 | `news_stack` | `true` | `room kessel_14.hotspots.haldane.talk.0.else.0.then.0.then.7`, `room kessel_14.hotspots.haldane.use.0.then.7` | `room kessel_14.hotspots.haldane.talk.0.else.0.then.0`, `room kessel_14.hotspots.haldane.use.0`, `room kessel_14.hotspots.notes.look.0` |  |
 | `news_who` | `true` | `actor haldane_feed.talk.0.then.4` | `room kessel_14.hotspots.notes.look.0`, `actor haldane_feed.talk.0` |  |
-| `off_dryer` |  | `act kapitel1.start.28`, `act kapitel2.start.43` | `room laundromat.hotspots.dryer6.with.stick.0`, `dialog stick_zurueck.main.0.if` |  |
-| `off_imai` |  | `act kapitel1.start.28`, `act kapitel2.start.43` | `room deck.hotspots.contact_imai.if`, `actor imai.talk.0` |  |
-| `off_klinik` |  | `act kapitel1.start.28`, `act kapitel2.start.43` | `dialog k2_tor.main.0.if` |  |
-| `off_lantern` |  | `act kapitel1.start.28`, `act kapitel2.start.43` | `room flat.hotspots.box_old.use.0`, `room kessel_14.hotspots.haken.if`, `room laundromat.hotspots.dryer6.use.0.then.0.then.0`, … (5) |  |
-| `off_main` |  | `act kapitel1.start.28`, `act kapitel2.start.43` | `room cam03.hotspots.thumb_cam22.if`, `room cam03.hotspots.thumb_cam23.if`, `room cam03.hotspots.thumb_cam30.if`, … (5) |  |
-| `off_motte` |  | `act kapitel1.start.28`, `act kapitel2.start.43` | `actor motte.talk.1` |  |
-| `off_roof` |  | `act kapitel1.start.28`, `act kapitel2.start.43` | `room flat.hotspots.box_old.use.0.else.0`, `room kessel_14.hotspots.haken.if` |  |
-| `off_tide` |  | `act kapitel1.start.28`, `act kapitel2.start.43` | `room cam03.hotspots.thumb_cam07.if`, `room cam03.hotspots.thumb_cam07v.if`, `room cam04.hotspots.thumb_cam07.if`, … (5) |  |
-| `off_traeger` |  | `act kapitel1.start.28`, `act kapitel2.start.43` | `moment traeger_ruf.unseen.0`, `moment traeger.if` |  |
-| `off_varga` |  | `act kapitel1.start.28`, `act kapitel2.start.43` | `room kessel_lobby.hotspots.mailboxes.use.0`, `room deck.hotspots.contact_varga.if`, `hints.25.if`, … (5) |  |
-| `off_vesper` |  | `act kapitel1.start.28`, `act kapitel2.start.43` | `room deck.hotspots.contact_vesper.if`, `room deck.hotspots.clip_anon_clip_kessler_ring.if`, `room deck.hotspots.clip_anon_clip_morrow_bribe.if`, … (4) |  |
-| `off_zeitung` |  | `act kapitel1.start.28`, `act kapitel2.start.43` | `room kessel_14.hotspots.haldane.talk.0.else.0.then.0`, `room kessel_14.hotspots.haldane.use.0`, `room kessel_14.hotspots.corner_cam.use.0` |  |
+| `off_dryer` |  | `act kapitel1.start.28`, `act kapitel2.start.44` | `room laundromat.hotspots.dryer6.with.stick.0`, `dialog stick_zurueck.main.0.if` |  |
+| `off_flat` |  | `act kapitel1.start.28`, `act kapitel2.start.44` | `room cam24.hotspots.rewind.if`, `room gasse.hotspots.steg.use.0`, `room weg1.hotspots.lerche.use.0`, … (5) |  |
+| `off_imai` |  | `act kapitel1.start.28`, `act kapitel2.start.44` | `room deck.hotspots.contact_imai.if`, `actor imai.talk.0.then.0`, `actor imai.talk.0.else.0`, … (4) |  |
+| `off_klinik` |  | `act kapitel1.start.28`, `act kapitel2.start.44` | `room gasse.hotspots.steg.use.0` |  |
+| `off_lantern` |  | `act kapitel1.start.28`, `act kapitel2.start.44` | `room flat.hotspots.box_old.use.0`, `room kessel_14.hotspots.haken.if`, `room laundromat.hotspots.dryer6.use.0.then.0.then.0`, … (5) |  |
+| `off_main` |  | `act kapitel1.start.28`, `act kapitel2.start.44` | `room cam03.hotspots.thumb_cam22.if`, `room cam03.hotspots.thumb_cam23.if`, `room cam03.hotspots.thumb_cam30.if`, … (5) |  |
+| `off_motte` |  | `act kapitel1.start.28`, `act kapitel2.start.44` | `room kessel_14.enter.2`, `actor motte.talk.1` |  |
+| `off_roof` |  | `act kapitel1.start.28`, `act kapitel2.start.44` | `room flat.hotspots.box_old.use.0.else.0`, `room kessel_14.hotspots.haken.if` |  |
+| `off_shop24` |  | `act kapitel1.start.28`, `act kapitel2.start.44` | `room weg1.hotspots.sheep.use.0`, `room weg1.hotspots.robot.use.0`, `room cam26.hotspots.rewind.if`, … (5) |  |
+| `off_tide` |  | `act kapitel1.start.28`, `act kapitel2.start.44` | `room cam03.hotspots.thumb_cam07.if`, `room cam03.hotspots.thumb_cam07v.if`, `room cam04.hotspots.thumb_cam07.if`, … (5) |  |
+| `off_traeger` |  | `act kapitel1.start.28`, `act kapitel2.start.44` | `moment traeger_ruf.unseen.0`, `moment traeger.if` |  |
+| `off_varga` |  | `act kapitel1.start.28`, `act kapitel2.start.44` | `room kessel_lobby.hotspots.mailboxes.use.0`, `room deck.hotspots.contact_varga.if`, `hints.28.if`, … (5) |  |
+| `off_vesper` |  | `act kapitel1.start.28`, `act kapitel2.start.44` | `room deck.hotspots.contact_vesper.if`, `room deck.hotspots.clip_anon_clip_kessler_ring.if`, `room deck.hotspots.clip_anon_clip_morrow_bribe.if`, … (4) |  |
+| `off_zeitung` |  | `act kapitel1.start.28`, `act kapitel2.start.44` | `room kessel_14.hotspots.haldane.talk.0.else.0.then.0`, `room kessel_14.hotspots.haldane.use.0`, `room kessel_14.hotspots.corner_cam.use.0` |  |
 | `p1` | `cut`, `full`, `nothing` | `room deck.hotspots.reply_kessler_full.use.1`, `room deck.hotspots.reply_kessler_cut.use.1`, `room deck.hotspots.reply_kessler_nothing.use.1`, … (5) | `room flat.hotspots.door.use.0`, `room flat.enter.3.then.0`, `room deck.hotspots.contact_sable.if`, … (5) | kapitel1 |
 | `pike_met` | `true` | `room drain_market.hotspots.datenfloss.with.haken.0.else.0.then.13`, `actor pike.with.haken.0.else.0.then.13` | `room drain_market.hotspots.datenfloss.use.0`, `room drain_market.hotspots.datenfloss.with.haken.0`, `actor ratz.talk.1`, … (5) |  |
 | `pruef_at` | `0`, `1`, `2`, `3` | `room deck.hotspots.pruef_faelschung_mark0_0.use.0`, `room deck.hotspots.pruef_faelschung_mark0_1.use.0`, `room deck.hotspots.pruef_faelschung_mark0_2.use.0`, … (5) | `room deck.hotspots.pruef_faelschung_zeit.if`, `room deck.hotspots.pruef_faelschung_zeit_again.if`, `room deck.hotspots.pruef_faelschung_regen.if`, … (5) |  |
 | `pruef_from` | `clip_forgery`, `clip_ines_death` | `room deck.hotspots.clip_check_clip_ines_death.use.1`, `room deck.hotspots.clip_check_clip_forgery.use.1` | `room deck.hotspots.pruef_faelschung_back_clip_ines_death.if`, `room deck.hotspots.pruef_faelschung_back_clip_forgery.if` |  |
 | `pruef_pick` | `clip_forgery`, `clip_ines_death`, `clip_kessler_cut`, `clip_kessler_ring`, `clip_morrow_bribe`, `clip_traeger` | `room k2_protokolle.hotspots.pruef_protokolle_close.use.1`, `room k2_protokolle.hotspots.pruef_protokolle_row_clip_kessler_ring.use.0`, `room k2_protokolle.hotspots.pruef_protokolle_row_clip_kessler_cut.use.0`, … (5) | `room k2_protokolle.hotspots.pruef_protokolle_spike0.if`, `room k2_protokolle.hotspots.pruef_protokolle_spike0_wrong.if`, `room k2_protokolle.hotspots.pruef_protokolle_spike0_clip_kessler_ring.if`, … (5) |  |
 | `quiet_dryer` |  | `room flat.hotspots.bed.use.0.then.0.else.0.else.2` | `room laundromat.hotspots.dryer6.use.0.then.0.then.0`, `room laundromat.hotspots.dryer6.with.stick.0`, `room laundromat.hotspots.dryer6.with.stick.0.else.0`, … (5) |  |
-| `read_imai` | `true` | `room deck.hotspots.contact_imai.use.1.then.0` | `room deck.hotspots.contact_imai.use.1` |  |
-| `read_kessler` | `true` | `room deck.hotspots.contact_kessler.use.1`, `act kapitel1.start.20`, `act kapitel2.start.37` | `hints.48.if`, `hints.89.if` |  |
+| `read_imai` | `true` | `room deck.hotspots.contact_imai.use.1.then.0.then.0` | `room deck.hotspots.contact_imai.use.1.then.0` |  |
+| `read_imai2` | `true` | `room deck.hotspots.contact_imai.use.1.else.0.then.0` | `room deck.hotspots.contact_imai.use.1.else.0` |  |
+| `read_kessler` | `true` | `room deck.hotspots.contact_kessler.use.1`, `act kapitel1.start.20`, `act kapitel2.start.38` | `hints.51.if`, `hints.92.if` |  |
 | `read_kessler_again` | `true` | `room deck.hotspots.contact_kessler.use.2` |  |  |
 | `read_tide` | `true` | `room deck.hotspots.contact_tide.use.1.then.0` | `room deck.hotspots.contact_tide.use.1` |  |
 | `read_varga` | `true` | `room deck.hotspots.contact_varga.use.1.then.0` | `room deck.hotspots.contact_varga.use.1` |  |
@@ -161,16 +173,17 @@ Kopf der Datei, die es setzt (`game/nagiwa.js` nennt die Muster).
 | `read_wren_k2` | `true` | `room deck.hotspots.contact_wren_k2.use.1.then.0` | `room deck.hotspots.contact_wren_k2.use.1` |  |
 | `rec_on` | `true` | `room cam03.hotspots.rec.use.1.then.0`, `room cam03.hotspots.rec.use.1.else.0`, `room cam03.enter.0`, … (5) | `room cam03.hotspots.rec.use.1`, `room cam04.hotspots.rec.use.1`, `room cam21.hotspots.rec.use.1`, … (5) |  |
 | `rent` | `paid`, `teo` | `act kapitel2.start.2.then.1`, `moment rent_due.unseen.0.then.1`, `moment rent_due.unseen.0.else.1` | `moment teo_monday.unseen.16` | kapitel2 |
-| `rent_notice` | `true` | `room kessel_lobby.hotspots.mailboxes.use.0.else.0.then.0`, `act kapitel1.start.22`, `act kapitel2.start.39` | `room kessel_lobby.hotspots.mailboxes.look.0`, `room kessel_lobby.hotspots.mailboxes.use.0.else.0`, `room kessel_lobby.hotspots.door.use.0`, … (5) |  |
+| `rent_notice` | `true` | `room kessel_lobby.hotspots.mailboxes.use.0.else.0.then.0`, `act kapitel1.start.22`, `act kapitel2.start.40` | `room kessel_lobby.hotspots.mailboxes.look.0`, `room kessel_lobby.hotspots.mailboxes.use.0.else.0`, `room kessel_lobby.hotspots.door.use.0`, … (5) |  |
 | `reuse_frei` | `true` | `room sumpf.hotspots.reuse.with.haken.3` | `room sumpf.props.reuse_bild.if`, `room sumpf.hotspots.reuse.if`, `dialog pike_sumpf.main.1.if`, … (4) |  |
-| `saw_varga` | `true` | `room cam04.hotspots.rewind.use.5`, `act kapitel1.start.19`, `act kapitel2.start.36`, … (4) | `actor varga.look.1` |  |
-| `soup_eaten` | `true` | `room flat.enter.1.then.6` | `room flat.hotspots.bed.use.0.else.0`, `hints.61.if`, `hints.102.if` |  |
+| `saw_varga` | `true` | `room cam04.hotspots.rewind.use.5`, `act kapitel1.start.19`, `act kapitel2.start.37`, … (4) | `actor varga.look.1` |  |
+| `shop24_gone` |  | `room flat.hotspots.bed.use.0.then.0.else.0.else.2` | `room weg1.props.homeless.if`, `room weg1.props.sheep.if`, `room weg1.props.sheep2.if`, … (5) |  |
+| `soup_eaten` | `true` | `room flat.enter.1.then.6` | `room flat.hotspots.bed.use.0.else.0`, `hints.64.if`, `hints.105.if` |  |
 | `stairs_down` | `true` | `room kessel_14.hotspots.stairs.use.1.then.0` | `room kessel_14.hotspots.stairs.use.1` |  |
 | `stairs_up` | `true` | `room kessel_lobby.hotspots.stairs.use.0.then.0` | `room kessel_lobby.hotspots.stairs.use.0` |  |
 | `stick_dryer` | `true` | `room laundromat.hotspots.dryer6.with.stick.0.then.2.else.0`, `dialog stick_zurueck.main.0.then.2.else.0`, `moment lantern_sat.play.4.then.1`, … (5) | `room laundromat.hotspots.dryer6.use.0.then.0.else.0`, `routine lantern.1.if`, `routine lantern.2.if`, … (5) |  |
 | `stick_ines` | `true` | `room laundromat.hotspots.dryer6.with.stick.0.then.0`, `actor lantern_k2.with.stick.1`, `dialog stick.main.0.then.0.then.0`, … (5) | `room laundromat.hotspots.dryer6.use.0.then.0`, `room laundromat.hotspots.dryer6.use.0.else.0.then.0`, `room laundromat.hotspots.dryer6.with.stick.0`, … (5) | kapitel2 |
-| `tag_ines` |  | `actor ines.talk.0.else.0.else.0`, `moment ines_meeting.play.0` | `actor ines.talk.0.else.0`, `hints.39.if`, `hints.80.if` |  |
-| `tag_kessler` |  | `room cam03.hotspots.rewind.use.1`, `actor kessler.talk.0.else.0` | `actor kessler.look.1`, `actor kessler.talk.0`, `hints.50.if`, … (5) |  |
+| `tag_ines` |  | `actor ines.talk.0.else.0.else.0`, `moment ines_meeting.play.0` | `actor ines.talk.0.else.0`, `hints.42.if`, `hints.83.if` |  |
+| `tag_kessler` |  | `room cam03.hotspots.rewind.use.1`, `actor kessler.talk.0.else.0` | `actor kessler.look.1`, `actor kessler.talk.0`, `hints.53.if`, … (5) |  |
 | `tag_kessler2` |  | `room cam03.hotspots.vending.use.0.then.5`, `actor kessler2.talk.0.else.0.else.5` |  |  |
 | `tag_varga` |  | `actor varga.talk.0.else.0` | `actor varga.talk.0` |  |
 | `teo_bowl` | `true` | `moment teo_visit.unseen.9`, `moment teo_visit.unseen.16` | `actor teo.poses.0.if` |  |

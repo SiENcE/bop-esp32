@@ -51,6 +51,13 @@ for v in "off_tide,off_shop24,k1a=lied" "off_tide,off_shop24,k1a=sold" "off_tide
   out=$($C node tools/solve-act.mjs kapitel2 --full --set "$k2t,$v" 2>&1)
   s=$(echo "$out" | grep -E "from the cache|states in|soft-lock|SOFT|HINTS|^hints|UNSOLV" | tr '\n' ' '); line "kapitel2 solve: $v" "$s"; need "kapitel2 solve: $v" "$s" "no soft-locks"; need "kapitel2 solve: $v" "$s" "every state on the way"
 done
+# Frau Imai's second part (§6.1, off_imai): alone with the others shut, once for each answer she had in Chapter 1 (without one it stays shut)
+k2i=$(echo "$k2t" | sed 's/off_imai,//')
+for v in "imai_told=truth" "imai_told=dream"; do
+  out=$($C node tools/solve-act.mjs kapitel2 --full --set "$k2i,off_varga,off_tide,off_shop24,$v" 2>&1)
+  s=$(echo "$out" | grep -E "from the cache|states in|soft-lock|SOFT|HINTS|^hints|UNSOLV" | tr '
+' ' '); line "kapitel2 solve: $v" "$s"; need "kapitel2 solve: $v" "$s" "no soft-locks"; need "kapitel2 solve: $v" "$s" "every state on the way"
+done
 for p in tools/paths/kapitel2_*.json; do
   n=$(basename "$p" .json); out=$($C node lib/cutaway/tools/play.mjs index.html --act kapitel2 --path "$p" 2>&1 | tail -1); line "clicks: $n" "$out"; need "clicks: $n" "$out" "all passed"
 done

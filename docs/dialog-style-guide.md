@@ -284,6 +284,16 @@ Durchspielen.)
 > „Die bar zahlen, seh ich nie wieder.“\
 > „Freundlich war er. Die sind immer freundlich.“
 
+### Frau Imai: die Zeugin im Schlaf
+
+Höflich und langsam, sie hat es mit nichts eilig. Sie siezt alle und sagt „habe“, nicht „hab“. Was sie gesehen hat, erzählt sie genau, Bild für Bild, wie eine
+Zeugin vor Gericht, und deutet es nie. Ihre Angst steht nicht in ihren Wörtern, sondern in dem, was sie tut: nicht schlafen, Tropfen holen. Auf Lull.
+(Ein Vorschlag vom 2026-11-19, zu prüfen beim Durchspielen.)
+
+> „Da ist eine Treppe, und auf den Stufen ist ein großer Fisch. Es regnet von links.“\
+> „Er hat hochgeschaut. Zu mir.“\
+> „Ich hole mir Tropfen. Damit träumt man gar nicht mehr.“
+
 ### Frau Haldane: die Nachbarin
 
 Immer müde, immer freundlich, auf Lull. Sie weiß nicht, was sie nachts tut, also weiß es auch ihr Text nie. In Kapitel 1 spricht sie

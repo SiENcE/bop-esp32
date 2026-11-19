@@ -151,4 +151,25 @@ doorJuno.look = [{ if: LIED, then: ["Auf meiner Tür steht GLASSER LIES. Gesprü
 const tide = Nagiwa.contacts.tide;
 tide.if = [{ or: [["day>1", "day<5"], ["day=5", "!k1b"]] }, TIDE];
 Nagiwa.threads.tide.push({ from: "tide", if: ["day>4", "!k1b"], at: "18:00", text: "Dann eben ohne dich." });
+
+// ---- Motte and the backup (§6.4): if he became her student in Chapter 1 (moth_student), the first time Juno comes past his bench on
+// Saturday or Sunday he says hello to EVI with his Tideboy on her pocket deck, and keeps her. That is the backup she comes back from in
+// Chapter 4; moth_student is all it needs, and nobody says what he did. Whether it has played is a view (moth_backup), as forgery_seen:
+// no flag, so it costs the solver nothing. A thread of its own (off_motte)
+Cutaway.state.view("moth_backup");
+const MO = (/** @type {string} */ text) => ({ say: "motte", text });
+Cutaway.room.get("kessel_14").enter.push({ if: ["day>4", "day<7", "moth_student", "!off_motte", "!moth_backup"], then: [
+  { set: "moth_backup" },
+  MO("Juno! Darf ich EVI mal Hallo sagen?"),
+  "Woher kennst du EVI?",
+  MO("Die redet aus deiner Tasche. Das hört man im ganzen Flur."),
+  "Na gut. Aber nur kurz.",
+  { walk: "juno", to: Nagiwa.at.kessel_14.motte, face: "se" },
+  "Er steckt seinen Tideboy an mein Taschen-Deck. Auf seinem kleinen Schirm laufen Zeilen durch, zu schnell zum Lesen.",
+  { evi: "froh" },
+  { say: "evi", text: "Hallo, Motte! Das kitzelt." },
+  MO("Fertig. Ich hab sie mir gemerkt."),
+  "Was hast du gemacht?",
+  MO("Hallo gesagt. Hab ich doch gefragt."),
+] });
 })();

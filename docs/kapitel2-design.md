@@ -560,7 +560,7 @@ sich das Kassenbuch am Samstag die Zeile dazu, die Kapitel 1 angekündigt hat: �
 
 ### 6.1 Frau Imai (`off_imai`)
 
-Nur, wenn Juno ihr in Kapitel 1 geantwortet hat (`imai_told` ist gesetzt); sonst bleibt der Faden zu. Er endet in Kapitel 2.
+Nur, wenn Juno ihr in Kapitel 1 geantwortet hat (`imai_told` ist gesetzt); sonst bleibt der Faden zu. Er endet in Kapitel 2. **Gebaut** (2026-11-19, `game/kapitel2_imai.js`): Ihr Kontakt aus Kapitel 1 schreibt am Samstag weiter; an ihrem Tisch erzählt sie am Samstag und Sonntag (den ganzen Abend, wie in Kapitel 1: Sie sitzt immer dort, die Stunden 20 bis 23 wären ein Zeitfenster ohne Grund), und das Gespräch endet in der Wahl, darum hört man es nie zweimal. Am Montag ist sie über ihrem Tee eingeschlafen, und der Faden endet ohne Antwort. Juno erkennt in ihrem Bild die alte Metro und Ines, und dass `cam31` an keinem Netz hängt. Weil die zweite Antwort nicht zur ersten passen muss, sagen die Zeilen des Kassenbuchs nicht „zum zweiten Mal“ und „wieder“, sondern „der Bahnsteig, die Wahrheit“ und „der Bahnsteig, ein Traum“ (`ledger_imai2`); nach „Traum“ auf „Wahrheit“ sagt sie: „Letztes Mal haben Sie gesagt, es ist wirklich passiert.“ Ihr Hinweis kommt vor denen des Abends (wie der des 24h-Ladens). Geprüft allein mit den anderen Fäden zu, einmal für jede Antwort aus Kapitel 1 (`check.sh`).
 
 | # | Wo | Was |
 |---|---|---|
@@ -605,7 +605,7 @@ Nur, wenn Juno ihn unterrichtet hat (`moth_student`): Beim ersten Mal, wenn Juno
 fragt er: „Darf ich EVI mal Hallo sagen?“ Er steckt seinen Tideboy an das Taschen-Deck, EVI kichert („Das kitzelt.“), und nach einem
 Moment: „Fertig. Ich hab sie mir gemerkt.“ Was er gemacht hat, sagt niemand. In Kapitel 4 ist es das Backup, aus dem EVI zurückkommt
 („Du hast gesagt, man macht immer ein Backup.“, story §7). Kein neues Flag: Das Backup gibt es, wenn es `moth_student` gibt. Ohne
-`moth_student` sitzt Motte auf seiner Bank wie immer.
+`moth_student` sitzt Motte auf seiner Bank wie immer. **Gebaut** (2026-11-19, `game/kapitel2_folgen.js`): Beim ersten Betreten des Flurs am Samstag oder Sonntag ruft er sie, Juno geht zu ihm an die Bank; ob die Szene gespielt hat, ist eine Ansicht (`moth_backup`, wie `forgery_seen`), kein Flag, also kein Zustand für den Solver.
 
 ### 6.5 Der 24h-Laden: Wer passt auf den Laden auf? (`off_shop24`)
 
@@ -876,6 +876,7 @@ Die Hinweise spricht EVI (Prolog-Design §2.2). Die Tabelle nennt die schweren S
 | Montag, 00:45 | (je nachdem, was fehlt, eine der Zeilen aus §3.7) | | |
 | S3, der 24h-Laden (nach dem Roboter; nie nötig, also ohne `about`, und nicht am Montag) | „Der Putzroboter hat dich ins Netz vom Laden gebracht.“ | „Die Kamera über der Kasse hat ein Archiv. Was war letzte Nacht?“ | „Öffne CAM 26 und drück PUFFER.“ |
 | S4, der 24h-Laden (mit dem Clip) | „Du weißt jetzt, wer im Laden nimmt. Das Schaf weiß es noch nicht.“ | „Zeig es ihm. Oder leg eine leere Schleife drüber. Oder Sable kauft es.“ | „Geh zum Schaf auf der Fischermann Street.“ |
+| I2, Frau Imai (nach `imai_told`, bis zur Wahl; ohne `about`, nicht am Montag) | „Frau Imai hat wieder geschrieben. Sie hat noch etwas gesehen.“ | „Sie sitzt abends im LUCKY STATIC an ihrem Tisch.“ | „Geh ins LUCKY STATIC und sprich mit Frau Imai.“ |
 | das Ende | „Du hast doch Clips mit Uhrzeit.“ | „Leg die Protokolle neben deine Aufnahmen.“ | „Nimm Kesslers Ring. Dienstag, 22:35.“ |
 
 ## 13. Was die Engine (und das Spiel) zusätzlich braucht
@@ -909,7 +910,7 @@ Archiv einer Kamera, Gegenstände an Hotspots und Fragen mit vier Antworten gibt
   die Änderungen an fertigen Bildern: das neue Kabel hinter dem großen Schirm, Lanterns grüner Text auf dem Schirm, das rote Licht der Kamera im 14. Stock aus.
   (Die Bretter an Okonkwos Laden und der dunkle Laden in `cam07v`, `GLASSER LIES`, `WHO TALKED?`, das Papierboot mit `I.` und das
   Absperrband an `cam30` sind gemalt, 2026-11-18, §5.)
-- **Sprechkarten** im `dialog-style-guide`: Lantern und Pike stehen als Entwurf, die der Pflegerin Marit Holm und die von Vargas Mann („der Schwere“) sind gewählt (2026-11-17); es fehlt noch Frau Imai; die Karte von Frau
+- **Sprechkarten** im `dialog-style-guide`: Lantern und Pike stehen als Entwurf, die der Pflegerin Marit Holm und die von Vargas Mann („der Schwere“) sind gewählt (2026-11-17); die von Frau Imai steht als Vorschlag (2026-11-19); die Karte von Frau
   Haldane ist zu ergänzen.
 - **`evi_trust`** (wie offen Juno im Prolog zu EVI war) geht mit, bekommt aber erst später eine Aufgabe (vom Nutzer entschieden
   2026-11-14): vielleicht, wenn EVI erfährt, was sie ist (§3.3), oder im Finale, wenn sie richtig lesen muss (story §7, Kap. 6).
