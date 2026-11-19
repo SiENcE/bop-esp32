@@ -60,7 +60,7 @@ characters() {
     # seen from above the ground point is under the figure, in the middle of its frame, not at its foot
     node -e 'const fs=require("fs"),d=process.argv[1];for(const f of fs.readdirSync(d)){const m=/^((?:juno|ratz|prediger|haendler|pike|kessler)_top_.*|statist_.*)\.json$/.exec(f);if(!m)continue;const s=Object.values(JSON.parse(fs.readFileSync(d+"/"+f,"utf8")).frames)[0].sourceSize;fs.writeFileSync(d+"/"+m[1]+".anchor.json",JSON.stringify({anchor:[s.w>>1,s.h>>1]}))}' build/art/characters/anims
     # build-atlas's --only matches exact names or a trailing *, so the feed people go by prefix
-    $ATLAS build/art/characters assets/characters.js --only "juno_*,teo_*,schlaefer_*,haldane_*,kessler_*,varga_*,commuter_*,yuen_*,ines_*,lantern_*,ashe_*,motte_*,bao_*,drone_*,regen_*,imai_*,prediger_*,monteur_*,mei_*,stamm_*,okonkwo_*,morrow_*,tideboy_*,ratz_*,streife_*,sable_*,quiet_*,marit_*,wartende_*,vargas_mann_*,haendler_top_*,pike_top_*,statist_*"
+    $ATLAS build/art/characters assets/characters.js --only "juno_*,teo_*,schlaefer_*,haldane_*,kessler_*,varga_*,commuter_*,nachbar_*,yuen_*,ines_*,lantern_*,ashe_*,motte_*,bao_*,drone_*,regen_*,imai_*,prediger_*,monteur_*,mei_*,stamm_*,okonkwo_*,morrow_*,tideboy_*,ratz_*,streife_*,sable_*,quiet_*,marit_*,wartende_*,vargas_mann_*,haendler_top_*,pike_top_*,statist_*"
 }
 
 ui() {

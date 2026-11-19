@@ -12,6 +12,8 @@
 //   quiet_a_idle_se, quiet_a_idle_ne   the leader
 //   quiet_b_idle_se, quiet_b_idle_ne   one of his men (the shadow on Kowalski Street, the man at dryer 6, the two at 4B)
 //   quiet_b_walk_se, quiet_b_walk_ne   the same walking slowly, 8 steps (the shadow going up and down while Bao's cart is gone)
+//   quiet_b_box_se, quiet_b_box_ne     the same carrying a moving box out of Ines' flat (CAM 25; the blocks art/test/k2_leih_blocks.px.js)
+//   quiet_b_tower_se                   the same carrying her computer, a tower case
 // Every frame is 23x53 inside the outline (25x55 with it: 1.83 m), pivot bottom-centre (column 12 with the outline, between the boots).
 ;(() => {
 
@@ -26,6 +28,8 @@ pal({
   a: "#1e1a22", A: "#2a2430", t: "#1c2232", T: "#2a3246", u: "#36405a", b: "#101420", o: "#d8ccc8", O: "#a69894",
   // threat red: dark, bright, its hot core; the drop of rain
   r: "#7e1420", q: "#ff3a3a", Q: "#ffb0a8", w: "#9fb8d8",
+  // what they carry out of 4B: a moving box's cardboard (shade, lit, its flap's edge) and tape; Ines' computer, a tower case, its LED
+  c: "#7a5638", C: "#9c7048", y: "#c49a68", Y: "#d8c8a0", z: "#22283a", Z: "#3a4458", v: "#62def0",
 })
 
 const IW = 23, IH = 53, X0 = 11           // inside the outline; the middle column 11 (12 with the outline)
@@ -215,12 +219,44 @@ function quiet(c, view, way, f) {
   if (f.step === undefined) drip(c, way, f.i)
 }
 
+/** B carrying: the forearms bent forward under the load, the gloves at its lower corners; from behind only the elbows out at his sides */
+function carry(c, view, load) {
+  const x = X0, se = view === "se"
+  // the upper arms down from the shoulders to the elbows, close to the coat
+  c.rect(x - 8, 13, 2, 9, se ? "H" : "X"); c.vline(x - 8, 13, 9, "h"); c.rect(x + 7, 13, 2, 9, "X"); c.vline(x + 8, 13, 9, se ? "H" : "h")
+  c.px(x - 8, 13, "L"); c.px(x + 7, 13, "W"); c.px(x + 8, 13, "L")
+  if (!se) {
+    // from behind: the box's ends show past his elbows, cardboard, the tape over its top
+    for (const bx of [x - 10, x + 9]) { c.rect(bx, 21, 2, 12, "C"); c.vline(bx + (bx < x ? 0 : 1), 21, 12, "c"); c.px(bx + (bx < x ? 1 : 0), 21, "Y") }
+    return
+  }
+  if (load === "box") {
+    // the box held before him from the waist to the chest: its front face lit from above, its top's edge, the tape down its middle
+    c.rect(x - 8, 21, 17, 13, "C"); c.hline(x - 8, 21, 17, "y"); c.hline(x - 8, 22, 17, "y"); c.rect(x - 8, 23, 2, 11, "c")
+    c.vline(x, 21, 13, "Y"); c.hline(x - 6, 33, 15, "c"); c.px(x - 8, 33, "k"); c.px(x + 8, 33, "k")
+    c.hline(x - 7, 27, 4, "c")                                                           // a handle hole
+  } else {
+    // the tower case upright against his chest: dark, its edge lit, the drive's slot, the power LED (off: unplugged; one px of cyan
+    // left where the glass catches the corridor's light)
+    c.rect(x - 3, 18, 8, 16, "Z"); c.rect(x - 3, 18, 2, 16, "z"); c.hline(x - 1, 18, 6, "4"); c.hline(x, 21, 4, "z"); c.px(x + 3, 24, "v")
+  }
+  // the gloves at the load's lower corners
+  g(c, x - 9, load === "box" ? 31 : 30, ["XL", "LX"]); g(c, x + 8, load === "box" ? 31 : 30, ["LX", "XL"])
+}
+
 // six frames: the drop gathers, falls, is gone; the red light on for most of them (A blinks off once, B's line dims once)
 const ON = [true, true, true, true, false, true]
 const MS = [500, 300, 100, 100, 600, 400]
 for (const way of ["a", "b"]) for (const view of ["se", "ne"])
   anim(`quiet_${way}_idle_${view}`, { w: IW, h: IH, frames: 6, ms: MS, outline: "k", pivot: "bottom" },
     (c) => quiet(c, view, way.toUpperCase(), { i: c.frame, on: ON[c.frame] }))
+// B carrying Ines' things out of 4B (CAM 25, Sunday 20:00; the user chose the box and the computer, 2026-11-19): standing, the drop and
+// the red line as when idle
+for (const [name, view, load] of [["quiet_b_box_se", "se", "box"], ["quiet_b_box_ne", "ne", "box"], ["quiet_b_tower_se", "se", "tower"]])
+  anim(name, { w: IW, h: IH, frames: 6, ms: MS, outline: "k", pivot: "bottom" }, (c) => {
+    const f = { i: c.frame, on: ON[c.frame] }
+    legs(c, "B"); coat(c, view, "B"); carry(c, view, load); head(c, view, "B", f); drip(c, "B", f.i)
+  })
 // the man in a hood walks slowly up and down before LUCKY STATIC while Bao's cart is gone (the user, 2026-11-17): 8 steps, slow
 for (const view of ["se", "ne"])
   anim(`quiet_b_walk_${view}`, { w: IW, h: IH, frames: 8, fps: 6, outline: "k", pivot: "bottom" },

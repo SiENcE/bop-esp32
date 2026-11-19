@@ -4,8 +4,8 @@
 //   evi_knows     Juno has found the file in the freezer, and EVI has learned what she is (W6, W7)
 //   (cache_note_serviette, cache_note_civic_rest: what she takes with her)
 // From Sunday 21:00 the flat is open (the Quiet broke the lock and sealed it): a time, no flag. The clinic (§3.2) is the other way to
-// know_flat (game/kapitel2_klinik.js). [PLATZHALTER] the house door's code; the neighbour and the two in white
-// are figures from other feeds; the rooms are blocks (§14)
+// know_flat (game/kapitel2_klinik.js). [PLATZHALTER] the house door's code. The neighbour is his own feed figure, the two in white
+// the Quiet's painted man B carrying her things (2026-11-19)
 "use strict";
 
 (function () {
@@ -15,8 +15,8 @@ const OPEN = { or: ["day=7", ["day=6", "time>=21:00"]] };          // after the 
 // ---- CAM 24 at half past seven: a neighbour comes home and taps the code right beside the doorbell's lens (W1). Each evening a moment of
 // its own (the first time the scene is written, after that it is played again); missed, the buffer has it
 Cutaway.actor("nachbar", { name: "Nachbar", color: "#8acfae",
-  costume: { idle: "commuter_b_feed", walk: "commuter_b_feed_walk", talk: "commuter_b_feed" }, speed: [14, 10],
-  look: "Ein Nachbar mit Kapuze. Er kommt jeden Abend um dieselbe Zeit heim.", talk: "Er hört mich nicht. Er tippt nur." });
+  costume: { idle: "nachbar_feed", walk: "nachbar_feed_walk", talk: "nachbar_feed" }, speed: [14, 10],
+  look: "Ein älterer Nachbar mit Mütze und einer Tüte vom 24h-Laden. Er kommt jeden Abend um dieselbe Zeit heim.", talk: "Er hört mich nicht. Er tippt nur." });
 Cutaway.routine("nachbar", [
   { day: [5, 6, 7], from: "19:30", to: "19:45", room: "cam24", at: A24.street, path: [A24.street, A24.gate], once: true },
 ]);
@@ -78,14 +78,15 @@ Cutaway.room.get("lerche_flur").hotspots.door_4b.use = [{ if: OPEN,
 // ---- CAM 25: the landing from its corner, linked with CAM 24 (the same house). On Sunday at eight two in white raincoats open 4B and carry it
 // out, the computer too, until nine; then they seal it (W3)
 Nagiwa.cams.cam25 = { id: "25", place: "WOHNBLOCK LERCHE, 4. STOCK", owner: "PRIVAT", map: [176, 38], if: "day>4" };
-for (const id of ["quiet_a", "quiet_b"]) {
-  Cutaway.actor(id, { name: "In Weiß", color: "#f0f0f0", speed: [6, 3],
-    costume: { idle: "ashe_feed", walk: "ashe_feed_walk", talk: "ashe_feed" },
+// (the Quiet's man B, painted, carrying her things out: a box, her computer; the user's choice, 2026-11-19)
+for (const [id, front] of [["quiet_a", "quiet_b_box_se"], ["quiet_b", "quiet_b_tower_se"]]) {
+  Cutaway.actor(id, { name: "In Weiß", color: "#f0f0f0", speed: [6, 3], lit: false,
+    costume: { idle: { se: front, ne: "quiet_b_box_ne" } },
     look: ["Ein weißer Regenmantel. Wo das Gesicht sein müsste, brennt mir das Bild durch.", "Wie bei dem in der Metro."],
     talk: ["Die Markierung rutscht ab. Da ist nichts, woran sie hängen bleibt."] });
 }
 Cutaway.routine("quiet_a", [{ day: 6, from: "20:00", to: "21:00", room: "cam25", at: A25.door_4b, face: "ne" }]);
-Cutaway.routine("quiet_b", [{ day: 6, from: "20:00", to: "21:00", room: "cam25", at: A25.door_4b2, face: "ne" }]);
+Cutaway.routine("quiet_b", [{ day: 6, from: "20:00", to: "21:00", room: "cam25", at: A25.door_4b2, face: "sw" }]);
 Cutaway.moment("quiet_flat", { room: "cam25", day: 6, from: "20:00", to: "21:00", if: ["!off_main", "!off_flat"], play: [
   "Zwei in weißen Regenmänteln, auf ihrem Flur.",
   "Wie der in der Metro.",

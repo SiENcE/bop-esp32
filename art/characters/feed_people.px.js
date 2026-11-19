@@ -18,6 +18,7 @@
 //   commuter_b      a hood, a short jacket, hands in pockets
 //   commuter_c      tall, a long coat, the DECOY: a scarf of Kessler's cut, but 6, not 9
 //   commuter_d      a woman with long hair, a light coat and a shoulder bag (bag 6)
+//   nachbar         Chapter 2, the neighbour in CAM 24: a flat cap, a long coat, a bag from the 24-hour shop (bag 9)
 //   yuen_cook       paper cap 8, apron 7, chopping at his counter
 //   ines            the end of Chapter 1, front and back: the white coat 9, a dark plait cut into it; a wallet with a light
 //   marit           Chapter 2, the nurse in CAM 21, front, back and looking back: the short coat 9, the scrubs 7, a bun
@@ -407,6 +408,46 @@ anim("commuter_b_feed", { w: CB.W, h: CB.H, frames: 2, ms: [1200, 900], outline:
 anim("commuter_b_feed_walk", { w: CB.W, h: CB.H, frames: 6, fps: 10, outline: "1", pivot: "bottom" }, (c) => {
   const i = c.frame
   commuterB(c, { bob: FP_BOB[i], feet: fpFeet(CB.H, i) })
+})
+
+// N: the neighbour in CAM 24 (Chapter 2, W1, the code at 19:30; the user chose way A of art/test/k2_leih_blocks.px.js, 2026-11-19): an
+// older man in a flat cap and a long coat to the knees, a bag from the 24-hour shop down his street in his near hand, swinging as he
+// walks; its white is his accent (9). 13x23 inside.
+const CN = { W: 13, H: 23 }
+const CN_LEGS = { W: CN.W, H: CN.H, near: 6, far: 3, hip: 17, lw: 3, sw: 3, leg: "2", shoe: "2", sep: "1" }
+sprite("_cn_cap", `
+  .33333.
+  3333333
+  2333332
+  .55555.
+  ..555..`)                     // the cap's crown, its peak in shade, the grey nape under it
+sprite("_cn_body", `
+  ..44444..
+  .4444444.
+  444444444
+  434444434
+  434444434
+  434444434
+  434444434
+  444444444
+  444444444
+  444444444
+  .4444444.
+  .3444443.`)                    // rows 5-16: the long coat, its seams, the hem
+function neighbour(c, o = {}) {
+  const b = o.bob ?? 0, sw = o.sway ?? 0
+  fpLegs(c, CN_LEGS, o.feet ?? fpStand(CN.H), b)
+  c.stamp("_cn_body", 1, 5 + b)
+  c.stamp("_cn_cap", 2 + (o.look ?? 0), b)
+  // the near hand, the bag's handles, the bag: white, its print a line darker, the weight pulling it straight
+  c.px(10, 13 + b, "6"); c.vline(10, 14 + b, 2, "8")
+  c.rect(9, 16 + b + sw, 4, 5, "9"); c.hline(9, 18 + b + sw, 4, "8"); c.px(9, 20 + b + sw, "8")
+}
+anim("nachbar_feed", { w: CN.W, h: CN.H, frames: 2, ms: [1400, 700], outline: "1", pivot: "bottom" },
+  (c) => neighbour(c, { look: c.frame }))
+anim("nachbar_feed_walk", { w: CN.W, h: CN.H, frames: 6, fps: 10, outline: "1", pivot: "bottom" }, (c) => {
+  const i = c.frame
+  neighbour(c, { bob: FP_BOB[i], sway: FP_SWING[i] < 0 ? -1 : 0, feet: fpFeet(CN.H, i) })
 })
 
 // C: the decoy. Tall, a long dark coat, and a scarf of the same cut as Kessler's, but dark wool:
