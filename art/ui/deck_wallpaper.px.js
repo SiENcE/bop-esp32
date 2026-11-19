@@ -278,7 +278,7 @@ pal({
     for (let y = 35; y < 62; y++) for (let x = 112; x < 158; x++) c.px(x, y, y < 50 ? ((x + y) % 4 ? "c" : "C") : (y & 1 ? "c" : "C"))
     { const rb = 35 + Math.floor(f * 27 / FRAMES); for (let x = 112; x < 158; x++) { c.px(x, rb, "C"); if (rb > 35 && x % 2) c.px(x, rb - 1, "C") } }
     // the city's name: in 2074 its two characters (the original mark), today NAGI·WA (pxl's own letters have no middle dot: it is set by hand)
-    if (today) { c.text(122, 37, "NAGI", "V"); c.px(138, 39, "V"); c.text(140, 37, "WA", "V") } else KANJI.draw(c, 121, 33, "V")
+    if (today) { c.text(122, 37, "NAGI", "V"); c.px(138, 39, "V"); c.text(140, 37, "WA", "V") }
     if (today) { c.text(125, 44, "SLEEP", "V"); c.text(123, 50, "BETTER", "V") }
     const glow = 0.5 + 0.5 * wave(f, FRAMES)
     if (!today) for (let y = 43; y < 55; y++) for (let x = 123; x < 148; x++) {
@@ -286,6 +286,8 @@ pal({
       if (d <= 81) c.px(x, y, d <= 33 + glow * 8 ? "V" : "v")
       else if (d <= 90 + glow * 30 && bay(x, y) < 0.3 + glow * 0.4) c.px(x, y, "C")
     }
+    // in 2074 the two characters stand clear of the frame (the user, 2026-11-20: they sat on its top edge), over the sun's glow
+    if (!today) KANJI.draw(c, 121, 36, "V")
     for (const [y, a, b] of [[55, 118, 152], [57, 123, 147], [59, 128, 142]]) for (let x = a; x < b; x++) c.px(x, y, (x + y + Math.floor(f / 2)) % 6 ? "v" : "C")
     for (let y = 26; y < 70; y++) for (let x = 100; x < 172; x++) {   // its light on the tower round it
       const d = Math.max(110 - x, x - 159, 33 - y, y - 63)
