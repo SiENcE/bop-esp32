@@ -85,8 +85,8 @@ es nicht mehr, §7).
 - Die Engine kennt jetzt den Beginn eines Akts an einem späteren Tag (Cutaway.js 9804188): Die Momente früherer Tage gelten als
   vergangen, ohne dass ihr `unseen` noch einmal läuft (sonst hätte der Start von Kapitel 2 die Miete ein zweites Mal abgebucht und
   Teos Besuch vom Mittwoch noch einmal gespielt).
-- Der Anfang: die wortlose Sequenz `k2_heimweg` als **Platzhalter** aus den Straßen der Stadt (Kowalski, Jade Row, Gasse, ihre Tür),
-  bis die abstrakten Bilder als Blöcke freigegeben sind; Junos eine Zeile über der Tür; dann EVIs festgelegte Szene, Wort für Wort.
+- Der Anfang: die Sequenz `k2_heimweg` ist ein **Platzhalter**, eine Karte auf Schwarz (der Nutzer überlegt sich hier etwas Neues, 2026-11-19; die Sequenz aus den Straßen der Stadt ist entfernt). Juno sagt ihre eine Zeile im Dunkeln;
+  dann EVIs festgelegte Szene, Wort für Wort.
 - Teos Besuch am Montag um 18:30 als Block (§7): das Klopfen, Bao, die Miete, der Haken, die Leiter, das Dach mit Tinte. Auf dem Dach
   sitzt Teo seit 2026-11-19 gemalt neben ihr (`dach_teo`, §10).
 - Die Uhr hält am Montag um 00:45. **Sie verlangt, was gebaut ist** (vom Nutzer so gewollt): den Stick bei Lantern und Entscheidung 2;
@@ -130,7 +130,7 @@ es nicht mehr, §7).
   Zustand hätte er jeden Zustand ab Sonntag vervierfacht, nur `forgery_proven` zählt für die Geschichte): erst der
   Zeitstempel, dann der Regen, dann das Licht. Ein Klick außer der Reihe sagt nur „Da ist was anders. Aber ich geh der Reihe nach, sonst
   übersehe ich was.“ Mit dem dritten Fund: `forgery_proven`, die Notiz „Die Fälschung, zerschnitten“, und Juno: „Lantern war schon weg.
-  Das kann ich zeigen.“ Die Bilder sind **Platzhalter**: das Bild von `cam31` mit seinen Feed-Figuren, im Code ausgeschnitten und in die
+  Das kann ich zeigen.“ Die Bilder bleiben aus dem gemalten Bild gebaut (vom Nutzer so entschieden 2026-11-19, kein eigenes Bild): das Bild von `cam31` mit seinen Feed-Figuren, im Code ausgeschnitten und in die
   zehn Werte des Phosphors gebracht (in der Fälschung ein abgedunkelter Rollstuhl an Ashes Stelle, bei Juno der weiße Fleck der Maske).
 - **Das letzte Prüfen** (§8) ist dasselbe Werkzeug: Ein Klick auf das Deck öffnet die Protokolle, drei Nächte (Dienstag bis Donnerstag)
   mit den Spitzen der Schläfer, darunter Junos Clips mit ihren Zeiten. Juno wählt einen Clip (eine Ansicht) und dann die Spitze dazu:
@@ -138,10 +138,13 @@ es nicht mehr, §7).
   Donnerstag 23:30. Ihre Aufnahme aus CAM 31 und die Fälschung passen zu keiner, und Juno sagt, warum. Eine Übereinstimmung genügt, dann
   läuft die Kette.
 - **Lantern finden** (§3.5, `game/kapitel2_lantern.js`, 2026-11-15; der Raum `lantern_versteck` als **Block** mit `tools/new-room.mjs`,
-  aus dem Kit von Junos Wohnung; die Fahrt und die Ankunft als Bühnen von der Seite, siehe unten): Am Sonntag um 22:00 reißt der große Schirm ab (der Moment `hijack`, über
-  Nacht vergessen); der Text steht vorerst als Bildunterschrift über dem Stottern des Schirms (**Platzhalter**, §13, 4). Die halbe Reparatur
-  steht jetzt auch an den Abenden von Kapitel 2 auf dem Gerüst; ab Sonntag 22:00 sagt sie, dass es übers Kabel kam (`know_cable`, auch wer den
-  Schirm nicht gesehen hat). **Umgebaut am 2026-11-16** (vom Nutzer entschieden, §3.5): Das Kabel führt zum Floß DATA 1C/GB ganz rechts im
+  aus dem Kit von Junos Wohnung; die Fahrt und die Ankunft als Bühnen von der Seite, siehe unten): Am Sonntag um 22:00 bricht für zehn Sekunden eine Stimme in jeden
+  Sender im Neunten ein, durch das Rauschen hört man nur „... Nagi·wa ... lügt ...“ (der Moment `hijack`, über Nacht vergessen; vom Nutzer
+  entschieden 2026-11-19: übers Radio statt über den großen Schirm, und wer es war und worauf es sich bezieht, weiß man erst später). Live hört
+  Juno es auf der Kowalski aus dem Radio der halben Reparatur und auf dem Deck, wenn ihr RADIO läuft (eine Ansicht); sonst reden die Leute
+  darüber: die halbe Reparatur, am Montag NINTH FM und NAGI·WA EASY, das Brett im NETZ (`rauschen`). Die halbe Reparatur
+  steht jetzt auch an den Abenden von Kapitel 2 auf dem Gerüst; ab Sonntag 22:00 sagt sie, dass es übers Kabel kam (`know_cable`, auch wer das
+  Radio nicht gehört hat). **Umgebaut am 2026-11-16** (vom Nutzer entschieden, §3.5): Das Kabel führt zum Floß DATA 1C/GB ganz rechts im
   Kanal; die Treppe hinab bleibt zu. Mit `know_cable` zieht der Haken das Floß an den Rand, und Pike (Figur `pike`, abends auf dem Floß; seine
   Planke ist eine eigene Gehfläche, mit einem Schlitz an den Rand angebunden) sagt, was er will (`pike_met`). Ratz gibt die Endstufe (das Ding
   `endstufe`) für eine Kopie des Ausweises (sein eigenes Gespräch, solange `pike_met` und noch kein `ledger_ratz`); gibt Juno sie Pike, stakt
@@ -305,8 +308,8 @@ Lantern kennt Juno nicht (story §10b) und vertraut niemandem. Er ist gejagt, se
 
 | # | Wo | Was | Flags / Dinge |
 |---|---|---|---|
-| L1 | `kowalski`, Sonntag 22:00 | Der große Werbebildschirm reißt mitten in der Lull-Werbung ab. Zehn Sekunden lang steht dort in Lanterns Grün: `I DIDN'T KILL HER. – LANTERN`, dann wieder SLEEP BETTER. Wer nicht auf der Straße ist, liest es danach im NETZ und hört es im LUCKY STATIC. Die Regenleserin hatte erzählt, dass er das vor zwei Jahren schon einmal getan hat (Kapitel 1). | Moment `hijack` |
-| L2 | `kowalski`, Gerüst | Die halbe Reparatur hat es gesehen, von ganz nah: „Das kam nicht über Funk. Das kam übers Kabel. Von unten.“ Er zeigt auf das neue Kabel, das hinter dem Schirm in den Gully geht. „Rechts. Nicht mein Vertrag.“ | `know_cable` |
+| L1 | `kowalski`, Sonntag 22:00 | Zehn Sekunden lang bricht eine Stimme in jeden Sender im Neunten ein; durch das Rauschen hört man nur „... Nagi·wa ... lügt ...“, dann wieder Musik (vom Nutzer entschieden 2026-11-19, statt des großen Schirms). Auf der Kowalski hört Juno es aus dem Radio der halben Reparatur, auf dem Deck aus ihrem RADIO; wer es nicht hört, bekommt es als Gerede mit (die halbe Reparatur, die Sender am Montag, das Brett im NETZ). Die Regenleserin hatte erzählt, dass er das vor zwei Jahren schon einmal getan hat (Kapitel 1). | Moment `hijack` |
+| L2 | `kowalski`, Gerüst | Die halbe Reparatur hat es in ihrem Radio gehört: „Das kam nicht über Funk. Das kam übers Kabel. Die Radios hier hängen alle am Verstärker hinterm großen Schirm.“ Er zeigt auf das neue Kabel, das hinter dem Schirm in den Gully geht. „Rechts. Nicht mein Vertrag.“ | `know_cable` |
 | L3 | `drain_market`, das Floß | Das Kabel kommt hinter dem Schirm aus dem Gully in den Kanal und läuft an der Kanalmauer entlang bis zum Floß DATA 1C/GB, dem mit der Batteriebank und der Antenne. Es liegt draußen auf dem Wasser an seinem Seil, zu weit vom Rand, und sein Mann kommt nicht herüber. Ohne `know_cable` verkauft da draußen nur einer Daten („Da verkauft einer Daten. Ich hab selber welche.“). Mit ihm zieht Juno das Floß mit dem **Haken** an den Rand (vom Nutzer entschieden 2026-11-16) und steigt hinüber: „Teo hätte das mit einer Hand gemacht.“ Den Haken hat sie aus Kapitel 1 in der Tasche; wer ihn nicht dabeihat, findet ihn neben der Aufzugtür. Die Kette an der Treppe hinab bleibt zu: Ratz muss kein Schloss mehr öffnen. | — |
 | L3b | `drain_market`, Pike und Ratz | **Der kleine Auftrag dieses Kapitels** (vom Nutzer entschieden 2026-11-16, statt Ratz und dem Schloss vom 2026-11-14): Auf dem Floß steht **Pike**, Lanterns Gehilfe, umgebaut mit dem **Reiher**: lange dünne Beine, mit denen er im Wasser steht und das Floß stakt, ein langer Hals, ein spitzes Gesicht. Er nimmt Juno mit, wenn sie ihm die **Endstufe** aus einem alten Flutwarnmast besorgt, die Lantern für seine Sendung am Montag braucht. Die hat nur Ratz, und Ratz verkauft Pike nichts mehr, seit Pikes Mod ihn einmal am Schwanz aus dem Kanal geschnappt und kopfüber über das Wasser gehalten hat. „Ein Reflex“, sagt Pike. Ratz: „Ein Schnabel macht nichts von allein.“ Juno bekommt die Endstufe für ihren alten **Ausweis**: Ratz kennt die Karten von Nagi·wa („Die mögen alte Karten.“), liest den Chip aus und behält die Kopie, denn mit einer Karte von drinnen gehen auch die Klappen in den Rohren unter der Krone auf, zu seiner Kolonie (story §9). Juno bekommt den Ausweis zurück: „Das zweite Mal, dass das Ding was aufmacht.“ Hat sie ihn nicht dabei, liegt er im Karton unter ihrem Bett. Kassenbuch: „Ratz: eine Kopie meines alten Ausweises.“ Ausweis und Haken kann Juno jederzeit mitnehmen (vom Nutzer entschieden 2026-11-15); nach der Endstufe fragt sie Ratz erst, wenn Pike gesagt hat, was er will. Gibt sie Pike die Endstufe, stakt er sie hinaus, und von da an nimmt er sie mit, wann sie will. Jedes Gespräch mit höchstens vier Antworten. | `pike_met`, `ledger_ratz`, das Ding `endstufe` |
 | L4 | der Kanal, die Fahrt | Pike stakt das Floß nach rechts aus dem Markt. Die Fahrt ist **von der Seite** gezeigt (in Iso sähe sie komisch aus): Der Kanal führt hinaus an den Rand, wo über der alten Stadt kein Ring mehr liegt. Dort steht ein ertrunkener Wald zwischen den Hausfronten, Stämme im Wasser, Moos in den Ästen, Wasserlinsen, Spiegelungen, darüber der Nachthimmel und der Schein der Krone, im Regen. Technisch (entschieden von Claude): eine feste Bühne von 320x180 (`sumpf_fahrt`, `game/rooms/sumpf.js`); das Floß steht still, die Ebenen dahinter und davor (die Ferne, die Hausfronten mit den Stämmen, die Wasserlinsen, die großen Stämme vorn) ziehen als Props mit `scroll` in eigenem Tempo vorbei; Juno steht auf dem Floß; beim ersten Mal ganz, danach kurz. Eine Kette ohne Verzweigung, sie kostet den Solver nichts. Pike hebt die Stange und stößt sie wieder ins Wasser. **Während der Fahrt reden Juno und Pike** (unten), dazu spielt eine ruhige, mystische Melodie, und man hört den Sumpf: Frösche, Insekten, Tropfen, das Wasser am Floß, einmal ein Vogel (vom Nutzer gewünscht 2026-11-16). | — |
@@ -336,7 +339,7 @@ kein Flag.
 >   „Das merkt man.“
 >
 > Pike: „Hörst du ihn manchmal? Den Sender.“
-> - „Ich weiß, was er auf den Schirm geschrieben hat.“ – Pike: „Zehn Sekunden.“ – Juno: „Länger glaubt einem eh keiner.“ – Pike
+> - „Ich hab ihn im Radio gehört. Nagi·wa lügt.“ – Pike: „Zehn Sekunden.“ – Juno: „Länger glaubt einem eh keiner.“ – Pike
 >   sieht sie an. – Pike: „Das sagt er auch. Fast genauso.“
 > - „Die Nachrichten sagen, er hat sie umgebracht.“ – Seine Stange bleibt im Wasser stehen. – Pike: „Sagen sie.“ – Juno: „Ich hab
 >   gesehen, dass er's nicht war.“ – Pike: „...“ – Pike: „Dann sag ihm das. Aber nicht gleich. Er braucht eine Weile.“
@@ -699,7 +702,7 @@ more than once“).
 | Deck | GLASS mit den grauen Kameras, NETZ, CHAT (Imai, Vesper, `BECKEN 3`), der Clip-Editor mit **Prüfen** und **Montieren**, CACHE, BUCH, RADIO mit den Nachrichten |
 | `kessel_14`, `cam14` | Motte und das Backup, Frau Haldane wach an ihrer Tür; nach `k1b=lied` an Junos Tür `GLASSER LIES` (gemalt, rot); ab Abend 3 ist `cam14` aus, das rote Licht im Flur dunkel |
 | `kessel_lobby` | der Briefkasten, Vargas Zettel |
-| `kowalski` | Bao (oder sein leerer Platz), der Werbebildschirm und Lanterns zehn Sekunden, die halbe Reparatur mit dem Kabel, Vargas Mann, der Schatten in Weiß |
+| `kowalski` | Bao (oder sein leerer Platz), Lanterns zehn Sekunden im Radio der halben Reparatur, die halbe Reparatur mit dem Kabel, Vargas Mann, der Schatten in Weiß |
 | `gasse` | der Weg zu Waschsalon und Markt, das Papierboot am Denkmal (gemalt) |
 | `laundromat`, `cam23` | den Stick zurücklegen; Lantern um halb eins; der Mann in Weiß, wenn die Quiet vom Trockner weiß |
 | `lucky_static` | Mei, der Fernseher an allen drei Abenden, der Stammgast, der im Schlaf redet, Frau Imai |
@@ -841,7 +844,7 @@ wechseln würde, eine eigene Ansicht (Kapitel 1, §10). Lull ist immer die ovale
    ├─ Klinik (optional): cam21 ─ Steg aus der Gasse ─ Aufnahme ─ „Lerche, vierter Stock“
    ├─ Lerche: cam24 19:30, der Code ─ cam25 ─ (So 20:00–21:00 die Quiet) ─ 4B ─ Serviette ─ Akte ─ EVI erfährt es
    ├─ Fälschung (So 18:00): NETZ ─ Prüfen: Zeitstempel, Regen, Licht ─ Beweis
-   ├─ Lantern (So 22:00 der Schirm): halbe Reparatur ─ Kabel ─ Haken, Pikes Floß ─ Ratz, Ausweis, Endstufe ─ Pike ─ die Fahrt ─ der Wohnwagen
+   ├─ Lantern (So 22:00 das Radio): halbe Reparatur ─ Kabel ─ Haken, Pikes Floß ─ Ratz, Ausweis, Endstufe ─ Pike ─ die Fahrt ─ der Wohnwagen
    │      └─ der Schatten in Weiß (19:00–23:00), wenn die Quiet Juno kennt
    └─ Entscheidung 2: Sable │ Vesper │ Morrow (Jade Row 00:30) │ Lantern │ behalten   (das Flüstern schneiden?)
                                                                   │
@@ -871,7 +874,7 @@ Die Hinweise spricht EVI (Prolog-Design §2.2). Die Tabelle nennt die schweren S
 | W3/W4, der Flur | „Welche Tür ist ihre? Die Klinik weiß es, oder die von Civic Rest zeigen es dir.“ Dann: „Ihre Tür ist zu. Das bleibt sie nicht lange.“ | „Die von Civic Rest räumen die Wohnung aus. Schau in CAM 25.“ | „Warte, bis sie weg sind. Sonntag ab neun ist der Flur frei.“ |
 | W6, die Akte | „Die haben den Rechner genommen. Ines hat auf Papier geschrieben.“ | „Wo hebt man Papier auf, das niemand finden soll?“ | „Schau ins Gefrierfach.“ |
 | die Fälschung | „Das ist nicht das, was wir gesehen haben.“ | „Leg die beiden Clips nebeneinander. PRÜFEN.“ | „Schau der Reihe nach auf die Uhrzeit, den Regen und das Licht.“ (gilt nur, solange Juno die Fälschung im Editor hat) |
-| L2–L5, Lantern | „Der Schirm war gekapert. Wer weiß, woher so was kommt?“ | „Der Mann auf dem Gerüst repariert den Schirm. Frag ihn.“ | „Folge dem Kabel in den Kanal des Markts.“ |
+| L2–L5, Lantern | „Im Radio war eine fremde Stimme. Wer weiß, woher so was kommt?“ | „Der Mann auf dem Gerüst hat ein Radio. Frag ihn.“ | „Folge dem Kabel in den Kanal des Markts.“ |
 | L3, das Floß | „Das Kabel geht zu dem Floß da draußen.“ | „Es liegt zu weit weg. Mit etwas Langem käme man ran.“ | „Nimm den Haken aus der Tasche. Hast du ihn nicht, hängt er neben dem Aufzug.“ |
 | L3b, Pike | „Pike will die Endstufe, und Ratz verkauft ihm nichts.“ | „Dir verkauft Ratz. Frag ihn, was er dafür will.“ | „Ratz will deinen alten Ausweis, nur kurz. Der liegt im Karton unter deinem Bett, wenn du ihn nicht dabeihast.“ |
 | der Schatten | „Der in Weiß steht wieder unten.“ | „Wenn er dich sieht, sieht er auch, wohin du gehst.“ | „Er geht um elf. Warte bis dahin, bevor du zu Lantern gehst.“ |
@@ -897,8 +900,8 @@ Archiv einer Kamera, Gegenstände an Hotspots und Fragen mit vier Antworten gibt
 2. **Eine Kamera nur im Archiv** (`cam51`): wie das Archiv von `cam18`, ohne Live-Bild. Gebaut (2026-11-19) mit `archive` am Raum: der Feed schreibt `ARCHIV` und statt der Uhr die Zeit des Bilds, das er zeigt: ohne gewähltes Bild die neueste Aufnahme (`newest`, letzte Nacht um drei), sonst das Archivbild, das eine Ansicht hält.
 3. **Kameras, die ausfallen**: `link_cam07` und `link_cam14` über Nacht vergessen, GLASS zeigt sie grau mit `KEIN SIGNAL` (gebaut: ein Eintrag in
    `Nagiwa.cams` kann `dead` haben, eine Bedingung, und `deadLine`, was Juno beim Klick sagt).
-4. **Der gekaperte Schirm** auf der Kowalski: ein Teil des Bilds der Straße, das zu bestimmten Zeiten den Text zeigt (gesetzt mit der
-   Spielschrift).
+4. ~~Der gekaperte Schirm~~ (seit 2026-11-19 kommt Lanterns Botschaft übers Radio: der Moment `hijack` im Radio der halben Reparatur,
+   in `game/radio.js` dieselben Fetzen in jedem Sender; kein Teil des Bilds der Straße mehr).
 5. ~~Ein Ausgang mit Auswahl~~ (das Tor der Jade Row führt seit 2026-11-18 nur noch auf Weg_1; die Klinik hat ihren eigenen Weg).
 6. Der Akt `kapitel2` mit seinem `keep` (§2.1) und `?act=kapitel2`.
 7. **Der Solver über die Kapitelgrenze** (beschlossen 2026-11-14, Stufe 2 der Prüfungen): Sobald Kapitel 2 gebaut ist, löst der Solver
@@ -914,7 +917,7 @@ Archiv einer Kamera, Gegenstände an Hotspots und Fragen mit vier Antworten gibt
 - **Zeilen:** alles, was hier steht, sind Vorschläge; Lanterns Sprechkarte ist ein Entwurf (2026-11-15), beim Durchspielen zu prüfen.
 - **Preise und Zahlen:** Sable 3000, Vesper 5000, die Zuschauer, Sables Archiv 150, Kessler 50.
 - **Aussehen:** Klinik, Flur, Wohnung, der Wohnwagen innen, Pike von oben auf dem Markt (dazu seine Farbe), `cam51` und alle neuen Figuren gehen erst als Blöcke zur Freigabe, ebenso
-  die Änderungen an fertigen Bildern: das neue Kabel hinter dem großen Schirm, Lanterns grüner Text auf dem Schirm, das rote Licht der Kamera im 14. Stock aus.
+  die Änderungen an fertigen Bildern: das neue Kabel hinter dem großen Schirm, das rote Licht der Kamera im 14. Stock aus.
   (Die Bretter an Okonkwos Laden und der dunkle Laden in `cam07v`, `GLASSER LIES`, `WHO TALKED?`, das Papierboot mit `I.` und das
   Absperrband an `cam30` sind gemalt, 2026-11-18, §5.)
 - **Sprechkarten** im `dialog-style-guide`: Lantern und Pike stehen als Entwurf, die der Pflegerin Marit Holm und die von Vargas Mann („der Schwere“) sind gewählt (2026-11-17); die von Frau Imai und die von Frau Haldane für dieses Kapitel stehen als Vorschlag (2026-11-19). Frau Haldanes Sohn heißt Najo

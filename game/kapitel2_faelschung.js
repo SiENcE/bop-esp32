@@ -7,8 +7,8 @@
 //   forgery_proven       all three, and the note "Die Fälschung, zerschnitten" (handed on: Morrow in Chapter 4; Sable, Morrow and Lantern in
 //                        decision 2, §3.6, when those are built)
 // From Sunday Juno knows his name, since the news say it; before, he is the one from the metro (game/kapitel2_stick.js).
-// [PLATZHALTER] the pictures are CAM 31's picture and its feed figures, cut out and put together in code, until the forgery's own picture
-// is approved as a block (§10: a dark wheelchair where Ashe stands, silent, the loop in the rain)
+// The pictures are CAM 31's painted picture and its feed figures, put together in code (a dark wheelchair where Ashe stands, the loop in the
+// rain): the user found that enough, 2026-11-19, so it stays reused rather than painted again
 "use strict";
 
 (function () {

@@ -33,6 +33,7 @@
       { text: "Samstag. In der alten Metro ist jemand gestorben. Das nächste ist leise.", day: 5 },
       { text: "Sonntag. Sie sagen, LANTERN war's. Ich kenn seine Sendungen. Der hat nie wen angefasst.", day: 6 },
       { text: "Montag. Sie suchen LANTERN. Wer ihn sieht, hat ihn nicht gesehen.", day: 7 },
+      { text: "Gestern um zehn hat mir einer das Lied zerschnitten. Rauschen, und dann: Nagi·wa lügt. Ich war's nicht.", day: 7 },
     ] },
     // NAGI·WA EASY: the company's station; its announcer is friendly, says Sie and says nothing (dialog-style-guide §6)
     { id: "easy", name: "NAGI·WA EASY", freq: "101.0", music: { theme: "easy" }, lines: [
@@ -43,6 +44,7 @@
       { text: "Nagi·wa dankt Ihnen für Ihren Dienst." },
       { text: "Revier 9 bittet um Ihre Mithilfe bei der Suche nach dem Piratensender LANTERN.", day: 6 },
       { text: "Hinweise zum Piratensender LANTERN nimmt Revier 9 jederzeit entgegen. Vielen Dank.", day: 7 },
+      { text: "Gestern um zweiundzwanzig Uhr kam es zu einer kurzen Störung. Es gab nichts zu hören.", day: 7 },
     ] },
     // KESSEL ROOFTOP: someone in the block plays records at night; sleepy, never says who
     { id: "roof", name: "KESSEL ROOFTOP", freq: "94.2", music: { theme: "rooftop" }, lines: [
@@ -59,13 +61,15 @@
       { text: "Hier ist Lantern. Wer das hier hört, ist noch wach." },
       { text: "Der Pegel steht bei einem Meter zehn. Wer unten wohnt: Stellt die Akkus hoch." },
       { text: "Sie sagen, ich hätte sie umgebracht. Ich sage nichts dazu. Ich sende." },
-      { text: "Zehn Sekunden auf dem großen Schirm. Hier hab ich länger. Glauben tut man mir hier auch nicht." },
+      { text: "Zehn Sekunden in jedem Radio im Neunten. Hier hab ich länger. Glauben tut man mir hier auch nicht." },
       { text: "Wer schläft, hört mich nicht. Das ist in Ordnung. Ich bin für die anderen da." },
       { text: "Funk hört jeder. Heute ist mir das recht." },
       { text: "Montag. Heute Nacht um eins sende ich, was sie mir gegeben hat. Bleibt wach.", day: 7 },
     ] },
   ];
-  Cutaway.i18n.declare("radio", ["AUS", "ON AIR", "RAUSCHEN", ...Nagiwa.radio.flatMap((s) => s.lines.map((l) => l.text))]);
+  // Sunday 22:00 to 22:15: someone breaks into every station; through the noise only this (the user, 2026-11-19; game/kapitel2_lantern.js)
+  const BREAK_IN = "... Nagi·wa ... lügt ..."
+  Cutaway.i18n.declare("radio", ["AUS", "ON AIR", "RAUSCHEN", BREAK_IN, ...Nagiwa.radio.flatMap((s) => s.lines.map((l) => l.text))]);
 
   /** The station on now, or null. */
   Nagiwa.radioOn = () => Nagiwa.radio.find((s) => s.id === Cutaway.state.peek("radio") && Nagiwa.radioKnown(s)) ?? null;
@@ -73,8 +77,9 @@
   Nagiwa.radioKnown = (s) => !s.if || Cutaway.state.test(s.if);
   /** What the presenter says now (a line every 9 s while the window is open), or "". */
   Nagiwa.radioLine = () => {
-    const s = Nagiwa.radioOn(), day = Cutaway.time.now.day;
+    const s = Nagiwa.radioOn(), day = Cutaway.time.now.day, m = Cutaway.time.now.minutes;
     if (!s) return "";
+    if (day === 6 && m >= 22 * 60 && m < 22 * 60 + 15 && !Cutaway.state.test("off_lantern")) return Nagiwa.t(BREAK_IN);
     const lines = s.lines.filter((l) => l.day === undefined || l.day === day);
     return lines.length ? Nagiwa.t(lines[Math.floor(Cutaway.clock.time / 9000) % lines.length].text) : "";
   };

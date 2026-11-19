@@ -125,33 +125,16 @@ Cutaway.dialog("k2_clip", { main: {
   ] });
 
 // ---- Saturday, 18:00: Juno comes home (kapitel2-design §2.1). She couldn't stand it in the flat and walked through the Ninth, the
-// night and the day, until it was evening again: a short sequence without words. [PLATZHALTER] its shots are the city's rooms for
-// now, until the abstract shots are approved as blocks (neon, the crowd, the yellow coat now near, now lost, then her door)
+// night and the day, until it was evening again. [PLATZHALTER] The user will think of something new here (2026-11-19): the sequence of the
+// city's rooms is gone, a card on black stands in for it until then
 Cutaway.sequence("k2_heimweg", {
   steps: [
-    { shot: "neon" },
     { music: { stop: true, fade: 0.5 } },
-    { fade: 1, ms: 0 },
-    { place: "juno", room: "kowalski", at: Nagiwa.at.kowalski.fromGasse, face: "nw" },
-    { goto: "kowalski", transition: false },
-    { letterbox: true, ms: 0 },
-    { camera: [96, 0], ms: 0 },
-    { fade: 0, ms: 1200 },
-    { camera: [0, 0], ms: 4000 },
-    { shot: "gewuehl" },
-    { place: "juno", room: "jade_row", at: AJ.far, face: "ne" },
-    { goto: "jade_row", transition: "dissolve" },
-    { wait: 3000 },
-    { place: "juno", room: "gasse", at: AG.statue, face: "ne" },
-    { goto: "gasse", transition: "dissolve" },
-    { camera: [96, 56], ms: 0 },
-    { camera: [60, 30], ms: 3500 },
-    { shot: "tuer" },
+    { fade: 1, ms: 600 },
     { place: "juno", room: "kessel_14", at: AK.door_juno, face: "nw" },
-    { goto: "kessel_14", transition: "dissolve" },
-    { wait: 800 },
+    { goto: "kessel_14", transition: false },
+    { caption: "[Platzhalter] Der Heimweg", at: "c", color: "#617aa0", ms: 2500 },
     "Ich bin gelaufen. Irgendwann war wieder Abend.",
-    { fade: 1, ms: 900 },
   ],
   after: [{ place: "juno", room: "kessel_14", at: AK.door_juno, face: "nw" }],
 });
@@ -280,9 +263,9 @@ Cutaway.hints([
   // the Quiet sits at the dryer (quiet_dryer): only the way to him by hand is left (in the runs with that way shut the dryer stays open)
   { if: ["stick_ines", "quiet_dryer", "!off_lantern"], about: ["reparatur", "wait", "bed", "close", ...HOME],
     text: ["Im Waschsalon sitzt einer in Weiß. In den Trockner kannst du nichts mehr legen.", "Lantern kommt nicht mehr. Du musst ihn finden und ihm den Stick bringen.",
-      "Ab zehn weiß der Monteur auf der Kowalski, woher der Schirm kam. Frag ihn."] },
+      "Ab zehn weiß der Monteur auf der Kowalski, woher das Rauschen im Radio kam. Frag ihn."] },
   { if: ["stick_ines", { or: ["day=7", ["day=6", "time>=22:00"]] }], about: ["reparatur", "dryer6"],
-    text: ["Du hast noch ihren Schlüssel. Lantern sucht ihn.", "Er schaut jede Nacht in den Trockner. Oder du findest ihn: Der Monteur weiß, woher der Schirm kam.", "Leg ihn in Trockner sechs zurück. Um halb eins holt er ihn."] },
+    text: ["Du hast noch ihren Schlüssel. Lantern sucht ihn.", "Er schaut jede Nacht in den Trockner. Oder du findest ihn: Der Monteur weiß, woher das Rauschen im Radio kam.", "Leg ihn in Trockner sechs zurück. Um halb eins holt er ihn."] },
   { if: ["stick_ines", "day=5"], about: ["dryer6", "bed", "wait", "close", ...HOME],
     text: ["Du hast noch ihren Schlüssel. Der aus der Metro sucht ihn bestimmt.", "Sie hat ihn in den Trockner gelegt. Dort sucht er ihn.", "Leg ihn in Trockner sechs zurück. Um halb eins holt er ihn."] },
   { if: "stick_ines", about: ["dryer6", "bed", "wait", "close", ...HOME],

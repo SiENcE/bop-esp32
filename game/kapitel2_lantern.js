@@ -13,8 +13,7 @@
 // The way is checked on its own (off_lantern shuts it in the other runs: the half repair doesn't know, the screen doesn't tear), since its
 // steps would multiply every state of the chapter: tools/check.sh, the run "lantern" (Juno with the stick, the flat and the forgery done).
 // Lantern's and Pike's voices: dialog-style-guide §6 (drafts). [PLATZHALTER] Pike is a figure of the market's crowd, the raft doesn't leave the market visibly, the caravan inside is the old shop's iso block, Lantern in it is his feed
-// figure (the ride and the arrival are painted: art/rooms/sumpf.px.js); the words on the screen are a caption over the stutter until the street's picture shows
-// them (§13, 4)
+// figure (the ride and the arrival are painted: art/rooms/sumpf.px.js); his words come over the radio, not the screen (the user, 2026-11-19)
 "use strict";
 
 (function () {
@@ -25,28 +24,31 @@ const RZ = (/** @type {string} */ text) => ({ say: "ratz", text });
 const P = (/** @type {string} */ text) => ({ say: "pike", text });
 const HIJACK_AFTER = { or: ["day=7", ["day=6", "time>=22:00"]] };     // Lantern's ten seconds have been
 
-// ---- L1, Sunday 22:00: the big screen tears in the middle of SLEEP BETTER. Seen from the street; whoever isn't there reads it on Monday
-// (the board, below). Forgotten overnight (game/kapitel2.js), so seen or not doesn't double Monday
-Cutaway.i18n.declare("feed display", ["I DIDN'T KILL HER. – LANTERN"]);
+// ---- L1, Sunday 22:00: for ten seconds a voice breaks into every station in the Ninth (the user, 2026-11-19: over the radio, not the big
+// screen): through the noise only "... Nagi·wa ... lügt ...", and nobody can say yet who it was or what he means. Heard live in Kowalski
+// Street from the half repair's radio on his scaffold, and on the deck's RADIO (a look: game/radio.js); otherwise people talk about it
+// (the half repair, the stations on Monday, the board in NETZ). Forgotten overnight (game/kapitel2.js), so heard or not doesn't double Monday
+Cutaway.actor("funkstimme", { name: "Stimme im Radio", color: "#8e9ab0", voice: { pitch: 46, wave: "square", syllable: 85 } });
 Cutaway.moment("hijack", { room: "kowalski", day: 6, from: "22:00", to: "22:15", if: "!off_lantern", unseen: [], play: [
-  { camera: [80, 0], ms: 1200 },
-  { show: "ad_fx" }, { play: "ad_fx", anim: "kowalski_ad_stutter", loop: true, wait: false }, { sfx: "glitch" },
-  { caption: "I DIDN'T KILL HER. – LANTERN", at: "c", color: "#7cff9a", ms: 3200 },
-  { hide: "ad_fx" }, { sfx: "static", gain: 0.4 },
-  "Zehn Sekunden. Dann war wieder SLEEP BETTER.",
-  "Lantern. Er lebt, und er sendet.",
-  { camera: "follow" },
+  { sfx: "static", gain: 0.6 },
+  "Das Radio der halben Reparatur rauscht. Mitten im Lied.",
+  { say: "funkstimme", text: "... Nagi·wa ... lügt ..." },
+  { sfx: "static", gain: 0.4 },
+  "Dann wieder Musik.",
+  "Wer war das? Und worüber lügt Nagi·wa?",
 ] });
 
-// ---- L2: the half repair, on his scaffold every evening of this chapter too. From Sunday ten he knows where the screen's words came from
+// ---- L2: the half repair, on his scaffold every evening of this chapter too, his radio beside him. From Sunday ten he knows where the voice
+// in it came from
 Cutaway.time.routines.get("reparatur").push({ day: [5, 6, 7], from: "18:00", to: "04:00", room: "kowalski", face: "ne" });
 const repair = /** @type {any} */ (Cutaway.actors.get("reparatur")).def;
 repair.talk = [{ if: "day<5", then: repair.talk, else: [
   { if: "know_cable", then: [R("Das Kabel geht in den Gully. Weiter unten bin ich nicht zuständig.")],
     else: [{ if: [HIJACK_AFTER, "!off_lantern"], then: [
-      R("Hast du's gesehen? Zehn Sekunden grün, mitten in SLEEP BETTER."),
+      { if: "day=6", then: [R("Hast du's gehört? Eben, mitten im Lied. Rauschen, und dann sagt einer: Nagi·wa lügt.")],
+        else: [R("Hast du's gehört? Gestern um zehn, mitten im Lied. Rauschen, und dann sagt einer: Nagi·wa lügt.")] },
       "Wo kam das her?",
-      R("Das kam nicht über Funk. Das kam übers Kabel. Von unten."),
+      R("Das kam nicht über Funk. Das kam übers Kabel. Die Radios hier hängen alle am Verstärker hinterm großen Schirm."),
       R("Da, das neue Kabel hinterm Schirm. Das geht in den Gully."),
       R("Rechts. Nicht mein Vertrag."),
       "Von unten. Der Gully geht in den Kanal, und der Kanal geht unter dem Markt durch.",
@@ -138,7 +140,7 @@ Cutaway.dialog("pike_fahrt", {
     { text: "„Nichts Besonderes. Ich wohn im Kessel-Block.“", goto: "hoeren", then: [P("Da wohnen viele. Die meisten schlafen."), "Ich nicht.", P("Das merkt man.")] },
   ] },
   hoeren: { enter: [P("Hörst du ihn manchmal? Den Sender.")], choices: [
-    { text: "„Ich weiß, was er auf den Schirm geschrieben hat.“", goto: "rat", then: [P("Zehn Sekunden."), "Länger glaubt einem eh keiner.",
+    { text: "„Ich hab ihn im Radio gehört. Nagi·wa lügt.“", goto: "rat", then: [P("Zehn Sekunden."), "Länger glaubt einem eh keiner.",
       "Er sieht mich an.", P("Das sagt er auch. Fast genauso.")] },
     { text: "„Die Nachrichten sagen, er hat sie umgebracht.“", goto: "rat", then: ["Seine Stange bleibt im Wasser stehen.", P("Sagen sie."),
       "Ich hab gesehen, dass er's nicht war.", P("..."), P("Dann sag ihm das. Aber nicht gleich. Er braucht eine Weile.")] },
@@ -314,14 +316,14 @@ Nagiwa.talkTree("lantern", [
   ]],
 ], "Ich geh wieder.");
 
-// ---- the board on Monday: who saw the screen (NETZ, game/netz.js)
+// ---- the board on Monday: who heard the radio (NETZ, game/netz.js)
 Object.assign(Nagiwa.netzPages, {
-  schirm: { title: "DER GROSSE SCHIRM", label: "Wer hat gestern den großen Schirm gesehen?", up: "brett", posts: [
-    { by: "anonym", text: "Wer hat gestern den großen Schirm auf der Kowalski gesehen?" },
-    { by: "K.", text: "Zehn Sekunden grün. Dann wieder SLEEP BETTER." },
-    { by: "anonym", text: "Das war der Mörder. Stand in den Nachrichten." },
-    { by: "Bao", text: "Ein Mörder, der sich entschuldigt. Das hab ich auch noch nicht gehabt." }] },
+  rauschen: { title: "DAS RAUSCHEN", label: "Wer hat gestern um zehn Radio gehört?", up: "brett", posts: [
+    { by: "anonym", text: "Wer hat gestern um zehn Radio gehört? Egal welchen Sender?" },
+    { by: "K.", text: "Mitten im Lied nur Rauschen. Dann einer: Nagi·wa lügt. Dann wieder Musik." },
+    { by: "anonym", text: "Das war der Mörder aus den Nachrichten. Der mit dem Rollstuhl." },
+    { by: "Bao", text: "Ein Mörder, der Nagi·wa einen Lügner nennt. Das hab ich auch noch nicht gehabt." }] },
 });
-Nagiwa.netzPages.brett.rows?.push({ page: "schirm", if: "day>6" });
-Nagiwa.netz.push({ kind: "board", slot: 2, page: "schirm", if: "day=7", text: "Wer hat gestern den großen Schirm gesehen?", by: "anonym" });
+Nagiwa.netzPages.brett.rows?.push({ page: "rauschen", if: "day>6" });
+Nagiwa.netz.push({ kind: "board", slot: 2, page: "rauschen", if: "day=7", text: "Wer hat gestern um zehn Radio gehört?", by: "anonym" });
 })();
