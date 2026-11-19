@@ -1,5 +1,5 @@
 // Nagiwa: Chapter 2, the forgery (docs/kapitel2-design.md §3.4), on blocks. On Sunday at six Nagi·wa's news show a clip from CAM 31 in which a
-// man in a wheelchair kills Ines, "der Piratensender, der sich LANTERN nennt". EVI finds it as the evening begins and puts it into the CACHE,
+// man in a wheelchair kills Ines, "ein Mann, der sich LANTERN nennt" (Nagi·wa doesn't know he runs a pirate station: the user, 2026-11-19). EVI finds it as the evening begins and puts it into the CACHE,
 // so it costs no state of its own; PRÜFEN (game/pruefen.js) lays it beside Juno's own recording:
 //   cache_clip_forgery   from Sunday 18:00, for everyone
 //   forgery_cuts         the places found so far, in their order: 1 the time stamp, 2 the rain. A view: how far Juno has got doesn't matter
@@ -146,13 +146,13 @@ Cutaway.state.view("forgery_seen");
 Nagiwa.cache.clip_forgery.open = [{ if: "!forgery_seen", then: [{ set: "forgery_seen" },
   "Ein Rollstuhl steht vor ihr, und dann liegt sie da. Es ist kein Ton dabei.",
   { evi: "besorgt" },
-  { say: "evi", text: "Sie sagen, er heißt LANTERN. Ein Piratensender." },
+  { say: "evi", text: "Sie sagen, er heißt Lantern." },
   { say: "evi", text: "Und dass er sie getötet hat." },
   { if: "e1=sold", then: ["Das ist mein Bild. Die haben mein Bild genommen."], else: ["Das ist nicht mein Bild. Dann war noch jemand an CAM 31."] },
   "Lantern war schon weg, als es passiert ist. Ich hab's doch gesehen.",
   { evi: "verwirrt" },
   { say: "evi", text: "Dann ist der Clip falsch?" },
-  "Das muss ich erst zeigen können."] }];
+  "Das müssen wir erst beweisen können."] }];
 
 // ---- the news, every evening: NETZ (here), the TV in LUCKY STATIC (game/lucky_static.js) and the radio (game/radio.js) (§7)
 Object.assign(Nagiwa.netzPages, {
@@ -163,10 +163,10 @@ Object.assign(Nagiwa.netzPages, {
   faelschung: { title: "NEUE BILDER AUS DER ALTEN METRO", label: "Neue Bilder aus der alten Metro", up: "nagiwa", by: "Nagi·wa Sicherheit", text: [
     "Revier 9 veröffentlicht Bilder aus der alten Metro, Linie 31.",
     "Sie zeigen, wie ein Mann im Rollstuhl die Ärztin Dr. Ines Calder tötet.",
-    "Der Mann ist als der Piratensender bekannt, der sich LANTERN nennt.",
+    "Der Mann nennt sich LANTERN.",
     "Revier 9 bittet um Ihre Mithilfe. Ihre Hinweise werden vertraulich behandelt."] },
-  fahndung: { title: "FAHNDUNG: LANTERN", label: "Fahndung nach dem Piratensender LANTERN", up: "nagiwa", by: "Nagi·wa Sicherheit", text: [
-    "Revier 9 sucht den Piratensender, der sich LANTERN nennt.",
+  fahndung: { title: "FAHNDUNG: LANTERN", label: "Fahndung nach LANTERN", up: "nagiwa", by: "Nagi·wa Sicherheit", text: [
+    "Revier 9 sucht einen Mann, der sich LANTERN nennt.",
     "Er gilt als gefährlich. Bitte sprechen Sie ihn nicht an.",
     "Hinweise nimmt Revier 9 jederzeit entgegen. Nagi·wa dankt Ihnen für Ihre Mithilfe."] },
   linie31: { title: "WAS WAR IN LINIE 31?", label: "Was war gestern in Linie 31?", up: "brett", posts: [
@@ -181,9 +181,9 @@ Nagiwa.netzPages.vater.posts?.push({ by: "L., Kowalski-Straße", text: "Sie sage
 Nagiwa.netz.push(
   { kind: "head", slot: 0, page: "metro", if: "day=5", text: "Tote in der alten Metro. Revier 9 ermittelt." },
   { kind: "board", slot: 2, page: "linie31", if: "day=5", text: "Was war gestern in Linie 31?", by: "anonym" },
-  { kind: "head", slot: 0, page: "faelschung", if: "day=6", text: "Neue Bilder aus der alten Metro: Der Piratensender LANTERN war es." },
+  { kind: "head", slot: 0, page: "faelschung", if: "day=6", text: "Neue Bilder aus der alten Metro: Es war ein Mann, der sich LANTERN nennt." },
   { kind: "board", slot: 2, page: "vater", if: "day=6", text: "Sie sagen, er ist jetzt auf einer Station. Besuchen darf man nicht.", by: "L., Kowalski-Straße" },
-  { kind: "head", slot: 0, page: "fahndung", if: "day=7", text: "Fahndung nach dem Piratensender LANTERN. Hinweise an Revier 9." },
+  { kind: "head", slot: 0, page: "fahndung", if: "day=7", text: "Fahndung nach LANTERN. Hinweise an Revier 9." },
   { kind: "sub", slot: 1, page: "faelschung", if: "day=7", text: "Die Bilder aus der alten Metro." });
 // EVI reads the headline once an evening (a view, as in Chapter 1: game/kapitel1_leben.js); on Sunday she has told Juno already
 (Nagiwa.appOpen.netz ??= []).push(

@@ -132,3 +132,33 @@ Cutaway.script.action("notify", (s) => {
     },
   });
 })();
+
+// ---- EVI's hints fit where Juno is (the user, 2026-11-19: a camera's step only when Juno is in that camera, otherwise where to go). A
+// sentence of a hint that is done in one camera ("Öffne CAM 25 ...", "Drück PUFFER auf CAM 03.", "Zoom ... in CAM 21") is said as written
+// only there; in another camera she says to switch, on the deck to open it in GLASS, in the street that it is seen only at the deck. A
+// sentence done in GLASS ("Öffne GLASS ...", "Klick CAM 31 an") is said in the street as "only at the deck". The hints stay written once,
+// as they are (the tools read them so: without a room nothing is changed); this reads them for the room shown, when EVI says them.
+Nagiwa.contextHints = function () {
+  const AT_CAM = /^(Öffne CAM|Drück PUFFER auf CAM|Zoom\b.*\bCAM|Schau in CAM|Spul\b.*\bCAM)/, IN_GLASS = /^(Öffne GLASS|Klick CAM|.*\bin GLASS\b)/;
+  const SWITCH = "Das ist in CAM {id}. Wechsel links in der Leiste.", DECK = "Öffne GLASS und nimm CAM {id}.", STREET = "Das siehst du nur am Deck, in CAM {id}.", GLASS = "Das geht nur am Deck.";
+  const ids = Object.values(Nagiwa.cams).map((c) => c.id);
+  Cutaway.i18n.declare("hints", [GLASS, ...ids.flatMap((id) => [SWITCH, DECK, STREET].map((s) => s.replace("{id}", id)))]);
+  /** one sentence, as it fits the room shown (null: no room, the tools) */
+  const fit = (/** @type {string} */ s, /** @type {string | undefined} */ room) => {
+    if (!room) return s;
+    const street = room !== "deck" && !Nagiwa.cams[room];
+    if (AT_CAM.test(s)) {
+      const id = /CAM (\d+[A-Z]?)/.exec(s)?.[1];
+      if (!id || room === `cam${id.toLowerCase()}`) return s;
+      return (room === "deck" ? DECK : street ? STREET : SWITCH).replace("{id}", id);
+    }
+    return IN_GLASS.test(s) && street ? GLASS : s;
+  };
+  const line = (/** @type {string} */ text, /** @type {string | undefined} */ room) => text.split(/(?<=[.!?])\s+/).map((s) => fit(s, room)).join(" ");
+  for (const h of Cutaway.hints.all()) {
+    const own = /** @type {any} */ (h).text;
+    if (typeof own !== "string" && !Array.isArray(own)) continue;
+    Object.defineProperty(h, "text", { enumerable: true, configurable: true,
+      get() { const room = Cutaway.scene?.room?.id; return Array.isArray(own) ? own.map((t) => line(t, room)) : line(own, room); } });
+  }
+};

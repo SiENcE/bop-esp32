@@ -5,6 +5,7 @@
   Nagiwa.buildDeck();                                   // the deck room, once the chapters have filled it
   Nagiwa.buildCamStrip();                               // every camera's strip of the others
   Nagiwa.declareTexts();                                // the game's own lists, for validate and the Texts tab
+  Nagiwa.contextHints();                                // EVI's hints read for where Juno is (game/evi.js), once every act has given its own
   Cutaway.inventory.setCorner("bottom");                 // style guide §8: the bag in the bottom right
   // A save holds every actor's position. Version 2: the Kessel Block's 14th floor was laid out again (10.11.2026) and the
   // bench moved a meter on, so Motte in an older save would sit beside it; he goes back to where the map puts him now.

@@ -1,11 +1,12 @@
 // Nagiwa: Chapter 2, Ines' flat (docs/kapitel2-design.md §3.3, W1–W7), on blocks. A break-in in street mode, guided by the feeds:
 //   code_lerche   the house door's code, seen in CAM 24 when a neighbour comes home at half past seven (W1)
-//   know_flat     which door is hers: the two from Civic Rest at 4B on Sunday at eight (CAM 25, W3), or the seal on it afterwards (W4)
+//   know_flat     which door is hers: Civic Rest's notice on 4B from Saturday (at the door, or zoomed in CAM 25), the two from Civic Rest at
+//                 4B on Sunday at eight (CAM 25, W3), or the seal on it afterwards (W4)
 //   evi_knows     Juno has found the file in the freezer, and EVI has learned what she is (W6, W7)
 //   (cache_note_serviette, cache_note_civic_rest: what she takes with her)
-// From Sunday 21:00 the flat is open (the Quiet broke the lock and sealed it): a time, no flag. The clinic (§3.2) is the other way to
-// know_flat (game/kapitel2_klinik.js). [PLATZHALTER] the house door's code. The neighbour is his own feed figure, the two in white
-// the Quiet's painted man B carrying her things (2026-11-19)
+// From Sunday 21:00 the flat is open (the Quiet broke the lock and sealed it): a time, no flag. The clinic (§3.2) says the house and the
+// floor (game/kapitel2_klinik.js), the notice on 4B the door and the time. [PLATZHALTER] the house door's code. The neighbour is his own
+// feed figure, the two in white the Quiet's painted man B carrying her things (2026-11-19)
 "use strict";
 
 (function () {
@@ -68,13 +69,24 @@ landing.lift.use = [{ sfx: "motor" }, ...DOWN("motor", "lift")];
 const SEAL = { id: "seal", image: "lerche_flur_seal", at: Nagiwa.layouts.lerche_flur.sealAt, anchor: [0, 0], baseline: 0.5, if: OPEN };
 Cutaway.room.get("lerche_flur").props.push(SEAL);
 
-// ---- 4B (W4): which door, and when it opens
+// ---- 4B (W4): which door, and when it opens. From Saturday until they come, Civic Rest's notice is taped on it (the user, 2026-11-19: Marit
+// in the clinic says the house and the floor, the notice the door and the time; EVI keeps the time): read at the door, or through CAM 25
+const NOTICE_TIME = ["day>4", { not: OPEN }];
+const NOTICE = { id: "notice", image: "lerche_flur_notice", at: Nagiwa.layouts.lerche_flur.noticeAt, anchor: [0, 0], baseline: 0.5, if: NOTICE_TIME };
+Cutaway.room.get("lerche_flur").props.push(NOTICE);
+const NOTICE_READ = [
+  "Räumung, Wohnung 4B. Sonntag, acht Uhr. Zutritt verboten.",
+  "Civic Rest räumt die Wohnungen der Toten. Das ist ihre.",
+  { set: "know_flat" },
+  { evi: "besorgt" },
+  { say: "evi", text: "Sonntag, zwanzig Uhr. Das merk ich mir." },
+];
 Cutaway.room.get("lerche_flur").hotspots.door_4b.use = [{ if: OPEN,
   then: [{ if: "!know_flat", then: ["An der Tür klebt ein Siegel: CIVIC REST, SEALED.", "Das war heute. Das ist ihre.", { set: "know_flat" }] },
     { if: "!visited:ines_wohnung", then: ["Unter dem Siegel ist das Schloss aufgebrochen.", "Ich reiß es ab."] },
     { goto: "ines_wohnung", at: AW.arrive, face: "se" }],
-  else: [{ if: "know_flat", then: ["Abgeschlossen. Ich bin keine Einbrecherin. Jedenfalls nicht so eine."],
-    else: ["Auf 4B steht kein Name. Ob sie hier gewohnt hat, weiß ich nicht."] }] }];
+  else: [{ if: "!know_flat", then: ["An der Tür klebt ein Zettel von Civic Rest.", ...NOTICE_READ] },
+    "Abgeschlossen. Ich bin keine Einbrecherin. Jedenfalls nicht so eine."] }];
 
 // ---- CAM 25: the landing from its corner, linked with CAM 24 (the same house). On Sunday at eight two in white raincoats open 4B and carry it
 // out, the computer too, until nine; then they seal it (W3)
@@ -104,9 +116,15 @@ Nagiwa.camRoom("cam25", { background: undefined, color: Nagiwa.PHOSPHOR[0], mic:
     { id: "room", image: "lerche_flur_bg", at: [A25.shift, 0], anchor: [0, 0], baseline: -1000 },
     ...LR.props.filter((/** @type {any} */ p) => p.id !== "cam"),
     { ...SEAL, at: [SEAL.at[0] + A25.shift, SEAL.at[1]] },
+    { ...NOTICE, at: [NOTICE.at[0] + A25.shift, NOTICE.at[1]] },
   ],
   hotspots: {
-    door_4b: { name: "4B", poly: A25.doorPoly, look: [{ if: OPEN, then: ["Über 4B klebt ein Siegel. Von hier oben ist es nur ein heller Streifen."], else: ["Das ist 4B. Ob das ihre ist, sehe ich von hier nicht."] }] },
+    door_4b: { name: "4B", poly: A25.doorPoly,
+      look: [{ if: OPEN, then: ["Über 4B klebt ein Siegel. Von hier oben ist es nur ein heller Streifen."],
+        else: [{ if: "day>4", then: ["Der vierte Stock. An 4B klebt ein Zettel."], else: ["Der vierte Stock. Welche Tür ihre ist, sehe ich von hier nicht."] }] }],
+      // the zoom onto the notice (art/ui/zooms.px.js): what it says, and the door is hers
+      use: [{ if: NOTICE_TIME, then: [{ zoom: "zoom_raeumung" }, "Ein Zettel von Civic Rest.", ...NOTICE_READ, { zoom: false }],
+        else: [{ if: OPEN, then: ["Das Siegel. Da waren sie schon."], else: ["Von hier sehe ich nur die Tür."] }] }] },
   } });
 
 // ---- in 4B (W5, W6, W7): the napkin under the magnet, the file in the freezer, and what EVI learns from it

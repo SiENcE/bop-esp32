@@ -1,9 +1,10 @@
-// Nagiwa: Chapter 2, Lull-Klinik 9-Ost (docs/kapitel2-design.md §3.2, K1–K3). Never needed: a second way to know_flat, and who Ines was.
+// Nagiwa: Chapter 2, Lull-Klinik 9-Ost (docs/kapitel2-design.md §3.2, K1–K3). Never needed: where Ines lived, and who she was.
 //   K1  CAM 21 from Saturday: at seven Ines no longer comes out; Marit comes to her night shift instead and looks back twice (a routine:
 //       no state, between 19:00 and 19:30, where waiting stops anyway)
 //   K2  the clinic from the inside (the room klinik, along the alley's walkway to the cross street): the intake from seven; Juno gives a false
 //       name, Marit offers Lull and wants to look behind her ear, Juno pulls her hood up. No scan, no item, nothing of Chapter 3
-//   K3  Juno asks about Dr. Calder: the protocols nobody ordered, her locker emptied, and the flat, by the day → know_flat
+//   K3  Juno asks about Dr. Calder: the protocols nobody ordered, her locker emptied, and where she lived: the Lerche Block, the fourth floor
+//       (the user, 2026-11-19: not the door; Civic Rest's notice on it says that, game/kapitel2_lerche.js)
 // Marit sits behind the glass as a prop (game/rooms/klinik.js); her voice is an actor without a figure, its lines over her head. Her card:
 // dialog-style-guide §6 (the routine one: the form's sentences in Sie, and when it is about Ines the form breaks and she says du).
 "use strict";
@@ -44,15 +45,10 @@ const CALDER = [
   "Sie sieht zur Tür. Dann beugt sie sich ans Glas.",
   M("Sie hat nachts Protokolle geschrieben. Die hat keiner bestellt."),
   M("Nie übers Netz der Klinik. Alles auf Papier."),
-  { if: "day=5", then: [M("Heute früh waren welche in Weiß da. Die haben ihren Spind ausgeräumt."),
-    M("Morgen um acht räumen sie auch ihre Wohnung. Lerche, vierter Stock, 4B.")] },
-  { if: "day=6", then: [M("Gestern früh waren welche in Weiß da. Die haben ihren Spind ausgeräumt."),
-    { if: "time<20:00", then: [M("Heute um acht räumen sie auch ihre Wohnung. Lerche, vierter Stock, 4B.")],
-      else: [{ if: "time<21:00", then: [M("Gerade räumen sie ihre Wohnung aus. Lerche, vierter Stock, 4B.")],
-        else: [M("Heute Abend haben sie ihre Wohnung ausgeräumt. Lerche, vierter Stock, 4B.")] }] }] },
-  { if: "day=7", then: [M("Am Samstag waren welche in Weiß da. Die haben ihren Spind ausgeräumt."),
-    M("Gestern haben sie ihre Wohnung ausgeräumt. Lerche, vierter Stock, 4B.")] },
-  { set: "know_flat" },
+  { if: "day=5", then: [M("Heute früh waren welche in Weiß da. Die haben ihren Spind ausgeräumt.")] },
+  { if: "day=6", then: [M("Gestern früh waren welche in Weiß da. Die haben ihren Spind ausgeräumt.")] },
+  { if: "day=7", then: [M("Am Samstag waren welche in Weiß da. Die haben ihren Spind ausgeräumt.")] },
+  M("Sie hat im Lerche gewohnt. Vierter Stock."),
   M("Wenn du sie gekannt hast, geh nicht hin, solange die da sind."),
   "Sie setzt sich wieder gerade hin.",
   M("Der Nächste, bitte."),

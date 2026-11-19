@@ -43,9 +43,9 @@ const NEWS = [
   { if: "day=4", then: [TV("Das Wetter für den Neunten: Tropfen aus dem Vierten. Später trocken."), "Später trocken. Hier unten? Das gab's noch nie."] },
   // Chapter 2 (kapitel2-design §3.4, §7): the death in the old metro, the forgery, the hunt
   { if: "day=5", then: [TV("Tote in der alten Metro. Revier 9 ermittelt."), "Sie sagen nicht, wer sie war. Und nicht, wie."] },
-  { if: "day=6", then: [TV("Neue Bilder aus der alten Metro."), TV("Der Piratensender, der sich LANTERN nennt, hat eine Ärztin getötet."),
+  { if: "day=6", then: [TV("Neue Bilder aus der alten Metro."), TV("Ein Mann, der sich LANTERN nennt, hat eine Ärztin getötet."),
     "Das ist nicht das, was ich gesehen hab.", "Mei macht nicht aus. Sie schaut nur weg."] },
-  { if: "day=7", then: [TV("Fahndung nach dem Piratensender LANTERN. Hinweise an Revier 9."), M("Der hat doch nie jemandem was getan. Der hat nur geredet.")] },
+  { if: "day=7", then: [TV("Fahndung nach LANTERN. Hinweise an Revier 9."), M("Der hat doch nie jemandem was getan. Der hat nur geredet.")] },
 ];
 
 // the regulars on their stools, anonymous (the user's wish: a joke about it): he sleeps on his arms, she tells him things anyway.

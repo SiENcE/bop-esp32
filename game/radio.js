@@ -42,8 +42,8 @@
       { text: "Ihre Sicherheit ist unser Auftrag. Kriminalität im Neunten auf Rekordtief." },
       { text: "Das Wetter für den Neunten: Niederschlag. Bleiben Sie entspannt." },
       { text: "Nagi·wa dankt Ihnen für Ihren Dienst." },
-      { text: "Revier 9 bittet um Ihre Mithilfe bei der Suche nach dem Piratensender LANTERN.", day: 6 },
-      { text: "Hinweise zum Piratensender LANTERN nimmt Revier 9 jederzeit entgegen. Vielen Dank.", day: 7 },
+      { text: "Revier 9 bittet um Ihre Mithilfe bei der Suche nach einem Mann, der sich LANTERN nennt.", day: 6 },
+      { text: "Hinweise zu LANTERN nimmt Revier 9 jederzeit entgegen. Vielen Dank.", day: 7 },
       { text: "Gestern um zweiundzwanzig Uhr kam es zu einer kurzen Störung. Es gab nichts zu hören.", day: 7 },
     ] },
     // KESSEL ROOFTOP: someone in the block plays records at night; sleepy, never says who

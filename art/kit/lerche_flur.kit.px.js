@@ -21,6 +21,8 @@ pal({ "ä": "#3f3d29", "Ä": "#5a5737", "ë": "#7a7548", "ö": "#2f3a24", "Ö": 
 
 /** the seal on 4B: set by art/rooms/lerche_flur.px.js for the bake's variant only */
 let LF_SEALED = false
+/** Civic Rest's notice on 4B (Saturday until they come): the same, its own variant */
+let LF_NOTICE = false
 
 const KIT_LERCHE_FLUR = (() => {
   const near = (x, c, w = 1 / 48) => Math.abs(x - c) < w, fl = Math.floor, ih = ISO.ihash
@@ -103,6 +105,17 @@ const KIT_LERCHE_FLUR = (() => {
         return a === -1 && e < ah ? "5" : "4"                                               // ...its lit inner edge on the left
       }
       if (e === 0) return op.lit ? "!Q" : "1"                                               // the gap: light under it if someone's home
+      // Civic Rest's notice taped on the leaf at eye height (the user, 2026-11-19: it says the floor's flat and the time they come): a
+      // white sheet, the agency's red band across its head, printed lines under it, tape at its top corners
+      if (op.sealed && LF_NOTICE) {
+        const x0 = fl(aw * 0.3), x1 = fl(aw * 0.8), e0 = fl(ah * 0.6), e1 = fl(ah * 0.84)
+        if (a >= x0 && a <= x1 && e >= e0 && e <= e1) {
+          if (e >= e1 - 1 && (a <= x0 + 1 || a >= x1 - 1)) return "h"                          // the tape
+          if (a === x0 || a === x1 || e === e0) return "h"
+          if (e >= e1 - 3) return "r"                                                        // the red band across its head
+          return (e1 - 5 - e) % 3 === 0 && a > x0 + 1 && a < x1 - 1 - ((e * 3) % 4) ? "3" : "H"   // printed lines
+        }
+      }
       if (op.sealed && LF_SEALED) {
         const le = fl(ah * 0.45)
         if (a >= 2 && a <= 6 && e >= le + 2 && e <= le + 6) return (a + e) % 2 ? "P" : "O"  // the lock broken out, splinters

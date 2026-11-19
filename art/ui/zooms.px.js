@@ -11,6 +11,7 @@
 //   zoom_ring             cam04's table: Kessler pulls his wedding ring off, Varga's hand waits, palm
 //                         up, the watch at his wrist; 3 frames, the ring the brightest cluster
 //   zoom_ring_hand_pale   Kessler's hand without the ring: the pale band where it was (Chapter 1)
+//   zoom_raeumung         through CAM 25 onto 4B: Civic Rest's notice, CLEARANCE, FLAT 4B, SUN 20:00, NO ENTRY (Chapter 2)
 //   zoom_keypad           through CAM 07V onto Okonkwo's customer display at one in the night: a small
 //                         TOTAL where the price should be, and every key he typed, 41709, in the game's font as
 //                         the display's dot matrix (the unlit dots faint behind), the cursor after the 9; still (Chapter 1, job B)
@@ -440,6 +441,25 @@ include("../lib/text.js")
     table(S, 33)
     kesslerHand(S, { pale: true, dx: 22, dy: 4 })
     S.flush(c)
+  })
+
+  // ================================================================ zoom_raeumung
+  // Through CAM 25 onto 4B (Chapter 2, the user 2026-11-19): Civic Rest's notice taped on the veneer, the agency's band across its head,
+  // CLEARANCE, the flat, the time they come, NO ENTRY; the door's grain and frame round it. Still
+  anim("zoom_raeumung", { w: ZW, h: ZH, frames: 1 }, (c) => {
+    const S = zbuf()
+    for (let y = 0; y < ZH; y++) for (let x = 0; x < ZW; x++) S.bg(x, y, Math.sin(x * 0.9 + Math.sin(y * 0.15 + x) * 1.3) > 0.7 ? "3" : "2")   // the veneer
+    S.rect(0, 0, 7, ZH, (x) => (x < 2 ? "5" : "4"))                                                // the frame
+    S.rect(8, 44, 9, 4, "6"); S.rect(8, 47, 6, 2, "5")                                             // the lever's end
+    S.rect(30, 3, 44, 50, (x, y) => (y < 11 ? "5" : "8"), "4")                                     // the sheet, its band
+    S.rect(28, 2, 8, 4, "7", null); S.rect(68, 2, 8, 4, "7", null)                                 // the tape
+    S.ink()
+    S.flush(c)
+    c.text(34, 5, "CIVIC REST", "9")
+    c.text(34, 15, "CLEARANCE", "2")
+    c.text(34, 24, "FLAT 4B", "1")
+    c.text(34, 33, "SUN 20:00", "1")
+    c.text(34, 44, "NO ENTRY", "2")
   })
 
   // ================================================================ zoom_keypad
