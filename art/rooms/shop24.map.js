@@ -1,5 +1,5 @@
 // shop24: the 24-hour shop on Fischermann Street (Chapter 2, the user's wish, 2026-11-18: Juno can go in; a side quest is planned there), as a
-// map (art/lib/isomap.js has the format), made by tools/new-room.mjs. Every length in meters. BLOCKS (to be painted later): seen from the
+// map (art/lib/isomap.js has the format), made by tools/new-room.mjs. Every length in meters. PAINTED (2026-11-19, art/kit/shop24.kit.px.js) on its approved blocks: seen from the
 // south-east, so its north wall is the glass front onto the street (u east), its west wall the drink fridges. Two rows of shelves, the counter
 // with the register by the door, cold tubes over it all; in the window the 24H sign seen from behind.
 "use strict";
@@ -26,8 +26,11 @@ ISO_MAPS.shop24 = {
   openings: [
     { id: "window", wall: 0, from: 0.3, to: 1.9, h: [0.5, 2.3], kit: "sh_window", sign: true },
     { id: "door", wall: 0, from: 2.1, to: 2.9, h: [0, 2.2], kit: "sh_window", door: true },
-    { id: "window2", wall: 0, from: 3.1, to: 4.7, h: [0.5, 2.3], kit: "sh_window" },
+    { id: "window2", wall: 0, from: 3.1, to: 4.7, h: [0.5, 2.3], kit: "sh_window", sticker: true },
     { id: "fridges", wall: 1, from: 0.3, to: 3.3, h: [0, 2.0], kit: "sh_fridges" },
+    // painted 2026-11-19: COLD DRINKS lit over the fridges, Lull's poster over the bin
+    { id: "header", wall: 1, from: 0.3, to: 3.3, h: [2.06, 2.36], kit: "sh_header" },
+    { id: "poster", wall: 1, from: 3.36, to: 3.98, h: [1.05, 1.95], kit: "sh_poster" },
   ],
   props: [
     { id: "counter", kit: "sh_counter", at: [3.9, 0.6], foot: [0.6, 1.4], h: 1.0 },   // from the front into the shop, the cashier behind it to the east

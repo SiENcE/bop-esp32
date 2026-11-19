@@ -1,4 +1,4 @@
-// shop24: the 24-hour shop on Fischermann Street (the user's wish, 2026-11-18), on blocks for now (art/rooms/shop24.map.js; painted later): its
+// shop24: the 24-hour shop on Fischermann Street (the user's wish, 2026-11-18), painted on its blocks (art/rooms/shop24.map.js, art/kit/shop24.kit.px.js, 2026-11-19): its
 // picture, walk area, props and lamps come from the bake (game/rooms/shop24.layout.js, Nagiwa.at.shop24). Juno can go in from Chapter 2 on;
 // a side quest is planned here (nobody behind the counter yet). The way in is the shop's door on the street (game/rooms/weg1.js).
 "use strict";

@@ -6,7 +6,7 @@ include("../lib/iso.js", { palette: true })
 include("../lib/isomap.js")
 include("../rooms/shop24.map.js")
 include("../lib/isokit.js")
-include("../kit/shop24.kit.px.js")
+include("../kit/shop24.kit.px.js", { palette: true })
 
 const SHOP24 = ISOKIT.bake(ISO_MAPS.shop24, { id: "shop24", frames: 12, fps: 10 })
 
