@@ -100,7 +100,7 @@ Maschinen für die Arbeit am Wasser umgebaut.
 
 ### Die neun Ringe
 
-Vom Nutzer freigegeben am 2026-11-19 (§10i). Gezählt wird von oben: Der **Erste Ring ist die Krone**, der **Neunte** liegt ganz unten
+Vom Nutzer freigegeben am 2026-11-19 (§10i); im Schnitt gezeichnet: `docs/welt/ringe_schnitt.png`. Gezählt wird von oben: Der **Erste Ring ist die Krone**, der **Neunte** liegt ganz unten
 über dem Wasser. Der Turm geht mitten durch alle hindurch und ragt über die Krone hinaus.
 
 **Die Regeln der Welt**
