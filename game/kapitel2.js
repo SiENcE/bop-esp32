@@ -232,7 +232,7 @@ Cutaway.hints([
   { if: ["!evi_knows", { not: { or: ["day=7", ["day=6", "time>=21:00"]] } }], about: ["door_4b", "fridge", "gate"],
     text: ["Auf dem Zettel stand: Sonntag, acht Uhr.", "Dann räumen die von Civic Rest ihre Wohnung. Danach ist sie offen.", "Warte, bis sie weg sind. Sonntag ab neun ist der Flur frei."] },
   { if: "!evi_knows", about: ["fridge", "door_4b", "gate"],
-    text: ["Die haben den Rechner genommen. Ines hat auf Papier geschrieben.", "Wo hebt man Papier auf, das niemand finden soll?", "Geh in ihre Wohnung, 4B, und schau ins Gefrierfach."] },
+    text: ["Die haben den Rechner genommen. Ines hat auf Papier geschrieben.", "Wo hebt man Papier auf, das niemand finden soll?", "Geh in ihre Wohnung. Was macht einer, der nur Rechner sucht, nicht auf?"] },
   // the stick (game/kapitel2_stick.js): while Juno has it, Lantern can't send
   // ... or he brings it to Lantern himself (game/kapitel2_lantern.js): the way down, step by step, once Juno is on it (the dryer stays the
   // shorter way, so each names it too)

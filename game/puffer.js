@@ -2,6 +2,9 @@
 //   { rewind: "22:05" }   the picture rewinds to that time on the same game day: tracking bands run up through it, the display's time
 //                         runs back with ◀◀ beside it; then everyone stands where their routines had them at that time in this room
 //                         (Cutaway.time.routines), and the display says PUFFER and that time while the buffered scene plays
+//   { rewind: "03:12", date: "2091-10-29" }   an archive's older night ("today": this game day's date, its small hours before the evening):
+//                         the same spooling, then the display says ARCHIV and that date; nobody of tonight stands in the picture
+//   { rewind: true }      only the spooling, the display's own time kept (an archive with its own stamps, CAM 51)
 //   { live: true }        fast forward, back to the live picture: the time and the routines' places as they are now
 // Between the two the scene is plain steps (the moment's own { replay }, or lines and walks), so the Schedule tab edits it where it is.
 // Nothing here is state: positions and the shown time are looks (the solver runs the steps in fast mode, where nothing waits).
@@ -10,7 +13,7 @@
 (function () {
   const W = 320, H = 180, REW = 1400, FF = 600;
   const C = { ink: "#0c0e1a", phosphor: "#8acfae", bright: "#d4f7e2", dim: "#388169", implant: "#3ff2ff" };
-  /** @type {{at: number, now: number, phase: "rew" | "play" | "ff", t0: number} | null} */
+  /** @type {{at: number | null, now: number, phase: "rew" | "play" | "ff", t0: number, date?: string} | null} */
   let buf = null;
   /** what the buffer is doing now, for the display (game/screens.js asks Nagiwa.stamp) */
   Nagiwa.buffer = () => buf;
@@ -23,13 +26,21 @@
     return `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, "0")}-${String(date.getUTCDate()).padStart(2, "0")} ${Cutaway.time.format(m)}`;
   };
   const shown = () => {
-    if (!buf) return null;
+    if (!buf || buf.at === null) return null;
+    if (buf.date) {                                                    // another night: the time spins back to it, the date its own
+      const k = Math.min(1, (Cutaway.clock.time - buf.t0) / (buf.phase === "ff" ? FF : REW));
+      return buf.phase === "play" ? buf.at + Math.floor((Cutaway.clock.time - buf.t0) / 1000) / 60 : buf.at + (1 - k) * 4320;
+    }
     const k = Math.min(1, (Cutaway.clock.time - buf.t0) / (buf.phase === "ff" ? FF : REW));
     if (buf.phase === "rew") return buf.now - (buf.now - buf.at) * k * k;
     if (buf.phase === "ff") return buf.at + (buf.now - buf.at) * k;
     return buf.at + Math.floor((Cutaway.clock.time - buf.t0) / 1000) / 60;
   };
-  Nagiwa.stamp = function () { const m = shown(); return m === null ? live() : stampAt(Math.floor(m)); };
+  Nagiwa.stamp = function () {
+    const m = shown();
+    if (m === null) return live();
+    return buf?.date ? `${buf.date} ${Cutaway.time.format(Math.floor(m))}` : stampAt(Math.floor(m));
+  };
 
   /** everyone whose routine had them in this room at that time stands there; who wasn't there is gone (a look: places aren't state) */
   function placeAt(/** @type {string} */ room, /** @type {number} */ m) {
@@ -44,17 +55,19 @@
   }
 
   Cutaway.script.action("rewind", async (s) => {
-    const room = Cutaway.scene.room?.id, at = Cutaway.time.parse(String(s.rewind)), now = Cutaway.time.now.minutes;
-    if (!room || !Number.isFinite(at)) return;
-    buf = { at, now, phase: "rew", t0: Cutaway.clock.time };
+    const room = Cutaway.scene.room?.id, now = Cutaway.time.now.minutes, date = s.date === "today" ? Nagiwa.dayDate() : s.date;
+    const hm = /^(\d{1,2}):(\d{2})$/.exec(String(s.rewind)), at = s.rewind === true ? null : date && hm ? Number(hm[1]) * 60 + Number(hm[2]) : Cutaway.time.parse(String(s.rewind));
+    if (!room || (at !== null && !Number.isFinite(at))) return;
+    buf = { at, now, phase: "rew", t0: Cutaway.clock.time, date };
     Cutaway.events.emit("sfx", { sfx: "rewind" });
     await Cutaway.script.sleep(REW);
-    placeAt(room, at);
-    buf = { at, now, phase: "play", t0: Cutaway.clock.time };
+    if (date) { for (const a of Cutaway.actors.all()) if (a.room === room) a.place(null, a.x, a.y); }   // another night: nobody of tonight
+    else if (at !== null) placeAt(room, at);
+    buf = { at, now, phase: "play", t0: Cutaway.clock.time, date };
   });
   Cutaway.script.action("live", async () => {
     if (!buf) return;
-    buf = { ...buf, now: Cutaway.time.now.minutes, phase: "ff", t0: Cutaway.clock.time };
+    buf = { ...buf, now: Cutaway.time.now.minutes, phase: "ff", t0: Cutaway.clock.time, date: undefined, at: buf.date ? null : buf.at };
     Cutaway.events.emit("sfx", { sfx: "forward" });
     await Cutaway.script.sleep(FF);
     buf = null;
@@ -63,7 +76,7 @@
   // leaving the camera ends the playback (a script cut short, a click on DECK)
   Cutaway.events.on("room.entered", () => { if (buf) { buf = null; Cutaway.time.reset(); Cutaway.time.apply(); } });
 
-  Cutaway.i18n.declare("feed display", ["PUFFER"]);
+  Cutaway.i18n.declare("feed display", ["PUFFER", "ARCHIV"]);
   /** two triangles side by side, pointing left (back) or right (on) */
   function arrows(/** @type {CanvasRenderingContext2D} */ ctx, x, y, back, color) {
     ctx.fillStyle = color;
@@ -94,6 +107,6 @@
     // the label left of the time (top right): its width from the font
     const hud = Cutaway.font.get("hud"), stampW = hud.measure(Nagiwa.stamp().toUpperCase()), x = W - 8 - stampW;
     if (spool) arrows(ctx, x - 11, 4, buf.phase === "rew", Math.floor(el / 200) % 2 ? C.bright : C.implant);
-    else hud.draw(ctx, Nagiwa.t("PUFFER"), x, 4, { color: C.implant, outline: C.ink, align: "right" });
+    else if (!r.archive) hud.draw(ctx, Nagiwa.t(buf.date ? "ARCHIV" : "PUFFER"), x, 4, { color: C.implant, outline: C.ink, align: "right" });   // (an archive room says ARCHIV itself)
   });
 })();

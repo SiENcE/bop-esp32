@@ -42,10 +42,10 @@
       counter: { name: "Kasse", poly: AS.counterPoly, look: ["Die Kasse, und keiner dahinter.", "Draußen steht das Schaf. Von hier sieht man nur seinen Schatten auf dem Glas."] },
       fridges: { name: "Kühlschränke", poly: AS.fridgesPoly, look: "Die Kühlschränke. Was da nachts fehlt, sieht die Kamera." },
       rewind: { name: "Archiv", z: 5, if: ["!cache_clip_shop24", "!off_shop24"],
-        use: ["Das Archiv vom Laden geht eine Nacht zurück. Ich spul auf halb drei.", "Draußen steht das Schaf und schläft.",
+        use: [{ rewind: "02:30", date: "today" }, "Das Archiv vom Laden geht eine Nacht zurück. Halb drei.", "Draußen steht das Schaf und schläft.",
           "Der Mann mit dem Einkaufswagen kommt rein. Er nimmt ein Sandwich aus dem Kühlschrank und eine Dose.",
           "Auf dem Sandwich klebt ein Etikett. Morgen abgelaufen.", "Er schaut einmal in die Kamera. Dann geht er.", { cache: "clip_shop24" },
-          "Er nimmt nur, was morgen sowieso im Müll landet. Die Kasse zählt es trotzdem."] },
+          "Er nimmt nur, was morgen sowieso im Müll landet. Die Kasse zählt es trotzdem.", { live: true }] },
     } });
 
   // ---- the clerk (S1, S4): what he tells, and what Juno does with the clip

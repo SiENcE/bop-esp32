@@ -153,10 +153,12 @@ Nagiwa.at = {
     baoPoly: ((x, y) => [x - 6, y - 49, x + 6, y - 49, x + 9, y - 37, x + 11, y - 23, x - 11, y - 23, x - 9, y - 37])(...Nagiwa.layouts.kowalski.spots.bao),
     // Chapter 2, the Quiet (game/kapitel2_quiet.js): the shadow at the front before LUCKY STATIC, his back to us, staring at the
     // Kessel Block's door (the user's choice, 2026-11-17); on Monday the leader there and his two men a step behind him on either side
-    quiet: [128, 168], quietLeft: [106, 160], quietRight: [148, 162],
+    // (moved to the front left, the user's mark, 2026-11-19; the ground round him is shut while any of them stands there: quietFence)
+    quiet: [94, 170], quietLeft: [72, 162], quietRight: [114, 164],
+    quietFence: [26, 175, 70, 150, 111, 128, 150, 150, 207, 175],
     // while Bao's cart is gone (Saturday and Sunday after K1b sold) he walks slowly up and down before LUCKY STATIC, and at each end
     // turns round slowly, a short step at a time away from us (the user, 2026-11-17)
-    quietWalk: [[96, 168], [190, 164], [192, 161], [189, 159], [186, 161], [96, 168], [94, 165], [97, 163], [100, 165]],
+    quietWalk: [[60, 170], [140, 168], [142, 165], [139, 163], [136, 165], [60, 170], [58, 167], [61, 165], [64, 167]],
     // Chapter 2, Varga's man (game/kapitel2_folgen.js): beside the Kessel Block's door, his back to its wall; Juno talks to him from
     // where she comes out
     vargasMann: [160, 94],

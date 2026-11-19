@@ -38,11 +38,11 @@
       rows: { name: "Kojen", poly: A51.rowsPoly, look: ["Kojen, eine neben der anderen, zwei übereinander.", "Hinter jedem Ohr leuchtet ein blasser Punkt. Alle hier nehmen Lull."] },
       rewind: { name: "Archiv", z: 5, if: ["!cache_clip_najo", "!off_haldane"], use: [
         "Das Archiv geht einen Monat zurück. Ich such Koje 12.",
-        { set: "cam51_at", value: "brief" }, "Sonntag, der vierzehnte Oktober, neun Uhr abends.",
+        { rewind: true }, { set: "cam51_at", value: "brief" }, "Sonntag, der vierzehnte Oktober, neun Uhr abends.",
         "Er sitzt auf seiner Koje und liest einen Brief. Auf Papier. Das ist ihrer.", "Dann klebt er sich das Pflaster hinters Ohr und legt sich hin.",
-        { set: "cam51_at", value: "morgen" }, "Montag, sechs Uhr. Das Licht geht an, alle stehen auf.", "Er nicht.",
-        { set: "cam51_at", value: "traeger" }, "Halb sieben. Zwei in Weiß tragen ihn raus, ganz vorsichtig und freundlich.",
-        "Ruhe-Erschöpfung. Seit vier Wochen.", { cache: "clip_najo" }, { unset: "cam51_at" },
+        { rewind: true }, { set: "cam51_at", value: "morgen" }, "Montag, sechs Uhr. Das Licht geht an, alle stehen auf.", "Er nicht.",
+        { rewind: true }, { set: "cam51_at", value: "traeger" }, "Halb sieben. Zwei in Weiß tragen ihn raus, ganz vorsichtig und freundlich.",
+        "Ruhe-Erschöpfung. Seit vier Wochen.", { cache: "clip_najo" }, { live: true }, { unset: "cam51_at" },
         "Und sie wartet jeden Sonntag auf seinen Brief."] },
     } });
 

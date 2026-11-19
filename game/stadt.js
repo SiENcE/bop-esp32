@@ -176,7 +176,7 @@ Nagiwa.threads.imai = [
   { from: "imai", at: "18:21", text: "Mein Arzt sagt, das kommt vom Schlaf. Ich will wissen, ob ich verrückt bin. Ich sitze abends im LUCKY STATIC." },
 ];
 Nagiwa.ledger.imai = { to: "R. IMAI", what: { truth: "die Wahrheit", dream: "ein Traum" } };
-Cutaway.actor("imai", { name: "Frau Imai", color: "#c8d8b0", room: "lucky_static", at: AI.imai, facing: "sw", walkTo: AI.imaiTalk, face: "nw",
+Cutaway.actor("imai", { name: "Frau Imai", color: "#c8d8b0", room: "lucky_static", at: AI.imai, facing: "sw", walkTo: AI.imaiTalk, face: "se",
   costume: { idle: every("imai_idle_sw"), walk: every("imai_idle_sw"), talk: every("imai_talk_sw") }, voice: { pitch: 60, range: 4, wave: "triangle", syllable: 85, speed: 0.9 },
   look: ["Sie sitzt vor einem Tee, der längst kalt ist. Hinter ihrem Ohr leuchtet der blasse Punkt.", "Sie hat drei Finger an jeder Hand, und alle sind viel zu lang.", "Sie hat es mit nichts eilig.", "Die kenn ich. Die stand in der Schlange vor der Klinik."],
   talk: [
@@ -205,8 +205,8 @@ Nagiwa.camRoom("cam18", { background: "cam18_bg", mic: { at: A18.mic, clear: 40,
   fish: { name: "Fisch", poly: A18.fishPoly, z: 1, look: ["Jemand hat einen Fisch auf die Stufen gemalt. FISH steht drunter, falls jemand fragt.", "Von unten sieht man nur Striche auf den Stufen. Den Fisch sieht man nur von hier oben."] },
   stairs: { name: "Treppe", poly: A18.stairsPoly, look: ["Das ist die Treppe zum alten Fischmarkt.", "Der Regen kommt von links, weil die Kamera schief hängt."] },
   rewind: { name: "Archiv", z: 5, if: "imai_step=1",
-    use: ["Ältere Nächte liegen im Nagi·wa-Archiv. Mein alter Zugang reicht gerade noch.", "Ich such den neunundzwanzigsten Oktober und spul vor und zurück.", "Um drei Uhr zwölf ist es so weit. Einer fällt die Treppe runter, und einer geht weg.",
-      "Sie hat es genau von hier oben gesehen, so, wie sie gesagt hat.", "Und den ganzen Fisch sieht man nur von hier oben.", "Um die Zeit lag sie im Bett und schlief.", "Wie sieht jemand im Schlaf, was meine Kamera sieht?", { cache: "note_imai_street" }, { set: "imai_step", value: 2 }] },
+    use: ["Ältere Nächte liegen im Nagi·wa-Archiv. Mein alter Zugang reicht gerade noch.", "Ich such den neunundzwanzigsten Oktober.", { rewind: "03:12", date: "2091-10-29" }, "Um drei Uhr zwölf ist es so weit. Einer fällt die Treppe runter, und einer geht weg.",
+      "Sie hat es genau von hier oben gesehen, so, wie sie gesagt hat.", "Und den ganzen Fisch sieht man nur von hier oben.", "Um die Zeit lag sie im Bett und schlief.", "Wie sieht jemand im Schlaf, was meine Kamera sieht?", { cache: "note_imai_street" }, { set: "imai_step", value: 2 }, { live: true }] },
 } });
 Cutaway.room("lucky_static", { name: "LUCKY STATIC", background: "lucky_static_bg", walk: AI.walk, holes: AI.holes, props: AI.props,
   light: { ambient: 0.82, lamps: AI.lamps.map((/** @type {any} */ { bake, zone, ...lamp }) => lamp) },

@@ -32,6 +32,24 @@ Cutaway.routine("quiet_schatten", [
   { day: 7, from: "19:00", to: "23:00", room: "kowalski", at: AW.quietLeft, face: "ne" },
 ]);
 Cutaway.routine("quiet_chef", [{ day: 7, from: "19:00", to: "23:00", room: "kowalski", at: AW.quiet, face: "ne" }]);
+// while one of them stands on Kowalski Street, the ground round him is shut (the user, 2026-11-19: Juno doesn't get near him): a hole in
+// the street's walk map, put in and taken out as they come and go (the door to LUCKY STATIC, the way west and Bao stay open). Only a
+// look of the walk map: no state, and nothing the game needs lies inside it
+{
+  const street = Cutaway.room.get("kowalski"), own = (street.holes ?? []).slice(), WHO = ["quiet_schatten", "quiet_schatten2", "quiet_chef"];
+  const fence = () => {
+    // where their routines put them now (not where the actors are yet: entering the street comes before the routines place them)
+    const { day, minutes } = Cutaway.time.now, P = Cutaway.time.parse;
+    const here = WHO.some((id) => (Cutaway.time.routines.get(id) ?? []).some((e) => (e.day === undefined || (Array.isArray(e.day) ? e.day.includes(day) : e.day === day))
+      && P(e.from) <= minutes && minutes < P(e.to) && e.room === "kowalski" && Cutaway.state.test(e.if)));
+    const want = here ? [...own, AW.quietFence] : own;
+    if ((street.holes ?? []).length === want.length) return;
+    street.holes = want;
+    if (Cutaway.scene.room?.id === "kowalski") Cutaway.scene.refresh();
+  };
+  Cutaway.events.on("room.entered", (/** @type {{id: string}} */ e) => { if (e.id === "kowalski") { street.holes = []; fence(); Cutaway.scene.refresh(); } });
+  Cutaway.events.on("time.changed", fence);
+}
 Cutaway.routine("quiet_schatten2", [{ day: 7, from: "19:00", to: "23:00", room: "kowalski", at: AW.quietRight, face: "ne" }]);
 
 // on the way into the alley while he stands there, EVI from the bag (only a line: the flag is set on the raft)
