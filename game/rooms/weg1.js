@@ -1,15 +1,18 @@
-// weg1: Fischermann Street (the user's name; Weg_1 in the city plan, where the user drew it on 2026-11-18), seen straight down as the Drain Market is (art/rooms/weg1.px.js, on
-// its approved blocks for now): from the gate at the end of Jade Row north, then west past the Wohnblock Lerche (its door where the arm
+// weg1: Fischermann Street (the user's name; Weg_1 in the city plan, where the user drew it on 2026-11-18), seen straight down as the Drain Market is (art/rooms/weg1.px.js, painted
+// on its approved blocks, 2026-11-19): from the gate at the end of Jade Row north, then west past the Wohnblock Lerche (its door where the arm
 // turns: the keypad, CAM 24's doorbell lens) to the stairs down to the Old Fish Market, shut for now (the user: maybe later, with a side
-// quest). Juno is seen from above here (game/cast.js). Its people (the homeless man, Lull's sheep, the cleaning robot) are in the picture
-// until they are painted as figures; their looks are here. What its doors do is in game/kapitel2_lerche.js.
+// quest). Juno is seen from above here (game/cast.js). Its people (the homeless man, Lull's sheep, the cleaning robot) are sprites of
+// their own over the picture, still on their blocks; their looks are here. What its doors do is in game/kapitel2_lerche.js.
 "use strict";
 
 (function () {
-  const A = Nagiwa.at.weg1, AJ = Nagiwa.at.jade_row;
+  const A = Nagiwa.at.weg1, AJ = Nagiwa.at.jade_row, P = Nagiwa.parts.weg1;
   Cutaway.room("weg1", {
     name: "Fischermann Street", background: "weg1_bg", size: /** @type {[number, number]} */ (A.size), walk: A.walk, holes: A.holes,
-    light: { ambient: 1 },
+    // the painting's street lamps as the runtime light: Juno takes on the shops' and the signs' colours (art/rooms/weg1.px.js)
+    light: { ambient: 0.85, lamps: P.lamps.map((/** @type {any} */ [x, y, color, r], /** @type {number} */ i) => ({ id: `lamp${i}`, at: [x, y], r, color, power: 1 })) },
+    // what hangs over the people: the cables and their lanterns, the strings of bulbs, the awnings, the blade signs
+    foreground: [{ image: "weg1_over", at: [0, 0] }],
     // the people and the robot apart from the picture, so they can come and go (on blocks: art/rooms/weg1.px.js). The night after the
     // clip went to the shop's chain (shop24_gone, game/kapitel2_laden.js) the homeless man is gone, his cardboard left; after it was sold
     // through Sable another man stands in the costume; the robot goes round its puddle until Juno resets it, then round the street
