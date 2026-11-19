@@ -34,7 +34,8 @@ Cutaway.moment("nachbar_mon", { room: "cam24", day: 7, from: "19:30", to: "19:45
 const cam24 = Cutaway.room.get("cam24");
 cam24.hotspots.rewind = { name: "Puffer", rect: Nagiwa.osd.rewind, z: 5,
   if: [{ or: [["day=5", "moment:nachbar_sat"], ["day=6", "moment:nachbar_sun"], ["day=7", "moment:nachbar_mon"]] }, "!code_lerche", "!off_main", "!off_flat"],
-  use: ["Ich spul den Puffer zurück auf halb acht.", { replay: "nachbar_sat" }] };
+  // the buffer rewound to half past seven (game/puffer.js): he comes home again and taps the code
+  use: [{ rewind: "19:30" }, { walk: "nachbar", to: A24.gate, free: true }, { replay: "nachbar_sat" }, { live: true }] };
 
 // ---- the way there, as the user drew it in the city plan (2026-11-18): the gate at the end of Jade Row opens onto Weg_1 (the room weg1,
 // seen from above), and there the Wohnblock Lerche's door has the keypad (W1's code); inside, the hall (lerche_eg) with the stairs and the

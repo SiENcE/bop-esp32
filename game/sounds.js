@@ -58,6 +58,9 @@
     noise: { filter: "highpass", from: 2500, to: 8000, ms: 380, attack: 220, gain: 0.08 } });
   S("jack_out", { tone: { wave: "sine", from: 1300, to: 55, ms: 300, gain: 0.11 },
     noise: { filter: "lowpass", from: 6000, to: 250, ms: 260, gain: 0.1 } });
+  // a camera's buffer spooling back (a falling whir, the tape's hiss) and on again (rising, shorter): game/puffer.js
+  S("rewind", { tone: { wave: "sawtooth", from: 900, to: 180, ms: 1300, attack: 60, gain: 0.04 }, noise: { filter: "bandpass", from: 2400, to: 900, q: 1.2, ms: 1350, gain: 0.07 } });
+  S("forward", { tone: { wave: "sawtooth", from: 220, to: 1100, ms: 550, attack: 30, gain: 0.04 }, noise: { filter: "bandpass", from: 900, to: 2600, q: 1.2, ms: 560, gain: 0.06 } });
   S("static", { noise: [{ filter: "bandpass", from: 3000, q: 0.7, ms: 260, gain: 0.16 }, { filter: "highpass", from: 5000, ms: 120, gain: 0.08, at: 120 }] });
   // the end in cam31: a body on wet concrete, through an old microphone; Lantern's motor starting up and going
   S("body_fall", { noise: { filter: "lowpass", from: 260, ms: 140, gain: 0.3 }, tone: { wave: "sine", from: 80, to: 44, ms: 170, gain: 0.3 } });

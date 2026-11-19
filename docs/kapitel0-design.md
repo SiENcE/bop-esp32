@@ -217,6 +217,10 @@ geschieht zu seiner Zeit, ob jemand zusieht oder nicht. Damit kein Spieler häng
   verpasst hat, kann sie im Puffer zurückspulen und dort aufzeichnen (der Knopf `PUFFER` erscheint, wenn
   es dort etwas gibt, das sie braucht). Aufnahmen früherer Nächte liegen nur im Nagi·wa-Archiv (ein
   späteres Rätsel). (Geändert beim Bau von H2: ein 30-Minuten-Puffer hätte Sackgassen erzeugt.)
+  **Das Zurückspulen ist zu sehen** (vom Nutzer gewünscht 2026-11-19, `game/puffer.js`): Das Bild spult zurück, Streifen verrutschen wie
+  bei einem alten Band, die Uhrzeit im Display läuft mit ◀◀ bis zur gepufferten Zeit zurück. Dann steht dort `PUFFER` mit dieser Zeit,
+  alle stehen, wo sie damals waren, und die Szene läuft wirklich ab (wer damals lief, läuft wieder). Zum Schluss spult es kurz vor (▶▶)
+  und ist wieder live. In einem Skript: `{ rewind: "22:05" }` ... `{ live: true }`; dazwischen die Szene als einfache Schritte.
 - Der Solver behandelt einen Moment als Zustand: gesehen, aufgezeichnet, verpasst.
 
 **Verbinden.** Eine Kamera ist verbunden, wenn Juno ihren Zugangscode kennt. Codes findet man:

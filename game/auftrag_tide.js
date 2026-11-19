@@ -100,7 +100,7 @@ Nagiwa.camRoom("cam07v", { background: undefined, color: Nagiwa.PHOSPHOR[0], mic
   props: [{ id: "shop", image: "okonkwo_shop_bg", at: [0, 0], anchor: [0, 0], baseline: -1000 }, ...AO.props], hotspots: {
   safe: { name: "Kasse", rect: AV.safeRect, z: 1, look: ["Der Tresor unter der Theke hängt an der Kasse.", "Und ihr Kundendisplay zeigt genau zu mir."] },
   shelves: { name: "Regale", rect: AV.shelvesRect, look: "Da stehen Reis, Batterien und Zigaretten, und ein Foto, das ich von hier nicht erkenne." },
-  rewind: { name: "Puffer", z: 5, if: ["day<4", "time>=01:15", "!cache_note_safe_code", "!k1b"], use: ["Ich spul den Puffer zurück auf eins.", ...READ] },
+  rewind: { name: "Puffer", z: 5, if: ["day<4", "time>=01:15", "!cache_note_safe_code", "!k1b"], use: [{ rewind: "01:00" }, ...READ, { live: true }] },   // (the buffer rewound: game/puffer.js)
 } });
 
 // ---- the machine in Jade Row: the tap goes into its service hatch, round the back, once the drone has passed (Juno waits for it herself:

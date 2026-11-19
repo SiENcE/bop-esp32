@@ -213,15 +213,15 @@ Nagiwa.camRoom("cam23", { background: undefined, color: Nagiwa.PHOSPHOR[0], mic:
   dryers: { name: "Trockner", poly: A23.dryersPoly, look: "Da sind acht Trockner, und die Sechs ist tot, mit Zettel dran. Da sieht keiner rein." },
   desk: { name: "Theke", poly: A23.deskPoly, look: "Hinter der Theke schläft ein Mann, seit Jahren." },
   // a look back may repeat: no flag of its own
-  rewind: { name: "Puffer", z: 5, if: ["day=3", "moment:ines_drop", "!seen:ines_drop"], use: ["Ich spul den Puffer zurück auf 20:05.", { replay: "ines_drop" }] },
+  rewind: { name: "Puffer", z: 5, if: ["day=3", "moment:ines_drop", "!seen:ines_drop"], use: [{ rewind: "20:05" }, { replay: "ines_drop" }, { live: true }] },   // (the buffer rewound: game/puffer.js)
 } });
 Nagiwa.camRoom("cam24", { background: "cam24_bg", mic: { at: A24.mic, ...MIC }, hotspots: { entrance: { name: "Haustür", poly: A24.doorPoly, look: "Das ist der Wohnblock Lerche. Da wohnt sie." } } });
 Nagiwa.camRoom("cam30", { background: "cam30_bg", mic: { at: A30.mic, ...MIC }, hotspots: {
   sign: { name: "Schild", poly: A30.signPoly, look: "LINE 31, CLOSED. Das ist sie seit der Flut, schätze ich." },
   tide: { name: "Pegeltafel", poly: A30.tidePoly, look: "Auf der Pegeltafel steht: Freitag, 23:00, Niedrigwasser." },
   rewind: { name: "Puffer", z: 5, if: { or: [["day=3", "moment:ines_tide", "!know_meeting"], ["day=4", "moment:ines_sign", "!know_meeting"]] },
-    use: [{ if: "day=3", then: ["Ich spul den Puffer zurück auf Viertel nach acht.", { replay: "ines_tide" }],
-      else: ["Im Puffer ist es. Da, die Treppe runter.", { replay: "ines_sign", from: 1 }] }] },
+    use: [{ if: "day=3", then: [{ rewind: "20:15" }, { replay: "ines_tide" }, { live: true }],
+      else: [{ rewind: "22:30" }, "Im Puffer ist es. Da, die Treppe runter.", { replay: "ines_sign", from: 1 }, { live: true }] }] },
 } });
 
 // ---- the alley and the laundromat, in street mode: both baked from their maps (art/rooms/gasse.map.js, laundromat.map.js)

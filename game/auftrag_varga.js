@@ -50,7 +50,7 @@ Nagiwa.camRoom("cam15", { background: "cam15_bg", mic: { at: A15.mic, clear: 40,
   kapsel23: { name: "Kapsel 23", poly: A15.c23Poly, if: "cache_note_kessler_hideout",
     look: [{ if: "kessler_gone", then: [{ if: "k1a=sold", then: ["Kapsel 23 steht offen. Auf dem Boden liegt eine zerbrochene Brille."], else: ["Kapsel 23 ist leer. Auf dem Bildschirm steht noch meine Zeile."] }], else: ["Das ist Kapsel 23.", "Jede Kapsel hat einen Bildschirm, und das Hotel schreibt drauf, wann man raus muss."] }],
     use: [{ if: "!k1a", then: ["Das Hotelnetz kann auf jeden Bildschirm schreiben. Ich jetzt auch.", { dialog: "k1a_warn" }], else: ["Das ist erledigt."] }] },
-  rewind: { name: "Puffer", z: 5, if: ["time>=22:45", "!cache_note_kessler_hideout", "!kessler_gone"], use: ["Ich spul den Puffer zurück auf 22:30.", ...CAPSULE] },
+  rewind: { name: "Puffer", z: 5, if: ["time>=22:45", "!cache_note_kessler_hideout", "!kessler_gone"], use: [{ rewind: "22:30" }, { walk: "kessler2", to: A15.spot, free: true }, ...CAPSULE, { live: true }] },   // (the buffer rewound: game/puffer.js)
 } });
 Cutaway.dialog("k1a_warn", { main: { choices: [
   { text: "„Varga sucht dich. Geh.“ schreiben.", silent: true, goto: "end", then: [{ set: "k1a", value: "warned" }, { ledger: "kessler_warn", value: "warned" }, { set: "kessler_gone" },

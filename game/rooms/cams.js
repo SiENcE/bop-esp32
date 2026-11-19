@@ -84,9 +84,10 @@ Nagiwa.camRoom("cam03", {
       look: "Aus dem Nudelautomaten isst die halbe Pumpenverwaltung.", use: [{ zoom: "zoom_vending_n7" }, "Die Nummer 7 ist Huhn scharf, und ihre Taste ist abgegriffen.", { zoom: false }] },
     office: { name: "Pumpenverwaltung Ost", poly: A3.officeDoorPoly, look: "Das ist die Pumpenverwaltung. Um zehn ist Schichtende." },
     rewind: { name: "Puffer", z: 5, if: ["call_missed", "!heard_yuens"],
-      use: ["Ich spul den Puffer zurück auf 22:05.", { tag: "kessler" }, "Da ist er, mit dem hellen Schal unterm Vordach.",
+      // the buffer rewound to 22:05 (game/puffer.js): Kessler comes out again and goes under the canopy with his phone
+      use: [{ rewind: "22:05" }, { tag: "kessler" }, { walk: "kessler", to: A3.awning, free: true }, "Da ist er, mit dem hellen Schal unterm Vordach.",
         "Die Klammern macht nicht das Deck, die macht mein Implantat.", "Das durften wir behalten, damals. Sie sagten, das Herausnehmen kostet mehr.", { say: "kessler", text: "Ja, ich bring's mit. Alles. Halb elf, bei Yuen's." }, { set: "heard_yuens" },
-        "Yuen's ist der Imbiss an der Ecke."] },
+        "Yuen's ist der Imbiss an der Ecke.", { live: true }] },
   },
 });
 
@@ -97,9 +98,10 @@ Nagiwa.camRoom("cam04", {
     tv: { name: "Fernseher", poly: A4.tvPoly, look: "Eine Frau schläft im Fernsehen und lächelt dabei. SLEEP BETTER, sagt Nagi·wa." },
     counter: { name: "Theke", poly: A4.counterPoly, look: "Bei Yuen's gibt's Nudeln und Tee, und keiner stellt Fragen." },
     rewind: { name: "Puffer", z: 5, if: ["moment:kessler_ring", "!cache_clip_kessler_ring"],
-      use: ["Ich spul den Puffer zurück auf 22:35.", { zoom: "zoom_ring" }, "Da, er zieht den Ring ab und schiebt ihn rüber.",
+      // the buffer rewound to 22:35 (game/puffer.js): the two at their table again, the ring
+      use: [{ rewind: "22:35" }, { zoom: "zoom_ring" }, "Da, er zieht den Ring ab und schiebt ihn rüber.",
         { cache: "clip_kessler_ring" }, { zoom: false }, { set: "saw_varga" }, { cache: "note_kessler_debt" },
-        "Ich hab's. Und der im grauen Mantel ist kein Liebhaber.", "Das ist Gus Varga, der Kredithai."] },
+        "Ich hab's. Und der im grauen Mantel ist kein Liebhaber.", "Das ist Gus Varga, der Kredithai.", { live: true }] },
   },
 });
 })();
