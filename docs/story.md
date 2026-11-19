@@ -98,6 +98,51 @@ Maschinen für die Arbeit am Wasser umgebaut.
   Geschlecht, und niemand im Spiel kommentiert das. Keine Figur ist „die Diverse"; jede ist zuerst
   eine Person mit einem Problem.
 
+### Die neun Ringe
+
+Vom Nutzer freigegeben am 2026-11-19 (§10i). Gezählt wird von oben: Der **Erste Ring ist die Krone**, der **Neunte** liegt ganz unten
+über dem Wasser. Der Turm geht mitten durch alle hindurch und ragt über die Krone hinaus.
+
+**Die Regeln der Welt**
+
+- **Höhe ist Rang.** Je höher ein Ring, desto trockener, heller, teurer und weiter weg vom Wasser. Jeder Ring ist das Dach des Rings
+  darunter (die **Hülle**), und die Ringe werden nach oben schmaler, wie Stufen (so zeigt sie das Intro vom Meer aus): Der Neunte ist
+  der breiteste, die Krone der schmalste.
+- **Himmel** hat jeder Ring nur an seinem **Außenrand**: an der Fassade aufs Meer, über der kein Ring mehr liegt. Dort wohnt man am
+  teuersten. Wer weiter innen wohnt, hat Hüllenlicht und den Boden des Rings darüber; die mittleren Ringe haben innen einen künstlichen
+  Himmel aus Bildschirmen, und ein Fenster geht dort auf einen Lichtschacht, nicht in den Himmel. Am Außenrand des Neunten hört die
+  Stadt auf, dahinter und darunter liegen die Sümpfe.
+- **Der Schacht um den Turm** geht offen durch alle Ringe: Vom Neunten sieht man durch ihn hinauf, Ring über Ring, bis zum kalten Licht
+  der Krone (der Blick vom Dach des Kessel-Blocks, der nah am Schacht steht).
+- **Der Ausweis** (ein Chip) sagt, wie hoch jemand darf. An jedem Ring gibt es einen Kontrollpunkt an der **Transitachse**, den Aufzügen
+  am Turm, und die harte Grenze liegt im Fünften: Weiter hinauf kommt nur, wer oben Wohnrecht hat. Aus dem Neunten geht es nur mit einer
+  **Arbeitserlaubnis** hinauf, und höchstens bis in den Fünften. Die eine Ausnahme waren die Beobachter: Ihr Dienstausweis (`CIVIC
+  MONITOR`) brachte sie zur Schicht über die Transitachse hinauf in den Turm, und nur dorthin. Junos Ausweis ist seit ihrer Entlassung
+  ungültig; eine Karte von drinnen bleibt er trotzdem, und die Klappen in Nagi·was Rohren, die durch alle Ringe gehen, fragen nicht
+  nach dem Datum (Ratz, §9).
+- **Schlaf ist Klasse.** Lull ist für unten. Oben schläft man noch selbst, und echter Schlaf gilt dort als Luxus.
+- **Die Flutschuld** tragen nur die Nachfahren der ertrunkenen Stadt. Wer höher wohnt, hat sich eingekauft oder wurde hergeholt; wer
+  aus dem Neunten in den Achten bis Sechsten gezogen ist, hat sich freigearbeitet. Das ist die Hoffnung, die Lull verkauft: mehr
+  Schichten, weniger Schuld, ein Ring höher.
+- **Schlafstationen** gibt es nur in den unteren Ringen bis hinauf zum Fünften, darüber keine. Die Sinker aus dem Neunten und aus dem
+  Fünften (Teo, Najo, Morrows Tochter) liegen auf der Station im Fünften, an der Transitachse.
+
+**Die Ringe**
+
+| Ring | Wer dort lebt | Arbeit und Alltag |
+|---|---|---|
+| darunter: **die Sümpfe** | offiziell niemand: Lantern, Pike, Aussteiger | Schmuggel, Funk, Fischen; die alte Stadt unter Wasser, am Rand der Himmel |
+| **9.** der Neunte | das Volk der Flut, die Gezeitenleute, die Tiere aus den Flutprogrammen | Pumpen, Schleusen, Filter, Doppelschichten auf Lull, der Drain-Markt; es regnet das Abwasser der oberen Ringe |
+| **8.** | Arbeiterfamilien mit etwas weniger Schuld, manche aus dem Neunten freigearbeitet | Entsalzung, Algenfarmen und Proteinküchen: das Essen für unten (Nudeln, Brühe) |
+| **7.** | Arbeiter und Vorarbeiter | Kraftwerke, Wärmetauscher, Recycling; von hier kommt die Wärme, die im Neunten durch die Hülle dampft |
+| **6.** | Dienstleute: Pflege, Wachdienste, Fahrer | Sie arbeiten weiter oben und schlafen hier. Der erste Ring, in dem es nicht regnet |
+| **5.** der Fünfte, die Mitte | Pendler in Wohnheimen (Najo), Grenzbeamte | die Transitachse und ihre Kontrollpunkte, Lager für alles, was nach oben geht, die Schlafstation, die Lull-Verteilung; nachts das Kochsalz |
+| **4.** | Angestellte von Nagi·wa, die Verwaltung | Büros, Schulen, Parks unter dem Bildschirmhimmel; hier wäre die Wohnung aus Aubrechts Angebot (§7, Kap. 5) |
+| **3.** | Ingenieure, die Forschung | Rechenzentren und Labore: Hier wurden AUTO-EVAL und Lull gebaut |
+| **2.** | die Wohlhabenden, das Management | Gärten, Privatsicherheit; die Zuschauer von NINTH LIVE |
+| **1.** die Krone | der Vorstand, Aubrecht | Civic Rest, der Ruhekern, echter Himmel über dem ganzen Ring; arbeiten muss hier niemand |
+| darüber: **der Turm** | niemand wohnt hier | Nagi·was Tower über der Krone: Aubrechts Büros; die **Beobachtungshalle**, in der Juno saß, bis man die Beobachter entließ, ein Stockwerk, das grün glimmt (das Intro fliegt hinein) |
+
 ### Orte (erste Liste)
 
 | Ring | Ort | Notizen |
@@ -789,3 +834,15 @@ Die Vorschläge aus derselben Prüfung, vom Nutzer übernommen (2026-11-14; Einz
 - **Lanterns Sender im RADIO** (vom Nutzer entschieden 2026-11-16): Sein Wohnwagen in den Sümpfen ist seine Sendestation, und auf Junos Deck ist er im RADIO der vierte Sender, LANTERN auf 87.6, sobald Juno ihn gefunden hat (`lantern_found`; beim ersten Treffen sagt er: „Wenn du mich hören willst: siebenundachtzig sechs, nachts. Kommen musst du dafür nicht.“). Vorher ist seine Zeile nur Rauschen. Nachts spricht er dort in seiner Sendestimme (ruhig, wie ein Moderator von früher, ohne Namen), am Montag kündigt er an, dass er um eins sendet, was sie ihm gegeben hat. Eine Ansicht, kein Zustand (`game/radio.js`).
 - **Das Richtmikro ist gestrichen** (vom Nutzer entschieden 2026-11-15): Man hört, was nah am Mikro einer Kamera gesagt wird, wie bei Ines' Tod in `cam31`; kein Rätsel braucht ein Werkzeug dafür.
 - **`evi_trust`** (wie offen Juno im Prolog zu EVI war) geht über die Kapitel mit und bekommt später eine Aufgabe (vom Nutzer entschieden 2026-11-14; Vorschläge in `kapitel2-design` §14).
+
+## 10i. Entscheidungen (2026-11-19): die neun Ringe
+
+- **Die neun Ringe** (§3, „Die neun Ringe“): vom Nutzer freigegeben, wie dort beschrieben: wer wo lebt und arbeitet, vom Neunten bis zur
+  Krone. Die **Krone ist der Erste Ring**.
+- **Junos Beobachtungshalle** lag oben im Turm, über der Krone, wie das Intro sie zeigt (zuerst für die Höhe des Fünften entschieden, am
+  selben Tag geändert, weil der Turm dort im Stapel der Ringe steckt). Juno fuhr mit ihrem Dienstausweis jeden Tag aus dem Neunten
+  hinauf; die Beobachter waren die eine Ausnahme von der Grenze im Fünften.
+- **Himmel am Außenrand:** Die Ringe werden nach oben schmaler, wie Stufen; jeder hat Himmel nur an seiner Fassade aufs Meer, innen
+  Hüllenlicht oder Bildschirmhimmel. Um den Turm geht ein offener Schacht durch alle Ringe bis zum Licht der Krone.
+- **In den Ringen 8 bis 6** leben auch Leute aus dem Neunten, die sich freigearbeitet haben.
+- **Schlafstationen** gibt es nur bis hinauf zum Fünften, darüber keine.
