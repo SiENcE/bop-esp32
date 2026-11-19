@@ -10,12 +10,12 @@ const AF = Nagiwa.at.flat;
 
 // ---- 01:00: wherever Juno is, every screen Lantern reaches tears off, the big one on Kowalski Street too. Never watched: it
 // happens as its window ends (the clock stood at 00:45 until everything was ready, game/kapitel2.js)
-Cutaway.i18n.declare("feed display", ["THEY DON'T SLEEP. THEY WORK."]);
+Cutaway.i18n.declare("feed display", ["THEY DON'T SLEEP."]);
 Cutaway.moment("protokolle", { room: "deck", day: 7, from: "00:45", to: "01:00", if: "~never", unseen: [
   { set: "end_beat2", value: "sent" },
   { sfx: "glitch" },
   "Alle Schirme sind auf einmal grün. Auch der große auf der Kowalski.",
-  { caption: "THEY DON'T SLEEP. THEY WORK.", at: "c", color: "#7cff9a", ms: 3200 },
+  { caption: "THEY DON'T SLEEP.", at: "c", color: "#7cff9a", ms: 3200 },
   "Lantern. Er sendet.",
   { fade: "out", ms: 1200 },
   { unset: "deck_app" },
