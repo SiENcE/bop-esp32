@@ -709,10 +709,13 @@
       const shown = mont && clip.montage?.moment === i ? clip.montage.shows ?? "SCHLEIFE" : label;   // a montaged moment: what was laid over it
       if (!gone && hud().measure(t(shown).toUpperCase()) + 5 <= at(b) - at(a)) small(ctx, t(shown), at(a) + 3, ly + 11, kept ? C.cyanPale : C.steel6);
     });
+    // the names in a column as wide as the longest, the bars after it (a long name never runs into its bar)
+    const label = (/** @type {string} */ who) => (anon ? "???" : t(Nagiwa.people[who]?.name ?? who));
+    const col = Math.max(34, ...clip.people.map(([who]) => hud().measure(label(who).toUpperCase()) + 4));
     if (!mont || clip.montage?.keeps) clip.people.forEach(([who, a, b], i) => {
-      const y = ly + 21 + i * 8;
-      small(ctx, anon ? "???" : t(Nagiwa.people[who]?.name ?? who), lx, y, C.steel6);
-      rect(ctx, C.steel4, Math.max(at(a), lx + 34), y + 1, at(b) - Math.max(at(a), lx + 34), 3);
+      const y = ly + 21 + i * 8, x0 = Math.max(at(a), lx + col);
+      small(ctx, label(who), lx, y, C.steel6);
+      if (at(b) > x0) rect(ctx, C.steel4, x0, y + 1, at(b) - x0, 3);
     });
     if (clip.cut) {
       const [a, b, label] = clip.moments[clip.cut.moment];
