@@ -116,7 +116,8 @@ Vom Nutzer freigegeben am 2026-11-19 (§10i); im Schnitt gezeichnet: `docs/welt/
   der Krone (der Blick vom Dach des Kessel-Blocks, der nah am Schacht steht).
 - **Der Ausweis** (ein Chip) sagt, wie hoch jemand darf. An jedem Ring gibt es einen Kontrollpunkt an der **Transitachse**, den Aufzügen
   am Turm, und die harte Grenze liegt im Fünften: Weiter hinauf kommt nur, wer oben Wohnrecht hat. Aus dem Neunten geht es nur mit einer
-  **Arbeitserlaubnis** hinauf, und höchstens bis in den Fünften. Die eine Ausnahme waren die Beobachter: Ihr Dienstausweis (`CIVIC
+  **Arbeitserlaubnis** hinauf, und höchstens bis in den Fünften. Von einem Ring in einen höheren kommt man nur über die Transitachse;
+  einen anderen Weg nach oben gibt es nicht. Die eine Ausnahme waren die Beobachter: Ihr Dienstausweis (`CIVIC
   MONITOR`) brachte sie zur Schicht über die Transitachse hinauf in den Turm, und nur dorthin. Junos Ausweis ist seit ihrer Entlassung
   ungültig; eine Karte von drinnen bleibt er trotzdem, und die Klappen in Nagi·was Rohren, die durch alle Ringe gehen, fragen nicht
   nach dem Datum (Ratz, §9).
