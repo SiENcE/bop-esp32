@@ -105,6 +105,9 @@ Nagiwa.at = {
   // CAM 26 is the 24-hour shop's own picture under the feed's filter (one place, one picture, as CAM 25 is the landing's), the camera
   // left out of its own picture (the side thread "Wer passt auf den Laden auf?", game/kapitel2_laden.js)
   cam26: { exposure: 1.6 },
+  // blocks (art/cams/cam51.px.js, measured there: CAM51_LAYOUT): the workers' hostel 5-Süd's dormitory C down its aisle; Najo's bunk the
+  // nearest on the right, the upper one (the cameras' strip covers the left edge); the left row's bunks past the strip
+  cam51: { mic: [177, 140], bunkPoly: [203, 99, 211, 45, 243, 45, 301, 81, 271, 147, 234, 154], rowsPoly: [80, 46, 115, 14, 129, 13, 131, 44, 122, 108, 93, 109] },
   // Weg_1 from above (art/rooms/weg1.px.js, its blocks: the street between the facades at y 120 and 290 from x 60, the arm to the gate
   // between x 790 and 930 down to y 505, what stands in the way in W1.OCC); Juno's sprite from above is anchored in its middle, so the
   // walk area keeps half her size from the facades. Spots face up, down, left or right

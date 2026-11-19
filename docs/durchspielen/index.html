@@ -49,7 +49,7 @@
   <nav>
     <div><b>Prolog:</b> <a href="#prolog">Nachtschicht</a></div>
     <div><b>Kapitel 1:</b> <a href="#k1">Hauptweg</a> · <span class="matt">Nebenwege:</span> <a href="#k1a">Auftrag A: Kessler</a> · <a href="#k1b">Auftrag B: der Eckladen</a> · <a href="#k1m">Mottes Lektionen</a> · <a href="#k1v">Vesper</a> · <a href="#k1l">LUCKY STATIC</a> · <a href="#k1d">Das Dach</a> · <a href="#k1z">Der Zeitungskrieg</a> · <a href="#k1i">Frau Imai</a> · <a href="#k1t">Die weißen Träger</a></div>
-    <div><b>Kapitel 2:</b> <a href="#k2">Hauptweg</a> · <span class="matt">Nebenwege:</span> <a href="#k2f">Lantern finden</a> · <a href="#k2k">Die Klinik</a> · <a href="#k2e">Die anderen Wege für den Clip</a> · <a href="#k2n">Was aus Kapitel 1 nachkommt</a> · <a href="#k2l">Der 24h-Laden</a> · <a href="#k2i">Frau Imai</a> · <a href="#k2m">Motte und das Backup</a> · <span class="matt">geplant:</span> <a class="geplant" href="#k2h">Frau Haldanes Sohn</a></div>
+    <div><b>Kapitel 2:</b> <a href="#k2">Hauptweg</a> · <span class="matt">Nebenwege:</span> <a href="#k2f">Lantern finden</a> · <a href="#k2k">Die Klinik</a> · <a href="#k2e">Die anderen Wege für den Clip</a> · <a href="#k2n">Was aus Kapitel 1 nachkommt</a> · <a href="#k2l">Der 24h-Laden</a> · <a href="#k2i">Frau Imai</a> · <a href="#k2h">Frau Haldanes Sohn</a> · <a href="#k2m">Motte und das Backup</a></div>
   </nav>
   <div class="kasten">
     <b>Warten:</b> am Deck <kbd>WARTEN</kbd>, in einer Kamera <kbd>VOR</kbd>. Es springt jeweils zum nächsten Ereignis; nur das bewegt die Uhr, Laufen nicht.<br>
@@ -345,10 +345,16 @@
   </ol>
 </section>
 
-<section class="weg neben geplant" id="k2h">
-  <h2><small>Kapitel 2 · Nebenweg · noch nicht gebaut</small>Frau Haldanes Sohn</h2>
-  <p class="matt">Ab Sonntag, dem Brieftag.</p>
-  <div class="kasten"><b>Platzhalter.</b> Frau Haldanes Sohn schreibt nicht mehr. Sable verkauft einen Blick ins Archiv seines Wohnheims im Fünften (CAM 51), und dort sieht Juno, was mit ihm geschehen ist. Dann die Wahl an ihrer Tür: die Wahrheit, ein montierter Clip (mit <kbd>MONTIEREN</kbd>, wie beim 24h-Laden) oder „Ich hab nichts gefunden.“ (<code>kapitel2-design</code> §6.2).</div>
+<section class="weg neben" id="k2h">
+  <h2><small>Kapitel 2 · Nebenweg</small>Frau Haldanes Sohn</h2>
+  <p class="matt">Ab Sonntag, dem Brieftag (am Montag geht es auch noch).</p>
+  <ol class="schritte">
+    <li><b>Aus der Wohnung in den Flur, Frau Haldanes offene Tür anklicken.</b><span>Sie sitzt wach im Sessel. „Sonntags schlaf ich nicht. Sonntags kommt sein Brief.“ Najo schreibt seit vier Sonntagen nicht mehr. „Kannst du sehen, ob es ihm gut geht?“ Er wohnt im Wohnheim 5-Süd, im Fünften.</span></li>
+    <li><b>Treppe, Haustür, Gasse, Drain-Markt, der Vorhang. Sable: „Hast du was im Fünften? Das Wohnheim 5-Süd.“, dann „Hier sind hundertfünfzig.“ oder „Nimm Kesslers Ring.“</b><span>CAM 51 steht auf dem Deck, nur das Archiv.</span></li>
+    <li><b>Nach Hause, Deck, <kbd>GLASS</kbd>, CAM 51, <kbd>PUFFER</kbd>.</b><span>CAM 51 gibt es nur im Archiv; es öffnet bei letzter Nacht, Najos Koje ist abgezogen. Sonntag, 14. Oktober, 21 Uhr: Er liest auf seiner Koje ihren Brief und legt sich hin. Montag, sechs Uhr: Er steht nicht auf. Halb sieben: Zwei in Weiß tragen ihn hinaus. Der Clip ist im CACHE.</span></li>
+    <li><b>Wer will: <kbd>CACHE</kbd>, der Clip CAM 51, <kbd>MONTIEREN</kbd>.</b><span>Ein Morgen vom 9. Oktober, an dem er zur Schicht geht, liegt jetzt über den Trägern, mit der Zeit von heute.</span></li>
+    <li><b>Zurück in den Flur, Frau Haldane anklicken, eine Antwort wählen.</b><span>Die Wahrheit: „Dann schlaf ich auch. Dann bin ich näher bei ihm.“ Der montierte Clip: „Er sieht müde aus. Er sah immer müde aus.“ Nichts: „Dann warte ich eben weiter.“ Es steht im Kassenbuch.</span></li>
+  </ol>
 </section>
 
 <section class="weg neben" id="k2m">
@@ -359,7 +365,7 @@
   </ol>
 </section>
 
-<footer>Stand: 19. November 2026. Alle Wege sind mit echten Klicks durchgespielt: das ganze Spiel vom Titelbild bis zum Ende von Kapitel 2 folgt <code>tools/paths/spiel.json</code>, Kapitel 2 allein <code>tools/paths/kapitel2_main.json</code>, Lantern <code>kapitel2_lantern.json</code>, Auf Sendung <code>kapitel2_sendung.json</code>, die Fälschung <code>kapitel2_faelschung.json</code>, der 24h-Laden <code>kapitel2_laden.json</code>, Kapitel 1 allein <code>tools/paths/kapitel1_main.json</code>, Auftrag A <code>kapitel1_varga_sold.json</code>, Auftrag B <code>kapitel1_tide_sold.json</code>, Mottes Lektionen <code>kapitel1_motte.json</code>, Vesper <code>kapitel1_vesper.json</code>, das Dach <code>kapitel1_dach.json</code>, der Zeitungskrieg <code>kapitel1_zeitung.json</code>, Frau Imai <code>kapitel1_imai.json</code> und <code>kapitel1_imai_traum.json</code>, die weißen Träger <code>kapitel1_traeger.json</code>. Frau Imais zweiter Teil und Mottes Backup brauchen Antworten aus Kapitel 1, die ein Klickpfad von Kapitel 2 allein nicht hat: Sie sind mit dem Solver und von Hand geprüft.</footer>
+<footer>Stand: 19. November 2026. Alle Wege sind mit echten Klicks durchgespielt: das ganze Spiel vom Titelbild bis zum Ende von Kapitel 2 folgt <code>tools/paths/spiel.json</code>, Kapitel 2 allein <code>tools/paths/kapitel2_main.json</code>, Lantern <code>kapitel2_lantern.json</code>, Auf Sendung <code>kapitel2_sendung.json</code>, die Fälschung <code>kapitel2_faelschung.json</code>, der 24h-Laden <code>kapitel2_laden.json</code>, Frau Haldanes Sohn <code>kapitel2_haldane.json</code>, Kapitel 1 allein <code>tools/paths/kapitel1_main.json</code>, Auftrag A <code>kapitel1_varga_sold.json</code>, Auftrag B <code>kapitel1_tide_sold.json</code>, Mottes Lektionen <code>kapitel1_motte.json</code>, Vesper <code>kapitel1_vesper.json</code>, das Dach <code>kapitel1_dach.json</code>, der Zeitungskrieg <code>kapitel1_zeitung.json</code>, Frau Imai <code>kapitel1_imai.json</code> und <code>kapitel1_imai_traum.json</code>, die weißen Träger <code>kapitel1_traeger.json</code>. Frau Imais zweiter Teil und Mottes Backup brauchen Antworten aus Kapitel 1, die ein Klickpfad von Kapitel 2 allein nicht hat: Sie sind mit dem Solver und von Hand geprüft.</footer>
 </main>
 </body>
 </html>

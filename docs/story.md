@@ -111,7 +111,7 @@ Maschinen für die Arbeit am Wasser umgebaut.
 | Neunter | **Revier 9** | die Wache von Lieutenant Morrow |
 | Darunter | **Die Sümpfe** | überflutete Straßen der alten Stadt unter dem Neunten (der Sumpf-Abgang, die alte Metro); weiter draußen, wo der Kanal des Drain-Markts an den Rand führt und kein Ring mehr darüber liegt, ein ertrunkener Wald zwischen den Hausfronten unter dem Nachthimmel; dort Lanterns Wohnwagen auf Pontons |
 | Mitte (5.) | **Die Transitachse**, die Aufzüge zwischen den Ringen | Kontrollpunkte, der einzige legale Weg nach oben |
-| Mitte | **Die Schlafstation** | Reihen von Sinkern in weißem Licht |
+| Mitte (5.) | **Die Schlafstation** | Reihen von Sinkern in weißem Licht; im Fünften, an der Transitachse (vom Nutzer entschieden 2026-11-19) |
 | Krone | **Nagi·wa Tower, Civic Rest** | Aubrechts Büros; sauber, kalt, lautlos |
 | Krone | **Der Ruhekern** | das Finale: wo die Stadt schläft |
 
@@ -376,7 +376,7 @@ Das Design steht in `docs/kapitel2-design.md` (Entscheidungen in §10h).
 
 **Ziel:** Teo zurückholen und verstehen, was Lull tut.
 
-- **Teo:** Er wird in die **Schlafstation** gebracht, oben in den mittleren Ringen, wo der Neunte
+- **Teo:** Er wird in die **Schlafstation** gebracht, oben im Fünften an der Transitachse, wo der Neunte
   nicht hinkommt. Juno versucht ihn zu besuchen und wird abgewiesen. Morrows Tochter liegt auf
   derselben Station.
 - **Pumpenhalle 3:** Tinte hat gesehen, wie Teo umfiel, und wie vor ihm elf andere. Sie zählt die
@@ -760,7 +760,7 @@ Die Gliederung von Kapitel 2 ist freigegeben (`docs/kapitel2-design.md`), mit di
 - **Vesper und der Mord-Clip:** Vesper bietet am meisten. Wer an ihn verkauft, landet im selben Weg wie bei Sable: Der Clip läuft eine Nacht auf NINTH LIVE, dann kauft Nagi·wa ihn auf, und er verschwindet; das Kassenbuch nennt die Zuschauer. Sables Verrat in Kapitel 4 gilt nur, wenn Sable gekauft hat.
 - **Morrow bekommt den Clip in der Jade Row,** bei ihrem nächtlichen Halt (`cam07`), nicht im Revier 9; Revier 9 wird kein Raum.
 - **Lantern finden:** Lantern kapert am Sonntag den großen Werbebildschirm der Kowalski-Straße für zehn Sekunden. Die halbe Reparatur weiß, dass es übers Kabel kam, und das Kabel führt in den Kanal des Drain-Markts und an ihm entlang hinaus in die Sümpfe zu seinem Versteck (der Weg dorthin: „Mit dem Floß in die Sümpfe“, unten).
-- **Frau Haldanes Sohn ist ein Sinker.** Juno findet ihn über das Archiv einer Kamera im Fünften: Am 15. Oktober wacht er nicht mehr auf, und zwei in Weiß tragen ihn hinaus. Ein kleiner Faden, der in Kapitel 2 endet; auf der Schlafstation in Kapitel 3 ist ihr Sohn höchstens ein Blick, ohne Flag.
+- **Frau Haldanes Sohn ist ein Sinker.** Er heißt **Najo** (vom Nutzer gewählt 2026-11-19). Juno findet ihn über das Archiv einer Kamera im Fünften: Am 15. Oktober wacht er nicht mehr auf, und zwei in Weiß tragen ihn hinaus. Ein kleiner Faden, der in Kapitel 2 endet; auf der Schlafstation in Kapitel 3 ist ihr Sohn höchstens ein Blick, ohne Flag. Najo ist mit einer Arbeitserlaubnis über die Transitachse in den Fünften gekommen, arbeitet dort und schläft unter der Woche im Arbeiterwohnheim 5-Süd; die zwei in Weiß tragen ihn von dort auf die Schlafstation im selben Ring, ohne einen Kontrollpunkt dazwischen. Juno im Neunten kommt nicht hinauf: Sable verkauft ihr nur einen Blick ins Archiv der Kamera im Schlafsaal, nie das Live-Bild (vom Nutzer entschieden 2026-11-19).
 
 Nach der Prüfung von Kapitel 2 gegen Kapitel 1 und die Bibel (am selben Tag):
 

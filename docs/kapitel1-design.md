@@ -269,7 +269,7 @@ Ausweis, Notschlüssel und der Weg aufs Dach sind schon im Prolog offen (entschi
 
 | Was sie sagt | Was es später heißt |
 |---|---|
-| Der Fünfte schmeckt seit Jahren nach Kochsalz, jede Nacht eimerweise: „Ich frag mich, wer da oben jede Nacht so viele wäscht.“ | die Schlafstation in den mittleren Ringen (Kap. 3, 4) |
+| Der Fünfte schmeckt seit Jahren nach Kochsalz, jede Nacht eimerweise: „Ich frag mich, wer da oben jede Nacht so viele wäscht.“ | die Schlafstation im Fünften, an der Transitachse (Kap. 3, 4) |
 | Sie wartet seit drei Jahren auf den ersten warmen Tropfen der Maschine | die automatische Auswertung hat es nie gegeben (Kap. 2) |
 | Das halbe Haus holt um drei zur selben Zeit Luft | die Schlafenden sind verbunden, Tintes „wie ein Schwarm“ (Kap. 3) |
 | Lull und Junos Implantat: „Das ist dieselbe Stelle. Sparsam sind sie, die Leute da oben.“ | Lull ist das Beobachter-Implantat in billig (§10a) |

@@ -15,11 +15,11 @@ for what in $list; do
   if [ "$what" = prolog ]; then
     node lib/cutaway/tools/graph.mjs index.html --act prolog --set off_roof --out build/graph/prolog.js | grep -E "states in|soft-lock|SOFT|HINTS|hints:|^wrote|^open"
   elif [ "$what" = kapitel2 ]; then
-    node lib/cutaway/tools/graph.mjs index.html --act kapitel2 --set "$(off main),off_lantern,off_shop24" --out build/graph/kapitel2_main.js | grep -E "states in|soft-lock|SOFT|HINTS|hints:|^wrote|^open"
+    node lib/cutaway/tools/graph.mjs index.html --act kapitel2 --set "$(off main),off_lantern,off_shop24,off_haldane" --out build/graph/kapitel2_main.js | grep -E "states in|soft-lock|SOFT|HINTS|hints:|^wrote|^open"
   elif [ "$what" = kapitel2_stick ]; then
-    node lib/cutaway/tools/graph.mjs index.html --act kapitel2 --set "$(off main),off_lantern,off_shop24,stick_ines" --out build/graph/kapitel2_stick.js | grep -E "states in|soft-lock|SOFT|HINTS|hints:|^wrote|^open"
+    node lib/cutaway/tools/graph.mjs index.html --act kapitel2 --set "$(off main),off_lantern,off_shop24,off_haldane,stick_ines" --out build/graph/kapitel2_stick.js | grep -E "states in|soft-lock|SOFT|HINTS|hints:|^wrote|^open"
   elif [ "$what" = kapitel2_lantern ]; then
-    node lib/cutaway/tools/graph.mjs index.html --act kapitel2 --set "$(off main),off_shop24,off_main,stick_ines,off_dryer,evi_knows,forgery_proven" --out build/graph/kapitel2_lantern.js | grep -E "states in|soft-lock|SOFT|HINTS|hints:|^wrote|^open"
+    node lib/cutaway/tools/graph.mjs index.html --act kapitel2 --set "$(off main),off_shop24,off_haldane,off_main,stick_ines,off_dryer,evi_knows,forgery_proven" --out build/graph/kapitel2_lantern.js | grep -E "states in|soft-lock|SOFT|HINTS|hints:|^wrote|^open"
   else
     node lib/cutaway/tools/graph.mjs index.html --act kapitel1 --set "$(off "$what")" --out "build/graph/kapitel1_$what.js" | grep -E "states in|soft-lock|SOFT|HINTS|hints:|^wrote|^open"
   fi

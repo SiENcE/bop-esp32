@@ -71,11 +71,11 @@
    * after the cut. A clip from another hour gives it (`hour`, 22 by default); one Juno filmed herself has no camera, only a place
    * (`where`). Anonymising (from Chapter 1, while `anon.if` holds) blurs every face for good: the flag `anon_<cache id>`. Montage (Chapter 2,
    * kapitel0-design §2.4: a fake Juno makes herself) lays an empty stretch of the same night over a moment (`montage.moment`): the flag
-   * `mont_<cache id>`, nobody in it any more. PRÜFEN (Chapter 2)
+   * `mont_<cache id>`, nobody in it any more; or another day's stretch of the same person (`shows` names it on the timeline, `keeps`: he stays in it). PRÜFEN (Chapter 2)
    * lays the clip beside another: `check` names the check it opens (Nagiwa.checks, game/pruefen.js). A clip without a picture of its own
    * (`thumb`) may draw one (`picture`).
    * @type {Record<string, {cam?: string, where?: string, hour?: number, from: number, to: number, thumb?: string, moments: [number, number, string][],
-   *   people: [string, number, number][], cut?: {moment: number, drop?: boolean, gives: string, if?: any, then?: any[]}, anon?: {if?: any, then?: any[]}, montage?: {moment: number, if?: any, then?: any[]}, check?: string,
+   *   people: [string, number, number][], cut?: {moment: number, drop?: boolean, gives: string, if?: any, then?: any[]}, anon?: {if?: any, then?: any[]}, montage?: {moment: number, shows?: string, keeps?: boolean, if?: any, then?: any[]}, check?: string,
    *   picture?: (ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number) => void}>} */
   Nagiwa.clips = {};
   /** what other files add to the deck's hotspots once everything is loaded (PRÜFEN, game/pruefen.js) @type {((hs: Record<string, any>) => void)[]} */
@@ -696,7 +696,7 @@
     const hh = String(clip.hour ?? 22).padStart(2, "0"), mm = (/** @type {number} */ m) => `${hh}:${String(Math.floor(m)).padStart(2, "0")}`;
     const meta = [["WO", cam ? t("{cam} // {place}", { cam: t("CAM {id}", { id: cam.id }), place: t(cam.place) }) : t(clip.where ?? "")],
       ["WANN", `${mm(clip.from)}-${mm(clip.to)}`], ["LÄNGE", t("{min} MIN", { min: `${Math.floor(clip.to - clip.from)}:${String(Math.round(((clip.to - clip.from) % 1) * 60)).padStart(2, "0")}` })],
-      ["WER", anon ? t("ANONYMISIERT") : mont ? t("NIEMAND") : clip.people.map(([who]) => t(Nagiwa.people[who]?.name ?? who)).join(", ")]];
+      ["WER", anon ? t("ANONYMISIERT") : mont && !clip.montage?.keeps ? t("NIEMAND") : clip.people.map(([who]) => t(Nagiwa.people[who]?.name ?? who)).join(", ")]];
     meta.forEach(([k, v], i) => { small(ctx, t(k), E.meta, py + 1 + i * 15, C.steel6); small(ctx, fit(v, X + WW - 6 - E.meta, hud()), E.meta, py + 8 + i * 15, C.cyanPale); });
     // the timeline: the minutes, the moments, who is in the picture when; the cut in brackets
     const [lx, ly, lw] = E.line, at = (/** @type {number} */ m) => Math.round(lx + (m - clip.from) / (clip.to - clip.from) * lw);
@@ -706,10 +706,10 @@
       const kept = clip.cut?.moment === i, gone = kept && clip.cut?.drop && cut;      // a moment taken out stays as a dark gap
       rect(ctx, gone ? C.steel1 : kept ? C.cyanDark : C.steel3, at(a) + 1, ly + 9, Math.max(1, at(b) - at(a) - 1), 9);
       // a moment too short for its name keeps it for the caption under the cut
-      const shown = mont && clip.montage?.moment === i ? "SCHLEIFE" : label;            // a montaged moment: the empty stretch laid over it
+      const shown = mont && clip.montage?.moment === i ? clip.montage.shows ?? "SCHLEIFE" : label;   // a montaged moment: what was laid over it
       if (!gone && hud().measure(t(shown).toUpperCase()) + 5 <= at(b) - at(a)) small(ctx, t(shown), at(a) + 3, ly + 11, kept ? C.cyanPale : C.steel6);
     });
-    if (!mont) clip.people.forEach(([who, a, b], i) => {
+    if (!mont || clip.montage?.keeps) clip.people.forEach(([who, a, b], i) => {
       const y = ly + 21 + i * 8;
       small(ctx, anon ? "???" : t(Nagiwa.people[who]?.name ?? who), lx, y, C.steel6);
       rect(ctx, C.steel4, Math.max(at(a), lx + 34), y + 1, at(b) - Math.max(at(a), lx + 34), 3);

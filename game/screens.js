@@ -32,7 +32,7 @@
   const t = Nagiwa.t;
   // the texts this layer draws (Nagiwa.t translates them; declared for validate and the Texts tab)
   Cutaway.i18n.declare("feed display", ["UNBEKANNT", "CAM {id} // {place}", "CAM {id}", "LINK: J.REYES IMPLANTAT",
-    "PUFFER", "REC", "VOR", "DECK", "CACHE {n}/8", "ZOOM x3"]);
+    "PUFFER", "REC", "VOR", "DECK", "CACHE {n}/8", "ZOOM x3", "ARCHIV"]);
   const blink = () => Math.floor(Cutaway.clock.time / 500) % 2 === 0;
 
   // ------------------------------------------------------------------ the feeds
@@ -62,7 +62,12 @@
       small(ctx, t(cam.owner), 4, 12, C.phosphor);
       small(ctx, t("LINK: J.REYES IMPLANTAT"), 4, 20, C.implant);
     }
-    small(ctx, Nagiwa.stamp(), W - 4, 4, C.phosphorBright, "right");
+    // a camera seen only in its archive (a room's `archive`): no live picture, its own time; the view flag holds the frame played back
+    // (`stamps`, each frame's time), and without one it shows its newest recording, from this game day's `newest` (last night)
+    const arch = /** @type {any} */ (Cutaway.scene.room)?.archive, frame = arch && S().flag(arch.flag);
+    const stamp = !arch ? Nagiwa.stamp() : frame ? arch.stamps[frame] : `${Nagiwa.dayDate()} ${arch.newest}`;
+    small(ctx, stamp, W - 4, 4, C.phosphorBright, "right");
+    if (arch) small(ctx, t("ARCHIV"), W - 8 - Cutaway.font.get("hud").measure(stamp.toUpperCase()), 4, C.implant, "right");   // (under the stamp: the buttons)
     if (S().flag("rec_on") && blink()) { ctx.fillStyle = C.red; ctx.fillRect(W - 80, 4, 3, 3); }
     // the cameras Juno has linked: a column on the left, under the display's lines (a click switches:
     // hotspots `thumb_<cam>`; the rects are Nagiwa.osd's); one whose code she knows but hasn't used yet greyed (a click links it)

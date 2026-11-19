@@ -298,7 +298,12 @@ Zeugin vor Gericht, und deutet es nie. Ihre Angst steht nicht in ihren Wörtern,
 
 Immer müde, immer freundlich, auf Lull. Sie weiß nicht, was sie nachts tut, also weiß es auch ihr Text nie. In Kapitel 1 spricht sie
 einmal, am Donnerstag, wach an ihrer Tür (`game/stadt.js`): kurze Sätze, sie fragt nach Post, und sie tröstet sich selbst („Dann schlaf
-ich, und morgens ist es nicht mehr so schlimm.“). Ihre Stimme für Kapitel 2 (ihr Sohn) ist noch zu ergänzen (`kapitel2-design` §14).
+ich, und morgens ist es nicht mehr so schlimm.“).
+
+In Kapitel 2 (ihr Sohn Najo, `game/kapitel2_haldane.js`; ein Vorschlag, 2026-11-19): Sie ist wach, und das hört man nur daran, dass sie zählt. Sonntage, Briefe, Wochen. Sie bittet, ohne zu drängen, und fragt danach nur noch eins: „Hast du ihn gesehen?“ Was sie hört, nimmt sie still; ihre Antworten sind ein Satz, der sie selbst tröstet, und manchmal tröstet er falsch.
+
+> „Sonntags schlaf ich nicht. Sonntags kommt sein Brief.“\
+> „Dann schlaf ich auch. Dann bin ich näher bei ihm.“
 
 ### Die Regenleserin: die Merkwürdige vom Dach
 

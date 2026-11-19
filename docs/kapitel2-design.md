@@ -591,7 +591,10 @@ Fälschung, wie die von Nagi·wa, und mit der am 24h-Laden eine von zweien, die 
 
 Ihre Antworten (Vorschläge): nach der Wahrheit, nach einer langen Pause: „Dann schlaf ich auch. Dann bin ich näher bei ihm.“ (Sie meint
 es, wie es der Zeuge meint, story §6.) Nach dem Clip: „Er sieht müde aus. Er sah immer müde aus.“ Nach „nichts“: „Dann warte ich
-eben weiter.“ Der Faden endet hier; in Kapitel 3 liegt er höchstens als Blick auf der Schlafstation, ohne Flag.
+eben weiter.“ Der Faden endet hier; in Kapitel 3 liegt er höchstens als Blick auf der Schlafstation, ohne Flag. Die liegt im Fünften an der Transitachse,
+im selben Ring wie sein Wohnheim (vom Nutzer entschieden 2026-11-19, story §10).
+
+**Gebaut** (2026-11-19, `game/kapitel2_haldane.js`; der Klickpfad `tools/paths/kapitel2_haldane.json`; `cam51` auf den freigegebenen Blöcken `docs/cams/cam51_blocks_x3.png` gemalt, Prüfbilder `docs/cams/cam51_x3.png` und im Spiel `cam51_spiel_x2.png`): Der Sohn heißt **Najo** (vom Nutzer gewählt 2026-11-19). Ab Sonntag sitzt Frau Haldane wach in ihrer Tür; ihr Bild bleibt, wie es ist (sie sitzt schon im Sessel in der offenen Tür), dass sie wach ist, sagen ihr Blick und ihre Zeilen. Sie bittet Juno beim ersten Ansprechen (`haldane_ask`), am Montag mit „Gestern war Sonntag“. Bei Sable steht die Frage nach dem Wohnheim an der Stelle von „Was verkaufst du sonst?“, so bleiben es vier Antworten: 150 Chits oder Kesslers Ring, roh (`ledger_sable_cam51` = paid oder ring, mit `link_cam51`). `cam51` gibt es nur im Archiv, nie live (vom Nutzer entschieden 2026-11-19: Sable verkauft einen Blick ins Archiv, nicht die Kamera); es öffnet bei seiner neuesten Aufnahme, letzte Nacht um drei, mit Najos abgezogener Koje. Es ist ein Blick den Gang eines Schlafsaals hinunter, die Kojen längs an beiden Wänden, zwei übereinander, zwischen ihnen Spinde; Najos Koje ist die vordere rechts, oben (die Leiste der Kameras deckt den linken Rand jedes Feeds). Das Archiv (`PUFFER`) zeigt drei Standbilder statt der Feed-Figuren: den Brief am 14. um 21:02, den Montagmorgen um 06:00, die Träger mit der Trage um 06:31; der Feed schreibt dann `ARCHIV` und ihre Zeit (eine Ansicht, `cam51_at`). Der Clip im CACHE ist 06:28 bis 06:33 (`cache_clip_najo`); Montieren legt einen Morgen vom 9. Oktober über die Träger (auf der Zeitleiste `ZUR SCHICHT`, Najo bleibt im Bild). Die Wahl an ihrer Tür hat dazu „Noch nicht.“, das nichts festlegt. Hinweise H1 bis H4 (§12) nur am Sonntag. `sh tools/check.sh` löst den Faden allein mit den anderen zu (`off_haldane`) und schließt ihn bei allen anderen Läufen.
 
 ### 6.3 Vesper (`off_vesper`)
 
@@ -793,7 +796,7 @@ Prüfbilder `docs/rooms/weg1_leben_blocks_west_x3.png`, `_laden_x3.png`, `_nachh
 |---|---|---|---|
 | `cam25` | Wohnblock Lerche, Flur im 4. Stock | das Iso-Bild von `lerche_flur` unter dem Feed-Filter (ein Ort, ein Bild, wie `cam14`) | verbunden mit `cam24`; zeigt, wann der Flur frei ist |
 | `cam26` | der 24h-Laden, über der Kasse | das Iso-Bild von `shop24` unter dem Feed-Filter (ein Ort, ein Bild) | verbunden über die Ladestation des Putzroboters (§6.5); live und das Archiv der letzten Nacht |
-| `cam51` | Wohnheim 5-Süd im Fünften, der Schlafsaal | Reihen von Kojen, Wäsche, ein Fenster ohne Himmel; die Sicht, die am besten passt (Style Guide), Vorschlag: frontal auf eine Kojenwand | **nur im Archiv**, von Sable; das Feed-Bild bekommt zum ersten Mal die weißen Träger als kleine Feed-Figuren (in Kapitel 1 nur Nahaufnahme und Stimmen, story §10b) |
+| `cam51` | Wohnheim 5-Süd im Fünften, der Schlafsaal | Reihen von Kojen, Wäsche, ein Fenster ohne Himmel; die Sicht, die am besten passt (Style Guide), Vorschlag: frontal auf eine Kojenwand. **Gemalt** (2026-11-19, `art/cams/cam51.px.js`, auf den vom Nutzer freigegebenen Blöcken): den Gang hinunter von oben über der Tür, die Kojen längs an beiden Wänden, Spinde, Wäsche, hohe Fenster in einen Lichtschacht, die Lull-Punkte der Schläfer; vier Bilder, alle aus dem Archiv (letzte Nacht, Brief, Morgen, Träger); Najo mit dem Brief von Hand gezeichnet | **nur im Archiv**, von Sable; das Feed-Bild bekommt zum ersten Mal die weißen Träger als kleine Feed-Figuren (in Kapitel 1 nur Nahaufnahme und Stimmen, story §10b) |
 
 ### 9.4 Für den Stadtplan (nur Vorschläge, nichts Bestehendes geändert)
 
@@ -818,13 +821,13 @@ wechseln würde, eine eigene Ansicht (Kapitel 1, §10). Lull ist immer die ovale
 | **Pike**, Lanterns Gehilfe | neu | `drain_market` (von oben), die Fahrt (von der Seite) | von oben stehend und stakend; von der Seite auf dem Floß, stakend (die Stange gehoben, gestoßen, geschoben, wieder gehoben) | umgebaut mit dem Reiher, nach dem Graureiher (vom Nutzer gewünscht 2026-11-16): lange dünne Beine, ein Mantel wie gefaltete graue Flügel mit dem Schwarz an der Schulter, ein langer weißer Hals im S mit dem schwarzen Strich vorn, ein kleiner weißer Kopf, der schwarze Strich vom Auge in den Schopf, der nach hinten hängt, ein langer orangegelber Schnabel; aufrecht und still. gemalt in `art/rooms/sumpf.px.js` (die Fahrt und die Ankunft), etwas kleiner als zuerst, damit er neben Juno (50 px) nur um Kopf und Hals größer ist; einseitig trägt er nichts, so genügt das Spiegeln. Seine Farbe ist das Orangegelb seines Schnabels, gedämpft neben Junos Gelb, `#e0a048` (vom Nutzer entschieden 2026-11-16). Von oben auf dem Markt als Block freigegeben (2026-11-16, `art/test/pike_top_blocks.px.js`): er steht am hinteren Ende seines Floßes |
 | **Kessler mit Gips** | neu (von oben) | `drain_market` | von oben, sitzend | der Gips am Arm ist einseitig: von oben kein Problem, er sitzt immer gleich. Als Block (2026-11-17): auf einem platten Karton, die Beine nach vorn, der Arm in Gips in einer Schlinge vor der Brust, sein Strickschal, die Mütze für Münzen mit etwas Abstand vor seinen Füßen (vom Nutzer so gewünscht) |
 | **Bao mit Verband** | Variante | `kowalski` | wie Bao | nur nach `k1b=sold`, Montag (Samstag und Sonntag fehlt sein Wagen). Als Block (2026-11-17, nach der Skizze des Nutzers): ein Band über der Stirn, das an der Seite über Ohr und Schläfe geht, die Wicklungen als graue Linien; der kahle Scheitel bleibt frei, sonst sieht es aus wie eine weiße Mütze |
-| **Frau Haldane, wach an der Tür** | Variante | `kessel_14` | wie ihre Figur (SE, NE, NW) | wach, ohne Lockenwickler? Vorschlag: die Lockenwickler bleiben, die Augen offen, das Pflaster dunkel |
+| **Frau Haldane, wach an der Tür** | Variante | `kessel_14` | wie ihre Figur (SE, NE, NW) | wach, ohne Lockenwickler? Vorschlag: die Lockenwickler bleiben, die Augen offen, das Pflaster dunkel. Vorerst nicht gebaut (2026-11-19): sie sitzt schon im Sessel in der offenen Tür, das Wachsein sagen die Zeilen |
 | **der Nachbar an der Haustür** | neu (Feed) | `cam24` | Feed SE, dazu die Nahaufnahme seiner Finger am Zahlenfeld (Zoom) | kommt jeden Abend um 19:30 heim; die Zahlen im Zoom mit der Spielschrift |
 | **die Wartenden in der Klinik** | neu | `klinik` | Iso sitzend nach SW auf der Stuhlreihe an der rechten Wand, von vorn wie Lantern in seinem Wohnwagen: der Oberkörper frontal, die Oberschenkel kurz nach links unten, die Schienbeine senkrecht (vom Nutzer korrigiert 2026-11-17) | müde, Lull-Pflaster, wie die Schlange in `cam21`. Als Block (2026-11-17): ein alter Mann in grauer Strickjacke, vornübergesunken; eine Frau in Hafenjacke, den Kopf an der Wand, die Augen zu; ein junger Mann im dunklen Hoodie, die Ellbogen auf den Knien. Das Pflaster sitzt jeweils hinter dem Ohr, das zu uns zeigt (nach SW gezeichnet, nie gespiegelt). **Gemalt** (2026-11-17) in `art/characters/klinik.px.js` (`wartende_1` bis `wartende_3`, sie atmen, der alte Mann nickt ein): die Strickjacke mit Knöpfen über einem hellen Kragen, die Hafenjacke mit Reflexstreifen und Zopf, der Hoodie mit seinen Bändeln und weißen Sohlen; im Raum Requisiten auf ihren Sitzen (`Nagiwa.at.klinik.waiting`) |
 | **die Fälschung** | neu (Clip) | `cam31` | das Bild von `cam31` mit einem dunklen Rollstuhl an Ashes Stelle | ein eigenes Bild für den Clip, stumm, mit der Schleife im Regen (§3.4) |
 | **jemand am Automaten** | neu (Feed) | `cam03` | Feed SE | zieht Nummer 7, wo Kessler stand; nur Ansehen |
-| **ihr Sohn** | neu | `cam51` (Feed) | Feed liegend auf der Koje, SE gehend | Lull-Pflaster als ovale Scheibe, im Feed als heller Punkt |
-| **die weißen Träger im Feed** | neu (Feed) | `cam51` | Feed SE, SW mit der Trage | Overall und Kapuze wie in `look_traeger` |
+| **ihr Sohn** | neu | `cam51` (Feed) | Feed liegend auf der Koje, SE gehend | Lull-Pflaster als ovale Scheibe, im Feed als heller Punkt. Gemalt (2026-11-19) nur in den Archivbildern von `cam51`: sitzend mit dem Brief (von Hand), liegend, auf der Trage |
+| **die weißen Träger im Feed** | neu (Feed) | `cam51` | Feed SE, SW mit der Trage | Overall und Kapuze wie in `look_traeger`. Gemalt (2026-11-19) im Archivbild `cam51_traeger`, weiße Overalls mit Kapuze |
 | Imai, Mei, die Stammgäste, Motte, Ratz, der Prediger, Sable, Okonkwo, Morrow, die halbe Reparatur, die Regenleserin | wieder | wie in Kapitel 1 | wie gemalt | Morrow steht in Jade Row im Straßenmodus: In `cam07` ist sie schon im Maßstab der Gasse gemalt, aber nur für den Feed; für die Straße braucht sie ihre Farben und die Ansichten, in denen Juno mit ihr redet (die Marke am Band hängt mittig, Spiegeln genügt) |
 
 **Tinte** ist in Kapitel 2 nur eine Nachricht, kein Bild. **Juno** bekommt keine neuen Ansichten (NW und SW sind zurückgestellt).
@@ -877,6 +880,10 @@ Die Hinweise spricht EVI (Prolog-Design §2.2). Die Tabelle nennt die schweren S
 | S3, der 24h-Laden (nach dem Roboter; nie nötig, also ohne `about`, und nicht am Montag) | „Der Putzroboter hat dich ins Netz vom Laden gebracht.“ | „Die Kamera über der Kasse hat ein Archiv. Was war letzte Nacht?“ | „Öffne CAM 26 und drück PUFFER.“ |
 | S4, der 24h-Laden (mit dem Clip) | „Du weißt jetzt, wer im Laden nimmt. Das Schaf weiß es noch nicht.“ | „Zeig es ihm. Oder leg eine leere Schleife drüber. Oder Sable kauft es.“ | „Geh zum Schaf auf der Fischermann Street.“ |
 | I2, Frau Imai (nach `imai_told`, bis zur Wahl; ohne `about`, nicht am Montag) | „Frau Imai hat wieder geschrieben. Sie hat noch etwas gesehen.“ | „Sie sitzt abends im LUCKY STATIC an ihrem Tisch.“ | „Geh ins LUCKY STATIC und sprich mit Frau Imai.“ |
+| H1, Frau Haldane (nur am Sonntag, ohne `about`) | „Heute ist Sonntag. Frau Haldane schläft heute nicht.“ | „Sie sitzt wach in ihrer Tür und wartet auf etwas.“ | „Sprich mit Frau Haldane im Flur.“ |
+| H2, Frau Haldane (nach ihrer Bitte) | „Frau Haldane will wissen, wie es ihrem Sohn geht.“ | „Im Fünften hast du keine Kamera. Wer verkauft so was?“ | „Geh zu Sable auf dem Drain-Markt und frag nach dem Wohnheim 5-Süd.“ |
+| H3, Frau Haldane (mit `cam51`) | „Du bist im Archiv vom Wohnheim.“ | „Schau nach, was mit Najo passiert ist.“ | „Öffne CAM 51 und drück PUFFER.“ |
+| H4, Frau Haldane (mit dem Clip) | „Du weißt jetzt, was mit Najo ist. Seine Mutter weiß es nicht.“ | „Sag ihr die Wahrheit. Oder montier ihr einen anderen Morgen. Oder sag, du hast nichts gefunden.“ | „Geh zu Frau Haldane im Flur.“ |
 | das Ende | „Du hast doch Clips mit Uhrzeit.“ | „Leg die Protokolle neben deine Aufnahmen.“ | „Nimm Kesslers Ring. Dienstag, 22:35.“ |
 
 ## 13. Was die Engine (und das Spiel) zusätzlich braucht
@@ -887,7 +894,7 @@ Archiv einer Kamera, Gegenstände an Hotspots und Fragen mit vier Antworten gibt
 1. **Prüfen und Montieren** im Clip-Editor sind Teil des Spiels (`game/deck.js`): zwei Clips auf zwei Zeitleisten, Stellen als
    Hotspots, ein Zähler `forgery_cuts`; Montieren als Wahl eines Moments und eines Zeitstempels. Dasselbe Prüfen dient dem Ende (die
    Protokolle als Zeitleiste ohne Bild).
-2. **Eine Kamera nur im Archiv** (`cam51`): wie das Archiv von `cam18`, ohne Live-Bild.
+2. **Eine Kamera nur im Archiv** (`cam51`): wie das Archiv von `cam18`, ohne Live-Bild. Gebaut (2026-11-19) mit `archive` am Raum: der Feed schreibt `ARCHIV` und statt der Uhr die Zeit des Bilds, das er zeigt: ohne gewähltes Bild die neueste Aufnahme (`newest`, letzte Nacht um drei), sonst das Archivbild, das eine Ansicht hält.
 3. **Kameras, die ausfallen**: `link_cam07` und `link_cam14` über Nacht vergessen, GLASS zeigt sie grau mit `KEIN SIGNAL` (gebaut: ein Eintrag in
    `Nagiwa.cams` kann `dead` haben, eine Bedingung, und `deadLine`, was Juno beim Klick sagt).
 4. **Der gekaperte Schirm** auf der Kowalski: ein Teil des Bilds der Straße, das zu bestimmten Zeiten den Text zeigt (gesetzt mit der
@@ -901,7 +908,7 @@ Archiv einer Kamera, Gegenstände an Hotspots und Fragen mit vier Antworten gibt
 
 ## 14. Offen
 
-- **Namen:** Frau Haldanes Sohn, die Quiet im Flur (vielleicht ohne Namen), der Kontakt
+- **Namen:** die Quiet im Flur (vielleicht ohne Namen), der Kontakt
   `BECKEN 3` (oder `TINTE`), die Kameranummern `cam25`, `cam26` und `cam51`; der Nachtverkäufer im Schafskostüm, der Obdachlose und die
   Kette des 24h-Ladens (§6.5).
 - **Zeilen:** alles, was hier steht, sind Vorschläge; Lanterns Sprechkarte ist ein Entwurf (2026-11-15), beim Durchspielen zu prüfen.
@@ -910,8 +917,8 @@ Archiv einer Kamera, Gegenstände an Hotspots und Fragen mit vier Antworten gibt
   die Änderungen an fertigen Bildern: das neue Kabel hinter dem großen Schirm, Lanterns grüner Text auf dem Schirm, das rote Licht der Kamera im 14. Stock aus.
   (Die Bretter an Okonkwos Laden und der dunkle Laden in `cam07v`, `GLASSER LIES`, `WHO TALKED?`, das Papierboot mit `I.` und das
   Absperrband an `cam30` sind gemalt, 2026-11-18, §5.)
-- **Sprechkarten** im `dialog-style-guide`: Lantern und Pike stehen als Entwurf, die der Pflegerin Marit Holm und die von Vargas Mann („der Schwere“) sind gewählt (2026-11-17); die von Frau Imai steht als Vorschlag (2026-11-19); die Karte von Frau
-  Haldane ist zu ergänzen.
+- **Sprechkarten** im `dialog-style-guide`: Lantern und Pike stehen als Entwurf, die der Pflegerin Marit Holm und die von Vargas Mann („der Schwere“) sind gewählt (2026-11-17); die von Frau Imai und die von Frau Haldane für dieses Kapitel stehen als Vorschlag (2026-11-19). Frau Haldanes Sohn heißt Najo
+  (vom Nutzer gewählt 2026-11-19).
 - **`evi_trust`** (wie offen Juno im Prolog zu EVI war) geht mit, bekommt aber erst später eine Aufgabe (vom Nutzer entschieden
   2026-11-14): vielleicht, wenn EVI erfährt, was sie ist (§3.3), oder im Finale, wenn sie richtig lesen muss (story §7, Kap. 6).
   Bis dahin meldet die Übergabe-Prüfung es als „kept for nothing“; das ist bekannt.

@@ -95,7 +95,7 @@ ersetzt durch Civic Rest, Trainingsdaten „Beobachterin 0412, J. REYES". EVI: �
 ersetzt." **Entscheidung 2:** den Clip an Sable oder Vesper verkaufen, Morrow geben, Lantern bringen oder behalten; eine Kopie behält Juno immer.
 Lantern sendet Ines' Protokolle, aber dem gejagten „Mörder" glaubt niemand. Teo wacht nicht mehr auf.
 
-**Kapitel 3 „Lull".** Teo liegt auf der Schlafstation in den mittleren Ringen; Juno wird abgewiesen. Tinte
+**Kapitel 3 „Lull".** Teo liegt auf der Schlafstation im Fünften, an der Transitachse; Juno wird abgewiesen. Tinte
 zählt die Sinker der Halle seit Jahren mit (ein Knoten pro Sinker in einem Kabel), sie „zucken gleichzeitig,
 wie ein Schwarm". Juno nimmt Lull und ist **wach im gemeinsamen Traum**: die Stadt durch tausend Kameras,
 der Zeuge mit vielen Stimmen (Frau Haldanes ist darunter), Teo, der ruhig eine Kamera beobachtet und nicht

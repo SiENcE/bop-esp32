@@ -40,9 +40,11 @@ Cutaway.actor("motte", {
   look: ["Motte. Zwölf, Kurier, und immer da, wo ich gerade hinwill.", "Die Mütze ist ihm drei Nummern zu groß. Er würde sie nie hergeben."],
   // (from Chapter 1 on, while a lesson is due tonight, he asks for it instead: game/kapitel1_leben.js)
   talk: [{ face: "se" }, { if: ["day>1", "day<5", "moth_kind", "!moth_today", "moth_lesson<3", "!off_motte"], then: [{ dialog: "motte_lektion" }, { if: "!moth_today", then: [{ dialog: "motte_mehr" }] }], else: [{ if: "!moth_met", then: [{ dialog: "motte" }],
-    else: [{ if: "moth_kind", then: [{ say: "motte", text: "Morgen zeigst du's mir. Versprochen ist versprochen." }],
-      else: [{ if: "moth_brushed", then: [{ say: "motte", text: "Ich bin nicht müde." }],
-        else: [{ say: "motte", text: "Reparaturen. Klar." }] }] }, { dialog: "motte_mehr" }] }] }],     // game/motte.js
+    // (after all three lessons he is one himself: no more "tomorrow")
+    else: [{ if: "moth_student", then: [{ say: "motte", text: "Ich bin jetzt Glasser. Aber unser Haus glass ich nicht." }],
+      else: [{ if: "moth_kind", then: [{ say: "motte", text: "Morgen zeigst du's mir. Versprochen ist versprochen." }],
+        else: [{ if: "moth_brushed", then: [{ say: "motte", text: "Ich bin nicht müde." }],
+          else: [{ say: "motte", text: "Reparaturen. Klar." }] }] }] }, { dialog: "motte_mehr" }] }] }],     // game/motte.js
 });
 
 // Bao, over 70, behind his noodle cart on Kowalski Street (art/characters/bao.px.js: drawn facing SE, flipped

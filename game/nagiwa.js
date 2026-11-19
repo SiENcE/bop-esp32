@@ -74,6 +74,11 @@ Nagiwa.stamp = function () {
   const n = Cutaway.time.now, [y, m, d] = Nagiwa.day1, date = new Date(Date.UTC(y, m - 1, d + n.day - 1 + (n.minutes >= 1440 ? 1 : 0)));
   return `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, "0")}-${String(date.getUTCDate()).padStart(2, "0")} ${n.text}`;
 };
+/** The game day's own date, "2091-11-11" (its evening's; after midnight still the same): the night before it is this date's small hours. */
+Nagiwa.dayDate = function () {
+  const [y, m, d] = Nagiwa.day1, date = new Date(Date.UTC(y, m - 1, d + Cutaway.time.now.day - 1));
+  return `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, "0")}-${String(date.getUTCDate()).padStart(2, "0")}`;
+};
 
 // { tag: "kessler" } tags a person in a feed (at most three at once; the newest pushes out the oldest)
 // (a moment that waits for a tag, `if: "tag_kessler"`, plays right after it)
@@ -87,7 +92,7 @@ Cutaway.script.action("tag", async (s) => {
 }, { sets: (s) => [`tag_${s.tag}`] });
 
 // { solo: true } says which threads tools/solve-act.mjs can shut, one flag each (--set off_roof); in the game they stay open
-Cutaway.script.action("solo", () => {}, { sets: () => ["off_main", "off_roof", "off_zeitung", "off_imai", "off_traeger", "off_varga", "off_tide", "off_motte", "off_vesper", "off_lantern", "off_dryer", "off_klinik", "off_flat", "off_shop24"] });
+Cutaway.script.action("solo", () => {}, { sets: () => ["off_main", "off_roof", "off_zeitung", "off_imai", "off_traeger", "off_varga", "off_tide", "off_motte", "off_vesper", "off_lantern", "off_dryer", "off_klinik", "off_flat", "off_shop24", "off_haldane"] });
 
 // { been_to: ["flat", ...] } rooms Juno knows already, when a chapter begins (nobody asks; each one left open would double the solver's states)
 Cutaway.script.action("been_to", (s) => { for (const room of s.been_to) Cutaway.state.visit(room); });

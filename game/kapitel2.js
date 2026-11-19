@@ -300,6 +300,15 @@ Cutaway.hints([
   // Frau Imai's second part (game/kapitel2_imai.js): the same, only on Saturday and Sunday, when she tells it
   { if: ["!off_imai", "day<7", "imai_told", "!imai2"],
     text: ["Frau Imai hat wieder geschrieben. Sie hat noch etwas gesehen.", "Sie sitzt abends im LUCKY STATIC an ihrem Tisch.", "Geh ins LUCKY STATIC und sprich mit Frau Imai."] },
+  // Frau Haldane's son (game/kapitel2_haldane.js): the same, only on Sunday, the day of letters, when she waits awake at her door
+  { if: ["!off_haldane", "day=6", "!haldane_ask"],
+    text: ["Heute ist Sonntag. Frau Haldane schläft heute nicht.", "Sie sitzt wach in ihrer Tür und wartet auf etwas.", "Sprich mit Frau Haldane im Flur."] },
+  { if: ["!off_haldane", "day=6", "haldane_ask", "!link_cam51"],
+    text: ["Frau Haldane will wissen, wie es ihrem Sohn geht.", "Im Fünften hast du keine Kamera. Wer verkauft so was?", "Geh zu Sable auf dem Drain-Markt und frag nach dem Wohnheim 5-Süd."] },
+  { if: ["!off_haldane", "day=6", "link_cam51", "!cache_clip_najo"],
+    text: ["Du bist im Archiv vom Wohnheim.", "Schau nach, was mit Najo passiert ist.", "Öffne CAM 51 und drück PUFFER."] },
+  { if: ["!off_haldane", "day=6", "cache_clip_najo", "!haldane"],
+    text: ["Du weißt jetzt, was mit Najo ist. Seine Mutter weiß es nicht.", "Sag ihr die Wahrheit. Oder montier ihr einen anderen Morgen. Oder sag, du hast nichts gefunden.", "Geh zu Frau Haldane im Flur."] },
   { if: ["day=7", "time>=00:45", "!e2", "!off_main"], about: ["wait", ...CLIP_WAYS, ...HOME],
     text: ["Was machst du mit dem Clip?", "Vesper zahlt am meisten. Er ist im CHAT.", "Du kannst ihn auch behalten. Drück WARTEN, dann fragt das Deck."] },
   { if: ["day=7", "time>=00:45", { or: ["e2", "off_main"] }], about: ["wait", "protokolle", ...HOME],
