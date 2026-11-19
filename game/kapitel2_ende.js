@@ -9,18 +9,35 @@
 const AF = Nagiwa.at.flat;
 
 // ---- 01:00: wherever Juno is, every screen Lantern reaches tears off, the big one on Kowalski Street too. Never watched: it
-// happens as its window ends (the clock stood at 00:45 until everything was ready, game/kapitel2.js)
+// happens as its window ends (the clock stood at 00:45 until everything was ready, game/kapitel2.js). Then his broadcast fills the
+// screen (the user's wish, 2026-11-20): the Lower Ninth asleep tonight, camera after camera, his ticker under it (game/kapitel2_sendung.js);
+// the waits are timed so that the ticker has run through by the last shot's end
 Cutaway.i18n.declare("feed display", ["THEY DON'T SLEEP."]);
 Cutaway.moment("protokolle", { room: "deck", day: 7, from: "00:45", to: "01:00", if: "~never", unseen: [
   { set: "end_beat2", value: "sent" },
   { sfx: "glitch" },
   "Alle Schirme sind auf einmal grün. Auch der große auf der Kowalski.",
-  { caption: "THEY DON'T SLEEP.", at: "c", color: "#7cff9a", ms: 3200 },
-  "Lantern. Er sendet.",
-  { fade: "out", ms: 1200 },
+  { fade: "out", ms: 600 },
   { unset: "deck_app" },
+  { goto: "sendung_23", transition: false },
+  { sfx: "glitch" },
+  { fade: "in", ms: 300 },
+  { caption: "THEY DON'T SLEEP.", at: "c", color: "#7cff9a", ms: 3200 },
+  { wait: 6000 },
+  { sfx: "glitch" },
+  { goto: "sendung_15", transition: false },
+  { wait: 10000 },
+  { sfx: "glitch" },
+  { goto: "sendung_lucky", transition: false },
+  { wait: 10000 },
+  { sfx: "glitch" },
+  { fade: "out", ms: 1200 },
   { goto: "k2_protokolle", at: AF.deck, face: "ne", transition: false },
   { fade: "in", ms: 1200 },
+  "Das sind unsere Kameras. Von heute Nacht.",
+  { evi: "besorgt" },
+  { say: "evi", text: "Er hat sie alle auf einmal genommen." },
+  "Lantern. Er sendet.",
   "Ihre Protokolle liegen im NETZ, offen für alle. Tabellen, Nacht für Nacht.",
   // (decision 2: given to Lantern, the clip goes out with them, too early, kapitel2-design §3.6)
   { if: "e2=lantern", then: ["Meine Aufnahme läuft mit. Ines auf der Treppe, bis er hochsieht.",
