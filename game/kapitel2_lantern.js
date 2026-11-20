@@ -53,7 +53,8 @@ Cutaway.actor("pike", { name: "Pike", color: "#e0a048",      // his beak's orang
   voice: { pitch: 58, range: 4, wave: "triangle", syllable: 95, speed: 0.85 },
   look: ["Ein langer Mann mit dünnen Beinen.", "Der Hals ist zu lang, das Gesicht läuft spitz zu. Ein Reiher-Mod."],
   talk: [{ if: "pike_met", then: [{ dialog: "pike" }], else: [
-    { if: "know_pike", then: ["Ratz sagt, du kennst die Sümpfe!", P("Ich verkauf Daten. Keine Fahrten."), "Er ist zu weit draußen. Ich müsste das Floß ranholen."],
+    { if: "know_pike", then: ["He! Bist du Pike? Ratz sagt, du kennst dich in den Sümpfen aus!", P("Ich verkauf Daten. Keine Fahrten."),
+      "Er ist zu weit draußen. Ich müsste das Floß ranholen."],
       else: [P("Gigabyte gegen Chits."), "Danke. Ich hab selber welche."] }] }] });
 Cutaway.routine("pike", [{ day: [5, 6, 7], from: "18:00", to: "04:00", room: "drain_market", at: AM.pike, face: "down" }]);
 const market = Cutaway.room.get("drain_market").hotspots;
@@ -66,8 +67,10 @@ market.datenfloss = { name: "DATA 1C/GB", rect: AM.datenflossRect, walkTo: AM.pi
   with: { haken: [{ if: "pike_met", then: ["Das Floß liegt schon am Rand."], else: [{ if: "know_pike", then: [
     "Ich hak den Notschlüssel ins Seil und zieh. Das Floß kommt, ganz langsam.", "Teo hätte das mit einer Hand gemacht.",
     P("..."), P("Wer zieht, will was."),
-    "Ich muss raus. Zu den Bäumen im Wasser.",
-    P("Ich verkauf Daten. Keine Fahrten."),
+    "Hallo. Bist du Pike?",
+    P("Kommt drauf an, wer fragt."),
+    "Ich bin Juno. Ratz hat gesagt, ich soll mit dir reden.",
+    P("Ratz schickt keinen. Ratz verkauft nur."),
     { dialog: "pike_frage" },
   ], else: ["Warum sollte ich das Floß ranholen? Ich will keine Daten."] }] }] } };
 
@@ -76,31 +79,36 @@ market.datenfloss = { name: "DATA 1C/GB", rect: AM.datenflossRect, walkTo: AM.pi
 const PUSH_OFF = ["Er stößt sich mit der Stange vom Rand ab. Das Floß treibt wieder raus."];
 Cutaway.dialog("pike_frage", {
   main: { choices: [
-    { text: "„Ratz sagt, du stakst da raus.“", then: [P("Ratz sagt viel. Ratz ist eine Ratte."), "Stimmt's?", P("Ich verkauf Daten.")] },
-    { text: "„Ich hab ein Bild. Bäume im Wasser.“", goto: "bild", then: [P("Bäume gibt's viele."), "Hier unten nicht.", P("...")] },
-    { text: "„Die Stimme im Radio. Nagi·wa lügt.“", then: [P("Hab ich nicht gehört. Ich hör Daten."), "Du hast eine Antenne auf dem Floß.", P("Für Daten.")] },
-    { text: "„Dann eben nicht.“", silent: true, goto: "end", then: ["Dann eben nicht.", ...PUSH_OFF] },
+    { text: "„Sag mal, du fährst doch öfter raus in die Sümpfe?“", then: ["Sagt zumindest Ratz.", P("Ratz sagt viel. Ratz ist eine Ratte."),
+      "Und, stimmt's?", P("Ich verkauf Daten. Pro Gigabyte.")] },
+    { text: "„In Lanterns Sendung hab ich Bäume im Wasser gesehen.“", goto: "bild", then: [P("Bäume gibt's viele."),
+      "Hier unten nicht. Hier unten gibt's Beton und Kanäle.", P("...")] },
+    { text: "„Die Stimme im Radio am Sonntag, hast du die auch gehört?“", then: ["Er sagt, Nagi·wa lügt. Ich glaub, er hat recht.",
+      P("Hab ich nicht gehört. Ich hör Daten."), "Aber du hast eine Antenne auf dem Floß.", P("Für Daten.")] },
+    { text: "„Schon gut. Dann eben nicht.“", silent: true, goto: "end", then: ["Schon gut. Dann eben nicht.", ...PUSH_OFF] },
   ] },
   bild: { choices: [
-    { text: "„Da sind grüne Lichter drin. Laternen.“", goto: "woher", then: ["Seine Stange bleibt im Wasser stehen.", P("..."), P("Wo hast du das her?")] },
-    { text: "„Die stehen da, wo die Ringe aufhören.“", then: [P("Da hört viel auf."), P("Die Miete zum Beispiel.")] },
+    { text: "„Kann es sein, dass Lantern da draußen in den Sümpfen lebt?“", goto: "woher", then: [
+      "Zwischen den Bäumen hingen kleine grüne Lichter. Wie Laternen.", "Seine Stange bleibt im Wasser stehen.", P("..."), P("Wo hast du das her?")] },
+    { text: "„Hast du ihn da draußen schon mal gesehen?“", then: [P("Da draußen sieht man nicht viel. Nebel, Wasser, Bäume."),
+      P("Und was da drin schwimmt, will man lieber nicht sehen.")] },
     { text: "Was anderes.", silent: true, goto: "main" },
   ] },
   woher: { choices: [
-    { text: "„Aus dem Rauschen. Von seiner Sendung am Sonntag.“", goto: "end", then: [
-      P("Aus dem Rauschen."),
-      "Unter dem Rauschen war seine eigene Kamera. Ganz blass.",
+    { text: "„Das war in seiner Sendung, unter dem Rauschen versteckt.“", goto: "end", then: [
+      P("Unter dem Rauschen."),
+      "Ich hab das Rauschen vom Anfang über das vom Ende gelegt.", "Darunter war seine eigene Kamera. Ganz blass.",
       P("Das hab ich ihm gesagt. Nicht so nah an den Lampen."),
       P("..."),
       P("Wer so was findet, findet ihn auch ohne mich. Dann lieber mit mir."),
       P("Aber ich fahr nicht für nichts."),
       P("Ratz hat eine Endstufe. Aus einem Flutwarnmast. Mir gibt er sie nicht."),
-      "Warum nicht?",
+      "Warum gibt er sie dir nicht?",
       P("Ratz sagt, ich hätte ihn fressen wollen."), P("Ein Reflex. Mehr war das nicht."),
       P("Bring mir die Endstufe, dann nehm ich dich mit."),
       { set: "pike_met" },
     ] },
-    { text: "„Hab ich gefunden.“", goto: "main", then: [P("Gefunden."), P("Dann such weiter.")] },
+    { text: "„Das hab ich irgendwo gefunden.“", goto: "main", then: [P("Irgendwo."), P("Dann such weiter. Irgendwo.")] },
     { text: "Was anderes.", silent: true, goto: "main" },
   ] },
 });
@@ -152,11 +160,11 @@ Cutaway.dialog("pike_fahrt", {
     { text: "„Nichts Besonderes. Ich wohn im Kessel-Block.“", goto: "hoeren", then: [P("Da wohnen viele. Die meisten schlafen."), "Ich nicht.", P("Das merkt man.")] },
   ] },
   hoeren: { enter: [P("Hörst du ihn manchmal? Den Sender.")], choices: [
-    { text: "„Ich hab ihn im Radio gehört. Nagi·wa lügt.“", goto: "rat", then: [P("Zehn Sekunden."), "Länger glaubt einem eh keiner.",
+    { text: "„Ich hab ihn im Radio gehört. Er sagt, Nagi·wa lügt.“", goto: "rat", then: [P("Zehn Sekunden."), "Länger glaubt einem eh keiner.",
       "Er sieht mich an.", P("Das sagt er auch. Fast genauso.")] },
     { text: "„Die Nachrichten sagen, er hat sie umgebracht.“", goto: "rat", then: ["Seine Stange bleibt im Wasser stehen.", P("Sagen sie."),
       "Ich hab gesehen, dass er's nicht war.", P("..."), P("Dann sag ihm das. Aber nicht gleich. Er braucht eine Weile.")] },
-    { text: "„Nein. Ich hör Kameras, kein Radio.“", goto: "rat", then: [P("Kameras lügen auch."), "Die nicht. Die Leute, die sie schneiden.",
+    { text: "„Nein. Ich hör mir lieber Kameras an als Radio.“", goto: "rat", then: [P("Kameras lügen auch."), "Die nicht. Die Leute, die sie schneiden.",
       P("Das würde ihm gefallen.")] },
   ] },
   // his advice, free, the way he gives everything: once
@@ -169,20 +177,20 @@ Cutaway.dialog("pike_fahrt", {
 // come back to its choices, after the ride, in the swamp)
 const PAID = [{ remove: "endstufe" }, P("Die mit den Kühlrippen. Gut."), ...RIDE_FIRST];
 Cutaway.dialog("pike", { main: { enter: [{ if: [...Nagiwa.quietOut, "!led_quiet"], then: [{ evi: "besorgt" }, { say: "evi", text: "Oben steht der in Weiß. Bis elf." }] }], choices: [
-  { text: "„Hier. Die Endstufe.“", if: "has:endstufe", goto: "end", then: PAID },
-  { text: "„Fährst du mich raus?“", if: ["ledger_ratz", "!has:endstufe"], goto: "end", then: [P("Steig auf."), ...RIDE_AGAIN] },
-  { text: "„Was ist mit Ratz?“", then: [P("Ratz sagt, ich hätte ihn fressen wollen."), P("Ich frühstücke nie.")] },
+  { text: "„Hier, ich hab deine Endstufe.“", if: "has:endstufe", goto: "end", then: PAID },
+  { text: "„Fährst du mich noch mal raus zu ihm?“", if: ["ledger_ratz", "!has:endstufe"], goto: "end", then: [P("Steig auf."), ...RIDE_AGAIN] },
+  { text: "„Was ist eigentlich zwischen dir und Ratz?“", then: [P("Ratz sagt, ich hätte ihn fressen wollen."), P("Ich frühstücke nie.")] },
   { text: "Später.", silent: true, goto: "end" },
 ] } });
 // the output stage handed to him straight from the bag works as well as saying so (what the hint says: give it to Pike)
 const pikeDef = /** @type {any} */ (Cutaway.actors.get("pike")).def;
-pikeDef.with = { endstufe: ["Hier. Die Endstufe.", ...PAID], haken: market.datenfloss.with.haken };
+pikeDef.with = { endstufe: ["Hier, ich hab deine Endstufe.", ...PAID], haken: market.datenfloss.with.haken };
 market.datenfloss.with.endstufe = pikeDef.with.endstufe;
 
 // ---- Ratz knows every way out under the city: asked about the trees in water, he names the heron (know_pike)
 const TREES = [
-  "Ratz, wo stehen Bäume im Wasser?",
-  RZ("Bäume! Wer braucht Bäume?"), "Ich. Mit grünen Lichtern drin.",
+  "Ratz, weißt du, wo hier irgendwo Bäume im Wasser stehen?",
+  RZ("Bäume! Wer braucht Bäume?"), "Ich. Ich hab welche gesehen, mit grünen Lichtern dazwischen.",
   RZ("Grüne Lichter, hm. Draußen. Wo die Ringe aufhören und keiner Miete zahlt."),
   RZ("Ich geh da nicht hin. Da schwimmt was."),
   RZ("Frag den Reiher. Pike, auf dem Datenfloß. Der stakt da raus, wenn keiner guckt."),
@@ -197,7 +205,7 @@ const ratz = /** @type {any} */ (Cutaway.actors.get("ratz")).def;
 ratz.talk = [RZ("Kundschaft! Kauf was, oder kauf was anderes."), { if: ["day>4", "know_sumpf", "!know_pike"], then: TREES,
   else: [{ if: ["day>4", "pike_met", "!ledger_ratz"], then: [{ dialog: "ratz_endstufe" }], else: [{ dialog: "ratz" }] }] }];
 Nagiwa.talkTree("ratz_endstufe", [
-  ["„Hast du eine Endstufe? Aus einem Flutwarnmast.“", [RZ("Die gute, mit Kühlrippen. Hab ich."), RZ("Wer will das wissen? Der Reiher?"), "Ich will das wissen.",
+  ["„Hast du eine Endstufe aus einem Flutwarnmast?“", [RZ("Die gute, mit Kühlrippen. Hab ich."), RZ("Wer will das wissen? Der Reiher?"), "Ich will das wissen.",
     RZ("Der Reiher kriegt nichts von mir. Der hat mich am Schwanz gehabt. Kopfüber, über dem Kanal!"), "Er sagt, das war ein Reflex.",
     RZ("Ein Schnabel macht nichts von allein."), RZ("Für dich kostet sie was anderes. Eine Karte von drinnen, mit Chip. Nur kurz.")], [
     ["„Hier. Mein alter Ausweis.“", [
@@ -210,7 +218,7 @@ Nagiwa.talkTree("ratz_endstufe", [
     ], undefined, ["has:ausweis", "!ledger_ratz"]],
     ["„Den hab ich nicht dabei.“", ["Der liegt noch im Karton unter meinem Bett.", RZ("Dann hol ihn. Ich lauf nicht weg. Ich wohn hier.")], undefined, ["!has:ausweis", "!ledger_ratz"]],
   ], "!ledger_ratz"],
-  ["„Was schwimmt da draußen?“", [RZ("Was Großes. Mit Zähnen, glaub ich."), RZ("Ich hab nur die Bugwelle gesehen. Die hat mir gereicht.")]],
+  ["„Was schwimmt da draußen eigentlich?“", [RZ("Was Großes. Mit Zähnen, glaub ich."), RZ("Ich hab nur die Bugwelle gesehen. Die hat mir gereicht.")]],
 ]);
 
 // ---- the pass and the hook are where they always were, also for whoever never went up on the roof in Chapter 1, and Juno can take them any

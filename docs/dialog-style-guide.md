@@ -126,6 +126,26 @@ dahinter. Gesagtes steht in „…“. Eine Handlung steht ohne Anführungszeich
 > „Sie sind nicht verrückt.“\
 > „Das war ein Traum.“
 
+**Was Juno im Gespräch sagt, klingt wie ein Gespräch** (vom Nutzer gewünscht 2026-11-20). Eine Option ist kein Stichwort für den
+Spieler, sondern der Satz, den Juno diesem Menschen in diesem Moment sagt:
+
+- **Sie fängt an wie ein Mensch.** Wer jemanden zum ersten Mal anspricht, grüßt oder fragt, wen er vor sich hat („Hallo. Bist du Pike?“),
+  und sagt, wer sie schickt („Ratz hat gesagt, ich soll mit dir reden.“).
+- **Sie gibt den Zusammenhang mit,** den der andere nicht kennt: woher sie etwas weiß („Sagt zumindest Ratz.“), wann und wo es war
+  („In Lanterns Sendung am Sonntag ...“).
+- **Sie fragt mit Fragen.** Eine echte Frage („Kann es sein, dass Lantern da draußen in den Sümpfen lebt?“, „Hast du ihn da draußen
+  schon mal gesehen?“) statt einer hingeworfenen Behauptung („Ratz sagt, du stakst da raus.“) oder eines Themas („Die Stimme im
+  Radio. Nagi·wa lügt.“).
+- **Die kleinen Wörter gehören dazu,** wie man sie wirklich sagt: „Sag mal“, „doch“, „eigentlich“, „schon gut“.
+- **Die Option ist ihr erster Satz;** was sie danach noch sagt, folgt als ihre nächsten Zeilen. So bleibt jede Zeile unter 90 Zeichen,
+  und die Option passt in eine Zeile der Auswahl (etwa 60 Zeichen).
+- Knapp bleibt sie trotzdem (§6): Natürlich heißt nicht geschwätzig, und kurze Antworten im Gespräch („Ich weiß.“, „Nein.“) bleiben kurz.
+
+> vorher: „Ratz sagt, du stakst da raus.“\
+> nachher: „Sag mal, du fährst doch öfter raus in die Sümpfe?“ – „Sagt zumindest Ratz.“\
+> vorher: „Die Stimme im Radio. Nagi·wa lügt.“\
+> nachher: „Die Stimme im Radio am Sonntag, hast du die auch gehört?“ – „Er sagt, Nagi·wa lügt. Ich glaub, er hat recht.“
+
 **F. Geschriebenes.** Chat, Notizen und Kassenbuch sind noch knapper als Gesprochenes, und hier darf der Telegrammstil stehen (§3). Im Chat schreibt jeder, wie er tippt: Teo
 nennt sie Ju, Sable unterschreibt mit S., WREN bleibt beim Sie und ohne Gruß. Das Kassenbuch ist ein Protokoll: was, an wen, für wie
 viel, später was daraus wurde. Es urteilt nie.
@@ -200,7 +220,7 @@ Man soll eine Figur an wenigen Worten erkennen. Jede Karte sagt, wie die Figur k
 
 ### Juno Reyes: die Beobachterin
 
-Trocken, knapp, aufmerksam. Knapp heißt: Sie sagt wenig, aber in ganzen Sätzen (§3). Stellt präzise Fragen, oft Gegenfragen, und vertraut Worten nicht besonders. Lieber konkret als poetisch,
+Trocken, knapp, aufmerksam. Knapp heißt: Sie sagt wenig, aber in ganzen Sätzen (§3), und im Gespräch so, wie man mit einem Menschen redet: grüßt, sagt, woher sie etwas weiß, und fragt mit echten Fragen (§4 E). Stellt präzise Fragen, oft Gegenfragen, und vertraut Worten nicht besonders. Lieber konkret als poetisch,
 selten große Gefühle. Sagt nie, was sie fühlt, solange sie es umgehen kann, und spielt nie die Coole. Am Anfang hält sie Menschen auf
 Abstand; später darf sie mehr sagen, ohne eine andere zu werden.
 
@@ -500,6 +520,7 @@ So etwas wird bewusst angelegt, wie Mottes Backup oder der Satz über die Leiter
 3. Geht es unter der Oberfläche um etwas anderes?
 4. Ist es ein ganzer Satz, wie ihn ein Mensch sagt, und keine Reihe von Wortgruppen? Oder ist es eine der Stellen, an denen der Telegrammstil bleiben darf? Passt das Satzmaß zur Figur (§3)? Darf das auch unspektakulär sein? Muss hier wirklich eine Pointe stehen?
 5. Stimmt sie mit der Bibel überein (Fakten, Du und Sie, Lull und Implantat)?
-6. Unter etwa 90 Zeichen? Ist die Haltung einer Wahl vor dem Klick klar?
+6. Unter etwa 90 Zeichen? Ist die Haltung einer Wahl vor dem Klick klar? Klingt eine Option wie ein Satz an diesen Menschen, mit Gruß,
+   Zusammenhang und einer echten Frage, wo sie hingehören (§4 E), und nicht wie ein Stichwort?
 7. Geht sie auf Englisch noch?
 8. Würde hier auch Schweigen genügen?
