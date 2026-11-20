@@ -48,7 +48,7 @@
 
   // ---- Sable (H2): a look into the archive, for chits or a clip. Her dialog (game/auftrag_varga.js) shows four in Chapter 2 at most:
   // while Juno asks for the hostel, this option stands where "what else do you sell" stands
-  const sable = /** @type {any} */ (Cutaway.dialog.get("sable")), other = sable.main.findIndex((/** @type {any} */ c) => c.text === "„Was verkaufst du sonst?“");
+  const sable = /** @type {any} */ (Cutaway.dialog.get("sable")), other = sable.main.findIndex((/** @type {any} */ c) => c.text === "„Was verkaufst du sonst noch?“");
   sable.main[other].if = { or: ["!haldane_ask", "link_cam51", "off_haldane"] };
   sable.main.splice(other, 0, { text: "„Hast du eine Kamera im Fünften? Im Wohnheim 5-Süd.“", if: ["haldane_ask", "!link_cam51", "!off_haldane"], goto: "cam51",
     then: [{ say: "sable", text: "5-Süd. Nagi·was Wohnheim, Schlafsaal C hat eine Kamera." }, { say: "sable", text: "Live nicht. Ins Archiv lass ich dich." },

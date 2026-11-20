@@ -285,7 +285,7 @@ Ausweis, Notschlüssel und der Weg aufs Dach sind schon im Prolog offen (entschi
 
 | Was er sagt | Was es später heißt |
 |---|---|
-| Der Spielstand ist weg: „Man macht immer ein Backup.“ „Wovon?“ „Von allem, was du nicht verlieren willst.“ | Motte rettet EVI (Kap. 4, „Du hast gesagt, man macht immer ein Backup.“) |
+| Der Spielstand ist weg: „Man macht doch immer ein Backup.“ „Wovon?“ „Von allem, was du nicht verlieren willst.“ | Motte rettet EVI (Kap. 4, „Du hast gesagt, man macht immer ein Backup.“) |
 | „Bis in den Fünften war ich schon“, „Die sehen eine Mütze.“ | Motte als Verbündeter im Tower (Kap. 5) |
 | Die Mütze, „damit man mich im Glass findet“; „Auch nicht, wenn mal was ist?“ „Dann schon.“ | die Razzia (Kap. 3) |
 | Das Licht hinterm Ohr seiner Mutter: „Komisch. Immer gleich. Ich zähl das manchmal mit.“ | der Takt für `cam31` (C7); fragt Juno, wie er zählt, sagt er ihn: „Lang, kurz, kurz, lang. Dann Pause.“ (story §10d); sonst EVI als letzte Stufe ihres Hinweises (§12) |

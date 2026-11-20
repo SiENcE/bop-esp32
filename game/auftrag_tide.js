@@ -129,7 +129,7 @@ Cutaway.actor("okonkwo", { name: "Okonkwo", color: "#d8b890", room: "okonkwo_sho
   look: ["Das ist Okonkwo mit seiner Strickjacke und der Lesebrille. Er rechnet noch auf Papier.", "Unter der Jacke wölbt sich sein Panzer. Den hat er schon, solange ich ihn kenne."],
   talk: [{ if: ["day>4", "k1b=warned"], then: [O("Juno! Komm rein, komm rein."), O("Für dich ist hier immer offen.")], else: [O("Juno. Guten Abend.")] }, { dialog: "okonkwo" }] });
 Nagiwa.talkTree("okonkwo", [
-  ["„Wie läuft's?“", [
+  ["„Na, wie läuft der Laden?“", [
     { if: "day=2", then: [O("Batterien gehen. Reis geht. Zigaretten gehen immer."), "Und du?", O("Ich gehe um eins.")] },
     { if: "day=3", then: [O("Draußen steht ein Wagen und wartet. Der wartet nicht auf mich.")] },
     { if: "day=4", then: [O("Heute ist es ruhig. Zu ruhig für einen Freitag.")] },
@@ -137,8 +137,8 @@ Nagiwa.talkTree("okonkwo", [
     { if: "day>4", then: [{ if: "k1b=lied", then: [O("Freitagnacht waren welche an meiner Tür. Mit einem Zettel in der Hand."), O("Der Zettel hat nicht gestimmt. Dann sind sie gegangen.")],
       else: [{ if: "k1b=warned", then: [O("Neuer Code. Neuer Riegel. Ich schlaf wieder.")], else: [O("Batterien gehen. Reis geht. Wie immer.")] }] }] },
   ]],
-  ["„Das Foto da?“", [O("Meine Familie. Am Strand, vor dem Wasser."), "Hier unten war ein Strand?", O("Da, wo jetzt der Drain-Markt ist. Wir hatten Handtücher.")]],
-  ["„Die Tidewater Boys wollen deinen Tresor.“", [{ set: "k1b", value: "warned" }, { ledger: "okonkwo", value: "warned" }, O("..."), O("Woher weißt du das?"), "Die haben mich nach dem Code gefragt.",
+  ["„Wer ist auf dem Foto da?“", [O("Meine Familie. Am Strand, vor dem Wasser."), "Hier unten war ein Strand?", O("Da, wo jetzt der Drain-Markt ist. Wir hatten Handtücher.")]],
+  ["„Pass auf. Die Tidewater Boys wollen an deinen Tresor.“", [{ set: "k1b", value: "warned" }, { ledger: "okonkwo", value: "warned" }, O("..."), O("Woher weißt du das?"), "Die haben mich nach dem Code gefragt.",
     O("Und du kommst zu mir."), O("Ich mach heute Nacht einen neuen."), O("Hier hast du eine Stange Reis. Und Batterien."), { give: "reis" }, O("Ich vergesse das nicht."),
     { evi: "verwirrt" }, { say: "evi", text: "Fünfhundert. Gegen Reis?" }, "Gegen Reis."], undefined, ["!k1b", "!off_tide"]],
 ]);
@@ -159,14 +159,14 @@ Cutaway.actor("ratz", { name: "Ratz", color: "#90d0a0", room: "drain_market", at
     "Sein Schwanz endet in einem alten Stecker. Der Kragen leuchtet, wenn er redet, und er redet viel."],
   talk: [RZ("Kundschaft! Kauf was, oder kauf was anderes."), { dialog: "ratz" }] });
 Nagiwa.talkTree("ratz", [
-  ["„Was hast du da?“", [RZ("Alles, was nicht festgeschraubt ist. Und Schraubenzieher.")], [
-    ["„Hast du einen Abzweiger?“", [RZ("Sechzig Chits. Freundschaftspreis."), RZ("Feindschaftspreis wär achtzig. Wir sind Freunde?")], [
+  ["„Was verkaufst du da alles?“", [RZ("Alles, was nicht festgeschraubt ist. Und Schraubenzieher.")], [
+    ["„Hast du einen Abzweiger? Ich muss an ein Kabel.“", [RZ("Sechzig Chits. Freundschaftspreis."), RZ("Feindschaftspreis wär achtzig. Wir sind Freunde?")], [
       ["„Hier sind sechzig.“", [{ inc: "chits", by: -60 }, { give: "abzweiger" }, { set: "got_tap" }, RZ("Freunde. Ich hab's gewusst."), RZ("Der klemmt an allem, was ein Kabel hat. Auch an Kabeln.")], undefined, ["chits>=60", "!got_tap"]],
       ["„Das ist zu teuer.“", [RZ("Dann sind wir Feinde. Achtzig.")]],
     ], ["!got_tap", "!off_tide"]],
     ["„Was ist das da, mit den Drähten?“", [RZ("Das ist ein Ding. Ich weiß nicht, was es macht, darum ist es teuer.")]],
   ]],
   ["„Woher hast du den Kragen?“", [RZ("Vom Flutprogramm. Das ist ein Sprechkragen, Modell zwei."), "Und Modell eins?", RZ("Hat gebissen."), "Wer?", RZ("Der Kragen.")]],
-  ["„Was willst du wissen?“", [RZ("Hast du Ratten gesehen? In den Rohren, unter der Krone. Große."), "Nur dich.", RZ("Dann sag's keinem. Die zählen auf mich.")]],
+  ["„Und du? Suchst du auch was?“", [RZ("Hast du Ratten gesehen? In den Rohren, unter der Krone. Große."), "Nur dich.", RZ("Dann sag's keinem. Die zählen auf mich.")]],
 ]);
 })();

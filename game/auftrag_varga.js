@@ -71,10 +71,10 @@ const SABLE_CLIP = [{ set: "e2", value: "sable" },
   S("Nett."), "Sable fragt nicht, wer sie war. Sable fragt nie.", "Wer sie kauft, sagt Sable auch nicht. Das kostet extra."];
 Cutaway.dialog("sable", {
   main: [
-    { text: "„Ich brauch den Code vom Morpheus, CAM 15.“", if: ["varga_step", "!code_cam15"], goto: "code", then: [S("Achtzig. Oder was, das achtzig wert ist.")] },
+    { text: "„Hast du den Code für die Kamera im Morpheus? CAM 15.“", if: ["varga_step", "!code_cam15"], goto: "code", then: [S("Achtzig. Oder was, das achtzig wert ist.")] },
     // (Chapter 1's, where Varga's thread plays: in Chapter 2 its place is the 24-hour shop's clip, so no more than four show)
     { text: "„Du hast Varga meinen Namen gegeben.“", if: "day<5", then: [S("Verkauft. Geben tu ich nichts."), "Für wie viel?", S("Das kostet extra.")] },
-    { text: "„Was verkaufst du sonst?“", then: [S("Steht an der Wand. Namen, Adressen."), "Und Geheimnisse?", S("Frag. Fragen kostet schon.")] },
+    { text: "„Was verkaufst du sonst noch?“", then: [S("Steht an der Wand. Namen, Adressen."), "Und Geheimnisse?", S("Frag. Fragen kostet schon.")] },
     // Chapter 2's decision 2 (kapitel2-design §3.6): Sable buys the clip and sells it on to Nagi·wa (the code above is Chapter 1's only)
     { text: "„Ich hab die Aufnahme aus der alten Metro.“", if: ["day>4", "cache_clip_ines_death", "!e2", "!off_main"], goto: "clip",
       then: [S("Man fragt danach. Zeig."), "Ines auf der Treppe. Bis er hochsieht.",
@@ -83,7 +83,7 @@ Cutaway.dialog("sable", {
         { if: "forgery_proven", then: [{ if: "k1a=warned", then: [S("3000.")], else: [S("4000.")] }],
           else: [{ if: "k1a=warned", then: [S("2000.")], else: [S("3000.")] }] }] },
     // the 24-hour shop's thread (kapitel2-design §6.5, game/kapitel2_laden.js): she buys the night's clip for the shop's chain
-    { text: "„Ich hab was aus einem 24h-Laden.“", if: ["day>4", "cache_clip_shop24", "!mont_clip_shop24", "!ledger_shop24", "!off_shop24"], goto: "shop24",
+    { text: "„Ich hab einen Clip aus einem 24h-Laden.“", if: ["day>4", "cache_clip_shop24", "!mont_clip_shop24", "!ledger_shop24", "!off_shop24"], goto: "shop24",
       then: [S("Zeig."), "Der Mann mit dem Wagen, um halb drei. Und draußen schläft das Schaf, das auf den Laden aufpassen soll.", S("Die Kette zahlt für so was. Sechzig.")] },
     { text: "Bis dann.", silent: true, goto: "end" },
   ],
@@ -99,8 +99,8 @@ Cutaway.dialog("sable", {
     { text: "„Noch nicht.“", goto: "main", then: [S("Ich hab Zeit. Die Aufnahme nicht.")] },
   ],
   whisper: [
-    { text: "„Ja. Ganz.“", goto: "end", then: SABLE_CLIP },
-    { text: "„Nein. Ich schneid's raus.“", if: "!off_lantern", goto: "end",
+    { text: "„Ja. Der Clip geht ganz raus.“", goto: "end", then: SABLE_CLIP },
+    { text: "„Nein. Das Flüstern schneid ich vorher raus.“", if: "!off_lantern", goto: "end",
       then: [{ cache: "clip_ines_cut" }, { sfx: "glitch" }, "Ich schneid das Flüstern raus. Dann weiß keiner von der Sechs.", ...SABLE_CLIP] },
     { text: "„Doch nicht.“", goto: "main", then: [S("Ich hab Zeit. Die Aufnahme nicht.")] },
   ],

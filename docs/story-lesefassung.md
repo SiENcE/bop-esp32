@@ -238,7 +238,7 @@ aufgefallen ist, dass der Schirm nur stottert, wenn sie vorbeigeht.
 Bao erinnert sich an den Dienstag, ob bar bezahlt oder angeschrieben, und sieht ihr an, dass sie etwas gesehen hat: „Du guckst, als
 hättest du was gesehen.“ – „Ich guck immer so.“ – „Eben.“ Am Freitag sagt er fast nichts.
 
-Motte sitzt auf seiner Bank und spielt Sump Runner auf seinem Tideboy. Sein Spielstand ist weg: „Man macht immer ein Backup.“ –
+Motte sitzt auf seiner Bank und spielt Sump Runner auf seinem Tideboy. Sein Spielstand ist weg: „Man macht doch immer ein Backup.“ –
 „Wovon?“ – „Von allem, was du nicht verlieren willst.“ War Juno im Prolog freundlich, fragt er jeden Abend: „Zeigst du mir heute
 was?“ Es gibt drei Lektionen, eine pro Abend: was eine Kamera ist, wie man einen Code findet, warum man nie den eigenen Block glasst.
 In der zweiten baut er den Abzweiger. Wer alle drei gibt, hat einen Schüler, und das wird später zählen. Das Licht hinter dem Ohr

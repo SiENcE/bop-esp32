@@ -17,9 +17,9 @@ Nagiwa.talkTree("regenleserin", [
       R("Frag mich morgen, Kind. Morgen liegt es mir auf der Zunge.")] },
   ]],
   ["„Woher kommt das alles?“", [R("Von oben, Kind. Alles fällt nach unten, und mit jedem Ring wird es billiger.")], [
-    ["„Was kommt von wem?“", [R("Jeder Ring schmeckt nach dem, was er sich leisten kann. Frag mich einen.")], [
-      ["„Der Achte, direkt über uns?“", [R("Der Achte schmeckt nach Spülwasser und Rost. Die haben auch nichts."), R("Aber sie haben uns unter sich, und das hilft.")]],
-      ["„Der Fünfte?“", [R("Durch den Fünften fahren die Aufzüge. Er schmeckt nach Schmieröl und Kaffee"), R("und nach Leuten, die ihren Passierschein suchen."),
+    ["„Und welcher Ring schmeckt wonach?“", [R("Jeder Ring schmeckt nach dem, was er sich leisten kann. Frag mich einen.")], [
+      ["„Und der Achte, direkt über uns?“", [R("Der Achte schmeckt nach Spülwasser und Rost. Die haben auch nichts."), R("Aber sie haben uns unter sich, und das hilft.")]],
+      ["„Und der Fünfte?“", [R("Durch den Fünften fahren die Aufzüge. Er schmeckt nach Schmieröl und Kaffee"), R("und nach Leuten, die ihren Passierschein suchen."),
         R("Und seit ein paar Jahren schmeckt er nach Kochsalz, jede Nacht und eimerweise,"), R("so wie es im Krankenhaus schmeckt.")], [
         ["„Dann ist da eben eine Klinik.“", [R("Für eine Klinik ist es zu viel. Ich frag mich, wer da oben jede Nacht so viele wäscht.")]],
       ]],
@@ -28,7 +28,7 @@ Nagiwa.talkTree("regenleserin", [
       ]],
     ]],
     ["„Und unter uns?“", [R("Unter uns ist da, wo ich zur Schule gegangen bin.")], [
-      ["„Die alte Stadt?“", [R("Als das Wasser kam, haben sie nicht abgepumpt. Sie haben draufgebaut."), R("Und uns die Rechnung geschickt.")], [
+      ["„Du meinst die alte Stadt?“", [R("Als das Wasser kam, haben sie nicht abgepumpt. Sie haben draufgebaut."), R("Und uns die Rechnung geschickt.")], [
         ["„Die Hüllenabgabe? Dreihundertzehn zahl ich dafür.“", [R("Die zahlst du, damit die Hülle dicht bleibt. Hier, koste mal, wie dicht sie ist."), "Nein, danke."]],
         ["„Wer erinnert sich da noch dran?“", [R("Frag Bao. Der hatte da unten eine Küche, und ihr Fenster ging zum Strand."), R("Sein bestes Rezept liegt noch da, sagt er, unter drei Stockwerken Wasser."), "Davon hat er mir nie was erzählt.", R("Du hast ja auch nie was gefragt. Du guckst nur.")]],
       ]],
@@ -60,9 +60,9 @@ Nagiwa.talkTree("regenleserin", [
     ]],
     ["„Was sagst du zu Lull?“", [R("Ich bin zweiundachtzig. Den Schlaf, den ich noch hab, schlaf ich selber."), R("Gratis, steht auf dem Schirm. Das Wasser war auch mal gratis.")], [
       ["„Was merkst du denn nachts?“", [R("Früher hat jeder für sich geschnarcht. Hör dir den Block mal um drei an."), R("Jetzt holt das halbe Haus zur selben Zeit Luft. Zur selben.")], [
-        ["„Zufall.“", [R("Das schmeckt nicht nach Zufall, Kind.")]],
+        ["„Das ist doch Zufall.“", [R("Das schmeckt nicht nach Zufall, Kind.")]],
       ]],
-      ["„Das Licht hinterm Ohr?“", [R("Hast du auch so eins?")], [
+      ["„Du meinst das Licht hinterm Ohr?“", [R("Hast du auch so eins?")], [
         ["„Ich hab was Älteres, von Nagi·wa, aus der Halle.“", [R("Wo sitzt es?"), "Es sitzt hinterm Ohr. Aber es leuchtet nur, wenn ich arbeite.", R("Das ist dieselbe Stelle."), R("Sparsam sind sie, die Leute da oben.")]],
       ]],
       ["„Und die Sinker?“", [R("Ruhe-Erschöpfung sagen die. Dann kommt der Wagen, der nicht hupt,"), R("und zwei in Weiß steigen aus, sehr freundlich."), R("In Weiß, hier unten! Das hält keinen Tag, das Wasser färbt alles."), R("Wer hier in Weiß rumläuft, kommt nicht von hier und bleibt nicht lang.")], [

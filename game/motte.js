@@ -8,16 +8,16 @@ const M = (/** @type {string} */ text) => ({ say: "motte", text });
 
 Nagiwa.talkTree("motte_mehr", [
   ["„Was spielst du da?“", [M("Sump Runner. Du bist eine Kabelratte."), M("Du ziehst Kabel durch die Rohre, und oben geht das Licht an.")], [
-    ["„Das ist ein Job.“", [M("Ja, aber mit Musik."), M("Im neunten Level hört das Rohr auf. Ganz oben, unter der Krone. Da kommt keiner weiter.")]],
+    ["„Das ist doch ein Job, kein Spiel.“", [M("Ja, aber mit Musik."), M("Im neunten Level hört das Rohr auf. Ganz oben, unter der Krone. Da kommt keiner weiter.")]],
     ["„Woher hast du das Ding?“", [M("Ein Tideboy. Keiner hat das Paket abgeholt, das zählt als Trinkgeld."), M("Vier Stunden Akku, dann zehn laden. Umgekehrt wie Lull.")]],
-    ["„Läuft's?“", [M("Mein Spielstand ist weg. Zwei Jahre. Das Ding ist einfach ausgegangen.")], [
-      ["„Man macht immer ein Backup.“", [M("Wovon?"), "Von allem, was du nicht verlieren willst."]],
+    ["„Und, läuft's?“", [M("Mein Spielstand ist weg. Zwei Jahre. Das Ding ist einfach ausgegangen.")], [
+      ["„Man macht doch immer ein Backup.“", [M("Wovon?"), "Von allem, was du nicht verlieren willst."]],
     ]],
   ]],
   ["„Was machst du hier draußen?“", [M("Warten, bis wer was gebracht haben will. Kurier halt.")], [
     ["„Was trägst du so aus?“", [M("Zettel, Schlüssel, Medikamente. Was nicht übers Netz soll."), M("Weil das Netz zuguckt. Das weißt du doch besser als ich.")], [
       ["„Wie weit kommst du damit?“", [M("Überall. Bis in den Fünften war ich schon, bis zur Kontrolle."), M("Keiner guckt ein Kind mit einer Tasche an.")], [
-        ["„Die Kameras schon.“", [M("Die sehen eine Mütze.")]],
+        ["„Die Kameras gucken schon.“", [M("Die sehen eine Mütze.")]],
       ]],
     ]],
     ["„Müsstest du nicht im Bett sein?“", [M("Drinnen ist's mir zu leise. Meine Mutter schläft, vier Stunden, dann Schicht.")], [
