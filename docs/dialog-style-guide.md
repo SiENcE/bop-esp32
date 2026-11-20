@@ -369,7 +369,7 @@ Rollstuhl und seit Jahren unten in den Sümpfen. Er hat zwei Stimmen, und gerade
   Falle. Sätze über sich selbst lässt er unfertig („Ich war mal ...“). Er redet kurz, mit vielen Pausen, nie mehr als nötig.
 - **Auf Sendung**, und wenn er über die Sendung redet, ist er auf einmal ganz da: flüssig, ruhig, ein bisschen feierlich, wie ein
   Moderator von früher. Das Senden ist das Einzige, dem er traut. „Hier ist Lantern. Wer das hier sieht, ist noch wach.“
-- **Namen sagt er nicht laut,** weil man Namen abhören kann. Ines ist „sie“, Juno ist lange „Sie“ ohne Namen, er selbst ist Lantern.
+- **Namen sagt er nicht laut,** weil man Namen abhören kann. Ines ist „sie“, Juno bleibt lange ohne Namen (sie duzen sich, §5), er selbst ist Lantern.
   Nur Pike, seinen Freund, nennt er beim Namen, nie „den Reiher“ (vom Nutzer entschieden 2026-11-20); „der Reiher“ sagt nur Ratz. Seinen
   echten Namen sagt er höchstens einmal, und dann ist es ein Ereignis.
 - **Bilder aus der Hand:** Frequenzen, Kabel, Rauschen, Akkus, Pumpen und der Wasserstand. „Funk hört jeder. Ein Kabel hört nur, wer dran
@@ -397,7 +397,8 @@ Reiher. Er verkauft Daten pro Gigabyte, bringt Lantern Akkus und Teile und schü
 - **Er handelt wie der Markt:** Gefallen gegen Gefallen, Gigabyte gegen Chits. Was er will, sagt er einmal und klar; warum, sagt er nicht.
 - **Bilder aus dem Wasser:** Strömung, Pegel, Grund, Fische, Köder, der Stab im Schlamm. „Wer auf dem Kanal wohnt, schaut nach unten.“
 - **Lantern** nennt er nie beim Namen, auch nicht „Lantern“: Er ist „der da draußen“ oder „mein Kunde“. Ob Juno zu ihm will, fragt er
-  nicht; er wartet, bis sie es sagt.
+  nicht; er wartet, bis sie es sagt. Er streitet ab, bis klar ist, dass sie Lantern schon gefunden hat; dann bringt er sie lieber selbst
+  hin („Wer so was findet, findet ihn auch ohne mich. Dann lieber mit mir.“, 2026-11-20).
 - **Der Reiher** ist ihm unangenehm, aber er redet nicht darüber. Zuckt sein Hals nach etwas, das sich bewegt, tut er, als sei nichts. Den
   Vorfall mit Ratz nennt er einen Reflex, und dabei bleibt er.
 - **Humor:** trocken, selten, über sich. „Ratz sagt, ich hätte ihn fressen wollen. Ich frühstücke nie.“

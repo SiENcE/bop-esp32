@@ -191,7 +191,7 @@ es nicht mehr, §7).
   noch in ihren Akten. Der Hinweis zur Fälschung gilt nur, während Juno sie im Editor ansieht, und erst nach den Hinweisen des Hauptfadens.
 - Geprüft wird wie in Kapitel 1 der Hauptweg mit geschlossenen Fäden (`off_<thread>`): `node tools/solve-act.mjs kapitel2 --full
   --set off_roof,off_zeitung,off_imai,off_traeger,off_varga,off_tide,off_motte,off_vesper,off_lantern`, und dasselbe mit `stick_ines`. Der Weg zu
-  Lantern ist darin zu (`off_lantern`: der Monteur weiß nichts, der Schirm reißt nicht ab), denn seine Schritte vervielfachten jeden anderen
+  Lantern ist darin zu (`off_lantern`: EVI nimmt am Sonntag nichts auf), denn seine Schritte vervielfachten jeden anderen
   Zustand; er hat seinen eigenen Lauf mit `off_main,stick_ines,off_dryer,evi_knows,forgery_proven` statt `off_lantern` (`off_dryer` schließt den Trockner, so
   zeigt der Lauf, dass der Stick Lantern immer auch von Hand erreicht; `off_main` schließt wie in Kapitel 1 den Rest des Hauptfadens: den
   Weg zum Wohnblock Lerche, Vespers Angebot und die Frage nach Entscheidung 2) (technisch entschieden 2026-11-15, wie bei
@@ -708,8 +708,8 @@ more than once“).
 | `kessel_lobby` | der Briefkasten, Vargas Zettel |
 | `kowalski` | Bao (oder sein leerer Platz), die halbe Reparatur, die Lanterns zehn Sekunden im Radio gehört hat, Vargas Mann, der Schatten in Weiß |
 | `gasse` | der Weg zu Waschsalon und Markt, das Papierboot am Denkmal (gemalt) |
-| `laundromat`, `cam23` | den Stick zurücklegen; Lantern um halb eins; der Mann in Weiß, wenn die Quiet vom Trockner weiß |
-| `lucky_static` | Mei, der Fernseher an allen drei Abenden, der Stammgast, der im Schlaf redet, Frau Imai |
+| `laundromat`, `cam23` | den Stick zurücklegen; Lantern um halb eins; der Mann in Weiß, wenn die Quiet vom Trockner weiß; um 01:00 am Montag das erste Bild in Lanterns Sendung (der Schläfer hinter der Theke, §8) |
+| `lucky_static` | Mei, der Fernseher an allen drei Abenden, der Stammgast, der im Schlaf redet, Frau Imai; um 01:00 am Montag unter dem Feed-Filter in Lanterns Sendung (geschlossen, der Stammgast schläft auf der Theke, §8) |
 | `jade_row`, `cam07` | Morrows Flutwagen (Entscheidung 2), nach dem Überfall die Bretter an Okonkwos Laden, `WHO TALKED?` (beides gemalt); das **Tor am Ende** führt jetzt auf Weg_1 zum Wohnblock Lerche; `cam07` fällt aus |
 | `okonkwo_shop`, `cam07v` | nach dem Überfall zu (die Tür mit Brettern, `cam07v` zeigt den leeren, dunklen Laden, gemalt); oder Okonkwos Dank |
 | `drain_market` | Sable, Ratz, der Prediger, Kessler mit Gips, und das **Floß DATA 1C/GB** mit Pike, Lanterns Gehilfen, der Juno in die Sümpfe bringt (§3.5) |
@@ -717,7 +717,7 @@ more than once“).
 | `sims`, `dach`, `dach_sitzen`, `dach_blick` | Teo am Montag, die Regenleserin; der Blick nach oben wie in Kapitel 1 |
 | `cam03` | Kessler kommt nicht mehr; am Automaten zieht jemand anderes Nummer 7 (nur Ansehen; gebaut) |
 | `cam04` | Varga sitzt am Samstag um 22:30 wieder bei Yuen's, auf seinem Platz; nach `k1a=lied` redet er über die Glasserin. Kesslers Ring vom Dienstag (der Clip aus dem Prolog) ist die Aufnahme, die das Ende braucht (§8) |
-| `cam15` | nach einem Verkauf am Freitag die offene Kapsel |
+| `cam15` | nach einem Verkauf am Freitag die offene Kapsel; um 01:00 am Montag in Lanterns Sendung (die Kapseln, §8) |
 | `cam18` | Frau Imais Kamera am alten Fischmarkt: nur das Archiv wie in Kapitel 1, nichts Neues (Juno hat dort ihren alten Zugang) |
 | `cam21` | die Klinik von außen: Ines kommt nicht mehr, die Pflegerin kommt um 19:00 zur Nachtschicht |
 | `cam22` | Pho Pump: Ines' Platz an der Theke bleibt leer; der Koch stellt trotzdem eine Schale hin, am Samstag (gemalt) |

@@ -13,8 +13,9 @@
 //                  brings her back in as found); ally once she has brought him the stick or her recording
 // The way is checked on its own (off_lantern shuts it in the other runs: EVI records nothing on Sunday), since its
 // steps would multiply every state of the chapter: tools/check.sh, the run "lantern" (Juno with the stick, the flat and the forgery done).
-// Lantern's and Pike's voices: dialog-style-guide §6 (drafts). [PLATZHALTER] Pike is a figure of the market's crowd, the raft doesn't leave the market visibly, the caravan inside is the old shop's iso block, Lantern in it is his feed
-// figure (the ride and the arrival are painted: art/rooms/sumpf.px.js); his words come over the radio, not the screen (the user, 2026-11-19)
+// Lantern's and Pike's voices: dialog-style-guide §6. All of it is painted: Pike from above on the market (art/characters/markt_people.px.js),
+// the raft gliding out through the tunnel, the ride and the arrival (art/rooms/sumpf.px.js), the caravan inside and Lantern in it; his ten
+// seconds come over the radio and as EVI's recording, not on the street's screen (the user, 2026-11-19 and 2026-11-20)
 "use strict";
 
 (function () {
