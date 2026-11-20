@@ -159,12 +159,12 @@ Cutaway.dialog("pike_fahrt", {
       P("Nicht hier draußen.")] },
     { text: "„Nichts Besonderes. Ich wohn im Kessel-Block.“", goto: "hoeren", then: [P("Da wohnen viele. Die meisten schlafen."), "Ich nicht.", P("Das merkt man.")] },
   ] },
-  hoeren: { enter: [P("Hörst du ihn manchmal? Den Sender.")], choices: [
-    { text: "„Ich hab ihn im Radio gehört. Er sagt, Nagi·wa lügt.“", goto: "rat", then: [P("Zehn Sekunden."), "Länger glaubt einem eh keiner.",
+  hoeren: { enter: [P("Und seine Sendung? Was hältst du davon?")], choices: [
+    { text: "„Er sagt, Nagi·wa lügt. Ich glaub ihm das.“", goto: "rat", then: [P("Zehn Sekunden."), "Länger glaubt einem eh keiner.",
       "Er sieht mich an.", P("Das sagt er auch. Fast genauso.")] },
     { text: "„Die Nachrichten sagen, er hat sie umgebracht.“", goto: "rat", then: ["Seine Stange bleibt im Wasser stehen.", P("Sagen sie."),
       "Ich hab gesehen, dass er's nicht war.", P("..."), P("Dann sag ihm das. Aber nicht gleich. Er braucht eine Weile.")] },
-    { text: "„Nein. Ich hör mir lieber Kameras an als Radio.“", goto: "rat", then: [P("Kameras lügen auch."), "Die nicht. Die Leute, die sie schneiden.",
+    { text: "„Ehrlich gesagt hör ich mir lieber Kameras an als Radio.“", goto: "rat", then: [P("Kameras lügen auch."), "Die nicht. Die Leute, die sie schneiden.",
       P("Das würde ihm gefallen.")] },
   ] },
   // his advice, free, the way he gives everything: once
@@ -244,7 +244,7 @@ hide.floss.use = [{ dialog: "pike_sumpf" }];
 // the first time: he doesn't want to be found; Juno's tone decides whether he stays (kapitel2-design §3.5, "Die Gespräche im Sumpf")
 const TOO_FAST = [
   L("Ich weiß nicht, wovon du redest."), L("Ich bin ein alter Mann mit einem Radio."), "So alt bist du nicht.", L("Raus."),
-  L("Und sag dem Reiher, er soll keinen mehr bringen."),
+  L("Und sag Pike, er soll keinen mehr bringen."),
   { set: "lantern_found", value: "out" },
   { goto: "sumpf", at: AH.door, face: "sw" },
   { sfx: "door_shut" },
@@ -252,25 +252,27 @@ const TOO_FAST = [
 ];
 const WARM = [{ set: "lantern_found", value: "found" }];
 Cutaway.dialog("lantern_erst", {
-  main: { enter: [L("Bleib da stehen."), L("Wer bist du? ... Nein. Sag's nicht."), L("Wie bist du ... Der Reiher. Natürlich der Reiher."),
-    "Er hat mich gebracht. Ich hab ihm die Endstufe besorgt.", L("Dann hat er sie also doch."), L("Und jetzt stehst du in meinem Wagen. Was willst du?")], choices: [
+  main: { enter: [L("Bleib da stehen."), L("Wer bist du? ... Nein. Sag's nicht."), L("Wie bist du ... Pike. Natürlich Pike."),
+    "Er hat mich gebracht. Ich hab ihm die Endstufe besorgt.", L("Dann hat er sie also doch."),
+    L("Und woher wusste Pike, dass du zu mir willst?"), "Deine Sendung am Sonntag. Unter dem Rauschen war deine eigene Kamera.",
+    L("..."), L("Dann sieht das bald noch jemand anders."), L("Und jetzt stehst du in meinem Wagen. Was willst du?")], choices: [
     { text: "„Erst mal nur reden. Wenn du willst.“", goto: "sitzen", then: [L("Reden."), L("Das sagen alle, bevor sie was wollen."), "Ich will auch was. Aber nicht gleich.",
       L("... Ehrlich wenigstens.")] },
-    { text: "„Pike sagt, du bist lange allein hier draußen.“", goto: "sitzen", then: [L("Pike redet zu viel. Für einen Reiher."), "Er hat drei Sätze gesagt.", L("Eben.")] },
+    { text: "„Pike hat erzählt, du bist schon lange allein hier draußen.“", goto: "sitzen", then: [L("Pike redet zu viel. Für seine Verhältnisse."), "Er hat drei Sätze gesagt.", L("Eben.")] },
     { text: "„Ich weiß, dass du's nicht warst. Ich hab alles gesehen.“", goto: "end", then: ["Er zuckt. Seine Hand geht ans Rad.", ...TOO_FAST] },
     { text: "„Ich hab den Schlüssel von Ines.“", if: "stick_ines", goto: "end", then: ["Bei ihrem Namen wird sein Gesicht ganz still.", ...TOO_FAST] },
   ] },
   sitzen: { enter: [L("Setz dich. Da, auf die Kiste. Nicht aufs Bett, das ist meins."), "Er dreht die Laterne an seinem Hals ein wenig heller."], choices: [
-    { text: "„Was ist das hier alles?“", goto: "warum", then: [L("Der Wagen hat mal Urlaub gemacht. Jetzt sendet er."), L("Siebenundachtzig sechs. Nachts."),
+    { text: "„Was machst du hier draußen mit dem ganzen Zeug?“", goto: "warum", then: [L("Der Wagen hat mal Urlaub gemacht. Jetzt sendet er."), L("Siebenundachtzig sechs. Nachts."),
       L("Hier ist Lantern. Wer das hier hört, ist noch wach. Das sag ich immer am Anfang.")] },
     { text: "„Wie lange bist du schon hier draußen?“", goto: "warum", then: [L("Seit dem Unfall. Pumpenhalle drei. Danach ..."),
       L("Hier draußen fragt keiner, wie man Treppen steigt."), "Und wie steigt man Treppen?", L("Treppen sind ein Argument. Ich hab Düsen.")] },
-    { text: "„Warum zeigen sie überall dich?“", goto: "end", then: ["Er sieht mich lange an. Dann nicht mehr.", ...TOO_FAST] },
+    { text: "„Warum zeigen sie dich überall in den Nachrichten?“", goto: "end", then: ["Er sieht mich lange an. Dann nicht mehr.", ...TOO_FAST] },
   ] },
   warum: { enter: [L("Und jetzt du. Warum bist du wirklich hier?")], choices: [
-    { text: "„Ich hab in der Metro zugesehen. Auf einer Kamera. Die ganze Zeit.“", goto: "end", then: ["Er sagt lange nichts.", L("Dann weißt du, dass ich ..."),
+    { text: "„Ich hab in der Metro zugesehen. Auf einer Kamera.“", goto: "end", then: ["Die ganze Zeit, bis zum Schluss.", "Er sagt lange nichts.", L("Dann weißt du, dass ich ..."),
       "Dass du schon weg warst. Ja.", L("..."), L("Das hat noch keiner zu mir gesagt."), ...WARM, { dialog: "lantern" }] },
-    { text: "„Ich hab was, das ihr gehört hat. Den Schlüssel.“", if: "stick_ines", goto: "end", then: [L("..."), L("Sie hat gesagt, sonst weiß es keiner."),
+    { text: "„Ich hab was, das ihr gehört hat.“", if: "stick_ines", goto: "end", then: ["Ihren Schlüssel. Den aus dem Trockner.", L("..."), L("Sie hat gesagt, sonst weiß es keiner."),
       "Sie konnte mich nicht sehen. Ich war an der Kamera.", L("Dann zeig ihn mir. Langsam."), ...WARM, { dialog: "lantern" }] },
   ] },
 });
@@ -278,10 +280,10 @@ Cutaway.dialog("lantern_erst", {
 Cutaway.dialog("pike_sumpf", { main: { enter: [P("Mhm?")], choices: [
   { text: "„Er hat mich rausgeworfen.“", if: "lantern_found=out", then: [P("Zu schnell?"), "Zu schnell.", P("Wenn er zu ist, redet er nicht mit Leuten. Nur mit dem Sender."),
     "Und wie red ich mit dem Sender?", P("Mit was, das sendet. Hier draußen liegt allerhand rum.")] },
-  { text: "„Was ist mit deiner Reuse?“", if: "!reuse_frei", then: [P("Die hängt da drüben in den Wurzeln. Hinter dem Wagen."), P("Da geh ich nicht hin."),
+  { text: "„Was ist das für eine Reuse da hinten in den Wurzeln?“", if: "!reuse_frei", then: [P("Die hängt da drüben in den Wurzeln. Hinter dem Wagen."), P("Da geh ich nicht hin."),
     P("Nicht mit dem, was da unten schwimmt.")] },
-  { text: "„Fährst du mich zurück?“", silent: true, goto: "end", then: ["Fährst du mich zurück?", P("Zurück?"), "Zurück.", { goto: "drain_market", at: AM.pikeTalk, face: "down" }] },
-  { text: "„Nichts. Ich schau mich um.“", silent: true, goto: "end" },
+  { text: "„Fährst du mich zurück zum Markt?“", silent: true, goto: "end", then: ["Fährst du mich zurück zum Markt?", P("Zurück?"), "Zurück.", { goto: "drain_market", at: AM.pikeTalk, face: "down" }] },
+  { text: "„Nichts. Ich schau mich nur ein bisschen um.“", silent: true, goto: "end" },
 ] } });
 // Lantern in person. He and Juno say du from the first word. The hand-over: said in his talk, or the stick given to him from the bag
 const HANDOVER = [
@@ -307,7 +309,7 @@ Cutaway.actor("lantern_k2", { name: "Lantern", color: "#b0f0a0", room: "lantern_
   talk: [{ if: "lantern_found=ally", then: [L("Du schon wieder. Pass auf, wer dir nachgeht.")], else: [L("Da bist du ja wieder.")] }, { dialog: "lantern" }],
   with: { stick: ["Hier. Der gehört dir.", ...HANDOVER] } });
 Nagiwa.talkTree("lantern", [
-  ["„Ich hab gesehen, was passiert ist.“", [
+  ["„Ich hab gesehen, was in der Metro passiert ist.“", [
     L("Was heißt gesehen?"),
     "CAM 31. Ich hab zugesehen, die ganze Zeit.",
     L("Dann weißt du, dass ich ..."),
@@ -320,7 +322,7 @@ Nagiwa.talkTree("lantern", [
   ]],
   // one place for two topics (the user's choice, 2026-11-16): her key while she has it, then her recording (decision 2, kapitel2-design §3.6)
   { either: [
-    ["„Ich hab ihren Schlüssel.“", [
+    ["„Ich hab ihren Schlüssel noch. Den aus dem Trockner.“", [
       L("..."),
       L("Sie hat gesagt, sonst weiß es keiner."),
       "Sie konnte mich nicht sehen. Ich war an der Kamera, und ich hab gehört, wo er liegt.",
@@ -330,19 +332,19 @@ Nagiwa.talkTree("lantern", [
       ["„Hier. Der gehört dir.“", HANDOVER, undefined, "stick_ines"],
       ["„Noch nicht.“", [L("Dann geh. Und lass dich nicht verfolgen.")], undefined, "stick_ines"],
     ], "stick_ines"],
-    ["„Ich hab eine Aufnahme.“", [
-      "CAM 31. Ines auf der Treppe, bis er hochsieht.",
+    ["„Ich hab eine Aufnahme aus der Metro.“", [
+      "Von CAM 31. Ines auf der Treppe, bis er hochsieht.",
       L("..."),
       L("Und die willst du senden lassen. Von mir."),
       "Bevor sie einer kauft, der sie verschwinden lässt.",
     ], [
-      ["„Hier. Mit ihren Protokollen.“", GIVE_CLIP, undefined, "!e2"],
+      ["„Nimm sie. Schick sie mit ihren Protokollen raus.“", GIVE_CLIP, undefined, "!e2"],
       ["„Noch nicht.“", [L("Dann behalt sie. Aber nicht zu lange.")], undefined, "!e2"],
     ], ["!stick_ines", "!e2", "cache_clip_ines_death", "!off_main"]],
   ] },
-  ["„Was ist das hier?“", [
+  ["„Was machst du hier draußen eigentlich?“", [
     L("Der Wagen hat mal Urlaub gemacht. Jetzt sendet er."),
-    L("Hier ist Lantern. Wer das hier sieht, ist noch wach."),
+    L("Hier ist Lantern. Wer das hier hört, ist noch wach."),
     L("Das sag ich immer am Anfang. Zehn Sekunden. Länger glaubt einem eh keiner."),
   ]],
 ], "Ich geh wieder.");

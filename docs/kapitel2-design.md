@@ -164,9 +164,9 @@ es nicht mehr, §7).
   Karton unter dem Bett und den Haken die Wand am Aufzug in Kapitel 2 auch dem, der in Kapitel 1 nie aufs Dach ging, und Juno kann beides
   jederzeit mitnehmen (vom Nutzer entschieden 2026-11-15). Nur die Solver-Läufe, in denen dieser Weg zu ist (`off_lantern`), schließen Karton und
   Haken mit, wie Kapitel 1 es mit dem Dach tut (`off_roof`). Lanterns Gespräch (`Nagiwa.talkTree`): „Ich hab
-  gesehen, was passiert ist.“, „Ich hab ihren Schlüssel.“ (mit dem Stick: „Hier. Der gehört Ihnen.“ oder „Noch nicht.“), „Was ist das hier?“
+  gesehen, was in der Metro passiert ist.“, „Ich hab ihren Schlüssel noch. Den aus dem Trockner.“ (mit dem Stick: „Hier. Der gehört dir.“ oder „Noch nicht.“), „Was machst du hier draußen eigentlich?“
   und „Ich geh wieder.“. Gibt Juno ihm den Stick, hat er ihn (wie aus dem Trockner), `lantern_found=ally`, und er wechselt zum Du („Sag's
-  nicht. Ich will's nicht wissen müssen.“). „Ich hab eine Aufnahme.“ (Entscheidung 2, §3.6) steht auf dem Platz des Schlüssels, sobald Juno den Stick nicht mehr hat (vom Nutzer entschieden 2026-11-16: wer den Stick noch trägt, gibt ihn zuerst); gibt sie Lantern den Clip, ist er ihr Verbündeter (`lantern_found=ally`) und wechselt zum Du, falls er es nicht schon getan hat. Am Montag fragt das Brett, wer den Schirm
+  nicht. Ich will's nicht wissen müssen.“). „Ich hab eine Aufnahme aus der Metro.“ (Entscheidung 2, §3.6; geben: „Nimm sie. Schick sie mit ihren Protokollen raus.“) steht auf dem Platz des Schlüssels, sobald Juno den Stick nicht mehr hat (vom Nutzer entschieden 2026-11-16: wer den Stick noch trägt, gibt ihn zuerst); gibt sie Lantern den Clip, ist er ihr Verbündeter (`lantern_found=ally`) und wechselt zum Du, falls er es nicht schon getan hat. Am Montag fragt das Brett, wer den Schirm
   gesehen hat. Die Hinweise zu diesem Weg gelten, solange Juno den Stick hat, Schritt für Schritt (der Trockner bleibt der kürzere Weg).
   **Gemalt** (2026-11-16, nach den Vorlagen des Nutzers, Prüfbilder `docs/rooms/sumpf_*`): die Fahrt und die Ankunft mit Pike, Juno und dem
   Floß; der Wohnwagen von innen auf den freigegebenen Blöcken (2026-11-16, Prüfbild `docs/rooms/lantern_versteck_x3.png`): Wände
@@ -341,12 +341,12 @@ kein Flag.
 > - „Nichts Besonderes. Ich wohn im Kessel-Block.“ – Pike: „Da wohnen viele. Die meisten schlafen.“ – Juno: „Ich nicht.“ – Pike:
 >   „Das merkt man.“
 >
-> Pike: „Hörst du ihn manchmal? Den Sender.“
-> - „Ich hab ihn im Radio gehört. Nagi·wa lügt.“ – Pike: „Zehn Sekunden.“ – Juno: „Länger glaubt einem eh keiner.“ – Pike
+> Pike: „Und seine Sendung? Was hältst du davon?“ (seit 2026-11-20: Juno hat ihn über seine Sendung gefunden)
+> - „Er sagt, Nagi·wa lügt. Ich glaub ihm das.“ – Pike: „Zehn Sekunden.“ – Juno: „Länger glaubt einem eh keiner.“ – Pike
 >   sieht sie an. – Pike: „Das sagt er auch. Fast genauso.“
 > - „Die Nachrichten sagen, er hat sie umgebracht.“ – Seine Stange bleibt im Wasser stehen. – Pike: „Sagen sie.“ – Juno: „Ich hab
 >   gesehen, dass er's nicht war.“ – Pike: „...“ – Pike: „Dann sag ihm das. Aber nicht gleich. Er braucht eine Weile.“
-> - „Nein. Ich hör Kameras, kein Radio.“ – Pike: „Kameras lügen auch.“ – Juno: „Die nicht. Die Leute, die sie schneiden.“ – Pike:
+> - „Ehrlich gesagt hör ich mir lieber Kameras an als Radio.“ – Pike: „Kameras lügen auch.“ – Juno: „Die nicht. Die Leute, die sie schneiden.“ – Pike:
 >   „Das würde ihm gefallen.“
 >
 > (Der Wald.) Juno: „Über uns hören die Ringe auf. Da ist Himmel. Und Bäume, mitten in der Stadt.“ – Pike: „Noch was. Umsonst.“ –
@@ -357,33 +357,34 @@ Danach kurz: Pike: „Mitte.“ – Juno: „Ich weiß.“
 
 *Lantern, das erste Mal.* Juno steht in der Tür. Sein Ton entscheidet, ob er bleibt:
 
-> Lantern: „Bleib da stehen.“ – Lantern: „Wer bist du? ... Nein. Sag's nicht.“ – Lantern: „Wie bist du ... Der Reiher. Natürlich der
-> Reiher.“ – Juno: „Er hat mich gebracht. Ich hab ihm die Endstufe besorgt.“ – Lantern: „Dann hat er sie also doch.“ – Lantern: „Und
-> jetzt stehst du in meinem Wagen. Was willst du?“
+> Lantern: „Bleib da stehen.“ – Lantern: „Wer bist du? ... Nein. Sag's nicht.“ – Lantern: „Wie bist du ... Pike. Natürlich
+> Pike.“ – Juno: „Er hat mich gebracht. Ich hab ihm die Endstufe besorgt.“ – Lantern: „Dann hat er sie also doch.“ – Lantern: „Und
+> woher wusste Pike, dass du zu mir willst?“ – Juno: „Deine Sendung am Sonntag. Unter dem Rauschen war deine eigene Kamera.“ –
+> Lantern: „...“ – Lantern: „Dann sieht das bald noch jemand anders.“ (2026-11-20) – Lantern: „Und jetzt stehst du in meinem Wagen. Was willst du?“
 > - „Erst mal nur reden. Wenn du willst.“ – Lantern: „Reden.“ – Lantern: „Das sagen alle, bevor sie was wollen.“ – Juno: „Ich will
 >   auch was. Aber nicht gleich.“ – Lantern: „... Ehrlich wenigstens.“ (weiter)
-> - „Pike sagt, du bist lange allein hier draußen.“ – Lantern: „Pike redet zu viel. Für einen Reiher.“ – Juno: „Er hat drei Sätze
+> - „Pike hat erzählt, du bist schon lange allein hier draußen.“ – Lantern: „Pike redet zu viel. Für seine Verhältnisse.“ – Juno: „Er hat drei Sätze
 >   gesagt.“ – Lantern: „Eben.“ (weiter)
 > - **zu forsch:** „Ich weiß, dass du's nicht warst. Ich hab alles gesehen.“
 > - **zu forsch:** „Ich hab den Schlüssel von Ines.“ (nur mit dem Stick)
 >
 > (weiter) Lantern: „Setz dich. Da, auf die Kiste. Nicht aufs Bett, das ist meins.“ – Er dreht die Laterne an seinem Hals ein wenig heller.
-> - „Was ist das hier alles?“ – Lantern: „Der Wagen hat mal Urlaub gemacht. Jetzt sendet er.“ – Lantern: „Siebenundachtzig sechs.
+> - „Was machst du hier draußen mit dem ganzen Zeug?“ – Lantern: „Der Wagen hat mal Urlaub gemacht. Jetzt sendet er.“ – Lantern: „Siebenundachtzig sechs.
 >   Nachts.“ – Lantern: „Hier ist Lantern. Wer das hier hört, ist noch wach. Das sag ich immer am Anfang.“ (weiter)
 > - „Wie lange bist du schon hier draußen?“ – Lantern: „Seit dem Unfall. Pumpenhalle drei. Danach ...“ – Lantern: „Hier draußen fragt
 >   keiner, wie man Treppen steigt.“ – Juno: „Und wie steigt man Treppen?“ – Lantern: „Treppen sind ein Argument. Ich hab Düsen.“ (weiter)
-> - **zu forsch:** „Warum zeigen sie überall dich?“
+> - **zu forsch:** „Warum zeigen sie dich überall in den Nachrichten?“
 >
 > (weiter) Lantern: „Und jetzt du. Warum bist du wirklich hier?“
-> - „Ich hab in der Metro zugesehen. Auf einer Kamera. Die ganze Zeit.“ – Lantern sagt lange nichts. – Lantern: „Dann weißt du, dass
+> - „Ich hab in der Metro zugesehen. Auf einer Kamera.“ – Juno: „Die ganze Zeit, bis zum Schluss.“ – Lantern sagt lange nichts. – Lantern: „Dann weißt du, dass
 >   ich ...“ – Juno: „Dass du schon weg warst. Ja.“ – Lantern: „...“ – Lantern: „Das hat noch keiner zu mir gesagt.“
-> - „Ich hab was, das ihr gehört hat. Den Schlüssel.“ (nur mit dem Stick) – Lantern: „...“ – Lantern: „Sie hat gesagt, sonst weiß es
+> - „Ich hab was, das ihr gehört hat.“ (nur mit dem Stick) – Juno: „Ihren Schlüssel. Den aus dem Trockner.“ – Lantern: „...“ – Lantern: „Sie hat gesagt, sonst weiß es
 >   keiner.“ – Juno: „Sie konnte mich nicht sehen. Ich war an der Kamera.“ – Lantern: „Dann zeig ihn mir. Langsam.“
 >
 > Danach sein Gespräch wie bisher (die Metro, der Schlüssel oder die Aufnahme, der Wagen, „Ich geh wieder.“), im Du.
 
 **Zu forsch:** Lantern: „Ich weiß nicht, wovon du redest.“ – Lantern: „Ich bin ein alter Mann mit einem Radio.“ – Juno: „So alt bist
-du nicht.“ – Lantern: „Raus.“ – Lantern: „Und sag dem Reiher, er soll keinen mehr bringen.“ (Die Tür geht zu, das grüne Licht wird
+du nicht.“ – Lantern: „Raus.“ – Lantern: „Und sag Pike, er soll keinen mehr bringen.“ (Die Tür geht zu, das grüne Licht wird
 dunkel: `lantern_found=out`.) Draußen, bei Pike: Pike: „Zu schnell?“ – Juno: „Zu schnell.“ – Pike: „Wenn er zu ist, redet er nicht mit
 Leuten. Nur mit dem Sender.“ An der Tür, wenn sie klopft: „Nichts. Nur das Brummen vom Rack.“
 
@@ -399,9 +400,9 @@ lässt es los.“ – Pike: „Danke.“ – Pike: „Nimm den hier. Ein Akku au
 > - „Mach die Tür auf. Ich will nur reden.“ – Es rauscht. Er hat abgeschaltet.
 >
 > (weiter)
-> - „Ich war zu schnell. Das tut mir leid. Ich hab dich in der Metro gesehen, und du warst weg, bevor er kam.“ – Lantern: „...“ –
+> - „Ich war vorhin zu schnell. Das tut mir leid.“ – Juno: „Ich hab dich in der Metro gesehen. Du warst schon weg, bevor er kam.“ – Lantern: „...“ –
 >   Lantern: „Die Tür ist offen.“
-> - „Pike sagt, du redest nur mit dem Sender. Also red ich mit dem Sender.“ – Lantern: „Pike redet zu viel.“ – Lantern: „... Aber er
+> - „Pike sagt, du redest nur noch mit dem Sender.“ – Juno: „Also red ich eben mit dem Sender.“ – Lantern: „Pike redet zu viel.“ – Lantern: „... Aber er
 >   hat recht. Die Tür ist offen.“
 > - „Mach auf, oder ich geh zu Morrow.“ – Es rauscht. Er hat abgeschaltet.
 

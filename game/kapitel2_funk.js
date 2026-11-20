@@ -91,8 +91,8 @@ Cutaway.dialog("lantern_funk", {
     { text: "„Mach die Tür auf. Ich will nur reden.“", goto: "end", then: STATIC },
   ] },
   sagen: [
-    { text: "„Ich war zu schnell. Das tut mir leid. Ich hab dich in der Metro gesehen, und du warst weg, bevor er kam.“", goto: "end", then: DOOR_OPEN },
-    { text: "„Pike sagt, du redest nur mit dem Sender. Also red ich mit dem Sender.“", goto: "end", then: [L("Pike redet zu viel."), L("... Aber er hat recht."), ...DOOR_OPEN] },
+    { text: "„Ich war vorhin zu schnell. Das tut mir leid.“", goto: "end", then: ["Ich hab dich in der Metro gesehen. Du warst schon weg, bevor er kam.", ...DOOR_OPEN] },
+    { text: "„Pike sagt, du redest nur noch mit dem Sender.“", goto: "end", then: ["Also red ich eben mit dem Sender.", L("Pike redet zu viel."), L("... Aber er hat recht."), ...DOOR_OPEN] },
     { text: "„Mach auf, oder ich geh zu Morrow.“", goto: "end", then: STATIC },
   ],
 });

@@ -366,7 +366,8 @@ Rollstuhl und seit Jahren unten in den Sümpfen. Er hat zwei Stimmen, und gerade
   Falle. Sätze über sich selbst lässt er unfertig („Ich war mal ...“). Er redet kurz, mit vielen Pausen, nie mehr als nötig.
 - **Auf Sendung**, und wenn er über die Sendung redet, ist er auf einmal ganz da: flüssig, ruhig, ein bisschen feierlich, wie ein
   Moderator von früher. Das Senden ist das Einzige, dem er traut. „Hier ist Lantern. Wer das hier sieht, ist noch wach.“
-- **Namen sagt er nicht laut,** weil man Namen abhören kann. Ines ist „sie“, Juno ist lange „Sie“ ohne Namen, er selbst ist Lantern. Seinen
+- **Namen sagt er nicht laut,** weil man Namen abhören kann. Ines ist „sie“, Juno ist lange „Sie“ ohne Namen, er selbst ist Lantern.
+  Nur Pike, seinen Freund, nennt er beim Namen, nie „den Reiher“ (vom Nutzer entschieden 2026-11-20); „der Reiher“ sagt nur Ratz. Seinen
   echten Namen sagt er höchstens einmal, und dann ist es ein Ereignis.
 - **Bilder aus der Hand:** Frequenzen, Kabel, Rauschen, Akkus, Pumpen und der Wasserstand. „Funk hört jeder. Ein Kabel hört nur, wer dran
   hängt.“
