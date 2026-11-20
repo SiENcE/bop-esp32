@@ -24,7 +24,7 @@ Nagiwa.talkTree("mei", [
     ["„Warum lässt du mich eigentlich anschreiben?“", [M("Wer anschreibt, kommt wieder."), M("Die bar zahlen, seh ich nie wieder.")]],
     ["„Ich zahl's dir zurück. Bald.“", [M("Hat keiner gefragt.")]],
   ]],
-  ["„Was hört man so?“", [
+  ["„Was gibt's Neues, Mei?“", [
     { if: "day=2", then: [M("Seit Lull gratis ist, trinken sie weniger."), M("Schlafen geht schneller als Saufen. Und billiger."), "Und dein Laden?", M("Der läuft. Für die, die noch wach sein wollen.")] },
     { if: "day=3", then: [M("Der Sohn vom Fischmann ist nicht aufgewacht."), "Sinker?", M("Ruhe-Erschöpfung, sagen die von Nagi·wa. Seit Sonntag liegt er da und lächelt."),
       M("Der Fischmann steht trotzdem am Stand. Was soll er sonst machen.")] },

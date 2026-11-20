@@ -257,7 +257,7 @@ Ausweis, Notschlüssel und der Weg aufs Dach sind schon im Prolog offen (entschi
 | 1 | CHAT | **Frau Imai** (R. IMAI, Status: schläft): „Ich habe einen Mord gesehen. In einer Straße, in der ich nie war.“ |
 | 2 | `lucky_static` | Eine Treppe, ein Fisch auf den Stufen, Regen von links, ein Mann, der fällt. „Das Komische ist, dass ich von oben draufgeschaut habe. Es war, als würde ich an einer Laterne hängen.“ Juno erkennt sie aus der Schlange: Sie ist der `UNKNOWN LINK`. |
 | 3 | `cam18`, Archiv | Der 29. Oktober, 03:12. Es ist wirklich geschehen, genau von dieser Kamera aus gesehen. Sie schlief von drei bis sieben. |
-| 4 | `lucky_static` | **Die Wahl:** „Sie sind nicht verrückt.“ (die Wahrheit, sie traut sich nicht mehr zu schlafen) oder „Das war ein Traum.“ (die Lüge, die sie schlafen lässt; beide im Kassenbuch). Kapitel 2 nimmt das auf. |
+| 4 | `lucky_static` | **Die Wahl:** „Sie sind nicht verrückt.“ (die Wahrheit, sie traut sich nicht mehr zu schlafen) oder „Das war nur ein Traum.“ (die Lüge, die sie schlafen lässt; beide im Kassenbuch). Kapitel 2 nimmt das auf. |
 
 **Die weißen Träger im Einzelnen (`traeger`):** Donnerstag, 23:30. Juno hört von überall her den Wagen, „der nicht hupt“. Auf der Kowalski-Straße: ein weißer Wagen ohne Schild, zwei freundliche Leute in Weiß, ein Mädchen in der Tür, die Rollos gehen runter. Die Wahl: **zusehen, filmen** (ein Clip im CACHE, für Vesper) oder **zu dem Mädchen gehen** (mehr als bleiben kann Juno nicht). Der Beitrag „Mein Vater wacht nicht auf“ im NETZ ist später ihrer.
 

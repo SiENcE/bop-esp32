@@ -127,7 +127,7 @@ wählt, sagt Juno wörtlich: Die Option ist der Satz selbst, die Reaktion passt 
 dahinter. Gesagtes steht in „…“. Eine Handlung steht ohne Anführungszeichen und ist immer `silent`, sonst sagt Juno sie laut. Große Entscheidungen fallen nie aus Versehen (Bibel §5).
 
 > „Sie sind nicht verrückt.“\
-> „Das war ein Traum.“
+> „Das war nur ein Traum.“
 
 **Was Juno im Gespräch sagt, klingt wie ein Gespräch** (vom Nutzer gewünscht 2026-11-20). Eine Option ist kein Stichwort für den
 Spieler, sondern der Satz, den Juno diesem Menschen in diesem Moment sagt:

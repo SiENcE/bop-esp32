@@ -111,7 +111,7 @@ floor14.corner_cam.use = [{ if: ["day>1", "day<5", "!link_cam14", "!off_zeitung"
   else: [{ if: "link_cam14", then: ["Ich bin schon drauf. Schöner wird's nicht."], else: ["Den eigenen Block glasst man nicht."] }] }];
 Cutaway.dialog("zeitung_cam", { main: { choices: [
   { text: "„Nur dieses eine Mal.“", goto: "end", then: [{ set: "code_cam14" }, { set: "link_cam14" }, { sfx: "link" }, "Das sagen alle. CAM 14 ist auf dem Deck."] },
-  { text: "„Nein.“", goto: "end", then: ["Soll die Zeitung halt weg sein."] },
+  { text: "„Nein. Das lass ich.“", goto: "end", then: ["Soll die Zeitung halt weg sein."] },
 ] } });
 Nagiwa.cams.cam14 = { id: "14", place: "KESSEL-BLOCK, 14. STOCK", owner: "NAGI·WA", map: [8, 14], if: "link_cam14" };
 Cutaway.actor("haldane_feed", { name: "Jemand im Morgenmantel", color: "#ffa8d8",
@@ -194,7 +194,7 @@ Cutaway.actor("imai", { name: "Frau Imai", color: "#c8d8b0", room: "lucky_static
 Cutaway.dialog("imai_wahl", { main: { choices: [
   { text: "„Sie sind nicht verrückt.“", goto: "end", then: [{ set: "imai_step", value: 3 }, { set: "imai_told", value: "truth" }, { ledger: "imai", value: "truth" }, "Die Treppe gibt es, und den Mann gibt es auch.", "Es war am neunundzwanzigsten Oktober um drei Uhr zwölf.",
     { say: "imai", text: "Da hab ich geschlafen." }, "Ich weiß.", { say: "imai", text: "Und wie soll ich das gesehen haben?" }, "Das weiß ich nicht.", { say: "imai", text: "Dann will ich heute Nacht nicht schlafen." }] },
-  { text: "„Das war ein Traum.“", goto: "end", then: [{ set: "imai_step", value: 3 }, { set: "imai_told", value: "dream" }, { ledger: "imai", value: "dream" }, "Ich hab nachgesehen. Da gibt es keine Treppe und keinen Fisch.",
+  { text: "„Das war nur ein Traum.“", goto: "end", then: [{ set: "imai_step", value: 3 }, { set: "imai_told", value: "dream" }, { ledger: "imai", value: "dream" }, "Ich hab nachgesehen. Da gibt es keine Treppe und keinen Fisch.",
     { say: "imai", text: "Gott sei Dank. Ich dachte schon ..." }, "Schlafen Sie gut, Frau Imai.", { evi: "verwirrt" }, { say: "evi", text: "Die Treppe gibt es aber. Ich hab sie gesehen." }, "Ich weiß."] },
 ] } });
 Nagiwa.cams.cam18 = { id: "18", place: "ALTER FISCHMARKT", owner: "NAGI·WA", map: [120, 14], if: { or: ["day>4", "imai_step>=1"] } };

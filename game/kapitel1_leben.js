@@ -78,12 +78,13 @@ const LESSON = [
       else: [M("Bau ich dir mal einen. Aus dem Tideboy.")] }],
   [M("Warum glasst du nie unser Haus?"), "Weil man dann weiß, was die Nachbarn nachts machen.", "Und das kriegt man nicht mehr weg.", M("Ich weiß schon, was Frau Haldane nachts macht."), "Siehst du.", { set: "moth_student" }, M("Jetzt bin ich Glasser."), "Jetzt weißt du Bescheid. Das ist schlimmer."],
 ];
-const QUESTION = ["„Was ist eine Kamera?“", "„Wie findet man einen Code?“", "„Warum glasst man den eigenen Block nicht?“"];
+// (Juno is the teacher: she says what she shows him tonight)
+const QUESTION = ["„Heute zeig ich dir, was eine Kamera ist.“", "„Heute zeig ich dir, wie man einen Code findet.“", "„Heute erklär ich dir, warum man den eigenen Block nie glasst.“"];
 // (the lessons are told apart by numbers: a plain = compares text)
 Cutaway.dialog("motte_lektion", { main: {
   enter: [M("Zeigst du mir heute was?")],
   choices: [
-    ...[0, 1, 2].map((n) => ({ text: QUESTION[n], if: [`moth_lesson>=${n}`, `moth_lesson<${n + 1}`], goto: "end", then: [...(n ? [] : ["Ich zeig dir eine Sache pro Abend. Heute: Was ist eine Kamera?"]), ...LESSON[n], { set: "moth_lesson", value: n + 1 }, { set: "moth_today" }] })),
+    ...[0, 1, 2].map((n) => ({ text: QUESTION[n], if: [`moth_lesson>=${n}`, `moth_lesson<${n + 1}`], goto: "end", then: [...(n ? [] : ["Ich zeig dir eine Sache pro Abend."]), ...LESSON[n], { set: "moth_lesson", value: n + 1 }, { set: "moth_today" }] })),
     { text: "„Heute nicht.“", goto: "end", then: [M("Morgen dann.")] },
   ] } });
 for (const night of [3, 4]) (Nagiwa.nights[night].passes ??= []).push({ unset: "moth_today" });
