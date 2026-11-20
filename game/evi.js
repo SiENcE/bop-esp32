@@ -139,7 +139,7 @@ Cutaway.script.action("notify", (s) => {
 // sentence done in GLASS ("Öffne GLASS ...", "Klick CAM 31 an") is said in the street as "only at the deck". The hints stay written once,
 // as they are (the tools read them so: without a room nothing is changed); this reads them for the room shown, when EVI says them.
 Nagiwa.contextHints = function () {
-  const AT_CAM = /^(Öffne CAM|Drück PUFFER auf CAM|Zoom\b.*\bCAM|Schau in CAM|Spul\b.*\bCAM)/, IN_GLASS = /^(Öffne GLASS|Klick CAM|.*\bin GLASS\b)/;
+  const AT_CAM = /^(Öffne CAM|Drück PUFFER auf CAM|Zoom\b.*\bCAM|Schau in CAM|Spul\b.*\bCAM)/, IN_GLASS = /^(Öffne GLASS|Klick CAM|.*\bin GLASS\b|.*\bim CACHE\b)/;
   const SWITCH = "Das ist in CAM {id}. Wechsel links in der Leiste.", DECK = "Öffne GLASS und nimm CAM {id}.", STREET = "Das siehst du nur am Deck, in CAM {id}.", GLASS = "Das geht nur am Deck.";
   const ids = Object.values(Nagiwa.cams).map((c) => c.id);
   Cutaway.i18n.declare("hints", [GLASS, ...ids.flatMap((id) => [SWITCH, DECK, STREET].map((s) => s.replace("{id}", id)))]);

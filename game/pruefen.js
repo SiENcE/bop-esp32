@@ -5,14 +5,16 @@
 //           (`counter`: how far Juno has got doesn't matter to the story), and the last one gives what the check is for (state)
 //   data    a recording without a picture (Ines' protocols) and the clips of Juno's CACHE under it: the clip picked is a view (`pruef_pick`),
 //           then the place in the data where it matches; one match is enough
+//   layers  two pieces of one recording (the noise at a clip's start and at its end), each nothing alone: laid over each other (a view,
+//           `pruef_over`) they show what is under them, and a click on what is found there gives what the check is for
 // No skill and no time: a wrong click only says something. The window open is the deck's (deck_app=pruef_<id>), a view; what was found is
 // state. A view only changes what can be clicked (the place under the playhead, the spike beside the clip picked), never what a click does.
 "use strict";
 
 (function () {
   const t = Nagiwa.t, S = () => Cutaway.state;
-  Cutaway.state.view("pruef_at", "pruef_pick", "pruef_from");
-  Cutaway.i18n.declare("deck", ["PRÜFEN // {name}", "STELLEN", "?", "MEIN CACHE", "{n}"]);
+  Cutaway.state.view("pruef_at", "pruef_pick", "pruef_from", "pruef_over");
+  Cutaway.i18n.declare("deck", ["PRÜFEN // {name}", "STELLEN", "?", "MEIN CACHE", "{n}", "ÜBEREINANDER", "NEBENEINANDER"]);
 
   /**
    * @typedef {{id: string, mark: number, side: 0 | 1, rect: number[], name: string, says: any[]}} CheckFind
@@ -31,8 +33,14 @@
    * at once); the CACHE's clips in their order, each with the spikes it matches and what Juno says then (and, if it has its own, why it
    * matches none); a spike clicked with no clip picked (`none`) or the wrong one (`wrong`); `found`: what follows any match; `done` the
    * condition that it has been found
+   * @typedef {{kind: "layers", title: string, if?: any, done: string, clip: string, lanes: [string, string], name: string, spots: number[][],
+   *   picture: (ctx: CanvasRenderingContext2D, which: 0 | 1 | 2, x: number, y: number, w: number, h: number) => void,
+   *   alone: any[], laid: any[], miss: any[], found: any[], again: any[]}} LayersCheck
+   * the clip it is opened from; its two pieces' names; what is found (`name`) at `spots` (points in the picture laid over, each a 12 px
+   * square); `picture` draws a piece (0, 1) or both laid over (2); what Juno says at a piece alone (`alone`), on laying them over (`laid`),
+   * elsewhere in the picture (`miss`), at a spot (`found`, which sets `done`), at one once it is done (`again`)
    */
-  /** @type {Record<string, ClipsCheck | DataCheck>} */
+  /** @type {Record<string, ClipsCheck | DataCheck | LayersCheck>} */
   Nagiwa.checks = {};
 
   /** the conditions under which a check can be used: its own, and not done yet @param {string} id */
@@ -48,6 +56,7 @@
     tools: [[0, 44], [48, 60], [112, 32], [148, 0]],      // the editor's tools, as game/deck.js places them (x after the window's edge + 8, width)
     nights: [82, 68, 74], base: 64, spike: 34,            // data: the nights' columns [x, labels' y, width], the spikes' base line, the highest
     rows: [86, 9],                                         // data: the CACHE's rows [y, height]
+    over: [112, 21, 168, 96], button: [148, 121, 96, 11],  // layers: the picture laid over, the button that lays them over or apart
   };
   const markAt = (/** @type {number} */ k) => k === 0 ? { or: ["!pruef_at", "pruef_at=0"] } : `pruef_at=${k}`;
   const markNow = () => Number(S().flag("pruef_at") ?? 0);
@@ -85,13 +94,27 @@
     const hs = {};
     const key = (/** @type {string} */ part) => `pruef_${id}_${part}`;
     if (o.close) hs[key("close")] = { name: "Schließen", rect: D.close, if: open, z: 8, use: [{ unset: "deck_app" }, { unset: "pruef_pick" }, { sfx: "type" }] };
-    if (c.kind === "clips") {
+    if (c.kind !== "data") {
       // PRÜFEN again: back to the clip it was opened from (which one is a view; the foreign clip if none is known), a hotspot each
+      const first = c.kind === "clips" ? c.a : c.clip;
       for (const [cid, clip] of Object.entries(Nagiwa.clips)) if (clip.check === id) {
         hs[key(`back_${cid}`)] = { name: "Prüfen", rect: [D.win[0] + 8 + L.tools[2][0], D.clip.tools, L.tools[2][1], 10], z: 8,
-          if: [open, cid === c.a ? { or: ["!pruef_from", `pruef_from=${cid}`] } : `pruef_from=${cid}`],
+          if: [open, cid === first ? { or: ["!pruef_from", `pruef_from=${cid}`] } : `pruef_from=${cid}`],
           use: [{ set: "deck_app", value: `clip_${cid}` }, { sfx: "type" }] };
       }
+    }
+    if (c.kind === "layers") {
+      // apart: each piece alone is nothing; the button lays them over and apart again (a view); laid over, the picture and its spots
+      const over = "pruef_over", done = c.done;
+      [0, 1].forEach((side) => { hs[key(`pic${side}`)] = { name: c.lanes[side], rect: L.pics[side], if: [open, `!${over}`], z: 6, use: c.alone }; });
+      hs[key("over")] = { name: "Übereinander", rect: L.button, if: [open, `!${over}`], z: 8, use: [{ set: over }, { sfx: "type" }, { if: { not: done }, then: c.laid }] };
+      hs[key("apart")] = { name: "Nebeneinander", rect: L.button, if: [open, over], z: 8, use: [{ unset: over }, { sfx: "type" }] };
+      hs[key("pic")] = { name: c.lanes.join(" + "), rect: L.over, if: [open, over], z: 6, use: [{ if: done, then: c.again, else: c.miss }] };
+      c.spots.forEach(([sx, sy], k) => {
+        hs[key(`spot${k}`)] = { name: c.name, rect: [L.over[0] + sx - 6, L.over[1] + sy - 6, 12, 12], if: [open, over], z: 7,
+          use: [{ if: done, then: c.again, else: [{ sfx: "tag" }, ...c.found] }] };
+      });
+    } else if (c.kind === "clips") {
       // the counter is a view (only the last find is state), so each place found so far has its own marks: moving the playhead is a move
       // of its own there, which the solver plays again after each find (it plays a move only in the first view that offers it)
       const n = c.finds.length, cnt = c.counter, done = c.done;
@@ -134,7 +157,7 @@
   };
   // the deck's checks of two clips: their hotspots come with the deck (game/deck.js, once everything is loaded)
   Nagiwa.deckParts.push((hs) => {
-    for (const [id, c] of Object.entries(Nagiwa.checks)) if (c.kind === "clips") Object.assign(hs, Nagiwa.checkHotspots(id));
+    for (const [id, c] of Object.entries(Nagiwa.checks)) if (c.kind !== "data") Object.assign(hs, Nagiwa.checkHotspots(id));
   });
 
   // ---------------------------------------------------------------- drawing
@@ -143,8 +166,36 @@
     const c = Nagiwa.checks[id], G = Nagiwa.deckDraw;
     if (!c) return;
     G.frame(ctx, t("PRÜFEN // {name}", { name: t(c.title) }));
-    if (c.kind === "clips") drawClips(ctx, c); else drawData(ctx, id, c);
+    if (c.kind === "clips") drawClips(ctx, c); else if (c.kind === "layers") drawLayers(ctx, c); else drawData(ctx, id, c);
   };
+
+  /** the editor's tools under the window, PRÜFEN lit (a click on it goes back to the clip) @param {CanvasRenderingContext2D} ctx */
+  function drawTools(ctx) {
+    const G = Nagiwa.deckDraw, C = G.C, p = G.pointer(), [X] = Nagiwa.deckUI.win, ty = Nagiwa.deckUI.clip.tools;
+    ["SCHNEIDEN", "ANONYMISIEREN", "PRÜFEN", "MONTIEREN"].forEach((label, i) => {
+      const [dx, fw] = L.tools[i], w = fw || Cutaway.font.get("hud").measure(t(label).toUpperCase()) + 8, x = X + 8 + dx, on = label === "PRÜFEN";
+      const hot = on && G.inRect(p.x, p.y, [x, ty, w, 10]);
+      G.chamfer(ctx, x, ty, w, 10, 2, hot ? C.cyanDark : on ? C.cyanDeep : C.steel1, on ? C.cyan : C.steel3, on ? C.cyanPale : C.steel4);
+      G.small(ctx, t(label), x + 4, ty + 3, on ? C.cyanPale : C.steel4);
+    });
+  }
+
+  /** two pieces, apart or laid over @param {CanvasRenderingContext2D} ctx @param {LayersCheck} c */
+  function drawLayers(ctx, c) {
+    const G = Nagiwa.deckDraw, C = G.C, p = G.pointer(), over = !!S().flag("pruef_over");
+    const pic = (/** @type {0 | 1 | 2} */ which, /** @type {number[]} */ [px, py, pw, ph], /** @type {string} */ label) => {
+      G.rect(ctx, C.ink, px - 1, py - 1, pw + 2, ph + 2);
+      ctx.save(); ctx.beginPath(); ctx.rect(px, py, pw, ph); ctx.clip(); c.picture(ctx, which, px, py, pw, ph); ctx.restore();
+      G.rect(ctx, C.ink, px, py, Cutaway.font.get("hud").measure(label.toUpperCase()) + 4, 9);
+      G.small(ctx, label, px + 2, py + 2, "#d4f7e2");
+    };
+    if (over) pic(2, L.over, `${t(c.lanes[0])} + ${t(c.lanes[1])}`);
+    else [0, 1].forEach((side) => pic(/** @type {0 | 1} */ (side), L.pics[side], t(c.lanes[side])));
+    const [bx, by, bw, bh] = L.button, hot = G.inRect(p.x, p.y, L.button), label = t(over ? "NEBENEINANDER" : "ÜBEREINANDER");
+    G.chamfer(ctx, bx, by, bw, bh, 2, hot ? C.cyanDark : C.cyanDeep, C.cyan, C.cyanPale);
+    G.small(ctx, label, bx + bw / 2, by + 3, C.cyanPale, "center");
+    drawTools(ctx);
+  }
 
   /** two clips, one timeline @param {CanvasRenderingContext2D} ctx @param {ClipsCheck} c */
   function drawClips(ctx, c) {
@@ -186,13 +237,7 @@
       G.small(ctx, label, fx + 4, L.finds, i < found ? C.cyanPale : C.steel4);
       fx += w + 4;
     });
-    // the editor's tools, PRÜFEN lit: a click on it goes back to the clip
-    ["SCHNEIDEN", "ANONYMISIEREN", "PRÜFEN", "MONTIEREN"].forEach((label, i) => {
-      const [dx, fw] = L.tools[i], w = fw || Cutaway.font.get("hud").measure(t(label).toUpperCase()) + 8, x = X + 8 + dx, on = label === "PRÜFEN";
-      const hot = on && G.inRect(p.x, p.y, [x, Nagiwa.deckUI.clip.tools, w, 10]);
-      G.chamfer(ctx, x, Nagiwa.deckUI.clip.tools, w, 10, 2, hot ? C.cyanDark : on ? C.cyanDeep : C.steel1, on ? C.cyan : C.steel3, on ? C.cyanPale : C.steel4);
-      G.small(ctx, t(label), x + 4, Nagiwa.deckUI.clip.tools + 3, on ? C.cyanPale : C.steel4);
-    });
+    drawTools(ctx);
   }
 
   /** data over the CACHE @param {CanvasRenderingContext2D} ctx @param {string} id @param {DataCheck} c */
