@@ -77,7 +77,7 @@ const GIVE_MORROW = [{ set: "e2", value: "morrow" }, { ledger: "morrow_ines", va
 Cutaway.dialog("morrow_k2", { main: {
   enter: [MO("Revier 9. Gehen Sie weiter.")],
   choices: [
-    { text: "„Ich hab eine Aufnahme. Aus der alten Metro.“", if: ["cache_clip_ines_death", "!e2"], goto: "clip", then: [MO("Zeigen.")] },
+    { text: "„Ich hab eine Aufnahme aus der alten Metro.“", if: ["cache_clip_ines_death", "!e2"], goto: "clip", then: ["Die sollten Sie sehen.", MO("Zeigen.")] },
     { text: "„Nichts. Ich geh schon.“", silent: true, goto: "end" },
   ] },
   clip: { enter: ["Ines auf der Treppe. Bis er hochsieht.", MO("...")],
@@ -87,13 +87,13 @@ Cutaway.dialog("morrow_k2", { main: {
       { text: "„Doch nicht.“", silent: true, goto: "end", then: [MO("Dann haben Sie mir nichts gezeigt.")] },
     ] },
   whisper: [
-    { text: "„Ja. Ganz.“", goto: "end", then: GIVE_MORROW },
-    { text: "„Nein. Ich schneid's raus.“", if: "!off_lantern", goto: "end", then: [...CUT_NOW, ...GIVE_MORROW] },
+    { text: "„Ja. Der Clip geht ganz raus.“", goto: "end", then: GIVE_MORROW },
+    { text: "„Nein. Das Flüstern schneid ich vorher raus.“", if: "!off_lantern", goto: "end", then: [...CUT_NOW, ...GIVE_MORROW] },
     { text: "„Doch nicht.“", silent: true, goto: "end", then: [MO("Dann haben Sie mir nichts gezeigt.")] },
   ] });
 Cutaway.dialog("k2_whisper_vesper", { main: { enter: WHISPER, choices: [
-  { text: "„Ja. Ganz.“", goto: "end", then: SOLD_VESPER },
-  { text: "„Nein. Ich schneid's raus.“", if: "!off_lantern", goto: "end", then: [...CUT_NOW, ...SOLD_VESPER] },
+  { text: "„Ja. Der Clip geht ganz raus.“", goto: "end", then: SOLD_VESPER },
+  { text: "„Nein. Das Flüstern schneid ich vorher raus.“", if: "!off_lantern", goto: "end", then: [...CUT_NOW, ...SOLD_VESPER] },
   { text: "„Doch nicht.“", goto: "end", then: ["Dann eben noch nicht."] },
 ] } });
 Nagiwa.replies.vesper.push({ id: "ines", text: CLIP_LINE, if: ["day>4", "cache_clip_ines_death", "!e2", "!off_main"],
@@ -113,14 +113,14 @@ Nagiwa.threads.vesper.push(
 Cutaway.dialog("k2_clip", { main: {
   enter: ["Es ist Viertel vor eins. Und der Clip ist immer noch nur bei mir.", "Was mach ich damit?"],
   choices: [
-    { text: "„An Vesper verkaufen.“", silent: true, if: ["cache_clip_ines_death", "cache_clip_ines_cut"], goto: "end", then: SOLD_VESPER },
-    { text: "„An Vesper verkaufen.“", silent: true, if: ["cache_clip_ines_death", "!cache_clip_ines_cut"], goto: "whisper", then: WHISPER },
-    { text: "„Behalten.“", silent: true, goto: "end", then: KEEP },
-    { text: "„Noch nicht.“", silent: true, goto: "end", then: ["Noch nicht. Noch ist Zeit."] },
+    { text: "„Ich verkauf ihn an Vesper.“", if: ["cache_clip_ines_death", "cache_clip_ines_cut"], goto: "end", then: SOLD_VESPER },
+    { text: "„Ich verkauf ihn an Vesper.“", if: ["cache_clip_ines_death", "!cache_clip_ines_cut"], goto: "whisper", then: WHISPER },
+    { text: "„Ich behalt ihn.“", goto: "end", then: KEEP },
+    { text: "„Noch nicht. Noch ist Zeit.“", goto: "end" },
   ] },
   whisper: [
-    { text: "„Ja. Ganz.“", goto: "end", then: SOLD_VESPER },
-    { text: "„Nein. Ich schneid's raus.“", if: "!off_lantern", goto: "end", then: [...CUT_NOW, ...SOLD_VESPER] },
+    { text: "„Ja. Der Clip geht ganz raus.“", goto: "end", then: SOLD_VESPER },
+    { text: "„Nein. Das Flüstern schneid ich vorher raus.“", if: "!off_lantern", goto: "end", then: [...CUT_NOW, ...SOLD_VESPER] },
     { text: "„Doch nicht.“", goto: "main" },
   ] });
 
@@ -182,9 +182,9 @@ Cutaway.moment("teo_monday", { room: "deck", day: 7, from: "18:00", to: "18:30",
   { face: "teo", to: "se" },
   "Er sieht müder aus als am Mittwoch. Und das Pflaster blinkt.",
   { if: "k1b=sold", then: [T("Von Bao. Bao hat einen Verband. Gekocht hat er trotzdem.")], else: [T("Von Bao. Er sagt, du siehst aus, als hättest du seit Freitag nichts gegessen.")] },
-  { if: "rent=teo", then: ["Die Miete. Danke.", T("Hab gesagt, sag nichts.")] },
+  { if: "rent=teo", then: ["Danke für die Miete, Teo.", T("Hab gesagt, sag nichts.")] },
   T("Gehen wir rauf, Ju? Wie früher."),
-  "Mit was willst du an die Leiter?",
+  "Und wie willst du an die Leiter kommen?",
   { if: "got_haken", then: [T("Hast du den Notschlüssel vom Aufzug noch?"), "Ja. Hier."],
     else: [T("Mit dem Notschlüssel vom Aufzug. Der hängt da noch, wie früher.")] },
   { fade: "out", ms: 700 },

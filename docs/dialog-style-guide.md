@@ -90,6 +90,9 @@ verkauft, das Kassenbuch rechnet. So darf auch eine schöne Zeile fallen, ohne d
   - **Lyrisch:** die Regenleserin. Ihre Sätze haben Rhythmus und Bilder, aber die Bilder kommen aus Geschmack, Wasser und Wetter (§2, „Bilder kommen aus der Hand“). Sie ist trotzdem kein Orakel.
   - **Lange, geschmeidige Sätze:** Direktorin Aubrecht. Ein Gedanke läuft bei ihr über Nebensätze und Kommas, ohne Bruch und ohne Eile, und gerade darin klingt das Ungeheuerliche vernünftig. Ein solcher Satz darf über mehrere Zeilen gehen (§5).
   Dadurch erkennt man diese Figuren schon am Satzbau. Die anderen tun es ihnen nicht nach, auch nicht für eine Pointe.
+  **Jeder hat seinen eigenen Stil, und doch passt alles zusammen** (vom Nutzer bestätigt 2026-11-20): Die Regenleserin darf in Metaphern
+  und lyrisch reden, Sable knapp, Aubrecht lang; Juno antwortet allen so, wie man mit Menschen redet (§4 E), und hält die Stimmen
+  zusammen. Beim Überarbeiten wird keine Figur an die anderen angeglichen.
 - **Zu viele Einzeiler.** Niemand ist eine Sprüchemaschine. Ernste Gespräche brauchen auch unspektakuläre Sätze. (Die Entscheidung vom 2026-11-06, dass die vorhandenen Blicke bleiben, wie sie sind, ist am 2026-11-10 aufgehoben: Sie werden in ganze Sätze umgeschrieben, und ihre Pointen bleiben.)
 - **Zu viel Erklärung.** Niemand erzählt seine Biografie oder Nagi·was Geschichte, nur weil ein Gespräch begonnen hat.
 - **Künstliche Coolness.** Juno ist keine unfehlbare Heldin. Sie sieht zu viel, isst zu wenig und weiß nicht immer, was sie tun soll.

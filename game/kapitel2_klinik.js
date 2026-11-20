@@ -29,7 +29,7 @@ Cutaway.actor("marit", { name: "Marit", color: "#c8b0e0", voice: { pitch: 60, ra
 const M = (/** @type {string} */ text) => ({ say: "marit", text });
 const INTAKE = [
   M("Name. Und wie viele Stunden schlafen Sie?"),
-  "Ada Novak. Drei. Manchmal vier.",
+  "Ada Novak. Und drei Stunden, manchmal vier.",
   M("Das sagen hier alle."),
   M("Wir können Ihnen Lull geben."),
   "Was kostet das?",
@@ -55,8 +55,8 @@ const CALDER = [
 ];
 Nagiwa.talkTree("k2_marit", [
   ["„Ich kann nicht schlafen.“", INTAKE],
-  ["„Ich suche Dr. Calder.“", CALDER],
-], "„Schon gut.“");
+  ["„Ich suche Dr. Calder. Arbeitet sie hier?“", CALDER],
+], "„Schon gut. Ich komm ein andermal.“");
 
 // the way there, as the user drew it in the city plan (2026-11-18): the alley's walkway runs on west out of its picture to the cross street,
 // where the clinic stands across from Pho Pump (CAM 21, CAM 22). From Chapter 2 on Juno goes along it. (off_klinik shuts the clinic for the

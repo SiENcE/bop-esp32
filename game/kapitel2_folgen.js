@@ -52,9 +52,9 @@ Cutaway.routine("kessler_markt", [{ day: [6, 7], from: "18:00", to: "04:00", if:
 Cutaway.dialog("k2_kessler", { main: {
   enter: [K("Haben Sie was übrig? Mit dem Arm nimmt mich keiner.")],
   choices: [
-    { text: "„Hier. Fünfzig.“", if: ["chits>=50", "!ledger_kessler_alms"], goto: "end", then: [{ ledger: "kessler_alms", value: "given" }, K("..."), K("Danke."),
+    { text: "„Hier sind fünfzig.“", if: ["chits>=50", "!ledger_kessler_alms"], goto: "end", then: [{ ledger: "kessler_alms", value: "given" }, K("..."), K("Danke."),
       "Er weiß nicht, wofür er sich bedankt. Ich schon."] },
-    { text: "„Was ist passiert?“", goto: "main", then: [K("Ich bin die Treppe runter. Dreimal."), "So sagt man das hier."] },
+    { text: "„Was ist mit Ihrem Arm passiert?“", goto: "main", then: [K("Ich bin die Treppe runter. Dreimal."), "So sagt man das hier."] },
     { text: "Weitergehen.", silent: true, goto: "end", then: [{ if: "ledger_kessler_alms", then: [K("Gute Nacht.")] }] },
   ] } });
 
@@ -69,9 +69,9 @@ Cutaway.routine("vargas_mann", [{ day: [5, 6], from: "19:00", to: "23:00", if: [
 Cutaway.dialog("k2_vargas_mann", { main: {
   enter: [VM("Die 200, Glasserin.")],
   choices: [
-    { text: "„Hier.“", if: "chits>=200", goto: "end", then: [{ ledger: "varga2", value: "paid" }, VM("..."), VM("Gut."), "Er zählt nicht mal nach. Er geht einfach."] },
-    { text: "„Hab ich nicht.“", goto: "end", then: [VM("..."), VM("Nicht? Dann schuldest du Varga was."), { ledger: "varga2", value: "owed" }, "Er stößt sich von der Wand ab und geht."] },
-    { text: "„Später.“", silent: true, goto: "end", then: [VM("Ich steh hier gern. Regnet ja nur.")] },
+    { text: "„Hier sind die zweihundert.“", if: "chits>=200", goto: "end", then: [{ ledger: "varga2", value: "paid" }, VM("..."), VM("Gut."), "Er zählt nicht mal nach. Er geht einfach."] },
+    { text: "„Die hab ich gerade nicht.“", goto: "end", then: [VM("..."), VM("Nicht? Dann schuldest du Varga was."), { ledger: "varga2", value: "owed" }, "Er stößt sich von der Wand ab und geht."] },
+    { text: "„Später.“", goto: "end", then: [VM("Ich steh hier gern. Regnet ja nur.")] },
   ] } });
 // Monday: a note in Juno's mailbox, by what she did (or didn't)
 const mailboxes = Cutaway.room.get("kessel_lobby").hotspots.mailboxes, mailUse = mailboxes.use;

@@ -50,16 +50,16 @@
   // while Juno asks for the hostel, this option stands where "what else do you sell" stands
   const sable = /** @type {any} */ (Cutaway.dialog.get("sable")), other = sable.main.findIndex((/** @type {any} */ c) => c.text === "„Was verkaufst du sonst?“");
   sable.main[other].if = { or: ["!haldane_ask", "link_cam51", "off_haldane"] };
-  sable.main.splice(other, 0, { text: "„Hast du was im Fünften? Das Wohnheim 5-Süd.“", if: ["haldane_ask", "!link_cam51", "!off_haldane"], goto: "cam51",
+  sable.main.splice(other, 0, { text: "„Hast du eine Kamera im Fünften? Im Wohnheim 5-Süd.“", if: ["haldane_ask", "!link_cam51", "!off_haldane"], goto: "cam51",
     then: [{ say: "sable", text: "5-Süd. Nagi·was Wohnheim, Schlafsaal C hat eine Kamera." }, { say: "sable", text: "Live nicht. Ins Archiv lass ich dich." },
       { say: "sable", text: "Hundertfünfzig. Oder einen Clip, roh. Was Echtes." }] });
   sable.cam51 = [
     { text: "„Hier sind hundertfünfzig.“", if: "chits>=150", goto: "end", then: [{ ledger: "sable_cam51", value: "paid" }, { set: "code_cam51" }, { set: "link_cam51" },
       { say: "sable", text: "Nett." }, "CAM 51 steht jetzt auf dem Deck. Nur das Archiv, einen Monat zurück."] },
-    { text: "„Nimm Kesslers Ring.“", if: { or: [["cache_clip_kessler_ring", "!anon_clip_kessler_ring"], "cache_clip_kessler_cut"] }, goto: "end",
+    { text: "„Nimm dafür Kesslers Ring.“", if: { or: [["cache_clip_kessler_ring", "!anon_clip_kessler_ring"], "cache_clip_kessler_cut"] }, goto: "end",
       then: [{ ledger: "sable_cam51", value: "ring" }, { set: "code_cam51" }, { set: "link_cam51" }, { say: "sable", text: "Den Ring will immer noch einer sehen. Nett." },
         "Jetzt zieht Kessler seinen Ring noch mal ab. Für jemand, den ich nicht kenne.", "CAM 51 steht auf dem Deck. Nur das Archiv."] },
-    { text: "„Zu teuer.“", goto: "main", then: [{ say: "sable", text: "Das Archiv wartet." }] },
+    { text: "„Das ist mir zu teuer.“", goto: "main", then: [{ say: "sable", text: "Das Archiv wartet." }] },
   ];
 
   // ---- at her door (H1, H4): from Sunday on she is awake and waits; she asks, and hears what Juno tells her
@@ -71,7 +71,7 @@
     H("Du kennst dich doch mit Kameras aus. Kannst du sehen, ob es ihm gut geht?"), H("Er wohnt im Wohnheim 5-Süd, im Fünften. Er hat da Arbeit."),
     { set: "haldane_ask" }, "Ich schau nach.", "Im Fünften hab ich keine Kamera. Aber Sable verkauft alles."];
   Cutaway.dialog("haldane_wahl", { main: { choices: [
-    { text: "„Er schläft. Sie haben ihn auf eine Station gebracht.“", goto: "end", then: [{ set: "haldane", value: "truth" }, { ledger: "haldane", value: "truth" },
+    { text: "„Er schläft. Die haben ihn auf eine Station gebracht.“", goto: "end", then: [{ set: "haldane", value: "truth" }, { ledger: "haldane", value: "truth" },
       H("Auf eine Station?"), "Am fünfzehnten Oktober ist er nicht mehr aufgewacht. Zwei in Weiß haben ihn geholt.", "Sie sagt lange nichts.",
       H("Dann schlaf ich auch. Dann bin ich näher bei ihm."), "Sie meint es genau so."] },
     { text: "„Hier. Das ist von heute früh.“", if: "mont_clip_najo", goto: "end", then: [{ set: "haldane", value: "fake" }, { ledger: "haldane", value: "fake" },
@@ -79,7 +79,7 @@
       H("Dann hat er bloß keine Zeit zum Schreiben."), "Ja. Bloß keine Zeit."] },
     { text: "„Ich hab nichts gefunden.“", goto: "end", then: [{ set: "haldane", value: "nothing" }, { ledger: "haldane", value: "nothing" },
       H("Nichts?"), H("Dann warte ich eben weiter.")] },
-    { text: "„Noch nicht.“", silent: true, goto: "end", then: [H("Ich bleib wach. Bis du was weißt.")] },
+    { text: "„Noch nicht. Ich schau noch.“", goto: "end", then: [H("Ich bleib wach. Bis du was weißt.")] },
   ] } });
   door.talk = [{ if: ["day>5", "!off_haldane"], then: [
     { if: "haldane=truth", then: ["Sie schläft in ihrem Sessel, mitten am Abend. Das Licht hinter ihrem Ohr blinkt wieder."],

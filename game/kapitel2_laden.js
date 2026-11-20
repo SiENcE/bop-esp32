@@ -61,10 +61,10 @@
               else: [...TELLS, { if: "!link_cam26", then: ["Die Kamera über der Kasse. Mal sehen, an welchem Netz die hängt."], else: ["Die hab ich schon. CAM 26."] }] }] }] }] }] }];
   Cutaway.room.get("weg1").hotspots.sheep2.use = [SH2("Flyer? Schlaf ist umsonst."), "Wo ist der andere?", SH2("Der hat im Dienst geschlafen. Sagt die Kette.")];
   Cutaway.dialog("shop24_wahl", { main: { choices: [
-    { text: "„Ich weiß, wer es war.“", if: "!mont_clip_shop24", goto: "end", then: [
+    { text: "„Ich weiß jetzt, wer dir die Sachen klaut.“", if: "!mont_clip_shop24", goto: "end", then: [
       "Ich zeig ihm den Clip. Den Mann mit dem Wagen, um halb drei, das Sandwich und die Dose.", SH("Der von gegenüber? Der nimmt doch nur, was eh weggeht."),
       SH("Ich muss das der Kette schicken. Sonst zahl ich weiter."), { ledger: "shop24", value: "shown" }, "Er tippt schon. Gegenüber schläft der Mann und weiß noch nichts."] },
-    { text: "„Ich hab nachgesehen. Da war keiner.“", if: "mont_clip_shop24", goto: "end", then: [
+    { text: "„Ich hab mir die Kamera angesehen. Da war keiner.“", if: "mont_clip_shop24", goto: "end", then: [
       "Ich zeig ihm die Schleife. Der Laden, leer, die ganze Nacht.", SH("Keiner? Aber es fehlt doch was."), SH("Dann bin ich's wohl selber. Im Schlaf."),
       { ledger: "shop24", value: "cut" }, "Er glaubt es. Das ist das Schlimmste daran."] },
     { text: "Nichts sagen.", silent: true, goto: "end", then: [SH("Dann lass mich schlafen.")] },

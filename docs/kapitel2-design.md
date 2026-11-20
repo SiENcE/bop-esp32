@@ -91,7 +91,7 @@ es nicht mehr, §7).
   sitzt Teo seit 2026-11-19 gemalt neben ihr (`dach_teo`, §10).
 - Die Uhr hält am Montag um 00:45. **Sie verlangt, was gebaut ist** (vom Nutzer so gewollt): den Stick bei Lantern und Entscheidung 2;
   `evi_knows` kommt dazu, sobald die Wohnung gebaut ist. Gebaut sind von Entscheidung 2 Vesper im CHAT (immer da, auch
-  bei `off_vesper`) und die Frage des Decks um 00:45 („An Vesper verkaufen.“, „Behalten.“, „Noch nicht.“). Preis und Zuschauer sind
+  bei `off_vesper`) und die Frage des Decks um 00:45 („Ich verkauf ihn an Vesper.“, „Ich behalt ihn.“, „Noch nicht. Noch ist Zeit.“). Preis und Zuschauer sind
   Platzhalter (§14).
 - Das Ende als Kette mit `end_beat2` (sent > found) bis zur Karte „Kapitel 3: Lull (kommt später)“. Das letzte Prüfen ist seit 2026-11-15
   das Werkzeug PRÜFEN (siehe „Das letzte Prüfen“ unten), der Kontakt um 03:15 heißt bis zur Entscheidung `BECKEN 3` (§14).
@@ -476,7 +476,7 @@ Lantern in seinem Gespräch (§2.1); Vesper im CHAT; Behalten fragt das Deck am 
 mit (§8). Das Flüstern (§3.1) ist ein eigener Moment
 im Clip-Editor (FLÜSTERN, 22 Sekunden am Ende der Übergabe); SCHNEIDEN nimmt ihn heraus, solange `e2` offen ist, und legt `clip_ines_cut` in den
 CACHE („CAM 31, 23:03, GESCHNITTEN“). Will Juno Sable, Vesper oder Morrow den ganzen Clip geben, fragt EVI vorher („Im Clip ist das Flüstern. Willst
-du, dass das jemand hört?“: „Ja. Ganz.“, „Nein. Ich schneid's raus.“, „Doch nicht.“); wer schon geschnitten hat, gibt den geschnittenen. Ging der
+du, dass das jemand hört?“: „Ja. Der Clip geht ganz raus.“, „Nein. Das Flüstern schneid ich vorher raus.“, „Doch nicht.“); wer schon geschnitten hat, gibt den geschnittenen. Ging der
 ganze Clip hinaus, setzt die nächste Nacht `quiet_dryer`: Der Mann in Weiß steht von 18:00 bis 01:00 in `cam23` vor der Sechs, Zurücklegen geht nicht
 mehr, und Lantern kommt nicht mehr an den Trockner; EVIs Hinweis schickt Juno dann zu ihm. (Die Läufe mit `off_lantern` halten den Trockner offen,
 weil dort der Weg zu ihm zu ist, und lassen das Schneiden weg, das dort nichts ändert und jeden Zustand verdoppelte; der Lauf dieses Wegs
@@ -492,7 +492,7 @@ Um 00:45 hält die Uhr, wie am Freitag in Kapitel 1, bis drei Dinge erfüllt sin
 1. Juno war in Ines' Wohnung (`evi_knows`). Sonst: „Ich weiß immer noch nicht, wer sie war.“
 2. Lantern hat den Stick (weder `stick_ines` noch `stick_dryer`). Sonst: „Ich hab noch ihren Schlüssel. Ohne den ist alles umsonst.“ Liegt der Stick wieder
    im Trockner, holt Lantern ihn sofort, die Uhr steht ja in seinem Fenster.
-3. Entscheidung 2 ist gefallen. Sonst fragt das Deck selbst, mit dem, was am Deck geht: Vesper im Chat und „Behalten.“. Zu Sable und
+3. Entscheidung 2 ist gefallen. Sonst fragt das Deck selbst, mit dem, was am Deck geht: Vesper im Chat und „Ich behalt ihn.“. Zu Sable und
    zu Lantern geht Juno hin; die Uhr steht ja, und Wege kosten nichts. Morrow hält am Montag nicht.
 
 Dann läuft die Uhr weiter, und um 01:00 kommt das Ende (§8). Kein Zustand kann hier hängen bleiben: Wohnung, Stick und Clip sind von
@@ -573,7 +573,7 @@ Nur, wenn Juno ihr in Kapitel 1 geantwortet hat (`imai_told` ist gesetzt); sonst
 |---|---|---|
 | I1 | CHAT, Samstag | „Ich hab wieder was gesehen. Eine Frau auf einem Bahnsteig.“ (Kapitel 1, §7) |
 | I2 | `lucky_static`, Sa und So 20:00–23:00 | An ihrem kleinen Tisch: Wasser bis zur Kante, eine Frau in Weiß, ein Mann in Weiß, der aus dem Schatten kommt. „Er hat hochgeschaut. Zu mir.“ Und: „Ich hab es gesehen. Um drei, im Schlaf.“ (entschieden 2026-11-14) Sie hat es nicht live gesehen, sondern danach, im Schlaf, wieder und wieder. Nach `imai_told=truth` hat sie kaum geschlafen und es trotzdem gesehen („Ich hab nur kurz die Augen zugemacht.“); nach `imai_told=dream`: „Sie haben gesagt, es war ein Traum.“ |
-| I3 | dort | Die Wahl: „Ich hab es auch gesehen. Es ist wirklich passiert.“ oder „Das war ein Traum.“ Kassenbuch: „Frau Imai: die Wahrheit, zum zweiten Mal.“ oder „Frau Imai: wieder ein Traum.“ Flag `imai2`. |
+| I3 | dort | Die Wahl: „Ich hab es auch gesehen. Es ist wirklich passiert.“ oder „Das war nur ein Traum, Frau Imai.“ Kassenbuch: „Frau Imai: die Wahrheit, zum zweiten Mal.“ oder „Frau Imai: wieder ein Traum.“ Flag `imai2`. |
 
 **Warum sie es gesehen hat** (entschieden 2026-11-14, story §10h): `cam31` hängt nicht an Nagi·was Netz, also spielt Civic Rest sie
 keinem Schläfer vor. Wer den Mord im Schlaf sieht, dem zeigt ihn der Zeuge: Nach
@@ -590,7 +590,7 @@ nicht mehr, der letzte Brief kam am 14. Oktober.
 | H1 | `kessel_14`, ab Sonntag | Sonntag ist Brieftag, und Frau Haldane schläft nicht, bis er kommt: Sie sitzt wach an ihrer offenen Tür, das Pflaster hinterm Ohr dunkel. „Sonntags schlaf ich nicht. Sonntags kommt sein Brief.“ Am Montag wartet sie immer noch. Sie bittet Juno: „Du kennst dich doch mit Kameras aus. Kannst du sehen, ob es ihm gut geht?“ Sein Wohnheim: 5-Süd, im Fünften. |
 | H2 | `sable_booth` | Kameras im Fünften hat Juno nicht. Sable verkauft einen Blick ins Archiv des Wohnheims: 150 Chits oder ein roher Clip aus dem CACHE als Shine (Kesslers Ring hat jeder; wer die Miete von Teo hat bezahlen lassen, hat 0 Chits). |
 | H3 | `cam51`, nur Archiv | Der Schlafsaal des Wohnheims, Reihen von Kojen (neues Bild, §9). Sonntag, 14. Oktober, 21:00: Er liest auf seiner Koje einen Brief seiner Mutter (seiner war am selben Tag bei ihr angekommen, der letzte), drückt das Lull-Pflaster an und legt sich hin. Montag, 15. Oktober, 06:00: Er steht nicht auf. Um 06:30 tragen ihn zwei in Weiß hinaus, freundlich. Juno: „Ruhe-Erschöpfung. Seit vier Wochen.“ |
-| H4 | `kessel_14` | Die Wahl, an ihrer Tür: **die Wahrheit** („Er schläft. Sie haben ihn auf eine Station gebracht.“), **ein montierter Clip** oder **„Ich hab nichts gefunden.“** Kassenbuch und Flag `haldane` = truth \| fake \| nothing. |
+| H4 | `kessel_14` | Die Wahl, an ihrer Tür: **die Wahrheit** („Er schläft. Die haben ihn auf eine Station gebracht.“), **ein montierter Clip** oder **„Ich hab nichts gefunden.“** Kassenbuch und Flag `haldane` = truth \| fake \| nothing. |
 
 **Montieren** (`kapitel0-design` §2.4) kommt hier oder am 24h-Laden (§6.5) zum ersten Mal, je nachdem, was Juno zuerst tut: Juno nimmt aus dem Archiv einen Moment, in dem er morgens zur Schicht
 geht (vom 9. Oktober), und setzt den Zeitstempel von heute davor. Frau Haldane sieht ihren Sohn heute früh zur Arbeit gehen. Es ist eine
@@ -657,7 +657,7 @@ neuen Preis noch seine Schrift. Juno: „Das sind Okonkwos Dosen. Da steht noch 
 
 | Wann | Wo | Was |
 |---|---|---|
-| **Montag, 18:30** | `flat` → `sims` → `dach_sitzen` | **Teos letzter Besuch, wach.** Es klopft wie in Kapitel 1. Teo ist müder als am Mittwoch, das Pflaster blinkt. Er bringt wieder etwas von Bao; nach dem Überfall: „Bao hat einen Verband. Gekocht hat er trotzdem.“ „Gehen wir rauf, Ju? Wie früher.“ An die Leiter kommt er mit dem Notschlüssel vom Aufzug, dem langen Haken im 14. Stock („Der hängt da noch, wie früher.“; hat Juno ihn eingesteckt, `got_haken`: „Hast du den Notschlüssel vom Aufzug noch?“ „Ja. Hier.“; vom Nutzer so entschieden 2026-11-19, kein Haken aus der Pumpenhalle). Hängt die Leiter noch oben, holt er sie herunter (`ladder_down`); hängt sie schon unten: „Du warst ohne mich oben?“ Oben setzen sie sich auf ihren Platz, und neben Juno ist zum ersten Mal jemand (der leere Platz aus Kapitel 1, `dach_sitzen`). Er erzählt von **Tinte**, der Krake im Filterbecken: „Tinte sagt, ich zuck im Schlaf. Wie die anderen.“ Und: „Wenn ich schlaf, ist alles still. Keine Pumpen. Keine Schulden.“ Er schläft kurz an ihrer Schulter ein, wie damals, wacht auf und muss zur Schicht. Nach `rent=teo`: „Die Miete. Danke.“ „Hab gesagt, sag nichts.“ Eine Szene ohne Wahl. |
+| **Montag, 18:30** | `flat` → `sims` → `dach_sitzen` | **Teos letzter Besuch, wach.** Es klopft wie in Kapitel 1. Teo ist müder als am Mittwoch, das Pflaster blinkt. Er bringt wieder etwas von Bao; nach dem Überfall: „Bao hat einen Verband. Gekocht hat er trotzdem.“ „Gehen wir rauf, Ju? Wie früher.“ An die Leiter kommt er mit dem Notschlüssel vom Aufzug, dem langen Haken im 14. Stock („Der hängt da noch, wie früher.“; hat Juno ihn eingesteckt, `got_haken`: „Hast du den Notschlüssel vom Aufzug noch?“ „Ja. Hier.“; vom Nutzer so entschieden 2026-11-19, kein Haken aus der Pumpenhalle). Hängt die Leiter noch oben, holt er sie herunter (`ladder_down`); hängt sie schon unten: „Du warst ohne mich oben?“ Oben setzen sie sich auf ihren Platz, und neben Juno ist zum ersten Mal jemand (der leere Platz aus Kapitel 1, `dach_sitzen`). Er erzählt von **Tinte**, der Krake im Filterbecken: „Tinte sagt, ich zuck im Schlaf. Wie die anderen.“ Und: „Wenn ich schlaf, ist alles still. Keine Pumpen. Keine Schulden.“ Er schläft kurz an ihrer Schulter ein, wie damals, wacht auf und muss zur Schicht. Nach `rent=teo`: „Danke für die Miete, Teo.“ „Hab gesagt, sag nichts.“ Eine Szene ohne Wahl. |
 | Samstag | `lucky_static` | Der Fernseher: „Tote in der alten Metro. Revier 9 ermittelt.“ Nach `k1b=sold` erzählt Mei vom Überfall bei Okonkwo und von Bao. Der schlafende Stammgast murmelt auf seinen Armen: „Sie geht zur Treppe.“ Die Frau neben ihm: „Er redet nie im Schlaf. Nie.“ |
 | Sonntag | `lucky_static` | Der Fernseher zeigt die Fälschung (§3.4). Mei schaltet nicht aus, sie schaut weg. |
 | Montag | `lucky_static` | „Fahndung nach LANTERN. Hinweise an Revier 9.“ Mei: „Der hat doch nie jemandem was getan. Der hat nur geredet.“ |

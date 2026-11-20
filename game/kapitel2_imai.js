@@ -38,7 +38,7 @@
   Cutaway.dialog("imai2_wahl", { main: { choices: [
     { text: "„Ich hab es auch gesehen. Es ist wirklich passiert.“", goto: "end", then: [{ set: "imai2", value: "truth" }, { ledger: "imai2", value: "truth" },
       I("Dann ist sie tot. Die Frau am Wasser."), "Ja.", I("Und wer zeigt mir das? Jede Nacht um drei?"), "Das will ich auch wissen."] },
-    { text: "„Das war ein Traum.“", goto: "end", then: [{ set: "imai2", value: "dream" }, { ledger: "imai2", value: "dream" },
+    { text: "„Das war nur ein Traum, Frau Imai.“", goto: "end", then: [{ set: "imai2", value: "dream" }, { ledger: "imai2", value: "dream" },
       { if: "imai_told=dream", then: [I("Wieder ein Traum. Gut.")], else: [I("Letztes Mal haben Sie gesagt, es ist wirklich passiert."), "Diesmal war es ein Traum."] },
       I("Ich hole mir Tropfen. Damit träumt man gar nicht mehr."), "Schlafen Sie gut, Frau Imai."] },
   ] } });
