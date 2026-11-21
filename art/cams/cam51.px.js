@@ -54,28 +54,16 @@ const bunk = (side, i) => {
   void wall
   return P
 }
-// a sleeper under a blanket, the head at the far end on the pillow: the legs low, the hips and shoulders a hump; the dot behind the
-// ear glows (the patch, on Lull)
+// a sleeper under a blanket, the head at the far end on the pillow: the legs low, the hips and shoulders a hump. The head is painted
+// on the pillow (heads(), at headAt), the dot behind the ear glows over it (dots(): the patch, on Lull)
 const dotAt = (side, i, y) => { const x0 = side < 0 ? -HALL + 0.12 : HALL - BD + 0.12, xm = x0 + (BD - 0.24) / 2; return [xm + (side < 0 ? 0.1 : -0.1), y + 0.36, bunkZ(i) + BL - 0.26] }
 const sleeper = (side, i, y) => {
   const z0 = bunkZ(i), x0 = side < 0 ? -HALL + 0.12 : HALL - BD + 0.12, x1 = x0 + BD - 0.24, xm = (x0 + x1) / 2, hz = z0 + BL - 0.3, turn = rnd(i, side + y, 8) > 0.5 ? 0.06 : -0.06
   return [block([x0 + 0.05, y + 0.08, z0 + 0.15], [x1 - 0.05, y + 0.2, z0 + 0.95], "blanket"), block([x0, y + 0.08, z0 + 0.9], [x1, y + 0.3, hz - 0.12], "blanket"),
-    block([x0 + 0.02, y + 0.28, hz - 0.3], [x1 - 0.02, y + 0.32, hz - 0.12], "fold"),
-    cyl(xm + turn, hz, 0.11, y + 0.2, y + 0.4, "head"), block([xm + (side < 0 ? 0.08 : -0.12), y + 0.33, hz + 0.02], [xm + (side < 0 ? 0.12 : -0.08), y + 0.38, hz + 0.06], "dot")]
+    block([x0 + 0.02, y + 0.28, hz - 0.3], [x1 - 0.02, y + 0.32, hz - 0.12], "fold")]
 }
-// a person standing, feet at x, z, round as the camera sees people from above: legs, a body, arms, the head; m their clothes (white: the
-// carriers in their overalls and hoods); reach: the arms held out along the hall (toward a stretcher's handles)
-const person = (x, z, m = "person", { towel = false, reach = 0 } = {}) => {
-  const white = m === "white", leg = white ? "white" : "legs", arm = white ? "white" : "arm", r = white ? 0.2 : 0.18
-  const P = [cyl(x - 0.08, z, 0.07, 0, 0.88, leg), cyl(x + 0.08, z, 0.07, 0, 0.88, leg), cyl(x, z, r, 0.82, 1.4, m), cyl(x, z, r - 0.05, 1.38, 1.47, m),
-    // the head, or the hood that sits down on the shoulders
-    ...(white ? [cyl(x, z, 0.14, 1.4, 1.6, "hood"), cyl(x, z, 0.1, 1.6, 1.72, "hood")] : [cyl(x, z, 0.1, 1.47, 1.72, "head")])]
-  if (!reach) P.push(cyl(x - r - 0.04, z, 0.05, 0.8, 1.42, arm), cyl(x + r + 0.04, z, 0.05, 0.8, 1.42, arm))
-  else for (const dx of [-r + 0.02, r - 0.02]) P.push(block([x + dx - 0.05, 0.9, Math.min(z, z + reach)], [x + dx + 0.05, 1.0, Math.max(z, z + reach)], arm))
-  if (towel) P.push(block([x - r, 1.38, z - 0.14], [x - r + 0.16, 1.5, z + 0.14], "towel"))
-  return P
-}
-
+const headAt = (side, i, y) => { const x0 = side < 0 ? -HALL + 0.12 : HALL - BD + 0.12, xm = x0 + (BD - 0.24) / 2, turn = rnd(i, side + y, 8) > 0.5 ? 0.06 : -0.06
+  return [xm + turn, y + 0.3, bunkZ(i) + BL - 0.3] }
 const ROOM = [
   block([-HALL - 1, 0, LEN], [HALL + 1, CEIL, LEN + 1], "farwall"),                    // the far wall, its door and the green sign, the ring
   block([-0.5, 0, LEN - 0.05], [0.5, 2.1, LEN], "door"), block([-0.35, 2.25, LEN - 0.06], [0.35, 2.45, LEN], "exit"),
@@ -135,17 +123,16 @@ const NAJO_SIT = [
 sprite("_najo_sit", NAJO_SIT)
 const najo = (c) => { const [x, y] = at(CAM, [SX - 0.15, U, SZ]); c.stamp("_najo_sit", x - 12, y - 29) }
 // Monday six: the light on, the others up, three in the aisle (one with a towel), one at his locker; Najo lies under his blanket,
-// the dot behind his ear still lit
-const MORGEN = [...sleeper(1, NAJO, UP), ...person(-0.4, 4.4, "shirt2", { towel: true }), ...person(0.3, 7.5, "person"), ...person(-0.2, 11.5, "shirt2"),
-  ...person(-HALL + 0.7, 14.9, "person", { reach: -0.3 }), ...FULL.filter((_, k) => k % 5 === 0).flatMap(([s, i, y]) => sleeper(s, i, y))]
+// the dot behind his ear still lit (the people painted: MORGEN_PEOPLE)
+const STILL = [[1, NAJO, UP], ...FULL.filter((_, k) => k % 5 === 0)]
+const MORGEN = STILL.flatMap(([s, i, y]) => sleeper(s, i, y))
 // half past six: two in white, a stretcher between them in the aisle by his bunk, just past it toward the door under the camera, he lies on it under its blanket; the hall empty.
 // The stretcher: its canvas, its two poles running out to handles at both ends, its legs folded under
 const TX = 0.3, TZ0 = NZ + 0.8, TZ1 = TZ0 + BL + 0.4
-const TRAEGER = [...person(TX, TZ0 - 0.35, "white", { reach: 0.3 }), ...person(TX, TZ1 + 0.35, "white", { reach: -0.3 }),
+const TRAEGER = [
   block([TX - 0.28, 0.76, TZ0 - 0.25], [TX - 0.22, 0.81, TZ1 + 0.25], "stretcher"), block([TX + 0.22, 0.76, TZ0 - 0.25], [TX + 0.28, 0.81, TZ1 + 0.25], "stretcher"),
   block([TX - 0.24, 0.74, TZ0], [TX + 0.24, 0.79, TZ1], "canvas"),
-  block([TX - 0.2, 0.79, TZ0 + 0.3], [TX + 0.2, 0.97, TZ1 - 0.45], "blanket"), block([TX - 0.2, 0.95, TZ1 - 0.75], [TX + 0.2, 0.99, TZ1 - 0.45], "fold"),
-  cyl(TX, TZ1 - 0.25, 0.1, 0.79, 0.99, "head"), block([TX + 0.08, 0.92, TZ1 - 0.23], [TX + 0.12, 0.97, TZ1 - 0.19], "dot")]
+  block([TX - 0.2, 0.79, TZ0 + 0.3], [TX + 0.2, 0.97, TZ1 - 0.45], "blanket"), block([TX - 0.2, 0.95, TZ1 - 0.75], [TX + 0.2, 0.99, TZ1 - 0.45], "fold")]
 
 const NIGHT = [
   { p: [0, 0.4, 4], I: 0.5, R: 5 }, { p: [0, 0.4, 9], I: 0.5, R: 5 }, { p: [0, 0.4, 14], I: 0.45, R: 5 },  // the strips' glow
@@ -194,10 +181,8 @@ const MATS = {
     return { a: 0.34, e: 0 }
   },
   blanket: (P, n) => ({ a: n[1] > 0.5 ? 0.52 + 0.08 * (fbm(P[0] * 6, P[2] * 3, 2) - 0.5) - (fr(P[2] * 2.5) < 0.12 ? 0.08 : 0) : 0.42, e: 0 }),
-  fold: { a: 0.75, e: 0 }, head: { a: 0.26, e: 0 }, dot: { a: 0.2, e: 0.95 },
-  person: { a: 0.28, e: 0 }, shirt2: { a: 0.46, e: 0 }, legs: { a: 0.2, e: 0 }, arm: { a: 0.32, e: 0 },
+  fold: { a: 0.75, e: 0 },
   shirt: (P) => ({ a: fr(P[1] * 8) < 0.5 ? 0.3 : 0.5, e: 0 }), towel: { a: 0.68, e: 0 }, boot: { a: 0.12, e: 0 },
-  white: (P, n) => ({ a: n[1] > 0.5 ? 0.95 : 0.85, e: 0.3 }), hood: (P, n) => ({ a: 0.9, e: n[1] > 0.5 ? 0.2 : 0.3 }),
   stretcher: { a: 0.6, e: 0 }, canvas: { a: 0.5, e: 0 }, letter: { a: 0.9, e: 0.35 },
 }
 const world = (extra, day) => feedWorld({ prims: [...ROOM, ...extra], lights: [...NIGHT, ...(day ? DAY : [])],
@@ -217,6 +202,188 @@ const words = (c) => {
   const [nx, ny] = at(CAM, [NX0 - 0.01, UP + 0.4, NZ + 0.03]); c.rect(nx - 6, ny - 3, 12, 7, "7"); TXT.draw(c, nx, ny - 2, "12", "1", { font: "hud", align: "center" })
 }
 
+// ================================================================ the people, painted (the user, 2026-11-21: no blocks for people)
+// Each figure is drawn flat into a buffer of its own, its parts as shapes sized from its height in the picture (personPx at its feet),
+// shaded by the light from the ceiling (the top of each part lighter, its edges darker, a seam where a part lies before another), then
+// put into the picture pixel by pixel where nothing nearer stands (a post, a guard, the stretcher's end): the depth of the baked picture
+// against the figure's own, row by row.
+function figBuf(w, h) {
+  const g = Array.from({ length: h }, () => Array(w).fill(null)), ord = {}
+  const b = {
+    w, h, g, ord,
+    px(x, y, k) { x = Math.floor(x); y = Math.floor(y); if (x >= 0 && y >= 0 && x < w && y < h) { g[y][x] = k; if (!(k in ord)) ord[k] = Object.keys(ord).length } },
+    // an oval round (cx, cy), pixel centres inside it
+    ell(cx, cy, rx, ry, k) {
+      for (let y = Math.floor(cy - ry); y <= Math.ceil(cy + ry); y++) for (let x = Math.floor(cx - rx); x <= Math.ceil(cx + rx); x++)
+        if (((x + 0.5 - cx) / rx) ** 2 + ((y + 0.5 - cy) / ry) ** 2 <= 1) b.px(x, y, k)
+    },
+    // a band from y0 down to y1, its middle and width running from (cx0, w0) to (cx1, w1): a body, a leg
+    band(y0, y1, cx0, w0, cx1, w1, k) {
+      for (let y = Math.floor(y0); y < Math.ceil(y1); y++) {
+        const t = y1 > y0 ? clamp((y + 0.5 - y0) / (y1 - y0), 0, 1) : 0, cx = cx0 + (cx1 - cx0) * t, ww = Math.max(1, Math.round(w0 + (w1 - w0) * t))
+        const x0 = Math.round(cx - ww / 2)
+        for (let x = x0; x < x0 + ww; x++) b.px(x, y, k)
+      }
+    },
+    // a limb: every pixel whose centre lies within wd/2 of the segment
+    limb(x0, y0, x1, y1, wd, k) {
+      const r = wd / 2, dx = x1 - x0, dy = y1 - y0, L2 = dx * dx + dy * dy || 1
+      for (let y = Math.floor(Math.min(y0, y1) - r); y <= Math.ceil(Math.max(y0, y1) + r); y++)
+        for (let x = Math.floor(Math.min(x0, x1) - r); x <= Math.ceil(Math.max(x0, x1) + r); x++) {
+          const t = clamp(((x + 0.5 - x0) * dx + (y + 0.5 - y0) * dy) / L2, 0, 1)
+          if (Math.hypot(x + 0.5 - x0 - t * dx, y + 0.5 - y0 - t * dy) <= r) b.px(x, y, k)
+        }
+    },
+  }
+  return b
+}
+// what each part is in phosphor steps: lit (its top), mid, its shade, its outline
+const PART = {
+  H: [3, 2, 1, 0], h: [6, 5, 4, 2],             // hair dark, hair grey
+  S: [7, 6, 5, 3],                              // skin
+  L: [8, 7, 6, 4], D: [5, 4, 3, 1], M: [6, 5, 4, 2],   // shirts: light, dark, mid
+  T: [4, 3, 2, 1], F: [2, 1, 1, 0],             // trousers, shoes and feet
+  W: [9, 9, 8, 5], G: [9, 9, 8, 5], m: [8, 7, 6, 4],   // the carriers' coverall, their hoods and gloves, the soft mask under the chin
+  O: [9, 9, 8, 5], o: [7, 7, 7, 5],             // the towel, its fold
+  e: [2, 2, 2, 2], c: [9, 9, 9, 9],             // eyes, the clip on the chest (cyan in the street; in the feed the brightest)
+}
+const partOf = (p) => PART[p] || PART[p[0]]   // "Wa": an arm of the coverall, shaded as it, but a part of its own (a seam to the body)
+// shade a figure's buffer into keys: each part lit at its top, darker at its edges, a seam where a part drawn later lies on it, the outline
+function shadeFig(b, lift = 0) {
+  const k = (v) => String(clamp(v + lift, 0, 9)), out = b.g.map((r) => r.slice())
+  const part = (x, y) => (x < 0 || y < 0 || x >= b.w || y >= b.h ? null : b.g[y][x])
+  for (let y = 0; y < b.h; y++) for (let x = 0; x < b.w; x++) {
+    const p = b.g[y][x]
+    if (!p) continue
+    const [lit, mid, dark, line] = partOf(p), around = [[-1, 0], [1, 0], [0, -1], [0, 1]].map(([dx, dy]) => part(x + dx, y + dy))
+    let v = mid
+    if (part(x, y - 1) !== p) v = lit                                                   // the light from above on the top of each part
+    else if (part(x - 1, y) !== p || part(x + 1, y) !== p) v = dark                       // its sides turn away
+    if (around.some((q) => q && q !== p && b.ord[q] > b.ord[p] && partOf(q) === partOf(p))) v = line   // a seam: the same cloth before it
+    else if (around.some((q) => q && q !== p && b.ord[q] > b.ord[p])) v = Math.min(v, dark)
+    if (around.some((q) => !q)) v = line                                                // the outline
+    out[y][x] = k(v)
+  }
+  return out
+}
+const H_ = H
+// put a figure into the picture: its feet (the buffer's bottom row, column ax) at the world point P; a row of the buffer stands at the
+// height it has in the world, and its pixels go only where the picture shows nothing nearer
+function putFig(c, baked, keys, P, ax, hm = 1.72, tol = 0.08) {
+  const [fx, fy] = at(CAM, P), N = keys.length
+  for (let j = 0; j < N; j++) {
+    const Pw = [P[0], hm * (N - 1 - j) / (N - 1), P[2]], dist = Math.hypot(...sub(Pw, CAM.pos))
+    for (let i = 0; i < keys[j].length; i++) {
+      const v = keys[j][i], X = fx - ax + i, Y = fy - (N - 1) + j
+      if (v == null || X < 0 || Y < 0 || X >= W || Y >= H_) continue
+      if (baked.depth[Y][X] + tol < dist) continue
+      c.px(X, Y, v)
+    }
+  }
+}
+// a shadow on the floor under the feet: the picture one step darker in a flat oval (the tubes are straight above)
+function shadowAt(c, baked, P, rx) {
+  const [x, y] = at(CAM, P), ry = Math.max(1, rx * 0.35)
+  for (let j = -Math.ceil(ry); j <= Math.ceil(ry); j++) for (let i = -Math.ceil(rx); i <= Math.ceil(rx); i++) {
+    if ((i / rx) ** 2 + (j / ry) ** 2 > 1) continue
+    const X = x + i, Y = y + j
+    if (X >= 0 && Y >= 0 && X < W && Y < H_) c.px(X, Y, PH[Math.max(0, baked.img[Y][X] - 1)])
+  }
+}
+
+// A standing person from behind or the front, h pixels tall: the legs and shoes, the hips, the body, the arms with the hands, the neck,
+// the head (the hair and the ears from behind, the face under the hair from the front). o: { front, shirt, hair, towel, step (the legs
+// apart), reach: [x, y] where a hand holds something, relative to the feet's column and the top (one arm, on its side; both: the two),
+// white: a carrier (the coverall, the close hood, the soft mask under the chin, white gloves, the clip on the chest) }
+function standing(h, o = {}) {
+  const sw = h * 0.27, w = Math.ceil(sw + h * 0.5) | 1, b = figBuf(w, h), X = w / 2
+  const cloth = o.white ? "W" : o.shirt || "L", legs = o.white ? "Wl" : "T", sleeve = o.white ? "Wa" : o.sleeve || "S", hand = o.white ? "G" : "S"
+  const hr = Math.max(1.4, h * 0.068), hy = hr + 0.2, sh = h * 0.175, waist = h * 0.52, armW = Math.max(1.5, h * 0.062), st = (o.step || 0) * h * 0.025
+  for (const s of [-1, 1]) b.band(waist + h * 0.04, h * 0.955, X + s * h * 0.052, h * 0.095, X + s * (h * 0.058 + st), h * 0.07, legs)
+  for (const s of [-1, 1]) b.ell(X + s * (h * 0.062 + st), h * 0.97, Math.max(1, h * 0.045), Math.max(0.8, h * 0.028), "F")
+  b.band(waist - h * 0.02, waist + h * 0.09, X, sw * 0.86, X, sw * 0.84, legs + "h")                     // the hips
+  b.band(sh + h * 0.02, waist, X, sw, X, sw * 0.86, cloth)                                              // the body
+  b.ell(X, sh + h * 0.03, sw / 2, h * 0.035, cloth)                                                     // the shoulders, round
+  for (const s of [-1, 1]) {
+    const r = o.reach && (o.both || o.reach[0] * s > 0) ? o.reach : null
+    const x1 = r ? X + s * Math.abs(r[0]) : X + s * (sw / 2 + armW * 0.15), y1 = r ? r[1] : h * 0.49
+    b.limb(X + s * (sw / 2 - armW * 0.45), sh + h * 0.05, x1, y1, armW, sleeve)
+    b.ell(x1, y1 + armW * 0.3, armW * 0.55, armW * 0.6, hand)
+  }
+  b.band(hy, sh + h * 0.04, X, hr * 1.0, X, hr * 1.1, o.white ? "G" : "S")                               // the neck
+  if (o.white) {
+    b.ell(X, hy, hr * 1.15, hr * 1.12, "G")                                                             // the close hood
+    b.band(hy + hr * 0.6, sh + h * 0.045, X, hr * 1.9, X, sw * 0.7, "G")                                // falling onto the shoulders
+    if (o.front) {
+      b.ell(X, hy + hr * 0.2, hr * 0.68, hr * 0.72, "S")
+      b.band(hy + hr * 0.75, hy + hr * 1.25, X, hr * 1.3, X, hr * 1.2, "m")
+      if (h > 30) { b.px(X - hr * 0.35, hy + hr * 0.05, "e"); b.px(X + hr * 0.35, hy + hr * 0.05, "e"); b.px(X + sw * 0.22, sh + h * 0.09, "c") }
+    }
+  } else {
+    for (const s of [-1, 1]) b.ell(X + s * hr * 0.95, hy + hr * 0.25, Math.max(0.6, hr * 0.28), Math.max(0.8, hr * 0.38), "S")  // the ears
+    b.ell(X, hy, hr, hr * 1.05, o.hair || "H")
+    if (o.front) {
+      b.ell(X, hy + hr * 0.4, hr * 0.78, hr * 0.75, "S")
+      if (h > 30) { b.px(X - hr * 0.38, hy + hr * 0.25, "e"); b.px(X + hr * 0.38, hy + hr * 0.25, "e") }
+    }
+  }
+  // a towel over the left shoulder (from behind: the screen's left), hanging down the back, a fold along it
+  if (o.towel) {
+    const tx = X - sw * 0.24
+    b.band(sh + h * 0.005, sh + h * 0.24, tx, sw * 0.34, tx + sw * 0.04, sw * 0.3, "O")
+    b.band(sh + h * 0.04, sh + h * 0.24, tx + sw * 0.08, 1, tx + sw * 0.11, 1, "o")
+  }
+  return { keys: shadeFig(b, o.lift || 0), ax: Math.floor(X) }
+}
+// a figure where it stands, as tall as the lens sees it there, its shadow under it
+const person51 = (c, baked, P, o, tol) => {
+  const h = Math.round(personPx(CAM, P, 1.72)), f = standing(h, typeof o === "function" ? o(h) : o)
+  shadowAt(c, baked, P, h * 0.13)
+  putFig(c, baked, f.keys, P, f.ax, 1.72, tol)
+}
+// a hand at a world point (a carrier's at the stretcher's handle), relative to the figure's feet column and its buffer's top
+const handAt = (Pfeet, Phand, h) => { const [fx, fy] = at(CAM, Pfeet), [x, y] = at(CAM, Phand); return [x - fx, y - fy + h - 1] }
+const MORGEN_PEOPLE = (c) => {
+  const b = bake("cam51_morgen", MORGEN, true)
+  person51(c, b, [-HALL + 0.7, 0, 14.9], (h) => ({ shirt: "D", reach: [-h * 0.3, h * 0.24] }))   // at his locker, opening it
+  person51(c, b, [-0.2, 0, 11.5], { shirt: "L", hair: "h" })
+  person51(c, b, [0.3, 0, 7.5], { front: true, shirt: "D", step: 1 })
+  person51(c, b, [-0.4, 0, 4.4], { shirt: "M", towel: true })
+}
+const TRAEGER_PEOPLE = (c) => {
+  const b = bake("cam51_traeger", TRAEGER, true)
+  // the one at the far end faces the lens, his hands on the handles before him; the near one has his back to it, his hands on the
+  // handles beyond him
+  const far = [TX, 0, TZ1 + 0.35], near = [TX, 0, TZ0 - 0.35]
+  person51(c, b, far, (h) => ({ white: true, front: true, both: true, reach: handAt(far, [TX + 0.25, 0.8, TZ1 + 0.22], h) }), 0.02)
+  person51(c, b, near, (h) => ({ white: true, both: true, reach: handAt(near, [TX + 0.25, 0.8, TZ0 - 0.22], h) }), 0.02)
+}
+// the heads on the pillows: the hair, and toward the aisle (where the dot glows) the ear and a bit of the cheek; sized by the lens
+const HEAD_HAIR = (s, i, y) => (rnd(i, s + y * 3, 9) > 0.75 ? "h" : "H")
+function heads(baked, list, lift) {
+  return (c) => { for (const [s, i, y] of list) {
+    const P = headAt(s, i, y), a = project(CAM, add(P, [-0.11, 0, 0])), z = project(CAM, add(P, [0.11, 0, 0])), wd = Math.hypot(z[0] - a[0], z[1] - a[1])
+    const rx = Math.max(1, wd / 2), ry = Math.max(0.9, rx * 0.82), n = Math.ceil(rx) * 2 + 2, b = figBuf(n, n), m = n / 2
+    const aisle = s < 0 ? 1 : -1
+    if (rx > 2.2) b.ell(m + aisle * rx * 0.62, m + ry * 0.3, Math.max(0.7, rx * 0.32), Math.max(0.8, ry * 0.42), "S")
+    b.ell(m, m, rx, ry, HEAD_HAIR(s, i, y))
+    if (rx > 2.2) b.ell(m + aisle * rx * 0.7, m + ry * 0.45, Math.max(0.6, rx * 0.25), Math.max(0.7, ry * 0.35), "S")
+    const keys = shadeFig(b, lift), [x, yy] = at(CAM, P), dist = Math.hypot(...sub(P, CAM.pos))
+    for (let j = 0; j < n; j++) for (let k = 0; k < n; k++) {
+      const v = keys[j][k], X = x - Math.floor(m) + k, Y = yy - Math.floor(m) + j
+      if (v == null || X < 0 || Y < 0 || X >= W || Y >= H_ || baked.depth[Y][X] + 0.25 < dist) continue
+      c.px(X, Y, v)
+    }
+  } }
+}
+// Najo on the stretcher: his face up, the hair toward the far end, the dot behind his ear
+const NAJO_LYING = (c) => {
+  const b = bake("cam51_traeger", TRAEGER, true), [x, y] = at(CAM, [TX, 0.9, TZ1 - 0.25])
+  const rows = ["..222..", ".22222.", "2655562", "5545455", "5556555", ".55555.", "..555.."]
+  rows.forEach((r, j) => [...r].forEach((v, i) => { if (v !== ".") c.px(x - 3 + i, y - 3 + j, v) }))
+  pxBehind(c, b, CAM, [TX + 0.1, 0.95, TZ1 - 0.21], "9")
+}
+
 // ================================================================ what the game needs (game/places.js cam51)
 const NB = boxCorners([NX0, LOW, NZ], [NX1, TOP, NZ + BL])
 const CAM51_LAYOUT = {
@@ -233,8 +400,11 @@ console.log("CAM51_LAYOUT " + JSON.stringify(CAM51_LAYOUT))
 // ================================================================ the scenes
 // the dots behind the sleepers' ears, one bright pixel each where nothing stands before it: in the dark, rows of them
 const dots = (key, extra, list) => (c) => { const b = bake(key, extra, false); for (const [s, i, y] of list) { const P = dotAt(s, i, y); pxBehind(c, b, CAM, P, "8", 1); pxBehind(c, b, CAM, P, "7", 0, -1); pxBehind(c, b, CAM, P, "9") } }
-scene("cam51_bg", { w: W, h: H, bg: "0" }, (c) => paintFeed(c, bake("cam51", NOW, false)), words, dots("cam51", NOW, FULL))
-scene("cam51_brief", { w: W, h: H, bg: "0" }, (c) => paintFeed(c, bake("cam51_brief", BRIEF, false)), words, dots("cam51_brief", BRIEF, FULL), najo)
-scene("cam51_morgen", { w: W, h: H, bg: "0" }, (c) => paintFeed(c, bake("cam51_morgen", MORGEN, true)), words)
-scene("cam51_traeger", { w: W, h: H, bg: "0" }, (c) => paintFeed(c, bake("cam51_traeger", TRAEGER, true)), words)
-scene("review_cam51", { w: W, h: H, bg: "0" }, (c) => paintFeed(c, bake("cam51", NOW, false)), words, dots("cam51", NOW, FULL), (c) => reviewFx(c, W, H))
+// the night: the picture, the heads on the pillows, the dots behind the ears over them
+const night = (key, extra) => [(c) => paintFeed(c, bake(key, extra, false)), words, (c) => heads(bake(key, extra, false), FULL, -1)(c), dots(key, extra, FULL)]
+scene("cam51_bg", { w: W, h: H, bg: "0" }, ...night("cam51", NOW))
+scene("cam51_brief", { w: W, h: H, bg: "0" }, ...night("cam51_brief", BRIEF), najo)
+scene("cam51_morgen", { w: W, h: H, bg: "0" }, (c) => paintFeed(c, bake("cam51_morgen", MORGEN, true)), words, (c) => heads(bake("cam51_morgen", MORGEN, true), STILL, 0)(c),
+  (c) => { const b = bake("cam51_morgen", MORGEN, true); for (const [s, i, y] of STILL) pxBehind(c, b, CAM, dotAt(s, i, y), "9") }, MORGEN_PEOPLE)
+scene("cam51_traeger", { w: W, h: H, bg: "0" }, (c) => paintFeed(c, bake("cam51_traeger", TRAEGER, true)), words, NAJO_LYING, TRAEGER_PEOPLE)
+scene("review_cam51", { w: W, h: H, bg: "0" }, ...night("cam51", NOW), (c) => reviewFx(c, W, H))
