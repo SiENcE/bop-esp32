@@ -48,7 +48,8 @@ Cutaway.moment("one_sun", { room: "deck", day: 6, from: "00:45", to: "01:00", if
 
 // ---- decision 2 (kapitel2-design §3.6): Vesper in the chat (always there for it, also with off_vesper), Sable in her booth, Morrow at
 // her patrol car in Jade Row (Saturday and Sunday, 00:30), Lantern in his caravan, or keeping it, which the deck asks on Monday at 00:45.
-// [PLATZHALTER] the prices (§14: Sable 3000, with the proof 4000, after k1a=warned 1000 less; Vesper 5000) and the viewers the morning after
+// The prices are the user's (2026-11-21, §14): Sable 3000, with the proof 4000, after k1a=warned 1000 less; Vesper 5000; the viewers the
+// morning after
 const CLIP_LINE = "Die Aufnahme aus CAM 31 senden.";
 const SOLD_VESPER = [{ set: "e2", value: "vesper" }, { ledger: "vesper_ines", value: "sold" },
   "Fünftausend. Für das, was ich nicht verhindert hab.", { evi: "besorgt" }, { say: "evi", text: "Ist das jetzt gut?" }, "Nein."];
@@ -125,8 +126,8 @@ Cutaway.dialog("k2_clip", { main: {
   ] });
 
 // ---- Saturday, 18:00: Juno comes home (kapitel2-design §2.1). She couldn't stand it in the flat and walked through the Ninth, the
-// night and the day, until it was evening again. [PLATZHALTER] The user will think of something new here (2026-11-19): the sequence of the
-// city's rooms is gone, a card on black stands in for it until then
+// night and the day, until it was evening again. The sequence of the city's rooms is gone (2026-11-19); a card on black stands for it, and
+// stays for Chapter 2 (the user, 2026-11-21: something new may come later)
 Cutaway.sequence("k2_heimweg", {
   steps: [
     { music: { stop: true, fade: 0.5 } },

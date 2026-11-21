@@ -838,6 +838,18 @@ Die Vorschläge aus derselben Prüfung, vom Nutzer übernommen (2026-11-14; Einz
 - **Lantern nennt Pike beim Namen** (vom Nutzer entschieden 2026-11-20): Pike ist sein Freund; „der Reiher“ sagt nur Ratz, der ihn nicht
   ausstehen kann. Beim ersten Treffen fragt Lantern, wie Juno ihn gefunden hat, und erfährt, dass seine eigene Kamera unter dem Rauschen
   zu sehen war: „Dann sieht das bald noch jemand anders.“
+- **Auch Sable nennt Pike** (vom Nutzer gewünscht 2026-11-21): Fragt Juno in Sables Bude nach den Bäumen im Wasser, die sie unter
+  Lanterns Rauschen gefunden hat, sagt Sable, dass Pike da rausfährt, und zwar gratis: „Das war gratis. Das nächste nicht.“ Juno muss
+  dann nicht mehr zu Ratz (`kapitel2-design` §3.5, L3).
+- **Was Kapitel 2 offen ließ** (vom Nutzer entschieden 2026-11-21, nach dem Durchspielen; `kapitel2-design` §14): Der Kontakt um 03:15
+  heißt im CHAT `BECKEN 3`, nicht TINTE: Juno kennt den Absender nicht, dass es Tinte ist, erfährt sie in Kapitel 3. Die Preise bleiben:
+  Sable 3000 für den Clip aus CAM 31 (mit Beweis 4000, nach `k1a=warned` 1000 weniger), Vesper 5000, Sables Blick ins Archiv 150,
+  Kessler 50, Sable für den Clip des 24h-Ladens 60. Die Kameras heißen CAM 25, CAM 26 und CAM 51. Die Quiet im Flur, der Nachtverkäufer im
+  Schafskostüm, der Obdachlose und die Kette des 24h-Ladens bleiben ohne Namen. Die Sprechkarten von Lantern, Pike, Frau Imai und Frau
+  Haldane sind entschieden. In CAM 51 sind die Leute gemalt (die Schläfer: nur Köpfe und Haare über den Decken). Der Türcode des
+  Wohnblocks Lerche bleibt 4719. Der Heimweg am Anfang von Kapitel 2 bleibt vorerst eine Karte auf Schwarz. Die Stufe 2 der Prüfungen
+  (der Solver über die Kapitelgrenze, `kapitel2-design` §13.7) gehört nicht zum Abschluss von Kapitel 2; sie kommt als eigene
+  Engine-Arbeit vor Kapitel 3.
 - **Lanterns Sender im RADIO** (vom Nutzer entschieden 2026-11-16): Sein Wohnwagen in den Sümpfen ist seine Sendestation, und auf Junos Deck ist er im RADIO der vierte Sender, LANTERN auf 87.6, sobald Juno ihn gefunden hat (`lantern_found`; beim ersten Treffen sagt er: „Wenn du mich hören willst: siebenundachtzig sechs, nachts. Kommen musst du dafür nicht.“). Vorher ist seine Zeile nur Rauschen. Nachts spricht er dort in seiner Sendestimme (ruhig, wie ein Moderator von früher, ohne Namen), am Montag kündigt er an, dass er um eins sendet, was sie ihm gegeben hat. Eine Ansicht, kein Zustand (`game/radio.js`).
 - **Das Richtmikro ist gestrichen** (vom Nutzer entschieden 2026-11-15): Man hört, was nah am Mikro einer Kamera gesagt wird, wie bei Ines' Tod in `cam31`; kein Rätsel braucht ein Werkzeug dafür.
 - **`evi_trust`** (wie offen Juno im Prolog zu EVI war) geht über die Kapitel mit und bekommt später eine Aufgabe (vom Nutzer entschieden 2026-11-14; Vorschläge in `kapitel2-design` §14).

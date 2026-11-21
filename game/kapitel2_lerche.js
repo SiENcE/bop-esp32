@@ -5,7 +5,7 @@
 //   evi_knows     Juno has found the file in the freezer, and EVI has learned what she is (W6, W7)
 //   (cache_note_serviette, cache_note_civic_rest: what she takes with her)
 // From Sunday 21:00 the flat is open (the Quiet broke the lock and sealed it): a time, no flag. The clinic (§3.2) says the house and the
-// floor (game/kapitel2_klinik.js), the notice on 4B the door and the time. [PLATZHALTER] the house door's code. The neighbour is his own
+// floor (game/kapitel2_klinik.js), the notice on 4B the door and the time. The house door's code is 4719 (the user's, 2026-11-21). The neighbour is his own
 // feed figure, the two in white the Quiet's painted man B carrying her things (2026-11-19)
 "use strict";
 

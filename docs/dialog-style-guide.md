@@ -311,7 +311,7 @@ Durchspielen.)
 
 Höflich und langsam, sie hat es mit nichts eilig. Sie siezt alle und sagt „habe“, nicht „hab“. Was sie gesehen hat, erzählt sie genau, Bild für Bild, wie eine
 Zeugin vor Gericht, und deutet es nie. Ihre Angst steht nicht in ihren Wörtern, sondern in dem, was sie tut: nicht schlafen, Tropfen holen. Auf Lull.
-(Ein Vorschlag vom 2026-11-19, zu prüfen beim Durchspielen.)
+(Ein Vorschlag vom 2026-11-19, nach dem Durchspielen von Kapitel 2 vom Nutzer entschieden 2026-11-21.)
 
 > „Da ist eine Treppe, und auf den Stufen ist ein großer Fisch. Es regnet von links.“\
 > „Er hat hochgeschaut. Zu mir.“\
@@ -323,7 +323,7 @@ Immer müde, immer freundlich, auf Lull. Sie weiß nicht, was sie nachts tut, al
 einmal, am Donnerstag, wach an ihrer Tür (`game/stadt.js`): kurze Sätze, sie fragt nach Post, und sie tröstet sich selbst („Dann schlaf
 ich, und morgens ist es nicht mehr so schlimm.“).
 
-In Kapitel 2 (ihr Sohn Najo, `game/kapitel2_haldane.js`; ein Vorschlag, 2026-11-19): Sie ist wach, und das hört man nur daran, dass sie zählt. Sonntage, Briefe, Wochen. Sie bittet, ohne zu drängen, und fragt danach nur noch eins: „Hast du ihn gesehen?“ Was sie hört, nimmt sie still; ihre Antworten sind ein Satz, der sie selbst tröstet, und manchmal tröstet er falsch.
+In Kapitel 2 (ihr Sohn Najo, `game/kapitel2_haldane.js`; ein Vorschlag vom 2026-11-19, vom Nutzer entschieden 2026-11-21): Sie ist wach, und das hört man nur daran, dass sie zählt. Sonntage, Briefe, Wochen. Sie bittet, ohne zu drängen, und fragt danach nur noch eins: „Hast du ihn gesehen?“ Was sie hört, nimmt sie still; ihre Antworten sind ein Satz, der sie selbst tröstet, und manchmal tröstet er falsch.
 
 > „Sonntags schlaf ich nicht. Sonntags kommt sein Brief.“\
 > „Dann schlaf ich auch. Dann bin ich näher bei ihm.“
@@ -362,7 +362,7 @@ sie weiß. Lantern: misstrauisch, vorsichtig, bricht Sätze ab. Für die großen
 
 ### Lantern: der Sender
 
-(Entwurf 2026-11-15, vom Nutzer gewünscht; zu prüfen beim Durchspielen.) Oskar Lind, früher Pumpentechniker, seit dem Unfall im
+(Entwurf 2026-11-15, vom Nutzer gewünscht; nach dem Durchspielen entschieden 2026-11-21.) Oskar Lind, früher Pumpentechniker, seit dem Unfall im
 Rollstuhl und seit Jahren unten in den Sümpfen. Er hat zwei Stimmen, und gerade der Wechsel zwischen ihnen macht ihn aus.
 
 - **Mit Menschen** ist er misstrauisch, vorsichtig und abgebrochen. Er fragt zurück, statt zu antworten, und prüft jeden Satz auf eine
@@ -389,7 +389,7 @@ Rollstuhl und seit Jahren unten in den Sümpfen. Er hat zwei Stimmen, und gerade
 
 ### Pike: der Fährmann
 
-(Entwurf 2026-11-16; zu prüfen beim Durchspielen.) Lanterns Gehilfe auf dem Floß DATA 1C/GB im Kanal des Drain-Markts, umgebaut mit dem
+(Entwurf 2026-11-16; nach dem Durchspielen entschieden 2026-11-21.) Lanterns Gehilfe auf dem Floß DATA 1C/GB im Kanal des Drain-Markts, umgebaut mit dem
 Reiher. Er verkauft Daten pro Gigabyte, bringt Lantern Akkus und Teile und schützt ihn, ohne es zu sagen.
 
 - **Er wartet.** Wie ein Reiher im Wasser steht er still, bis sich etwas lohnt. Er redet wenig und langsam, lässt Pausen stehen und
