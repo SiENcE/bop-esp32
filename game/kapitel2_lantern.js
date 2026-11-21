@@ -5,7 +5,8 @@
 // raft lies out on the water at its rope: the hook pulls it to the edge, and Juno has to ask Pike until he gives in (if she lets go first,
 // he pushes off again); then he wants the output stage Lantern needs, which only Ratz has and won't sell him; Ratz gives it to Juno for a
 // copy of her old pass. Pike poles her out to the drowned forest, where Lantern lives in a caravan on pontoons. Juno can give him the stick.
-//   know_pike      Ratz has told her that Pike poles out where the trees stand in water
+//   know_pike      ratz | sable: who told her that Pike poles out where the trees stand in water (she says so to him); once he has given
+//                  in, only that she knows (true), so the source multiplies no state after it
 //   pike_met       Pike has given in and said what he wants
 //   ledger_ratz    Ratz has his copy of her pass, and she has the output stage (the item endstufe) until she gives it to Pike
 //   lantern_found  found | out | ally: she has found his hide (they say du from the first word, the user's decision 2026-11-16); out
@@ -54,13 +55,15 @@ Cutaway.actor("pike", { name: "Pike", color: "#e0a048",      // his beak's orang
   voice: { pitch: 58, range: 4, wave: "triangle", syllable: 95, speed: 0.85 },
   look: ["Ein langer Mann mit dünnen Beinen.", "Der Hals ist zu lang, das Gesicht läuft spitz zu. Ein Reiher-Mod."],
   talk: [{ if: "pike_met", then: [{ dialog: "pike" }], else: [
-    { if: "know_pike", then: ["He! Bist du Pike? Ratz sagt, du kennst dich in den Sümpfen aus!", P("Ich verkauf Daten. Keine Fahrten."),
+    { if: "know_pike", then: [{ if: "know_pike=sable", then: ["He! Bist du Pike? Sable sagt, du fährst raus in die Sümpfe!"],
+      else: ["He! Bist du Pike? Ratz sagt, du kennst dich in den Sümpfen aus!"] }, P("Ich verkauf Daten. Keine Fahrten."),
       "Er ist zu weit draußen. Ich müsste das Floß ranholen."],
       else: [P("Gigabyte gegen Chits."), "Danke. Ich hab selber welche."] }] }] });
 Cutaway.routine("pike", [{ day: [5, 6, 7], from: "18:00", to: "04:00", room: "drain_market", at: AM.pike, face: "down" }]);
 const market = Cutaway.room.get("drain_market").hotspots;
 market.datenfloss = { name: "DATA 1C/GB", rect: AM.datenflossRect, walkTo: AM.pikeTalk, face: "down",
-  look: [{ if: "know_pike", then: ["Pikes Floß. Ratz sagt, er stakt da raus, wo die Bäume im Wasser stehen.", "Es liegt draußen an seinem Seil."],
+  look: [{ if: "know_pike", then: [{ if: "know_pike=sable", then: ["Pikes Floß. Sable sagt, er fährt da raus, wo die Bäume im Wasser stehen."],
+    else: ["Pikes Floß. Ratz sagt, er stakt da raus, wo die Bäume im Wasser stehen."] }, "Es liegt draußen an seinem Seil."],
     // (Pike is on it from Saturday only: in Chapter 1 it lies there empty, nothing to give away yet)
     else: [{ if: "day<5", then: ["Das Floß DATA 1C/GB liegt draußen an seinem Seil. Keiner drauf, aber die Bildschirme laufen."],
       else: ["Auf dem Floß DATA 1C/GB verkauft einer Daten. Es liegt draußen an seinem Seil."] }] }],
@@ -70,8 +73,8 @@ market.datenfloss = { name: "DATA 1C/GB", rect: AM.datenflossRect, walkTo: AM.pi
     P("..."), P("Wer zieht, will was."),
     "Hallo. Bist du Pike?",
     P("Kommt drauf an, wer fragt."),
-    "Ich bin Juno. Ratz hat gesagt, ich soll mit dir reden.",
-    P("Ratz schickt keinen. Ratz verkauft nur."),
+    { if: "know_pike=sable", then: ["Ich bin Juno. Sable hat gesagt, ich soll mit dir reden.", P("Sable schickt keinen. Sable verkauft nur.")],
+      else: ["Ich bin Juno. Ratz hat gesagt, ich soll mit dir reden.", P("Ratz schickt keinen. Ratz verkauft nur.")] },
     { dialog: "pike_frage" },
   ], else: ["Warum sollte ich das Floß ranholen? Ich will keine Daten."] }] }] } };
 
@@ -80,7 +83,8 @@ market.datenfloss = { name: "DATA 1C/GB", rect: AM.datenflossRect, walkTo: AM.pi
 const PUSH_OFF = ["Er stößt sich mit der Stange vom Rand ab. Das Floß treibt wieder raus."];
 Cutaway.dialog("pike_frage", {
   main: { choices: [
-    { text: "„Sag mal, du fährst doch öfter raus in die Sümpfe?“", then: ["Sagt zumindest Ratz.", P("Ratz sagt viel. Ratz ist eine Ratte."),
+    { text: "„Sag mal, du fährst doch öfter raus in die Sümpfe?“", then: [{ if: "know_pike=sable", then: ["Sagt zumindest Sable.", P("Sable sagt, was sich verkauft.")],
+      else: ["Sagt zumindest Ratz.", P("Ratz sagt viel. Ratz ist eine Ratte.")] },
       "Und, stimmt's?", P("Ich verkauf Daten. Pro Gigabyte.")] },
     { text: "„In Lanterns Sendung hab ich Bäume im Wasser gesehen.“", goto: "bild", then: [P("Bäume gibt's viele."),
       "Hier unten nicht. Hier unten gibt's Beton und Kanäle.", P("...")] },
@@ -107,7 +111,7 @@ Cutaway.dialog("pike_frage", {
       "Warum gibt er sie dir nicht?",
       P("Ratz sagt, ich hätte ihn fressen wollen."), P("Ein Reflex. Mehr war das nicht."),
       P("Bring mir die Endstufe, dann nehm ich dich mit."),
-      { set: "pike_met" },
+      { set: "pike_met" }, { set: "know_pike" },
     ] },
     { text: "„Das hab ich irgendwo gefunden.“", goto: "main", then: [P("Irgendwo."), P("Dann such weiter. Irgendwo.")] },
     { text: "Was anderes.", silent: true, goto: "main" },
@@ -195,8 +199,18 @@ const TREES = [
   RZ("Grüne Lichter, hm. Draußen. Wo die Ringe aufhören und keiner Miete zahlt."),
   RZ("Ich geh da nicht hin. Da schwimmt was."),
   RZ("Frag den Reiher. Pike, auf dem Datenfloß. Der stakt da raus, wenn keiner guckt."),
-  { set: "know_pike" },
+  { set: "know_pike", value: "ratz" },
 ];
+
+// ---- Sable knows it too (the user's wish, 2026-11-21: Juno is at the booth anyway, for Frau Haldane's son, and may tell of the swamp
+// there): for once for nothing. Her Chapter 2 dialog shows four at most, so this stands where "what else do you sell" stands, after the
+// hostel's question (game/kapitel2_haldane.js) while that one is open
+const sableTalk = /** @type {any} */ (Cutaway.dialog.get("sable")), sableOther = sableTalk.main.findIndex((/** @type {any} */ c) => c.text === "„Was verkaufst du sonst noch?“");
+const SABLE_SWAMP = ["day>4", "know_sumpf", "!know_pike", "!off_lantern", { or: ["!haldane_ask", "link_cam51", "off_haldane"] }];
+sableTalk.main[sableOther].if = { or: ["!know_sumpf", "know_pike", "off_lantern"] };
+sableTalk.main.splice(sableOther, 0, { text: "„Weißt du, wo hier Bäume im Wasser stehen?“", if: SABLE_SWAMP, then: [
+  "Mit grünen Lichtern dazwischen.", { say: "sable", text: "Draußen. Wo die Ringe aufhören." }, { say: "sable", text: "Pike fährt da raus. Das Datenfloß." },
+  { set: "know_pike", value: "sable" }, "Und was kostet das?", { say: "sable", text: "Das war gratis. Das nächste nicht." }] });
 
 // ---- L3b: Ratz has the output stage, and he gives it to Juno (never to the heron) for a copy of her old pass: his colony, the flaps in the
 // pipes under the Crown. Asked only once Pike has said what he wants (knowledge she lacks before)
