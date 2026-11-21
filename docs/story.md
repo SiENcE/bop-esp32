@@ -842,7 +842,8 @@ Die Vorschläge aus derselben Prüfung, vom Nutzer übernommen (2026-11-14; Einz
   Lanterns Rauschen gefunden hat, sagt Sable, dass Pike da rausfährt, und zwar gratis: „Das war gratis. Das nächste nicht.“ Juno muss
   dann nicht mehr zu Ratz (`kapitel2-design` §3.5, L3).
 - **Was Kapitel 2 offen ließ** (vom Nutzer entschieden 2026-11-21, nach dem Durchspielen; `kapitel2-design` §14): Der Kontakt um 03:15
-  heißt im CHAT `BECKEN 3`, nicht TINTE: Juno kennt den Absender nicht, dass es Tinte ist, erfährt sie in Kapitel 3. Die Preise bleiben:
+  heißt im CHAT `BECKEN 3`, nicht TINTE: der Knoten im Netz der Pumpenhalle; dass Tinte schreibt, weiß Juno, weil Teo am Abend von ihr
+  erzählt hat („Das ist nicht Nagi·wa. Das ist Tinte.“). Die Preise bleiben:
   Sable 3000 für den Clip aus CAM 31 (mit Beweis 4000, nach `k1a=warned` 1000 weniger), Vesper 5000, Sables Blick ins Archiv 150,
   Kessler 50, Sable für den Clip des 24h-Ladens 60. Die Kameras heißen CAM 25, CAM 26 und CAM 51. Die Quiet im Flur, der Nachtverkäufer im
   Schafskostüm, der Obdachlose und die Kette des 24h-Ladens bleiben ohne Namen. Die Sprechkarten von Lantern, Pike, Frau Imai und Frau

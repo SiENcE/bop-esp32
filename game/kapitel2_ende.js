@@ -101,8 +101,8 @@ Cutaway.room("k2_protokolle", { name: "Junos Wohnung", background: "flat_bg", pr
     ...Nagiwa.checkHotspots("protokolle", { close: true }),
   } });
 
-// 03:15: a contact Juno doesn't know, BECKEN 3 (the user's choice, 2026-11-21): Tinte, over the pump hall's net (story §5); that it is
-// she, Juno learns in Chapter 3
+// 03:15: a contact Juno doesn't know, BECKEN 3 (the user's choice, 2026-11-21): Tinte, over the pump hall's net (story §5); Juno knows
+// it is she, since Teo spoke of her this evening
 Object.assign(Nagiwa.contacts, { becken3: { name: "BECKEN 3", color: "#7ad0c8", status: "online", if: "end_beat2=found", unread: "!read_becken3" } });
 Cutaway.state.view("read_becken3");
 Nagiwa.threads.becken3 = [

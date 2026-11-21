@@ -85,16 +85,16 @@ es nicht mehr, §7).
 - Die Engine kennt jetzt den Beginn eines Akts an einem späteren Tag (Cutaway.js 9804188): Die Momente früherer Tage gelten als
   vergangen, ohne dass ihr `unseen` noch einmal läuft (sonst hätte der Start von Kapitel 2 die Miete ein zweites Mal abgebucht und
   Teos Besuch vom Mittwoch noch einmal gespielt).
-- Der Anfang: die Sequenz `k2_heimweg` ist ein **Platzhalter**, eine Karte auf Schwarz (der Nutzer überlegt sich hier etwas Neues, 2026-11-19; die Sequenz aus den Straßen der Stadt ist entfernt). Juno sagt ihre eine Zeile im Dunkeln;
+- Der Anfang: die Sequenz `k2_heimweg` ist eine Karte auf Schwarz (die Sequenz aus den Straßen der Stadt ist seit 2026-11-19 entfernt; die Karte bleibt vorerst, vom Nutzer entschieden 2026-11-21, etwas Neues kann später kommen). Juno sagt ihre eine Zeile im Dunkeln;
   dann EVIs festgelegte Szene, Wort für Wort.
 - Teos Besuch am Montag um 18:30 als Block (§7): das Klopfen, Bao, die Miete, der Haken, die Leiter, das Dach mit Tinte. Auf dem Dach
   sitzt Teo seit 2026-11-19 gemalt neben ihr (`dach_teo`, §10).
 - Die Uhr hält am Montag um 00:45. **Sie verlangt, was gebaut ist** (vom Nutzer so gewollt): den Stick bei Lantern und Entscheidung 2;
   `evi_knows` kommt dazu, sobald die Wohnung gebaut ist. Gebaut sind von Entscheidung 2 Vesper im CHAT (immer da, auch
   bei `off_vesper`) und die Frage des Decks um 00:45 („Ich verkauf ihn an Vesper.“, „Ich behalt ihn.“, „Noch nicht. Noch ist Zeit.“). Preis und Zuschauer sind
-  Platzhalter (§14).
+  entschieden (2026-11-21, §14).
 - Das Ende als Kette mit `end_beat2` (sent > found) bis zur Karte „Kapitel 3: Lull (kommt später)“. Das letzte Prüfen ist seit 2026-11-15
-  das Werkzeug PRÜFEN (siehe „Das letzte Prüfen“ unten), der Kontakt um 03:15 heißt bis zur Entscheidung `BECKEN 3` (§14).
+  das Werkzeug PRÜFEN (siehe „Das letzte Prüfen“ unten), der Kontakt um 03:15 heißt `BECKEN 3` (vom Nutzer entschieden 2026-11-21, §14).
 - **Der Stick** (§3.1, `game/kapitel2_stick.js`): Wo er ist, sagen zwei Flags, `stick_ines` (Juno hat ihn) und `stick_dryer` (er liegt
   wieder in Trockner 6); hat Juno ihn nicht und liegt er nicht im Trockner, hat Lantern ihn (kein eigenes Flag, das spart Zustände).
   Juno legt ihn an Trockner 6 zurück („Zurücklegen.“ oder „Behalten.“). Solange er nicht Lanterns ist, sieht Lantern jede Nacht um
@@ -108,7 +108,7 @@ es nicht mehr, §7).
   und Frau Kesslers Antworten aus dem Prolog gingen wieder auf (sie gelten jetzt nur am Dienstag).
 - **Ines' Wohnung** (§3.3, `game/kapitel2_lerche.js`, die Räume `lerche_flur` und `ines_wohnung` als **Blöcke** aus den Kits des 14. Stocks
   und von Junos Wohnung, gebaut mit `tools/new-room.mjs`): In `cam24` kommt jeden Abend um 19:30 ein Nachbar heim und tippt den Code
-  (`code_lerche`, **Platzhalter** „4719“; der Nachbar ist seit 2026-11-19 eine eigene Feed-Figur, vom Nutzer gewählt: ein älterer Mann mit Schiebermütze und langem Mantel, eine Tüte vom 24h-Laden in der Hand, `nachbar_feed`, Prüfbild `docs/cams/cam24_nachbar_x7.png`; verpasst hat ihn der Puffer). Das Tor der Jade Row führt
+  (`code_lerche`, „4719“, vom Nutzer entschieden 2026-11-21; der Nachbar ist seit 2026-11-19 eine eigene Feed-Figur, vom Nutzer gewählt: ein älterer Mann mit Schiebermütze und langem Mantel, eine Tüte vom 24h-Laden in der Hand, `nachbar_feed`, Prüfbild `docs/cams/cam24_nachbar_x7.png`; verpasst hat ihn der Puffer). Das Tor der Jade Row führt
   auf Weg_1 (seit 2026-11-18, nach dem Stadtplan des Nutzers), dort hat die Haustür des Wohnblocks das Zahlenfeld; im Erdgeschoss geht es
   über Treppe oder Aufzug in den 4. Stock. Im Flur weiß Juno ohne `know_flat` nicht, welche
   Tür, bis sie den Zettel von Civic Rest an 4B liest (ab Samstag, an der Tür oder herangezoomt in `cam25`; vom Nutzer 2026-11-19); `cam25` (neu, mit `cam24` verbunden, das Bild des Flurs unter dem Filter) zeigt am Sonntag um 20:00 die zwei in Weiß an 4B (als Figur
@@ -468,7 +468,7 @@ kann den ganzen Clip oder den ohne das Flüstern nehmen (§3.1).
 Flag: `e2` = sable | vesper | morrow | lantern | kept. In Kapitel 2 haben Sable und Vesper dieselben Folgen; für Kapitel 4 zählt, wer
 gekauft hat (Sables Verrat).
 
-**Gebaut** (2026-11-16, auf Blöcken, die Preise Platzhalter): alle fünf Wege. Sable in ihrer Bude („Ich hab die Aufnahme aus der alten
+**Gebaut** (2026-11-16, auf Blöcken; die Preise entschieden 2026-11-21, §14): alle fünf Wege. Sable in ihrer Bude („Ich hab die Aufnahme aus der alten
 Metro.“, dann „Verkauft.“ oder „Noch nicht.“; die vier Preise als Werte von `ledger_sable_ines`); Morrow am Samstag und Sonntag um
 00:30 in der Jade Row selbst, ihr Streifenwagen ein Stück hinter ihr in der Gasse, in seiner Größe dort gemalt (`streife_nah`, vom Nutzer
 freigegeben 2026-11-16) (Morrows Dialog `morrow_k2`, sie siezt);
