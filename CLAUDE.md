@@ -31,6 +31,7 @@ code comments English.
 | `docs/story.md` | the story bible (German): world, cast, the secret, 6 chapters, branches, endings; decisions in §10 |
 | `docs/faq.md` | questions about the story and their answers (German, spoils everything): Lull and the implant, Teo, why the sleepers watch, EVI, the chapters 2–6, the Witness, the endings; follows the story bible |
 | `docs/ideen.md` | ideas not decided (German): feedback, counter-proposals, versions not taken, each dated with where it came from; **only ever appended to**, never rewritten, and **read only when the user asks**; what gets decided goes into the story bible's §10 |
+| `docs/timeline.md` | the timeline (German): the years before (the flood, the photo of 2074, the accident of 2076, the dismissal), then every chapter by day and time, as far as it is built; follows the bible and the chapter designs |
 | `docs/story-lesefassung.md` | the story to read, up to and including Chapter 1, then a part marked as a spoiler that tells what lies behind it, and the list of what still contradicts itself or is open |
 | `docs/kapitel0-design.md` | the prologue "Nachtschicht", plus the rules every chapter uses: the deck as a computer and EVI (§2), feed mode (§3), game time and routines (§4), the steps 0–12 (§6) |
 | `docs/kapitel1-design.md` | Chapter 1 "Glass": three jobs over three evenings, the WREN thread, the murder in cam31 |
