@@ -208,6 +208,17 @@
       look: "Die Steuer von 2089. Solange ich sie nicht öffne, gibt es sie nicht.", use: "Nein." };
     hs.file_essen = { name: "ESSEN!!.txt", rect: D.files.essen, if: "!deck_app",
       look: "Die Datei heißt ESSEN!!, und ich hab sie mir selbst geschickt.", use: "Sie ist leer. Wie der Kühlschrank, vermutlich." };
+    // MÜLL: what Juno threw away and didn't delete. The drafts to Teo can be read (kapitel2-design §6.6, the user's choice 2026-11-22: a
+    // look, no flag; she can send them in Chapter 3, when he sleeps); the 3 and the 7, the others she deleted
+    const MUELL_USE = [
+      ["Meine Kündigung. Automatische Auswertung, steht da.", "Die mach ich nicht mehr auf. Ich weiß, was drinsteht."],
+      ["Entwurf drei. Abgeschickt hab ich ihn nie.", "„Teo. Ich hab Mamas Schal gefunden, hinter dem Schrank. Willst du ihn? Du musst nicht. Ich dachte nur, weil du doch“", "Da hört er auf."],
+      ["Entwurf sieben.", "„Hör auf mit den Doppelschichten. Papa hat auch gesagt, das ist nur für ein Jahr. Ich zahl meine Miete selbst. Ich“", "Weiter bin ich nie gekommen."],
+    ];
+    MUELL.forEach((name, i) => {
+      hs[`muell_${i}`] = { name, rect: [X + 6, Y + 7 + 12 * i, 150, 11], if: app("muell"), z: 4,
+        look: i ? "Ein Entwurf an Teo. Von denen gab es mal sieben." : "Die Mail von Nagi·wa Personal. Ich hab sie nie gelöscht.", use: MUELL_USE[i] };
+    });
     // EVI: on the deck she is the hint button
     hs.evi = { name: "EVI", rect: D.evi, z: 6, use: [{ hint: true }],
       look: "EVI. Sie wohnt auf meinem Deck und liest Kameras besser als Menschen." };
