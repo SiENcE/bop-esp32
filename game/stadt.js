@@ -230,9 +230,9 @@ Cutaway.moment("traeger", { room: "kowalski", day: 3, from: "23:30", to: "00:45"
     { say: "traeger_weiss", text: "Ruhe-Erschöpfung." }, { say: "traeger_weiss", text: "Er hat es jetzt gut." }, "Oben gehen die Rollos runter, eins nach dem anderen.", { zoom: false }, { dialog: "traeger_wahl" }] });
 Nagiwa.cache.clip_traeger = { kind: "clip", name: "DIE WEISSEN TRÄGER", about: "Kowalski-Straße, Do 23:30. Ein Sinker, zwei in Weiß, ein Mädchen in der Tür." };
 Cutaway.dialog("traeger_wahl", { main: { choices: [
-  { text: "Zusehen.", silent: true, goto: "end", then: [{ set: "traeger", value: "watched" }, "Ich schau zu. Das kann ich.", "Die Türen gehen zu. Der Wagen fährt, und er hupt immer noch nicht."] },
-  { text: "Filmen.", silent: true, goto: "end", then: [{ set: "traeger", value: "filmed" }, { cache: "clip_traeger" }, "Das Taschen-Deck reicht dafür. Es gibt Leute, die zahlen für so was.", { evi: "besorgt" }, { say: "evi", text: "Das Mädchen ist mit im Bild." }, "Ich weiß."] },
-  { text: "Zu dem Mädchen gehen.", silent: true, goto: "end", then: [{ set: "traeger", value: "girl" }, "Ich geh rüber. Was sagt man da?", { say: "traeger_kind", text: "Geht es ihm gut? Die sagen, es geht ihm gut." }, "Ich weiß es nicht.", { say: "traeger_kind", text: "Er wacht einfach nicht auf." }, "Ich bleib, bis der Wagen weg ist. Mehr hab ich nicht."] },
+  { text: "Zusehen.", silent: true, goto: "end", then: ["Ich schau zu. Das kann ich.", "Die Türen gehen zu. Der Wagen fährt, und er hupt immer noch nicht."] },
+  { text: "Filmen.", silent: true, goto: "end", then: [{ cache: "clip_traeger" }, "Das Taschen-Deck reicht dafür. Es gibt Leute, die zahlen für so was.", { evi: "besorgt" }, { say: "evi", text: "Das Mädchen ist mit im Bild." }, "Ich weiß."] },
+  { text: "Zu dem Mädchen gehen.", silent: true, goto: "end", then: ["Ich geh rüber. Was sagt man da?", { say: "traeger_kind", text: "Geht es ihm gut? Die sagen, es geht ihm gut." }, "Ich weiß es nicht.", { say: "traeger_kind", text: "Er wacht einfach nicht auf." }, "Ich bleib, bis der Wagen weg ist. Mehr hab ich nicht."] },
 ] } });
 
 // ---- the half repair: he lives on the scaffold at the big screen and repairs its left half; the right half is another contract

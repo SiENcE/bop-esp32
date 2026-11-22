@@ -259,7 +259,7 @@ Ausweis, Notschlüssel und der Weg aufs Dach sind schon im Prolog offen (entschi
 | 3 | `cam18`, Archiv | Der 29. Oktober, 03:12. Es ist wirklich geschehen, genau von dieser Kamera aus gesehen. Sie schlief von drei bis sieben. |
 | 4 | `lucky_static` | **Die Wahl:** „Sie sind nicht verrückt.“ (die Wahrheit, sie traut sich nicht mehr zu schlafen) oder „Das war nur ein Traum.“ (die Lüge, die sie schlafen lässt; beide im Kassenbuch). Kapitel 2 nimmt das auf. |
 
-**Die weißen Träger im Einzelnen (`traeger`):** Donnerstag, 23:30. Juno hört von überall her den Wagen, „der nicht hupt“. Auf der Kowalski-Straße: ein weißer Wagen ohne Schild, zwei freundliche Leute in Weiß, ein Mädchen in der Tür, die Rollos gehen runter. Die Wahl: **zusehen, filmen** (ein Clip im CACHE, für Vesper) oder **zu dem Mädchen gehen** (mehr als bleiben kann Juno nicht). Der Beitrag „Mein Vater wacht nicht auf“ im NETZ ist später ihrer.
+**Die weißen Träger im Einzelnen** (ohne eigenes Flag: gestrichen 2026-11-22, story §10j; der Clip bleibt): Donnerstag, 23:30. Juno hört von überall her den Wagen, „der nicht hupt“. Auf der Kowalski-Straße: ein weißer Wagen ohne Schild, zwei freundliche Leute in Weiß, ein Mädchen in der Tür, die Rollos gehen runter. Die Wahl: **zusehen, filmen** (ein Clip im CACHE, für Vesper) oder **zu dem Mädchen gehen** (mehr als bleiben kann Juno nicht). Der Beitrag „Mein Vater wacht nicht auf“ im NETZ ist später ihrer.
 
 **In der Tasche** (entschieden): Was Juno wirklich in der Hand hält, ist ein Gegenstand: der Ausweis, der Haken, Ines' Stick (dazu später der Abzweiger und der Reis). Clips und Notizen bleiben im CACHE. **EVI** sitzt immer in der Tasche, fest: Ein Klick lässt sie reden, benutzen kann man sie nicht.
 

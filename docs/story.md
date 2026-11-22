@@ -883,6 +883,14 @@ Aus `docs/review.md` (ein Review von Story und Umsetzung nach Kapitel 2), vom Nu
   Mutter zwei Jahre später, erschöpft von den Doppelschichten. Juno hat Teo großgezogen, und mit den Eltern ging die Flutschuld auf die
   beiden über. Teo arbeitet heute in der Halle, in der der Vater starb; Tinte hat den Vater gekannt. Das Foto am Deck (2074) hat der
   Vater gemacht.
+- **Lanterns Unfall ist derselbe:** Oskar Lind war 2076 Pumpentechniker in der Pumpenhalle 3, und der Unfall, seit dem er im Rollstuhl
+  sitzt, ist der, bei dem Junos Vater starb. Vorerst ist das nur Hintergrund (keiner der beiden weiß es vom anderen); vielleicht wird
+  später mehr daraus.
+- **Die Pumpenhalle 3 ist ein Schacht,** riesig, tief und weit: gekrümmte, gerippte Wände, Gerüste und Treppentürme an den Wänden,
+  Plattformen auf vielen Ebenen, ganz unten das Wasser mit dem Filterbecken und Tinte; die Menschen darin sind winzig (der Nutzer
+  nach der ersten Blockskizze, mit einem Foto eines Baugrubenschachts als Vorbild).
+- **`traeger` ist gestrichen:** Wie Juno die weißen Träger in Kapitel 1 angesehen hat, merkt sich kein Flag mehr (keiner las es); was
+  bleibt, sind ihr Clip und das Kassenbuch.
 - **Teo bekommt mehr Bild** (`kapitel2-design` §6.6): Er erzählt mehr von sich und seinen Gefühlen, auch dass er die Eltern vermisst,
   und seine Gespräche bauen aufeinander auf. Am Mittwoch in Kapitel 1 wählt Juno einmal, worüber sie mit ihm redet (`teo_talk`), und am
   Montag knüpft er daran an. Ab Samstag in Kapitel 2 gibt es eine Kamera in der Pumpenhalle 3 (CAM 33, Flutwerk), deren Code Juno sich

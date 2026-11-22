@@ -327,7 +327,7 @@ Cutaway.act("kapitel2", {
     "anon_clip_kessler_ring", "anon_clip_morrow_bribe", "anon_clip_traeger",
     "got_ausweis", "got_haken", "window_open", "ladder_down", "link_cam14", "link_cam15", "link_cam07v"],
   // left behind on purpose (the tools check it, sh tools/handoff.sh): what Chapter 1 needed only for itself, or what follows from the rest
-  leave: ["know_meeting", "end_beat", "kessler_gone", "imai_step", "traeger"],
+  leave: ["know_meeting", "end_beat", "kessler_gone", "imai_step"],
   start: [
     { time: "18:00", day: 5 }, { give: "evi_bag", to: "juno" },
     // (the Kassenbuch's entries pay as they are written: the money as it stands at the end of that way comes after them)
