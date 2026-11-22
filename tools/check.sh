@@ -39,14 +39,14 @@ done
 # and that way alone, Juno with the stick and the dryer shut (off_dryer: it must reach him by hand), her flat and the forgery done (its
 # steps would multiply every other state)
 for v in main stick lantern; do
-  r="$(off main),off_shop24,off_haldane"; [ "$v" = main ] && r="$r,off_lantern"; [ "$v" = stick ] && r="$r,off_lantern,off_flat,evi_knows,stick_ines"; [ "$v" = lantern ] && r="$r,off_main,stick_ines,off_dryer,evi_knows,forgery_proven"
+  r="$(off main),off_shop24,off_haldane,off_teo"; [ "$v" = main ] && r="$r,off_lantern"; [ "$v" = stick ] && r="$r,off_lantern,off_flat,evi_knows,stick_ines"; [ "$v" = lantern ] && r="$r,off_main,stick_ines,off_dryer,evi_knows,forgery_proven"
   out=$($C node tools/solve-act.mjs kapitel2 --full --set "$r" 2>&1)
   s=$(echo "$out" | grep -E "from the cache|states in|soft-lock|SOFT|HINTS|^hints|UNSOLV" | tr '\n' ' '); line "kapitel2 solve: $v" "$s"; need "kapitel2 solve: $v" "$s" "no soft-locks"; need "kapitel2 solve: $v" "$s" "every state on the way"
 done
 # Chapter 2's threads that Chapter 1 hands on (kapitel2-design §5): each alone with the main way shut (its flat taken as done: evi_knows),
 # once for each answer of Chapter 1 that changes what happens (Varga: lied, sold, none; the corner shop: sold, lied, warned, none);
 # and Chapter 2's own, the 24-hour shop (§6.5, off_shop24), alone with both of those shut (the robbery only changes a look there)
-k2t="off_roof,off_zeitung,off_imai,off_traeger,off_motte,off_vesper,off_lantern,off_klinik,off_main,evi_knows,off_haldane"
+k2t="off_roof,off_zeitung,off_imai,off_traeger,off_motte,off_vesper,off_lantern,off_klinik,off_main,evi_knows,off_teo,off_haldane"
 for v in "off_tide,off_shop24,k1a=lied" "off_tide,off_shop24,k1a=sold" "off_tide,off_shop24" "off_varga,off_shop24,k1b=sold" "off_varga,off_shop24,k1b=lied" "off_varga,off_shop24,k1b=warned" "off_varga,off_shop24" "off_varga,off_tide"; do
   out=$($C node tools/solve-act.mjs kapitel2 --full --set "$k2t,$v" 2>&1)
   s=$(echo "$out" | grep -E "from the cache|states in|soft-lock|SOFT|HINTS|^hints|UNSOLV" | tr '\n' ' '); line "kapitel2 solve: $v" "$s"; need "kapitel2 solve: $v" "$s" "no soft-locks"; need "kapitel2 solve: $v" "$s" "every state on the way"
@@ -61,6 +61,10 @@ done
 k2h=$(echo "$k2t" | sed 's/,off_haldane//')
 out=$($C node tools/solve-act.mjs kapitel2 --full --set "$k2h,off_varga,off_tide,off_shop24" 2>&1)
 s=$(echo "$out" | grep -E "from the cache|states in|soft-lock|SOFT|HINTS|^hints|UNSOLV" | tr '\n' ' '); line "kapitel2 solve: haldane" "$s"; need "kapitel2 solve: haldane" "$s" "no soft-locks"; need "kapitel2 solve: haldane" "$s" "every state on the way"
+# Teo and the pump hall (§6.6, off_teo): alone with the others shut (CAM 33 and Sable's code; Chapter 1 hands it teo_talk, which only Monday's roof reads)
+k2o=$(echo "$k2t" | sed 's/off_teo,//')
+out=$($C node tools/solve-act.mjs kapitel2 --full --set "$k2o,off_varga,off_tide,off_shop24" 2>&1)
+s=$(echo "$out" | grep -E "from the cache|states in|soft-lock|SOFT|HINTS|^hints|UNSOLV" | tr '\n' ' '); line "kapitel2 solve: teo" "$s"; need "kapitel2 solve: teo" "$s" "no soft-locks"; need "kapitel2 solve: teo" "$s" "every state on the way"
 for p in tools/paths/kapitel2_*.json; do
   n=$(basename "$p" .json); out=$($C node lib/cutaway/tools/play.mjs index.html --act kapitel2 --path "$p" 2>&1 | tail -1); line "clicks: $n" "$out"; need "clicks: $n" "$out" "all passed"
 done

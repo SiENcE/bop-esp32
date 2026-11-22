@@ -200,8 +200,9 @@ Cutaway.moment("teo_monday", { room: "deck", day: 7, from: "18:00", to: "18:30",
   { fade: "in", ms: 900 },
   "Neben mir sitzt jemand. Zum ersten Mal seit Jahren.",
   T("Tinte sagt, ich zuck im Schlaf. Wie die anderen."),
-  "Wer ist Tinte?",
-  { if: "teo_talk=papa", then: [T("Die Krake im Filterbecken. Die, die Papa gekannt hat.")], else: [T("Die Krake im Filterbecken. Die ist älter als ich und zählt alles.")] },
+  // Juno has seen her in CAM 33 (game/kapitel2_teo.js), and so him
+  { if: "link_cam33", then: ["Die Krake. Ich hab sie gesehen.", T("Du hast mich geglasst?"), "Einmal.", T("Und, hab ich gut ausgesehen?")],
+    else: ["Wer ist Tinte?", { if: "teo_talk=papa", then: [T("Die Krake im Filterbecken. Die, die Papa gekannt hat.")], else: [T("Die Krake im Filterbecken. Die ist älter als ich und zählt alles.")] }] },
   // he goes on from what they talked about on Wednesday (teo_talk, kapitel2-design §6.6)
   { if: "teo_talk=papa", then: [T("Ich hab ihm erzählt, dass du wieder Kameras machst. Am Becken."), "Und?", T("Er hätte gelacht. Und dann gesagt, du sollst was essen."),
     T("Ich vermiss die beiden, Ju. Manchmal mehr, wenn ich wach bin.")] },

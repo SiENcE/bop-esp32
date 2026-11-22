@@ -199,7 +199,7 @@ zurück (im Akt `leave`, damit die Übergabe-Prüfung es als Absicht kennt): `kn
 
 **Was Kapitel 2 weitergibt:** `e2`, `lantern_alive` (ein Flag: Juno hat Lantern gefunden und die Quiet nicht zu ihm geführt; gebaut ist bisher
 `lantern_found` = found | ally),
-`forgery_proven`, `moth_student`, `k1b` nur als `warned` (Okonkwos Versteck in Kapitel 4) und das Kassenbuch. In Kapitel 2
+`forgery_proven`, `moth_student`, `teo_talk` (das Gespräch am Mittwoch, §6.6), `k1b` nur als `warned` (Okonkwos Versteck in Kapitel 4) und das Kassenbuch. In Kapitel 2
 abgeschlossen sind Varga und Kessler, der Eckladen bis auf Okonkwos Dank, Frau Imai, Frau Haldane (ihr Sohn ist in Kapitel 3 höchstens
 ein Blick auf der Station, ohne Flag), Vesper, WREN und die Miete.
 
@@ -684,15 +684,17 @@ Junos alter Zugang hilft hier nicht, sie muss sich den Code besorgen, und dafür
 | Schritt | Ort | Was |
 |---|---|---|
 | T1 | Deck, GLASS | Ab Samstag steht CAM 33 grau auf der Karte, am Meer: `FLUTWERK, PRIVAT`. Ein Klick: „Teos Halle. Die hat ein eigenes Netz.“ – „Den eigenen Block glasst man nicht. Den eigenen Bruder erst recht nicht.“ |
-| T2 | `sable_booth` | Sable, unter dem Thema „Ich such was.“ (4.3 des Reviews: Sables Gespräch als `Nagiwa.talkTree`, mit dem Wohnheim und den Bäumen): „Die Pumpenhalle drei. Hast du da eine Kamera?“ – „Flutwerk. Die zahlen schlecht und ändern nie was.“ – „Hundert.“ Oder ein roher Clip. Danach `link_cam33`. |
-| T3 | Deck, GLASS, CAM 33 | Die Halle ist ein Schacht (vom Nutzer gewünscht 2026-11-22: „größer, episch, tief, groß, weit“): die Kamera hängt oben am Rand und sieht steil hinunter, gekrümmte, gerippte Wände, Gerüste und Treppentürme, Plattformen auf vielen Ebenen, ganz unten das Wasser mit dem Filterbecken, darin Tinte (ein großer Schatten, Arme, ein Sprechkragen), die Pumpen wie Häuser. Die Menschen sind winzig. Juno sieht Teo bei der Schicht (ab 20:00), und ab 22:00 in der Pause schlafen die Kollegen auf der Bank einer Plattform, und ihre Pflaster blinken gleichzeitig: Sie zucken im selben Moment. |
+| T2 | `sable_booth` | Sable, unter dem Thema „Ich such was.“ (4.3 des Reviews: Sables Gespräch als `Nagiwa.talkTree`, mit dem Wohnheim und den Bäumen): „Die Pumpenhalle drei. Hast du da eine Kamera?“ – „Flutwerk. Die zahlen schlecht und ändern nie was.“ – „Hundert.“ (nur Chits: ein roher Clip hätte die Flags eines anderen Fadens gebraucht). Danach `code_cam33`, und in GLASS verbindet Juno die Kamera (`link_cam33`). |
+| T3 | Deck, GLASS, CAM 33 | Die Halle ist ein Schacht (vom Nutzer gewünscht 2026-11-22: „größer, episch, tief, groß, weit“): die Kamera hängt oben am Rand und sieht steil hinunter, gekrümmte, gerippte Wände, Gerüste und Treppentürme, Plattformen auf vielen Ebenen, ganz unten das Wasser mit dem Filterbecken, darin Tinte (ein großer Schatten, Arme, ein Sprechkragen), die Pumpen wie Häuser. Die Menschen sind winzig. Juno sieht Teo bei der Schicht (ab 20:00), und ab 23:00, in der Pause, schlafen die Kollegen ihre vier Stunden Lull auf der Bank einer Plattform, und ihre Pflaster blinken gleichzeitig: Sie zucken im selben Moment. |
 
-Was CAM 33 zeigt, ist nur ein Blick (kein Flag, die Routinen nach der Uhr). Nah am Mikro steht das Becken, darum hört Juno, was Teo
-Tinte erzählt, und das ist, was er Juno nie sagt (ein Klick auf Teo, je Abend etwas anderes):
+Was CAM 33 zeigt, ist nur ein Blick (kein Flag, die Bilder nach der Uhr, `game/kapitel2_teo.js`). Die Kamera hängt oben am Rand, aber den
+Ton hört der Knoten des Beckens (BECKEN 3: Tintes Sprechkragen hängt im Netz der Halle), darum hört Juno, was Teo Tinte erzählt, und
+das ist, was er Juno nie sagt (ein Klick auf Teo, je Abend etwas anderes; am Samstag sagt er ihren Namen, so kennt Juno ihn). In der
+Pause blinken die Pflaster der Schlafenden alle zugleich, im Takt von Lull: lang, kurz, kurz, lang, Pause (`cam33_takt`).
 
-| Abend | Teo und Tinte (in der Pause, 22:00 bis 23:00) |
+| Abend | Teo und Tinte (in der Pause ab 23:00, ihren vier Stunden Lull bis drei; sie geht bis zum Ende des Abends, so hält das Warten im Feed immer in ihr) |
 |---|---|
-| Samstag | „Meine Schwester hat wieder nicht gegessen.“ – Tinte: „Und du?“ – „Ich hab Lull. Ich brauch nichts.“ – Tinte legt einen Arm ans Glas, dahin, wo er sitzt. |
+| Samstag | „Tinte, meine Schwester hat wieder nicht gegessen.“ – Tinte: „Und du?“ – „Ich hab Lull. Ich brauch nichts.“ – Tinte legt einen Arm ans Glas, dahin, wo er sitzt. |
 | Sonntag | Teo schläft mit den anderen auf der Bank und zuckt mit ihnen. Tinte: „Schon wieder.“ Juno: „Wie die anderen.“ |
 | Montag | „Wir waren auf dem Dach. Wie früher.“ – Tinte: „Und?“ – „Sie hat nichts gesagt. Wie Papa, wenn er sich gefreut hat.“ – „Glaubst du, er hätte das gewollt? Dass ich hier bin?“ – Tinte: „Er wollte, dass du singst. Du singst nicht.“ |
 

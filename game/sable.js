@@ -4,7 +4,7 @@
 // was." and "Ich hab was zu verkaufen." in their places, each opening the questions of the threads under it. Each question asks only its
 // own thread's flags (CLAUDE.md: threads share no flag), and each says its chapter in its own condition (day<5, day>4), so every option
 // of hers stands here, not patched in by the chapter that came later. What she sells comes with its thread's flags:
-//   code_cam15 (job A, game/auftrag_varga.js), link_cam51 (Frau Haldane's son, game/kapitel2_haldane.js), know_pike=sable (the way to
+//   code_cam15 (job A, game/auftrag_varga.js), link_cam51 (Frau Haldane's son, game/kapitel2_haldane.js), code_cam33 (Teo, game/kapitel2_teo.js), know_pike=sable (the way to
 //   Lantern, game/kapitel2_lantern.js), e2=sable (decision 2), ledger_shop24=sold (the 24-hour shop, game/kapitel2_laden.js)
 "use strict";
 
@@ -23,6 +23,7 @@ Cutaway.actor("sable", { name: "Sable", color: "#ff4fd3", room: "sable_booth", a
 // what each of Chapter 2's questions needs: the thread's own flags, nothing of another's
 const HOSTEL = ["haldane_ask", "!link_cam51", "!off_haldane"];           // Frau Haldane asked, the archive's look not bought
 const SWAMP = ["know_sumpf", "!know_pike", "!off_lantern"];              // the swamp found under Lantern's noise, Pike not yet known
+const PUMP = ["!code_cam33", "!off_teo"];                                // Teo's pump hall, its code not bought (game/kapitel2_teo.js)
 const CLIP = ["cache_clip_ines_death", "!e2", "!off_main"];              // the murder's recording, decision 2 still open
 const SHOP = ["cache_clip_shop24", "!mont_clip_shop24", "!ledger_shop24", "!off_shop24"];
 // Chapter 2's decision 2: the clip sold to Sable at the price she named (the four values of ledger_sable_ines)
@@ -36,7 +37,7 @@ Cutaway.dialog("sable", {
   // Chapter 1 shows the first, third and fifth, Chapter 2 the second, fourth and fifth: the same three places
   main: [
     { text: "„Hast du den Code für die Kamera im Morpheus? CAM 15.“", if: ["day<5", "varga_step", "!code_cam15"], goto: "code", then: [S("Achtzig. Oder was, das achtzig wert ist.")] },
-    { text: "„Ich such was.“", if: ["day>4", { or: [HOSTEL, SWAMP] }], goto: "search", then: [S("Suchen kostet. Was?")] },
+    { text: "„Ich such was.“", if: ["day>4", { or: [HOSTEL, SWAMP, PUMP] }], goto: "search", then: [S("Suchen kostet. Was?")] },
     { text: "„Du hast Varga meinen Namen gegeben.“", if: "day<5", then: [S("Verkauft. Geben tu ich nichts."), "Für wie viel?", S("Das kostet extra.")] },
     { text: "„Ich hab was zu verkaufen.“", if: ["day>4", { or: [CLIP, SHOP] }], goto: "sell", then: [S("Zeig.")] },
     { text: "„Was verkaufst du sonst noch?“", then: [S("Steht an der Wand. Namen, Adressen."), "Und Geheimnisse?", S("Frag. Fragen kostet schon.")] },
@@ -51,7 +52,14 @@ Cutaway.dialog("sable", {
     { text: "„Weißt du, wo hier Bäume im Wasser stehen?“", if: SWAMP, goto: "main", then: [
       "Mit grünen Lichtern dazwischen.", S("Draußen. Wo die Ringe aufhören."), S("Pike fährt da raus. Das Datenfloß."),
       { set: "know_pike", value: "sable" }, "Und was kostet das?", S("Das war gratis. Das nächste nicht.")] },
+    // Teo's pump hall (§6.6, T2; the user's wish 2026-11-22: Juno has to go out for it): the Flutwerk's own net
+    { text: "„Die Pumpenhalle drei. Hast du da eine Kamera?“", if: PUMP, goto: "cam33", then: [S("Flutwerk. Die zahlen schlecht und ändern nie was."), S("Hundert.")] },
     BACK,
+  ],
+  cam33: [
+    { text: "„Hier sind hundert.“", if: "chits>=100", goto: "end", then: [{ ledger: "sable_cam33", value: "paid" }, { set: "code_cam33" }, S("Nett."),
+      "Der Code von CAM 33 ist jetzt auf dem Deck. Teos Halle."] },
+    { text: "„Das ist mir zu teuer.“", goto: "main", then: [S("Das Flutwerk läuft nicht weg.")] },
   ],
   cam51: [
     { text: "„Hier sind hundertfünfzig.“", if: "chits>=150", goto: "end", then: [{ ledger: "sable_cam51", value: "paid" }, { set: "code_cam51" }, { set: "link_cam51" },

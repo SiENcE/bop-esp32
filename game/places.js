@@ -108,6 +108,11 @@ Nagiwa.at = {
   // blocks (art/cams/cam51.px.js, measured there: CAM51_LAYOUT): the workers' hostel 5-Süd's dormitory C down its aisle; Najo's bunk the
   // nearest on the right, the upper one (the cameras' strip covers the left edge); the left row's bunks past the strip
   cam51: { mic: [177, 140], bunkPoly: [203, 99, 211, 45, 243, 45, 301, 81, 271, 147, 234, 154], rowsPoly: [80, 46, 115, 14, 129, 13, 131, 44, 122, 108, 93, 109] },
+  // CAM 33, Pumpenhalle 3 (art/cams/cam33.px.js, measured there: CAM33_LAYOUT): the shaft from its rim; the sound from the basin's node;
+  // Teo where he is by the clock (the deck, the basin's rim, the bench's end), the patches' beat over the bench (takt)
+  cam33: { mic: [165, 117], takt: [83, 64], teoDeckPoly: [151, 118, 163, 117, 165, 124, 164, 130, 153, 131, 152, 124], teoRimPoly: [152, 109, 164, 108, 166, 115, 165, 121, 154, 122, 152, 115],
+    teoBenchPoly: [77, 63, 78, 56, 86, 55, 93, 66, 92, 72, 84, 74], tintePoly: [142, 90, 177, 85, 183, 114, 145, 119], benchPoly: [78, 125, 82, 71, 91, 70, 89, 124],
+    stairsPoly: [193, 96, 198, 79, 213, 39, 207, 59], pumpPoly: [103, 131, 134, 128, 140, 139, 142, 163, 118, 166, 104, 163] },
   // Weg_1 from above (art/rooms/weg1.px.js, its blocks: the street between the facades at y 120 and 290 from x 60, the arm to the gate
   // between x 790 and 930 down to y 505, what stands in the way in W1.OCC); Juno's sprite from above is anchored in its middle, so the
   // walk area keeps half her size from the facades. Spots face up, down, left or right
