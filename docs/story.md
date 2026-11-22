@@ -208,6 +208,38 @@ Cyan nur für Technik.
 - **Im Finale zählt das Kassenbuch** (entschieden 2026-11-13): Der Zeuge zeigt Juno im Ruhekern ihr
   eigenes Kassenbuch, aus seiner Sicht und mit den Gesichtern (§7, Kap. 6). Sein Gewicht entscheidet mit,
   ob der Zeuge ihr vertraut, und damit, welche Enden es am Stuhl überhaupt gibt (§8).
+- **Die Gewichte** (vom Nutzer entschieden 2026-11-22, nach dem moralischen Kompass; der Spieler erfährt davon nichts, keine Anzeige
+  zeigt sie; `game/gewicht.js`, `Nagiwa.ledgerWeight()`): Es zählt, was Juno gewählt hat, nicht was danach geschah. Die Folgen
+  (Okonkwo ausgeraubt, Bao verletzt, Kessler bettelt, Ines tot, WREN hatte es woanders) stehen im Kassenbuch mit ihren Gesichtern,
+  zählen aber über die Wahl, die sie verursacht hat, sonst entschiede Pech mit. Plus: Juno hat jemandem um Geld oder Bequemlichkeit
+  geschadet; minus: sie hat geschützt, geholfen oder die Wahrheit gesagt, ohne daran zu verdienen. Ein Verkauf, dessen Clip sie vorher
+  anonymisiert hat, wiegt eins weniger. Was hier nicht steht, wiegt 0.
+
+  | Eintrag | Wert | Gewicht | Warum |
+  |---|---|---|---|
+  | M. Kessler (Prolog) | ein Ehebruch (montiert) | +2 | eine erfundene Lüge, die eine Ehe zerstört, für 100 mehr |
+  | Sable: Kesslers Schulden | verkauft, getauscht | +1 | das Geheimnis eines Menschen verkauft |
+  | Varga: Kessler | verkauft | +3 | einen Menschen an einen Schläger verkauft (der falsche Ort: 0) |
+  | Kessler | gewarnt | −1 | geschützt, ohne Lohn |
+  | TIDE: Okonkwos Tresor | verkauft | +3 | einen Laden an Räuber verkauft (der falsche Code: 0) |
+  | Okonkwo | gewarnt | −1 | geschützt |
+  | WREN: Ines' Treffpunkt | verkauft / geweigert | +3 / −1 | eine Frau an ihren Mörder verkauft, oder ein Nein |
+  | WREN: die Live-Übertragung | bezahlt | +1 | für das Zusehen bei einem Mord kassiert |
+  | Frau Imai (Kapitel 1 und 2) | die Wahrheit / ein Traum | −1 / +1 | ernst genommen, oder beruhigt bis zu Tropfen gegen das Träumen |
+  | Vesper: Kesslers Ring, Morrows Umschlag | roh | +1 | Elend als Unterhaltung (anonymisiert: 0) |
+  | Vesper: die weißen Träger | roh | +2 | die Trauer eines Kindes verkauft (anonymisiert: +1) |
+  | Entscheidung 2: Vesper | verkauft | +2 | Ines' Tod als Unterhaltung, aber die Wahrheit lief eine Nacht |
+  | Entscheidung 2: Sable | verkauft (alle vier Preise) | +3 | an Nagi·wa verkauft, die Wahrheit begraben, für Geld |
+  | Entscheidung 2: Morrow / Lantern | gegeben | −1 / −2 | als Beweis gegeben, ohne Geld; gegeben, damit die Wahrheit gesendet wird |
+  | Kessler auf dem Drain-Markt | fünfzig gegeben | −1 | geholfen |
+  | Frau Haldane | die Wahrheit / ein montierter Morgen | −1 / +1 | ehrlich zu einer Mutter, oder eine barmherzige Fälschung |
+  | Sable: CAM 51 | für Kesslers Ring | +1 | Kesslers Elend noch einmal verkauft |
+  | 24h-Laden | montiert / gezeigt / verkauft | −1 / +1 / +2 | eine Lüge, die zwei schützt, oder der Obdachlose wird vertrieben |
+
+  Der Bereich liegt etwa bei −8 (immer geschützt, nie verkauft) bis +25 (alles verkauft); der einfache Weg durch Kapitel 1 wiegt 4.
+  Für das Finale drei Stufen (die Grenzen werden in Kapitel 6 festgelegt): leicht, unter 3 (der Zeuge vertraut ihr); mittel, 3 bis 9
+  (sie muss ihn überzeugen); schwer, ab 10 (er traut ihr nicht). Die Einträge selbst gehen weiter mit über die Kapitel (`KEPT_LEDGER`),
+  weil das BUCH sie zeigt; das Gewicht rechnet das Spiel aus ihnen, es ist kein eigenes Flag.
 
 ## 6. Das Geheimnis (die Wahrheit hinter allem)
 
@@ -896,3 +928,16 @@ Aus `docs/review.md` (ein Review von Story und Umsetzung nach Kapitel 2), vom Nu
   Montag knüpft er daran an. Ab Samstag in Kapitel 2 gibt es eine Kamera in der Pumpenhalle 3 (CAM 33, Flutwerk), deren Code Juno sich
   bei Sable besorgen muss, damit sie aus der Wohnung kommt. Die Entwürfe an Teo im MÜLL lassen sich lesen; abschicken kann Juno sie in
   Kapitel 3.
+- **Geld in der Hauptgeschichte blockiert nie** (vom Nutzer entschieden 2026-11-22, nach dem Review §2.3): Was Juno kaufen kann (ab
+  Kapitel 3 etwa eine gefälschte Arbeitserlaubnis für den Fünften, Schwarzmarkt-Lull, eine Bestechung an der Station), ist entweder
+  eine Nebenaufgabe, oder das Geld dafür bekommt Juno auf jedem Weg sicher. Ein Kauf, den die Hauptgeschichte braucht, darf nie an zu
+  wenig Chits scheitern.
+- **Die 870.000 Zuschauer** (vom Nutzer gewünscht 2026-11-22, nach dem Review §2.7): Wer den echten Mord bei NINTH LIVE gesehen hat,
+  kann Juno später oben helfen, als Unterstützer in den höheren Ringen, wenn sie Kontakt aufnimmt oder Hilfe braucht. Dafür muss sie
+  sich erst zu erkennen geben: Erst dann weiß jemand, dass sie es war, die die Wahrheit gezeigt hat. Warum Vesper den Clip zeigen
+  kann: NINTH LIVE ist ein Kanal der Krone, nicht Nagi·was; für die Krone ist es ein echter Mord aus dem Neunten, Unterhaltung, und
+  niemand oben weiß, wer der Mann in Weiß ist. Am nächsten Morgen kauft Nagi·wa den Clip auf, und er verschwindet (§10h).
+- **Woher der Zeuge den Mord aus CAM 31 hat** (vom Nutzer 2026-11-22: es braucht keine Erklärung; falls doch, später, diese): Der Zeuge
+  ist im Netz der Schläfer entstanden und erreicht deshalb CAM 31, Nagi·wa nicht (das Netz der Schläfer spricht das alte Protokoll, der
+  Takt hinter jedem Lull-Ohr ist sein Handshake).
+- **Die Gewichte des Kassenbuchs** stehen in §5 (vom Nutzer freigegeben 2026-11-22).
