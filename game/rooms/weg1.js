@@ -42,10 +42,10 @@
         use: [{ goto: "jade_row", at: AJ.far, face: "sw" }] },
       fish: { name: "Treppe zum Fischmarkt", rect: A.fishRect, walkTo: A.fish, face: "left", look: "Die Treppe geht runter zum alten Fischmarkt. Davor ist ein Gitter.",
         use: ["Das Gitter ist zu, mit einem Vorhängeschloss.", "Unten hör ich Wasser, ein Aggregat und Stimmen.", "Da unten ist jemand. Um die Zeit."] },
-      homeless: { name: "Obdachloser", rect: A.homelessRect, walkTo: A.homelessTalk, face: "down", if: "!shop24_gone",
+      homeless: { name: "Obdachloser", poly: A.homelessPoly, walkTo: A.homelessTalk, face: "down", if: "!shop24_gone",
         look: ["Er schläft auf Pappe, unterm Rand vom Laden. Neben ihm ein Einkaufswagen voller alter Bildschirme.", "Einer davon zeigt noch Rauschen. Er hat ihn angelassen, wie ein Feuer.",
           "Manchmal ist auf dem Rauschen kurz ein Bild. Ein Flur.", "Das ist CAM 25. Wo hat er die her?"] },
-      cardboard: { name: "Pappe", rect: A.homelessRect, walkTo: A.homelessTalk, face: "down", if: "shop24_gone",
+      cardboard: { name: "Pappe", rect: A.cardboardRect, walkTo: A.homelessTalk, face: "down", if: "shop24_gone",
         look: ["Da liegt nur noch seine Pappe. Der Wagen mit den Bildschirmen ist weg.", "Die Kette hat den Gehweg räumen lassen."] },
       // (what talking to them does is the side thread's: game/kapitel2_laden.js)
       sheep: { name: "Lull-Schaf", poly: A.sheepPoly, walkTo: A.sheepTalk, face: "right", if: { not: ["shop24_gone", "ledger_shop24=sold"] },

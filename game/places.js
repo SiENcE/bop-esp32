@@ -123,7 +123,9 @@ Nagiwa.at = {
       [798, 296, 826, 296, 826, 334, 798, 334], [880, 406, 922, 406, 922, 444, 880, 444], [664, 190, 696, 190, 696, 220, 664, 220]],
     gate: [860, 492], lerche: [760, 140], fish: [72, 205], homelessTalk: [527, 246], sheepTalk: [650, 205], robotTalk: [206, 200],
     noodles: [210, 262], trash: [320, 166], steam: [348, 215], shop: [720, 268], shopRect: [662, 274, 116, 14],
-    gateRect: [784, 505, 152, 35], fishRect: [0, 140, 60, 130], homelessRect: [505, 262, 43, 22], noodlesRect: [150, 268, 120, 20], lercheRect: [728, 120, 57, 14],
+    gateRect: [784, 505, 152, 35], fishRect: [0, 140, 60, 130], noodlesRect: [150, 268, 120, 20], lercheRect: [728, 120, 57, 14],
+    // the homeless man curled on his cardboard with his cart of screens beside it; once he is gone only the cardboard is left, a rect
+    homelessPoly: [507, 284, 507, 269, 513, 262, 548, 262, 548, 284], cardboardRect: [504, 261, 27, 22],
     sheepPoly: [668, 193, 692, 193, 694, 205, 692, 217, 668, 217, 666, 205], trashPoly: [295, 122, 340, 122, 340, 148, 295, 148],
     steamPoly: [361, 206, 370, 203, 379, 206, 382, 215, 379, 224, 370, 227, 361, 224, 358, 215], robotPoly: [173, 196, 176, 193, 184, 193, 187, 196, 187, 204, 184, 207, 176, 207, 173, 204],
     // the street's life (design §7) and the 24-hour shop's thread (§6.5): the homeless man and the sheep as sprites over the
@@ -246,10 +248,10 @@ Nagiwa.at = {
     const at = fromLayout(Nagiwa.layouts.gasse), R = Nagiwa.layouts.gasse.props.railing.poly, W = 416, H = 236;
     const P = (/** @type {number} */ u, /** @type {number} */ v, h = 0) => [224 + 32 * (u - v), 60 + 16 * (u + v) - 30 * h];
     const cone = (/** @type {number} */ u, /** @type {number} */ v, /** @type {number} */ h, /** @type {number} */ r) => [...P(u, v, h).map((n, i) => n - (i ? 0 : 2)), ...P(u, v, h).map((n, i) => n + (i ? 0 : 2)), ...P(u + r, v - r), ...P(u - r, v + r)];
-    // the padlocks on the railing where Juno looks at the water (art/kit/gasse.kit.px.js: along it from 2.75 m, at its lower rail)
-    const a = P(5.92, 2.8, 0.7), b = P(5.92, 3.9, 0.3);
+    // the padlocks on the railing where Juno looks at the water (art/kit/gasse.kit.px.js: along it from 2.75 m, at its lower rail): a band
+    // along the locks as they hang, from the nearest to the farthest, 14 px high, not the box round the slanting rail
     // the cables' hotspot as the user set it in the editor (2026-11-09): over the bundles only, clear of the doors below
-    return { ...at, cablesRect: [76, -1, 347, 37], locksRect: [b[0] - 2, a[1] - 2, a[0] - b[0] + 4, b[1] - a[1] + 4], waterPoly: [R[0], R[1], W, R[1], W, H, R[10], R[11]],
+    return { ...at, cablesRect: [76, -1, 347, 37], locksPoly: [296, 192, 336, 180, 336, 194, 296, 206], waterPoly: [R[0], R[1], W, R[1], W, H, R[10], R[11]],
       hazeDoor: cone(1.08, 0.3, 2.25, 0.45), hazeStatue: cone(2.95, 3.65, 3.15, 0.65), adAt: Nagiwa.layouts.gasse.openings.ad.slice(0, 2),
       // Chapter 2: the paper boat with I. among the candles at the monument's foot (its top left; art/rooms/gasse.px.js)
       papierboot: [198, 173],
@@ -269,12 +271,15 @@ Nagiwa.at = {
     steam: [108, 40], parkedCar: [156, 86], droneFrom: [-30, 60], droneStop: [200, 64], droneTo: [360, 58],
     // Chapter 2 after K1b warned: WHO TALKED? on the passage's wall in the arch (art/rooms/jade_row.px.js, the overlay "tag")
     tagRect: [282, 106, 27, 16],
-    parlourRect: [118, 88, 8, 26], arcadeRect: [100, 90, 16, 32], balconyRect: [44, 20, 58, 46], nightRect: [212, 8, 43, 62], carRect: [168, 92, 24, 17], pharmacyRect: [195, 88, 13, 24], gateRect: [136, 50, 48, 46], screenRect: [136, 4, 48, 44], signsRect: [195, 56, 22, 32],
+    parlourRect: [118, 88, 8, 26], arcadeRect: [100, 90, 16, 32], balconyRect: [44, 20, 58, 46], nightRect: [212, 8, 43, 62], pharmacyRect: [195, 88, 13, 24], gateRect: [136, 50, 48, 46], screenRect: [136, 4, 48, 44],
     // the hotspots' shapes, measured from the blocks' own perspective (art/old/jade_row_blocks.px.js prints JADE_POLYS): what lies on a side
-    // wall is a trapezoid here; the machine, the arcade, the gate, the screen, the car and the hanging signs are drawn as rects
+    // wall is a trapezoid here; the machine, the arcade, the gate and the screen are drawn as rects
     // Okonkwo's shop takes the whole near left-hand wall in the painting (art/rooms/jade_row.px.js, SHOP0 to SHOP1: the user's wishes,
     // 2026-11-11): a window of one pane from the picture's edge (windowNear), the door between, a window of three panes (window) up
     // to the arcade, the sign over the whole front; Juno stands at "shop" before the door
+    // the car parked facing us at the lane's end (its picture at parkedCar: the roof, then the body with its lights), in front of the gate;
+    // the two lanterns hanging over the pharmacy's sign (the small one and the big one with its character), in front of the signs behind
+    carPoly: [165, 90, 181, 90, 185, 97, 185, 109, 161, 109, 161, 97], signsPoly: [196, 61, 216, 63, 220, 69, 220, 80, 216, 84, 207, 84, 196, 70],
     windowPoly: [60, 134, 98, 113, 98, 84, 60, 87], windowNearPoly: [0, 168, 36, 146, 36, 88, 0, 91], doorPoly: [36, 160, 60, 145, 60, 84, 36, 85],
     signPoly: [0, 82, 98, 81, 98, 69, 0, 52], parlourPoly: [116, 109, 128, 102, 128, 80, 116, 80], soupPoly: [242, 128, 211, 110, 211, 82, 242, 83],
     pharmacyPoly: [208, 106, 195, 99, 195, 82, 208, 83], nightPoly: [255, 56, 213, 67, 213, 40, 255, 7], balconyPoly: [46, 13, 75, 13, 100, 33, 100, 66, 80, 66, 46, 60], backPoly: [329, 193, 279, 160, 279, 78, 289, 58, 300, 53, 313, 54, 329, 77],
@@ -294,7 +299,7 @@ Nagiwa.at = {
     // the old photo's camera (art/ui/deck_wallpaper.px.js): the parapet across the picture, the tar in front of it
     // the notch: the Rain Reader's gutter on its pole and she herself on her bucket, so Juno passes in front of them, never through (the slit: an actor stands on walkable floor, and a click there is a click on her); readerTalk: where Juno stands to talk to her
     walk: [[6, 156, 52, 156, 52, 170, 91, 170, 91, 163, 93, 163, 93, 170, 118, 170, 118, 156, 314, 156, 318, 176, 2, 176]], hatch: [22, 166], edge: [222, 162], reader: [92, 164], readerTalk: [124, 165],
-    hatchRect: [4, 114, 28, 40], ringsRect: [0, 0, 320, 22], placeRect: [192, 100, 58, 50], screenRect: [110, 33, 50, 31], noodlesRect: [96, 49, 9, 57], droneRect: [284, 98, 26, 18],
+    hatchRect: [4, 114, 28, 40], ringsRect: [0, 0, 320, 22], placeRect: [192, 100, 58, 50], screenRect: [110, 33, 50, 31], noodlesRect: [96, 49, 9, 57], droneRect: [288, 102, 13, 12],
   },
   // sitting on the roof, the view from their place (Chapter 2, Monday): Teo at Juno's right, his picture's top left (dach_teo)
   dach_sitzen: { teo: [109, 106] },
@@ -334,7 +339,8 @@ Nagiwa.at = {
   // stands on walkable floor), the desk a prop drawn over Sable; the curtain is on the left side wall, so its shape is the wall's trapezoid
   sable_booth: {
     walk: [[16, 142, 156, 142, 156, 130, 164, 130, 164, 142, 300, 142, 316, 178, 4, 178]], arrive: [38, 160], door: [20, 150], front: [118, 158], sable: [160, 130], cage: [270, 152],
-    curtainPoly: [6, 69, 28, 71, 28, 128, 6, 136], pricesRect: [196, 62, 74, 25], screensRect: [120, 79, 28, 34], birdRect: [272, 70, 28, 36],
+    curtainPoly: [6, 69, 28, 71, 28, 128, 6, 136], pricesRect: [196, 62, 74, 25], screensPoly: [124, 79, 146, 79, 146, 95, 148, 95, 148, 113, 120, 113, 120, 95, 124, 95],
+    birdPoly: [275, 70, 297, 70, 300, 74, 300, 106, 272, 106, 272, 74],
     props: [{ id: "desk", image: "sable_booth_desk", at: [112, 76], anchor: [0, 0], baseline: 141 }],
   },
   // looking from the window at the back wall (as CAM 07V): Okonkwo behind the counter (his bust stands on the walk area's edge, drawn over
@@ -343,7 +349,7 @@ Nagiwa.at = {
   // stands on walkable floor, as the Rain Reader on the roof)
   okonkwo_shop: {
     walk: [[10, 130, 164, 130, 164, 114, 168, 114, 168, 130, 310, 130, 316, 176, 4, 176]], arrive: [30, 150], door: [16, 136], front: [158, 140], okonkwo: [166, 116], shelves: [124, 138],
-    doorRect: [4, 32, 28, 90], shelvesRect: [102, 32, 112, 50], counterRect: [108, 90, 126, 34], photoRect: [222, 50, 18, 16],
+    doorPoly: [6, 34, 31, 40, 31, 113, 6, 122], shelvesRect: [102, 32, 112, 50], counterRect: [108, 90, 126, 34], photoRect: [222, 50, 18, 16],
     props: [{ id: "counter", image: "okonkwo_shop_counter", at: [171, 125] }],
   },
   // LUCKY STATIC (art/rooms/lucky_static.map.js, game/rooms/lucky_static.layout.js). The stools stand in front of the counter: the
@@ -386,5 +392,5 @@ Nagiwa.at.cam07 = (() => {
 })();
 Nagiwa.at.cam07v = (() => {
   const O = Nagiwa.at.okonkwo_shop;
-  return { exposure: 1.3, okonkwo: O.okonkwo, mic: O.front, safeRect: [200, 68, 32, 24], shelvesRect: O.shelvesRect, photoRect: O.photoRect };
+  return { exposure: 1.3, okonkwo: O.okonkwo, mic: O.front, safePoly: [203, 68, 223, 68, 229, 80, 229, 89, 200, 89, 200, 80], shelvesRect: O.shelvesRect, photoRect: O.photoRect };
 })();

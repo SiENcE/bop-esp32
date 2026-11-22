@@ -30,6 +30,9 @@ const MEASURE = () => {
     const box = Cutaway.scene.propBox(p); if (!box) continue;
     Cutaway.assets.draw(m, p.image, box[0] + (p.flip ? box[2] - 1 : 0), box[1], { anchor: [p.flip ? box[2] - 1 : 0, 0], frame: 0, flip: p.flip });
   }
+  // what hangs over the people hides the floor under it too (a room from above: the noodle bar's awning, the 24-hour shop's canopy)
+  const fore = (r.foreground ?? []).filter((f) => f.image && f.at && Cutaway.state.test(f.if));
+  for (const f of fore) Cutaway.assets.draw(m, f.image, f.at[0], f.at[1], { anchor: [0, 0], frame: 0 });
   const hidden = m.getImageData(0, 0, W, H).data;
   const stat = Object.fromEntries(hs.map((h) => [h.id, { shape: h.def.poly ? "poly" : h.def.rect ? "rect" : "box", area: 0, floor: 0, under: 0 }]));
   const order = (h, i) => (h.def.z ?? 0) * 1e4 + i;
@@ -49,7 +52,8 @@ const MEASURE = () => {
   const big = W > 320 || H > 180, o = big ? { x: 0, y: 0 } : cam;
   const c = document.createElement("canvas"); c.width = big ? W : 320; c.height = big ? H : 180;
   const g = c.getContext("2d");
-  if (big) Cutaway.assets.draw(g, r.background, 0, 0, { anchor: [0, 0], frame: 0 }); else g.drawImage(Cutaway.display.buffer, 0, 0);
+  if (big) { Cutaway.assets.draw(g, r.background, 0, 0, { anchor: [0, 0], frame: 0 }); for (const f of fore) Cutaway.assets.draw(g, f.image, f.at[0], f.at[1], { anchor: [0, 0], frame: 0 }); }
+  else g.drawImage(Cutaway.display.buffer, 0, 0);
   for (const [x, y, k] of marks) { g.fillStyle = k ? "rgba(255,230,60,0.45)" : "rgba(255,40,40,0.55)"; g.fillRect(x - o.x, y - o.y, 1, 1); }
   g.strokeStyle = "#ffa03a"; g.lineWidth = 1;
   for (const h of hs) { g.beginPath(); h.poly.forEach((q, i) => g[i ? "lineTo" : "moveTo"](q.x - o.x + 0.5, q.y - o.y + 0.5)); g.closePath(); g.stroke(); }
@@ -74,7 +78,7 @@ try {
     const res = await chrome.ev(`(${MEASURE.toString()})()`);
     writeFileSync(`${OUT}/${id}.png`, Buffer.from(res.png.split(",")[1], "base64"));
     const rows = Object.entries(res.hs);
-    lines.push(`${id.padEnd(16)} floor seen ${String(res.seen).padStart(6)}, taken from clicks ${String(res.taken).padStart(5)} (${(res.seen ? (100 * res.taken) / res.seen : 0).toFixed(1).padStart(4)}%)   ${rows.filter(([, s]) => s.shape === "rect").length} rect, ${rows.filter(([, s]) => s.shape === "poly").length} poly, ${rows.filter(([, s]) => s.shape === "box").length} box`);
+    lines.push(`${id.padEnd(16)} floor seen ${String(res.seen).padStart(6)}, taken from clicks ${String(res.taken).padStart(5)} (${(res.seen ? (100 * res.taken) / res.seen : 0).toFixed(1).padStart(4)}%)   ${rows.filter(([, s]) => s.shape === "rect").length} rect, ${rows.filter(([, s]) => s.shape === "poly").length} poly, ${rows.filter(([, s]) => s.shape === "box").length} box${rows.some(([, s]) => s.shape === "rect") ? ` (rects: ${rows.filter(([, s]) => s.shape === "rect").map(([h]) => h).join(", ")})` : ""}`);
     for (const [h, s] of rows.sort((a, b) => b[1].floor - a[1].floor)) {
       if (!s.floor && s.under < s.area * 0.25) continue;
       lines.push(`    ${h.padEnd(18)} ${s.shape.padEnd(4)} area ${String(s.area).padStart(6)}, on seen floor ${String(s.floor).padStart(5)}${s.under ? `, under another hotspot ${s.under} (${Math.round((100 * s.under) / Math.max(1, s.area))}%)` : ""}`);

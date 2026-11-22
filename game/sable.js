@@ -116,7 +116,7 @@ Cutaway.room("sable_booth", { name: "Sables Bude", background: "sable_booth_bg",
   hotspots: {
     curtain: { name: "Vorhang", poly: AB.curtainPoly, walkTo: AB.door, face: "nw", use: [{ goto: "drain_market", at: AM.curtain, face: "up" }] },
     prices: { name: "Preisliste", rect: AB.pricesRect, walkTo: AB.front, face: "ne", look: ["NAMES 50. ADDRESSES 80. SECRETS: ASK.", "Ich hab schon teurer gekauft. Und schon billiger verkauft."] },
-    screens: { name: "Bildschirme", rect: AB.screensRect, walkTo: AB.front, face: "nw", look: "Sables Bildschirme. Ich schau nicht genauer hin. Das kostet bestimmt auch." },
-    bird: { name: "Vogel", rect: AB.birdRect, walkTo: AB.cage, face: "ne", look: "Im Käfig sitzt ein Vogel aus Draht. Er singt nicht, und Sable sagt, das ist der Preis." },
+    screens: { name: "Bildschirme", poly: AB.screensPoly, walkTo: AB.front, face: "nw", look: "Sables Bildschirme. Ich schau nicht genauer hin. Das kostet bestimmt auch." },
+    bird: { name: "Vogel", poly: AB.birdPoly, walkTo: AB.cage, face: "ne", look: "Im Käfig sitzt ein Vogel aus Draht. Er singt nicht, und Sable sagt, das ist der Preis." },
   } });
 })();

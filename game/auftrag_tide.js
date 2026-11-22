@@ -98,7 +98,7 @@ Cutaway.routine("okonkwo_safe", [{ day: [2, 3], from: "01:00", to: "01:15", if: 
 Nagiwa.camRoom("cam07v", { background: undefined, color: Nagiwa.PHOSPHOR[0], mic: { at: AV.mic, clear: 40, lost: 150 },
   post: [{ exposure: AV.exposure }, ...Nagiwa.FEED_POST],
   props: [{ id: "shop", image: "okonkwo_shop_bg", at: [0, 0], anchor: [0, 0], baseline: -1000 }, ...AO.props], hotspots: {
-  safe: { name: "Kasse", rect: AV.safeRect, z: 1, look: ["Der Tresor unter der Theke hängt an der Kasse.", "Und ihr Kundendisplay zeigt genau zu mir."] },
+  safe: { name: "Kasse", poly: AV.safePoly, z: 1, look: ["Der Tresor unter der Theke hängt an der Kasse.", "Und ihr Kundendisplay zeigt genau zu mir."] },
   shelves: { name: "Regale", rect: AV.shelvesRect, look: "Da stehen Reis, Batterien und Zigaretten, und ein Foto, das ich von hier nicht erkenne." },
   rewind: { name: "Puffer", z: 5, if: ["day<4", "time>=01:15", "!cache_note_safe_code", "!k1b"], use: [{ rewind: "01:00" }, ...READ, { live: true }] },   // (the buffer rewound: game/puffer.js)
 } });
@@ -145,7 +145,7 @@ Nagiwa.talkTree("okonkwo", [
 Cutaway.room("okonkwo_shop", { name: "Okonkwos Laden", background: "okonkwo_shop_bg", walk: AO.walk, props: AO.props,
   ambience: ["fridge_hum"], music: { theme: "juno", intensity: 0.3 },
   hotspots: {
-    door: { name: "Tür", rect: AO.doorRect, walkTo: AO.door, face: "sw", use: [{ goto: "jade_row", at: AJ.shop, face: "se" }] },
+    door: { name: "Tür", poly: AO.doorPoly, walkTo: AO.door, face: "sw", use: [{ goto: "jade_row", at: AJ.shop, face: "se" }] },
     shelves: { name: "Regale", rect: AO.shelvesRect, walkTo: AO.shelves, face: "ne", look: "Reis, Batterien und Zigaretten stehen in Reihen, alles mit Preis, alles auf Papier." },
     counter: { name: "Theke", rect: AO.counterRect, walkTo: AO.front, face: "ne", look: [{ if: "k1b=sold", then: ["Unter der Theke ist der Tresor, und den Code hab ich verkauft. Er grüßt mich trotzdem."], else: ["Unter der Theke ist der Tresor. Ob er weiß, dass ich's weiß? Nein."] }] },
     photo: { name: "Foto", rect: AO.photoRect, walkTo: AO.front, face: "ne", look: "Eine Familie steht am Strand, und hinter ihnen ist die alte Stadt noch trocken." },

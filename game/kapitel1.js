@@ -245,7 +245,7 @@ Cutaway.room("gasse", { name: "Die Gasse", background: "gasse_bg", size: /** @ty
       look: ["Das Flutdenkmal ist eine Frau, die bis an die Knie im Wasser steht.", "Sie hält ein kleines Boot in den Händen.", "Die Stange daneben zeigt, wie hoch es stand, weit über ihrem Kopf.",
         "Unten stehen die Namen, und der Sockel ist zu klein für alle.", "Und jeden Abend setzt jemand Papierboote mit Kerzen davor."] },
     // the padlocks on the railing (the user's wish: clickable, Juno or EVI say something)
-    locks: { name: "Schlösser", rect: AG.locksRect, walkTo: AG.water, face: "se", z: 1,
+    locks: { name: "Schlösser", poly: AG.locksPoly, walkTo: AG.water, face: "se", z: 1,
       look: ["Am Geländer hängen Schlösser, und auf jedem stehen zwei Namen in Edding."],
       use: ["Die Schlüssel liegen da unten. Bei der alten Stadt.", { evi: "verwirrt" }, { say: "evi", text: "Dann kriegt die keiner mehr auf. Ist das der Plan?" }, "Das ist der Plan."] },
     ad: { name: "Werbung", poly: AG.adPoly, walkTo: AG.ad, face: "nw", look: ["Die Werbung zeigt Kiemen, Schulden und ein Spiel.", "Alle drei Sekunden kommt was anderes, das ich nicht brauche."] },
