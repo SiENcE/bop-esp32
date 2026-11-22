@@ -1,105 +1,23 @@
 # Plan: Glass Sister on Cutaway.js
 
-Status (2026-11-22): **H5 (Chapter 2) is done.** The user played it through and decided what `docs/kapitel2-design.md` §14 left open (story §10h, 2026-11-21): the contact at 03:15 is BECKEN 3, the prices, the camera numbers and the door code 4719 stay, the nameless stay nameless, the voice cards of Lantern, Pike, Frau Imai and Frau Haldane are decided, the way home stays a card on black for now. From the playthrough: Sable names Pike too (`know_pike=ratz` or `know_pike=sable`, its own click path), and CAM 51's people are painted. The red eye of the landing's camera has been out from Monday since 2026-11-17. Checks (2026-11-22): sh tools/check.sh: ALL PASSED (validate 0 errors, 11 warnings; doc-lint 0 errors; the prologue 78612 states; Chapter 1 every thread; Chapter 2 main 215148, stick 93050, lantern 271112, haldane 104272 states and the runs of the shop, Varga, Tide and Frau Imai; every click path: no soft-locks, every state with a hint); sh tools/handoff.sh: 3 acts, 13 runs, 0 errors, 20 warnings. Stage 2 of the checks (the solver across the chapter line) is not part of H5 (the user, 2026-11-21): it is engine work C15, before H6. Next: C15, then H6 (Chapter 3 "Lull": its design first). Before that (2026-11-20): **H5 (Chapter 2) was under way:** `docs/kapitel2-design.md` (three evenings, the main thread, decision 2, the threads Chapter 1 hands on, places, figures, the chain, hints; story §10h). Step 1, its frame on blocks, plays (`game/kapitel2.js`, `game/kapitel2_ende.js`): the act `kapitel2` with its `keep` and `leave`, game days 5 to 7, Chapter 1 going on into it, the wordless way home as a placeholder and EVI's fixed scene, Teo's visit on Monday, the clock at 00:45 (so far asking for decision 2 only: Vesper or keeping it), the end as a chain to "Kapitel 3: Lull"; the engine begins an act on a later day without replaying earlier days' moments (Cutaway.js 9804188). Step 2, the main thread on blocks, piece by piece: the stick (Lantern's look into the dryer), Ines' flat (the code in CAM 24, CAM 25, the Civic Rest file, EVI learns what she is) the forgery with the clip editor's new tool PRÜFEN (`game/pruefen.js`, also the end's last check against the protocols) and finding Lantern (the hijacked screen, the half repair and the cable, Lantern's hide and talk, the stick given to him) are built (2026-11-15). The way to Lantern is rebuilt (the user's decision, 2026-11-16, kapitel2-design §3.5) and reviewed: the hook pulls the raft DATA 1C/GB to the canal's edge on the Drain Market, Pike (Lantern's helper, the heron) wants the output stage Ratz gives Juno for her pass, the ride out through the drowned forest and the arrival at Lantern's caravan on its pontoon are two painted stages seen from the side with Juno standing on the raft, a melody and the swamp's sounds of their own; Ratz's lock is gone. Decision 2's five ways are built (2026-11-16), and the Quiet comes closer (2026-11-17, `game/kapitel2_quiet.js`, its leader and his men painted in `art/characters/quiet.px.js`, their white taking no light: the engine's `lit`): the shadow before Juno's house from 19:00 to 23:00, three on Monday, the man at dryer 6 in the laundromat and in CAM 23, CAM 07 and CAM 14 going dark in GLASS, the landing camera's red eye out, `led_quiet` on Pike's raft. The clinic is built and painted (2026-11-17, `game/kapitel2_klinik.js`, the room `klinik`, `art/characters/klinik.px.js`): Marit Holm, the nurse at the intake (her card in `docs/dialog-style-guide.md` §6), comes to her night shift in CAM 21 at seven and looks back twice; through the gate at the end of Jade Row the clinic from the inside, the intake from seven (a false name, Lull offered, the hood up) and what she says of Dr. Calder by the day, a second way to `know_flat`. What Chapter 1 leaves behind (kapitel2-design §5, `game/kapitel2_folgen.js`) plays and is painted (2026-11-17/18): WREN deleted or the Kassenbuch's line, Varga's man at the door, Kessler begging on the Drain Market, Bao's empty corner and his bandage, and on the places themselves, on the user's approved blocks, the planks across Okonkwo's shop with its windows dark (Jade Row painted again boarded up, only what differs laid over it) and in CAM 07V, `WHO TALKED?` and `GLASSER LIES` in red, someone else at Kessler's machine in CAM 03, the bowl at Ines' place in CAM 22, the police tape in CAM 30 and the paper boat with `I.` at the monument. On 2026-11-18 SUMP RUNNER, the arcade cabinet in the Wohnblock Lerche's hall, became playable on blocks (`game/sump_runner.js`: Motte's game, in turns, free, its best run a view), and was painted on them the same day (`art/ui/sump_runner.px.js`). The same day the Wohnblock Lerche's landing and hall and Ines' flat with its balcony were painted on their approved blocks, with the look over the railing (`look_balkon`); Fischermann Street was painted on 2026-11-19 (full, neon, dirty: `art/rooms/weg1.px.js`, its over layer `weg1_over`, its lamps the runtime light, what moves as parts, its figures painted), the 24-hour shop was painted the same day (`art/kit/shop24.kit.px.js`, its window onto the street, the fridges under COLD DRINKS, the stocked shelves); the shop's side thread (who watches the shop, design §6.5, with `cam26`) and the street's life (§7) were designed the same day, and their new pieces went to blocks (the shop's camera, the robot's dock, the bin of tins; on the street the people and the robot as sprites of their own, the second sheep, a delivery drone, the queue and passers-by reused from the Drain Market, the fish market's grating). The user approved those blocks the same day, and the thread was built on them (`game/kapitel2_laden.js`: the robot's reset links CAM 26, its archive gives the clip, MONTIEREN wakes in the clip editor, the choice at the sheep or Sable's, the night after it; the street's cook, the grating's voices; its own solver run and click path). Since then (2026-11-19/20): the man in white fenced off on Kowalski Street, the buffers and archives spooling visibly (`game/puffer.js`), EVI's hints by the room shown, Ines' flat found by the clinic and the Civic Rest notice on 4B, Lantern's ten seconds over the radio and recorded by EVI, the swamp found under its noise with PRÜFEN laying the two pieces over each other (`game/kapitel2_rauschen.js`), Ratz naming Pike and Juno asking Pike until he gives in (the cable is gone), the end's broadcast at 01:00 over the whole screen (`game/kapitel2_sendung.js`), and every talk of Chapters 1 and 2 reviewed with the user so that Juno's choices sound like talk (`docs/dialog-style-guide.md` §4 E). Next: the user plays Chapter 2 through and decides what is open (`docs/kapitel2-design.md` §14: the way home, the contact at 03:15, names, prices, the door code), the camera's red light on the 14th floor as a block, then the full checks. Before that (2026-11-13): **H0, H1, H1c, H2, H2c and H2b done; H3 under way; H4 (Chapter 1) plays whole and is painted (2026-11-13: every room, camera, figure, close-up and item of the chapter; nothing comes from `art/mock/` any more, its blocks and their atlas are gone; each piece went through blocks and the user's choice first, `docs/kapitel1-design.md` lists the choices): the prologue goes on into it, its three evenings with jobs A, B and C, the side stories (the roof, the newspaper war, Frau Imai, the white carriers, Motte's lessons, Vesper), the life around them (Teo, Bao, Mei in LUCKY STATIC, Frau Haldane, NETZ), and its end in cam31 painted (`art/cams/cam31.px.js`, `game/kapitel1_ende.js`: the murder in two variants, the setting Gewalt on the page Inhalt).** The intro "Die letzte Schicht" plays whole, from the float over the sea to the ride down in the lift, then the title screen (about 1:45; approved 2026-11-05). The prologue plays through steps
-0a–15 in the new scale: the flat, the deck with EVI, the feeds (cam04's people at their true size), the 14th
-floor's landing `kessel_14` (Frau Haldane asleep through her open door, the note war, Motte on his bench
-with his first dialogue, the look down the stairwell: the first top-down view, `look_shaft`) and the lobby
-`kessel_lobby` (the rent notice: `rent_notice`) and out into Kowalski Street, painted and baked from its map
-(`art/kit/kowalski.kit.px.js`, 416 px wide, it scrolls; `docs/rooms/kowalski_x3.png`):
-LUCKY STATIC, the half-broken ad screen, the noodle machine with its tired face, Bao's cart and umbrella (see-through
-where it hides someone: the engine's `seeThrough`), the alley shut; the cart ends the test section. Bao is painted
-(head A, `art/characters/bao.px.js`) behind his cart with step 16 ("Wie immer? Ich
-schreib's an.", paying cash with `bao_paid`, eating: `soup_eaten`); the menu screen shows the street whole as a still. Steps 17-18 follow it: the broken screen
-stutters, the eye in its static turns to Juno, JUNO. over the whole screen with the stinger "witness", Bao saw
-nothing, EVI: "Das war nicht ich. Ehrlich.", the card for Chapter 1 (`docs/rooms/kowalski_juno_x3.png`). **The
-prologue plays from the flat to its end.** The intro "Die letzte Schicht" (kapitel0-design §5) is decided as a storyboard in blocks
-(`art/test/intro_blocks.px.js`): one slow
-float over the lit sea to the tower and in through its green window, the hall, the ride down without words; it plays
-on the first start only (and from the menu) and ends on the title screen with the logo, which comes on every start.
-The deck keeps its CRT and mouse. Painting it: the opening float (A1, A2), the tower (C, `game/intro_tower.js`) the observation hall (shot 1, `art/rooms/hall.map.js`, `game/intro_hall.js`) Juno at her desk (shot 2, `art/intro/desk.px.js`, `game/intro_desk.js`), the announcement (3) and the screens going out (4) play; still to come: her words on black (T), the ride down (D), today (6) and the logo (7) (`game/intro.js` draws it in
-perspective, the painted parts in `art/intro/float.px.js` -> `assets/intro.js`; `docs/rooms/intro_float_a2_x3.png`), as the sequence "intro": on the first start before the splash, and from the menu ("Intro ansehen").
-The engine's version is in `lib/cutaway/VERSION.txt`.
+Status (2026-11-22):
 
-The game's connections can be looked at (2026-11-08): `sh tools/graph.sh [prolog | main | <thread>]` (the engine's
-`graph.mjs` and `graph.html`) searches as the checks do and watches every move: the puzzle dependency chart (steps, the
-facts they need and bring about, the winning way numbered) and the state budget (how many times more states each flag,
-item or once-mark makes). The editor shows it too (the tab Connections, with the studio's tasks "graph: …"): a step opens its
-hotspot with the script in Things, a fact lists every place that sets or asks it, and Things shows a hotspot's steps. Next, if
-wanted: a timetable of the evenings (who is where at which tick), the city's map with the cameras, the hints over the chart.
-Rooms in the editor (2026-11-08): the engine's tab Map (every room, its exits and script warps, unreachable and broken ways) and
-the game's tab Iso (`game/editor/iso.js`): a street-mode room's map edited in full over its picture (every part of the format
-drawn, moved, deleted, walls with their openings renumbered, the stairs and their hole, the floor painted, the room resized,
-every other key as written), saved back value by value and baked from there, the Room tab of a baked room warning that its shapes come from
-the bake; "Where from?" on a pixel opens the kit piece or map line that painted it (the bake now records it). Painting pixels
-over a baked background was dropped (the user's decision): the art stays code, changed in the map and the kit.
+- **Done:** H0, H1, H1c, H2, H2b, H2c; H3 (the prologue solves and plays from the title screen); H4 (Chapter 1, painted, every thread
+  solved alone); **H5 (Chapter 2 "Aufnahme")**, played through by the user, his decisions in `docs/story.md` §10h. After the review of
+  2026-11-22 (`docs/review.md`, decisions in story §10j): the secret lies less open after Chapter 1, Sable's talk is one tree
+  (`game/sable.js`), Teo's talks build on each other and his pump hall is a camera of its own (CAM 33, `game/kapitel2_teo.js`), the
+  Kassenbuch has its hidden weights (story §5, `game/gewicht.js`), the flag `traeger` is gone. Engine: E-a, E-b, E-c.
+- **Open:** E-d (C12, C13: dialogue v2 and the node editor), E-e, C14 (the controller, before R0), R0 (the demo build), C15 (the solver
+  across the chapter line, before H6). From the review: Chapter 2's remaining patches on Chapter 1's rooms (§4.2, to be settled when
+  Chapter 3 first touches them) and the hotspots that are rects but not rect things (§4.5).
+- **Next:** C15, then H6 (Chapter 3 "Lull", its design first).
+- **Checks:** the last full run (2026-11-22): `sh tools/check.sh` ALL PASSED (validate 0 errors; the prologue 78612 states; Chapter 1
+  every thread; Chapter 2 main 215148, stick 93050, lantern 271112, haldane 104272 and the runs of the shop, Varga, Tide and Frau Imai;
+  every click path; no soft-locks, every state with a hint); `sh tools/handoff.sh` 0 errors, 20 warnings. Since then Chapter 1's states
+  have tripled (`teo_talk`: its main way 115984) and Chapter 2 has the thread `teo` (22074 states); a full run is due before H6.
 
-What was added on 2026-11-04 (in order):
-- every text through i18n (`Nagiwa.t`, the engine's `i18n.declare`); a Chinese layout test
-  (`docs/ideas/chinesisch.md`);
-- H2b's mockup F (`docs/mockups/mock_f_deck_*`), the old photo as the deck's wallpaper, animated
-  (`art/ui/deck_wallpaper.px.js`), its music "memory" (`game/music.js`; engine: `bend`, `vibrato.rise`, the
-  `hall` send);
-- H1c: the height test (`docs/rooms/iso_height_test_x2.png`, 30 px per meter), rooms as maps baked with
-  their light (`art/lib/isomap.js`, `art/lib/isokit.js`, `art/kit/`, `docs/ideas/iso-tiles.md`), Juno at
-  50 px with face B (`art/characters/juno.px.js`), the old art in `art/old/`;
-- H2b: the deck (`game/deck.js`: desktop, GLASS, CHAT, CACHE with the clip editor, BUCH, KONTO, NETZ, RADIO,
-  MÜLL, the photo), EVI (`game/evi.js`: her voice in its own place, the hints, faces, pointing, the boot,
-  message cards); engine: `buttons: false`, `{ hint: true }`, `lineBox`, `hints.configure({ by })`, view
-  flags for the solver (`state.view`).
-
-Earlier status (2026-11-03): design done; H0 done.
-
-H0 (the setup) consists of:
-- the engine copy in `lib/cutaway/` (`sh tools/sync-engine.sh`, Cutaway.js 0.1.0, commit 39d7fd7);
-- `index.html`, `game/game.js`, `studio.json`;
-- `tools/build_art.sh` and a test street (`art/test/street.px.js`, the iso mockup without its interface).
-
-Juno walks in the test street on a 2:1 walk area, with four hotspots. Validate reports 0 errors.
-
-**H2 (the vertical slice) plays** (commit 6513b12):
-- What's in it: prologue steps 0–11, with the deck, CAM 03 and CAM 04, Kessler's evening, choice P1 and Sable's offer.
-- Checks: validate gives 0 errors, and the solver finds the way in 16 moves with no soft-locks.
-- Since done: the flat (art/rooms/flat.px.js: 8 props with front lines, runtime light) and the hints (11, each in three steps; solve --full confirms every state has one).
-- Missing:
-  - the sounds (tag, link, cache);
-  - Juno with the hood down indoors (style guide §6).
-
-**H1 (Juno) done:** `art/characters/juno.px.js` holds SE and NE views, each with idle (4 frames), walk (8 x 100 ms) and talk (2), plus the feed figure (idle 2, walk 6). The lineup is `docs/characters/juno_lineup_x4.png`. She walks in the test street with diagonal facings at 16x8 px/s.
-
-H1 is still missing the shared art helpers: `art/lib/iso.js` and `art/lib/feed.js`, taken from the mockups.
-
-**E-a, E-b and E-c are built in the engine** (uncommitted in `B:\Github_my\cutaway\`; 449 tests pass). E-c consists of:
-- C7: post-effects, `src/post.js`;
-- C8: a room's `mic`, `lines` and `label`;
-- C9: `Cutaway.scene.boxes()`;
-- C10: `Cutaway.settings.define` and `setting:` conditions.
-
-C11, the tool updates, went in with each feature.
-
-E-a and E-b:
-
-| Item | What was built |
-|---|---|
-| C1 | number conditions |
-| C2 | diagonal facings |
-| C3 | a prop's `front` line |
-| C4 | game time, `src/time.js` |
-| C5 | routines and moments, with `moment:` and `seen:` |
-| C6 | watched rooms (`observe: true`) |
-
-The solver and `play.mjs` wait as a move ("wait": on to the next change).
-
-Compatibility: the demo validates, solves and plays through. In The Loonies the new code paths are never taken (no comparisons, diagonal views, front lines, time or watched rooms in its data). A bounded solve of its Act 1 gives the same states with the old and the new engine. A full headless playthrough (`play.mjs --max 1000000`) can't finish on this machine within a tool run's 2-hour limit: its full-game solve alone takes longer. Run it by hand in The Loonies after its next `sync-engine.sh` (`playthrough.bat`, or `node tools/playthrough.mjs`).
-
-| Done | File |
-|---|---|
-| style | `docs/style-guide.md` |
-| story | `docs/story.md` (German) |
-| prologue design | `docs/kapitel0-design.md` |
-| Chapter 1 design | `docs/kapitel1-design.md` |
-
-Nothing is built yet. This plan says what the engine needs, what stays in the game, and in which
-order to build it. The model is the Loonies' plan (`B:\Github_my\the_goonies\docs\PLAN-engine-and-game.md`).
+What each step built and how it was decided is in the commits and the chapter designs (`docs/kapitel1-design.md`,
+`docs/kapitel2-design.md`).
 
 ## 0. Ground rules
 
