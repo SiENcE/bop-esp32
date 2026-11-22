@@ -866,3 +866,16 @@ Die Vorschläge aus derselben Prüfung, vom Nutzer übernommen (2026-11-14; Einz
   Hüllenlicht oder Bildschirmhimmel. Um den Turm geht ein offener Schacht durch alle Ringe bis zum Licht der Krone.
 - **In den Ringen 8 bis 6** leben auch Leute aus dem Neunten, die sich freigearbeitet haben.
 - **Schlafstationen** gibt es nur bis hinauf zum Fünften, darüber keine.
+
+## 10j. Entscheidungen (2026-11-22): nach dem Review
+
+Aus `docs/review.md` (ein Review von Story und Umsetzung nach Kapitel 2), vom Nutzer entschieden am 2026-11-22:
+
+- **Das Finale bleibt im Ruhekern,** in der Serverkathedrale mit dem Stuhl (§7, Kapitel 6); die Beobachtungshalle als Ort des Finales
+  ist gestrichen.
+- **Der Weg zu Lantern und Pike bleibt, wie er ist** (`kapitel2-design` §3.5), der Tausch um die Endstufe mit.
+- **Das Geheimnis liegt weniger offen** (§6: der Spieler soll es einen Schritt vor Juno erraten, nicht ein Kapitel): Ines sagt in
+  `cam31` nicht mehr „Sie schlafen nicht. Sie arbeiten.“, sondern „Es stimmt. Ich hab es dreimal nachgerechnet.“; EVIs Hinweis auf den
+  Takt sagt, wo man ihn findet (Motte zählt nachts etwas mit), nicht mehr, wer ihn hat; Frau Imai sagt nicht mehr, dass sie von oben
+  draufgeschaut hat, „als würde ich an einer Laterne hängen“. Was das Spiel zeigt, bleibt: Frau Haldanes Ecken, die Treppe aus CAM 18,
+  `UNKNOWN LINK`, der Takt bei Mottes Mutter.

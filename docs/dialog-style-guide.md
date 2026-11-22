@@ -357,8 +357,8 @@ Knapp und dienstlich, und sie hasst, was sie tut. Sie redet im Telegrammstil, wi
 Juno hört die beiden fast nur durchs Glass, also müssen wenige Sätze sie tragen. Ines: genau, ruhig, wissenschaftlich, und man hört, was
 sie weiß. Lantern: misstrauisch, vorsichtig, bricht Sätze ab. Für die großen Gespräche ab Kapitel 2 hat er seine eigene Karte (unten).
 
-> Ines: „Es stimmt. Sie schlafen nicht. Sie *arbeiten*.“\
-> Lantern: „Wenn das stimmt ...“
+> Lantern: „Wenn das stimmt ...“\
+> Ines: „Es stimmt. Ich hab es dreimal nachgerechnet.“
 
 ### Lantern: der Sender
 

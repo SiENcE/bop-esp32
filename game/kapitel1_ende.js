@@ -88,7 +88,7 @@ Cutaway.moment("ines_meeting", { room: "cam31", day: 4, from: "22:45", to: "23:3
   { walk: "lantern", to: A.lantern, face: "nw", free: true },
   { say: "ines", text: "Es ist alles drauf. Die Protokolle passen auf die Sekunde." },
   { say: "lantern", text: "Wenn das stimmt ..." },
-  { say: "ines", text: "Es stimmt. Sie schlafen nicht. Sie arbeiten." },
+  { say: "ines", text: "Es stimmt. Ich hab es dreimal nachgerechnet." },
   { set: "ines_gives" },
   "Sie gibt ihm was, eine Wallet.",
   { unset: "ines_gives" },

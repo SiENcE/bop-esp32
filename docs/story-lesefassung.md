@@ -300,7 +300,7 @@ NIEMAND. 14B.
 **Die Frau, die sich erinnert.** Im Chat schreibt Frau Imai: „Ich habe einen Mord gesehen. In einer Straße, in der ich nie war.“ Im
 LUCKY STATIC sitzt sie vor kaltem Tee, drei viel zu lange Finger an jeder Hand, den blassen Punkt hinter dem Ohr, und Juno erkennt sie
 aus der Schlange vor der Klinik. „Da ist eine Treppe, und auf den Stufen ist ein großer Fisch. Es regnet von links. Ein Mann fällt die
-Treppe hinunter … Das Komische ist, dass ich von oben draufgeschaut habe. Es war, als würde ich an einer Laterne hängen.“ Sie schläft
+Treppe hinunter, und ein anderer geht einfach weg.“ Sie schläft
 von drei bis sieben, vier Stunden Lull, wie alle hier. Die Treppe ist die am alten Fischmarkt, CAM 18, und im Archiv findet Juno den
 29. Oktober, 03:12: Es ist wirklich geschehen, genau von dieser Kamera aus gesehen, und den ganzen Fisch auf den Stufen sieht man nur
 von dort oben. Dann muss Juno ihr antworten: „Sie sind nicht verrückt.“, und Frau Imai traut sich nicht mehr zu schlafen, oder „Das
@@ -371,7 +371,7 @@ sonst Werbebildschirme für zehn Sekunden Wahrheit kapert.
 
 „Wenn das stimmt ...“
 
-„Es stimmt. Sie schlafen nicht. Sie *arbeiten*.“
+„Es stimmt. Ich hab es dreimal nachgerechnet.“
 
 Sie gibt ihm eine Daten-Wallet mit den verschlüsselten Protokollen. Ohne den Stick lässt sie sich nicht lesen. „Und der Schlüssel ...?“ Sie beugt sich zu ihm und flüstert, und nur das Mikro neben ihr hört es: „SUDS & SPIN. Trockner sechs, der kaputte. Sonst weiß es keiner.“
 
@@ -420,7 +420,7 @@ ersten vier Nächte lesen, wenn man weiß, was dahinter liegt.
 
 Lull schenkt nicht nur Schlaf. Während der Neunte schläft, leiht es sich seine Augen und spielt ihm die Kameras der Stadt vor, und der
 schlafende Verstand markiert, was falsch aussieht. Keine Maschine hat Juno ersetzt, ihre Nachbarn haben es getan, im Schlaf. Darum
-malt Frau Haldane um jedes Gesicht vier kleine Ecken, darum hat Frau Imai die Treppe von oben gesehen, als hinge sie an einer Laterne,
+malt Frau Haldane um jedes Gesicht vier kleine Ecken, darum hat Frau Imai die Treppe genau so geträumt, wie CAM 18 sie sieht,
 und darum pulsiert hinter jedem Ohr derselbe Takt, den Junos Implantat für CAM 31 braucht. Die automatische Auswertung, die sie
 damals abgelöst haben soll, hat es nie gegeben. Ihr gescheiterter Versuch sitzt in Junos Tasche und heißt EVI, gelernt aus Junos
 eigenen Klammern.

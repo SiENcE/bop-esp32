@@ -183,7 +183,6 @@ Cutaway.actor("imai", { name: "Frau Imai", color: "#c8d8b0", room: "lucky_static
     { if: ["imai_step=0", "!off_imai"], then: [
       "Die kenn ich. Die stand in der Schlange vor der Klinik.", "Hinter ihrem Ohr leuchtet der blasse Punkt.", { say: "imai", text: "Sie sind die Glasserin? Danke, dass Sie gekommen sind." }, { say: "imai", text: "Mir glaubt keiner. Ich glaube es ja selbst nicht." },
       { say: "imai", text: "Da ist eine Treppe, und auf den Stufen ist ein großer Fisch. Es regnet von links." }, { say: "imai", text: "Ein Mann fällt die Treppe hinunter, und ein anderer geht einfach weg." },
-      { say: "imai", text: "Das Komische ist, dass ich von oben draufgeschaut habe." }, { say: "imai", text: "Es war, als würde ich an einer Laterne hängen." },
       "Und wann war das?", { say: "imai", text: "Das war vor einer Woche, im Schlaf. Ich schlafe von drei bis sieben." }, { say: "imai", text: "Ich nehme vier Stunden Lull, wie alle hier." },
       { set: "imai_step", value: 1 }, "Eine Treppe mit einem Fisch darauf. Das ist CAM 18 am alten Fischmarkt.", "Das könnte ihre Treppe sein, und zu der Kamera hab ich noch Zugang."] },
     { if: "imai_step=1", then: [{ say: "imai", text: "Haben Sie die Treppe gefunden? Die mit dem großen Fisch auf den Stufen?" }] },
