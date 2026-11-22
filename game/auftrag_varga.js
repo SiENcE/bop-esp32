@@ -8,10 +8,7 @@
 "use strict";
 
 (function () {
-const A3 = Nagiwa.at.cam03, A15 = Nagiwa.at.cam15, AM = Nagiwa.at.drain_market, AB = Nagiwa.at.sable_booth;
-const S = (/** @type {string} */ text) => ({ say: "sable", text });
-// Sable is drawn from the front, lens over the left eye: the same picture for every facing, so the engine never mirrors it
-const every = (/** @type {string} */ anim) => ({ se: anim, sw: anim, ne: anim, nw: anim });
+const A3 = Nagiwa.at.cam03, A15 = Nagiwa.at.cam15;
 /** Kessler with the hood up (art/characters/feed_people.px.js): each facing drawn, so the engine never mirrors his light @param {string} p */
 const HOOD = (p) => ({ se: `${p}se`, sw: `${p}sw`, ne: `${p}ne`, nw: `${p}nw` });
 
@@ -58,68 +55,7 @@ Cutaway.dialog("k1a_warn", { main: { choices: [
   { text: "Noch nicht.", silent: true, goto: "end" },
 ] } });
 
-// ---- Sable sells access. The booth is behind a curtain on the Drain Market. Only a hotel Juno knows of can be asked for.
-Nagiwa.ledger.sable_kessler.what.swap = "Kesslers Schulden, gegen einen Code";
-Cutaway.actor("sable", { name: "Sable", color: "#ff4fd3", room: "sable_booth", at: AB.sable, facing: "sw",
-  costume: { idle: every("sable_sit"), walk: every("sable_sit"), talk: every("sable_talk") }, voice: { pitch: 56, range: 3, wave: "triangle", syllable: 80, speed: 0.95 },
-  look: ["Sable hat einen Mantel, eine Pfeife und eine Preisliste.", "Bei Sable hat alles einen Preis. Das ist das Ehrliche daran."],
-  talk: [S("Juno. Kaufst du, oder verkaufst du?"), { dialog: "sable" }] });
-// Chapter 2's decision 2: the clip sold to Sable at the price the main choice named (the four values of ledger_sable_ines)
-const SABLE_CLIP = [{ set: "e2", value: "sable" },
-  { if: "forgery_proven", then: [{ if: "k1a=warned", then: [{ ledger: "sable_ines", value: "proof_warned" }], else: [{ ledger: "sable_ines", value: "proof" }] }],
-    else: [{ if: "k1a=warned", then: [{ ledger: "sable_ines", value: "warned" }], else: [{ ledger: "sable_ines", value: "sold" }] }] },
-  S("Nett."), "Sable fragt nicht, wer sie war. Sable fragt nie.", "Wer sie kauft, sagt Sable auch nicht. Das kostet extra."];
-Cutaway.dialog("sable", {
-  main: [
-    { text: "„Hast du den Code für die Kamera im Morpheus? CAM 15.“", if: ["day<5", "varga_step", "!code_cam15"], goto: "code", then: [S("Achtzig. Oder was, das achtzig wert ist.")] },
-    // (Chapter 1's, where Varga's thread plays: in Chapter 2 its place is the 24-hour shop's clip, so no more than four show)
-    { text: "„Du hast Varga meinen Namen gegeben.“", if: "day<5", then: [S("Verkauft. Geben tu ich nichts."), "Für wie viel?", S("Das kostet extra.")] },
-    { text: "„Was verkaufst du sonst noch?“", then: [S("Steht an der Wand. Namen, Adressen."), "Und Geheimnisse?", S("Frag. Fragen kostet schon.")] },
-    // Chapter 2's decision 2 (kapitel2-design §3.6): Sable buys the clip and sells it on to Nagi·wa (the code above is Chapter 1's only)
-    { text: "„Ich hab die Aufnahme aus der alten Metro.“", if: ["day>4", "cache_clip_ines_death", "!e2", "!off_main"], goto: "clip",
-      then: [S("Man fragt danach. Zeig."), "Ines auf der Treppe. Bis er hochsieht.",
-        { if: "forgery_proven", then: ["Die im Glass ist gefälscht. Das kann ich zeigen.", S("Mit Beweis kostet's mehr. Auch beim Käufer.")] },
-        { if: "k1a=warned", then: [S("Varga redet. Tausend weniger.")] },
-        { if: "forgery_proven", then: [{ if: "k1a=warned", then: [S("3000.")], else: [S("4000.")] }],
-          else: [{ if: "k1a=warned", then: [S("2000.")], else: [S("3000.")] }] }] },
-    // the 24-hour shop's thread (kapitel2-design §6.5, game/kapitel2_laden.js): she buys the night's clip for the shop's chain
-    { text: "„Ich hab einen Clip aus einem 24h-Laden.“", if: ["day>4", "cache_clip_shop24", "!mont_clip_shop24", "!ledger_shop24", "!off_shop24"], goto: "shop24",
-      then: [S("Zeig."), "Der Mann mit dem Wagen, um halb drei. Und draußen schläft das Schaf, das auf den Laden aufpassen soll.", S("Die Kette zahlt für so was. Sechzig.")] },
-    { text: "Bis dann.", silent: true, goto: "end" },
-  ],
-  shop24: [
-    { text: "„Verkauft.“", goto: "end", then: [{ ledger: "shop24", value: "sold" }, S("Nett."), "Die Kette sieht jetzt beide. Den, der nimmt, und den, der schläft."] },
-    { text: "„Noch nicht.“", goto: "main", then: [S("Sechzig. Morgen vielleicht noch fünfzig.")] },
-  ],
-  clip: [
-    { text: "„Verkauft.“", if: "cache_clip_ines_cut", goto: "end", then: SABLE_CLIP },
-    // the whole clip: EVI asks first about the whisper in it (kapitel2-design §3.1)
-    { text: "„Verkauft.“", if: "!cache_clip_ines_cut", goto: "whisper",
-      then: [{ evi: "besorgt" }, { say: "evi", text: "Im Clip ist das Flüstern. Willst du, dass das jemand hört?" }] },
-    { text: "„Noch nicht.“", goto: "main", then: [S("Ich hab Zeit. Die Aufnahme nicht.")] },
-  ],
-  whisper: [
-    { text: "„Ja. Der Clip geht ganz raus.“", goto: "end", then: SABLE_CLIP },
-    { text: "„Nein. Das Flüstern schneid ich vorher raus.“", if: "!off_lantern", goto: "end",
-      then: [{ cache: "clip_ines_cut" }, { sfx: "glitch" }, "Ich schneid das Flüstern raus. Dann weiß keiner von der Sechs.", ...SABLE_CLIP] },
-    { text: "„Doch nicht.“", goto: "main", then: [S("Ich hab Zeit. Die Aufnahme nicht.")] },
-  ],
-  code: [
-    { text: "„Hier sind achtzig.“", if: "chits>=80", goto: "end", then: [{ inc: "chits", by: -80 }, { set: "code_cam15" }, S("Nett. Das Morpheus ändert ihn nie."), "CAM 15 steht jetzt auf dem Deck."] },
-    { text: "„Ich geb dir Kesslers Schulden für den Code.“", if: ["cache_note_kessler_debt", "!ledger_sable_kessler"], goto: "end", then: [{ ledger: "sable_kessler", value: "swap" }, { set: "code_cam15" }, S("Nett."), "Das landet auch im Kassenbuch. Alles."] },
-    { text: "„Das ist zu teuer.“", goto: "main", then: [S("Heute. Morgen auch.")] },
-  ],
-});
-const AK = Cutaway.room.get("drain_market").hotspots;
-AK.curtain = { name: "Vorhang", rect: AM.curtainRect, walkTo: AM.curtain, face: "down", look: "Hinter dem Vorhang riecht's nach Pfeife. Da sitzt Sable.", use: [{ goto: "sable_booth", at: AB.arrive, face: "se" }] };
-Cutaway.room("sable_booth", { name: "Sables Bude", background: "sable_booth_bg", walk: AB.walk, props: AB.props,
-  ambience: ["neon_buzz"], music: { theme: "juno", intensity: 0.4 },
-  hotspots: {
-    curtain: { name: "Vorhang", poly: AB.curtainPoly, walkTo: AB.door, face: "nw", use: [{ goto: "drain_market", at: AM.curtain, face: "up" }] },
-    prices: { name: "Preisliste", rect: AB.pricesRect, walkTo: AB.front, face: "ne", look: ["NAMES 50. ADDRESSES 80. SECRETS: ASK.", "Ich hab schon teurer gekauft. Und schon billiger verkauft."] },
-    screens: { name: "Bildschirme", rect: AB.screensRect, walkTo: AB.front, face: "nw", look: "Sables Bildschirme. Ich schau nicht genauer hin. Das kostet bestimmt auch." },
-    bird: { name: "Vogel", rect: AB.birdRect, walkTo: AB.cage, face: "ne", look: "Im Käfig sitzt ein Vogel aus Draht. Er singt nicht, und Sable sagt, das ist der Preis." },
-  } });
+// ---- Sable sells CAM 15's code (her booth and her talk: game/sable.js)
 
 // ---- the chat: what Varga wrote, what Juno can send (the place she found is her only way in: nothing to accept first)
 Object.assign(Nagiwa.contacts, { varga: { name: "G. VARGA", color: "#a0a0b8", status: "online", if: ["day>1", "day<5", "!off_varga"], unread: "!read_varga",

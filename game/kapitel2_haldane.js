@@ -46,22 +46,7 @@
         "Und sie wartet jeden Sonntag auf seinen Brief."] },
     } });
 
-  // ---- Sable (H2): a look into the archive, for chits or a clip. Her dialog (game/auftrag_varga.js) shows four in Chapter 2 at most:
-  // while Juno asks for the hostel, this option stands where "what else do you sell" stands (before the swamp's question)
-  const sable = /** @type {any} */ (Cutaway.dialog.get("sable")), other = sable.main.findIndex((/** @type {any} */ c) => c.text === "„Was verkaufst du sonst noch?“");
-  const was = sable.main[other].if;   // (the swamp's question stands there too: game/kapitel2_lantern.js)
-  sable.main[other].if = [was, { or: ["!haldane_ask", "link_cam51", "off_haldane"] }].filter(Boolean);
-  sable.main.splice(other, 0, { text: "„Hast du eine Kamera im Fünften? Im Wohnheim 5-Süd.“", if: ["haldane_ask", "!link_cam51", "!off_haldane"], goto: "cam51",
-    then: [{ say: "sable", text: "5-Süd. Nagi·was Wohnheim, Schlafsaal C hat eine Kamera." }, { say: "sable", text: "Live nicht. Ins Archiv lass ich dich." },
-      { say: "sable", text: "Hundertfünfzig. Oder einen Clip, roh. Was Echtes." }] });
-  sable.cam51 = [
-    { text: "„Hier sind hundertfünfzig.“", if: "chits>=150", goto: "end", then: [{ ledger: "sable_cam51", value: "paid" }, { set: "code_cam51" }, { set: "link_cam51" },
-      { say: "sable", text: "Nett." }, "CAM 51 steht jetzt auf dem Deck. Nur das Archiv, einen Monat zurück."] },
-    { text: "„Nimm dafür Kesslers Ring.“", if: { or: [["cache_clip_kessler_ring", "!anon_clip_kessler_ring"], "cache_clip_kessler_cut"] }, goto: "end",
-      then: [{ ledger: "sable_cam51", value: "ring" }, { set: "code_cam51" }, { set: "link_cam51" }, { say: "sable", text: "Den Ring will immer noch einer sehen. Nett." },
-        "Jetzt zieht Kessler seinen Ring noch mal ab. Für jemand, den ich nicht kenne.", "CAM 51 steht auf dem Deck. Nur das Archiv."] },
-    { text: "„Das ist mir zu teuer.“", goto: "main", then: [{ say: "sable", text: "Das Archiv wartet." }] },
-  ];
+  // ---- Sable (H2): a look into the archive, for chits or a clip, under her "Ich such was." (game/sable.js)
 
   // ---- at her door (H1, H4): from Sunday on she is awake and waits; she asks, and hears what Juno tells her
   const door = Cutaway.room.get("kessel_14").hotspots.haldane, talk = door.talk, look = door.look;

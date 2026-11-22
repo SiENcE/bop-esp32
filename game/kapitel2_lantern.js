@@ -202,15 +202,7 @@ const TREES = [
   { set: "know_pike", value: "ratz" },
 ];
 
-// ---- Sable knows it too (the user's wish, 2026-11-21: Juno is at the booth anyway, for Frau Haldane's son, and may tell of the swamp
-// there): for once for nothing. Her Chapter 2 dialog shows four at most, so this stands where "what else do you sell" stands, after the
-// hostel's question (game/kapitel2_haldane.js) while that one is open
-const sableTalk = /** @type {any} */ (Cutaway.dialog.get("sable")), sableOther = sableTalk.main.findIndex((/** @type {any} */ c) => c.text === "„Was verkaufst du sonst noch?“");
-const SABLE_SWAMP = ["day>4", "know_sumpf", "!know_pike", "!off_lantern", { or: ["!haldane_ask", "link_cam51", "off_haldane"] }];
-sableTalk.main[sableOther].if = { or: ["!know_sumpf", "know_pike", "off_lantern"] };
-sableTalk.main.splice(sableOther, 0, { text: "„Weißt du, wo hier Bäume im Wasser stehen?“", if: SABLE_SWAMP, then: [
-  "Mit grünen Lichtern dazwischen.", { say: "sable", text: "Draußen. Wo die Ringe aufhören." }, { say: "sable", text: "Pike fährt da raus. Das Datenfloß." },
-  { set: "know_pike", value: "sable" }, "Und was kostet das?", { say: "sable", text: "Das war gratis. Das nächste nicht." }] });
+// ---- Sable knows it too (the user's wish, 2026-11-21): under her "Ich such was.", for once for nothing (game/sable.js)
 
 // ---- L3b: Ratz has the output stage, and he gives it to Juno (never to the heron) for a copy of her old pass: his colony, the flaps in the
 // pipes under the Crown. Asked only once Pike has said what he wants (knowledge she lacks before)
