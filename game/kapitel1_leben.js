@@ -1,7 +1,9 @@
 // Nagiwa: the life around Chapter 1's jobs (docs/kapitel1-design.md §7): Teo's visit on Wednesday at 18:30, Motte's lessons, Bao, the stuttering ad screen.
 // Teo comes by on Wednesday evening with soup from Bao. The visit can't be missed: at 18:30 there is a knock wherever Juno is waiting,
-// she opens the door, Teo comes in, they talk, he goes, the door shuts, and afterwards she is back where she was. A scene without choices,
-// so it costs the solver nothing but its moment;
+// she opens the door, Teo comes in, they talk, he goes, the door shuts, and afterwards she is back where she was. Once in it Juno chooses
+// what she talks about with him before he goes (kapitel2-design §6.6, the user's wish 2026-11-22); Chapter 2 keeps it, and Teo goes on
+// from it on the roof on Monday:
+//   teo_talk      papa (their father) | essen (he stays to eat) | schicht (the double shifts): two of them bring the two closer
 // what Juno learns there (Teo is on Lull) other talks read from `moment:teo_visit`.
 "use strict";
 
@@ -23,6 +25,15 @@ Cutaway.actor("teo", { name: "Teo", color: "#ffa040",
 // the clock). The knock, Juno to her door, the door open (a prop shown for the scene), Teo in from the hallway, the talk, Teo out, the
 // door shut, and back where she was ({ remember_place } and { return_place }: a camera, or the deck with its window open).
 // Plain steps, so the editor's Schedule tab opens the scene as blocks and writes it back here.
+// once, before he goes: what Juno asks him about (teo_talk)
+Cutaway.dialog("teo_mittwoch", { main: { choices: [
+  { text: "„Denkst du noch an Papa?“", goto: "end", then: [{ set: "teo_talk", value: "papa" }, T("Jeden Tag. Ich arbeite ja da, wo er ..."),
+    T("Manchmal red ich mit ihm. Am Becken, wenn keiner guckt. Blöd, oder?"), "Nein.", T("Die Krake hat ihn gekannt. Die sagt, er hat beim Tauchen gesungen. Falsch, aber laut.")] },
+  { text: "„Bleib zum Essen. Nur fünf Minuten.“", goto: "end", then: [{ set: "teo_talk", value: "essen" }, T("Fünf Minuten."),
+    T("Mama hat die Brühe immer zu salzig gemacht."), "Bao auch.", T("Deswegen ess ich da."), "Aus fünf Minuten werden zehn."] },
+  { text: "„Wie sind die Doppelschichten wirklich?“", goto: "end", then: [{ set: "teo_talk", value: "schicht" }, T("Gut. Ehrlich."), "...",
+    T("Manchmal weiß ich nicht mehr, ob ich wach bin. Dann ist es auch egal."), T("Das war ein Witz, Ju.")] },
+] } });
 Cutaway.moment("teo_visit", { room: "deck", day: 2, from: "18:00", to: "18:30", if: "~never", unseen: [
   { remember_place: true },
   "Es klopft. Um die Zeit klopft nur einer.",
@@ -53,7 +64,9 @@ Cutaway.moment("teo_visit", { room: "deck", day: 2, from: "18:00", to: "18:30", 
   "Immer noch.",
   { say: "teo", text: "Du redest noch immer, als hätten sie dich gefeuert, weil du schlecht warst." },
   "...",
+  { dialog: "teo_mittwoch" },
   { say: "teo", text: "Iss. Ich muss los, meine Schicht fängt um acht an." },
+  { if: { or: ["teo_talk=papa", "teo_talk=essen"] }, then: ["Pass auf dich auf."] },
   { say: "teo", text: "Schlaf du auch mal, Ju." },
   { walk: "teo", to: AF.doorway, free: true },
   { place: "teo", room: null },

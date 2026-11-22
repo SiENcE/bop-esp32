@@ -201,7 +201,14 @@ Cutaway.moment("teo_monday", { room: "deck", day: 7, from: "18:00", to: "18:30",
   "Neben mir sitzt jemand. Zum ersten Mal seit Jahren.",
   T("Tinte sagt, ich zuck im Schlaf. Wie die anderen."),
   "Wer ist Tinte?",
-  T("Die Krake im Filterbecken. Die ist älter als ich und zählt alles."),
+  { if: "teo_talk=papa", then: [T("Die Krake im Filterbecken. Die, die Papa gekannt hat.")], else: [T("Die Krake im Filterbecken. Die ist älter als ich und zählt alles.")] },
+  // he goes on from what they talked about on Wednesday (teo_talk, kapitel2-design §6.6)
+  { if: "teo_talk=papa", then: [T("Ich hab ihm erzählt, dass du wieder Kameras machst. Am Becken."), "Und?", T("Er hätte gelacht. Und dann gesagt, du sollst was essen."),
+    T("Ich vermiss die beiden, Ju. Manchmal mehr, wenn ich wach bin.")] },
+  { if: "teo_talk=essen", then: [T("Das war schön am Mittwoch. Die fünf Minuten."), "Es waren zehn.", T("Ich weiß. Ich hab gezählt."),
+    T("Mama hätte uns rausgeworfen. Zu salzig, zu spät, zu wenig geschlafen.")] },
+  { if: "teo_talk=schicht", then: [T("Am Mittwoch hab ich gelogen."), "Ich weiß.", T("Vier Stunden fühlen sich nicht an wie zehn. Die fühlen sich an wie weg."),
+    "Papa hat auch gesagt, nur ein Jahr."] },
   T("Wenn ich schlaf, ist alles still. Keine Pumpen. Keine Schulden."),
   "...",
   "Er ist an meiner Schulter eingeschlafen. Wie damals.",
@@ -322,7 +329,7 @@ Cutaway.hints([
 const KEPT_LEDGER = Object.keys(Nagiwa.ledger).filter((id) => !["vesper_ines", "cam31", "sable_ines", "morrow_ines", "lantern_ines"].includes(id)).map((id) => `ledger_${id}`);
 Cutaway.act("kapitel2", {
   title: "Kapitel 2", name: "Aufnahme", room: "flat", actor: "juno", fresh: true,
-  keep: ["e1", "stick_ines", "k1a", "k1b", "imai_told", "moth_student", "rent", "chits", "evi_trust", ...KEPT_LEDGER,
+  keep: ["e1", "stick_ines", "k1a", "k1b", "imai_told", "moth_student", "rent", "chits", "evi_trust", "teo_talk", ...KEPT_LEDGER,
     "cache_clip_ines_death", "cache_clip_kessler_ring", "cache_clip_kessler_cut", "cache_clip_morrow_bribe", "cache_clip_traeger",
     "anon_clip_kessler_ring", "anon_clip_morrow_bribe", "anon_clip_traeger",
     "got_ausweis", "got_haken", "window_open", "ladder_down", "link_cam14", "link_cam15", "link_cam07v"],
@@ -331,7 +338,7 @@ Cutaway.act("kapitel2", {
   start: [
     { time: "18:00", day: 5 }, { give: "evi_bag", to: "juno" },
     // (the Kassenbuch's entries pay as they are written: the money as it stands at the end of that way comes after them)
-    { if: "!e1", then: [{ set: "e1", value: "sold" }, { set: "rent", value: "paid" },
+    { if: "!e1", then: [{ set: "e1", value: "sold" }, { set: "rent", value: "paid" }, { set: "teo_talk", value: "papa" },
       { ledger: "kessler", value: "full" }, { ledger: "wren_advance", value: "paid" }, { ledger: "wren", value: "sold" }, { ledger: "wren_live", value: "paid" }, { ledger: "ines", value: "dead" },
       { set: "chits", value: 1550 }, { set: "cache_clip_kessler_ring" }, { set: "cache_clip_ines_death" }] },
     // what Frau Kessler got on Tuesday: the prologue's answer, which the flat's door, the chat and Sable's contact read, is the Kassenbuch's
