@@ -1,7 +1,7 @@
 # Glass Sister: die Geschichte zum Lesen (bis einschließlich Kapitel 1)
 
 Eine Lesefassung, kein neuer Entwurf: Sie erzählt nach, was in `story.md`, `kapitel0-design.md`, `kapitel1-design.md` und im
-Spiel steht, mit den Entscheidungen bis zum 14. November (story §10b–§10h). Stand: 14. November 2026. Der Vorspann und der Prolog
+Spiel steht, mit den Entscheidungen bis zum 22. November (story §10b–§10j). Stand: 22. November 2026. Der Vorspann und der Prolog
 sind gebaut und gemalt, und auch Kapitel 1 spielt ganz durch und ist gemalt; seine Zeilen sind Vorschläge, die beim Durchspielen
 geprüft werden. Im Zweifel gilt das Spiel. Der letzte Teil vor den offenen Punkten, „Was Kapitel 1 noch nicht sagt“, verrät das
 Geheimnis; wer es nicht wissen will, hört nach CAM 31 auf.
@@ -148,6 +148,12 @@ seine Doppelschichten in Pumpenhalle 3. „Vier Stunden Lull, und ich bin wie ne
 wann?“ – „Seit es gratis ist.“ Sie reden über Junos Nagi·wa-Zeit. „Du redest noch immer, als hätten sie dich gefeuert, weil du
 schlecht warst.“
 
+Ihre Eltern sind tot. Der Vater starb 2076 bei einem Unfall in genau dieser Pumpenhalle, Juno war 16 und Teo 8, die Mutter zwei Jahre
+später, erschöpft von den Doppelschichten. Juno hat Teo großgezogen, und die Flutschuld der Eltern ist jetzt ihre. Bevor er zur
+Schicht geht, fragt Juno ihn eine Sache: ob er noch an Papa denkt („Jeden Tag. Ich arbeite ja da, wo er ...“, und am Becken redet er
+manchmal mit ihm, die Krake hat ihn gekannt), ob er zum Essen bleibt (aus fünf Minuten werden zehn, und Mamas Brühe war zu salzig, wie
+Baos), oder wie die Doppelschichten wirklich sind („Manchmal weiß ich nicht mehr, ob ich wach bin. … Das war ein Witz, Ju.“).
+
 Auf dem Deck warten drei Nachrichten.
 
 Von Varga: „Du warst bei Yuen's. Ich hab dich nicht gesehen, aber ich weiß, wie das läuft. Kessler ist weg. Finde ihn. 400.“ Ihren
@@ -278,7 +284,7 @@ hoch. „Teo kam da früher mit irgendwas Langem ran.“ Neben der Aufzugtür im
 „Um stecken zu bleiben, müsste der Aufzug erst mal fahren.“ Juno hat Höhenangst. „Nicht runterschauen.“ Das alles geht schon im Prolog.
 
 Oben sieht sie die Ringe zum ersten Mal von unten: „Da oben ist nicht der Himmel. Da oben ist der Boden von jemand anderem.“ Es ist
-derselbe Blick wie auf dem alten Foto am Deck, zwanzig Jahre später: Der große Schirm sagt SLEEP BETTER statt RISE ABOVE, und dem
+derselbe Blick wie auf dem alten Foto am Deck, das ihr Vater gemacht hat, zwanzig Jahre später: Der große Schirm sagt SLEEP BETTER statt RISE ABOVE, und dem
 NOODLES-Schild fehlen zwei Buchstaben. Juno kann sich an ihren alten Platz setzen, allein, wo sie mit vierzehn und Teo mit sechs eine
 Schale Nudeln geteilt haben. „Er ist hier eingeschlafen. An meiner Schulter. … Heute schläft er besser. Sagt er.“
 
@@ -431,13 +437,19 @@ Doppelschichten. Darum behält er manche. Der Sohn vom Fischmann, der Vater des 
 hinaustragen: Sie sind nicht krank, sie sind geblieben. „Er hat es jetzt gut“ ist eine Lüge und auch nicht ganz. Und wenn Juno auf
 dem Dach sagt, Teo schlafe heute besser, dann ist das der Anfang.
 
-Drei Jahre lang hat der Zeuge Juno nur zugesehen, einer der wenigen im Neunten, die noch jede Nacht wach auf seinem Protokoll sind. An
+Dreieinhalb Jahre lang hat der Zeuge Juno nur zugesehen, einer der wenigen im Neunten, die noch jede Nacht wach auf seinem Protokoll sind. An
 diesem Dienstag spricht er zum ersten Mal, weil seine Uhr läuft: In der Krone ist beschlossen, ihn aus dem Kollektiv der Schläfer zu bereinigen. Deshalb steht am
 Ende des Prologs ihr Name in ihrem Auge.
 
 Dass am nächsten Abend auch WREN kommt, ist kein Zufall. Was die Schläfer von Ines sehen, gibt der Zeuge nicht weiter: Keine
 ihrer Markierungen kommt bei Nagi·wa an, und ohne Markierung findet Nagi·wa einen Menschen in seinen eigenen Kameras nicht. Juno tut für WREN die Arbeit, die der Zeuge
 verweigert. Beide brauchen jemanden, der wach hinsieht.
+
+Lantern sitzt seit demselben Unfall im Rollstuhl, bei dem Junos Vater starb: Oskar Lind war 2076 Pumpentechniker in der Halle 3.
+Keiner der beiden weiß es vom anderen.
+
+Und das Kassenbuch wiegt. Was Juno gewählt hat, nicht was danach geschah, zählt am Ende, wenn der Zeuge ihr ihr eigenes Buch zeigt,
+mit den Gesichtern, und schon der einfache Weg durch die ersten vier Nächte wiegt etwas.
 
 Der Mann im weißen Regenmantel heißt Corvin Ashe, und er saß früher selbst in Junos Halle. Weil CAM 31 nur das alte
 Beobachter-Protokoll versteht, weiß er, was für ein Mensch gerade durch sie sieht, als er hinaufschaut.

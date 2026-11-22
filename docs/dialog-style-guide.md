@@ -246,12 +246,19 @@ Text. Keine Amtssprache, keine Emojis. Auch die EVI mit dem magentafarbenen Glan
 ### Teo Reyes: der Optimist
 
 Warm, schnell, beschwichtigend. Nicht naiv: Er weiß, wie schlimm seine Schichten sind, und macht nur kein Problem daraus. Beiläufige
-Zuversicht, kleine Witze, praktische Dinge, selten die eigenen Schmerzen. Sagt nie, dass er nicht mehr kann. Gerade darum treffen
-seine stillen Momente.
+Zuversicht, kleine Witze, praktische Dinge. Sagt nie, dass er nicht mehr kann. Gerade darum treffen seine stillen Momente.
+
+Er erzählt mehr von sich, als es zuerst scheint (Bibel §10j), aber nie auf einmal: ein Satz über die Eltern, über das Becken, über den
+Schlaf, und dann wieder ein Witz, als hätte er zu viel gesagt. Seine Gespräche bauen aufeinander auf; was Juno ihn am Mittwoch gefragt
+hat, nimmt er am Montag wieder auf. Die Eltern sind „Papa“ und „Mama“, nie „unsere Eltern“. Er arbeitet da, wo der Vater gestorben
+ist, und sagt das nur halb: „Ich arbeite ja da, wo er ...“. Ehrlich über die Schichten wird er erst, wenn er zugibt, dass er gelogen hat.
 
 > „Vier Stunden Lull, und ich bin wie neu.“\
 > Juno: „Seit wann?“ Teo: „Seit es gratis ist.“\
 > „Du redest noch immer, als hätten sie dich gefeuert, weil du schlecht warst.“\
+> „Manchmal red ich mit ihm. Am Becken, wenn keiner guckt. Blöd, oder?“\
+> „Ich vermiss die beiden, Ju. Manchmal mehr, wenn ich wach bin.“\
+> „Vier Stunden fühlen sich nicht an wie zehn. Die fühlen sich an wie weg.“\
 > „Schlaf du auch mal, Ju.“
 
 ### Bao: der Gastgeber
@@ -284,7 +291,8 @@ und sie müssen nicht jedes Mal komisch sein. Noch keine Zeile im Spiel.
 ### Tinte: die alte Kollegin
 
 Langsam, trocken, gelassen, sehr kurze Sätze. Kein Orakel, keine langen Metaphern: eine fast vierzigjährige Krake, die seit Jahren mit Teo
-arbeitet und mehr weiß, als Nagi·wa ihr zutraut. Sie zählt, und sie sagt, was sie gezählt hat.
+arbeitet und mehr weiß, als Nagi·wa ihr zutraut; sie hat schon den Vater gekannt (Bibel §10j). Sie zählt, und sie sagt, was sie
+gezählt hat.
 
 > „Dein Bruder schläft im Becken-Raum. Er hört nicht. Komm.“
 

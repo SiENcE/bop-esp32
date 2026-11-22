@@ -305,7 +305,7 @@ Wird langsam über die Kapitel enthüllt; der Spieler soll es einen Schritt vor 
      Ein Zeuge, der nicht sprechen kann, braucht eine wache Stimme auf seinem Protokoll, und Juno ist eine
      der wenigen. Das trägt das Ende „Zeugnis“ (§8).
    - **Warum gerade jetzt** (entschieden 2026-11-13): Die Bereinigung (Punkt 6) ist beschlossen, und er
-     spürt, wie Civic Rest sie vorbereitet. Drei Jahre hat er Juno nur zugesehen; am Dienstag des Prologs
+     spürt, wie Civic Rest sie vorbereitet. Dreieinhalb Jahre hat er Juno nur zugesehen; am Dienstag des Prologs
      ruft er sie, weil seine Uhr läuft. Mit dem Prolog beginnt also schon die Frist, die Juno in Kapitel 4
      auf dem Terminal der Schlafstation sieht.
 5. **Warum Ines starb:** Ihre Schlafprotokolle bewiesen, dass die Hirnaktivität der Lull-Nutzer mit

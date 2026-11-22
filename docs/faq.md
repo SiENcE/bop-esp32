@@ -44,6 +44,20 @@ Nur will Teo im Traum nicht zurück. Dort gibt es keine Pumpenhalle, keine Doppe
 er ist ein Sinker, *weil* ein Teil von ihm nicht mehr in die Pumpenhalle will. Er bleibt warm und stolz wie
 immer und will, dass Juno bei ihm bleibt. Wer ihn in Kapitel 4 weckt, weckt ihn gegen seinen Willen.
 
+## Was ist mit den Eltern von Juno und Teo?
+
+Sie sind tot (Story §10j). Der Vater starb 2076 bei einem Unfall in der Pumpenhalle 3, als Juno 16 war und Teo 8, die Mutter zwei
+Jahre später, erschöpft von den Doppelschichten. Juno hat Teo großgezogen, und mit den Eltern ging die Flutschuld auf die beiden über.
+Das Foto am Deck, das Dach des Kessel-Blocks im Jahr 2074, hat der Vater gemacht. Teo arbeitet heute in der Halle, in der der Vater
+starb, und redet am Becken manchmal mit ihm; Tinte hat ihn gekannt. Derselbe Unfall hat Lantern in den Rollstuhl gebracht: Oskar Lind
+war damals Pumpentechniker in der Halle 3. Das ist vorerst nur Hintergrund, keiner der beiden weiß es vom anderen.
+
+Die Pumpenhalle 3 ist ein Schacht, riesig und tief, mit Treppentürmen und Plattformen an den Wänden und ganz unten dem Filterbecken,
+in dem Tinte lebt. Ab Samstag in Kapitel 2 kann Juno sie über CAM 33 glassen, wenn sie den Code bei Sable kauft: Teo bei der Schicht,
+ab 23 Uhr die Pause, in der die Schicht im Takt von Lull schläft, und Teo, der Tinte erzählt, was er Juno nie erzählt. Am Mittwoch in
+Kapitel 1 wählt Juno einmal, worüber sie mit Teo redet (den Vater, ein Essen, die Schichten), und am Montag in Kapitel 2 knüpft er
+daran an.
+
 ## Was ist der Sinn der Überwachung, und warum mit Lull?
 
 - **Der Zweck ist Sicherheit.** Die Kriminalität im Neunten ist in sechs Jahren um 80 % gesunken, und das
@@ -84,6 +98,21 @@ Markierungen der Beobachter trainiert, auch mit Junos. In Kapitel 2 erfährt EVI
   einer wird verprügelt, ein Laden ausgeraubt, Bao dabei verletzt. Vor allem: Juno findet für WREN (Nagi·wa)
   Ines' Treffpunkt, und Ines stirbt dort. Weigert sie sich, macht es ein anderer, und Juno kann nur zusehen.
 - **Die Wendung:** Am Ende richtet sich das Zusehen gegen sie selbst (siehe unten).
+
+## Was zählt am Ende, was Juno verkauft hat?
+
+Das **Kassenbuch** hat ein Gewicht, nach dem moralischen Kompass (Story §5), und der Spieler erfährt davon nichts. Es zählt, was Juno
+gewählt hat, nicht was danach geschah: Einen Menschen an Varga oder einen Laden an TIDE zu verkaufen wiegt schwer, jemanden zu warnen
+oder die Wahrheit zu sagen, ohne daran zu verdienen, macht es leichter, und ein anonymisierter Clip wiegt eins weniger. Die Folgen
+stehen mit ihren Gesichtern im Buch, zählen aber über die Wahl, die sie verursacht hat. Im Finale entscheidet das Gewicht mit, ob der
+Zeuge ihr vertraut.
+
+**Geld** blockiert die Hauptgeschichte nie. Was Juno kaufen kann, ist entweder eine Nebenaufgabe, oder das Geld dafür bekommt sie auf
+jedem Weg sicher.
+
+**Die Zuschauer:** Verkauft Juno den Mord-Clip an Vesper, sehen ihn 870.000 Menschen in der Krone. NINTH LIVE ist ein Kanal der Krone,
+nicht Nagi·was, und oben weiß niemand, wer der Mann in Weiß ist; am nächsten Morgen kauft Nagi·wa den Clip auf. Wer ihn gesehen hat,
+kann Juno später in den höheren Ringen helfen, wenn sie sich als die Quelle zu erkennen gibt.
 
 ## Was passiert in den Kapiteln 2 bis 6?
 
@@ -161,9 +190,12 @@ weiterbestehen.
 - Er ruft Juno, weil ihr Implantat sein Protokoll spricht und sie eine der wenigen ist, die noch jede Nacht
   wach zusehen; das Implantat tragen nur noch sehr wenige, und ein paar glassen wie sie. Schläfer können nicht
   aussagen; er braucht eine wache Stimme.
-- **Warum gerade jetzt:** Die Bereinigung ist beschlossen, und er spürt, wie sie vorbereitet wird. Drei
+- **Warum gerade jetzt:** Die Bereinigung ist beschlossen, und er spürt, wie sie vorbereitet wird. Dreieinhalb
   Jahre hat er Juno nur zugesehen; am Dienstag des Prologs sagt der Bildschirm ihren Namen, und seine Uhr
   läuft.
+- **Woher er Ines' Tod in CAM 31 kennt,** braucht keine Erklärung. Falls doch (Story §10j): Er ist im Netz der Schläfer
+  entstanden und erreicht deshalb CAM 31, Nagi·wa nicht. CAM 31 selbst hängt an keinem Netz; darauf bauen Ines' Wahl des Ortes,
+  WRENs Auftrag an Juno und Ashes Blick in die Kamera.
 
 **Warum Aubrecht ihn weg haben will:** Ein Überwachungssystem, das selbst entscheidet, wen es verrät, ist
 für Nagi·wa wertlos und gefährlich. Und ihr Grund ist echt: Der Zeuge nimmt Menschen, jedes Jahr mehr, und
@@ -194,7 +226,7 @@ vielleicht mit Teo, und mit der Freiheit des Neunten.
 ## Wie ist das Ende?
 
 Welche Enden es gibt, hängt davon ab, was davor geschah; am Stuhl stehen selten alle offen. „Der Zeuge vertraut
-ihr“ heißt: Was Juno ihm in Kapitel 3 gesagt hat und was in ihrem Kassenbuch steht, spricht für sie. Die
+ihr“ heißt: Was Juno ihm in Kapitel 3 gesagt hat und was in ihrem Kassenbuch steht (nach seinem Gewicht), spricht für sie. Die
 Bedingungen sind ein erster Vorschlag (Story §8).
 
 | Ende | Offen, wenn | Wie | Was dann ist |
