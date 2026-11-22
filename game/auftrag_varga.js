@@ -71,7 +71,7 @@ const SABLE_CLIP = [{ set: "e2", value: "sable" },
   S("Nett."), "Sable fragt nicht, wer sie war. Sable fragt nie.", "Wer sie kauft, sagt Sable auch nicht. Das kostet extra."];
 Cutaway.dialog("sable", {
   main: [
-    { text: "„Hast du den Code für die Kamera im Morpheus? CAM 15.“", if: ["varga_step", "!code_cam15"], goto: "code", then: [S("Achtzig. Oder was, das achtzig wert ist.")] },
+    { text: "„Hast du den Code für die Kamera im Morpheus? CAM 15.“", if: ["day<5", "varga_step", "!code_cam15"], goto: "code", then: [S("Achtzig. Oder was, das achtzig wert ist.")] },
     // (Chapter 1's, where Varga's thread plays: in Chapter 2 its place is the 24-hour shop's clip, so no more than four show)
     { text: "„Du hast Varga meinen Namen gegeben.“", if: "day<5", then: [S("Verkauft. Geben tu ich nichts."), "Für wie viel?", S("Das kostet extra.")] },
     { text: "„Was verkaufst du sonst noch?“", then: [S("Steht an der Wand. Namen, Adressen."), "Und Geheimnisse?", S("Frag. Fragen kostet schon.")] },

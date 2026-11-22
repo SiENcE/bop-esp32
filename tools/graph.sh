@@ -3,7 +3,7 @@
 # the checks, every move watched (what it needs, what it brings about), and the state budget. One data file per
 # act and per thread into build/graph/, as check.sh solves them (each of Chapter 1's threads alone, the others shut).
 #   sh tools/graph.sh [prolog | main | <thread> | kapitel2 | all]...   (no argument: the prologue and Chapter 1's main thread; all: every run
-#   the checks make, which the hand-over check (tools/handoff.sh) needs; kapitel2: Chapter 2's main way, the threads shut as in Chapter 1; kapitel2_stick: the same with the stick still in Juno's bag; both with the way to Lantern shut, off_lantern;
+#   the checks make, which the hand-over check (tools/handoff.sh) needs; kapitel2: Chapter 2's main way, the threads shut as in Chapter 1; kapitel2_stick: the same with the stick still in Juno's bag and her flat shut and taken as done (off_flat, evi_knows), as check.sh has it; both with the way to Lantern shut, off_lantern;
 #   kapitel2_lantern: that way alone, Juno with the stick and the dryer shut, her flat and the forgery done)
 # Prints a link to open for each; the viewer runs from file://.
 cd "$(dirname "$0")/.."
@@ -17,7 +17,7 @@ for what in $list; do
   elif [ "$what" = kapitel2 ]; then
     node lib/cutaway/tools/graph.mjs index.html --act kapitel2 --set "$(off main),off_lantern,off_shop24,off_haldane" --out build/graph/kapitel2_main.js | grep -E "states in|soft-lock|SOFT|HINTS|hints:|^wrote|^open"
   elif [ "$what" = kapitel2_stick ]; then
-    node lib/cutaway/tools/graph.mjs index.html --act kapitel2 --set "$(off main),off_lantern,off_shop24,off_haldane,stick_ines" --out build/graph/kapitel2_stick.js | grep -E "states in|soft-lock|SOFT|HINTS|hints:|^wrote|^open"
+    node lib/cutaway/tools/graph.mjs index.html --act kapitel2 --set "$(off main),off_lantern,off_shop24,off_haldane,off_flat,evi_knows,stick_ines" --out build/graph/kapitel2_stick.js | grep -E "states in|soft-lock|SOFT|HINTS|hints:|^wrote|^open"
   elif [ "$what" = kapitel2_lantern ]; then
     node lib/cutaway/tools/graph.mjs index.html --act kapitel2 --set "$(off main),off_shop24,off_haldane,off_main,stick_ines,off_dryer,evi_knows,forgery_proven" --out build/graph/kapitel2_lantern.js | grep -E "states in|soft-lock|SOFT|HINTS|hints:|^wrote|^open"
   else
