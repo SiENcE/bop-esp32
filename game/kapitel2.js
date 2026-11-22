@@ -1,4 +1,4 @@
-// Nagiwa: Chapter 2 "Aufnahme" (docs/kapitel2-design.md), on blocks: the frame so far. Three evenings on game days 5 to 7
+// Nagiwa: Chapter 2 "Aufnahme" (docs/kapitel2-design.md): the frame. Three evenings on game days 5 to 7
 // (Saturday 10 to Monday 12 November), the way home at the start, Teo's last visit awake on Monday, the clock that stops on
 // Monday at 00:45 until everything is ready, decision 2 as far as it is built. The end: game/kapitel2_ende.js.
 //   e2              Entscheidung 2: sable | vesper | morrow | lantern | kept (Sable in her booth: game/auftrag_varga.js; Morrow in Jade Row
@@ -156,7 +156,7 @@ Cutaway.moment("heimkehr", { room: "flat", day: 5, from: "18:00", to: "18:15", i
   { say: "evi", text: "Gern." },
 ] });
 
-// ---- Monday, 18:30: Teo's last visit awake (kapitel2-design §7), on blocks. A knock wherever Juno is waiting, as on Wednesday; then
+// ---- Monday, 18:30: Teo's last visit awake (kapitel2-design §7). A knock wherever Juno is waiting, as on Wednesday; then
 // up on to the roof, where for the first time someone sits beside her. A scene without choices: it costs the solver its moment only.
 // He takes the lift's emergency key, the long hook on the 14th floor (or asks Juno for it, if she took it): if the ladder still hangs up
 // there, he pulls it down (the user, 2026-11-19: not a hook from the pump hall, the one by the lift is there). On the roof he sits at her

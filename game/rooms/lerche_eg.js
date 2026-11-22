@@ -9,7 +9,6 @@
     walk: A.walk, holes: A.holes, props: A.props,
     light: { ambient: 0.8, lamps: A.lamps.map((/** @type {any} */ { bake, zone, ...lamp }) => lamp) },
     hotspots: {
-      // (on blocks for the user's approval: the way in from Weg_1, the lift and the stairs are wired once the blocks are approved)
       lift: { name: "Aufzug", poly: A.liftPoly, walkTo: A.lift, face: "ne", look: "Der Aufzug hier fährt. In diesem Haus funktioniert noch was." },
       stairs: { name: "Treppe", poly: A.stairsPoly, walkTo: A.stairs, face: "ne", look: "Vier Stockwerke. Im Kessel wären es vierzehn." },
       mailboxes: { name: "Briefkästen", poly: A.mailboxesPoly, walkTo: A.mailboxes, face: "ne", look: ["Zwölf Briefkästen. Über dem von 4B klebt ein rotes Band.", "Ihre Post kriegt jetzt jemand anderes."] },

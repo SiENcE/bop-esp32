@@ -95,7 +95,7 @@ Cutaway.room("dach", { name: "Das Dach", background: "dach_bg", walk: AD.walk,
 // sitting where they sat, the old photo's picture twenty years on
 Cutaway.room("dach_sitzen", { name: "Unser Platz", background: "dach_heute", observe: true, lines: "bottom", buttons: false,
   // on Monday evening Teo sits at her right, his head on her shoulder (Chapter 2, game/kapitel2.js: the view teo_up)
-  props: [{ id: "teo", image: "dach_teo", at: [109, 106], anchor: [0, 0], baseline: 999, if: "teo_up" }],
+  props: [{ id: "teo", image: "dach_teo", at: Nagiwa.at.dach_sitzen.teo, anchor: [0, 0], baseline: 999, if: "teo_up" }],
   ambience: ["city_far", { sfx: "feed_rain", gain: 0.5 }], music: { theme: "memory", fade: 2 },
   hotspots: { back: { name: "Aufstehen", rect: [0, 0, 320, 180], exit: { to: "dach", at: AD.edge, face: "sw" } } },
   enter: ["Er ist hier eingeschlafen. An meiner Schulter.", "Ich hab mich eine Stunde nicht bewegt. Vor Angst, und damit er weiterschläft.", "Heute schläft er besser. Sagt er."] });

@@ -18,11 +18,11 @@
     // front of Juno the heads along the edge
     props: [
       ...P.parts.map((/** @type {any} */ p) => ({ id: p.name.slice("jade_row_".length), image: p.name, at: p.at, anchor: [0, 0], baseline: 0 })),
-      { id: "steam", image: "jade_row_steam", at: [108, 40], anchor: [0, 0], baseline: 1 },
+      { id: "steam", image: "jade_row_steam", at: AJ.steam, anchor: [0, 0], baseline: 1 },
       { id: "crowd", image: "jade_row_crowd", at: [0, 148], anchor: [0, 0], baseline: 300 },
       // the car parked facing us down the lane (art/mock/jade_row.px.js, JADE_CAR); gone while Revier 9's patrol car waits there in
       // CAM 07 at 00:30 (game/auftrag_tide.js), the user's wish, and in Chapter 2 while Morrow stops there on her round
-      { id: "car", image: "jade_row_car", at: [156, 86], anchor: [0, 0], baseline: 107,
+      { id: "car", image: "jade_row_car", at: AJ.parkedCar, anchor: [0, 0], baseline: 107,
         if: { not: { or: [["day>1", "day<4", "time>=00:30", "time<00:45", "!off_tide"], ["day>4", "day<7", "time>=00:30", "time<00:45", "!off_main"]] } } },
       // Chapter 2: Morrow's patrol car behind her while she stops there (game/auftrag_tide.js), painted at its size a little back
       // down the lane (art/characters/tide_people.px.js, streife_nah); a picture, since nobody walks where it stands

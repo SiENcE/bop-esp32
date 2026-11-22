@@ -1,4 +1,4 @@
-// Nagiwa: job B of Chapter 1, "Der Eckladen" (docs/kapitel1-design.md §4), on blocks. TIDE wants the code of Okonkwo's safe in Jade Row.
+// Nagiwa: job B of Chapter 1, "Der Eckladen" (docs/kapitel1-design.md §4). TIDE wants the code of Okonkwo's safe in Jade Row.
 // From above (cam07) his back hides the keypad when he opens it at 01:00; the machine across the lane sees it at hip height, once it is tapped
 // (a tap from Ratz on the Drain Market). Then K1b: sell the code, sell a false one, or warn him in his shop. Lt. Morrow takes an envelope at 00:30.
 //   got_tap   Juno has bought the tap (the item `abzweiger` until it is used on the machine)
@@ -108,11 +108,11 @@ Nagiwa.camRoom("cam07v", { background: undefined, color: Nagiwa.PHOSPHOR[0], mic
 Cutaway.item("abzweiger", { name: "Abzweiger", icon: "inv_tap", look: "Den Abzweiger hab ich von Ratz. Er klemmt sich an alles, was ein Kabel hat." });
 Cutaway.item("reis", { name: "Reis", icon: "inv_reis", look: "Die Stange Reis und die Batterien hat mir Okonkwo gegeben." });
 const jade = Cutaway.room.get("jade_row");
-jade.props.push({ id: "drone", image: "drone_hover", at: [-30, 60], hidden: true, baseline: 2 });
+jade.props.push({ id: "drone", image: "drone_hover", at: AJ.droneFrom, hidden: true, baseline: 2 });
 const TAP = [
   "Hinten am Automaten ist die Wartungsklappe. Da sieht keiner hin.",
-  { move: "drone", to: [-30, 60], ms: 1 }, { show: "drone" }, { move: "drone", to: [200, 64], ms: 1600 },
-  "Außer der Drohne. Solange die guckt, mach ich nichts.", { move: "drone", to: [360, 58], ms: 1400 }, { hide: "drone" },
+  { move: "drone", to: AJ.droneFrom, ms: 1 }, { show: "drone" }, { move: "drone", to: AJ.droneStop, ms: 1600 },
+  "Außer der Drohne. Solange die guckt, mach ich nichts.", { move: "drone", to: AJ.droneTo, ms: 1400 }, { hide: "drone" },
   "Jetzt.", { remove: "abzweiger" }, { set: "code_cam07v" }, { set: "link_cam07v" }, { sfx: "link" }, "Er ist angezapft. Die Automatenkamera ist jetzt auf dem Deck, CAM 07V.",
 ];
 Object.assign(jade.hotspots.machine, {

@@ -1,4 +1,4 @@
-// Nagiwa: Chapter 2, the stick (docs/kapitel2-design.md §3.1), on blocks. Ines' wallet is Lantern's, and its key is the stick from dryer 6:
+// Nagiwa: Chapter 2, the stick (docs/kapitel2-design.md §3.1). Ines' wallet is Lantern's, and its key is the stick from dryer 6:
 // without both he can't send. Where it is:
 //   stick_ines    Juno has it (kept from Chapter 1)
 //   stick_dryer   she has put it back into dryer 6, anonymously; Lantern takes it the same night

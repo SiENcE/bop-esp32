@@ -171,7 +171,7 @@ Cyan nur für Technik.
 
 | Wer | Rolle | Aussehen und Silhouette (Akzent im Feed) | Farbe |
 |---|---|---|---|
-| **Juno Reyes**, 31 | Glasserin und Informationshändlerin; früher **zivile Beobachterin** bei Nagi·wa (eine menschliche Kamerabeobachterin), vor drei Jahren entlassen, als „automatische Auswertung" ihr Team ersetzte; ihr Beobachter-Implantat durfte sie behalten, weil das Herausnehmen mehr gekostet hätte | gelber Regenmantel mit Kapuze, Umhängetasche, Implantat hinter dem Ohr (unter der Kapuze nicht zu sehen; auf dem Titelbild als Cyan-Linie über der Wange) | `#fff070` |
+| **Juno Reyes**, 31 | Glasserin und Informationshändlerin; früher **zivile Beobachterin** bei Nagi·wa (eine menschliche Kamerabeobachterin), vor dreieinhalb Jahren entlassen, als „automatische Auswertung" ihr Team ersetzte; ihr Beobachter-Implantat durfte sie behalten, weil das Herausnehmen mehr gekostet hätte | gelber Regenmantel mit Kapuze, Umhängetasche, Implantat hinter dem Ohr (unter der Kapuze nicht zu sehen; auf dem Titelbild als Cyan-Linie über der Wange) | `#fff070` |
 | **EVI** | die KI auf Junos Deck: der ausgemusterte Prototyp der „automatischen Auswertung" (§6), den Juno vor der Löschung gerettet hat. Neugierig, lieb, gut mit Daten und hoffnungslos schlecht darin, Menschen zu lesen; fragt Juno ständig, warum Menschen Dinge tun. Erklärt das Deck, meldet Nachrichten, gibt die Hinweise. Lebt auf dem Deck und geht auf dem Taschen-Deck mit (§10b). | ein kleines rundes Pixelwesen mit großen Augen und zwei Antennen-Ohren, auf dem Desktop etwa 24 px, in der Tasche 16 px; 6 Gesichter (froh, neugierig, verwirrt, besorgt, müde, Glitch) | `#8ef5d8` |
 | **Teo Reyes**, 23 | ihr jüngerer Bruder; arbeitet Doppelschichten in Pumpenhalle 3, **mit Lull**; fröhlich und stolz, zahlt ihre Miete, wenn sie es nicht kann. Hat sich mit 18 einen **Gezeitenmod** machen lassen (Kiemen), weil Taucher das Doppelte verdienen: Nagi·was idealer Arbeiter, umgebaut für die Schicht und betäubt für die Nacht. Als Sinker will er im Traum nicht zurück (§6, Punkt 3; §7, Kap. 3 und 4). | orange Arbeitsweste, Gehörschutz um den Hals, Kiemenschlitze, die im Feed leuchten | `#ffa040` |
 | **Bao**, über 70 | betreibt die Nudel-Garküche vor dem LUCKY STATIC; lässt Juno anschreiben; kennt jeden. Redet ständig von seinem Mann Lou, „meinem Alten", der nie zu sehen ist, bis zum Epilog. Hat nur einen Arm. | Schirm, weiße Schürze, der andere Ärmel hochgesteckt | `#e8c890` |
@@ -268,7 +268,7 @@ Wird langsam über die Kapitel enthüllt; der Spieler soll es einen Schritt vor 
    Beobachtern haben es nur sehr wenige noch, weit verstreut; manche sind auf Lull oder selbst Sinker geworden, ein paar glassen
    wie sie, darunter der andere Glasser, der nach einer Weigerung WRENs Auftrag übernimmt (§9). Juno ist eine der wenigen, die das
    Glass noch jede Nacht *wach* beobachten, so wie der Zeuge es im Schlaf beobachtet (geändert 2026-11-14, bis dahin: die Einzige
-   im Neunten). Er sieht ihr seit drei Jahren beim Zusehen zu. Als der Bildschirm ihren Namen sagt, spricht er zum ersten Mal.
+   im Neunten). Er sieht ihr seit dreieinhalb Jahren beim Zusehen zu. Als der Bildschirm ihren Namen sagt, spricht er zum ersten Mal.
    - **Wozu er sie braucht** (entschieden 2026-11-13): Schläfer können nicht handeln und nicht aussagen.
      Ein Zeuge, der nicht sprechen kann, braucht eine wache Stimme auf seinem Protokoll, und Juno ist eine
      der wenigen. Das trägt das Ende „Zeugnis“ (§8).
@@ -327,7 +327,7 @@ Die „Rätsel" hier sind der Umriss; jedes Kapitel bekommt später ein eigenes 
 **Bringt bei:** das Deck und EVI, Feed-Modus (zusehen, zuhören, markieren, aufzeichnen), Verkaufen,
 Straßenmodus.
 
-- **Vorspann (vor dem Titel, überspringbar):** drei Jahre früher. Die Beobachtungshalle von Nagi·wa:
+- **Vorspann (vor dem Titel, überspringbar):** dreieinhalb Jahre früher. Die Beobachtungshalle von Nagi·wa:
   Reihen von Menschen mit Implantaten vor Wänden voller Kamerabilder, Juno mittendrin. Die letzte
   Schicht. Eine Durchsage: „Ab morgen übernimmt die automatische Auswertung. Nagi·wa dankt Ihnen für
   Ihren Dienst." Die Bildschirme gehen einer nach dem anderen aus. Juno fährt mit ihrem Karton hinunter, und
@@ -525,7 +525,7 @@ Das Design steht in `docs/kapitel2-design.md` (Entscheidungen in §10h).
   2026-11-13). Wer da ist (die Verbündeten, Teo wach oder im Traum, welche EVI), was Juno weiß und was im
   Kassenbuch steht, bestimmt, welche Wege es im Ruhekern überhaupt gibt. Am Stuhl stehen selten alle Enden
   offen; die volle Wahl hat nur, wer davor fast alles dafür getan hat (§8).
-- **Das Kassenbuch des Zeugen:** Er hat Juno drei Jahre lang beim Verkaufen zugesehen. Im Ruhekern zeigt
+- **Das Kassenbuch des Zeugen:** Er hat Juno dreieinhalb Jahre lang beim Verkaufen zugesehen. Im Ruhekern zeigt
   er ihr ihr eigenes Kassenbuch, aus seiner Sicht, mit den Gesichtern: Kessler in seiner Kapsel, Okonkwo,
   Bao, Ines in CAM 31, die Hunderttausende, die bei NINTH LIVE zugesehen haben. Was dort steht, entscheidet
   zusammen mit Entscheidung 3, ob er ihr vertraut. Hier kommt „Zusehen ist Schuld“ (§2) an, und die

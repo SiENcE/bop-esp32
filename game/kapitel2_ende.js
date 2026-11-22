@@ -1,4 +1,4 @@
-// Nagiwa: the end of Chapter 2 (docs/kapitel2-design.md §8), on blocks. Monday from 01:00: Lantern sends Ines' protocols, Juno lays them
+// Nagiwa: the end of Chapter 2 (docs/kapitel2-design.md §8). Monday from 01:00: Lantern sends Ines' protocols, Juno lays them
 // beside her own recordings, and Teo doesn't wake up. One chain on which nothing branches, as Chapter 1's end:
 //   end_beat2    sent (the protocols are out, Juno at her deck) > found (the match: the rest goes on by itself)
 // So the times in it may lie between the ticks. The last check is PRÜFEN (game/pruefen.js): the protocols as a timeline over her CACHE's

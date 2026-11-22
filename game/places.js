@@ -45,9 +45,9 @@ Nagiwa.at = {
   kessel_lobby: fromLayout(Nagiwa.layouts.kessel_lobby),
   // the observation hall, the intro's shot 1 (art/rooms/hall.map.js, game/rooms/hall.layout.js)
   hall: fromLayout(Nagiwa.layouts.hall),
-  // the 4th floor's landing in the Wohnblock Lerche, on blocks (art/rooms/lerche_flur.map.js, game/rooms/lerche_flur.layout.js)
+  // the 4th floor's landing in the Wohnblock Lerche (art/rooms/lerche_flur.map.js, game/rooms/lerche_flur.layout.js)
   lerche_flur: fromLayout(Nagiwa.layouts.lerche_flur),
-  // Ines' flat, 4B, on blocks (art/rooms/ines_wohnung.map.js, game/rooms/ines_wohnung.layout.js); the fridge's upper part has the napkin
+  // Ines' flat, 4B (art/rooms/ines_wohnung.map.js, game/rooms/ines_wohnung.layout.js); the fridge's upper part has the napkin
   // under its magnet, its lower part is the freezer (one hotspot asks which)
   ines_wohnung: fromLayout(Nagiwa.layouts.ines_wohnung),
   // shop24 (art/rooms/shop24.map.js, game/rooms/shop24.layout.js)
@@ -87,12 +87,12 @@ Nagiwa.at = {
   // of CH and WAVE, the power switch that puts it away
   funk: { screen: [132, 44, 116, 40], tx: [72, 44, 44, 26], chL: [130, 102, 16, 20], chR: [168, 102, 16, 20], waveL: [194, 102, 16, 20],
     waveR: [232, 102, 16, 20], pwr: [226, 130, 22, 14] },
-  // SUMP RUNNER's cabinet, close (game/sump_runner.js, on blocks): the marquee, the screen, the playfield's grid on it (its top left, a
+  // SUMP RUNNER's cabinet, close (game/sump_runner.js): the marquee, the screen, the playfield's grid on it (its top left, a
   // cell's size, columns and rows), the side panel, and the control panel's buttons under it
   sump_runner: { marquee: [40, 2, 240, 16], screen: [44, 24, 232, 126], grid: [52, 30, 12, 9, 10], side: [170, 30, 100, 116],
     left: [90, 160, 20, 14], up: [112, 160, 20, 14], down: [134, 160, 20, 14], right: [156, 160, 20, 14], start: [194, 160, 36, 14],
     quit: [238, 160, 40, 14] },
-  // Lantern's hide, on blocks (art/rooms/lantern_versteck.map.js, game/rooms/lantern_versteck.layout.js); he sits at "lantern"
+  // Lantern's hide (art/rooms/lantern_versteck.map.js, game/rooms/lantern_versteck.layout.js); he sits at "lantern"
   // where the LED ticker lies over his poster (art/rooms/lantern_versteck.px.js prints it, TICKER_AT, from the poster's opening)
   lantern_versteck: { ...fromLayout(Nagiwa.layouts.lantern_versteck), tickerAt: [88, 45] },
   // CAM 25 is the landing's own picture under the feed's filter, as CAM 14 is the 14th floor's (one place, one picture), the camera left
@@ -121,7 +121,7 @@ Nagiwa.at = {
     gateRect: [784, 505, 152, 35], fishRect: [0, 140, 60, 130], homelessRect: [505, 262, 43, 22], noodlesRect: [150, 268, 120, 20], lercheRect: [728, 120, 57, 14],
     sheepPoly: [668, 193, 692, 193, 694, 205, 692, 217, 668, 217, 666, 205], trashPoly: [295, 122, 340, 122, 340, 148, 295, 148],
     steamPoly: [361, 206, 370, 203, 379, 206, 382, 215, 379, 224, 370, 227, 361, 224, 358, 215], robotPoly: [173, 196, 176, 193, 184, 193, 187, 196, 187, 204, 184, 207, 176, 207, 173, 204],
-    // the street's life (design §7) and the 24-hour shop's thread (§6.5), on blocks: the homeless man and the sheep as sprites over the
+    // the street's life (design §7) and the 24-hour shop's thread (§6.5): the homeless man and the sheep as sprites over the
     // picture (their top left); the robot going round its puddle (no hole: it moves, and steps aside); the queue at the noodle bar from 19:00 (the market's people from above,
     // [x, y, look, facing]); two people passing along the street and back; a delivery drone crossing high over it (px a second, ms it rests at each end)
     homelessAt: [504, 261], sheepAt: [665, 190],
@@ -259,6 +259,9 @@ Nagiwa.at = {
     // Chapter 2: Morrow before her patrol car, Saturday and Sunday at 00:30; the car a little back down the lane, at its own size there
     // (streife_nah, the user's choice, 2026-11-16)
     morrow: [180, 147], car: [196, 128],
+    // the steam at the lane's end and the car parked facing us (pictures over the painting, at their top left); the drone over the
+    // machine when Juno taps it (game/auftrag_tide.js): in from the left, a stop, out to the right
+    steam: [108, 40], parkedCar: [156, 86], droneFrom: [-30, 60], droneStop: [200, 64], droneTo: [360, 58],
     // Chapter 2 after K1b warned: WHO TALKED? on the passage's wall in the arch (art/rooms/jade_row.px.js, the overlay "tag")
     tagRect: [282, 106, 27, 16],
     parlourRect: [118, 88, 8, 26], arcadeRect: [100, 90, 16, 32], balconyRect: [44, 20, 58, 46], nightRect: [212, 8, 43, 62], carRect: [168, 92, 24, 17], pharmacyRect: [195, 88, 13, 24], gateRect: [136, 50, 48, 46], screenRect: [136, 4, 48, 44], signsRect: [195, 56, 22, 32],
@@ -288,6 +291,8 @@ Nagiwa.at = {
     walk: [[6, 156, 52, 156, 52, 170, 91, 170, 91, 163, 93, 163, 93, 170, 118, 170, 118, 156, 314, 156, 318, 176, 2, 176]], hatch: [22, 166], edge: [222, 162], reader: [92, 164], readerTalk: [124, 165],
     hatchRect: [4, 114, 28, 40], ringsRect: [0, 0, 320, 22], placeRect: [192, 100, 58, 50], screenRect: [110, 33, 50, 31], noodlesRect: [96, 49, 9, 57], droneRect: [284, 98, 26, 18],
   },
+  // sitting on the roof, the view from their place (Chapter 2, Monday): Teo at Juno's right, his picture's top left (dach_teo)
+  dach_sitzen: { teo: [109, 106] },
   // the Drain Market seen straight down (art/rooms/drain_market.px.js, kapitel1-design §9): its walk area, places and shapes measured
   // from the approved layout and the painting's parts (game/rooms/drain_market.layout.js, tools/market-layout.mjs). The moving parts lie
   // on the picture behind everyone (an "under" part is its own rect of the floor with the moving thing on it); the steam, then the

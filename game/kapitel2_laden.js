@@ -1,4 +1,4 @@
-// Nagiwa: Chapter 2's side thread "Wer passt auf den Laden auf?" (kapitel2-design §6.5, the user's choice 2026-11-18), on blocks. The man in
+// Nagiwa: Chapter 2's side thread "Wer passt auf den Laden auf?" (kapitel2-design §6.5, the user's choice 2026-11-18). The man in
 // Lull's sheep costume on Fischermann Street is the 24-hour shop's night clerk; asleep on his feet on a Lull patch, nobody is behind the
 // register, every night goods go missing and come off his wage. Juno resets the cleaning robot circling in its puddle with her pocket
 // deck; it drives home to its dock in the shop, and through the dock the shop's camera, CAM 26, is hers. Its archive shows the homeless

@@ -1,4 +1,4 @@
-// Nagiwa: Chapter 2, Ines' flat (docs/kapitel2-design.md §3.3, W1–W7), on blocks. A break-in in street mode, guided by the feeds:
+// Nagiwa: Chapter 2, Ines' flat (docs/kapitel2-design.md §3.3, W1–W7). A break-in in street mode, guided by the feeds:
 //   code_lerche   the house door's code, seen in CAM 24 when a neighbour comes home at half past seven (W1)
 //   know_flat     which door is hers: Civic Rest's notice on 4B from Saturday (at the door, or zoomed in CAM 25), the two from Civic Rest at
 //                 4B on Sunday at eight (CAM 25, W3), or the seal on it afterwards (W4)

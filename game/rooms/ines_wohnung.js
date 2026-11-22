@@ -1,4 +1,4 @@
-// ines_wohnung: Ines' flat, 4B (docs/kapitel2-design.md §3.3 W5–W7, §9.2), on blocks: its picture, walk area, props and lamps come from the bake
+// ines_wohnung: Ines' flat, 4B (docs/kapitel2-design.md §3.3 W5–W7, §9.2): its picture, walk area, props and lamps come from the bake
 // (game/rooms/ines_wohnung.layout.js, Nagiwa.at.ines_wohnung). What she left (the napkin, the file in the freezer): game/kapitel2_lerche.js.
 "use strict";
 

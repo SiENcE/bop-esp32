@@ -1,4 +1,4 @@
-// Nagiwa: Chapter 2, finding Lantern (docs/kapitel2-design.md §3.5, L1–L5), on blocks. On Sunday at ten Lantern's ten seconds break into
+// Nagiwa: Chapter 2, finding Lantern (docs/kapitel2-design.md §3.5, L1–L5). On Sunday at ten Lantern's ten seconds break into
 // every channel, and EVI records them (game/kapitel2_rauschen.js); under the noise Juno finds trees in water and green lights, the swamp
 // (know_sumpf). EVI sends her to Ratz, who knows every way out under the city and sends her on to Pike, the heron on the raft DATA 1C/GB,
 // who poles out there when nobody looks (know_pike; the user's decision, 2026-11-20, instead of the cable the half repair knew about). The

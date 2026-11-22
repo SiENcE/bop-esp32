@@ -68,7 +68,7 @@ sieht.
 
 ## Wie hat Juno EVI bekommen?
 
-In ihrer letzten Woche bei Nagi·wa, vor drei Jahren, fand sie den Prototyp **EVAL-7** auf einem Server, der
+In ihrer letzten Woche bei Nagi·wa, vor dreieinhalb Jahren, fand sie den Prototyp **EVAL-7** auf einem Server, der
 gelöscht werden sollte, und nahm ihn mit, weil er ihr leid tat. Sie nannte ihn EVI. Der Vorspann zeigt das
 ohne ein Wort: Im Karton, mit dem sie die Halle verlässt, liegt ein Datenstick mit dem Aufkleber
 `EVAL-7 // DELETE`.
@@ -139,7 +139,7 @@ In drei Stufen:
 2. **Ihre Verkäufe kommen zurück.** Das Kassenbuch zeigt, wer durch sie zu Schaden kam; Bao wird verletzt,
    wenn sie den Tresorcode verkauft hat; Sable verrät sie, wenn sie Sable den Clip verkauft hat.
 3. **Die Wahrheit trifft sie persönlich.** Ihre Nachbarn und ihr Bruder überwachen die Stadt im Schlaf, EVI
-   ist aus Junos eigenen Markierungen gemacht, und der Zeuge sieht ihr seit drei Jahren zu.
+   ist aus Junos eigenen Markierungen gemacht, und der Zeuge sieht ihr seit dreieinhalb Jahren zu.
 
 ## Was macht der Zeuge, und warum soll er weg?
 

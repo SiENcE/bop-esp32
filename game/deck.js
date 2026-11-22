@@ -49,6 +49,8 @@
     map: [82, 22, 228, 124],                                  // GLASS's map inside the window
     camBox: 54,                                               // a camera's place on it, as wide as its longest line ("CODE BEKANNT"): keep the cameras this far apart
   };
+  // the MÜLL's files: Juno's own names, so a translation renames them
+  const MUELL = Cutaway.i18n.declare("deck", ["NAGIWA_PERSONAL_KUENDIGUNG.MSG", "AN_TEO_ENTWURF_3.TXT", "AN_TEO_ENTWURF_7.TXT"]);
   Cutaway.i18n.declare("deck", [...Object.values(LABEL), "DECK // J.REYES", "{time}  {date}", "{chits} CHITS", "WARTEN", "ZURÜCK",
     "KONTAKTE", "KEIN ZUGANG", "KEIN SIGNAL", "CODE BEKANNT", "VERBUNDEN", "NETZKARTE // LOWER NINTH", "CLIP", "NOTIZ", "FOTO", "GELESEN", "online",
     "abwesend", "schläft", "Werbung", "KASSENBUCH", "+{chits}", "KONTOSTAND", "MIETE", "{n} CHITS, FÄLLIG IN 3 TAGEN", "{n} CHITS, FÄLLIG IN 2 TAGEN", "{n} CHITS, FÄLLIG MORGEN", "{n} CHITS, FÄLLIG HEUTE", "{n} CHITS, BEZAHLT", "{n} CHITS, BEZAHLT VON TEO", "DAVON HÜLLENABGABE {n}",
@@ -639,9 +641,7 @@
     /** MÜLL: what Juno threw away and never opened */
     muell(/** @type {CanvasRenderingContext2D} */ ctx) {
       const [X, Y] = D.win;
-      small(ctx, "NAGIWA_PERSONAL_KUENDIGUNG.MSG", X + 8, Y + 10, C.steel6);
-      small(ctx, "AN_TEO_ENTWURF_3.TXT", X + 8, Y + 22, C.steel6);
-      small(ctx, "AN_TEO_ENTWURF_7.TXT", X + 8, Y + 34, C.steel6);
+      MUELL.forEach((name, i) => small(ctx, t(name), X + 8, Y + 10 + 12 * i, C.steel6));
     },
   };
 

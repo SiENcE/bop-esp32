@@ -1,5 +1,5 @@
 // lantern_versteck: Lantern's caravan from the inside, his home and his sender (docs/kapitel2-design.md §3.5 L5, §9.2; the user's layout,
-// 2026-11-16), on blocks: its picture, walk area, props and lamps come from the bake (game/rooms/lantern_versteck.layout.js,
+// 2026-11-16): its picture, walk area, props and lamps come from the bake (game/rooms/lantern_versteck.layout.js,
 // Nagiwa.at.lantern_versteck). The bed at the back against the left wall, his neon poster against Lull over it, an LED ticker running along its foot; along the long side wall the kitchen with
 // its window and the fridge, then his monitors and deck and the rack of senders; the door to the cab at the front, only hinted at (shut:
 // nobody goes there); the sliding door out to the pontoon in the middle of the near side.

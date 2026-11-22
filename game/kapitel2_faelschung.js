@@ -1,4 +1,4 @@
-// Nagiwa: Chapter 2, the forgery (docs/kapitel2-design.md §3.4), on blocks. On Sunday at six Nagi·wa's news show a clip from CAM 31 in which a
+// Nagiwa: Chapter 2, the forgery (docs/kapitel2-design.md §3.4). On Sunday at six Nagi·wa's news show a clip from CAM 31 in which a
 // man in a wheelchair kills Ines, "ein Mann, der sich LANTERN nennt" (Nagi·wa doesn't know he runs a pirate station: the user, 2026-11-19). EVI finds it as the evening begins and puts it into the CACHE,
 // so it costs no state of its own; PRÜFEN (game/pruefen.js) lays it beside Juno's own recording:
 //   cache_clip_forgery   from Sunday 18:00, for everyone

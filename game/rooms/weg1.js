@@ -14,7 +14,7 @@
     // what hangs over the people: the cables and their lanterns, the strings of bulbs, the awnings, the blade signs
     // (and over it the steam from the gully, 24H's failing H, the shut shop's tube, the noodle bar's blade sign stuttering)
     foreground: [{ image: "weg1_over", at: [0, 0] }, ...P.parts.filter((/** @type {any} */ p) => p.layer === "over").map((/** @type {any} */ p) => ({ image: p.name, at: p.at }))],
-    // the people and the robot apart from the picture, so they can come and go (on blocks: art/rooms/weg1.px.js). The night after the
+    // the people and the robot apart from the picture, so they can come and go (art/rooms/weg1.px.js). The night after the
     // clip went to the shop's chain (shop24_gone, game/kapitel2_laden.js) the homeless man is gone, his cardboard left; after it was sold
     // through Sable another man stands in the costume; the robot goes round its puddle until Juno resets it, then round the street
     props: [

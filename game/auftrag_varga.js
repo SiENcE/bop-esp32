@@ -1,4 +1,4 @@
-// Nagiwa: job A of Chapter 1, "Der verschwundene Schuldner" (docs/kapitel1-design.md §3), on flat blocks. Varga wants Kessler found.
+// Nagiwa: job A of Chapter 1, "Der verschwundene Schuldner" (docs/kapitel1-design.md §3). Varga wants Kessler found.
 // Kessler has gone under, but he can't leave his noodles: at 22:15 someone with a hood draws number 7 on cam03, at 22:30 he crawls
 // into capsule 23 of the Morpheus (cam15, its code from Sable). Then K1a: sell him, lie, or warn him on his capsule's screen.
 //   varga_step    1: Juno has recognised him and knows about the Morpheus (nothing asks whether she took the job: finding him is enough)

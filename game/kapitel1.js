@@ -191,7 +191,7 @@ Nagiwa.threads.teo.push(
   { from: "teo", if: "rent=teo", at: "22:30", text: "Hab gehört, die Miete. Ich hab Schichten gemacht. Schon überwiesen. Sag nichts." },
 );
 
-// the cameras, on blocks (the buffers: what Juno missed tonight, kapitel0-design §3)
+// the cameras (the buffers: what Juno missed tonight, kapitel0-design §3)
 const MIC = { clear: 40, lost: 150 };
 Nagiwa.camRoom("cam21", { background: "cam21_bg", mic: { at: A21.mic, ...MIC }, hotspots: {
   menu: { name: "Speisekarte", rect: A21.menu, look: "Die Speisekarte von Pho Pump hängt im Fenster gegenüber.",

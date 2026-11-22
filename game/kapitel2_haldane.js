@@ -1,4 +1,4 @@
-// Nagiwa: Chapter 2's thread of Frau Haldane's son (kapitel2-design §6.2, story §9), on blocks. Najo writes to his mother every Sunday
+// Nagiwa: Chapter 2's thread of Frau Haldane's son (kapitel2-design §6.2, story §9). Najo writes to his mother every Sunday
 // from the Fifth, where he works, and since the 14th of October he hasn't (Chapter 1 begins it: on Thursday she tells Juno). Sunday is
 // the day of letters: from Sunday on she sits awake at her open door and asks Juno to look whether he is all right. Juno has no camera
 // in the Fifth; Sable sells a look into the archive of his hostel (150 chits, or Kessler's ring as Shine). CAM 51 shows what happened:
