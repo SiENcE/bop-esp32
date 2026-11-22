@@ -879,3 +879,12 @@ Aus `docs/review.md` (ein Review von Story und Umsetzung nach Kapitel 2), vom Nu
   Takt sagt, wo man ihn findet (Motte zählt nachts etwas mit), nicht mehr, wer ihn hat; Frau Imai sagt nicht mehr, dass sie von oben
   draufgeschaut hat, „als würde ich an einer Laterne hängen“. Was das Spiel zeigt, bleibt: Frau Haldanes Ecken, die Treppe aus CAM 18,
   `UNKNOWN LINK`, der Takt bei Mottes Mutter.
+- **Die Eltern von Juno und Teo sind tot.** Der Vater starb 2076 bei einem Unfall in der Pumpenhalle 3 (Juno war 16, Teo 8), die
+  Mutter zwei Jahre später, erschöpft von den Doppelschichten. Juno hat Teo großgezogen, und mit den Eltern ging die Flutschuld auf die
+  beiden über. Teo arbeitet heute in der Halle, in der der Vater starb; Tinte hat den Vater gekannt. Das Foto am Deck (2074) hat der
+  Vater gemacht.
+- **Teo bekommt mehr Bild** (`kapitel2-design` §6.6): Er erzählt mehr von sich und seinen Gefühlen, auch dass er die Eltern vermisst,
+  und seine Gespräche bauen aufeinander auf. Am Mittwoch in Kapitel 1 wählt Juno einmal, worüber sie mit ihm redet (`teo_talk`), und am
+  Montag knüpft er daran an. Ab Samstag in Kapitel 2 gibt es eine Kamera in der Pumpenhalle 3 (CAM 33, Flutwerk), deren Code Juno sich
+  bei Sable besorgen muss, damit sie aus der Wohnung kommt. Die Entwürfe an Teo im MÜLL lassen sich lesen; abschicken kann Juno sie in
+  Kapitel 3.

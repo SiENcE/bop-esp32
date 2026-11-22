@@ -119,3 +119,10 @@ in einem Wohnwagen auf Pontons und betreibt von da seinen Sender.
 - Der halb versunkene Laden würde ein Wohnwagen auf Pontons.
 - Für den Solver ist der kleine Auftrag ein eigener Schritt mit eigenem Zähler, wie Ratz' Schloss jetzt. Die Fahrt selbst ist eine
   Kette ohne Verzweigung und kostet keine Zustände.
+
+## 2026-11-22: Die Verbindung zwischen Juno und Teo (vom Nutzer, beim Review)
+
+Einige Gesprächsoptionen mit Teo lassen sich nur einmal wählen und stärken die Verbindung zwischen Juno und Teo. Das kann das Ende
+verbessern, in dem Juno ihn weckt (Entscheidung 4): Teo freut sich, wieder bei Juno zu sein. „Nur eine Idee.“ Im Design ist es bisher
+nur so weit, dass `teo_talk` (Mittwoch, Kapitel 1) weitergegeben wird und zwei seiner drei Werte die beiden näher bringen
+(`kapitel2-design` §6.6).

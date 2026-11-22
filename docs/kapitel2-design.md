@@ -653,6 +653,78 @@ Stammgast im LUCKY STATIC.
 **Okonkwos Ware** (nur ein Look, vom Nutzer so gewählt): Nach `k1b=sold` steht im Laden ein Korb mit Okonkwos Dosen, billig, unter dem
 neuen Preis noch seine Schrift. Juno: „Das sind Okonkwos Dosen. Da steht noch sein Preis drunter.“ Sonst ist es ein Regal wie die anderen.
 
+### 6.6 Teo und die Pumpenhalle 3 (`off_teo`)
+
+(Vorschlag 2026-11-22 nach dem Review, `docs/review.md` §2.4, und den Antworten des Nutzers; noch nicht freigegeben.) Teo ist der
+Titel, aber bisher sieht man ihn nur dreimal wach. Dieser Faden gibt ihm eine Kamera, Gespräche, die aufeinander aufbauen, und eine
+Vergangenheit: die Eltern (story §10j).
+
+**Die Eltern** (vom Nutzer entschieden 2026-11-22, story §10j): Der Vater starb 2076 bei einem Unfall in der Pumpenhalle 3, Juno war
+16, Teo 8. Die Mutter starb zwei Jahre später, erschöpft von den Doppelschichten. Juno hat Teo großgezogen, und mit den Eltern ging die
+Flutschuld auf die beiden über. Teo arbeitet heute in der Halle, in der der Vater starb, und Tinte hat den Vater gekannt. Das Foto am
+Deck (Dach, 2074, Juno 14, Teo 6) ist zwei Jahre davor; der Vater hat es gemacht.
+
+**Mittwoch, Kapitel 1: eine Wahl** (vom Nutzer gewünscht 2026-11-22). Teos Besuch (`teo_visit`, kapitel1-design §7) bleibt, wie er
+ist, bis „Und du? Immer noch die Kameras?“. Danach wählt Juno einmal, worüber sie mit ihm redet, bevor er zur Schicht muss. Ein Flag,
+`teo_talk`, merkt es sich; Kapitel 2 übernimmt es (`keep`), und Teo knüpft am Montag daran an. Zwei der drei Antworten bringen die
+beiden näher (der Vorschlag des Nutzers: das kann später zählen, wenn Juno Teo weckt und er sich freut, wieder bei ihr zu sein;
+Entscheidung 4, story §7 Kapitel 4).
+
+| Juno | Teo | `teo_talk` |
+|---|---|---|
+| „Denkst du noch an Papa?“ | „Jeden Tag. Ich arbeite ja da, wo er ...“ – „Manchmal red ich mit ihm. Am Becken, wenn keiner guckt. Blöd, oder?“ – Juno: „Nein.“ – „Die Krake hat ihn gekannt. Die sagt, er hat beim Tauchen gesungen. Falsch, aber laut.“ | `papa` |
+| „Bleib zum Essen. Nur fünf Minuten.“ | Er setzt sich auf die Kante des Betts. „Fünf Minuten.“ – „Mama hat die Brühe immer zu salzig gemacht.“ – Juno: „Bao auch.“ – „Deswegen ess ich da.“ – Er bleibt zehn. | `essen` |
+| „Wie sind die Doppelschichten wirklich?“ | „Gut. Ehrlich.“ – „...“ – „Manchmal weiß ich nicht mehr, ob ich wach bin. Dann ist es auch egal.“ – „Das war ein Witz, Ju.“ | `schicht` |
+
+Danach wie bisher: „Iss. Ich muss los, meine Schicht fängt um acht an.“ Nach `papa` und `essen` sagt Juno „Pass auf dich auf.“, nach
+`schicht` nichts.
+
+**Die Kamera: CAM 33, Pumpenhalle 3** (ab Samstag, vom Nutzer entschieden 2026-11-22). Die Halle gehört dem Flutwerk, nicht Nagi·wa:
+Junos alter Zugang hilft hier nicht, sie muss sich den Code besorgen, und dafür muss sie aus der Wohnung (der Wunsch des Nutzers).
+
+| Schritt | Ort | Was |
+|---|---|---|
+| T1 | Deck, GLASS | Ab Samstag steht CAM 33 grau auf der Karte, am Meer: `FLUTWERK, PRIVAT`. Ein Klick: „Teos Halle. Die hat ein eigenes Netz.“ – „Den eigenen Block glasst man nicht. Den eigenen Bruder erst recht nicht.“ |
+| T2 | `sable_booth` | Sable, unter dem Thema „Ich such was.“ (4.3 des Reviews: Sables Gespräch als `Nagiwa.talkTree`, mit dem Wohnheim und den Bäumen): „Die Pumpenhalle drei. Hast du da eine Kamera?“ – „Flutwerk. Die zahlen schlecht und ändern nie was.“ – „Hundert.“ Oder ein roher Clip. Danach `link_cam33`. |
+| T3 | Deck, GLASS, CAM 33 | Die Halle: das Filterbecken mit Tinte (ein großer Schatten, Saugnäpfe am Glas, ein Sprechkragen), die Pumpen, eine Bank. Juno sieht Teo bei der Schicht (ab 20:00), und ab 22:00 in der Pause schlafen die Kollegen auf der Bank, und ihre Pflaster blinken gleichzeitig: Sie zucken im selben Moment. |
+
+Was CAM 33 zeigt, ist nur ein Blick (kein Flag, die Routinen nach der Uhr). Nah am Mikro steht das Becken, darum hört Juno, was Teo
+Tinte erzählt, und das ist, was er Juno nie sagt (ein Klick auf Teo, je Abend etwas anderes):
+
+| Abend | Teo und Tinte (in der Pause, 22:00 bis 23:00) |
+|---|---|
+| Samstag | „Meine Schwester hat wieder nicht gegessen.“ – Tinte: „Und du?“ – „Ich hab Lull. Ich brauch nichts.“ – Tinte legt einen Arm ans Glas, dahin, wo er sitzt. |
+| Sonntag | Teo schläft mit den anderen auf der Bank und zuckt mit ihnen. Tinte: „Schon wieder.“ Juno: „Wie die anderen.“ |
+| Montag | „Wir waren auf dem Dach. Wie früher.“ – Tinte: „Und?“ – „Sie hat nichts gesagt. Wie Papa, wenn er sich gefreut hat.“ – „Glaubst du, er hätte das gewollt? Dass ich hier bin?“ – Tinte: „Er wollte, dass du singst. Du singst nicht.“ |
+
+**Montag: das Dach** (§7) knüpft an. Kennt Juno Tinte aus CAM 33 (`link_cam33`), fragt sie nicht mehr „Wer ist Tinte?“, sondern:
+„Die Krake. Ich hab sie gesehen.“ – Teo: „Du hast mich geglasst?“ – „Einmal.“ – Teo: „Und, hab ich gut ausgesehen?“ Dann nach
+`teo_talk`:
+
+| `teo_talk` | auf dem Dach |
+|---|---|
+| `papa` | „Ich hab ihm erzählt, dass du wieder Kameras machst. Am Becken.“ – „Und?“ – „Er hätte gelacht. Und dann gesagt, du sollst was essen.“ – „Ich vermiss die beiden, Ju. Manchmal mehr, wenn ich wach bin.“ |
+| `essen` | „Das war schön am Mittwoch. Die fünf Minuten.“ – „Es waren zehn.“ – „Ich weiß. Ich hab gezählt.“ – „Mama hätte uns rausgeworfen. Zu salzig, zu spät, zu wenig geschlafen.“ |
+| `schicht` | „Am Mittwoch hab ich gelogen.“ – „Ich weiß.“ – „Vier Stunden fühlen sich nicht an wie zehn. Die fühlen sich an wie weg.“ – „Papa hat auch gesagt, nur ein Jahr.“ |
+
+Danach wie bisher: „Wenn ich schlaf, ist alles still. Keine Pumpen. Keine Schulden.“, und er schläft an ihrer Schulter ein.
+
+**Die Entwürfe im MÜLL** (vom Nutzer entschieden 2026-11-22): `AN_TEO_ENTWURF_3.TXT` und `AN_TEO_ENTWURF_7.TXT` lassen sich ab dem
+Prolog öffnen (ein Blick, kein Flag; abschicken kann Juno sie erst in Kapitel 3, wenn er schläft). Was Juno ihm nie geschickt hat:
+
+> ENTWURF 3: „Teo. Ich hab Mamas Schal gefunden, hinter dem Schrank. Willst du ihn? Du musst nicht. Ich dachte nur, weil du doch“\
+> ENTWURF 7: „Hör auf mit den Doppelschichten. Papa hat auch gesagt, das ist nur für ein Jahr. Ich zahl meine Miete selbst. Ich“
+
+Die Entwürfe 1, 2, 4, 5 und 6 hat sie gelöscht.
+
+**Was es kostet:** `teo_talk` hat drei Werte und ist ab Mittwoch gesetzt, also verdreifacht es die Zustände von Kapitel 1 ab dem
+ersten Abend (in jedem Lauf). `link_cam33` gehört zum eigenen Faden `off_teo` (der Solver prüft ihn allein, mit den anderen Fäden
+zu); was CAM 33 zeigt, ist nur ein Blick. Kapitel 2 übernimmt `teo_talk` und gibt es weiter (für Kapitel 3 und Entscheidung 4).
+
+**Neu zu malen** (Blöcke zuerst, dann die Freigabe): CAM 33, die Pumpenhalle 3 von oben im Phosphor (das Becken mit Tinte, die
+Pumpen, die Bank), Teo und zwei, drei Kollegen als Feed-Figuren (Teo sitzend, schlafend; die Kollegen schlafend), Tinte im Becken (ein
+Schatten mit Armen, die sich bewegen), die grauen und hellen Zustände von CAM 33 in GLASS.
+
 ## 7. Das Leben drumherum
 
 | Wann | Wo | Was |
