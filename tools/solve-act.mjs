@@ -1,17 +1,19 @@
 // Solve one act alone, from its start (the whole game would multiply every act by what the ones before leave):
-//   node tools/solve-act.mjs kapitel1 [--full] [--max N] [--set flag,flag] [--from graph files] [--workers N] [--json path.json]
+//   node tools/solve-act.mjs kapitel1 [--full] [--max N] [--set flag,flag] [--from graph files] [--hold f,g] [--vary f,g] [--only f,g] [--workers N] [--json path.json]
 // --set: flags for its start: one kept from the act before (with its value: k1a=lied), or off_<thread> to shut a side story (CLAUDE.md, checks);
 // --from: the runs of the act before (build/graph/<act>_<run>.js, comma between them; sh tools/graph.sh makes them): the act begun from
 // every way they end, as it keeps them, and searched from all at once (the engine's C15); with --full each start must be won;
+// --hold, --vary, --only narrow those starts for a run about a part of the act (the engine's startsFrom): flags no start takes over (Ines'
+// stick, in a run that shuts the main way), the only flags that make starts of their own (the run's own answers), the only ends that count;
 // --workers: threads that search, default one less than the cores, at most 12.
 import { writeFileSync } from "node:fs";
 import { availableParallelism } from "node:os";
 import { makeSolver, loadFor, describe } from "../lib/cutaway/tools/lib/solver.mjs";
-import { startsFor } from "../lib/cutaway/tools/lib/starts.mjs";
+import { startsFromArgs, STARTS_OPTIONS } from "../lib/cutaway/tools/lib/starts.mjs";
 
 const args = process.argv.slice(2);
 const opt = (n, d) => { const i = args.indexOf(n); return i >= 0 ? args[i + 1] : d; };
-const act = args.find((a, i) => !a.startsWith("--") && !["--max", "--set", "--from", "--workers", "--json"].includes(args[i - 1]));
+const act = args.find((a, i) => !a.startsWith("--") && !["--max", "--set", "--workers", "--json", ...STARTS_OPTIONS].includes(args[i - 1]));
 if (!act) { console.error("usage: node tools/solve-act.mjs <act> [--full] [--max N] [--set flag] [--json out.json]"); process.exit(2); }
 const kept = opt("--set");
 
@@ -21,9 +23,7 @@ const setup = { page: "index.html", options: { act, demo: { acts: [act] } }, sta
   const [k, v] = f.split("=");
   return v === undefined ? { set: k } : { set: k, value: Number.isNaN(Number(v)) ? v : Number(v) };
 }) : [] };
-const from = opt("--from");
-const starts = from ? await startsFor("index.html", act, from.split(",")) : undefined;
-if (starts) console.log(`${starts.length} starts from the runs before (${starts.reduce((n, s) => n + s.n, 0)} end states)`);
+const starts = await startsFromArgs("index.html", act, args);
 const solver = await makeSolver(loadFor(setup), { workers: Number(opt("--workers", String(Math.min(12, availableParallelism() - 1)))), setup, starts: starts?.map((s) => s.flags) });
 const t0 = Date.now();
 let shown = 0;
