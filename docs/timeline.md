@@ -89,7 +89,7 @@ Pike, der 24h-Laden in der Fischermann Street, Frau Imai, Frau Haldanes Sohn und
 
 | Kapitel | Was |
 |---|---|
-| 3 „Lull“ | Teo liegt auf der Schlafstation im Fünften. Juno nimmt Lull und ist wach im gemeinsamen Traum; die Quiet stürmt den Block. Am Ende ist die Wohnung ausgebrannt und EVI weg. |
+| 3 „Lull“ | Teo liegt auf der Schlafstation im Fünften. Juno nimmt Lull und ist wach im gemeinsamen Traum; die Quiet stürmt den Block. Am Ende ist die Wohnung ausgebrannt, das große Deck geschmolzen, und von EVI läuft nur ein Rest auf dem Taschen-Deck. |
 | 4 „Die Quiet“ | Juno ist gejagt, auf dem Drain-Markt und in den Sümpfen; EVI kommt zurück. Die Bereinigung hat eine Frist von drei Tagen; Entscheidung 4: Teo wecken oder im Traum lassen. |
 | 5 „Die Krone“ | Aubrechts Angebot, der Einbruch in den Tower, die Begegnung mit Ashe. |
 | 6 „Besser schlafen“ | Das Finale im Ruhekern, am Stuhl; das Kassenbuch zählt. |

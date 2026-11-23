@@ -131,10 +131,11 @@ der Zeuge mit vielen Stimmen (Frau Haldanes ist darunter), Teo, der ruhig eine K
 zurückwill. Währenddessen
 stürmt die Quiet den Block; Motte warnt Juno, wenn sie nett zu ihm war, sonst flieht sie über das Dach.
 **Entscheidung 3:** was sie dem Zeugen sagt („Ich helfe dir", „Gib mir meinen Bruder zurück", „Du bist genau
-wie die"). Am Ende ist die Wohnung ausgebrannt, das Deck geschmolzen, **EVI weg**.
+wie die"). Am Ende ist die Wohnung ausgebrannt, das große Deck geschmolzen, und **von EVI ist nur ein Rest übrig**: Auf dem
+Taschen-Deck läuft sie roh weiter, glitchig und mit verschlüsselten Tipps.
 
 **Kapitel 4 „Die Quiet"** (gejagt). Juno taucht auf dem Drain-Markt und in den Sümpfen unter, Ratz führt sie
-durch die Rohre, sie baut ein neues Deck. EVI kommt zurück: aus Mottes Backup (wenn Juno ihn unterrichtet
+durch die Rohre, sie baut ein neues Deck. Darin wird EVI wieder ganz: aus Mottes Backup (wenn Juno ihn unterrichtet
 hat) oder vom Zeugen, mit Lücken und Magenta in den Augen, dafür kann sie ihn übersetzen. Die Verbündeten
 werden geprüft: Sable verrät Juno, wenn sie Sable den Clip verkauft hat; Morrow lässt sich mit der
 zerschnittenen Fälschung aus Kapitel 2 und ihrer Tochter umstimmen, die Juno in Kapitel 3 im Traum gefunden

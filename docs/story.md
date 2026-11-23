@@ -478,9 +478,9 @@ Das Design steht in `docs/kapitel2-design.md` (Entscheidungen in §10h).
   fliehen).
 - **Entscheidung 3:** was Juno dem Zeugen sagt. „Ich helfe dir", „Gib mir meinen Bruder zurück" oder
   „Du bist genau wie die." Das bestimmt, wie der Zeuge im Finale handelt.
-- **Das Ende:** Juno entkommt aus dem Kessel-Block. Ihre Wohnung ist ausgebrannt, ihr Deck ist weg,
-  und sie hat nur noch ihr Implantat. **EVI ist weg.** Das letzte, was das Deck zeigt, bevor es
-  schmilzt, ist EVIs Gesicht im Glitch.
+- **Das Ende:** Juno entkommt aus dem Kessel-Block. Ihre Wohnung ist ausgebrannt, ihr großes Deck ist
+  geschmolzen, und sie hat nur noch das Taschen-Deck und ihr Implantat. **Von EVI ist nur ein Rest
+  übrig** (§10k). Das letzte, was das große Deck zeigt, bevor es schmilzt, ist EVIs Gesicht im Glitch.
 
 ### Kapitel 4: Die Quiet (gejagt, ~2 Std.)
 
@@ -490,10 +490,11 @@ Das Design steht in `docs/kapitel2-design.md` (Entscheidungen in §10h).
   ein neues Deck (gekauft, getauscht oder mit altem Shine bezahlt). Ratz kennt die Rohre, durch die
   man ungesehen von einem Markt zum anderen kommt, und verkauft Teile zu Wucherpreisen, aber er
   verkauft Juno nicht.
-- **EVI kommt zurück**, immer, aber auf zwei Wegen:
+- **EVI wird wieder ganz**, sobald das neue Deck läuft; bis dahin läuft sie roh auf dem Taschen-Deck (§10k).
+  Ganz wird sie immer, aber auf zwei Wegen:
   - Hat Juno Motte unterrichtet (`moth_student`), hat Motte ein Backup gemacht („Du hast gesagt, man
-    macht immer ein Backup."). EVI wacht im neuen Deck auf und ist ganz EVI.
-  - Sonst bringt der Zeuge EVI zurück: Das neue Deck startet, und EVI ist da, mit Lücken in der
+    macht immer ein Backup."): vom Taschen-Deck, mit EVIs KI-Daten. EVI wacht im neuen Deck auf und ist ganz EVI.
+  - Sonst füllt der Zeuge die Lücken: Das neue Deck startet, und EVI ist ganz da, mit Lücken in der
     Erinnerung und einem magentafarbenen Glanz in den Augen. „Sie haben mich aufgehoben. Die
     Schlafenden. Sie sind sehr viele, Juno." Diese EVI hört den Zeugen und kann ihn übersetzen, aber sie
     erinnert sich nicht mehr an den Prolog.
@@ -965,3 +966,10 @@ Aus `docs/ideen2.md` (Ideen aus dem Review vom 2026-11-22), vom Nutzer entschied
 - **Wo Junos Körper liegt, während sie im Traum sieht:** In Kapitel 3 in ihrer Wohnung (§7). Ab Kapitel 4 an einem Ort, an dem sie
   schutzlos liegt, solange sie sieht: eine Kapsel im Morpheus, Lanterns Bett, Okonkwos Hinterzimmer oder Sables Hinterzimmer; welcher,
   legt das Design von Kapitel 4 fest.
+- **EVI nach dem Brand** (vom Nutzer entschieden 2026-11-23): EVI läuft unterwegs wie immer auf dem Taschen-Deck (§10b), und das hat
+  Juno in der Tasche, als sie aus dem Kessel-Block flieht. Mit dem großen Deck schmelzen EVIs Rechenkraft und der größte Teil ihrer
+  Daten; auf dem kleinen Gerät läuft bis zum neuen Deck in Kapitel 4 nur noch eine rohe, gedrosselte EVI. Sie glitcht mehr, tut
+  seltsame Dinge und gibt verschlüsselte Tipps, ist aber da und bleibt der Hinweisknopf. Was sie Seltsames tut, ist nur zu sehen und
+  ändert nichts, was das Spiel braucht; ihre Hinweise bleiben lösbar (die dritte Stufe ist durch den Glitch hindurch zu verstehen).
+  Mottes Backup hat er in Kapitel 2 vom Taschen-Deck gezogen, mit EVIs KI-Daten: Mit ihm wird sie im neuen Deck wieder ganz EVI, ohne
+  es füllt der Zeuge die Lücken (§7, Kapitel 4).
