@@ -20,13 +20,16 @@ if (!args.length) { console.error("usage: node tools/cached.mjs [--fresh] <comma
 
 /** every file under a folder @param {string} dir @returns {string[]} */
 const walk = (dir) => readdirSync(dir, { withFileTypes: true }).flatMap((e) => e.isDirectory() ? walk(path.join(dir, e.name)) : [path.join(dir, e.name)]);
+/** what the run writes (graph.mjs --out): no input, but the run is needed again when it is missing */
+const written = args.includes("--out") ? path.resolve(root, args[args.indexOf("--out") + 1]) : null;
 /** the files a check reads: the page and its scripts (no fetch: that is all the game loads), the engine's tools, this repo's
- * tools a check runs (solve-act.mjs and what it imports), and every argument that names a file (a click path) */
+ * tools a check runs (solve-act.mjs and what it imports), and every argument that names a file (a click path, the graph data of
+ * the runs an act starts from), but what it writes */
 function inputs() {
   const page = path.join(root, "index.html");
   const scripts = [...readFileSync(page, "utf8").matchAll(/<script src="([^"]+)"/g)].map((m) => path.join(root, m[1]));
   const tools = walk(path.join(root, "lib/cutaway/tools")).filter((f) => /\.(mjs|js)$/.test(f));
-  const named = args.map((a) => path.resolve(root, a)).filter((f) => existsSync(f) && statSync(f).isFile());
+  const named = args.map((a) => path.resolve(root, a)).filter((f) => f !== written && existsSync(f) && statSync(f).isFile());
   return [...new Set([page, ...scripts, ...tools, ...named])].sort();
 }
 const h = createHash("sha1").update(JSON.stringify(args));
@@ -34,7 +37,7 @@ for (const f of inputs()) h.update(path.relative(root, f).replace(/\\/g, "/") + 
 const key = h.digest("hex").slice(0, 20);
 const dir = path.join(root, "build/check-cache"), file = path.join(dir, key + ".txt");
 
-if (!fresh && existsSync(file)) {
+if (!fresh && existsSync(file) && (!written || existsSync(written))) {
   // the note first: the checks read a run's last line ("all passed")
   console.log(`(from the cache: nothing it reads has changed since it passed, ${statSync(file).mtime.toISOString().slice(0, 16).replace("T", " ")})`);
   process.stdout.write(readFileSync(file, "utf8"));

@@ -102,7 +102,7 @@ code comments English.
 | `game/skin.js`, `font.js`, `transitions.js`, `sounds.js`, `music.js`, `title.js`, `hints.js` | the look (frames, cards, labels, choices), the fonts, room transitions, synthesised sounds and music, title and menu screens, hints |
 | `art/**/*.px.js` | pxl sources: `lib/` (shared `iso.js`, `feed.js`), `characters/`, `rooms/`, `cams/`, `mock/` (flat blocks of what isn't painted yet), `ui/`, `intro/`, `mockups/`, `test/`; `*_review.px.js` are review sheets, never built into the game |
 | `assets/*.js` | built atlases (checked in, so the game runs without Node) |
-| `tools/` | `build_art.sh`, `sync-engine.sh`, `render-sounds.mjs`, `solve-act.mjs` (one act alone), `check.sh` (all the checks), `cached.mjs` (a check again only if what it reads changed), `sh.mjs` (a script of tools/ with Git for Windows' sh, as the studio's tasks run them), `graph.sh` (the connections to look at; `all`: every run the checks make), `handoff.sh` (the hand-over between the acts, from those runs), `doc-lint.mjs` (the docs against the game: names, flag values, weekdays; `--flags` writes `docs/flags.md`), `check-hover.mjs` (the pointer turns hot), `new-room.mjs` (a new street-mode room from a template: map, bake file, own kit, baked, then the game's room, places and index.html; `--remove` takes it out), `iso-layout.mjs` (a map's numbers, as the bake writes them), `room-parts.mjs` (a painted room's PARTS line as `game/rooms/<id>.parts.js`; `build_art.sh room` runs it), `market-layout.mjs` (the Drain Market's numbers from its approved layout: walk area, places, hotspots, the crowd, where it sounds; `build_art.sh room drain_market` runs it), `title-backdrop.mjs` (the menu's backdrop brought to 320x180), `cjk-raster.mjs` (CJK glyphs for layout tests), `portrait-title.py` (the profiles of Juno and Teo, cut from the title picture), `paths/` (the ways to click through, the prologue's and Chapter 1's) |
+| `tools/` | `build_art.sh`, `sync-engine.sh`, `render-sounds.mjs`, `solve-act.mjs` (one act alone), `check.sh` (all the checks), `cached.mjs` (a check again only if what it reads changed; what a run writes with `--out` is no input, and a missing one runs it again), `runs.sh` (the solver's runs of Chapters 1 and 2, one list for `check.sh` and `graph.sh`: their flags, and for Chapter 2 the run of Chapter 1 each begins from and how), `sh.mjs` (a script of tools/ with Git for Windows' sh, as the studio's tasks run them), `graph.sh` (the connections to look at; `all`: every run the checks make), `handoff.sh` (the hand-over between the acts, from those runs), `doc-lint.mjs` (the docs against the game: names, flag values, weekdays; `--flags` writes `docs/flags.md`), `check-hover.mjs` (the pointer turns hot), `new-room.mjs` (a new street-mode room from a template: map, bake file, own kit, baked, then the game's room, places and index.html; `--remove` takes it out), `iso-layout.mjs` (a map's numbers, as the bake writes them), `room-parts.mjs` (a painted room's PARTS line as `game/rooms/<id>.parts.js`; `build_art.sh room` runs it), `market-layout.mjs` (the Drain Market's numbers from its approved layout: walk area, places, hotspots, the crowd, where it sounds; `build_art.sh room drain_market` runs it), `title-backdrop.mjs` (the menu's backdrop brought to 320x180), `cjk-raster.mjs` (CJK glyphs for layout tests), `portrait-title.py` (the profiles of Juno and Teo, cut from the title picture), `paths/` (the ways to click through, the prologue's and Chapter 1's) |
 | `studio.json` | the editor's studio: writable folders, layer files, tasks |
 | `build/`, `out/` | scratch (raw pxl output, screenshots, renders), not checked in |
 | `.claude/skills/claude-pxl/` | the pxl skill, its own repo (gitignored) |
@@ -142,7 +142,7 @@ code comments English.
   prologue (dev), `?manual` freezes the clock, `?nointro`, `?edit` / F10 the editor, F9 the debug overlay.
 - The editor with the studio: `node lib/cutaway/tools/studio.mjs` (guide: the engine's `docs/editor.md`, F1).
 - Engine copy: `sh tools/sync-engine.sh`.
-- The game's connections: `sh tools/graph.sh [prolog | main | <thread>]` searches as the checks do, watches every move (what it
+- The game's connections: `sh tools/graph.sh [prolog | main | <thread> | kapitel2_<run> | all]` searches as the checks do, watches every move (what it
   needs, what it brings about) and writes `build/graph/<name>.js`; open the link it prints (the engine's `graph.html`): the
   puzzle dependency chart with the winning way, and the state budget (which flag multiplies the states by how much). In the
   editor it is the tab Connections: the studio's tasks "graph: prolog" and "graph: kapitel1 main" make the data
@@ -199,11 +199,11 @@ node tools/solve-act.mjs prolog --full --set off_roof  # the prologue's way, the
 node lib/cutaway/tools/play.mjs index.html --act prolog --path tools/paths/prolog.json   # the prologue alone with real clicks (it ends where it would go on): "all passed"
 node lib/cutaway/tools/play.mjs index.html --act prolog --path tools/paths/prolog_dach.json   # the prologue with the roof: "all passed"
 node lib/cutaway/tools/play.mjs index.html --path tools/paths/spiel.json   # the whole game from the title, through the prologue and Chapter 1 to Chapter 2's end: "all passed"
-node tools/solve-act.mjs kapitel1 --full --set off_roof,off_zeitung,off_imai,off_traeger,off_varga,off_tide,off_motte,off_vesper   # Chapter 1's main thread: "no soft-locks", every state has a hint
-# and each side story alone (sh tools/check.sh does all of it): --set off_main,know_meeting and off_<the others>
+node lib/cutaway/tools/graph.mjs index.html --act kapitel1 --set off_roof,off_zeitung,off_imai,off_traeger,off_varga,off_tide,off_motte,off_vesper --out build/graph/kapitel1_main.js   # Chapter 1's main thread, traced (it says what the solver says): "no soft-locks", every state has a hint, and how it ends, for Chapter 2
+# and each side story alone (sh tools/check.sh does all of it, the runs listed in tools/runs.sh): --set off_main,know_meeting and off_<the others>, --out build/graph/kapitel1_<thread>.js
 node lib/cutaway/tools/play.mjs index.html --act kapitel1 --path tools/paths/kapitel1_main.json   # its main way with real clicks: "all passed"
-node tools/solve-act.mjs kapitel2 --full --set off_roof,off_zeitung,off_imai,off_traeger,off_varga,off_tide,off_motte,off_vesper,off_lantern,off_shop24,off_haldane,off_teo   # Chapter 2's main way, the threads shut as in Chapter 1, its own (the 24-hour shop) and the way to Lantern too
-# and the same with ,off_flat,evi_knows,stick_ines (Ines' flat shut and taken as done: the stick doesn't touch it); the way to Lantern alone: --set <the threads>,off_main,stick_ines,off_dryer,evi_knows,forgery_proven (sh tools/check.sh does all three, and the 24-hour shop alone: --set off_roof,off_zeitung,off_imai,off_traeger,off_motte,off_vesper,off_lantern,off_klinik,off_main,evi_knows,off_varga,off_tide; Frau Imai's second part the same without off_imai, with off_shop24 and imai_told=truth or =dream; Frau Haldane's son the same with off_imai and without off_haldane; Teo and the pump hall the same with off_imai and off_haldane, without off_teo; every other Chapter 2 run has off_haldane and off_teo)
+node tools/solve-act.mjs kapitel2 --full --set off_roof,off_zeitung,off_imai,off_traeger,off_varga,off_tide,off_motte,off_vesper,off_shop24,off_haldane,off_teo,off_lantern --from build/graph/kapitel1_main.js --vary e1 --hold stick_ines   # Chapter 2's main way from every way Chapter 1's main thread ends (the solver across the chapter line, C15): "every one can be won", "no soft-locks", every state has a hint
+# and its other runs (sh tools/check.sh does all of them): tools/runs.sh lists each with its flags, the run of Chapter 1 it begins from and how its starts are narrowed (--vary e1 and its own answer, --hold or --only stick_ines); the stick, the way to Lantern, Varga, Tide, the 24-hour shop, Frau Imai, Frau Haldane, Teo
 node lib/cutaway/tools/play.mjs index.html --act kapitel2 --path tools/paths/kapitel2_main.json   # its main way with real clicks: "all passed"
 ```
 
@@ -226,7 +226,11 @@ not covered by the solver: keep them independent (their own `<thread>_step` numb
 
 Across chapters (the user's decision, 2026-11-14, story §10h): a chapter takes over only a few flags from the earlier ones, and most
 things are settled within the chapter they begin in, or variables and open threads pile up chapter by chapter. Each chapter's design
-lists exactly what it keeps (its act's `keep`) and what it hands on.
+lists exactly what it keeps (its act's `keep`) and what it hands on. The solver goes across the chapter line (C15): each run of a chapter begins from
+every way its run of the chapter before ends (`--from build/graph/<act>_<run>.js`, which that run writes), narrowed to what it is about
+(`--vary` the answers it reads, `--hold` what would open a part it shuts, `--only` the ends it is about; `tools/runs.sh`), and every one
+of those starts must be won. Every answer a chapter hands on multiplies the next one's states where it is read late, so a run varies
+only its own (Chapter 2: e1 and the thread's answer, about two to three times the states of one start).
 
 ## Art
 

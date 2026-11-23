@@ -1,26 +1,26 @@
 #!/usr/bin/env sh
 # The game's connections, to look at (the engine's tools/graph.mjs and graph.html): every state searched as in
 # the checks, every move watched (what it needs, what it brings about), and the state budget. One data file per
-# act and per thread into build/graph/, as check.sh solves them (each of Chapter 1's threads alone, the others shut).
-#   sh tools/graph.sh [prolog | main | <thread> | kapitel2 | all]...   (no argument: the prologue and Chapter 1's main thread; all: every run
-#   the checks make, which the hand-over check (tools/handoff.sh) needs; kapitel2: Chapter 2's main way, the threads shut as in Chapter 1; kapitel2_stick: the same with the stick still in Juno's bag and her flat shut and taken as done (off_flat, evi_knows), as check.sh has it; both with the way to Lantern shut, off_lantern;
-#   kapitel2_lantern: that way alone, Juno with the stick and the dryer shut, her flat and the forgery done)
+# act and per run into build/graph/, the runs as check.sh solves them (tools/runs.sh: each of Chapter 1's threads alone, the others
+# shut; each of Chapter 2's runs from every way its run of Chapter 1 ends, so that run's file must be there first).
+#   sh tools/graph.sh [prolog | main | <thread> | kapitel2_<run> | kapitel2 | all]...   (no argument: the prologue and Chapter 1's main
+#   thread; kapitel2: kapitel2_main; all: every run the checks make, in order, which the hand-over check (tools/handoff.sh) needs)
 # Prints a link to open for each; the viewer runs from file://.
 cd "$(dirname "$0")/.."
-THREADS="roof zeitung imai traeger varga tide motte vesper"
-off() { r=""; [ "$1" = main ] || r=",off_main,know_meeting"; [ "$1" = motte ] && r="$r,moth_kind"; for t in $THREADS; do [ "$t" = "$1" ] || r="$r,off_$t"; done; echo "${r#,}"; }
+. tools/runs.sh
 mkdir -p build/graph
-list="${*:-prolog main}"; [ "$list" = all ] && list="prolog main $THREADS kapitel2 kapitel2_stick kapitel2_lantern"
+list="${*:-prolog main}"
+[ "$list" = all ] && list="prolog main $THREADS $(for v in $K2_NAMES; do printf 'kapitel2_%s ' "$v"; done)"
 for what in $list; do
+  [ "$what" = kapitel2 ] && what=kapitel2_main
   if [ "$what" = prolog ]; then
     node lib/cutaway/tools/graph.mjs index.html --act prolog --set off_roof --out build/graph/prolog.js | grep -E "states in|soft-lock|SOFT|HINTS|hints:|^wrote|^open"
-  elif [ "$what" = kapitel2 ]; then
-    node lib/cutaway/tools/graph.mjs index.html --act kapitel2 --set "$(off main),off_lantern,off_shop24,off_haldane,off_teo" --out build/graph/kapitel2_main.js | grep -E "states in|soft-lock|SOFT|HINTS|hints:|^wrote|^open"
-  elif [ "$what" = kapitel2_stick ]; then
-    node lib/cutaway/tools/graph.mjs index.html --act kapitel2 --set "$(off main),off_lantern,off_shop24,off_haldane,off_teo,off_flat,evi_knows,stick_ines" --out build/graph/kapitel2_stick.js | grep -E "states in|soft-lock|SOFT|HINTS|hints:|^wrote|^open"
-  elif [ "$what" = kapitel2_lantern ]; then
-    node lib/cutaway/tools/graph.mjs index.html --act kapitel2 --set "$(off main),off_shop24,off_haldane,off_teo,off_main,stick_ines,off_dryer,evi_knows,forgery_proven" --out build/graph/kapitel2_lantern.js | grep -E "states in|soft-lock|SOFT|HINTS|hints:|^wrote|^open"
-  else
-    node lib/cutaway/tools/graph.mjs index.html --act kapitel1 --set "$(off "$what")" --out "build/graph/kapitel1_$what.js" | grep -E "states in|soft-lock|SOFT|HINTS|hints:|^wrote|^open"
-  fi
+  else case "$what" in
+    kapitel2_*)
+      v=${what#kapitel2_}
+      # shellcheck disable=SC2046
+      node lib/cutaway/tools/graph.mjs index.html --act kapitel2 --set "$(k2 "$v" set)" --from "$(k2 "$v" from)" $(k2 "$v" starts) --out "build/graph/$what.js" | grep -E "starts? from|states in|starts:|soft-lock|SOFT|HINTS|hints:|^wrote|^open" ;;
+    *)
+      node lib/cutaway/tools/graph.mjs index.html --act kapitel1 --set "$(off "$what")" --out "build/graph/kapitel1_$what.js" | grep -E "states in|soft-lock|SOFT|HINTS|hints:|^wrote|^open" ;;
+  esac; fi
 done

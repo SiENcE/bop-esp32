@@ -975,10 +975,13 @@ Archiv einer Kamera, Gegenstände an Hotspots und Fragen mit vier Antworten gibt
    gestrichen; in `game/radio.js` die Fetzen in jedem Sender auf dem Deck; kein Teil des Bilds der Straße mehr).
 5. (das Tor der Jade Row führt nur noch auf Weg_1; die Klinik hat ihren eigenen Weg).
 6. Der Akt `kapitel2` mit seinem `keep` (§2.1) und `?act=kapitel2`.
-7. **Der Solver über die Kapitelgrenze** (Stufe 2 der Prüfungen, `PLAN.md` C15): Sobald Kapitel 2 gebaut ist, löst der Solver
-   es nicht nur aus einer festen Vorgeschichte, sondern aus jedem Endzustand von Kapitel 1, beschränkt auf das, was `keep` übernimmt
-   (die Zahl der Varianten nennt `sh tools/handoff.sh`, im Studio der Tab Handoffs). Dafür braucht es in der Engine einen Start aus
-   einer Liste von Zuständen; die Übergabe-Prüfung (`handoff.mjs`) und die Endzustände in den Graph-Daten gibt es schon.
+7. **Der Solver über die Kapitelgrenze** (Stufe 2 der Prüfungen, `PLAN.md` C15): Jeder Lauf von Kapitel 2 beginnt nicht aus einer
+   festen Vorgeschichte, sondern aus jedem Ende seines Laufs in Kapitel 1, so wie `keep` es übernimmt (`--from
+   build/graph/kapitel1_<lauf>.js`, das der Lauf von Kapitel 1 schreibt), und jeder dieser Starts muss zu gewinnen sein. Weil jede
+   übergebene Antwort die Zustände vervielfacht, wo Kapitel 2 sie spät liest, ändert ein Lauf nur `e1` (mit der Miete und dem Geld, die
+   daran hängen) und seine eigene Antwort (Varga `k1a`, der Eckladen `k1b`, Frau Imai `imai_told`, Teo `teo_talk`); alles andere ist das
+   häufigste Ende von Kapitel 1 mit diesen Werten. Ines' Stick bleibt in den Läufen zurück, die den Hauptweg schließen; die Läufe um den
+   Stick (der Stick, der Weg zu Lantern) nehmen nur die Enden, in denen er in ihrer Tasche ist. Die Läufe stehen in `tools/runs.sh`.
 
 ## 14. Offen
 
@@ -990,7 +993,7 @@ Archiv einer Kamera, Gegenstände an Hotspots und Fragen mit vier Antworten gibt
 - (erledigt): Sable 3000 (mit Beweis 4000, nach `k1a=warned` 1000 weniger),
   Vesper 5000, die Zuschauer, Sables Archiv 150, Kessler 50, Sable für den Clip des 24h-Ladens 60; der Türcode des Wohnblocks Lerche 4719.
 - am Kapitelanfang (`k2_heimweg`): bleibt vorerst die Karte auf Schwarz (etwas Neues kann später kommen).
-- (§13.7): gehört nicht zum Abschluss von Kapitel 2; eigene Engine-Arbeit vor Kapitel 3.
+- (§13.7): gebaut, als Engine-Arbeit nach dem Abschluss von Kapitel 2 (C15).
 - (erledigt): Klinik, Flur, Wohnung, der Wohnwagen innen, Pike von oben auf dem Markt (dazu seine Farbe), `cam51` und alle neuen Figuren sind
   über Blöcke gemalt; in `cam51` sind auch die Leute gemalt (die Bewohner am Morgen, die zwei in Weiß, die Köpfe der
   Schläfer über den Decken). Das rote Licht der Kamera im 14. Stock ist ab Montag aus (die dunkle Zwillingskamera `corner_cam_dark` im
