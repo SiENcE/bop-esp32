@@ -126,3 +126,24 @@ Einige Gesprächsoptionen mit Teo lassen sich nur einmal wählen und stärken di
 verbessern, in dem Juno ihn weckt (Entscheidung 4): Teo freut sich, wieder bei Juno zu sein. „Nur eine Idee.“ Im Design ist es bisher
 nur so weit, dass `teo_talk` (Mittwoch, Kapitel 1) weitergegeben wird und zwei seiner drei Werte die beiden näher bringen
 (`kapitel2-design` §6.6).
+
+## Die Ringe als Bildreise (2026-11-23, aus `docs/ideen2.md`, den Ideen nach dem Review vom 2026-11-22)
+
+Entschieden ist daraus die Regel (Bibel §10k): Jeder große Ortswechsel bekommt seine eigene Bildsprache, ohne neuen Grafikstil. Offen
+bleiben die Bilder selbst, als Vorschlag für die Designs der Kapitel:
+
+- **Der Neunte** (bis Kapitel 2, gebaut): nasse, überfüllte Räume, Neon, Werbung, Regen, Kameras, Gesichter; lebendig, aber paranoid.
+  Das Bild wird immer mehr von den Kameras beherrscht, und Juno weiß nicht mehr, wer sie gerade sieht.
+- **Die Sümpfe** (Kapitel 2, gebaut): überraschend offen, kein enger Neonkanal mehr, sondern versunkene Häuser, Baumkronen im Wasser und
+  der echte Nachthimmel.
+- **Der Traum** (Kapitel 3): der radikale Kontrast, Magenta und Weiß, Tausende Feeds, schwebende Markierungen, keine Straßenperspektive.
+- **Der Fünfte** (Kapitel 4): weißes Salzlicht, riesige Transitaufzüge, endlose Schlafstationen, kontrollierte Wege. Nach den
+  unübersichtlichen Sümpfen wird die Architektur geometrisch und brutal, und die Menschen werden zu Reihen.
+- **Der Vierte bis Zweite** (Kapitel 5): nicht nur sauberer, sondern fremder. Künstlicher Himmel, gepflegte Parks, Labore, gläserne
+  Korridore, private Gärten; alles schön, nichts wirklich menschlich. Die Wohlhabenden sehen den Neunten nur als Unterhaltung.
+- **Die Krone und der Turm** (Kapitel 5 und 6): in der Krone zum ersten Mal echter Himmel, aber diese Freiheit ist exklusiv; danach der
+  Turm, grün leuchtende Systeme, absolute Kontrolle.
+- **Der Ruhekern** (Kapitel 6): keine normale Zone mehr, eine riesige Serverkathedrale, in der die ganze Stadt in einem Raum
+  zusammengedrängt scheint, und in ihrer Mitte nur ein Stuhl.
+
+Aus derselben Quelle, noch offen: Stellen zum Einstecken in Kapitel 4 wären etwa ein Kameramast oder eine Wartungsklappe.
