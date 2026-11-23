@@ -1,20 +1,22 @@
 # Plan: Glass Sister on Cutaway.js
 
-Status (2026-11-22):
+Status (2026-11-23):
 
 - **Done:** H0, H1, H1c, H2, H2b, H2c; H3 (the prologue solves and plays from the title screen); H4 (Chapter 1, painted, every thread
   solved alone); **H5 (Chapter 2 "Aufnahme")**, played through by the user, his decisions in `docs/story.md` §10h. After the review of
   2026-11-22 (`docs/review.md`, decisions in story §10j): the secret lies less open after Chapter 1, Sable's talk is one tree
   (`game/sable.js`), Teo's talks build on each other and his pump hall is a camera of its own (CAM 33, `game/kapitel2_teo.js`), the
-  Kassenbuch has its hidden weights (story §5, `game/gewicht.js`), the flag `traeger` is gone. Engine: E-a, E-b, E-c.
+  Kassenbuch has its hidden weights (story §5, `game/gewicht.js`), the flag `traeger` is gone, the hotspots round things
+  that are not rects are polys (§4.5). Engine: E-a, E-b, E-c.
 - **Open:** E-d (C12, C13: dialogue v2 and the node editor), E-e, C14 (the controller, before R0), R0 (the demo build), C15 (the solver
   across the chapter line, before H6). From the review: Chapter 2's remaining patches on Chapter 1's rooms (§4.2, to be settled when
-  Chapter 3 first touches them) and the hotspots that are rects but not rect things (§4.5).
+  Chapter 3 first touches them).
 - **Next:** C15, then H6 (Chapter 3 "Lull", its design first).
-- **Checks:** the last full run (2026-11-22): `sh tools/check.sh` ALL PASSED (validate 0 errors; the prologue 78612 states; Chapter 1
-  every thread; Chapter 2 main 215148, stick 93050, lantern 271112, haldane 104272 and the runs of the shop, Varga, Tide and Frau Imai;
-  every click path; no soft-locks, every state with a hint); `sh tools/handoff.sh` 0 errors, 20 warnings. Since then Chapter 1's states
-  have tripled (`teo_talk`: its main way 115984) and Chapter 2 has the thread `teo` (22074 states); a full run is due before H6.
+- **Checks:** the last full run (2026-11-23): `sh tools/check.sh` ALL PASSED (validate 0 errors, 10 warnings; doc-lint 0 errors; the
+  prologue 78612 states; Chapter 1 main 115984, roof 52394, zeitung 41712, imai 37158, traeger 12446, varga 109103, tide 142246, motte
+  33430, vesper 34258; Chapter 2 main 215148, stick 93050, lantern 271112, the shop 50020, haldane 104272, teo 22074 and the runs of
+  Varga, Tide and Frau Imai; every click path, the taps, the pointer; no soft-locks, every state with a hint); `sh tools/graph.sh all`
+  13 runs, no soft-locks; `sh tools/handoff.sh --only` 0 errors, 20 warnings, the same as before `teo_talk`, which is handed on cleanly.
 
 What each step built and how it was decided is in the commits and the chapter designs (`docs/kapitel1-design.md`,
 `docs/kapitel2-design.md`).
