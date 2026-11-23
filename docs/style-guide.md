@@ -163,6 +163,7 @@ The same meanings hold in both modes, so the feed's overlay feels like Juno's vi
 | **cyan** | technology, screens, things to use | ad screens, terminals, implants. In the feed: hotspot brackets. |
 | **magenta** | commerce, nightlife, desire | signs, bars, ads, the black market's lure |
 | **amber** | people, warmth, home, food | windows, lamps, cooking fires: where someone lives |
+| **magenta and white** | Lull, the sleepers, the Witness | the pulsing patch behind the ear, and the shared dream (a third mode beside street and feed, set by a mockup first; story §10k). Magenta alone stays commerce and desire; with white, it is the sleepers' net. |
 
 A location takes one key hue from this set and plays it against the night blues. Proposed:
 

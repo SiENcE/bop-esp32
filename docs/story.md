@@ -941,3 +941,22 @@ Aus `docs/review.md` (ein Review von Story und Umsetzung nach Kapitel 2), vom Nu
   ist im Netz der Schläfer entstanden und erreicht deshalb CAM 31, Nagi·wa nicht (das Netz der Schläfer spricht das alte Protokoll, der
   Takt hinter jedem Lull-Ohr ist sein Handshake).
 - **Die Gewichte des Kassenbuchs** stehen in §5 (vom Nutzer freigegeben 2026-11-22).
+
+## 10k. Entscheidungen (2026-11-23): die Basis nach dem Brand, die Bilder der Ringe
+
+Aus `docs/ideen2.md` (Ideen aus dem Review vom 2026-11-22), vom Nutzer entschieden am 2026-11-23:
+
+- **Die Basis folgt Junos Weg.** Bis Kapitel 3 ist die Wohnung mit dem Deck die Basis. Nach dem Brand bekommt Juno keine neue feste
+  Basis: Das neue Deck aus Kapitel 4 ist klein und reist in der Tasche mit, hat aber kein eigenes Netz, und Juno glasst dort, wo sie
+  einsteckt (der Abzweiger, die Wartungscodes auf den Gehäusen). In Kapitel 5 gibt es weiter oben weniger solcher Stellen, und jede ist
+  besser bewacht; in Kapitel 6 ist der Stuhl im Ruhekern der letzte Ort, von dem aus sie sieht, und der einzige mit allen Kameras
+  zugleich („Der lange Schlaf“, §8, ist das Sitzenbleiben dort).
+- **Jeder Anschluss geht nur einmal:** Die Quiet findet ihn danach und macht ihn unbrauchbar. Es gibt wenige Anschlüsse, und jeder ist
+  ein Ort mit einem Grund, nicht viele gleichartige.
+- **Lull und der Zeuge sind Magenta und Weiß,** verwandt mit dem pulsierenden Pflaster (Style Guide §5).
+- **Der Traum ist ein dritter Modus** neben Straße und Feed: keine Straßenperspektive, etwa viele Feeds zugleich mit schwebenden
+  Markierungen. Er wird zuerst als Mockup festgelegt.
+- **Jeder große Ortswechsel bekommt seine eigene Bildsprache** (der Neunte nass und voll, die Sümpfe offen unter dem echten Himmel, der
+  Traum, der Fünfte in weißem Salzlicht und Reihen, die mittleren Ringe schön und fremd unter Bildschirmhimmeln, die Krone mit echtem
+  Himmel, der Turm, der Ruhekern), ohne neuen Grafikstil: andere Architektur, Farben, Bewegung, Klänge und Kameraführung, mit einem
+  eigenen Kit je Ort. Eine andere Kameraführung (etwa eine gemalte Sicht wie die Jade Row statt Iso) wird vorher mit Mockups getestet.
