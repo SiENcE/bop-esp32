@@ -960,3 +960,8 @@ Aus `docs/ideen2.md` (Ideen aus dem Review vom 2026-11-22), vom Nutzer entschied
   Traum, der Fünfte in weißem Salzlicht und Reihen, die mittleren Ringe schön und fremd unter Bildschirmhimmeln, die Krone mit echtem
   Himmel, der Turm, der Ruhekern), ohne neuen Grafikstil: andere Architektur, Farben, Bewegung, Klänge und Kameraführung, mit einem
   eigenen Kit je Ort. Eine andere Kameraführung (etwa eine gemalte Sicht wie die Jade Row statt Iso) wird vorher mit Mockups getestet.
+- **Ein Versteck in Kapitel 4:** Hat Juno Okonkwo in Kapitel 1 gewarnt (`k1b=warned`, was als „Okonkwos Dank“ weitergeht), versteckt
+  er sie in seinem Hinterzimmer. Sonst braucht es ein anderes Versteck; welches, legt das Design von Kapitel 4 fest.
+- **Wo Junos Körper liegt, während sie im Traum sieht:** In Kapitel 3 in ihrer Wohnung (§7). Ab Kapitel 4 an einem Ort, an dem sie
+  schutzlos liegt, solange sie sieht: eine Kapsel im Morpheus, Lanterns Bett, Okonkwos Hinterzimmer oder Sables Hinterzimmer; welcher,
+  legt das Design von Kapitel 4 fest.
