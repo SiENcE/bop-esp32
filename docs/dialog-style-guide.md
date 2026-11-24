@@ -454,7 +454,10 @@ denselben Beruf hat. Seine erste Äußerung im Spiel ist ein Blick in die Kamera
 
 Viele Stimmen zugleich (die von Frau Haldane ist darunter). Wenn er durch das Implantat spricht: Magenta-Weiß, Kleinbuchstaben, ohne Namen,
 und der Spieler merkt es zuerst am Ton (`dialog-design` §2). Er hat keinen eigenen Willen, er hat den der Schläfer (story §6, Punkt 3):
-Was er sagt, ist ihr Gewissen und ihre Müdigkeit zugleich, nie ein Plan. Sonst noch offen.
+Was er sagt, ist ihr Gewissen und ihre Müdigkeit zugleich, nie ein Plan, dazu sein einer eigener Wunsch: weiterzubestehen. Er spricht
+in Bruchstücken und im „wir“ (vom Nutzer entschieden 2026-11-24, story §10l). Vieles setzt er aus Sätzen der Schläfer zusammen, die der
+Spieler schon gehört hat, und daran erkennt man ihn; kurze eigene Sätze im „wir“ darf er sagen. „sonntags kommt sein brief.“ ·
+„sie geht zur treppe.“ · „wir haben es gesehen. jede nacht.“ · „juno.“
 
 ### Geschäftsleute und Nagi·wa
 

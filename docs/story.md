@@ -184,7 +184,7 @@ Cyan nur für Technik.
 | **Dr. Ines Calder** | Schlaftechnikerin in einer Lull-Klinik, die Schlafprotokolle hinausschmuggelt | weißer Klinikkittel, dunkler Zopf | `#f0a0c0` |
 | **„Lantern"** (Oskar Lind; so sieht er aus: `docs/portraits/lantern_x4.png`) | ein Piratensender, der Werbebildschirme für zehn Sekunden Wahrheit kapert; Ines' Kontakt; paranoid. Sitzt seit einem Pumpenunfall im Rollstuhl, den er für die Sümpfe umgebaut hat: Schwimmer, ein Bootsmotor, Schubdüsen für kurze Sätze über Treppen und Leitern, der Sender eingebaut. | geflickter Poncho; der Rollstuhl mit Schwimmern, Düsen und einem Bündel Antennen | `#b0f0a0` |
 | **Pike** | Lanterns Gehilfe, umgebaut mit dem Reiher; verkauft auf dem Floß DATA 1C/GB im Kanal des Drain-Markts Daten pro Gigabyte und bringt Lantern Akkus und Teile; Ratz kann ihn nicht ausstehen (§10, „Mit dem Floß in die Sümpfe“) | lange dünne Beine, ein langer Hals, ein spitzes Gesicht, die Stakstange | offen |
-| **Lt. Agnes Morrow** | Revier 9; nimmt Geld von Nagi·wa und hasst sich dafür; ihre Tochter ist eine Lull-Sinkerin | grauer Trenchcoat, Polizeimarke am Band | `#a8b8d0` |
+| **Lt. Agnes Morrow** | Revier 9; nimmt Geld von Nagi·wa und hasst sich dafür; ihre Tochter Raya ist eine Lull-Sinkerin | grauer Trenchcoat, Polizeimarke am Band | `#a8b8d0` |
 | **Corvin Ashe** | ein Agent der **Quiet**, Nagi·was inoffizieller Sicherheitseinheit; früher selbst Beobachter in Junos Halle; nach der Entlassung ging er zu Nagi·wa, Juno auf den Schwarzmarkt: ihr Spiegelbild (§7, Kap. 5); höflich, geduldig, der Mörder | weißer Regenmantel, im Feed ohne Gesicht (eine Maske, die die Kamera überstrahlt) | `#ff7a6a` |
 | **Direktorin Selene Aubrecht** | Leiterin von Civic Rest, dem Lull-Programm; glaubt, den Neunten gerettet zu haben, und die Zahlen geben ihr recht; sie sieht als Einzige, wie viele Menschen der Zeuge behält, und will ihn aufhalten; moralisch grau, keine Schurkin: Sie hat recht und mordet trotzdem (§6, Punkt 6) | weißer Anzug, silbernes Haar | `#e8f0ff` |
 | **Der Zeuge** | das Auge in den Bildschirmen (§6): der Neunte im Schlaf, ohne eigenen Willen, mit dem der Schläfer | eine Störung, ein Auge, viele Stimmen zugleich | `#ffc0f2` (Magenta-Weiß) |
@@ -994,6 +994,15 @@ Am selben Tag, nach dem ersten Entwurf:
 - **Tintes Faden geht weiter:** Ob sie bleibt, verkauft wird oder geht (`tinte`), nehmen die Kapitel 4 bis 6 mit; „verzögern“ gibt es nicht.
 - **Mit Mottes Warnung rettet Juno Mamas Schal** aus der Wohnung (den aus ihrem Entwurf an Teo); er geht als Ding weiter und kann in
   Kapitel 4 bei Teo zählen. Ohne die Warnung verbrennt er.
-- **Das Taschen-Deck behält CACHE und BUCH,** also auch den Clip aus CAM 31; GLASS, NETZ, RADIO und MÜLL schmelzen mit dem großen Deck.
-  Mit Mottes Backup ist das nur bis Kapitel 4 so: Juno spielt es ins neue Deck ein, und alles ist wieder da, auch EVI ganz (§10k).
+- **Auf dem Taschen-Deck läuft nach dem Brand nur die rohe EVI** (geändert am selben Tag, bis dahin: es behält CACHE und BUCH). Alles
+  andere schmilzt mit dem großen Deck: der CACHE mit den Clips, das BUCH, GLASS, NETZ, RADIO und der MÜLL. Mit Mottes Backup kommt in
+  Kapitel 4 alles zurück: Juno spielt es ins neue Deck ein, und alles ist wieder da, auch EVI ganz (§10k). Ohne Backup bringt der Zeuge
+  zurück, was er gesehen hat, EVI mit Lücken und das Kassenbuch; Junos Clips bleiben verloren, auch der aus CAM 31, und der Beweis für
+  „Licht aus“ sind dann Ines' Protokolle (§8).
 - **Ratz' Kolonie** liegt weiter unten als die Krone, auf halbem Weg unter dem Fünften; den Weg ganz hinauf zeigt Ratz später.
+- **Das Tor der Pumpenhalle öffnet Teos eigene PIN:** Jeder Arbeiter hat an der Personaltür seine eigene, und Teo hat sich das Jahr vom
+  Dach ausgesucht, das Jahr des Fotos. Das Foto am Deck bekommt dafür einen Datumsstempel.
+- **Morrows Tochter heißt Raya Morrow.** Der Rest ist ein Vorschlag im Design (`kapitel3-design` §6.1).
+- **Wie der Zeuge spricht:** in Bruchstücken und im „wir“, mit vielen Stimmen. Vieles setzt er aus den Sätzen der Schläfer zusammen, die
+  der Spieler kennt, aber kurze eigene Sätze darf er sagen. Was er sagt, ist nie ein Plan, sondern das Gewissen und die Müdigkeit der
+  Schläfer, dazu sein einer Wunsch, weiterzubestehen (§6, Punkt 3).

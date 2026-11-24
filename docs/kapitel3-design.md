@@ -3,9 +3,11 @@
 Stand: Entwurf (2026-11-24). Nichts davon ist gebaut. Entschieden hat der Nutzer am 2026-11-24 die Gliederung in vier Punkten (story
 §10l): Das Kapitel beginnt am Dienstagabend, Teo liegt da schon auf der Station; Juno kommt nicht in den Fünften hinauf, die Station sieht
 sie erst im Traum; es sind zwei Abende; die Nebenfäden sind Morrows Tochter, Ratz' Kolonie und Tinte, die ins Meer soll. Am selben Tag dazu: Tintes Faden geht über das
-Kapitel hinaus (ohne „verzögern“); mit Mottes Warnung rettet Juno Mamas Schal; das Taschen-Deck behält CACHE und BUCH, und mit Mottes
-Backup ist in Kapitel 4 alles wieder da; Ratz' Kolonie liegt weiter unten als die Krone. Alles andere hier ist ein Vorschlag, die Zeilen
-sowieso; die offenen Fragen stehen in §14.
+Kapitel hinaus (ohne „verzögern“); mit Mottes Warnung rettet Juno Mamas Schal; Ratz' Kolonie liegt weiter unten als die Krone. Nach dem
+ersten Entwurf, auch am selben Tag: Auf dem Taschen-Deck läuft nach dem Brand nur die rohe EVI, alles andere ist weg, bis Mottes Backup es
+in Kapitel 4 zurückbringt (§3.9); das Tor öffnet Teos eigene PIN, das Jahr vom Dach, und das Foto bekommt dafür einen Datumsstempel
+(§3.2); Morrows Tochter heißt Raya Morrow (§6.1); der Zeuge spricht in Bruchstücken im „wir“, oft mit den Sätzen der Schläfer (§3.5).
+Alles andere hier ist ein Vorschlag, die Zeilen sowieso; die offenen Fragen stehen in §14.
 Story: `docs/story.md` (§6, §7 Kapitel 3, §10a, §10j, §10k). Was Kapitel 2 übergibt: `docs/kapitel2-design.md` §2.1. Regeln für Deck,
 Feed-Modus und Zeit: `docs/kapitel0-design.md` §2–4. Wie die Texte klingen: `docs/dialog-style-guide.md`.
 
@@ -23,7 +25,8 @@ Feed-Modus und Zeit: `docs/kapitel0-design.md` §2–4. Wie die Texte klingen: `
 | Ende | Die Quiet stürmt die Wohnung, während Juno träumt; die Wohnung brennt aus, das große Deck schmilzt, und EVI läuft roh auf dem Taschen-Deck weiter |
 
 **Was die Bibel hier heißt** (§6): Teo ist ein Sinker, weil ein Teil von ihm nicht mehr in die Pumpenhalle will; der Zeuge hat ihn
-behalten. Der Zeuge hat keinen eigenen Willen, er hat den der Schläfer, und darum spricht er in diesem Kapitel mit ihren Sätzen (§3.5).
+behalten. Der Zeuge hat keinen eigenen Willen, er hat den der Schläfer (bis auf den einen, weiterzubestehen, story §6, Punkt 3), und
+darum spricht er in Bruchstücken im „wir“, oft mit ihren Sätzen (§3.5).
 Von der Bereinigung erfährt Juno erst in Kapitel 4; hier spürt sie nur, dass seine Uhr läuft.
 
 ## 2. Die zwei Tage
@@ -86,15 +89,16 @@ Razzia.
 
 Die Halle gehört dem Flutwerk (`kapitel2-design` §6.6). Juno geht zum ersten Mal selbst hinein, und zwar nicht in den Schacht, den
 `cam33` von oben sieht, sondern ganz unten in den **Becken-Raum**: einen Raum neben dem Filterbecken, eine Wand aus Glas, dahinter das
-Wasser und Tinte, die Bank, auf der die Schicht in der Pause schläft, die Spinde. So bleibt `cam33` ein Blick auf einen Ort, den Juno
-nicht betritt, und der Becken-Raum ist ein eigener Raum in Iso (§9).
+Wasser und Tinte, die Spinde der Schicht. Die Bank, auf der die Schicht in der Pause schläft, bleibt, wo Kapitel 2 sie zeigt: auf einer
+Plattform im Schacht, die `cam33` sieht. So bleibt `cam33` ein Blick auf einen Ort, den Juno nicht betritt, und der Becken-Raum ist ein
+eigener Raum in Iso (§9).
 
 | # | Wo | Was | Flags / Dinge |
 |---|---|---|---|
-| P1 | CHAT, Dienstag | `BECKEN 3` schreibt, so kurz wie Tinte redet: „Tor drei. Die Tür will eine Zahl. Er hat sie mir nie gesagt.“ – „Er hat gesagt: das Jahr vom Dach.“ | — |
-| P2 | Deck, das Foto | Das Jahr vom Dach ist das Jahr des Fotos am Deck, 2074 (story §10b). Vorschlag: Auf dem Foto steht unten rechts der Datumsstempel einer alten Kamera, `'74`, wie auf Papierbildern von früher (das Bild ganz geöffnet, ein Klick, kein Ansehen). Juno: „Papa hat das gemacht. Vierundsiebzig.“ | — |
-| P3 | das Tor des Flutwerks | Das Tor liegt am Wasser, am Ende eines Stegs (wo, entscheidet der Stadtplan des Nutzers, §9). Am Zahlenfeld tippt Juno die Zahl wie den Takt an `cam31`, Ziffer für Ziffer; erst am Ende zeigt sich, ob sie stimmt. Mit „2074“ geht sie auf. Ohne P1 weiß Juno nicht, dass Tinte sie erwartet, aber nichts sperrt das Tor außer der Zahl. | `know_flutwerk` (Vorschlag) |
-| P4 | `becken_raum` | Tinte am Glas. Ihr Gespräch (`Nagiwa.talkTree`, unten). Ab 20:00 ist die Schicht oben bei der Arbeit, ab 23:00 schlafen die Kollegen hier auf der Bank ihre vier Stunden, und Teos Platz ist leer; nur sein Gehörschutz hängt noch am Haken. | — |
+| P1 | CHAT, Dienstag | `BECKEN 3` schreibt, so kurz wie Tinte redet: „Tor drei. Die Tür will seine Zahl. Jeder hat eine eigene.“ – „Er hat sie mir nie gesagt. Nur: das Jahr vom Dach.“ | — |
+| P2 | Deck, das Foto | Das Jahr vom Dach ist das Jahr des Fotos am Deck, 2074 (story §10b). Auf dem Foto steht unten rechts der Datumsstempel einer alten Kamera, `'74`, wie auf Papierbildern von früher (vom Nutzer erlaubt 2026-11-24; das Bild ganz geöffnet, ein Klick, kein Ansehen). Juno: „Papa hat das gemacht. Vierundsiebzig.“ | — |
+| P3 | das Tor des Flutwerks | Das Tor liegt am Wasser, am Ende eines Stegs (wo, entscheidet der Stadtplan des Nutzers, §9). Daneben die Personaltür mit einem Zahlenfeld: Jeder Arbeiter hat dort seine eigene PIN, und Teo hat sich das Jahr vom Dach ausgesucht (vom Nutzer entschieden 2026-11-24). Juno öffnet die Tür mit der Zahl ihres Bruders; das Feld zeigt danach `REYES, T. – SHIFT B`. Sie tippt die Zahl wie den Takt an `cam31`, Ziffer für Ziffer; erst am Ende zeigt sich, ob sie stimmt. Ohne P1 weiß Juno nicht, dass Tinte sie erwartet, aber nichts sperrt die Tür außer der Zahl. | `know_flutwerk` (Vorschlag) |
+| P4 | `becken_raum` | Tinte am Glas. Ihr Gespräch (`Nagiwa.talkTree`, unten). Ab 20:00 ist die Schicht oben bei der Arbeit, ab 23:00 schläft sie oben auf der Bank ihrer Plattform ihre vier Stunden. Unten ist es still; an Teos Spind hängt noch sein Gehörschutz. | — |
 | P5 | dort | Tinte gibt Juno den Weg ins Netz der Halle: Ihr Knoten ist `BECKEN 3`, und über ihn steht `cam33` jetzt jedem auf der Karte. Und sie sagt, wo Teo ist, wenn er schläft (unten). | `link_cam33`, `know_teo_cam` |
 
 **Tinte** (Vorschläge; ihre Karte im `dialog-style-guide` §6: langsam, trocken, sehr kurze Sätze, sie zählt und sagt, was sie gezählt
@@ -169,9 +173,12 @@ das Mockup:
 - Juno bewegt sich, indem sie ein Bild anklickt, das nach vorn kommt und das Bild füllt; von dort führen die Markierungen weiter, wie das
   Folgen im Feed. Alles Klicks, keine Zeit, kein Ziehen.
 - **Der Zeuge** ist ein Auge in den Bildern, eine Störung, die durch alle zugleich läuft. Er spricht mit vielen Stimmen in Magenta-Weiß,
-  in Kleinbuchstaben und ohne Namen (`dialog-design` §2), und zwar mit **den Sätzen der Schläfer**, die der Spieler schon kennt: Frau
-  Haldanes („sonntags kommt sein brief“), des Stammgasts im LUCKY STATIC („sie geht zur treppe“), Teos („wenn ich schlaf, ist alles
-  still“). Er hat keinen eigenen Willen, also hat er auch keine eigenen Sätze.
+  in Kleinbuchstaben und ohne Namen (`dialog-design` §2), **in Bruchstücken und im „wir“** (vom Nutzer entschieden 2026-11-24). Vieles
+  setzt er aus **den Sätzen der Schläfer** zusammen, die der Spieler schon kennt, und daran erkennt man ihn: Frau Haldanes („sonntags
+  kommt sein brief“), des Stammgasts im LUCKY STATIC („sie geht zur treppe“), Teos („wenn ich schlaf, ist alles still“). Kurze eigene
+  Sätze im „wir“ darf er sagen. Was er sagt, ist nie ein Plan, sondern das Gewissen und die Müdigkeit der Schläfer, dazu sein einer
+  Wunsch, weiterzubestehen (story §6, Punkt 3). So passt er zu seinem ersten Wort im Prolog („JUNO.“), zum Finale, wo er zeigt und
+  entscheidet, und zu Kapitel 4, wo die EVI des Zeugen ihn erst übersetzen muss.
 - Die Uhr steht im Traum. Eine Traumnacht endet, wenn sie zu Ende erzählt ist, und dann wacht Juno am nächsten Abend auf.
 
 **Die erste Traumnacht** (Dienstag auf Mittwoch) ist eine Ankunft, geführt und ohne Verzweigung: Juno fällt in den Takt des Pflasters
@@ -245,17 +252,20 @@ Taschen-Deck, eine rohe, gedrosselte EVI (story §10k), ihre Zeilen zerhackt (Vo
 > EVI: „Ich hab ... nicht alles mitgenommen.“
 
 Hier bekommt `evi_trust` seine erste Aufgabe (`kapitel2-design` §14): Hat Juno im Prolog offen mit ihr geredet, sagt EVI danach „Das
-Kassenbuch hab ich. Du hast gesagt, ich soll alles aufschreiben.“, sonst nur „Ich weiß nicht mehr, was ich weiß.“ (Nur eine Zeile, kein
+Buch ist weg. Die Clips auch.“ – „Aber dich kenn ich noch.“, sonst nur „Ich weiß nicht mehr, was ich weiß.“ (Nur eine Zeile, kein
 Zustand.)
 
 Dann sitzt Juno oben auf ihrem Platz vom Foto (`dach_sitzen`), auf dem Teo am Montag an ihrer Schulter eingeschlafen ist, und neben ihr
 ist der Platz wieder leer. Unten brennt ihr Fenster, über ihr die Unterseiten der Ringe. Abblende. „Kapitel 4: Die Quiet“.
 
-**Was das Taschen-Deck behält** (vom Nutzer entschieden 2026-11-24): den CACHE mit den Clips (auch `clip_ines_death`, den Beweis für
-„Licht aus“, story §8) und das BUCH. Was mit dem großen Deck schmilzt: GLASS mit der Karte, NETZ, RADIO und der MÜLL mit den Entwürfen an
-Teo. **Mit Mottes Backup ist es nur bis Kapitel 4 weg** (`moth_student`, story §10k): Das Backup hat Motte in Kapitel 2 vom Taschen-Deck
-gezogen; Juno baut sich in Kapitel 4 ein neues Deck zusammen und spielt es ein, und dann ist alles wieder da, auch EVI ganz. Ohne Backup
-bleibt verloren, was nicht im Taschen-Deck war, und der Zeuge füllt EVIs Lücken. Was genau das Backup enthält, legt Kapitel 4 fest.
+**Was das Taschen-Deck behält** (vom Nutzer entschieden 2026-11-24, statt des ersten Entwurfs, der CACHE und BUCH behielt): nur die
+rohe EVI. Alles andere ist mit dem großen Deck weg: der CACHE mit den Clips, das BUCH, GLASS mit der Karte, NETZ, RADIO und der MÜLL mit
+den Entwürfen an Teo. Bis zum neuen Deck in Kapitel 4 hat Juno nur das, was sie weiß. **Mit Mottes Backup kommt alles zurück**
+(`moth_student`, story §10k): Das Backup hat Motte in Kapitel 2 vom Taschen-Deck gezogen; Juno baut sich in Kapitel 4 ein neues Deck
+zusammen und spielt es ein, und dann ist alles wieder da, auch EVI ganz. **Ohne Backup** bringt der Zeuge zurück, was er gesehen hat:
+EVI mit Lücken (story §7, Kapitel 4) und das Kassenbuch, denn er hat Juno dreieinhalb Jahre beim Verkaufen zugesehen. Junos Clips bleiben
+dann verloren, auch der aus CAM 31 (`clip_ines_death`); der Beweis für „Licht aus“ sind dann Ines' Protokolle (story §8). Das Kassenbuch
+zählt im Spiel ohnehin über seine Flags, nicht über das Deck. Was genau das Backup enthält, legt Kapitel 4 fest.
 
 ## 4. Die Quiet kommt näher
 
@@ -298,11 +308,17 @@ Kapitel 4 umzustimmen (story §7, §9).
 
 | # | Wo | Was |
 |---|---|---|
-| M1 | `transit_neun`, Dienstag 20:00 | Morrow fährt hinauf, ihre Marke genügt. Die Wache: „Wie jeden Dienstag, Lieutenant. Grüßen Sie [Name].“ Morrow: „Sie schläft. Wie immer.“ Juno hört es oder sieht es im Puffer (Vorschlag: die Kamera über dem Kontrollpunkt, eine Nagi·wa-Kamera mit Junos altem Zugang). |
-| M2 | Traum, die Station | In der zweiten Traumnacht unter den Schläfern der Station: An jedem Bett ein Namensschild. Mit dem Namen aus M1 findet Juno sie. |
-| M3 | dort | Morrows Tochter spricht im Traum wie Teo, ruhig und weit weg. Sie gibt Juno etwas für ihre Mutter mit, das nur die beiden wissen (Vorschlag: wie die Mutter sie als Kind genannt hat). Flag `morrow_kind`, weiter in Kapitel 4. |
+**Raya Morrow** (der Name vom Nutzer, 2026-11-24; alles andere ein Vorschlag): 19 Jahre alt, Agnes Morrows einziges Kind. Sie hat in
+der Sortierhalle unter dem Drain-Markt Doppelschichten gemacht, für die Flutschuld wie alle, und Lull genommen wie alle. An einem Morgen
+im April 2091 ist sie nicht aufgewacht; seit sieben Monaten liegt sie auf der Station 5-Mitte. Ihre Mutter fährt jeden Dienstag hinauf,
+denn eine Marke öffnet, was einer Schwester verschlossen bleibt. Morrow nimmt Nagi·was Geld (story §9), und sie redet sich ein, sie tue
+es für Rayas Bett.
 
-Der Name der Tochter und was sie sagt, sind offen (§14).
+| # | Wo | Was |
+|---|---|---|
+| M1 | `transit_neun`, Dienstag 20:00 | Morrow fährt hinauf, ihre Marke genügt. Die Wache: „Wie jeden Dienstag, Lieutenant. Grüßen Sie Raya.“ Morrow: „Sie schläft. Wie immer.“ Juno hört es oder sieht es im Puffer (Vorschlag: die Kamera über dem Kontrollpunkt, eine Nagi·wa-Kamera mit Junos altem Zugang). |
+| M2 | Traum, die Station | In der zweiten Traumnacht unter den Schläfern der Station: An jedem Bett ein Schild, und Civic Rest nennt seine Schläfer freundlich beim Vornamen, mit einer Nummer (`RAYA · 5M-0219`). Mit dem Namen aus M1 findet Juno sie unter den vielen. |
+| M3 | dort | Raya spricht im Traum wie Teo, ruhig und weit weg. Sie sieht durch die Kameras wie alle Schläfer, und sie hat ihre Mutter gesehen, jede Nacht um halb eins in der Jade Row, mit dem Umschlag (`cam07`, bis die Kamera ausging). Markiert hat sie sie nie: „Ich kann nicht. Sie ist meine Mama.“ Sie gibt Juno etwas mit, das nur die beiden wissen, den Namen, den ihre Mutter ihr als Kind gab, als sie Steine aus dem Abfluss sammelte: „Sag ihr: Kiesel sieht sie. Sie soll aufhören. Für mich muss sie das nicht.“ Flag `morrow_kind`, weiter in Kapitel 4: Mit „Kiesel“ glaubt Morrow Juno, und mit dem, was Raya gesehen hat, lässt sie sich umstimmen (story §7, Kapitel 4). |
 
 ### 6.2 Ratz' Kolonie (`off_ratz`)
 
@@ -330,15 +346,15 @@ nicht (vom Nutzer entschieden 2026-11-24).
 |---|---|---|
 | T1 | `becken_raum` | Am Glas klebt der Aushang, englisch wie alle Technik der Stadt: `BASIN 3: AUTOMATION TRIAL TUE 22:00. RELEASE OF UNIT WED 23:00.` Tinte: „Unit. Das bin ich.“ |
 | T2 | `cam33`, Dienstag 22:00 | Der Test: Eine Filtermaschine wird ins Becken gelassen, sie verstopft, und Tinte räumt hinter ihr auf, ohne dass es oben jemand merkt. Juno nimmt es auf (oder holt es aus dem Puffer). |
-| T3 | CHAT oder `becken_raum` | **Verhindern:** Juno schickt den Clip dem Vorarbeiter (ein Kontakt über `BECKEN 3`). Am Mittwoch hängt ein neuer Aushang: `RELEASE POSTPONED`. Die Maschine, die eine Arbeiterin ersetzen sollte, konnte es nicht, wie AUTO-EVAL Juno nicht ersetzen konnte; das sagt keiner, aber EVI fragt: „Dann ist die Maschine wie ich?“ |
+| T3 | CHAT oder `becken_raum` | **Verhindern:** Juno schickt den Clip dem Vorarbeiter (ein Kontakt über `BECKEN 3`). Am Mittwoch hängt ein neuer Aushang: `RELEASE POSTPONED`. Dahinter steht dieselbe Geschichte wie Junos: 2088 hieß es, eine „automatische Auswertung“ habe sie ersetzt, aber AUTO-EVAL hat nie funktioniert (der gescheiterte Prototyp ist EVI), und die Arbeit machen in Wahrheit die Schläfer. So soll jetzt eine Maschine Tinte ersetzen und kann es nicht. Das sagt keiner, aber EVI fragt: „Dann ist die Maschine wie ich?“ |
 | T3b | dort | **Verkaufen:** Am Mittwoch um 23:00 heben sie Tinte im Netz in den Kanal zum Meer; `cam33` sieht es. Sable kauft den Abschied für NINTH LIVE („Tiere gehen oben gut.“). Kassenbuch. |
 | T3c | dort | **Nichts tun:** Juno sieht zu oder nicht. Tinte geht. |
 
 Flag `tinte` = stays | sold | gone, und **es geht weiter** (vom Nutzer entschieden 2026-11-24): Bleibt Tinte, kann sie in Kapitel 4 bis 6
 noch helfen, etwa mit ihren Knoten, die dieselben Sinker zählen wie Aubrechts Zahlen (story §6, Punkt 6); welche Rolle sie dort hat,
 legen diese Kapitel fest. Damit der Hauptfaden nicht an diesem Faden
-hängt, sagt Tinte `know_teo_cam` schon am Dienstag (§3.2), und ist sie am Mittwoch fort, liegt das Kabel mit den zwölf Knoten auf der
-Bank, für die Schwester (Vorschlag).
+hängt, sagt Tinte `know_teo_cam` schon am Dienstag (§3.2), und ist sie am Mittwoch fort, liegt das Kabel mit den zwölf Knoten vor dem
+Glas, für die Schwester (Vorschlag).
 
 ## 7. Das Leben drumherum
 
@@ -395,9 +411,9 @@ und 2.
 
 | Raum | Blick | Was darin ist |
 |---|---|---|
-| `becken_raum` | Iso, etwa 6 x 4 m, ganz unten im Schacht | die Glaswand zum Filterbecken mit Tinte dahinter (ein großer Schatten, Arme, Saugnäpfe am Glas, der Sprechkragen), die Bank der Schicht, die Spinde (Teos mit seinem Namen), der Haken mit seinem Gehörschutz, ein Pultstück der Pumpen, das Kabel mit den Knoten im Wasser; von oben fällt das Licht des Schachts herein, durch die Decke sieht man ein Stück der Gerüste. Grün und Bernstein, nass. |
+| `becken_raum` | Iso, etwa 6 x 4 m, ganz unten im Schacht | die Glaswand zum Filterbecken mit Tinte dahinter (ein großer Schatten, Arme, Saugnäpfe am Glas, der Sprechkragen), die Spinde (Teos mit seinem Namen und seinem Gehörschutz daran), ein Pultstück der Pumpen, das Kabel mit den Knoten im Wasser; von oben fällt das Licht des Schachts herein, durch die Decke sieht man ein Stück der Gerüste. Grün und Bernstein, nass. |
 | das Tor des Flutwerks | ein Hotspot mit Zahlenfeld am Ende eines Stegs, kein eigener Raum (Vorschlag) | `FLUTWERK – PUMP HALL 3 – NO ENTRY`, das Zahlenfeld. Wo der Steg abgeht (aus der Gasse am Wasser entlang?), entscheidet der Stadtplan. |
-| `transit_neun` | Iso oder eine Bühne von der Seite (Mockups, story §10k) | der Fuß der Transitachse: gläserne Aufzugsröhren, die in den Schacht um den Turm steigen, die Schranke, die Wache hinter Glas, ein Bogen mit Lesegerät, `RING 5 – WORK PERMIT ONLY`, rotes Licht (Behörde, Style Guide §5), eine Schlange Pendler mit Erlaubnis; nach oben der Blick durch den Schacht bis zum kalten Licht der Krone |
+| `transit_neun` | Iso oder eine Bühne von der Seite (Mockups, story §10k) | im Neunten, der Fuß der Transitachse: gläserne Aufzugsröhren, die in den Schacht um den Turm steigen, die Schranke, die Wache hinter Glas, ein Bogen mit Lesegerät, `RING 5 – WORK PERMIT ONLY`, rotes Licht (Behörde, Style Guide §5), eine Schlange Pendler mit Erlaubnis; nach oben der Blick durch den Schacht bis zum kalten Licht der Krone |
 | der Traum | ein eigener Modus, Mockup zuerst (§3.5) | die Wand der Bilder, die Ecken, das Auge |
 | die Station im Fünften | nur im Traum, durch ihre Kameras | Reihen von Schläfern in weißem Salzlicht (story §10k). Weil Juno in Kapitel 4 selbst dort hingeht, ist sie ein Ort für beide Kapitel: Sie wird als der Raum gebaut, den Kapitel 4 betritt, und im Traum unter dem Filter des Traums gezeigt (ein Ort, ein Bild). |
 | die Wartungskameras | Feeds in den Rohren (§6.2) | Rohre, Klappen, Lüfter, eine Drohne; alt, nachgerüstet, wie `cam31` |
@@ -411,7 +427,7 @@ und 2.
 | **Morrow** | wieder | `transit_neun` | im Straßenmodus wie in der Jade Row in Kapitel 2 |
 | **Teo im Traum** | neu (Variante) | Traum | Teo in Magenta und Weiß, sitzend am Rand neben der Kamera; das Pflaster am linken Ohr |
 | **die Schläfer der Station** | neu | Traum (Station) | Reihen unter weißen Decken, Köpfe und Haare wie in `cam51`, Namensschilder |
-| **Morrows Tochter** | neu | Traum | offen (§14) |
+| **Raya Morrow** | neu | Traum (Station) | 19, eine Schläferin wie die anderen unter der weißen Decke; im Traum in Magenta und Weiß, mit dem Pflaster und der Haarfarbe ihrer Mutter |
 | **Ratz in den Rohren** | neu (Feed) | Wartungskameras | Ratz als Feed-Figur, sein Kragen hell wie eine Lampe |
 | **die Kolonie** | neu (Feed) | Wartungskameras | Kabelratten mit glimmenden Kragen |
 | **der Zeuge** | neu | Traum | ein Auge, eine Störung, viele Stimmen; Mockup |
@@ -432,7 +448,7 @@ hindurch verständlich, story §10k). Das betrifft erst Kapitel 4.
 
 | Für | Stufe 1 | Stufe 2 | Stufe 3 |
 |---|---|---|---|
-| das Tor | „Tinte hat geschrieben. Die Tür will eine Zahl.“ | „Das Jahr vom Dach. Welches Dach meint er?“ | „Mach das Foto am Deck ganz auf. Unten rechts steht das Jahr.“ |
+| das Tor | „Tinte hat geschrieben. Die Tür will Teos Zahl.“ | „Das Jahr vom Dach. Welches Dach meint er?“ | „Mach das Foto am Deck ganz auf. Unten rechts steht das Jahr.“ |
 | Tinte | „Tinte war dabei, als er umfiel.“ | „Sie ist im Becken-Raum der Pumpenhalle.“ | „Geh durchs Tor zum Becken-Raum und sprich mit Tinte.“ |
 | `OBS-4` | „Ines' Tabellen haben oben eine Kopfzeile. Die hast du noch nicht gelesen.“ | „Das Wort darin kennst du. Aus deinem Handbuch.“ | „Leg die Protokolle mit PRÜFEN neben das Beobachter-Handbuch.“ |
 | Lull | „Lull kostet nichts. Das sagen alle.“ | „In der Klinik sitzt ab sieben Marit. Oder Sable hat welches.“ | „Hol dir Lull in der Klinik und kleb es dir ab eins im Bett hinters Ohr.“ |
@@ -457,12 +473,20 @@ Vorläufig, beim Bau zu prüfen:
 
 Fragen an den Nutzer (Story, Namen, Look):
 
-- **Morrows Tochter:** ihr Name, ihr Alter, seit wann sie schläft, und was sie Juno für ihre Mutter mitgibt (§6.1).
+- **Raya Morrow:** Passen der Vorschlag (19, seit April auf der Station, „Kiesel“, ihre Mutter in der Jade Row) und die Zeilen? (§6.1)
 - **Tinte:** Wer kauft den Abschied (Sable, oder kommt Vesper dafür zurück)? (§6.3)
 - **Der Zeuge bei Entscheidung 3:** Sind die drei Reaktionen so richtig, und was lässt er nach „Ich helfe dir.“ da? (§3.7)
-- **Das Ende:** Ist die Regenleserin um drei auf dem Dach (das halbe Haus holt um drei zur selben Zeit Luft), oder ist Juno allein? (§3.9)
-- **Das Tor:** Ist „das Jahr vom Dach“ (2074) als Zahl richtig, und darf das Foto am Deck dafür einen Datumsstempel bekommen? (§3.2)
-- **Der Weg zum Flutwerk und der Kontrollpunkt im Stadtplan** (§9.2).
+- **Das Ende** (der Nutzer: „Müssen wir mal gucken, wie wir das Ende machen.“): Der Entwurf lässt Juno aufs Dach fliehen, weil die Quiet
+  über die Treppe kommt und der einzige andere Weg hinaus Fenster, Sims und Leiter ist, und oben endet das Kapitel an ihrem Platz vom
+  Foto, neben dem Teos Platz leer ist, mit dem Blick auf ihr brennendes Fenster. Offen ist, ob das Kapitel dort endet oder erst, wenn sie
+  vom Dach herunter und fort ist (über die Nachbardächer, auf den Drain-Markt, wo Kapitel 4 beginnt), und ob die Regenleserin oben ist.
+  (§3.8, §3.9)
+- **Das Tor:** Die PIN ist das Jahr des Fotos. Der Nutzer schrieb „2072“, das Foto ist 2074 (story §10b, die Zeitleiste): ein
+  Tippfehler, oder soll sich das Jahr des Fotos ändern? (§3.2)
+
+Der Weg zum Flutwerk und der Kontrollpunkt liegen beide im Neunten (die Pumpenhalle 3 am Meer, der Kontrollpunkt am Fuß des Turms), also
+auf den Ebenen, die der Stadtplan schon hat; nur weiter weg vom Kessel-Block. Einen zweiten Ring braucht der Plan erst mit Kapitel 4, wenn
+Juno die Station im Fünften betritt. Wo die beiden Orte liegen, entscheidet der Nutzer im Stadtplan (§9.2).
 
 Technisch, beim Bau: das Mockup des Traums (§3.5), ob `transit_neun` Iso oder eine Bühne wird (Mockups), die Station als Raum für Kapitel
 3 und 4, die Messung der Läufe (§13.5), §4.2 des Reviews (die Flicken von Kapitel 2 auf Räumen von Kapitel 1), sobald dieses Kapitel sie
