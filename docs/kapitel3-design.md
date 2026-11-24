@@ -172,7 +172,9 @@ Cyberspace, und hat am 2026-11-24 die drei Varianten **zusammen** gewählt, als 
   Hier klickt Juno die Bilder an.
 - **Der Tunnel** (B) ist der Weg: Ein angeklicktes Bild öffnet einen Tunnel, dessen Wände Kamerabilder sind, und Juno fliegt hindurch.
 - **Das Bild aus Code** (C) ist das Innere eines Bildes: der Ort, aus dem fallenden Takt gebaut, und darin, was Juno sucht (Teo am Rand
-  von CAM 33, Raya auf der Station).
+  von CAM 33, Raya auf der Station). Die zweite Runde zeigt beides (`mock_g_traum_teo_x3.gif`, `mock_g_traum_station_x3.gif`): Teo
+  sitzt fest und farbig auf dem Rand über dem Schacht aus Code, von hinten, das Pflaster am linken Ohr im Takt; die Station sind Reihen
+  weißer Betten, die Köpfe dunkel auf den Kissen, Rayas Bett in Junos Klammern mit Name und Nummer.
 
 Was der Traum außerdem zeigen soll (der Vorschlag vor dem Mockup, er gilt weiter):
 
@@ -496,6 +498,6 @@ auf den Ebenen, die der Stadtplan schon hat; nur weiter weg vom Kessel-Block. Ei
 Juno die Station im Fünften betritt. Im Stadtplan stehen beide als Vorschlag (`flutwerk_steg`, `flutwerk_tor`, `transit_neun`, dazu
 `becken_raum` und `cam33`); an die richtige Stelle setzt sie der Nutzer (§9.2).
 
-Technisch, beim Bau: die zweite Runde des Traum-Mockups (die Bilder im Datenraum lesbarer, Junos Umriss, Teo und Raya im Bild aus Code, die Ecken der Schläfer, die Station; §3.5), ob `transit_neun` Iso oder eine Bühne wird (Mockups), die Station als Raum für Kapitel
+Technisch, beim Bau: was nach der zweiten Runde des Traum-Mockups bleibt (Junos Umriss und Teo werden beim Malen genauer, die Bilder im Datenraum noch lesbarer; §3.5), ob `transit_neun` Iso oder eine Bühne wird (Mockups), die Station als Raum für Kapitel
 3 und 4, die Messung der Läufe (§13.5), §4.2 des Reviews (die Flicken von Kapitel 2 auf Räumen von Kapitel 1), sobald dieses Kapitel sie
 berührt.

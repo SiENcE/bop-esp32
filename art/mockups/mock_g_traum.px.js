@@ -64,8 +64,8 @@ function feedPanel(c, p, cy, f) {
     const u = (L[0] * r[0] + L[2] * r[2]) / p.w + 0.5, v = 0.5 - L[1] / p.h
     if (u < 0 || u >= 1 || v < 0 || v >= 1) continue
     const edge = u < 0.012 || u > 0.988 || v < 0.02 || v > 0.98
-    let k = edge ? 8 : sample(p.img, u, v) * 0.8 + 1.3
-    if (!edge && ((y + f) % 3 === 0)) k -= 1                          // the dream's own scanlines, drifting
+    let k = edge ? 8 : sample(p.img, u, v) * 0.95 + 0.9
+    if (!edge && ((y + f) % 4 === 0)) k -= 0.7                          // the dream's own scanlines, drifting
     c.px(x, y, dk(k - fade))
   }
   p.box = [x0, y0, x1, y1]; p.corners = corners
@@ -279,12 +279,11 @@ scene("mock_g_traum_tunnel", { w: W, h: H, bg: "a" },
 // ================================================================ C: the picture made of code
 // CAM 33, the pump hall's shaft from the rim, built only from the falling beat: each column a stream, its glyphs as bright
 // as the picture under them; where a stream's head passes, the picture flares white. The sleepers on the bench are marked.
-function glyphsC(c, f) {
-  const img = IMG["cam33_pause"]
+function glyphsC(c, f, img = IMG["cam33_pause"], y1 = H) {
   for (let x = 0; x < W; x += 3) {
     const r = ih(x, 7), s = r < 0.5 ? 5 : 10, P = 240
     const head = (Math.floor(ih(x, 3) * P) + f * s) % P
-    for (let y = 0; y < H; y++) {
+    for (let y = 0; y < y1; y++) {
       const gi = (y + Math.floor(ih(x, 5) * 14)) % 14
       const on = GLYPH[gi]
       const v = (img[y][x] + img[y][Math.min(W - 1, x + 1)]) / 2
@@ -306,4 +305,136 @@ scene("mock_g_traum_glyphen", { w: W, h: H, bg: "a" },
   (c) => juno(c, 58, H + 6, c.frame),
   (c) => voices(c, W / 2, 8, "wenn ich schlaf, ist alles still.", c.frame),
   (c) => glitch(c, c.frame),
+)
+
+// ================================================================ round 2: what Juno finds inside a picture
+// A line spoken in the dream (Teo, Raya): white, an ink edge, no voices behind it: one person, not the Witness.
+function speak(c, x, y, s) { TXT.draw(c, x, y, s, "j", { align: "center", outline: "a" }) }
+
+// C1: Teo on the rim of CAM 33. The shaft below is the camera's picture made of code; the rim is solid, and on it sits Teo, seen from
+// behind, in the dream's colours (kapitel3-design §3.6), his legs over the edge, the patch behind his left ear on Lull's beat.
+const TEO = [
+  ".......dddddd.......",
+  ".....dddddddddd.....",
+  "....ddddddeddddd....",
+  "....dddddddddddd....",
+  "...sdddddddddddds...",
+  "...sdddddddddddds...",
+  "...Pdddddddddddd....",
+  ".....dddddddddd.....",
+  "......ssssssss......",
+  "....gggggggggggg....",
+  "...gGGGGGGGGGGGGg...",
+  "..wwvvvvvvvvvvvvww..",
+  ".wwwvvvvvvvvvvvvwww.",
+  ".wwwvvvvvvvvvvvvwww.",
+  "wwwwvvvvvvvvvvvvwwww",
+  "wwwwvvvvvvvvvvvvwwww",
+  "wwwwvvvvvvvvvvvvwwww",
+  "wwwwVVVVVVVVVVVVwwww",
+  "wwwwvvvvvvvvvvvvwwww",
+  "wwwwvvvvvvvvvvvvwwww",
+  ".wwwvvvvvvvvvvvvwww.",
+  ".sssvvvvvvvvvvvvsss.",
+  "..ssvvvvvvvvvvvvss..",
+  "....vvvvvvvvvvvv....",
+]
+// d hair, s skin, g/G the ear defenders round his neck, w the shirt, v the orange vest, V its reflective band, P the Lull patch
+const TEO_KEYS = { d: "c", e: "d", s: "i", g: "f", G: "g", w: "e", v: "h", V: "j" }
+function teo(c, x0, y0, f, S = 2) {    // drawn at S times its grid: he is what the picture is about
+  const m = (i, j) => j >= 0 && j < TEO.length && i >= 0 && i < TEO[j].length && TEO[j][i] !== "."
+  const at = (X, Y) => m(Math.floor((X - x0) / S), Math.floor((Y - y0) / S))
+  for (let Y = y0 - 1; Y < y0 + TEO.length * S + 1; Y++) for (let X = x0 - 1; X < x0 + 20 * S + 1; X++) {
+    const i = Math.floor((X - x0) / S), j = Math.floor((Y - y0) / S)
+    if (!m(i, j)) { if (at(X - 1, Y) || at(X + 1, Y) || at(X, Y - 1) || at(X, Y + 1)) put(c, X, Y, "a"); continue }
+    const k = TEO[j][i]
+    put(c, X, Y, k === "P" ? (beat(f) ? "j" : "g") : TEO_KEYS[k])
+  }
+}
+function rim(c, top) {               // the shaft's rim: a ledge across the bottom, its edge lit
+  for (let y = top; y < H; y++) for (let x = 0; x < W; x++) {
+    const e = y - top - Math.round(Math.sin(x / 40) * 1.5)
+    if (e < 0) continue
+    c.px(x, y, e === 0 ? "h" : e === 1 ? "g" : (x + y * 3) % 11 === 0 ? "e" : "d")
+  }
+}
+scene("mock_g_traum_teo", { w: W, h: H, bg: "a" },
+  layer("clock", stamp("_clock", -4, -4)),
+  (c) => { capture(c); glyphsC(c, c.frame) },
+  (c) => rim(c, 158),
+  (c) => teo(c, 186, 112, c.frame),
+  glow("j", { r: 3, strength: 0.35, ramp: 0 }),
+  (c) => juno(c, 96, H + 6, c.frame),
+  (c) => marks(c, 86, 136, 106, 156, "j", 3),             // the sleepers have marked her (the first night: „Die haben mich markiert.“)
+  (c) => { brackets(c, 182, 108, 229, 162, "U", 5); TXT.draw(c, 182, 100, "TEO", "U", { font: "hud", outline: "a" }) },
+  (c) => speak(c, 206, 86, "Ju. Du bist ja wach."),
+  (c) => glitch(c, c.frame, 1),
+)
+
+// C2: the station in the Fifth, where the bodies lie (kapitel3-design §9.2): rows of beds in white salt light, seen through one of
+// its cameras and built from the beat like any picture in the dream. Raya's bed has her name and number at its foot (§6.1).
+const STATION = (() => {
+  const cam = { pos: [0, 4.6, -1.4], pitch: 42 * Math.PI / 180 }
+  const cp = Math.cos(cam.pitch), sp = Math.sin(cam.pitch)
+  const boxes = [], heads = [], plates = []
+  for (let row = 0; row < 6; row++) for (const bx of [-1.9, 0, 1.9]) {
+    const bz = 1.8 + row * 3.2
+    boxes.push({ a: [bx - 0.48, 0, bz - 1], b: [bx + 0.48, 0.55, bz + 1], top: 8.6 })           // the bed, the white blanket
+    boxes.push({ a: [bx - 0.4, 0.55, bz + 0.55], b: [bx + 0.4, 0.68, bz + 0.95], top: 9.4 })    // the pillow
+    heads.push({ c: [bx, 0.74, bz + 0.62], r: 0.17 })
+    plates.push({ a: [bx - 0.22, 0.25, bz - 1.02], b: [bx + 0.22, 0.42, bz - 1.0], top: 9.6, raya: row === 1 && bx === 0 })
+  }
+  const img = []
+  for (let y = 0; y < H; y++) {
+    const r = new Uint8Array(W)
+    for (let x = 0; x < W; x++) {
+      const ux = (x + 0.5 - W / 2) / F, uy = -(y + 0.5 - H / 2) / F
+      const d = [ux, uy * cp - sp, uy * sp + cp], n = Math.hypot(...d); d[0] /= n; d[1] /= n; d[2] /= n
+      let best = 1e9, val = 0
+      const hitBox = (B, front) => {
+        let t0 = -1e9, t1 = 1e9, ax = -1
+        for (let k = 0; k < 3; k++) {
+          const inv = 1 / d[k], ta = (B.a[k] - cam.pos[k]) * inv, tb = (B.b[k] - cam.pos[k]) * inv
+          const lo = Math.min(ta, tb), hi = Math.max(ta, tb)
+          if (lo > t0) { t0 = lo; ax = k } if (hi < t1) t1 = hi
+        }
+        if (t0 < t1 && t0 > 0 && t0 < best) { best = t0; val = ax === 1 ? B.top : ax === 2 ? front : front - 1.5 }
+      }
+      for (const B of boxes) hitBox(B, 6.4)
+      for (const B of plates) hitBox(B, B.top)
+      for (const S of heads) {
+        const o = [cam.pos[0] - S.c[0], cam.pos[1] - S.c[1], cam.pos[2] - S.c[2]]
+        const b = o[0] * d[0] + o[1] * d[1] + o[2] * d[2], cc = o[0] ** 2 + o[1] ** 2 + o[2] ** 2 - S.r * S.r, disc = b * b - cc
+        if (disc > 0) { const t = -b - Math.sqrt(disc); if (t > 0 && t < best) { best = t; val = 1.2 } }
+      }
+      if (d[1] < 0) {                                                   // the floor: pale, with the lamps' pools down the aisles
+        const t = -cam.pos[1] / d[1]
+        if (t < best) { const px = cam.pos[0] + d[0] * t, pz = cam.pos[2] + d[2] * t
+          const pool = Math.max(0, 1 - Math.abs(((pz + 1.6) % 3.2) - 1.6) / 1.6) * (Math.abs(Math.abs(px) - 0.85) < 0.3 ? 1 : 0.3)
+          best = t; val = 2.6 + pool * 2 }
+      }
+      if (best > 1e8) val = 5                                           // the far wall, lit
+      r[x] = Math.max(0, Math.min(9, Math.round(val - Math.max(0, best - 6) * 0.12)))
+    }
+    img.push(r)
+  }
+  // where Raya's plate and head land on the screen (for the brackets)
+  const toScreen = (P) => { const rel = [P[0] - cam.pos[0], P[1] - cam.pos[1], P[2] - cam.pos[2]]
+    const zc = rel[1] * -sp + rel[2] * cp, yc = rel[1] * cp + rel[2] * sp
+    return [W / 2 + F * rel[0] / zc, H / 2 - F * yc / zc] }
+  return { img, raya: [toScreen([-0.52, 0.6, 1.8 + 3.2 - 1.05]), toScreen([0.52, 0.8, 1.8 + 3.2 + 1.0])] }
+})()
+scene("mock_g_traum_station", { w: W, h: H, bg: "a" },
+  layer("clock", stamp("_clock", -4, -4)),
+  (c) => glyphsC(c, c.frame, STATION.img),
+  (c) => {
+    const [[ax, ay], [bx, by]] = STATION.raya
+    const x0 = Math.round(Math.min(ax, bx)) - 2, x1 = Math.round(Math.max(ax, bx)) + 2, y0 = Math.round(Math.min(ay, by)) - 2, y1 = Math.round(Math.max(ay, by)) + 2
+    brackets(c, x0, y0, x1, y1, "U", 4)
+    TXT.draw(c, x1 + 4, y0, "RAYA 5M-0219", "U", { font: "hud", outline: "a" })
+  },
+  glow("j", { r: 3, strength: 0.3, ramp: 0 }),
+  (c) => juno(c, 56, H + 6, c.frame),
+  (c) => speak(c, W / 2, 8, "Sag ihr: Kiesel sieht sie."),
+  (c) => glitch(c, c.frame, 1),
 )
