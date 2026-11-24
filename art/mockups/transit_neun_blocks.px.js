@@ -266,3 +266,104 @@ scene("transit_neun_halle", { w: HW, h: HH, bg: "k" },
     TXT.draw(c, 6, 6, "A: ISO, DIE HALLE (12 X 8 M, WAENDE 7 M)", "6", { font: "hud" })
   },
 )
+
+// ================================================================ A3: the hall, long, the way through it (the user, 2026-11-24)
+// Bigger to the right and scrolling: Juno comes in at the left and has to cross a hall to the counters. A first check right behind
+// the doors sorts everyone by light: a cyan gate for a permit, a red one for none. With a permit: a narrow lane behind a glass wall
+// along the tower's side, nearly empty, straight to the arches and the tubes. Without: the waiting hall, wide and full, benches,
+// people asleep on Lull, a board counting today's approved against today's denied, the application counters at its far end.
+// 24 x 7 m, walls 7 m. In iso a long room runs right and down, so the camera follows Juno diagonally.
+const LW = 1040, LH = 760
+const L = (u, v, h = 0) => [Math.round(250 + 32 * (u - v)), Math.round(250 + 16 * (u + v) - h * 30)]
+const lq = (c, pts, k) => c.poly(pts.flat(), k)
+function lbox(c, u, v, h, du, dv, dh, top, left, right) {
+  lq(c, [L(u, v + dv, h), L(u + du, v + dv, h), L(u + du, v + dv, h + dh), L(u, v + dv, h + dh)], left)
+  lq(c, [L(u + du, v, h), L(u + du, v + dv, h), L(u + du, v + dv, h + dh), L(u + du, v, h + dh)], right)
+  lq(c, [L(u, v, h + dh), L(u + du, v, h + dh), L(u + du, v + dv, h + dh), L(u, v + dv, h + dh)], top)
+}
+function lman(c, u, v, coat, o = {}) {
+  const [x, y] = L(u, v), h = o.sit ? 38 : (o.h ?? 52)
+  c.ellipse(x, y, 9, 4, "f")
+  if (o.sit) { c.rect(x - 7, y - 24, 14, 14, coat); c.rect(x - 7, y - 10, 14, 6, o.legs ?? "2") }
+  else { c.rect(x - 7, y - h + 10, 14, h - 30, coat); c.rect(x - 7, y - 20, 14, 20, o.legs ?? "2") }
+  const top = o.sit ? y - 34 : y - h
+  if (o.sleep) { c.rect(x - 2, top + 2, 8, 9, "S"); c.rect(x - 2, top + 2, 8, 3, "k"); c.px(x - 3, top + 6, "N") }   // head to one side, the patch
+  else { c.rect(x - 4, top, 8, 10, o.head ?? "S"); c.rect(x - 4, top, 8, 3, "k") }
+  if (o.hood) { c.rect(x - 6, top - 2, 12, 9, o.hood); c.rect(x - 3, top + 3, 6, 6, "S") }
+  if (o.cap) { c.rect(x - 5, top - 2, 10, 4, o.cap); c.rect(x - 1, top - 4, 2, 2, "q") }
+  if (o.bag) { c.rect(x - 11, y - 30, 5, 8, o.bag); c.line(x - 7, y - 30, x + 6, top + 11, o.bag) }
+  if (o.permit) c.rect(x + 7, y - 30, 3, 4, "v")
+  if (o.case) c.rect(x + 8, y - 16, 7, 14, "3")
+}
+scene("transit_neun_lang", { w: LW, h: LH, bg: "k" },
+  (c) => {
+    const U = 24, V = 7, WH = 7, GL = 2.2                                  // GL: the glass wall between the lane and the waiting hall
+    // the floor; the permit lane's cyan stripe
+    lq(c, [L(0, 0), L(U, 0), L(U, V), L(0, V)], "Z")
+    for (let u = 0; u <= U; u++) c.line(...L(u, 0), ...L(u, V), "z")
+    for (let v = 0; v <= V; v++) c.line(...L(0, v), ...L(U, v), "z")
+    lq(c, [L(3.6, 0.9), L(U, 0.9), L(U, 1.3), L(3.6, 1.3)], "C")
+    // the walls: the tower's (right, along u) and the street's (left, along v) with the doors
+    lq(c, [L(0, 0), L(U, 0), L(U, 0, WH), L(0, 0, WH)], "2")
+    lq(c, [L(0, 0), L(0, V), L(0, V, WH), L(0, 0, WH)], "1")
+    for (const h of [3.6, 6.6]) { c.line(...L(0, 0, h), ...L(U, 0, h), "V"); c.line(...L(0, 0, h), ...L(0, V, h), "V") }
+    lq(c, [L(0.02, 3.4), L(0.02, 6.2), L(0.02, 6.2, 2.8), L(0.02, 3.4, 2.8)], "c")                 // the glass doors, the street's light
+    for (let v = 3.6; v < 6.2; v += 0.5) c.line(...L(0.02, v, 0.1), ...L(0.02, v - 0.3, 2.6), "v")   // rain behind them
+    { const [x, y] = L(0, 4.8, 3.3); TXT.draw(c, x, y, "TRANSIT 9", "V", { align: "center" }) }
+    // the tubes in the tower's wall at the far end, a lift lit in the first
+    const TUBES = [[17.0, 19.2], [20.2, 22.4]]
+    for (const [a, b] of TUBES) {
+      lq(c, [L(a, 0), L(b, 0), L(b, 0, 24), L(a, 0, 24)], "c")
+      c.line(...L(a, 0), ...L(a, 0, 24), "6"); c.line(...L(b, 0), ...L(b, 0, 24), "6")
+      for (let h = 0.8; h < 24; h += 1.4) c.line(...L(a, 0, h), ...L(b, 0, h), "C")
+    }
+    lq(c, [L(17.15, 0.05), L(19.05, 0.05), L(19.05, 0.05, 2.6), L(17.15, 0.05, 2.6)], "5")
+    c.line(...L(17.15, 0.05, 2.6), ...L(19.05, 0.05, 2.6), "H"); c.line(...L(17.4, 0.05, 2.4), ...L(18.8, 0.05, 2.4), "V")
+    lq(c, [L(10, 0.02, 3.0), L(23.6, 0.02, 3.0), L(23.6, 0.02, 3.6), L(10, 0.02, 3.6)], "k")
+    { const [x, y] = L(13.4, 0, 3.55); TXT.draw(c, x, y, "RING 5 - WORK PERMIT ONLY", "q", { align: "center" }) }
+    // the ad and the board on the tower's wall over the waiting hall: what they sell, and how few go up
+    lq(c, [L(4.5, 0.02, 3.8), L(8.5, 0.02, 3.8), L(8.5, 0.02, 6.4), L(4.5, 0.02, 6.4)], "M")
+    { const [x, y] = L(6.5, 0, 5.6); TXT.draw(c, x, y, "LULL", "N", { align: "center" }); const [x2, y2] = L(6.5, 0, 4.7); TXT.draw(c, x2, y2, "WHILE YOU WAIT", "m", { font: "hud", align: "center" }) }
+    lq(c, [L(10, 0.02, 4.0), L(15, 0.02, 4.0), L(15, 0.02, 6.4), L(10, 0.02, 6.4)], "k")
+    { const T = (u, h, s, k) => { const [x, y] = L(u, 0, h); TXT.draw(c, x, y, s, k, { font: "hud", align: "center" }) }
+      T(12.5, 6.1, "TODAY", "6"); T(12.5, 5.6, "APPROVED      4", "v"); T(12.5, 5.1, "DENIED    2.318", "q"); T(12.5, 4.5, "NOW SERVING 0412", "R") }
+    // the first check: four gates across the hall behind the doors, a light on each; the guard's booth
+    lbox(c, 0.4, 0.3, 0, 1.6, 1.4, 1.1, "4", "3", "5"); lman(c, 1.2, 0.7, "H", { cap: "G" })
+    for (const [v, k] of [[1.0, "v"], [2.6, "q"], [4.0, "q"], [5.4, "q"]]) {
+      lbox(c, 3.2, v, 0, 0.3, 0.25, 1.9, "G", "4", "5"); lbox(c, 3.2, v + 1.05, 0, 0.3, 0.25, 1.9, "G", "4", "5")
+      lbox(c, 3.2, v, 1.9, 0.3, 1.3, 0.2, k, "1", "2")
+    }
+    { const [x, y] = L(3.3, 3.5, 2.6); c.rect(x - 34, y - 4, 68, 9, "k"); TXT.draw(c, x, y - 2, "PERMIT CHECK", "q", { font: "hud", align: "center" }) }
+    // the glass wall from the gates to the counters: the lane behind it, the hall in front
+    for (let u = 3.6; u <= 16.4; u += 1.6) lbox(c, u, GL - 0.05, 0, 0.1, 0.1, 2.6, "H", "5", "6")
+    for (let u = 3.6; u < 16.4; u += 0.05) for (let h = 0.1; h < 2.6; h += 0.12) {                // the glass: a sparse sheen, the lane seen through it
+      const [x, y] = L(u, GL, h); if ((x + y) % 5 === 0) c.px(x, y, "C")
+    }
+    c.line(...L(3.6, GL, 2.6), ...L(16.4, GL, 2.6), "V"); c.line(...L(3.6, GL, 0.05), ...L(16.4, GL, 0.05), "6")
+    // in the lane: two with permits, walking to the arches; the arches before the tubes
+    lman(c, 9.5, 1.1, "4", { permit: true, case: true }); lman(c, 14.2, 1.1, "5", { permit: true })
+    for (const [a, b] of TUBES) {
+      lbox(c, a + 0.3, 0.8, 0, 0.25, 0.3, 2.5, "G", "4", "5"); lbox(c, b - 0.55, 0.8, 0, 0.25, 0.3, 2.5, "G", "4", "5")
+      lbox(c, a + 0.3, 0.8, 2.5, b - a - 0.6, 0.3, 0.3, "r", "1", "2")
+    }
+    // the application counters at the far end of the waiting hall: guards, screens, a short line in posts and belts
+    for (const u of [17.6, 19.6, 21.6]) {
+      lman(c, u + 0.8, 2.9, "H", { cap: "G", h: 50 })
+      lbox(c, u, 3.3, 0, 1.6, 0.7, 1.05, "5", "3", "4")
+      lbox(c, u + 0.35, 3.45, 1.05, 0.9, 0.2, 0.55, "6", "c", "C")
+    }
+    for (let u = 17.4; u <= 23.4; u += 1.2) lbox(c, u - 0.05, 5.0, 0, 0.1, 0.1, 1.0, "H", "5", "6")
+    for (let u = 17.4; u < 23.4; u += 1.2) c.line(...L(u, 5.0, 0.95), ...L(u + 1.2, 5.0, 0.95), "r")
+    // the waiting hall: rows of benches, full; some asleep on Lull; people standing between
+    const COATS = ["4", "3", "5", "g", "4", "3"]
+    let n = 0
+    for (const v of [3.4, 4.9, 6.3]) for (let u = 5; u < 16; u += 2.6) {
+      lbox(c, u, v, 0, 2.2, 0.5, 0.45, "5", "3", "4")
+      for (let s = 0; s < 3; s++) { n++; if (n % 5 === 3) continue; lman(c, u + 0.4 + s * 0.7, v + 0.25, COATS[n % 6], { sit: true, sleep: n % 4 === 1 }) }
+    }
+    for (const [u, v] of [[16.6, 3.6], [17.2, 4.4], [18.4, 4.5], [19.6, 4.4], [16.0, 5.6], [4.6, 4.2], [4.5, 5.7]]) { n++; lman(c, u, v, COATS[n % 6], { case: n % 3 === 0 }) }
+    // Juno at the first check: a red gate for her
+    lman(c, 2.4, 3.3, "y", { hood: "y", bag: "G" })
+    TXT.draw(c, 6, 6, "A: ISO, DIE LANGE HALLE (24 X 7 M, WAENDE 7 M)", "6", { font: "hud" })
+  },
+)
