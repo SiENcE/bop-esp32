@@ -452,6 +452,8 @@ Das Design steht in `docs/kapitel2-design.md` (Entscheidungen in §10h).
 
 ### Kapitel 3: Lull (~2 Std.)
 
+Das Design entsteht in `docs/kapitel3-design.md` (Entscheidungen in §10l).
+
 **Ziel:** Teo zurückholen und verstehen, was Lull tut.
 
 - **Teo:** Er wird in die **Schlafstation** gebracht, oben im Fünften an der Transitachse, wo der Neunte
@@ -973,3 +975,15 @@ Aus `docs/ideen2.md` (Ideen aus dem Review vom 2026-11-22), vom Nutzer entschied
   ändert nichts, was das Spiel braucht; ihre Hinweise bleiben lösbar (die dritte Stufe ist durch den Glitch hindurch zu verstehen).
   Mottes Backup hat er in Kapitel 2 vom Taschen-Deck gezogen, mit EVIs KI-Daten: Mit ihm wird sie im neuen Deck wieder ganz EVI, ohne
   es füllt der Zeuge die Lücken (§7, Kapitel 4).
+
+## 10l. Entscheidungen (2026-11-24): Kapitel 3
+
+Die Gliederung von Kapitel 3 (`docs/kapitel3-design.md`), vom Nutzer entschieden am 2026-11-24:
+
+- **Der Anfang ist der Dienstagabend:** Teo liegt da schon auf der Station. Was in der Nacht geschah (wie er umfiel, wie man ihn holte),
+  erfährt Juno am Abend in der Pumpenhalle von Tinte.
+- **Juno kommt nicht hinauf:** Am Kontrollpunkt der Transitachse im Neunten wird sie abgewiesen. Die Station im Fünften sieht sie in
+  Kapitel 3 nur im Traum, durch ihre Kameras; selbst hinauf fährt sie erst in Kapitel 4.
+- **Zwei Abende,** Dienstag 13. und Mittwoch 14. November, mit zwei Traumnächten; die Razzia kommt in der zweiten, während Juno träumt.
+- **Drei Nebenfäden:** Morrows Tochter (im Traum auf der Station gefunden, für Kapitel 4), Ratz' Kolonie (für die Rohre in Kapitel 4) und
+  Tinte, die ins Meer soll (story §9).
