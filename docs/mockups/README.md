@@ -45,5 +45,6 @@ Diese Bilder entstanden nach A bis F, jedes für eine einzelne Frage; die Entsch
 | `nagiwa_logo_x4.png` | wie der Name der Stadt und des Konzerns geschrieben werden kann; entschieden ist Nagi·wa | `art/mockups/nagiwa_logo.px.js` | 2026-11-07, `docs/story.md` §10 |
 | `mock_g_time.png` | der Zeitstempel des Implantats im Straßenmodus, drei Varianten; gewählt ist A, klein und gedämpft oben links | Mockup | 2026-11-08, `docs/style-guide.md` §8a |
 | `mock_g_ringe_a_x3.png`, `mock_g_ringe_b_x3.png` | der Blick vom Dach nach oben zu den Ringen: A genau entlang der Hochachse, B schräg von Junos Platz aus | Mockup | im Spiel steht B, `docs/kapitel1-design.md` („Die Stadt“) |
+| `mock_g_traum_raum_x3`, `mock_g_traum_tunnel_x3`, `mock_g_traum_glyphen_x3` (`.gif`, `.png`) | der Traum, der dritte Modus von Kapitel 3: A der Datenraum mit dem Auge als Sonne am Horizont, B der Tunnel aus Kamerabildern, C CAM 33 aus dem fallenden Takt gebaut | `art/mockups/mock_g_traum.px.js` | 2026-11-24: alle drei zusammen, als die drei Zustände des Traums, `docs/style-guide.md` §9a |
 | `zh_deck_compare_x2.png` | ein Test, wie das Deck mit chinesischen Zeichen aussähe (links Deutsch, rechts Chinesisch) | `art/test/cjk_deck.px.js` | nur ein Test, `docs/ideas/chinesisch.md` |
 

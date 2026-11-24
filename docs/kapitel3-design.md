@@ -163,8 +163,18 @@ dieses Wissen holt Juno sich Lull zwar (es kostet nichts, und was man findet, ka
 Das Ding ist `lull`, eine Packung Pflaster. Am Bett ab 01:00, mit `know_obs4`: „Mit Lull schlafen.“ Juno klebt es sich hinters Ohr, neben
 das Implantat. Von nun an trägt sie beides (in den Nahaufnahmen zu sehen, unter der Kapuze nicht).
 
-**Der Traum ist ein dritter Modus** (story §10k), und er kommt **zuerst als Mockup** zur Freigabe. Was er zeigen soll, als Vorschlag für
-das Mockup:
+**Der Traum ist ein dritter Modus** (story §10k), und er kam **zuerst als Mockup** zur Freigabe: `docs/mockups/mock_g_traum_*_x3.gif`
+(Quelle `art/mockups/mock_g_traum.px.js`). Der Nutzer wollte ihn außergewöhnlich, anders als alles im Spiel, cyberpunkig, wie ein
+Cyberspace, und hat am 2026-11-24 die drei Varianten **zusammen** gewählt, als die drei Zustände des Traums (Style Guide §9a):
+
+- **Der Datenraum** (A) ist der Ort, an dem Juno ist: ein Gitter, das zu einem Horizont läuft, an dem das Auge des Zeugen aufgeht wie eine
+  Sonne; die Kamerabilder schweben im Leeren, von jedem ein Faden zum Auge, auf dem Pulse laufen; Lulls Takt fällt in Spalten wie Code.
+  Hier klickt Juno die Bilder an.
+- **Der Tunnel** (B) ist der Weg: Ein angeklicktes Bild öffnet einen Tunnel, dessen Wände Kamerabilder sind, und Juno fliegt hindurch.
+- **Das Bild aus Code** (C) ist das Innere eines Bildes: der Ort, aus dem fallenden Takt gebaut, und darin, was Juno sucht (Teo am Rand
+  von CAM 33, Raya auf der Station).
+
+Was der Traum außerdem zeigen soll (der Vorschlag vor dem Mockup, er gilt weiter):
 
 - Keine Straße und kein einzelner Feed, sondern **viele Kamerabilder zugleich**, eine Wand aus Bildern wie in der Beobachtungshalle des
   Vorspanns, nur lebendig, treibend, in **Magenta und Weiß** (Lull und die Schläfer, Style Guide §5).
@@ -460,7 +470,7 @@ hindurch verständlich, story §10k). Das betrifft erst Kapitel 4.
 
 Vorläufig, beim Bau zu prüfen:
 
-1. **Der Traum** als Modus: viele Feeds zugleich auf einem Bild. Vermutlich ein Raum der Engine ohne gespielte Figur wie die Feeds
+1. **Der Traum** als Modus, in den drei Zuständen des Mockups (Datenraum, Tunnel, Bild aus Code; §3.5): viele Feeds zugleich auf einem Bild. Vermutlich ein Raum der Engine ohne gespielte Figur wie die Feeds
    (`observe`), dessen Bild das Spiel aus kleinen Feed-Bildern zusammensetzt (eine UI-Ebene in `game/`), dazu ein Nachbearbeitungs-Pass in
    Magenta und Weiß (C7 kennt Paletten). Generisch wäre höchstens „mehrere Räume als Kacheln in einem“; das klärt das Mockup.
 2. **Die inneren Stimmen** (C12) wären für DAS IMPLANTAT bei `OBS-4` schön, sind aber nicht nötig: Ohne sie sagt Juno die Zeile selbst.
@@ -486,6 +496,6 @@ auf den Ebenen, die der Stadtplan schon hat; nur weiter weg vom Kessel-Block. Ei
 Juno die Station im Fünften betritt. Im Stadtplan stehen beide als Vorschlag (`flutwerk_steg`, `flutwerk_tor`, `transit_neun`, dazu
 `becken_raum` und `cam33`); an die richtige Stelle setzt sie der Nutzer (§9.2).
 
-Technisch, beim Bau: das Mockup des Traums (§3.5), ob `transit_neun` Iso oder eine Bühne wird (Mockups), die Station als Raum für Kapitel
+Technisch, beim Bau: die zweite Runde des Traum-Mockups (die Bilder im Datenraum lesbarer, Junos Umriss, Teo und Raya im Bild aus Code, die Ecken der Schläfer, die Station; §3.5), ob `transit_neun` Iso oder eine Bühne wird (Mockups), die Station als Raum für Kapitel
 3 und 4, die Messung der Läufe (§13.5), §4.2 des Reviews (die Flicken von Kapitel 2 auf Räumen von Kapitel 1), sobald dieses Kapitel sie
 berührt.

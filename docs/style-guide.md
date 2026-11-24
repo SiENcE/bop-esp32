@@ -407,6 +407,26 @@ The overlay's brackets are cyan; the only red ones are a threat's (Ashe in `cam3
   then the OSD types in.
 - Leaving: the reverse, back to Juno at her deck (or wherever she jacked in).
 
+## 9a. The dream: the sleepers' net (Chapter 3)
+
+A third mode beside street and feed (story §10k, `docs/kapitel3-design.md` §3.5): Juno on Lull with her implant awake, inside the
+shared dream. It must look like nothing else in the game: a cyberspace. Mockup `docs/mockups/mock_g_traum_*_x3.gif`
+(`art/mockups/mock_g_traum.px.js`); the user chose its three variants **together**, as the dream's three states (2026-11-24):
+
+| State | What it is | How it looks |
+|---|---|---|
+| **The data room** (A) | where Juno is; she clicks the pictures here | a grid running to a horizon, where the Witness's eye rises like a sun cut by lines; the city's camera pictures hang in the void at different depths, each with a thread to the eye and pulses running along it |
+| **The tunnel** (B) | the way into a picture | a tunnel whose walls are camera pictures, flown through toward the eye at its end |
+| **The picture made of code** (C) | inside a picture, where what Juno looks for is | the place built only from the falling beat, each glyph as bright as the picture under it, flaring where a stream's head passes |
+
+- **Colour:** only the dream's ramp, black-violet to magenta to white (`#030006` ... `#fff1fb`), and **Juno the one cyan thing**: an
+  outline from behind, scanned (hood, bag, strap), her brackets on what can be clicked, labels in the hud font. No phosphor, no OSD.
+- **Lull's beat falls like code:** columns of long, short, short, long dashes, the head white, the tail fading; never letters.
+- **The pictures are the game's own feeds,** the same places (one place, one picture), put into the dream's ramp, with the dream's own
+  drifting scanlines.
+- **The Witness:** an eye (the pupil wider on the beat), glitches that slip rows sideways; his lines in lowercase, white, with voices
+  offset behind them in magenta, the dream dimmed behind the line.
+
 ## 10. Animation
 
 - **Every scene has small life:**
