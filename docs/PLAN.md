@@ -1,6 +1,6 @@
 # Plan: Glass Sister on Cutaway.js
 
-Status (2026-11-23):
+Status (2026-11-24):
 
 - **Done:** H0, H1, H1c, H2, H2b, H2c; H3 (the prologue solves and plays from the title screen); H4 (Chapter 1, painted, every thread
   solved alone); **H5 (Chapter 2 "Aufnahme")**, played through by the user, his decisions in `docs/story.md` §10h. After the review of
@@ -13,7 +13,9 @@ Status (2026-11-23):
 - **Open:** E-d (C12, C13: dialogue v2 and the node editor), E-e, C14 (the controller, before R0), R0 (the demo build). Across the
   chapter line not yet: the prologue into Chapter 1 (87 ways; Chapter 1's runs still begin from its own start). From the review:
   Chapter 2's remaining patches on Chapter 1's rooms (§4.2, to be settled when Chapter 3 first touches them).
-- **Next:** H6 (Chapter 3 "Lull", its design first).
+- **Now:** H6 (Chapter 3 "Lull"). Its design is drafted (`docs/kapitel3-design.md`, the user's decisions in story §10l), every new place
+  has an approved block sketch or mockup (the dream's three states, the checkpoint's long hall, the basin room, the walkway to the
+  Flutwerk, a maintenance camera, the station), and the build is planned in steps (§4, "H6 in steps"). **Next:** H6.1.
 - **Checks:** the last full run (2026-11-23): `sh tools/check.sh` ALL PASSED (validate 0 errors, 10 warnings; doc-lint 0 errors; the
   prologue 78612 states; Chapter 1 main 115984, roof 52394, zeitung 41712, imai 37158, traeger 12446, varga 109103, tide 142246, motte
   33430, vesper 34258; Chapter 2 main 215148, stick 93050, lantern 271112, the shop 50020, haldane 104272, teo 22074 and the runs of
@@ -163,6 +165,29 @@ Each item gets tests (`node tests/run.mjs`, "all passed"), `npm run check`, a se
 
 H2 is the important test. It proves the two modes and the watch–record–sell loop before anything
 else is drawn at scale. If feed mode doesn't feel right there, change the design, not the art count.
+
+### H6 in steps (Chapter 3 "Lull", planned 2026-11-24)
+
+The design is `docs/kapitel3-design.md` (§ numbers below are its own). The order puts the risk first, as H2 did: the dream is a
+third mode nobody has built, so a spike proves it before the content leans on it. New rooms come in on blocks from their approved
+sketches (`tools/new-room.mjs`) and are painted late, when what happens in them has settled. Each step ends with its checks and a
+commit; a thread's solver run comes with the thread; Chapter 2's main way runs only where a step touches it.
+
+| Step | What | Checks | Done when |
+|---|---|---|---|
+| **H6.0** | **The ground for the solver:** Chapter 2's runs write how they end through `graph.mjs` (`build/graph/kapitel2_<run>.js`), as Chapter 1's do, so Chapter 3 can begin from them (§13.5); measure one end file's size first. The prologue into Chapter 1 (C15, 87 ways) may come here or stay open: it doesn't block H6 | the runs of `tools/runs.sh`, one at a time | `build/graph/kapitel2_main.js` exists with its ends |
+| **H6.1** | **The act:** `game/kapitel3.js`, the act `kapitel3` on game days 8 and 9 with its `keep` and `leave` (§2.1), `?act=kapitel3`; Chapter 2's end chain goes on into it; the card on black, CIVIC REST in the CHAT, Teo `schläft`, EVI's lines; the bed and the clock's holds for two evenings; nothing else yet | validate; a click path to the second evening; `handoff.sh --only` for what Chapter 2 hands on | Chapter 3 starts from Chapter 2's end and from `?act=kapitel3` |
+| **H6.2** | **The dream, a spike:** the third mode in `game/traum.js` (§13.1, style guide §9a): the data room drawing the city's feeds as pictures in the void through the dream's ramp, the tunnel as the way into one, the picture made of code over a room, Juno's cyan, the Witness's voices; clicks only, the clock still. A generic piece goes to the engine only if it can be told without this game's words (several rooms as tiles in one, a palette pass) | validate; the whole game with real clicks; screenshots against the mockups at 1x and 3x | one feed reached through all three states, by hand and in `play.mjs` |
+| **H6.3** | **The pump hall:** `flutwerk_steg` and `becken_raum` on blocks; BECKEN 3's messages, the photo's stamp `'74`, the staff door's keypad with Teo's PIN, Tinte's talk (`Nagiwa.talkTree`, §3.2), `know_flutwerk`, `know_teo_cam`, `link_cam33` for everyone | validate; the main thread's solver; its click path | Juno talks to Tinte and knows where Teo looks |
+| **H6.4** | **OBS-4 and Lull:** PRÜFEN laying data over data (the handbook over the protocols' head, a new kind in `game/pruefen.js`), `know_obs4`; Lull from Marit (she sees the implant) or Sable (100), the thing `lull`, the bed from 01:00 with it | as H6.3 | Juno can take Lull and stay awake |
+| **H6.5** | **The first dream night:** the guided chain (§3.5): the feeds, Juno marked, her name in every voice, CAM 31 as the sleepers see it, the station from above; morning is Wednesday evening | as H6.3 | night 1 plays through and the solver passes it as a chain |
+| **H6.6** | **The second night and decision 3:** CAM 33 found with `know_teo_cam` (without it a hint, not a lock), Teo on the rim in the picture of code (§3.6, his lines by `teo_talk`), the Witness and `e3` with its three reactions (§3.7) | as H6.3 | every `e3` reachable, none by accident |
+| **H6.7** | **The raid and the fire:** the chain (§3.8, §3.9) branching only on `moth_student`, Mama's scarf (`got_schal`), window, ledge, ladder, roof; the deck burning, EVI's face, the raw EVI on the pocket deck (`evi_trust`'s line), the end and the card "Kapitel 4"; the flat burnt as a second bake if Chapter 4 shows it | as H6.3; `handoff.sh` for what Chapter 3 hands on (`e3`, `got_schal`, the threads' answers) | the main way plays from Tuesday to the end |
+| **H6.8** | **The checkpoint:** `transit_neun` on blocks, the long hall (§3.3, §9.2): the first check's red gate, the waiting hall's routines by day and hour (looks only), the guard at the application counters, the few behind the glass | validate; the main thread's solver (the hall is never needed) | Juno is turned away there, by hand and in `play.mjs` |
+| **H6.9** | **The threads, each alone** (§6): Morrow's daughter (`off_tochter`: Morrow at 20:00 in the hall, Raya on the station in the second night, `morrow_kind`), Ratz' colony (`off_ratz`: WARTUNG 5-17, the maintenance cameras, guiding him, `ratz_kolonie`), Tinte to the sea (`off_tinte`: the notice, the test on Tuesday at 22:00, the release on Wednesday at 23:00, the clip to the foreman or to Sable, `tinte`) | each thread's own solver run and click path, the others shut | each solves alone without soft-locks, every state with a hint |
+| **H6.10** | **The life around and what Chapter 2 leaves** (§4, §5, §7): the Quiet coming closer, the lines by `e2`, Lantern on the RADIO, Okonkwo's thanks, Bao at the alley, Frau Haldane's door, the drafts sent from the MÜLL, Motte; the news, the board, the Rain Reader; the hints (§12) | validate; the main thread's solver; the whole game with real clicks | nothing in it is a state the solver didn't need |
+| **H6.11** | **The art:** the rooms painted on their sketches' lines (`becken_raum`, `flutwerk_steg`, `transit_neun`, the station), Tinte large, Teo and Raya in the dream, the maintenance cameras, the burnt flat; the dream's pictures readable (§3.5); each block sketch, its approval, then the paint, big paintings perhaps to an agent with an exact brief | validate; the whole game with real clicks; review sheets at 1x and 3x | nothing of Chapter 3 is left on blocks |
+| **H6.12** | **Across the chapter line and the milestone:** Chapter 3's runs in `tools/runs.sh` from Chapter 2's ends (C15: the main run varying `e2` and `moth_student`, each thread its own), `handoff.sh`, `doc-lint --flags`; the walkthrough (`docs/durchspielen/`), the timeline, `spiel.json` to Chapter 3's end; the user plays it through | all of it: `sh tools/check.sh`, `graph.sh all`, `handoff.sh --only` | every start winnable, no soft-locks, every state with a hint; the user's play-through |
 
 ## 5. Risks
 

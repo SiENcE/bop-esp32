@@ -475,6 +475,10 @@ hindurch verständlich, story §10k). Das betrifft erst Kapitel 4.
 
 ## 13. Was die Engine (und das Spiel) zusätzlich braucht
 
+In welcher Reihenfolge das Kapitel gebaut wird, steht in `docs/PLAN.md` §4 („H6 in steps“, 2026-11-24): zuerst der Akt, dann der
+Traum als technischer Versuch, dann der Hauptfaden, der Kontrollpunkt, die Fäden jeder für sich, das Leben drumherum, die Malerei
+und am Ende die Läufe über die Kapitelgrenze.
+
 Vorläufig, beim Bau zu prüfen:
 
 1. **Der Traum** als Modus, in den drei Zuständen des Mockups (Datenraum, Tunnel, Bild aus Code; §3.5): viele Feeds zugleich auf einem Bild. Vermutlich ein Raum der Engine ohne gespielte Figur wie die Feeds
