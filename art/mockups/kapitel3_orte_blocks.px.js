@@ -6,7 +6,7 @@
 //                         city's (coarse, like cam31), down a pipe to a fan, a hatch shut, a drone on its post, Ratz before the hatch;
 //                         the implant's overlay and the camera's display
 //   station_blocks        the station in the Fifth (§9.2, a room for Chapters 3 and 4): iso, white salt light, rows of beds, the
-//                         sleepers' heads on the pillows, a monitor at each bed pulsing Lull's beat in magenta, names and numbers
+//                         sleepers' heads on the pillows, a monitor at each bed pulsing Lull's beat in the patch's pale blue; bigger than the screen, scrolling to the door at the front right, names and numbers
 pal({
   k: "#0c0e1a", 1: "#131a2a", 2: "#1a2337", 3: "#232f47", 4: "#2f3e5a", 5: "#41547a", 6: "#617aa0",
   e: "#0f151f", f: "#151d2b", z: "#1c2738", Z: "#253349", X: "#32445f",
@@ -17,6 +17,7 @@ pal({
   a: "#06140f", b: "#0b261d", d: "#123a2c", g: "#1d5440",                                       // the sea's water
   w: "#c8d0c8",
   // the Fifth's white salt light: pale greys to white, a little cold
+  x: "#c8e8ff", p: "#7aa8d8",                                                              // Lull's pale blue, the patch's own (art/ui/splash.px.js)
   A: "#8a929c", B: "#a8b0b8", D: "#c4cad0", E: "#dde2e6", F: "#f2f4f5", K: "#3a3e46", L: "#5c626c",
   // the phosphor of a feed, 0 to 9
   0: "#030a0a", h: "#071514", i: "#0c221f", j: "#12332d", l: "#1a483e", n: "#266252", o: "#388169", 7: "#55a585", 8: "#8acfae", 9: "#d4f7e2",
@@ -110,35 +111,40 @@ scene("wartung_cam_blocks", { w: W, h: H, bg: "0" },
 )
 
 // ================================================================ 3: the station in the Fifth
-scene("station_blocks", { w: W, h: H, bg: "B" },
+scene("station_blocks", { w: 624, h: 400, bg: "B" },                    // bigger than the screen: it scrolls right and down to the door
   (c) => {
-    const P = iso(118, 62)
-    const U = 8, V = 5, WH = 3.4
+    const P = iso(150, 66)
+    const U = 14, V = 5, WH = 3.4
     quad(c, [P(0, 0), P(U, 0), P(U, V), P(0, V)], "E")                                    // the floor: pale, polished
     for (let u = 0; u <= U; u += 1) c.line(...P(u, 0), ...P(u, V), "D")
     quad(c, [P(0, 0), P(U, 0), P(U, 0, WH), P(0, 0, WH)], "D")                            // the walls, white
     quad(c, [P(0, 0), P(0, V), P(0, V, WH), P(0, 0, WH)], "B")
-    for (const h of [3.0]) { c.line(...P(0, 0, h), ...P(U, 0, h), "F"); c.line(...P(0, 0, h), ...P(0, V, h), "F") }   // light strips
+    c.line(...P(0, 0, 3.0), ...P(U, 0, 3.0), "F"); c.line(...P(0, 0, 3.0), ...P(0, V, 3.0), "F")   // light strips
     quad(c, [P(2.5, 0.02, 2.2), P(5.5, 0.02, 2.2), P(5.5, 0.02, 2.8), P(2.5, 0.02, 2.8)], "F")
     { const [x, y] = P(4, 0, 2.7); TXT.draw(c, x, y, "CIVIC REST - STATION 5-MITTE", "L", { font: "hud", align: "center" }) }
-    // a terminal on the left wall (Chapter 4: the PURGE's deadline)
+    // a terminal on the left wall (Chapter 4: the PURGE's schedule)
     quad(c, [P(0.02, 1.0, 1.0), P(0.02, 2.0, 1.0), P(0.02, 2.0, 1.9), P(0.02, 1.0, 1.9)], "K")
     { const [x, y] = P(0.02, 1.5, 1.7); TXT.draw(c, x, y, "72:00:00", "m", { font: "hud", align: "center" }) }
-    // the rows of beds: their feet toward us, heads at the wall's side, a monitor at each, the patch's beat in magenta
-    const names = [["NAJO", "5M-0198"], ["RAYA", "5M-0219"], ["TEO", "5M-0412"]]
+    // the rows of beds: heads at the wall's side, feet toward us, a monitor at each with the patch's beat in Lull's pale blue
+    const names = { 1: "NAJO", 4: "RAYA", 9: "TEO" }
     let i = 0
-    for (const v of [1.2, 3.4]) for (let u = 0.6; u < 7.6; u += 1.7) {
-      blk(c, P, u, v, 0, 0.95, 2.0 - 0.9, 0.55, "F", "B", "D")                             // the bed (head at v, feet toward the front)
+    for (const v of [1.2, 3.4]) for (let u = 0.6; u < 12.4; u += 1.7) {
+      blk(c, P, u, v, 0, 0.95, 1.1, 0.55, "F", "B", "D")                                   // the bed
       blk(c, P, u + 0.1, v + 0.05, 0.55, 0.75, 0.35, 0.1, "F", "D", "E")                   // the pillow
       { const [x, y] = P(u + 0.47, v + 0.22, 0.75); c.rect(x - 3, y - 3, 7, 5, "K") }       // the head, dark hair
       blk(c, P, u + 0.95, v + 0.1, 0, 0.12, 0.12, 1.3, "A", "L", "B")                      // the monitor's pole
       blk(c, P, u + 0.82, v, 1.3, 0.4, 0.1, 0.32, "K", "K", "L")
-      { const [x, y] = P(u + 1.02, v + 0.05, 1.45); c.line(x - 5, y, x - 2, y, "m"); c.line(x - 1, y - 2, x + 1, y + 1, "m"); c.line(x + 2, y, x + 5, y, "M") }
-      const nm = [null, names[0], null, null, names[1], null, names[2], null][i] ?? ["", ""]; i++
-      { const [x, y] = P(u + 0.47, v + 1.1, 0.4); c.rect(x - 9, y - 2, 18, 6, "F"); if (nm[0]) TXT.draw(c, x, y - 1, nm[0], "K", { font: "hud", align: "center" }) }
+      { const [x, y] = P(u + 1.02, v + 0.05, 1.45); c.line(x - 5, y, x - 2, y, "x"); c.line(x - 1, y - 2, x + 1, y + 1, "x"); c.line(x + 2, y, x + 5, y, "p") }
+      const nm = names[i] ?? ""; i++
+      { const [x, y] = P(u + 0.47, v + 1.1, 0.4); c.rect(x - 9, y - 2, 18, 6, "F"); if (nm) TXT.draw(c, x, y - 1, nm, "K", { font: "hud", align: "center" }) }
     }
     // a care robot in the aisle
     blk(c, P, 6.4, 2.6, 0, 0.5, 0.5, 1.0, "F", "D", "E"); { const [x, y] = P(6.65, 2.85, 1.0); c.rect(x - 2, y - 4, 4, 2, "v") }
-    juno(c, ...P(3.4, 2.75))
+    // the near end: a low cut wall across the room's front right, and in it the door to the lifts, lit
+    quad(c, [P(U, 0), P(U, V), P(U, V, 0.6), P(U, 0, 0.6)], "B")
+    quad(c, [P(U, 2.0), P(U, 3.3), P(U, 3.3, 0.6), P(U, 2.0, 0.6)], "F")
+    { const [x, y] = P(U, 2.65, 0.9); c.rect(x - 14, y - 3, 28, 8, "K"); TXT.draw(c, x, y - 1, "TRANSIT", "v", { font: "hud", align: "center" }) }
+    quad(c, [P(U - 1.4, 2.0), P(U, 2.0), P(U, 3.3), P(U - 1.4, 3.3)], "F")                  // light through the open door
+    juno(c, ...P(12.6, 2.7))
   },
 )
