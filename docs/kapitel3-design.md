@@ -309,7 +309,7 @@ Kapitel 4 umzustimmen (story §7, §9).
 
 | # | Wo | Was |
 |---|---|---|
-**Raya Morrow** (der Name vom Nutzer, 2026-11-24; alles andere ein Vorschlag): 19 Jahre alt, Agnes Morrows einziges Kind. Sie hat auf
+**Raya Morrow** (der Name vom Nutzer, 2026-11-24, der Rest vom Nutzer bestätigt am selben Tag): 19 Jahre alt, Agnes Morrows einziges Kind. Sie hat auf
 dem Drain-Markt an einem Fischstand gearbeitet, den Tag über und dann noch die Nacht, für die Flutschuld wie alle, und Lull genommen wie
 alle. An einem Morgen im April 2091 ist sie nicht aufgewacht; seit sieben Monaten liegt sie auf der Station 5-Mitte. Ihre Mutter fährt
 jeden Dienstag hinauf, denn eine Marke öffnet, was einer Schwester verschlossen bleibt. Morrow nimmt Schmiergeld (story §9): In Kapitel 1
@@ -320,7 +320,7 @@ holt sie sich nachts um halb eins in der Jade Row vom Tidewater-Jungen einen Ums
 |---|---|---|
 | M1 | `transit_neun`, Dienstag 20:00 | Morrow fährt hinauf, ihre Marke genügt. Die Wache: „Wie jeden Dienstag, Lieutenant. Grüßen Sie Raya.“ Morrow: „Sie schläft. Wie immer.“ Juno hört es oder sieht es im Puffer (Vorschlag: die Kamera über dem Kontrollpunkt, eine Nagi·wa-Kamera mit Junos altem Zugang). |
 | M2 | Traum, die Station | In der zweiten Traumnacht unter den Schläfern der Station: An jedem Bett ein Schild, und Civic Rest nennt seine Schläfer freundlich beim Vornamen, mit einer Nummer (`RAYA · 5M-0219`). Mit dem Namen aus M1 findet Juno sie unter den vielen. |
-| M3 | dort | Raya spricht im Traum wie Teo, ruhig und weit weg. Sie sieht durch die Kameras wie alle Schläfer, und sie hat ihre Mutter gesehen, jede Nacht um halb eins in der Jade Row (`cam07`, bis die Kamera ausging). Sie sagt es so, dass Juno es nicht vorher gesehen haben muss: „Mama hält jede Nacht in der Jade Row. Ein Junge gibt ihr einen Umschlag.“ – Juno: „Schmiergeld.“ – „Ich hab sie nie markiert. Ich kann nicht. Sie ist meine Mama.“ Hat Juno es in Kapitel 1 gesehen, kennt sie es schon; ein Flag dafür gibt es nicht (der Clip geht über Kapitel 2 nicht hinaus), die Zeilen sind für alle dieselben. Sie gibt Juno etwas mit, das nur die beiden wissen, den Namen, den ihre Mutter ihr als Kind gab, als sie Steine aus dem Abfluss sammelte: „Sag ihr: Kiesel sieht sie. Sie soll aufhören. Für mich muss sie das nicht.“ Flag `morrow_kind`, weiter in Kapitel 4: Mit „Kiesel“ glaubt Morrow Juno, und mit dem, was Raya gesehen hat, lässt sie sich umstimmen (story §7, Kapitel 4). |
+| M3 | dort | Raya spricht im Traum wie Teo, ruhig und weit weg. Im Traum sind die Schläfer da und können reden, mit Juno, die als Einzige wach darin ist; draußen kann keiner von ihnen etwas sagen (story §6, Punkt 4: Schläfer können nicht aussagen). Darum braucht Raya Juno als Botin: Ihrer Mutter selbst kann sie nichts sagen, auch nicht dienstags, wenn Morrow an ihrem Bett sitzt. Sie sieht durch die Kameras wie alle Schläfer, und sie hat ihre Mutter gesehen, jede Nacht um halb eins in der Jade Row (`cam07`, bis die Kamera ausging). Sie sagt es so, dass Juno es nicht vorher gesehen haben muss: „Mama hält jede Nacht in der Jade Row. Ein Junge gibt ihr einen Umschlag.“ – Juno: „Schmiergeld.“ – „Ich hab sie nie markiert. Ich kann nicht. Sie ist meine Mama.“ Hat Juno es in Kapitel 1 gesehen, kennt sie es schon; ein Flag dafür gibt es nicht (der Clip geht über Kapitel 2 nicht hinaus), die Zeilen sind für alle dieselben. Sie gibt Juno etwas mit, das nur die beiden wissen, den Namen, den ihre Mutter ihr als Kind gab, als sie Steine aus dem Abfluss sammelte: „Sag ihr: Kiesel sieht sie. Sie soll aufhören. Für mich muss sie das nicht.“ Flag `morrow_kind`, weiter in Kapitel 4: Mit „Kiesel“ glaubt Morrow Juno, und mit dem, was Raya gesehen hat, lässt sie sich umstimmen (story §7, Kapitel 4). |
 
 ### 6.2 Ratz' Kolonie (`off_ratz`)
 
@@ -475,7 +475,6 @@ Vorläufig, beim Bau zu prüfen:
 
 Fragen an den Nutzer (Story, Namen, Look):
 
-- **Raya Morrow:** Passen der Vorschlag (19, seit April auf der Station, „Kiesel“, ihre Mutter in der Jade Row) und die Zeilen? (§6.1)
 - **Das Ende des Kapitels** (der Nutzer: „Müssen wir mal gucken, wie wir das Ende machen.“ – „das definieren wir, wenn es so weit ist“): Der Entwurf lässt Juno aufs Dach fliehen, weil die Quiet
   über die Treppe kommt und der einzige andere Weg hinaus Fenster, Sims und Leiter ist, und oben endet das Kapitel an ihrem Platz vom
   Foto, neben dem Teos Platz leer ist, mit dem Blick auf ihr brennendes Fenster. Offen ist, ob das Kapitel dort endet oder erst, wenn sie
