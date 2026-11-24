@@ -86,7 +86,7 @@ Cutaway.moment("k2_ende", { room: "k2_protokolle", day: 7, from: "03:30", to: "0
   { wait: 1200 },
   "Das ist nicht Nagi·wa. Das ist Tinte.",
   { fade: "out", ms: 2000 },
-  { end: "Kapitel 3: Lull (kommt später)" },
+  { act: "next" },                                                            // on into Chapter 3 (game/kapitel3.js)
 ] });
 
 // her flat at night, only the deck's screens lit (the look of Chapter 1's end); one thing to click: the deck, which opens the check

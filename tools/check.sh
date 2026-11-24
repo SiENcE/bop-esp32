@@ -39,6 +39,12 @@ done
 for p in tools/paths/kapitel2_*.json; do
   n=$(basename "$p" .json); out=$($C node lib/cutaway/tools/play.mjs index.html --act kapitel2 --path "$p" 2>&1 | tail -1); line "clicks: $n" "$out"; need "clicks: $n" "$out" "all passed"
 done
+# Chapter 3 (being built, docs/PLAN.md H6): its frame alone from its own start, until its runs begin from Chapter 2's ends (H6.12)
+out=$($C node tools/solve-act.mjs kapitel3 --full --set off_roof,off_zeitung,off_imai,off_traeger,off_varga,off_tide,off_motte,off_vesper,off_shop24,off_haldane,off_teo,off_lantern 2>&1)
+s=$(echo "$out" | grep -E "from the cache|states in|soft-lock|SOFT|HINTS|^hints|UNSOLV" | tr '\n' ' '); line "kapitel3 solve: main" "$s"; need "kapitel3 solve: main" "$s" "no soft-locks"; need "kapitel3 solve: main" "$s" "every state on the way"
+for p in tools/paths/kapitel3_*.json; do
+  n=$(basename "$p" .json); out=$($C node lib/cutaway/tools/play.mjs index.html --act kapitel3 --path "$p" 2>&1 | tail -1); line "clicks: $n" "$out"; need "clicks: $n" "$out" "all passed"
+done
 out=$($C node lib/cutaway/tools/play.mjs index.html --act prolog --touch --path tools/paths/prolog.json 2>&1 | tail -1); line "prologue taps" "$out"; need "prologue taps" "$out" "all passed"
 out=$($C node lib/cutaway/tools/play.mjs index.html --act kapitel1 --touch --path tools/paths/kapitel1_main.json 2>&1 | tail -1); line "taps: kapitel1_main" "$out"; need "taps: kapitel1_main" "$out" "all passed"
 out=$($C node tools/check-hover.mjs 2>&1 | tail -1); line "the pointer turns hot" "$out"; need "the pointer turns hot" "$out" "all passed"
