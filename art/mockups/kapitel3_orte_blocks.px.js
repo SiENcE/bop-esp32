@@ -133,8 +133,8 @@ scene("station_blocks", { w: 624, h: 400, bg: "B" },                    // bigge
       blk(c, P, u + 0.1, v + 0.05, 0.55, 0.75, 0.35, 0.1, "F", "D", "E")                   // the pillow
       { const [x, y] = P(u + 0.47, v + 0.22, 0.75); c.rect(x - 3, y - 3, 7, 5, "K") }       // the head, dark hair
       blk(c, P, u + 0.95, v + 0.1, 0, 0.12, 0.12, 1.3, "A", "L", "B")                      // the monitor's pole
-      blk(c, P, u + 0.82, v, 1.3, 0.4, 0.1, 0.32, "K", "K", "L")
-      { const [x, y] = P(u + 1.02, v + 0.05, 1.45); c.line(x - 5, y, x - 2, y, "x"); c.line(x - 1, y - 2, x + 1, y + 1, "x"); c.line(x + 2, y, x + 5, y, "p") }
+      blk(c, P, u + 0.81, v + 0.11, 1.3, 0.4, 0.1, 0.32, "K", "K", "L")                   // the monitor, centred on its pole
+      { const [x, y] = P(u + 1.01, v + 0.21, 1.45); c.line(x - 5, y, x - 2, y, "x"); c.line(x - 1, y - 2, x + 1, y + 1, "x"); c.line(x + 2, y, x + 5, y, "p") }
       const nm = names[i] ?? ""; i++
       { const [x, y] = P(u + 0.47, v + 1.1, 0.4); c.rect(x - 9, y - 2, 18, 6, "F"); if (nm) TXT.draw(c, x, y - 1, nm, "K", { font: "hud", align: "center" }) }
     }

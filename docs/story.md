@@ -512,7 +512,12 @@ Das Design entsteht in `docs/kapitel3-design.md` (Entscheidungen in §10l).
 - **Die Schlafstation:**
   - Juno fährt die Transitachse hinauf zur Station;
   - sie sieht Teo und die Sinker in Reihen, beobachtet von den Kameras der Station;
-  - ein Terminal der Station zeigt den **Zeitplan der Bereinigung** (auf dem Bildschirm `PURGE`): drei Tage.
+  - ein Terminal der Station zeigt den **Zeitplan der Bereinigung** (auf dem Bildschirm `PURGE`): drei Tage. Es ist kein
+    Aushang, sondern der interne Wartungsplan des Personals, wie ein Krankenhaus ein geplantes System-Update anzeigt: Die Station
+    trifft es am härtesten, denn hier liegen die Sinker, die das Update nicht überleben, und das Personal bereitet sich darauf vor.
+    Auf dem Bildschirm in Nagi·was kalter Sprache etwa `FIRMWARE OBS-5 // PURGE // STATION 5-MITTE // T-72:00:00`, darunter
+    `BETTENFREIGABE NACH ABSCHLUSS`: für die Leute dort Routine, für Juno ein Schock. Öffentlich ist es nicht; Juno sieht es nur,
+    weil sie hineinkommt (§10l).
 - **Entscheidung 4:** ob Juno Teo jetzt rettet. Sie kann ihn wecken, **gegen seinen Willen** (unter
   Schmerzen, und er ist vielleicht nicht mehr ganz er selbst), oder ihn im Traum lassen, wie er es will,
   wo der Zeuge ihn bis zum Ende in Sicherheit hält. Wer weckt, entscheidet über seinen Kopf hinweg, wie
@@ -1005,6 +1010,11 @@ Am selben Tag, nach dem ersten Entwurf:
   Dach ausgesucht, das Jahr des Fotos. Das Foto am Deck bekommt dafür einen Datumsstempel.
 - **Morrows Tochter heißt Raya Morrow.** Der Rest ist ein Vorschlag im Design (`kapitel3-design` §6.1).
 - **Tintes Abschied kauft Sable,** wenn Juno ihn verkauft.
+- **Warum die Frist der Bereinigung auf der Station steht** (§7, Kapitel 4): Das Terminal ist der interne Wartungsplan des Personals;
+  die Station trifft das Update am härtesten, weil dort die Sinker liegen. Der Bildschirm sagt es in Nagi·was Sprache
+  (`FIRMWARE OBS-5 // PURGE // STATION 5-MITTE // T-72:00:00`, `BETTENFREIGABE NACH ABSCHLUSS`).
+- **Lulls Farben:** Das Pflaster und alles, was seinen Takt in der wachen Welt zeigt (die Monitore an den Betten der Station), bleiben
+  im Blassblau des Pflasters; Magenta und Weiß sind der Traum und der Zeuge (Style Guide §5).
 - **Entscheidung 3:** Die drei Reaktionen des Zeugen bleiben, wie der Entwurf sie vorschlägt (`kapitel3-design` §3.7). Nach „Ich helfe
   dir.“ gibt er Nagi·wa nicht mehr weiter, was die Schläfer an Juno markieren; er versteckt sie nicht, er meldet sie nur nicht mehr, und
   in Kapitel 4 findet die Quiet sie darum schwerer.
