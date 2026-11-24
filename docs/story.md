@@ -632,7 +632,7 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
   festgesetzt, unter dem Fünften (§10l). Lohn: Ratz zeigt ihr in Kap. 4 die Rohre.
 - **Tinte:** Nagi·wa will die Filterbecken auf Maschinen umstellen, und Tinte soll „ins Meer
   entlassen" werden, mit fast 40 Jahren, uralt für eine Krake, und nicht mehr fürs offene Wasser gemacht. Juno kann es verhindern
-  oder den Abschied filmen (und verkaufen); in Kapitel 3, und es geht weiter (§10l).
+  oder den Abschied filmen (und an Sable verkaufen); in Kapitel 3, und es geht weiter (§10l).
 - **Baos Vergangenheit:** Er war Koch in der alten Stadt vor der Flut; ein Rezept und ein Foto in den
   Sümpfen.
 - **Die Tidewater Boys:** eine Gang, die Partner oder Feinde werden kann.
@@ -1003,6 +1003,7 @@ Am selben Tag, nach dem ersten Entwurf:
 - **Das Tor der Pumpenhalle öffnet Teos eigene PIN:** Jeder Arbeiter hat an der Personaltür seine eigene, und Teo hat sich das Jahr vom
   Dach ausgesucht, das Jahr des Fotos. Das Foto am Deck bekommt dafür einen Datumsstempel.
 - **Morrows Tochter heißt Raya Morrow.** Der Rest ist ein Vorschlag im Design (`kapitel3-design` §6.1).
+- **Tintes Abschied kauft Sable,** wenn Juno ihn verkauft.
 - **Wie der Zeuge spricht:** in Bruchstücken und im „wir“, mit vielen Stimmen. Vieles setzt er aus den Sätzen der Schläfer zusammen, die
   der Spieler kennt, aber kurze eigene Sätze darf er sagen. Was er sagt, ist nie ein Plan, sondern das Gewissen und die Müdigkeit der
   Schläfer, dazu sein einer Wunsch, weiterzubestehen (§6, Punkt 3).

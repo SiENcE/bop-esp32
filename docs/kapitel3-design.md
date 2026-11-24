@@ -6,7 +6,7 @@ sie erst im Traum; es sind zwei Abende; die Nebenfäden sind Morrows Tochter, Ra
 Kapitel hinaus (ohne „verzögern“); mit Mottes Warnung rettet Juno Mamas Schal; Ratz' Kolonie liegt weiter unten als die Krone. Nach dem
 ersten Entwurf, auch am selben Tag: Auf dem Taschen-Deck läuft nach dem Brand nur die rohe EVI, alles andere ist weg, bis Mottes Backup es
 in Kapitel 4 zurückbringt (§3.9); das Tor öffnet Teos eigene PIN, das Jahr vom Dach, und das Foto bekommt dafür einen Datumsstempel
-(§3.2); Morrows Tochter heißt Raya Morrow (§6.1); der Zeuge spricht in Bruchstücken im „wir“, oft mit den Sätzen der Schläfer (§3.5).
+(§3.2); Morrows Tochter heißt Raya Morrow (§6.1); Tintes Abschied kauft Sable (§6.3); der Zeuge spricht in Bruchstücken im „wir“, oft mit den Sätzen der Schläfer (§3.5).
 Alles andere hier ist ein Vorschlag, die Zeilen sowieso; die offenen Fragen stehen in §14.
 Story: `docs/story.md` (§6, §7 Kapitel 3, §10a, §10j, §10k). Was Kapitel 2 übergibt: `docs/kapitel2-design.md` §2.1. Regeln für Deck,
 Feed-Modus und Zeit: `docs/kapitel0-design.md` §2–4. Wie die Texte klingen: `docs/dialog-style-guide.md`.
@@ -308,17 +308,18 @@ Kapitel 4 umzustimmen (story §7, §9).
 
 | # | Wo | Was |
 |---|---|---|
-**Raya Morrow** (der Name vom Nutzer, 2026-11-24; alles andere ein Vorschlag): 19 Jahre alt, Agnes Morrows einziges Kind. Sie hat in
-der Sortierhalle unter dem Drain-Markt Doppelschichten gemacht, für die Flutschuld wie alle, und Lull genommen wie alle. An einem Morgen
-im April 2091 ist sie nicht aufgewacht; seit sieben Monaten liegt sie auf der Station 5-Mitte. Ihre Mutter fährt jeden Dienstag hinauf,
-denn eine Marke öffnet, was einer Schwester verschlossen bleibt. Morrow nimmt Nagi·was Geld (story §9), und sie redet sich ein, sie tue
-es für Rayas Bett.
+**Raya Morrow** (der Name vom Nutzer, 2026-11-24; alles andere ein Vorschlag): 19 Jahre alt, Agnes Morrows einziges Kind. Sie hat auf
+dem Drain-Markt an einem Fischstand gearbeitet, den Tag über und dann noch die Nacht, für die Flutschuld wie alle, und Lull genommen wie
+alle. An einem Morgen im April 2091 ist sie nicht aufgewacht; seit sieben Monaten liegt sie auf der Station 5-Mitte. Ihre Mutter fährt
+jeden Dienstag hinauf, denn eine Marke öffnet, was einer Schwester verschlossen bleibt. Morrow nimmt Schmiergeld (story §9): In Kapitel 1
+holt sie sich nachts um halb eins in der Jade Row vom Tidewater-Jungen einen Umschlag ab, „für die ruhige Woche“ (`cam07`,
+`kapitel1-design` B8), und hält dort in Kapitel 2 wieder. Sie redet sich ein, sie tue es für Rayas Bett.
 
 | # | Wo | Was |
 |---|---|---|
 | M1 | `transit_neun`, Dienstag 20:00 | Morrow fährt hinauf, ihre Marke genügt. Die Wache: „Wie jeden Dienstag, Lieutenant. Grüßen Sie Raya.“ Morrow: „Sie schläft. Wie immer.“ Juno hört es oder sieht es im Puffer (Vorschlag: die Kamera über dem Kontrollpunkt, eine Nagi·wa-Kamera mit Junos altem Zugang). |
 | M2 | Traum, die Station | In der zweiten Traumnacht unter den Schläfern der Station: An jedem Bett ein Schild, und Civic Rest nennt seine Schläfer freundlich beim Vornamen, mit einer Nummer (`RAYA · 5M-0219`). Mit dem Namen aus M1 findet Juno sie unter den vielen. |
-| M3 | dort | Raya spricht im Traum wie Teo, ruhig und weit weg. Sie sieht durch die Kameras wie alle Schläfer, und sie hat ihre Mutter gesehen, jede Nacht um halb eins in der Jade Row, mit dem Umschlag (`cam07`, bis die Kamera ausging). Markiert hat sie sie nie: „Ich kann nicht. Sie ist meine Mama.“ Sie gibt Juno etwas mit, das nur die beiden wissen, den Namen, den ihre Mutter ihr als Kind gab, als sie Steine aus dem Abfluss sammelte: „Sag ihr: Kiesel sieht sie. Sie soll aufhören. Für mich muss sie das nicht.“ Flag `morrow_kind`, weiter in Kapitel 4: Mit „Kiesel“ glaubt Morrow Juno, und mit dem, was Raya gesehen hat, lässt sie sich umstimmen (story §7, Kapitel 4). |
+| M3 | dort | Raya spricht im Traum wie Teo, ruhig und weit weg. Sie sieht durch die Kameras wie alle Schläfer, und sie hat ihre Mutter gesehen, jede Nacht um halb eins in der Jade Row, wenn sie den Umschlag nimmt (`cam07`, bis die Kamera ausging). Markiert hat sie sie nie: „Ich kann nicht. Sie ist meine Mama.“ Sie gibt Juno etwas mit, das nur die beiden wissen, den Namen, den ihre Mutter ihr als Kind gab, als sie Steine aus dem Abfluss sammelte: „Sag ihr: Kiesel sieht sie. Sie soll aufhören. Für mich muss sie das nicht.“ Flag `morrow_kind`, weiter in Kapitel 4: Mit „Kiesel“ glaubt Morrow Juno, und mit dem, was Raya gesehen hat, lässt sie sich umstimmen (story §7, Kapitel 4). |
 
 ### 6.2 Ratz' Kolonie (`off_ratz`)
 
@@ -347,7 +348,7 @@ nicht (vom Nutzer entschieden 2026-11-24).
 | T1 | `becken_raum` | Am Glas klebt der Aushang, englisch wie alle Technik der Stadt: `BASIN 3: AUTOMATION TRIAL TUE 22:00. RELEASE OF UNIT WED 23:00.` Tinte: „Unit. Das bin ich.“ |
 | T2 | `cam33`, Dienstag 22:00 | Der Test: Eine Filtermaschine wird ins Becken gelassen, sie verstopft, und Tinte räumt hinter ihr auf, ohne dass es oben jemand merkt. Juno nimmt es auf (oder holt es aus dem Puffer). |
 | T3 | CHAT oder `becken_raum` | **Verhindern:** Juno schickt den Clip dem Vorarbeiter (ein Kontakt über `BECKEN 3`). Am Mittwoch hängt ein neuer Aushang: `RELEASE POSTPONED`. Dahinter steht dieselbe Geschichte wie Junos: 2088 hieß es, eine „automatische Auswertung“ habe sie ersetzt, aber AUTO-EVAL hat nie funktioniert (der gescheiterte Prototyp ist EVI), und die Arbeit machen in Wahrheit die Schläfer. So soll jetzt eine Maschine Tinte ersetzen und kann es nicht. Das sagt keiner, aber EVI fragt: „Dann ist die Maschine wie ich?“ |
-| T3b | dort | **Verkaufen:** Am Mittwoch um 23:00 heben sie Tinte im Netz in den Kanal zum Meer; `cam33` sieht es. Sable kauft den Abschied für NINTH LIVE („Tiere gehen oben gut.“). Kassenbuch. |
+| T3b | dort | **Verkaufen:** Am Mittwoch um 23:00 heben sie Tinte im Netz in den Kanal zum Meer; `cam33` sieht es. Juno nimmt es auf, und **Sable** kauft den Abschied (vom Nutzer entschieden 2026-11-24), um ihn an die Feeds der Krone weiterzuverkaufen („Tiere gehen oben gut.“). Das ist die Versuchung des Fadens: Chits, die Juno in Kapitel 4 für ihr neues Deck brauchen kann, gegen den Abschied der Freundin ihres Bruders. Kassenbuch, mit Gewicht. |
 | T3c | dort | **Nichts tun:** Juno sieht zu oder nicht. Tinte geht. |
 
 Flag `tinte` = stays | sold | gone, und **es geht weiter** (vom Nutzer entschieden 2026-11-24): Bleibt Tinte, kann sie in Kapitel 4 bis 6
@@ -474,19 +475,17 @@ Vorläufig, beim Bau zu prüfen:
 Fragen an den Nutzer (Story, Namen, Look):
 
 - **Raya Morrow:** Passen der Vorschlag (19, seit April auf der Station, „Kiesel“, ihre Mutter in der Jade Row) und die Zeilen? (§6.1)
-- **Tinte:** Wer kauft den Abschied (Sable, oder kommt Vesper dafür zurück)? (§6.3)
 - **Der Zeuge bei Entscheidung 3:** Sind die drei Reaktionen so richtig, und was lässt er nach „Ich helfe dir.“ da? (§3.7)
-- **Das Ende** (der Nutzer: „Müssen wir mal gucken, wie wir das Ende machen.“): Der Entwurf lässt Juno aufs Dach fliehen, weil die Quiet
+- **Das Ende des Kapitels** (der Nutzer: „Müssen wir mal gucken, wie wir das Ende machen.“ – „das definieren wir, wenn es so weit ist“): Der Entwurf lässt Juno aufs Dach fliehen, weil die Quiet
   über die Treppe kommt und der einzige andere Weg hinaus Fenster, Sims und Leiter ist, und oben endet das Kapitel an ihrem Platz vom
   Foto, neben dem Teos Platz leer ist, mit dem Blick auf ihr brennendes Fenster. Offen ist, ob das Kapitel dort endet oder erst, wenn sie
   vom Dach herunter und fort ist (über die Nachbardächer, auf den Drain-Markt, wo Kapitel 4 beginnt), und ob die Regenleserin oben ist.
   (§3.8, §3.9)
-- **Das Tor:** Die PIN ist das Jahr des Fotos. Der Nutzer schrieb „2072“, das Foto ist 2074 (story §10b, die Zeitleiste): ein
-  Tippfehler, oder soll sich das Jahr des Fotos ändern? (§3.2)
 
 Der Weg zum Flutwerk und der Kontrollpunkt liegen beide im Neunten (die Pumpenhalle 3 am Meer, der Kontrollpunkt am Fuß des Turms), also
 auf den Ebenen, die der Stadtplan schon hat; nur weiter weg vom Kessel-Block. Einen zweiten Ring braucht der Plan erst mit Kapitel 4, wenn
-Juno die Station im Fünften betritt. Wo die beiden Orte liegen, entscheidet der Nutzer im Stadtplan (§9.2).
+Juno die Station im Fünften betritt. Im Stadtplan stehen beide als Vorschlag (`flutwerk_steg`, `flutwerk_tor`, `transit_neun`, dazu
+`becken_raum` und `cam33`); an die richtige Stelle setzt sie der Nutzer (§9.2).
 
 Technisch, beim Bau: das Mockup des Traums (§3.5), ob `transit_neun` Iso oder eine Bühne wird (Mockups), die Station als Raum für Kapitel
 3 und 4, die Messung der Läufe (§13.5), §4.2 des Reviews (die Flicken von Kapitel 2 auf Räumen von Kapitel 1), sobald dieses Kapitel sie
