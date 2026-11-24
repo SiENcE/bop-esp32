@@ -498,6 +498,6 @@ auf den Ebenen, die der Stadtplan schon hat; nur weiter weg vom Kessel-Block. Ei
 Juno die Station im Fünften betritt. Im Stadtplan stehen beide als Vorschlag (`flutwerk_steg`, `flutwerk_tor`, `transit_neun`, dazu
 `becken_raum` und `cam33`); an die richtige Stelle setzt sie der Nutzer (§9.2).
 
-Technisch, beim Bau: was nach der zweiten Runde des Traum-Mockups bleibt (Junos Umriss und Teo werden beim Malen genauer, die Bilder im Datenraum noch lesbarer; §3.5), ob `transit_neun` Iso oder eine Bühne wird (Mockups), die Station als Raum für Kapitel
+Technisch, beim Bau: Das Mockup des Traums ist freigegeben (beide Runden, vom Nutzer 2026-11-24); beim Malen werden Junos Umriss und Teo genauer und die Bilder im Datenraum lesbarer (§3.5); ob `transit_neun` Iso oder eine Bühne wird (Mockups), die Station als Raum für Kapitel
 3 und 4, die Messung der Läufe (§13.5), §4.2 des Reviews (die Flicken von Kapitel 2 auf Räumen von Kapitel 1), sobald dieses Kapitel sie
 berührt.

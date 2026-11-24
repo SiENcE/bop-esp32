@@ -411,7 +411,8 @@ The overlay's brackets are cyan; the only red ones are a threat's (Ashe in `cam3
 
 A third mode beside street and feed (story §10k, `docs/kapitel3-design.md` §3.5): Juno on Lull with her implant awake, inside the
 shared dream. It must look like nothing else in the game: a cyberspace. Mockup `docs/mockups/mock_g_traum_*_x3.gif`
-(`art/mockups/mock_g_traum.px.js`); the user chose its three variants **together**, as the dream's three states (2026-11-24):
+(`art/mockups/mock_g_traum.px.js`); the user chose its three variants **together**, as the dream's three states, and approved the second
+round (Teo on the rim, the station with Raya's bed) the same day (2026-11-24):
 
 | State | What it is | How it looks |
 |---|---|---|
