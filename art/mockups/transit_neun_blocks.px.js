@@ -354,14 +354,14 @@ scene("transit_neun_lang", { w: LW, h: LH, bg: "k" },
     }
     for (let u = 17.4; u <= 23.4; u += 1.2) lbox(c, u - 0.05, 5.0, 0, 0.1, 0.1, 1.0, "H", "5", "6")
     for (let u = 17.4; u < 23.4; u += 1.2) c.line(...L(u, 5.0, 0.95), ...L(u + 1.2, 5.0, 0.95), "r")
-    // the waiting hall: rows of benches, full; some asleep on Lull; people standing between
+    // the waiting hall: rows of benches, a few waiting (who and how many changes by the day and the hour); some asleep on Lull
     const COATS = ["4", "3", "5", "g", "4", "3"]
     let n = 0
     for (const v of [3.4, 4.9, 6.3]) for (let u = 5; u < 16; u += 2.6) {
       lbox(c, u, v, 0, 2.2, 0.5, 0.45, "5", "3", "4")
-      for (let s = 0; s < 3; s++) { n++; if (n % 5 === 3) continue; lman(c, u + 0.4 + s * 0.7, v + 0.25, COATS[n % 6], { sit: true, sleep: n % 4 === 1 }) }
+      for (let s = 0; s < 3; s++) { n++; if (!(n % 4 === 0 || n % 7 === 2)) continue; lman(c, u + 0.4 + s * 0.7, v + 0.25, COATS[n % 6], { sit: true, sleep: n % 4 === 1 }) }
     }
-    for (const [u, v] of [[16.6, 3.6], [17.2, 4.4], [18.4, 4.5], [19.6, 4.4], [16.0, 5.6], [4.6, 4.2], [4.5, 5.7]]) { n++; lman(c, u, v, COATS[n % 6], { case: n % 3 === 0 }) }
+    for (const [u, v] of [[17.2, 4.4], [18.4, 4.5], [4.6, 4.2]]) { n++; lman(c, u, v, COATS[n % 6], { case: n % 3 === 0 }) }
     // Juno at the first check: a red gate for her
     lman(c, 2.4, 3.3, "y", { hood: "y", bag: "G" })
     TXT.draw(c, 6, 6, "A: ISO, DIE LANGE HALLE (24 X 7 M, WAENDE 7 M)", "6", { font: "hud" })
