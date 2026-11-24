@@ -2,8 +2,10 @@
 
 Stand: Entwurf (2026-11-24). Nichts davon ist gebaut. Entschieden hat der Nutzer am 2026-11-24 die Gliederung in vier Punkten (story
 §10l): Das Kapitel beginnt am Dienstagabend, Teo liegt da schon auf der Station; Juno kommt nicht in den Fünften hinauf, die Station sieht
-sie erst im Traum; es sind zwei Abende; die Nebenfäden sind Morrows Tochter, Ratz' Kolonie und Tinte, die ins Meer soll. Alles andere
-hier ist ein Vorschlag, die Zeilen sowieso; die offenen Fragen stehen in §14.
+sie erst im Traum; es sind zwei Abende; die Nebenfäden sind Morrows Tochter, Ratz' Kolonie und Tinte, die ins Meer soll. Am selben Tag dazu: Tintes Faden geht über das
+Kapitel hinaus (ohne „verzögern“); mit Mottes Warnung rettet Juno Mamas Schal; das Taschen-Deck behält CACHE und BUCH, und mit Mottes
+Backup ist in Kapitel 4 alles wieder da; Ratz' Kolonie liegt weiter unten als die Krone. Alles andere hier ist ein Vorschlag, die Zeilen
+sowieso; die offenen Fragen stehen in §14.
 Story: `docs/story.md` (§6, §7 Kapitel 3, §10a, §10j, §10k). Was Kapitel 2 übergibt: `docs/kapitel2-design.md` §2.1. Regeln für Deck,
 Feed-Modus und Zeit: `docs/kapitel0-design.md` §2–4. Wie die Texte klingen: `docs/dialog-style-guide.md`.
 
@@ -224,7 +226,9 @@ Eine Kette wie das Ende von Kapitel 1 und 2, an der nur `moth_student` verzweigt
   Die Kamera im Flur ist seit Montag tot (`cam14`, `kapitel2-design` §4), aber Motte nicht: Er sieht die in Weiß die Treppe heraufkommen.
   Seit dem Backup kennt sein Tideboy das Taschen-Deck, und EVI reißt Juno aus dem Traum: „Juno! Motte sagt, sie kommen! Die Treppe!“
   Juno ist wach, bevor die Tür bricht, und geht durchs Fenster, über den Sims, die Leiter hinauf aufs Dach, ohne Eile, die sie
-  hinterher noch spürt. (Vorschlag, §14: Mit der Warnung kann sie eine Sache aus der Wohnung mitnehmen.)
+  hinterher noch spürt. **Eine Sache nimmt sie mit** (vom Nutzer entschieden 2026-11-24): **Mamas Schal**, den sie hinter dem Schrank
+  gefunden hat (der Entwurf an Teo im MÜLL, `kapitel2-design` §6.6). Er ist ein Ding in der Tasche, und das Flag `got_schal` geht weiter:
+  In Kapitel 4 kann er bei Teo zählen (Entscheidung 4). Ohne die Warnung verbrennt er mit allem anderen.
 - **Ohne:** Juno wacht auf, als die Tür aufbricht. Weiße Masken im Licht des Decks. Sie ist am Fenster, bevor sie denkt, und draußen.
   Hat sie das Fenster nie geöffnet, schlägt sie es ein („Kein Riegel. Keine Zeit.“); hängt die Leiter noch oben, springt sie danach.
   Die Zeilen lesen, wie es in Kapitel 1 war, der Ablauf nicht: So kann hier nichts hängen bleiben.
@@ -247,9 +251,11 @@ Zustand.)
 Dann sitzt Juno oben auf ihrem Platz vom Foto (`dach_sitzen`), auf dem Teo am Montag an ihrer Schulter eingeschlafen ist, und neben ihr
 ist der Platz wieder leer. Unten brennt ihr Fenster, über ihr die Unterseiten der Ringe. Abblende. „Kapitel 4: Die Quiet“.
 
-**Was das Taschen-Deck behält** (Vorschlag, §14): den CACHE mit den Clips (auch `clip_ines_death`, den Beweis für „Licht aus“, story §8)
-und das BUCH; was weg ist: GLASS mit der Karte, NETZ, RADIO und der MÜLL, also auch die Entwürfe an Teo, wenn Juno sie nicht vorher
-geschickt hat (§5).
+**Was das Taschen-Deck behält** (vom Nutzer entschieden 2026-11-24): den CACHE mit den Clips (auch `clip_ines_death`, den Beweis für
+„Licht aus“, story §8) und das BUCH. Was mit dem großen Deck schmilzt: GLASS mit der Karte, NETZ, RADIO und der MÜLL mit den Entwürfen an
+Teo. **Mit Mottes Backup ist es nur bis Kapitel 4 weg** (`moth_student`, story §10k): Das Backup hat Motte in Kapitel 2 vom Taschen-Deck
+gezogen; Juno baut sich in Kapitel 4 ein neues Deck zusammen und spielt es ein, und dann ist alles wieder da, auch EVI ganz. Ohne Backup
+bleibt verloren, was nicht im Taschen-Deck war, und der Zeuge füllt EVIs Lücken. Was genau das Backup enthält, legt Kapitel 4 fest.
 
 ## 4. Die Quiet kommt näher
 
@@ -310,12 +316,15 @@ der Krone (story §9). Sein Stand ist leer, an der Kiste ein Zettel: `BIN ROHR. 
 | R3 | die Wartungskameras | **Lotsen**: Juno sieht durch die Kameras voraus, Ratz geht. Sie schaltet einen Lüfter ab, öffnet eine Klappe über ein Wartungsterminal, sagt ihm, wann die Drohne vorbei ist (ohne Timing: Die Drohne hat ihre festen Stellungen, und Ratz wartet, bis Juno „Jetzt.“ sagt). Ein kleines Vorspiel für den Einbruch in Kapitel 5, wo Juno einen Verbündeten durch den Tower lotst (story §7). |
 | R4 | die letzte Kamera | Die Kolonie: Kabelratten in einem Knoten aus Rohren, ihre Kragen glimmen. Ratz: „Familie. Teuer. Gratis.“ Lohn: In Kapitel 4 zeigt er Juno die Rohre (story §9). Flag `ratz_kolonie`, weiter in Kapitel 4. |
 
-Wo die Kolonie liegt (unter der Krone ist weit oben, story §3) und wie viele Kameras es braucht, ist offen (§14).
+**Wo die Kolonie liegt** (vom Nutzer entschieden 2026-11-24): nicht unter der Krone, sondern weiter unten, wo sie sich auf halbem Weg
+festgesetzt hat, unter dem Fünften, wo die Klappen nicht mehr aufgehen. Den Weg ganz hinauf zeigt Ratz Juno in Kapitel 4 oder 5. Wie
+viele Kameras es braucht, klärt der Bau.
 
 ### 6.3 Tinte soll ins Meer (`off_tinte`)
 
 Das Flutwerk stellt die Filterbecken auf Maschinen um, und Tinte soll mit fast vierzig Jahren „ins Meer entlassen“ werden, für das sie
-nicht mehr gemacht ist (story §9). Juno kann es verhindern, verzögern oder den Abschied filmen und verkaufen.
+nicht mehr gemacht ist (story §9). Juno kann es verhindern, den Abschied filmen und verkaufen oder nichts tun; „verzögern“ gibt es
+nicht (vom Nutzer entschieden 2026-11-24).
 
 | # | Wo | Was |
 |---|---|---|
@@ -325,8 +334,9 @@ nicht mehr gemacht ist (story §9). Juno kann es verhindern, verzögern oder den
 | T3b | dort | **Verkaufen:** Am Mittwoch um 23:00 heben sie Tinte im Netz in den Kanal zum Meer; `cam33` sieht es. Sable kauft den Abschied für NINTH LIVE („Tiere gehen oben gut.“). Kassenbuch. |
 | T3c | dort | **Nichts tun:** Juno sieht zu oder nicht. Tinte geht. |
 
-Flag `tinte` = stays | sold | gone. Ob es weitergeht (ob Tinte in Kapitel 4 bis 6 noch eine Rolle hat, story §6 Punkt 6: sie zählt
-dieselben Sinker wie Aubrecht), ist offen (§14), ebenso ob „verzögern“ ein eigener Weg ist. Damit der Hauptfaden nicht an diesem Faden
+Flag `tinte` = stays | sold | gone, und **es geht weiter** (vom Nutzer entschieden 2026-11-24): Bleibt Tinte, kann sie in Kapitel 4 bis 6
+noch helfen, etwa mit ihren Knoten, die dieselben Sinker zählen wie Aubrechts Zahlen (story §6, Punkt 6); welche Rolle sie dort hat,
+legen diese Kapitel fest. Damit der Hauptfaden nicht an diesem Faden
 hängt, sagt Tinte `know_teo_cam` schon am Dienstag (§3.2), und ist sie am Mittwoch fort, liegt das Kabel mit den zwölf Knoten auf der
 Bank, für die Schwester (Vorschlag).
 
@@ -412,7 +422,7 @@ und 2.
 
 Neu im Hauptfaden: `know_flutwerk`, `know_teo_cam`, `link_cam33` (für jeden), `know_obs4`, das Ding `lull`, ein Schritt-Flag für die
 Traumnächte und `e3`. In den Fäden `morrow_kind`, `ratz_kolonie` und `tinte` mit je einem Schritt. Weiter gehen davon nur `e3`,
-`morrow_kind`, `ratz_kolonie` und vielleicht `tinte` (§14), dazu das Kassenbuch. Die Traumnacht 1 ist eine Kette und kostet fast
+`morrow_kind`, `ratz_kolonie`, `tinte` und `got_schal`, dazu das Kassenbuch. Die Traumnacht 1 ist eine Kette und kostet fast
 nichts; was in Nacht 2 frei ist (die Bilder, die Juno ansieht), ist eine Ansicht, kein Zustand, außer dem, was sie findet.
 
 ## 12. Hinweise
@@ -448,13 +458,7 @@ Vorläufig, beim Bau zu prüfen:
 Fragen an den Nutzer (Story, Namen, Look):
 
 - **Morrows Tochter:** ihr Name, ihr Alter, seit wann sie schläft, und was sie Juno für ihre Mutter mitgibt (§6.1).
-- **Tinte:** Geht ihr Faden weiter (spielt Tinte in Kapitel 4 bis 6 noch eine Rolle, etwa mit ihren Knoten neben Aubrechts Zahlen)? Gibt
-  es „verzögern“ als eigenen Weg? Wer kauft den Abschied (Sable, oder kommt Vesper dafür zurück)? (§6.3)
-- **Ratz' Kolonie:** Liegt sie wirklich unter der Krone, oder findet Juno sie in diesem Kapitel weiter unten (der Weg ganz hinauf wäre
-  dann Kapitel 4 oder 5)? (§6.2)
-- **Mottes Warnung:** Darf Juno mit der Warnung eine Sache aus der Wohnung retten, und welche (das Foto, Mamas Schal aus dem Entwurf an
-  Teo, der Kaktus)? (§3.8)
-- **Das Taschen-Deck:** Behält es CACHE und BUCH (und damit den Clip als Beweis), und geht der MÜLL mit den Entwürfen verloren? (§3.9)
+- **Tinte:** Wer kauft den Abschied (Sable, oder kommt Vesper dafür zurück)? (§6.3)
 - **Der Zeuge bei Entscheidung 3:** Sind die drei Reaktionen so richtig, und was lässt er nach „Ich helfe dir.“ da? (§3.7)
 - **Das Ende:** Ist die Regenleserin um drei auf dem Dach (das halbe Haus holt um drei zur selben Zeit Luft), oder ist Juno allein? (§3.9)
 - **Das Tor:** Ist „das Jahr vom Dach“ (2074) als Zahl richtig, und darf das Foto am Deck dafür einen Datumsstempel bekommen? (§3.2)

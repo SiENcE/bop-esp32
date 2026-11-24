@@ -628,10 +628,11 @@ Optional, über die Kapitel verteilt; jede zeigt auch etwas von der Stadt.
   das für die Gefilmten bedeutet hat. Anonymisierte Clips (Clip-Editor, Prolog-Design §2) kauft Vesper
   nicht: „Ohne Gesichter ist es kein Leben."
 - **Ratz:** Er sucht seine Kolonie, die beim Ende des Kabelprogramms in die Rohre unter der Krone
-  gezogen ist. Juno findet sie über alte Wartungskameras. Lohn: Ratz zeigt ihr in Kap. 4 die Rohre.
+  gezogen ist. Juno findet sie über alte Wartungskameras, in Kapitel 3, weiter unten, als Ratz dachte: Sie hat sich auf halbem Weg
+  festgesetzt, unter dem Fünften (§10l). Lohn: Ratz zeigt ihr in Kap. 4 die Rohre.
 - **Tinte:** Nagi·wa will die Filterbecken auf Maschinen umstellen, und Tinte soll „ins Meer
-  entlassen" werden, mit fast 40 Jahren, uralt für eine Krake, und nicht mehr fürs offene Wasser gemacht. Juno kann es verhindern,
-  verzögern oder den Abschied filmen (und verkaufen).
+  entlassen" werden, mit fast 40 Jahren, uralt für eine Krake, und nicht mehr fürs offene Wasser gemacht. Juno kann es verhindern
+  oder den Abschied filmen (und verkaufen); in Kapitel 3, und es geht weiter (§10l).
 - **Baos Vergangenheit:** Er war Koch in der alten Stadt vor der Flut; ein Rezept und ein Foto in den
   Sümpfen.
 - **Die Tidewater Boys:** eine Gang, die Partner oder Feinde werden kann.
@@ -987,3 +988,12 @@ Die Gliederung von Kapitel 3 (`docs/kapitel3-design.md`), vom Nutzer entschieden
 - **Zwei Abende,** Dienstag 13. und Mittwoch 14. November, mit zwei Traumnächten; die Razzia kommt in der zweiten, während Juno träumt.
 - **Drei Nebenfäden:** Morrows Tochter (im Traum auf der Station gefunden, für Kapitel 4), Ratz' Kolonie (für die Rohre in Kapitel 4) und
   Tinte, die ins Meer soll (story §9).
+
+Am selben Tag, nach dem ersten Entwurf:
+
+- **Tintes Faden geht weiter:** Ob sie bleibt, verkauft wird oder geht (`tinte`), nehmen die Kapitel 4 bis 6 mit; „verzögern“ gibt es nicht.
+- **Mit Mottes Warnung rettet Juno Mamas Schal** aus der Wohnung (den aus ihrem Entwurf an Teo); er geht als Ding weiter und kann in
+  Kapitel 4 bei Teo zählen. Ohne die Warnung verbrennt er.
+- **Das Taschen-Deck behält CACHE und BUCH,** also auch den Clip aus CAM 31; GLASS, NETZ, RADIO und MÜLL schmelzen mit dem großen Deck.
+  Mit Mottes Backup ist das nur bis Kapitel 4 so: Juno spielt es ins neue Deck ein, und alles ist wieder da, auch EVI ganz (§10k).
+- **Ratz' Kolonie** liegt weiter unten als die Krone, auf halbem Weg unter dem Fünften; den Weg ganz hinauf zeigt Ratz später.
