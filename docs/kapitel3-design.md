@@ -216,14 +216,15 @@ Danach kommt der Zeuge, und diesmal will er etwas: dass sie bleibt, wie Teo es w
 Er spricht mit den Stimmen der Schläfer, und ihre zwei Wünsche passen nicht zusammen: „wir sagen nichts über die nachbarn“ – „wir wollen
 nicht mehr aufwachen.“ Juno antwortet, und das ist Entscheidung 3 (story §7), nie aus Versehen (story §5):
 
-| Wahl | Was Juno sagt | Was der Zeuge tut (Vorschlag) |
+| Wahl | Was Juno sagt | Was der Zeuge tut (vom Nutzer bestätigt 2026-11-24) |
 |---|---|---|
-| **helfen** | „Ich helfe dir.“ | Die Bilder werden still und warm. „wach.“ Er lässt ihr etwas da, das sie in Kapitel 4 spürt (welches, entscheidet Kapitel 4). |
-| **den Bruder** | „Gib mir meinen Bruder zurück.“ | Teos eigene Stimme unter den vielen: „ich will nicht, ju.“ Der Zeuge gibt nicht, was der Schläfer nicht will. |
-| **wie die** | „Du bist genau wie die.“ | Die Bilder gehen eines nach dem anderen aus, wie in der Halle des Vorspanns. Er zieht sich zurück. |
+| **helfen** | „Ich helfe dir.“ | Die Bilder werden still und warm. „wach.“ Juno ist die Erste, die ihn als jemanden behandelt und nicht als Gefahr. **Was er ihr dalässt** (vom Nutzer entschieden 2026-11-24): Von nun an gibt er Nagi·wa nicht mehr weiter, was die Schläfer an Juno markieren. Er versteckt sie nicht (das kann er nicht, story §10h), er meldet sie nur nicht mehr, und wen er nicht meldet, findet Nagi·wa schwerer. Juno spürt es in Kapitel 4, wenn sie gejagt wird; wie, legt dessen Design fest. Die Razzia dieser Nacht ändert es nicht mehr: Die Quiet weiß längst, wo Juno wohnt. |
+| **den Bruder** | „Gib mir meinen Bruder zurück.“ | Teos eigene Stimme unter den vielen: „ich will nicht, ju.“ Der Zeuge gibt nicht her, was der Schläfer selbst nicht will: Er hält Teo nicht fest, Teo will bleiben. Das bereitet Entscheidung 4 vor (ihn gegen seinen Willen wecken). |
+| **wie die** | „Du bist genau wie die.“ | Die Bilder gehen eines nach dem anderen aus, wie in der Beobachtungshalle des Vorspanns, als Juno entlassen wurde. Gemeint ist Nagi·wa, die Menschen beobachten und behalten; er zieht sich gekränkt zurück. |
 
 Flag `e3` = help | brother | same. Es geht über die Kapitel bis zum Finale (story §8: mit dem Gewicht des Kassenbuchs entscheidet es, ob
-der Zeuge ihr vertraut). Kaum hat sie geantwortet, beginnt die Razzia.
+der Zeuge ihr vertraut). Für das Vertrauen zählt `help` am meisten, `brother` ist neutral (dann entscheidet das Kassenbuch) und `same`
+am wenigsten (Vorschlag; die Grenzen legt Kapitel 6 fest). Kaum hat sie geantwortet, beginnt die Razzia.
 
 ### 3.8 Die Razzia
 
@@ -319,7 +320,7 @@ holt sie sich nachts um halb eins in der Jade Row vom Tidewater-Jungen einen Ums
 |---|---|---|
 | M1 | `transit_neun`, Dienstag 20:00 | Morrow fährt hinauf, ihre Marke genügt. Die Wache: „Wie jeden Dienstag, Lieutenant. Grüßen Sie Raya.“ Morrow: „Sie schläft. Wie immer.“ Juno hört es oder sieht es im Puffer (Vorschlag: die Kamera über dem Kontrollpunkt, eine Nagi·wa-Kamera mit Junos altem Zugang). |
 | M2 | Traum, die Station | In der zweiten Traumnacht unter den Schläfern der Station: An jedem Bett ein Schild, und Civic Rest nennt seine Schläfer freundlich beim Vornamen, mit einer Nummer (`RAYA · 5M-0219`). Mit dem Namen aus M1 findet Juno sie unter den vielen. |
-| M3 | dort | Raya spricht im Traum wie Teo, ruhig und weit weg. Sie sieht durch die Kameras wie alle Schläfer, und sie hat ihre Mutter gesehen, jede Nacht um halb eins in der Jade Row, wenn sie den Umschlag nimmt (`cam07`, bis die Kamera ausging). Markiert hat sie sie nie: „Ich kann nicht. Sie ist meine Mama.“ Sie gibt Juno etwas mit, das nur die beiden wissen, den Namen, den ihre Mutter ihr als Kind gab, als sie Steine aus dem Abfluss sammelte: „Sag ihr: Kiesel sieht sie. Sie soll aufhören. Für mich muss sie das nicht.“ Flag `morrow_kind`, weiter in Kapitel 4: Mit „Kiesel“ glaubt Morrow Juno, und mit dem, was Raya gesehen hat, lässt sie sich umstimmen (story §7, Kapitel 4). |
+| M3 | dort | Raya spricht im Traum wie Teo, ruhig und weit weg. Sie sieht durch die Kameras wie alle Schläfer, und sie hat ihre Mutter gesehen, jede Nacht um halb eins in der Jade Row (`cam07`, bis die Kamera ausging). Sie sagt es so, dass Juno es nicht vorher gesehen haben muss: „Mama hält jede Nacht in der Jade Row. Ein Junge gibt ihr einen Umschlag.“ – Juno: „Schmiergeld.“ – „Ich hab sie nie markiert. Ich kann nicht. Sie ist meine Mama.“ Hat Juno es in Kapitel 1 gesehen, kennt sie es schon; ein Flag dafür gibt es nicht (der Clip geht über Kapitel 2 nicht hinaus), die Zeilen sind für alle dieselben. Sie gibt Juno etwas mit, das nur die beiden wissen, den Namen, den ihre Mutter ihr als Kind gab, als sie Steine aus dem Abfluss sammelte: „Sag ihr: Kiesel sieht sie. Sie soll aufhören. Für mich muss sie das nicht.“ Flag `morrow_kind`, weiter in Kapitel 4: Mit „Kiesel“ glaubt Morrow Juno, und mit dem, was Raya gesehen hat, lässt sie sich umstimmen (story §7, Kapitel 4). |
 
 ### 6.2 Ratz' Kolonie (`off_ratz`)
 
@@ -475,7 +476,6 @@ Vorläufig, beim Bau zu prüfen:
 Fragen an den Nutzer (Story, Namen, Look):
 
 - **Raya Morrow:** Passen der Vorschlag (19, seit April auf der Station, „Kiesel“, ihre Mutter in der Jade Row) und die Zeilen? (§6.1)
-- **Der Zeuge bei Entscheidung 3:** Sind die drei Reaktionen so richtig, und was lässt er nach „Ich helfe dir.“ da? (§3.7)
 - **Das Ende des Kapitels** (der Nutzer: „Müssen wir mal gucken, wie wir das Ende machen.“ – „das definieren wir, wenn es so weit ist“): Der Entwurf lässt Juno aufs Dach fliehen, weil die Quiet
   über die Treppe kommt und der einzige andere Weg hinaus Fenster, Sims und Leiter ist, und oben endet das Kapitel an ihrem Platz vom
   Foto, neben dem Teos Platz leer ist, mit dem Blick auf ihr brennendes Fenster. Offen ist, ob das Kapitel dort endet oder erst, wenn sie

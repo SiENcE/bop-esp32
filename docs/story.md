@@ -184,7 +184,7 @@ Cyan nur für Technik.
 | **Dr. Ines Calder** | Schlaftechnikerin in einer Lull-Klinik, die Schlafprotokolle hinausschmuggelt | weißer Klinikkittel, dunkler Zopf | `#f0a0c0` |
 | **„Lantern"** (Oskar Lind; so sieht er aus: `docs/portraits/lantern_x4.png`) | ein Piratensender, der Werbebildschirme für zehn Sekunden Wahrheit kapert; Ines' Kontakt; paranoid. Sitzt seit einem Pumpenunfall im Rollstuhl, den er für die Sümpfe umgebaut hat: Schwimmer, ein Bootsmotor, Schubdüsen für kurze Sätze über Treppen und Leitern, der Sender eingebaut. | geflickter Poncho; der Rollstuhl mit Schwimmern, Düsen und einem Bündel Antennen | `#b0f0a0` |
 | **Pike** | Lanterns Gehilfe, umgebaut mit dem Reiher; verkauft auf dem Floß DATA 1C/GB im Kanal des Drain-Markts Daten pro Gigabyte und bringt Lantern Akkus und Teile; Ratz kann ihn nicht ausstehen (§10, „Mit dem Floß in die Sümpfe“) | lange dünne Beine, ein langer Hals, ein spitzes Gesicht, die Stakstange | offen |
-| **Lt. Agnes Morrow** | Revier 9; nimmt Geld von Nagi·wa und hasst sich dafür; ihre Tochter Raya ist eine Lull-Sinkerin | grauer Trenchcoat, Polizeimarke am Band | `#a8b8d0` |
+| **Lt. Agnes Morrow** | Revier 9; nimmt Schmiergeld und hasst sich dafür; ihre Tochter Raya ist eine Lull-Sinkerin | grauer Trenchcoat, Polizeimarke am Band | `#a8b8d0` |
 | **Corvin Ashe** | ein Agent der **Quiet**, Nagi·was inoffizieller Sicherheitseinheit; früher selbst Beobachter in Junos Halle; nach der Entlassung ging er zu Nagi·wa, Juno auf den Schwarzmarkt: ihr Spiegelbild (§7, Kap. 5); höflich, geduldig, der Mörder | weißer Regenmantel, im Feed ohne Gesicht (eine Maske, die die Kamera überstrahlt) | `#ff7a6a` |
 | **Direktorin Selene Aubrecht** | Leiterin von Civic Rest, dem Lull-Programm; glaubt, den Neunten gerettet zu haben, und die Zahlen geben ihr recht; sie sieht als Einzige, wie viele Menschen der Zeuge behält, und will ihn aufhalten; moralisch grau, keine Schurkin: Sie hat recht und mordet trotzdem (§6, Punkt 6) | weißer Anzug, silbernes Haar | `#e8f0ff` |
 | **Der Zeuge** | das Auge in den Bildschirmen (§6): der Neunte im Schlaf, ohne eigenen Willen, mit dem der Schläfer | eine Störung, ein Auge, viele Stimmen zugleich | `#ffc0f2` (Magenta-Weiß) |
@@ -479,7 +479,8 @@ Das Design entsteht in `docs/kapitel3-design.md` (Entscheidungen in §10l).
   nett zu Motte war; sonst wacht Juno auf, als die Tür aufgebrochen wird, und muss über das Dach
   fliehen).
 - **Entscheidung 3:** was Juno dem Zeugen sagt. „Ich helfe dir", „Gib mir meinen Bruder zurück" oder
-  „Du bist genau wie die." Das bestimmt, wie der Zeuge im Finale handelt.
+  „Du bist genau wie die." Das bestimmt, wie der Zeuge im Finale handelt. Nach „Ich helfe dir" meldet er Nagi·wa nicht mehr, was
+  die Schläfer an Juno markieren, und in Kapitel 4 findet die Quiet sie schwerer (§10l).
 - **Das Ende:** Juno entkommt aus dem Kessel-Block. Ihre Wohnung ist ausgebrannt, ihr großes Deck ist
   geschmolzen, und sie hat nur noch das Taschen-Deck und ihr Implantat. **Von EVI ist nur ein Rest
   übrig** (§10k). Das letzte, was das große Deck zeigt, bevor es schmilzt, ist EVIs Gesicht im Glitch.
@@ -1004,6 +1005,10 @@ Am selben Tag, nach dem ersten Entwurf:
   Dach ausgesucht, das Jahr des Fotos. Das Foto am Deck bekommt dafür einen Datumsstempel.
 - **Morrows Tochter heißt Raya Morrow.** Der Rest ist ein Vorschlag im Design (`kapitel3-design` §6.1).
 - **Tintes Abschied kauft Sable,** wenn Juno ihn verkauft.
+- **Entscheidung 3:** Die drei Reaktionen des Zeugen bleiben, wie der Entwurf sie vorschlägt (`kapitel3-design` §3.7). Nach „Ich helfe
+  dir.“ gibt er Nagi·wa nicht mehr weiter, was die Schläfer an Juno markieren; er versteckt sie nicht, er meldet sie nur nicht mehr, und
+  in Kapitel 4 findet die Quiet sie darum schwerer.
+- **Morrow nimmt Schmiergeld** (§9; bis dahin „Geld von Nagi·wa“): Das Geld, das Kapitel 1 zeigt, kommt von Tidewater.
 - **Wie der Zeuge spricht:** in Bruchstücken und im „wir“, mit vielen Stimmen. Vieles setzt er aus den Sätzen der Schläfer zusammen, die
   der Spieler kennt, aber kurze eigene Sätze darf er sagen. Was er sagt, ist nie ein Plan, sondern das Gewissen und die Müdigkeit der
   Schläfer, dazu sein einer Wunsch, weiterzubestehen (§6, Punkt 3).
