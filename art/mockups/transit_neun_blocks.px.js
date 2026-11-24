@@ -175,3 +175,94 @@ scene("transit_neun_oben", { w: W, h: H, bg: "k" },
     TXT.draw(c, 4, 4, "C: VON OBEN", "6", { font: "hud" })
   },
 )
+
+// ================================================================ A2: the hall, the user's choice (iso), big and tall
+// After the user's photo of an airport's check-in hall (2026-11-24): a long row of counters with a screen over each, lanes of posts and
+// belts the queue winds through, behind the counters the scanner arches and the glass tubes. At the game's own scale (isomap: 32 px a
+// meter along u to the right, 16 down; 30 px a meter up), 12 x 8 m, its walls 7 m, twice a room's, so the tubes rise out of the top: the
+// hall is bigger than the screen both ways and the camera moves over it, as in the intro's observation hall.
+const HW = 672, HH = 560, HCX = 272, HCY = 214
+const P = (u, v, h = 0) => [Math.round(HCX + 32 * (u - v)), Math.round(HCY + 16 * (u + v) - h * 30)]
+const quad = (c, pts, k) => c.poly(pts.flat(), k)
+function hbox(c, u, v, h, du, dv, dh, top, left, right) {
+  quad(c, [P(u, v + dv, h), P(u + du, v + dv, h), P(u + du, v + dv, h + dh), P(u, v + dv, h + dh)], left)
+  quad(c, [P(u + du, v, h), P(u + du, v + dv, h), P(u + du, v + dv, h + dh), P(u + du, v, h + dh)], right)
+  quad(c, [P(u, v, h + dh), P(u + du, v, h + dh), P(u + du, v + dv, h + dh), P(u, v + dv, h + dh)], top)
+}
+// a standing figure at the game's scale: 1.75 m, about 52 px
+function man(c, u, v, coat, o = {}) {
+  const [x, y] = P(u, v), h = o.h ?? 52, w = 14
+  c.ellipse(x, y, 9, 4, "f")                                                          // its shadow on the floor
+  c.rect(x - 7, y - h + 10, w, h - 10, coat); c.rect(x - 7, y - 20, w, 20, o.legs ?? "2")
+  c.rect(x - 4, y - h, 8, 10, o.head ?? "S"); c.rect(x - 4, y - h, 8, 3, o.hair ?? "k")
+  if (o.hood) { c.rect(x - 6, y - h - 2, 12, 9, o.hood); c.rect(x - 3, y - h + 3, 6, 6, "S") }
+  if (o.cap) { c.rect(x - 5, y - h - 2, 10, 4, o.cap); c.rect(x - 1, y - h - 4, 2, 2, "q") }
+  if (o.bag) { c.rect(x - 11, y - 30, 5, 8, o.bag); c.line(x - 7, y - 30, x + 6, y - h + 11, o.bag) }
+  if (o.permit) { c.rect(x + 7, y - 30, 3, 4, "v") }
+  if (o.case) c.rect(x + 8, y - 16, 7, 14, "3")
+}
+scene("transit_neun_halle", { w: HW, h: HH, bg: "k" },
+  (c) => {
+    const U = 12, V = 8, WH = 7
+    // the floor: pale tiles, two bands of light under the ceiling's strips
+    quad(c, [P(0, 0), P(U, 0), P(U, V), P(0, V)], "Z")
+    for (let u = 0; u <= U; u += 1) c.line(...P(u, 0), ...P(u, V), "z")
+    for (let v = 0; v <= V; v += 1) c.line(...P(0, v), ...P(U, v), "z")
+    for (const v0 of [1.6, 5.2]) quad(c, [P(0, v0), P(U, v0), P(U, v0 + 0.9), P(0, v0 + 0.9)], "X")
+    // the back walls, twice a room's height
+    quad(c, [P(0, 0), P(U, 0), P(U, 0, WH), P(0, 0, WH)], "2")
+    quad(c, [P(0, 0), P(0, V), P(0, V, WH), P(0, 0, WH)], "1")
+    for (const h of [3.6, 6.6]) { c.line(...P(0, 0, h), ...P(U, 0, h), "V"); c.line(...P(0, 0, h), ...P(0, V, h), "V") }   // light strips
+    // the tubes in the tower's wall: glass, rising out of the picture; a lift lit at the bottom of the first, one halfway up the third
+    const TUBES = [[2.0, 4.4], [5.6, 8.0], [9.2, 11.6]]
+    for (const [a, b] of TUBES) {
+      quad(c, [P(a, 0), P(b, 0), P(b, 0, 20), P(a, 0, 20)], "c")
+      c.line(...P(a, 0), ...P(a, 0, 20), "6"); c.line(...P(b, 0), ...P(b, 0, 20), "6")
+      for (let h = 0.8; h < 20; h += 1.4) c.line(...P(a, 0, h), ...P(b, 0, h), "C")
+    }
+    const lift = (a, b, h0, lit) => {
+      quad(c, [P(a + 0.15, 0.05, h0), P(b - 0.15, 0.05, h0), P(b - 0.15, 0.05, h0 + 2.6), P(a + 0.15, 0.05, h0 + 2.6)], lit ? "5" : "4")
+      c.line(...P(a + 0.15, 0.05, h0 + 2.6), ...P(b - 0.15, 0.05, h0 + 2.6), "H"); c.line(...P(a + 0.15, 0.05, h0), ...P(b - 0.15, 0.05, h0), "H")
+      c.line(...P(a + 0.15, 0.05, h0), ...P(a + 0.15, 0.05, h0 + 2.6), "G"); c.line(...P(b - 0.15, 0.05, h0), ...P(b - 0.15, 0.05, h0 + 2.6), "G")
+      c.line(...P(a + 0.5, 0.05, h0 + 2.4), ...P(b - 0.5, 0.05, h0 + 2.4), "V")
+    }
+    lift(2.0, 4.4, 0, true); lift(9.2, 11.6, 4.6, false)
+    // the sign over the arches, along the wall
+    quad(c, [P(1.2, 0.02, 3.0), P(11.8, 0.02, 3.0), P(11.8, 0.02, 3.5), P(1.2, 0.02, 3.5)], "k")
+    for (const [a, b] of TUBES) { const [sx, sy] = P((a + b) / 2, 0, 3.4); TXT.draw(c, sx, sy, "RING 5", "q", { font: "nagiwa", align: "center" }) }
+    // the left wall: the ad selling sleep, the board of the lifts, a camera
+    quad(c, [P(0.02, 0.8, 2.4), P(0.02, 3.6, 2.4), P(0.02, 3.6, 5.6), P(0.02, 0.8, 5.6)], "M")
+    { const [x, y] = P(0, 2.2, 4.6); TXT.draw(c, x, y, "LULL", "N", { align: "center" }); const [x2, y2] = P(0, 2.2, 3.7); TXT.draw(c, x2, y2, "TWO WEEKS FREE", "m", { font: "hud", align: "center" }) }
+    quad(c, [P(0.02, 4.6, 3.0), P(0.02, 7.4, 3.0), P(0.02, 7.4, 4.6), P(0.02, 4.6, 4.6)], "c")
+    { const [x, y] = P(0, 6.0, 4.3); TXT.draw(c, x, y, "NEXT LIFT 20:00", "v", { font: "hud", align: "center" }); const [x2, y2] = P(0, 6.0, 3.7); TXT.draw(c, x2, y2, "RING 5  WORK PERMIT", "C", { font: "hud", align: "center" }) }
+    // the scanner arches before the tubes
+    for (const [a, b] of TUBES) {
+      hbox(c, a + 0.4, 0.9, 0, 0.25, 0.3, 2.5, "G", "4", "5"); hbox(c, b - 0.65, 0.9, 0, 0.25, 0.3, 2.5, "G", "4", "5")
+      hbox(c, a + 0.4, 0.9, 2.5, b - a - 0.8, 0.3, 0.3, "r", "1", "2")
+    }
+    man(c, 6.8, 1.4, "4", { permit: true })                                                      // one going through
+    // the counters: four desks, a guard behind each, a screen over each on its pole; the gaps lead to the arches
+    const DESKS = [[0.4, 2.6], [3.8, 6.2], [7.4, 9.8], [11.0, 11.9]]
+    for (const [a, b] of DESKS) {
+      for (let u = a + 0.6; u < b - 0.3; u += 1.4) man(c, u, 2.4, "H", { cap: "G", h: 50 })
+      hbox(c, a, 2.7, 0, b - a, 0.7, 1.05, "5", "3", "4")
+      for (let u = a + 0.6; u < b - 0.3; u += 1.4) { hbox(c, u - 0.05, 2.95, 1.05, 0.1, 0.1, 1.2, "G", "5", "6"); hbox(c, u - 0.45, 2.9, 2.25, 0.9, 0.2, 0.55, "6", "c", "C")
+        const [x, y] = P(u, 3.1, 2.62); TXT.draw(c, x - 6, y - 3, "R5", "v", { font: "hud" }) }
+    }
+    // the lanes: posts and belts, the queue winding through them from the front to the counters
+    const LANES = [4.4, 5.4, 6.4]
+    LANES.forEach((v, i) => {
+      const u0 = i % 2 ? 1.2 : 2.4, u1 = i % 2 ? 9.6 : 10.8
+      for (let u = u0; u <= u1 + 0.01; u += 1.2) { hbox(c, u - 0.05, v - 0.05, 0, 0.1, 0.1, 1.0, "H", "5", "6") }
+      for (let u = u0; u < u1; u += 1.2) c.line(...P(u, v, 0.95), ...P(u + 1.2, v, 0.95), "r")
+    })
+    const COATS = ["4", "3", "5", "4", "3", "5", "4", "g"]
+    // between the counters and the first lane, then lane by lane, back to front, people standing in line
+    const Q = [[1.4, 3.8], [5.0, 3.9], [8.6, 3.8], [3.0, 4.9], [4.4, 4.9], [5.8, 4.95], [7.3, 4.9], [8.9, 4.9],
+               [9.9, 5.9], [8.4, 5.9], [6.9, 5.95], [5.3, 5.9], [3.6, 5.9], [2.2, 6.9], [3.8, 6.9], [5.2, 6.95]]
+    Q.forEach(([u, v], i) => man(c, u, v, COATS[i % COATS.length], { permit: i % 3 !== 1, case: i % 4 === 2 }))
+    // Juno, in front, outside the lanes: no permit
+    man(c, 9.6, 7.3, "y", { hood: "y", bag: "G", legs: "2" })
+    TXT.draw(c, 6, 6, "A: ISO, DIE HALLE (12 X 8 M, WAENDE 7 M)", "6", { font: "hud" })
+  },
+)
