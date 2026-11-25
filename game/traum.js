@@ -51,12 +51,56 @@ const brighter = (/** @type {number} */ x, /** @type {number} */ y, /** @type {n
   x |= 0; y |= 0; if (x < 0 || y < 0 || x >= W || y >= H) return;
   const i = key(x, y); if (i < 10) put(x, y, dk(i + n));
 };
+// the dream's passes over the picture, drawn as it goes onto the screen (k: how much of the pass is left, or done, for "out"):
+//   in     coming in from the bed's black: dark by whole steps of the ramp, bent in waves, rows slipping, clearing slowly
+//   flash  the tunnel's end: white, falling back by steps into the picture that comes
+//   out    waking: the picture made of code falls out of the screen column by column, Juno's outline stays a moment, then goes
+const pass = { kind: "", k: 0 };
+const dim = (/** @type {number} */ i, /** @type {number} */ n) => (i < 10 ? dk(i - n) : i - 10 - Math.round(n / 2.5) >= 0 ? i - Math.round(n / 2.5) : 0);
+const lift = (/** @type {number} */ i, /** @type {number} */ n) => (i < 10 ? dk(i + n) : n > 4 ? 9 : n > 1 ? cV : i);
+const PASS = /** @type {Record<string, (b: Uint8Array, x: number, y: number, t: number, k: number) => number>} */ ({
+  in(b, x, y, t, k) {
+    let sx = x + Math.round((Math.sin(y * 0.09 + t * 0.004) * 14 + Math.sin(y * 0.37 - t * 0.013) * 4) * k);
+    const sy = y + Math.round(Math.sin(x * 0.045 + t * 0.003) * 7 * k);
+    if (ih(y >> 1, Math.floor(t / 90), 41) < 0.1 * k) sx += Math.round((ih(y >> 1, Math.floor(t / 90), 42) - 0.5) * 50 * k);
+    if (sx < 0 || sy < 0 || sx >= W || sy >= H) return 0;
+    return dim(b[sy * W + sx], k * 10);
+  },
+  flash(b, x, y, t, k) {
+    const sy = Math.max(0, Math.min(H - 1, y + Math.round(Math.sin(x * 0.07 + t * 0.01) * 3 * k)));
+    return lift(b[sy * W + x], k * 11);
+  },
+  out(b, x, y, t, k) {
+    const i = b[y * W + x];
+    if (i >= 10) return k < 0.8 ? i : k < 0.92 && ih(Math.floor(t / 60), 1, 43) < 0.5 ? cu : 0;   // she stays, then flickers out
+    const c = Math.floor(x / 3), dl = ih(c, 31) * 0.45, fall = Math.max(0, Math.min(1, (k - dl) / 0.5));
+    const off = fall * fall * (H + 40), sy = Math.floor(y - off);
+    if (sy >= 0) { const j = b[sy * W + x]; return j < 10 ? dk(j - fall * 3) : 0; }
+    const tail = off - y;                                                // above the falling column: its trail, brightest at its top edge
+    return fall > 0 && tail < 8 ? dk(7 - tail) : 0;
+  },
+});
 function blit(/** @type {CanvasRenderingContext2D} */ ctx) {
-  const s = surface(), d = s.img.data;
-  for (let i = 0; i < W * H; i++) { const c = RGB[s.buf[i]]; d[i * 4] = c[0]; d[i * 4 + 1] = c[1]; d[i * 4 + 2] = c[2]; d[i * 4 + 3] = 255; }
+  const s = surface(), d = s.img.data, b = s.buf, t = Cutaway.clock.time, run = pass.k > 0 && PASS[pass.kind];
+  for (let y = 0, i = 0; y < H; y++) for (let x = 0; x < W; x++, i++) {
+    const c = RGB[run ? run(b, x, y, t, pass.k) : b[i]];
+    d[i * 4] = c[0]; d[i * 4 + 1] = c[1]; d[i * 4 + 2] = c[2]; d[i * 4 + 3] = 255;
+  }
   s.cx.putImageData(s.img, 0, 0);
   ctx.drawImage(s.cv, 0, 0);
 }
+// { dream: "in" | "flash" | "out", ms, ease, wait } runs a pass; "in" takes over the bed's black (the engine's fade) at once
+Cutaway.script.action("dream", (s) => {
+  const kind = String(s.dream), from = kind === "out" ? 0 : 1, to = 1 - from;
+  pass.kind = kind; pass.k = from;
+  if (kind === "in") Cutaway.fx.fade(0, 0);
+  const done = Cutaway.tween.to({ key: "dream", ms: Cutaway.script.fast ? 0 : Number(s.ms) || 0, ease: s.ease ?? "linear", step: (k) => { pass.k = from + (to - from) * k; } });
+  return Cutaway.script.goOn(s, done);
+});
+// waking leaves the picture fallen away: a dream room entered again (a save) begins clear
+Cutaway.events.on("room.enter", () => { if (pass.kind === "out") pass.k = 0; });
+// in the dream nobody's voice sounds: the lines stand without blips (a provider that speaks them silently)
+Cutaway.voice.use(() => (/** @type {any} */ (Cutaway.scene.room)?.dream ? { stop() {} } : null));
 
 // ---- the cameras' pictures, read once into the dream's ramp (0..9 by their step on the phosphor ramp): the background and what lies over it
 /** @type {Record<string, Float32Array>} */
@@ -293,7 +337,7 @@ function shot(id, draw, over) {
     surface();
     if (k !== last) { draw(f, p); last = k; }
     blit(ctx);
-    over?.(ctx);
+    if (!(pass.k > 0.2)) over?.(ctx);
   };
 }
 // (loaded before the intro's files: its `float` moves Nagiwa.intro.p, read here only while drawing)
@@ -330,8 +374,9 @@ Cutaway.actor("zeuge", { name: "Der Zeuge", color: RAMP[9], voice: { pitch: 50, 
 
 // ---- the rooms. Nothing in them is a state of its own: the way in and out are plain steps
 const ROOM = { color: RAMP[0], observe: true, lines: "top", ambience: ["feed_hiss"], music: { theme: "glass", intensity: 0.15 } };
-const IN_33 = [{ sfx: "link" }, { goto: "traum_tunnel", transition: "dissolve" }, { float: [0, 1], ms: 2600, ease: "in" },
-  { goto: "traum_cam33", transition: "dissolve" }, { say: "zeuge", text: "wenn ich schlaf, ist alles still." }];
+const IN_33 = [{ sfx: "link" }, { goto: "traum_tunnel", transition: "dissolve" }, { sfx: "traum_flug" }, { float: [0, 1], ms: 5200, ease: "in" },
+  { sfx: "traum_blitz" }, { dream: "flash", ms: 1800, ease: "out", wait: false }, { goto: "traum_cam33", transition: false }, { wait: 1500 },
+  { say: "zeuge", text: "wenn ich schlaf, ist alles still." }];
 /** @type {Record<string, any>} */
 const hotspots = {};
 for (const p of A.panels) {

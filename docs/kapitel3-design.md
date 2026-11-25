@@ -489,7 +489,11 @@ Vorläufig, beim Bau zu prüfen:
    die die Engine zeichnet. Die Bilder hängen als Hotspots mit ihrem Umriss im Raum (`Nagiwa.at.traum`). Solange `dreaming` gilt, steht die
    Uhr (auch für den Solver), und der Traum hat seinen eigenen Hinweis. Bis H6.4 Lull davorsetzt, führt das Bett am Dienstag ab 01:00
    ohne Lull hinein: Datenraum, CAM 33 durch den Tunnel, das Becken, und Juno wacht am Mittwochabend auf. Kein Raum des Traums ist ein
-   Zustand für sich (+28 Zustände).
+   Zustand für sich (+28 Zustände). Die Übergänge, wie vom Nutzer am 25.11. gewünscht (Stilführer §9a): langsam
+   schwarz, während die Musik schon umschaltet, der Datenraum dunkel und verbogen eingeblendet, im Traum keine Sprechgeräusche; der Tunnel
+   doppelt so lang mit einem weißen Blitz ins Bild aus Code; beim Aufwachen fällt das Bild spaltenweise aus dem Schirm, Junos Umriss zuletzt,
+   dann die Karte des Abends. Das Spiel zeichnet sie selbst (`{ dream: "in" | "flash" | "out" }`), mit drei Geräuschen (`traum_flug`,
+   `traum_blitz`, `traum_fall`).
 2. **Die inneren Stimmen** (C12) wären für DAS IMPLANTAT bei `OBS-4` schön, sind aber nicht nötig: Ohne sie sagt Juno die Zeile selbst.
 3. **Ein Zahlenfeld** wie die Eingabe des Takts an `cam31` (das Tor, §3.2): vorhanden, im Spiel.
 4. **Der Akt `kapitel3`** mit `keep` und `leave` (§2.1) und `?act=kapitel3`.

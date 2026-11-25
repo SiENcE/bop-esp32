@@ -427,6 +427,11 @@ round (Teo on the rim, the station with Raya's bed) the same day (2026-11-24):
   drifting scanlines.
 - **The Witness:** an eye (the pupil wider on the beat), glitches that slip rows sideways; his lines in lowercase, white, with voices
   offset behind them in magenta, the dream dimmed behind the line.
+- **Going in, through and out** (the user, 2026-11-25): the screen goes black slowly while the music already turns into the dream's
+  (Juno's theme fades out under it); the data room comes in dark and bent, rows slipping, and clears by whole steps of the ramp. In the
+  dream nobody's voice sounds: the lines stand without blips. The tunnel is a long flight (about five seconds) that ends in a white
+  flash, falling back by steps into the picture made of code. Waking, that picture falls out of the screen column by column, Juno's
+  outline stays a moment longer and flickers out, then black and the evening's card.
 
 ## 10. Animation
 

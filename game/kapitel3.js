@@ -49,16 +49,23 @@ Nagiwa.threads.civic_rest = [
 const bed = Cutaway.room.get("flat").hotspots.bed;
 bed.use = [{ if: ["day=8", "time>=01:00", "!bed_closed"], then: [
   "Genug für heute.",
-  { fade: "out", ms: 900 },
+  // the screen goes black slowly, and the music already turns into the dream's while it does; the dream comes in bent and dark
+  { music: { stop: true, fade: 3 } }, { music: { theme: "glass", intensity: 0.15, fade: 5 } },
+  { fade: "out", ms: 3500 },
   { set: "dreaming" },
   { goto: "traum", transition: false },
-  { fade: "in", ms: 1500 },
+  { wait: 700 },
+  { dream: "in", ms: 4500, ease: "out" },
   { say: "zeuge", text: "wir haben dich gesehen. jede nacht." },
 ], else: bed.use }];
 Cutaway.room.get("traum_cam33").hotspots.becken.use = [
   "Teo hat hier gesessen. Auf dem Rand.",
   { say: "zeuge", text: "hier ist es still." },
-  { fade: "out", ms: 1500 },
+  // waking: the picture made of code falls out of the screen, Juno's outline a moment longer, then black and the evening's card
+  { music: { stop: true, fade: 3 } }, { sfx: "traum_fall" },
+  { dream: "out", ms: 3200, ease: "in" },
+  { wait: 900 },
+  { fade: "out", ms: 0 },
   { unset: "dreaming" },
   { night_passes: true }, { unset: "deck_woke" },
   { goto: "flat", at: AF.bed, face: "se", transition: false },

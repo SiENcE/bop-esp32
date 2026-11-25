@@ -5,6 +5,7 @@
 //                               cache (nagiwa.js), link (rooms/deck.js)
 //   room changes                jack_in, jack_out, static, glitch (here, by the kind in transitions.js)
 //   the deck                    mail, boot, type (the cards' letters: skin.js), evi (the hint button, here)
+//   the dream                   traum_flug, traum_blitz, traum_fall (game/kapitel3.js, traum.js)
 //   ambience (rooms' loops)     rain_glass, city_far, neon_buzz, fridge_hum, deck_fans, feed_hiss, feed_rain
 //   the Drain Market            its loops at their places (the crowd, the wok, the canal, the roofs' ACs, the pillar) and
 //                               one-shots from its stalls (haggling, cleavers, the wok tossed, the loudspeaker)
@@ -79,6 +80,13 @@
   S("type", { noise: { filter: "bandpass", from: 2600, q: 1.5, ms: 18, gain: 0.08 }, tone: { wave: "square", from: 190, ms: 12, gain: 0.02 } });
   // EVI: a small round chirp, up and a little down
   S("evi", { tone: [{ wave: "triangle", from: 880, to: 1320, ms: 60, gain: 0.13 }, { wave: "triangle", from: 1320, to: 1046, ms: 90, gain: 0.12, at: 70 }] });
+  // the dream (game/traum.js): the flight down the tunnel swelling, the white flash at its end, the picture falling away on waking
+  S("traum_flug", { tone: { wave: "sawtooth", from: 55, to: 480, ms: 5200, attack: 2200, gain: 0.03, vibrato: [6, 18] },
+    noise: { filter: "bandpass", from: 300, to: 2800, q: 1.1, ms: 5200, attack: 2600, gain: 0.06 } });
+  S("traum_blitz", { tone: [{ wave: "sine", from: 1760, to: 2637, ms: 900, gain: 0.07 }, { wave: "triangle", from: 110, to: 55, ms: 1400, gain: 0.16 }],
+    noise: { filter: "highpass", from: 2600, to: 6000, ms: 1300, gain: 0.16 } });
+  S("traum_fall", { tone: { wave: "sawtooth", from: 820, to: 40, ms: 3200, attack: 300, gain: 0.035 },
+    noise: { filter: "bandpass", from: 2800, to: 220, q: 1.3, ms: 3300, attack: 400, gain: 0.08 } });
 
   // ---------------------------------------------------------------- ambience (loops)
   S("rain_glass", { loop: { noise: { filter: "lowpass", freq: 3200, q: 0.5 }, gain: 0.045, crackle: 0.25 } });     // on the window, drops tapping
