@@ -2,7 +2,7 @@
 // (Tuesday 13 and Wednesday 14 November); Teo already lies on the station. What there is so far: the act with what Chapter 2 hands on
 // (§2.1), the start (the card, the line on black, CIVIC REST in the CHAT, EVI), the bed on Tuesday from 01:00, and on Wednesday night
 // a stand-in for the end that is still to come (the dream, decision 3, the raid and the fire: H6.5 to H6.7).
-// No flag of its own yet.
+// No flag of its own yet. Its start rebuilds what earlier code reads (p1 from the Kassenbuch, the CACHE's notes), as Chapter 2's does.
 "use strict";
 
 (function () {
@@ -89,6 +89,8 @@ Cutaway.act("kapitel3", {
     // Juno's old access and the codes she has had since Chapter 1 and 2
     ...["cam03", "cam04", "cam07", "cam18", "cam21", "cam22", "cam23", "cam24", "cam25", "cam30"].flatMap((c) => [{ set: `code_${c}` }, { set: `link_${c}` }]),
     { cache: "note_kessler_photo" }, { cache: "note_obs_handbook" },
+    // Ines' file from the freezer, which every way through Chapter 2 finds (Monday's clock waits for it), and the forgery's note with its proof
+    { cache: "note_civic_rest" }, { if: "forgery_proven", then: [{ cache: "note_forgery" }] },
     { set: "know_ines" }, { set: "saw_varga" }, { set: "read_kessler" },
     { set: "fridge_empty" }, { set: "rent_notice" }, { set: "moth_met" }, { set: "bao_soup" },
     // the rooms she knows: nobody asks whether she has been there, and each would double its states

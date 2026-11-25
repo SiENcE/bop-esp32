@@ -1,6 +1,6 @@
 # Plan: Glass Sister on Cutaway.js
 
-Status (2026-11-24):
+Status (2026-11-25):
 
 - **Done:** H0, H1, H1c, H2, H2b, H2c; H3 (the prologue solves and plays from the title screen); H4 (Chapter 1, painted, every thread
   solved alone); **H5 (Chapter 2 "Aufnahme")**, played through by the user, his decisions in `docs/story.md` §10h. After the review of
@@ -9,13 +9,17 @@ Status (2026-11-24):
   Kassenbuch has its hidden weights (story §5, `game/gewicht.js`), the flag `traeger` is gone, the hotspots round things
   that are not rects are polys (§4.5). Engine: E-a, E-b, E-c; C15, the solver across the chapter line (each of Chapter 2's runs
   begins from every way its run of Chapter 1 ends, `tools/runs.sh`; it found at once that a fresh act's start lost what Chapter 1 handed
-  on, fixed in the engine).
+  on, fixed in the engine). **H6.1** (Chapter 3's act): `kapitel3` on game days 8 and 9 with its `keep` and `leave`, its start (the line
+  on black, CIVIC REST, EVI), the bed and a stand-in for its end; Chapter 2 goes on into it. Its start rebuilds what earlier code reads (`p1`
+  from the Kassenbuch, without which the flat's door held Juno in; Ines' file and the forgery's note in the CACHE). What Chapters 1 and 2
+  left open is settled with them (review §4.2): job B ends on Friday, Chapter 2's threads and tools (Sable's search and sale, Frau
+  Haldane, the 24-hour shop, the way to Lantern, the forgery's PRÜFEN, anonymising, 4B) end on Monday night, the old unread dots stay
+  in their chapters; the world stays (the dead cameras, the tape, the paper boat, the window, the hook).
 - **Open:** E-d (C12, C13: dialogue v2 and the node editor), E-e, C14 (the controller, before R0), R0 (the demo build). Across the
-  chapter line not yet: the prologue into Chapter 1 (87 ways; Chapter 1's runs still begin from its own start). From the review:
-  Chapter 2's remaining patches on Chapter 1's rooms (§4.2, to be settled when Chapter 3 first touches them).
+  chapter line not yet: the prologue into Chapter 1 (87 ways; Chapter 1's runs still begin from its own start).
 - **Now:** H6 (Chapter 3 "Lull"). Its design is drafted (`docs/kapitel3-design.md`, the user's decisions in story §10l), every new place
   has an approved block sketch or mockup (the dream's three states, the checkpoint's long hall, the basin room, the walkway to the
-  Flutwerk, a maintenance camera, the station), and the build is planned in steps (§4, "H6 in steps"). **Next:** H6.1.
+  Flutwerk, a maintenance camera, the station), and the build is planned in steps (§4, "H6 in steps"). H6.1 is done. **Next:** H6.2, the dream as a spike (`game/traum.js`).
 - **Checks:** the last full run (2026-11-23): `sh tools/check.sh` ALL PASSED (validate 0 errors, 10 warnings; doc-lint 0 errors; the
   prologue 78612 states; Chapter 1 main 115984, roof 52394, zeitung 41712, imai 37158, traeger 12446, varga 109103, tide 142246, motte
   33430, vesper 34258; Chapter 2 main 215148, stick 93050, lantern 271112, the shop 50020, haldane 104272, teo 22074 and the runs of
@@ -24,6 +28,10 @@ Status (2026-11-24):
   Then (C15) Chapter 2's runs from Chapter 1's ends, each varying e1 and its own answer, every start winnable, no soft-locks, every state
   with a hint: main 430920 states (86 min), stick 186340, lantern 463984 (109 min), varga 317248, tide 95068, the shop 100040, imai 76496,
   haldane 161656, teo 82614; about twice the states of one start, and Chapter 2 now takes about five hours of `check.sh`.
+  For H6.1 (2026-11-25): `graph.sh kapitel2` 430920 states (89 min), 864 winning ends, cut to Chapter 3's `keep` 18 starts; Chapter 3
+  1218 states, no soft-locks, every state with a hint; Chapter 2's run of Tide again (job B now ends on Friday): 8 starts, 44584 states (95068 before, when Okonkwo could still be warned on Saturday), every start winnable, no soft-locks, every state with a hint;
+  `handoff.sh --only` 0 errors, 22 warnings (new: `evi_trust`, which the fire reads in H6.7, and Ines' file and the forgery's note,
+  which Chapter 3's start gives again rather than keeping them).
 
 What each step built and how it was decided is in the commits and the chapter designs (`docs/kapitel1-design.md`,
 `docs/kapitel2-design.md`).
