@@ -18,6 +18,7 @@
 #include "lvgl.h"
 #include "misc/cache/instance/lv_image_cache.h"
 #include "art.h"
+#include "library_view.h"
 #include "../power.h"
 #include "../spotify/spotify.h"
 #include "../wifi.h"
@@ -34,15 +35,36 @@ LV_FONT_DECLARE(lv_font_montserrat_bold_24);
 #define UI_TASK_CORE 1
 #define NORMAL_BRIGHTNESS 85
 #define DIM_BRIGHTNESS 10
+#define OFF_BRIGHTNESS 0
 #define BATTERY_DIM_TIMEOUT_US (30LL * 1000000)
-#define ART_CORNER_RADIUS 4
+// AMOLED pixels age with the light they emit, so a still screen burns in. With
+// nothing playing, the screen dims after one minute and goes dark after five,
+// on any power source.
+#define IDLE_DIM_TIMEOUT_US (60LL * 1000000)
+#define IDLE_OFF_TIMEOUT_US (5LL * 60 * 1000000)
+// Static text and the progress bar move along a small loop. Even steps keep
+// every invalidated area on the even-pixel grid that the panel needs.
+#define PIXEL_SHIFT_INTERVAL_US (60LL * 1000000)
+#define LOW_BATTERY_PERCENT 15
+// Kid mode: the albums button sits at the right end of the info band. Its tap
+// area is the whole band right of the title, larger than the drawn button.
+#define HOME_BUTTON_SIZE 56
+#define HOME_BUTTON_LEFT 300
+#define HOME_TAP_LEFT 284
+#define HOME_GLYPH_SQUARE 14
+#define HOME_GLYPH_GAP 6
+// A playback that ends returns to the album grid, but not while a new album is
+// still starting and Spotify reports nothing playing for a moment.
+#define ALBUM_START_GRACE_US (8LL * 1000000)
+#define ART_CORNER_RADIUS BOP_ART_CORNER_RADIUS
 #define FEEDBACK_SIZE 96
 #define FEEDBACK_DURATION_MS 750
 #define VOLUME_UPDATE_INTERVAL_US 150000
 #define VOLUME_FINAL_DELAY_US 400000
 #define VOLUME_CURVE_EXPONENT 1.8f
 #define ATTRIBUTION_QR_SIZE 208
-#define ATTRIBUTION_URL_CAPACITY (sizeof("https://open.spotify.com/track/") + BOP_TRACK_ID_CAPACITY)
+// "episode" is the longer of the two path segments, so it sizes the buffer.
+#define ATTRIBUTION_URL_CAPACITY (sizeof("https://open.spotify.com/episode/") + BOP_TRACK_ID_CAPACITY)
 
 static const char *TAG = "bop_ui";
 
@@ -65,10 +87,13 @@ typedef struct {
     lv_obj_t *idle;
     lv_obj_t *gesture_layer;
     lv_obj_t *offline;
+    lv_obj_t *battery;
+    lv_obj_t *home_button;
     lv_obj_t *feedback;
     lv_obj_t *feedback_glyph;
     lv_obj_t *attribution;
     lv_obj_t *attribution_qr;
+    lv_obj_t *attribution_caption;
     QueueHandle_t art_queue;
     bop_album_art_t *active_art;
     playback_state_t state;
@@ -79,7 +104,16 @@ typedef struct {
     int64_t optimistic_until_us;
     bool optimistic_toggle;
     bool attribution_visible;
-    bool battery_dimmed;
+    bool battery_visible;
+    bool battery_low;
+    char battery_text[16];
+    int display_brightness;
+    uint8_t pixel_shift_index;
+    int64_t pixel_shift_changed_us;
+    int64_t last_playing_us;
+    bool library_visible;
+    uint32_t album_request_id;
+    int64_t album_started_us;
     bool press_active;
     bool press_moved;
     bool volume_drag_available;
@@ -97,10 +131,11 @@ typedef struct {
     int64_t volume_last_attempt_us;
     int64_t volume_final_deadline_us;
     int64_t volume_feedback_until_us;
-    int64_t last_touch_us;
 } ui_context_t;
 
 static ui_context_t ui;
+
+static void show_library(void);
 
 static lv_obj_t *make_label(
     lv_obj_t *parent,
@@ -198,6 +233,39 @@ static void create_idle_state(void)
     lv_obj_set_style_text_align(hint, LV_TEXT_ALIGN_CENTER, 0);
 }
 
+// Four squares draw a grid of albums, a picture a child knows without words.
+// The button is drawing only: the gesture layer above it takes the tap.
+static void create_home_button(void)
+{
+    ui.home_button = lv_obj_create(ui.screen);
+    lv_obj_remove_style_all(ui.home_button);
+    lv_obj_remove_flag(ui.home_button, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE);
+    lv_obj_set_size(ui.home_button, HOME_BUTTON_SIZE, HOME_BUTTON_SIZE);
+    lv_obj_set_pos(
+        ui.home_button,
+        HOME_BUTTON_LEFT,
+        INFO_TOP + (SCREEN_HEIGHT - INFO_TOP - HOME_BUTTON_SIZE) / 2);
+    lv_obj_set_style_radius(ui.home_button, LV_RADIUS_CIRCLE, 0);
+    lv_obj_set_style_bg_color(ui.home_button, lv_color_hex(0x2A2A2A), 0);
+    lv_obj_set_style_bg_opa(ui.home_button, LV_OPA_COVER, 0);
+
+    int32_t glyph = 2 * HOME_GLYPH_SQUARE + HOME_GLYPH_GAP;
+    int32_t inset = (HOME_BUTTON_SIZE - glyph) / 2;
+    for (int32_t index = 0; index < 4; ++index) {
+        lv_obj_t *square = lv_obj_create(ui.home_button);
+        lv_obj_remove_style_all(square);
+        lv_obj_remove_flag(square, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE);
+        lv_obj_set_size(square, HOME_GLYPH_SQUARE, HOME_GLYPH_SQUARE);
+        lv_obj_set_pos(
+            square,
+            inset + (index % 2) * (HOME_GLYPH_SQUARE + HOME_GLYPH_GAP),
+            inset + (index / 2) * (HOME_GLYPH_SQUARE + HOME_GLYPH_GAP));
+        lv_obj_set_style_radius(square, 3, 0);
+        lv_obj_set_style_bg_color(square, lv_color_hex(0xF4F4F4), 0);
+        lv_obj_set_style_bg_opa(square, LV_OPA_COVER, 0);
+    }
+}
+
 static void create_playing_state(void)
 {
     ui.band = lv_obj_create(ui.screen);
@@ -216,11 +284,10 @@ static void create_playing_state(void)
     lv_obj_set_style_bg_color(ui.art_placeholder, lv_color_hex(0x181818), 0);
     lv_obj_set_style_bg_opa(ui.art_placeholder, LV_OPA_COVER, 0);
     lv_obj_set_style_radius(ui.art_placeholder, ART_CORNER_RADIUS, 0);
-    lv_obj_set_style_clip_corner(ui.art_placeholder, true, 0);
 
+    // The art arrives with its corners already rounded (art.c), so LVGL draws
+    // it as a plain image without a mask.
     ui.art_image = lv_image_create(ui.screen);
-    lv_obj_set_style_radius(ui.art_image, ART_CORNER_RADIUS, 0);
-    lv_obj_set_style_clip_corner(ui.art_image, true, 0);
     lv_obj_add_flag(ui.art_image, LV_OBJ_FLAG_HIDDEN);
 
     ui.title = make_label(
@@ -243,9 +310,10 @@ static void create_playing_state(void)
         17);
     lv_label_set_long_mode(ui.artist, LV_LABEL_LONG_SCROLL_CIRCULAR);
 
+    // The bar and the total time end left of the albums button.
     ui.progress = lv_bar_create(ui.screen);
     lv_obj_set_pos(ui.progress, 16, INFO_TOP + 51);
-    lv_obj_set_size(ui.progress, 336, 3);
+    lv_obj_set_size(ui.progress, 256, 3);
     lv_bar_set_range(ui.progress, 0, 1000);
     lv_obj_set_style_radius(ui.progress, LV_RADIUS_CIRCLE, LV_PART_MAIN);
     lv_obj_set_style_radius(ui.progress, LV_RADIUS_CIRCLE, LV_PART_INDICATOR);
@@ -266,12 +334,18 @@ static void create_playing_state(void)
         ui.screen,
         &lv_font_montserrat_14,
         lv_color_hex(0xA7A7A7),
-        256,
+        184,
         INFO_TOP + 55,
         88,
         17);
     lv_obj_set_style_text_align(ui.total, LV_TEXT_ALIGN_RIGHT, 0);
 
+    create_home_button();
+}
+
+static bool point_on_home_button(const lv_point_t *point)
+{
+    return point->x >= HOME_TAP_LEFT && point->y >= INFO_TOP;
 }
 
 static void feedback_opacity(void *object, int32_t value)
@@ -321,10 +395,12 @@ static void show_attribution(void)
     }
 
     char url[ATTRIBUTION_URL_CAPACITY];
+    const char *kind = ui.state.is_episode ? "episode" : "track";
     int written = snprintf(
         url,
         sizeof(url),
-        "https://open.spotify.com/track/%s",
+        "https://open.spotify.com/%s/%s",
+        kind,
         ui.state.track_id);
     if (written < 0 || (size_t)written >= sizeof(url)) {
         ESP_LOGW(TAG, "Track URL is too long for attribution");
@@ -334,6 +410,11 @@ static void show_attribution(void)
         ESP_LOGW(TAG, "Could not create Spotify attribution QR code");
         return;
     }
+    lv_label_set_text(
+        ui.attribution_caption,
+        ui.state.is_episode
+            ? "Scan to open this episode in Spotify"
+            : "Scan to open this track in Spotify");
 
     ui.attribution_visible = true;
     lv_obj_remove_flag(ui.attribution, LV_OBJ_FLAG_HIDDEN);
@@ -371,7 +452,7 @@ static void create_attribution_screen(void)
     lv_qrcode_set_light_color(ui.attribution_qr, lv_color_hex(0xFFFFFF));
     lv_obj_align(ui.attribution_qr, LV_ALIGN_TOP_MID, 0, 112);
 
-    lv_obj_t *caption = make_label(
+    ui.attribution_caption = make_label(
         ui.attribution,
         &lv_font_montserrat_14,
         lv_color_hex(0xB3B3B3),
@@ -379,8 +460,8 @@ static void create_attribution_screen(void)
         336,
         320,
         18);
-    lv_label_set_text(caption, "Scan to open this track in Spotify");
-    lv_obj_set_style_text_align(caption, LV_TEXT_ALIGN_CENTER, 0);
+    lv_label_set_text(ui.attribution_caption, "Scan to open this track in Spotify");
+    lv_obj_set_style_text_align(ui.attribution_caption, LV_TEXT_ALIGN_CENTER, 0);
 
     lv_obj_t *hint = make_label(
         ui.attribution,
@@ -468,23 +549,31 @@ static void handle_tap(void)
     ui.optimistic_until_us = ui.state_received_us + 2000000;
 }
 
-static void restore_normal_brightness(void)
+static void set_display_brightness(int brightness)
 {
-    if (!ui.battery_dimmed) {
+    if (ui.display_brightness == brightness) {
         return;
     }
-    esp_err_t error = bsp_display_brightness_set(NORMAL_BRIGHTNESS);
-    if (error == ESP_OK) {
-        ui.battery_dimmed = false;
-        ESP_LOGI(TAG, "Restored display brightness");
-    } else {
-        ESP_LOGW(TAG, "Could not restore brightness: %s", esp_err_to_name(error));
+    esp_err_t error = bsp_display_brightness_set(brightness);
+    if (error != ESP_OK) {
+        ESP_LOGW(TAG, "Could not set display brightness to %d%%: %s",
+            brightness, esp_err_to_name(error));
+        return;
     }
+    ui.display_brightness = brightness;
+    ESP_LOGI(TAG, "Display brightness: %d%%", brightness);
 }
 
+static void restore_normal_brightness(void)
+{
+    set_display_brightness(NORMAL_BRIGHTNESS);
+}
+
+// The idle timers read LVGL's own inactivity clock, which every touch resets,
+// including a touch on the attribution screen that never reaches this layer.
+// This call only restores the light at once instead of on the next UI tick.
 static void record_touch(void)
 {
-    ui.last_touch_us = esp_timer_get_time();
     restore_normal_brightness();
 }
 
@@ -650,7 +739,14 @@ static void gesture_event(lv_event_t *event)
         return;
     }
     if (code == LV_EVENT_PRESSED) {
+        // A touch on a dark screen only wakes it. Nobody can see what a tap or
+        // a swipe there would change, so the press goes no further.
+        bool screen_was_off = ui.display_brightness == OFF_BRIGHTNESS;
         record_touch();
+        if (screen_was_off) {
+            ui.press_active = false;
+            return;
+        }
         lv_indev_get_point(input, &ui.press_point);
         ui.volume_last_point = ui.press_point;
         ui.press_active = true;
@@ -715,7 +811,11 @@ static void gesture_event(lv_event_t *event)
     } else if (ui.gesture_axis == GESTURE_AXIS_NONE
         && horizontal_distance <= TAP_THRESHOLD
         && vertical_distance <= TAP_THRESHOLD) {
-        handle_tap();
+        if (point_on_home_button(&ui.press_point)) {
+            show_library();
+        } else {
+            handle_tap();
+        }
     }
     ui.gesture_axis = GESTURE_AXIS_NONE;
 }
@@ -736,6 +836,23 @@ static void create_offline_indicator(void)
     lv_obj_set_style_bg_opa(ui.offline, LV_OPA_70, 0);
     lv_obj_set_style_pad_hor(ui.offline, 4, 0);
     lv_obj_add_flag(ui.offline, LV_OBJ_FLAG_HIDDEN);
+}
+
+static void create_battery_indicator(void)
+{
+    ui.battery = make_label(
+        ui.screen,
+        &lv_font_montserrat_14,
+        lv_color_hex(0xF4F4F4),
+        12,
+        8,
+        80,
+        18);
+    lv_obj_set_width(ui.battery, LV_SIZE_CONTENT);
+    lv_obj_set_style_bg_color(ui.battery, lv_color_hex(0x080808), 0);
+    lv_obj_set_style_bg_opa(ui.battery, LV_OPA_70, 0);
+    lv_obj_set_style_pad_hor(ui.battery, 4, 0);
+    lv_obj_add_flag(ui.battery, LV_OBJ_FLAG_HIDDEN);
 }
 
 static void create_feedback_layer(void)
@@ -832,6 +949,7 @@ static void apply_art(bop_album_art_t *art)
 static void update_track(const playback_state_t *state)
 {
     bool track_changed = strcmp(ui.state.track_id, state->track_id) != 0;
+    bool was_available = ui.state.available;
     int64_t now = esp_timer_get_time();
     if (ui.volume_target_awaiting_snapshot
         && state->volume_command_generation == ui.volume_snapshot_generation) {
@@ -849,7 +967,14 @@ static void update_track(const playback_state_t *state)
             hide_attribution(NULL);
         }
         show_playing(false);
-        lv_obj_set_style_bg_color(ui.screen, lv_color_hex(0x121212), 0);
+        lv_obj_set_style_bg_color(ui.screen, lv_color_hex(BOP_IMAGE_BACKGROUND_RGB), 0);
+        // When the album ends, the child returns to the covers to pick the
+        // next one instead of facing an empty player.
+        if (was_available
+            && !ui.library_visible
+            && now - ui.album_started_us >= ALBUM_START_GRACE_US) {
+            show_library();
+        }
         return;
     }
 
@@ -912,29 +1037,199 @@ static void update_connectivity(void)
     }
 }
 
-static void update_battery_care(void)
+// Playback counts as activity, so a long song never darkens the screen. Idle
+// time runs from the later of the last touch and the last playing moment.
+static void update_display_care(int64_t now)
 {
-    if (!bop_power_on_battery()) {
-        restore_normal_brightness();
+    int64_t untouched_us = (int64_t)lv_display_get_inactive_time(NULL) * 1000;
+    if (ui.state.available && ui.state.is_playing) {
+        ui.last_playing_us = now;
+    }
+    int64_t idle_us = now - ui.last_playing_us;
+    if (untouched_us < idle_us) {
+        idle_us = untouched_us;
+    }
+
+    int brightness = NORMAL_BRIGHTNESS;
+    if (idle_us >= IDLE_OFF_TIMEOUT_US) {
+        brightness = OFF_BRIGHTNESS;
+    } else if (idle_us >= IDLE_DIM_TIMEOUT_US
+        || (bop_power_on_battery() && untouched_us >= BATTERY_DIM_TIMEOUT_US)) {
+        brightness = DIM_BRIGHTNESS;
+    }
+    set_display_brightness(brightness);
+}
+
+static void update_pixel_shift(int64_t now)
+{
+    static const int8_t offsets[][2] = {
+        {0, 0}, {2, 0}, {2, 2}, {0, 2}, {-2, 2}, {-2, 0}, {-2, -2}, {0, -2}, {2, -2},
+    };
+    if (now - ui.pixel_shift_changed_us < PIXEL_SHIFT_INTERVAL_US) {
         return;
     }
-    if (ui.battery_dimmed
-        || esp_timer_get_time() - ui.last_touch_us < BATTERY_DIM_TIMEOUT_US) {
-        return;
+    ui.pixel_shift_changed_us = now;
+    ui.pixel_shift_index = (ui.pixel_shift_index + 1) % (sizeof(offsets) / sizeof(offsets[0]));
+    int32_t x = offsets[ui.pixel_shift_index][0];
+    int32_t y = offsets[ui.pixel_shift_index][1];
+
+    // The album art changes with every track and fills the screen edge to
+    // edge, so it stays in place. Moving it would uncover a strip of screen.
+    lv_obj_t *shifted[] = {
+        ui.title,
+        ui.artist,
+        ui.progress,
+        ui.elapsed,
+        ui.total,
+        ui.idle,
+        ui.offline,
+        ui.battery,
+        ui.home_button,
+    };
+    for (size_t index = 0; index < sizeof(shifted) / sizeof(shifted[0]); ++index) {
+        lv_obj_set_style_translate_x(shifted[index], x, 0);
+        lv_obj_set_style_translate_y(shifted[index], y, 0);
     }
-    esp_err_t error = bsp_display_brightness_set(DIM_BRIGHTNESS);
-    if (error == ESP_OK) {
-        ui.battery_dimmed = true;
-        ESP_LOGI(TAG, "Dimmed display after 30 seconds of battery idle time");
+}
+
+static const char *battery_symbol(const bop_battery_status_t *battery)
+{
+    if (battery->charging) {
+        return LV_SYMBOL_CHARGE;
+    }
+    if (battery->percent < 0 || battery->percent >= 80) {
+        return LV_SYMBOL_BATTERY_FULL;
+    }
+    if (battery->percent >= 55) {
+        return LV_SYMBOL_BATTERY_3;
+    }
+    if (battery->percent >= 30) {
+        return LV_SYMBOL_BATTERY_2;
+    }
+    if (battery->percent >= 10) {
+        return LV_SYMBOL_BATTERY_1;
+    }
+    return LV_SYMBOL_BATTERY_EMPTY;
+}
+
+// The badge appears only while the battery matters: on battery power, or while
+// it charges. On USB with a full battery, or with no battery, it stays hidden.
+static void update_battery_indicator(void)
+{
+    bop_battery_status_t battery;
+    bop_power_get_battery(&battery);
+    bool visible = battery.present && (battery.on_battery || battery.charging);
+    bool low = visible
+        && battery.on_battery
+        && battery.percent >= 0
+        && battery.percent <= LOW_BATTERY_PERCENT;
+
+    char text[sizeof(ui.battery_text)];
+    if (battery.percent >= 0) {
+        snprintf(text, sizeof(text), "%s %d%%", battery_symbol(&battery), battery.percent);
     } else {
-        ESP_LOGW(TAG, "Could not dim display: %s", esp_err_to_name(error));
+        snprintf(text, sizeof(text), "%s", battery_symbol(&battery));
     }
+
+    // A label redraws on every set, so it changes only when its text does.
+    if (strcmp(text, ui.battery_text) != 0) {
+        strlcpy(ui.battery_text, text, sizeof(ui.battery_text));
+        lv_label_set_text(ui.battery, ui.battery_text);
+    }
+    if (low != ui.battery_low) {
+        ui.battery_low = low;
+        lv_obj_set_style_text_color(
+            ui.battery, lv_color_hex(low ? 0xFF6B6B : 0xF4F4F4), 0);
+    }
+    if (visible != ui.battery_visible) {
+        ui.battery_visible = visible;
+        if (visible) {
+            lv_obj_remove_flag(ui.battery, LV_OBJ_FLAG_HIDDEN);
+        } else {
+            lv_obj_add_flag(ui.battery, LV_OBJ_FLAG_HIDDEN);
+        }
+    }
+}
+
+static void show_library(void)
+{
+    if (ui.attribution_visible) {
+        hide_attribution(NULL);
+    }
+    cancel_volume_gesture();
+    // The grid takes its own input. The gesture layer above it would
+    // otherwise catch every touch meant for a cover.
+    lv_obj_add_flag(ui.gesture_layer, LV_OBJ_FLAG_HIDDEN);
+    ui.library_visible = true;
+    bop_library_view_show();
+}
+
+static void show_player(void)
+{
+    bop_library_view_hide();
+    lv_obj_remove_flag(ui.gesture_layer, LV_OBJ_FLAG_HIDDEN);
+    ui.library_visible = false;
+}
+
+static bool library_press(void)
+{
+    bool screen_was_off = ui.display_brightness == OFF_BRIGHTNESS;
+    record_touch();
+    return !screen_was_off;
+}
+
+static void library_select(const char *album_id)
+{
+    uint32_t request_id = ++ui.next_feedback_request_id;
+    if (request_id == 0) {
+        request_id = ++ui.next_feedback_request_id;
+    }
+    spotify_command_submission_t submission = bop_spotify_enqueue_play_album(album_id, request_id);
+    if (submission != SPOTIFY_COMMAND_SUBMISSION_QUEUED) {
+        show_feedback(LV_SYMBOL_WARNING);
+        return;
+    }
+    ui.album_request_id = request_id;
+    bop_library_view_set_pending(album_id);
+}
+
+static void library_resume(void)
+{
+    show_player();
+}
+
+// A tap on the playing album's cover pauses or resumes, through the same path
+// as a tap on the player, with its immediate play-state update.
+static void library_toggle(void)
+{
+    handle_tap();
+}
+
+// The grid stays until Spotify accepts the album, so a failed start leaves the
+// child on the covers with a sign: a muted speaker when no device can play.
+static void handle_album_result(const spotify_command_result_t *result)
+{
+    if (result->request_id == 0 || result->request_id != ui.album_request_id) {
+        return;
+    }
+    ui.album_request_id = 0;
+    bop_library_view_set_pending(NULL);
+    if (result->accepted) {
+        ui.album_started_us = esp_timer_get_time();
+        show_player();
+        return;
+    }
+    show_feedback(result->no_device ? LV_SYMBOL_MUTE : LV_SYMBOL_WARNING);
 }
 
 static void process_command_results(void)
 {
     spotify_command_result_t result;
     while (bop_spotify_get_command_result(&result)) {
+        if (result.command == SPOTIFY_COMMAND_PLAY_ALBUM) {
+            handle_album_result(&result);
+            continue;
+        }
         if (result.command != SPOTIFY_COMMAND_TOGGLE || result.request_id == 0) {
             continue;
         }
@@ -953,7 +1248,7 @@ static void ui_timer(lv_timer_t *timer)
 {
     (void)timer;
     update_connectivity();
-    update_battery_care();
+    update_battery_indicator();
     bop_album_art_t *art = NULL;
     while (xQueueReceive(ui.art_queue, &art, 0) == pdTRUE) {
         apply_art(art);
@@ -978,8 +1273,18 @@ static void ui_timer(lv_timer_t *timer)
             }
         }
     }
-    finish_volume_update(esp_timer_get_time());
+    const bop_library_view_playback_t library_playback = {
+        .available = ui.state.available,
+        .is_playing = ui.state.is_playing,
+        .album_id = ui.state.album_id,
+    };
+    bop_library_view_update(&library_playback);
+    int64_t now = esp_timer_get_time();
+    finish_volume_update(now);
     update_progress();
+    // After the snapshot, so a playback start lights the screen on this tick.
+    update_display_care(now);
+    update_pixel_shift(now);
 }
 
 esp_err_t bop_ui_start(void)
@@ -998,16 +1303,34 @@ esp_err_t bop_ui_start(void)
     ui.screen = lv_screen_active();
     lv_obj_remove_flag(ui.screen, LV_OBJ_FLAG_SCROLLABLE);
     lv_obj_set_style_pad_all(ui.screen, 0, 0);
-    lv_obj_set_style_bg_color(ui.screen, lv_color_hex(0x121212), 0);
+    lv_obj_set_style_bg_color(ui.screen, lv_color_hex(BOP_IMAGE_BACKGROUND_RGB), 0);
     lv_obj_set_style_bg_opa(ui.screen, LV_OPA_COVER, 0);
 
     create_playing_state();
     create_idle_state();
+    // The grid lies above the player and below the status labels, the
+    // feedback overlay, and the attribution screen, which all follow it.
+    const bop_library_view_callbacks_t library_callbacks = {
+        .press = library_press,
+        .select = library_select,
+        .toggle = library_toggle,
+        .resume = library_resume,
+    };
+    error = bop_library_view_create(ui.screen, &library_callbacks);
+    if (error != ESP_OK) {
+        return error;
+    }
     create_offline_indicator();
+    create_battery_indicator();
     create_feedback_layer();
     create_attribution_screen();
-    ui.last_touch_us = esp_timer_get_time();
+    // start_display set this brightness before the UI started.
+    ui.display_brightness = NORMAL_BRIGHTNESS;
+    ui.last_playing_us = esp_timer_get_time();
+    ui.pixel_shift_changed_us = ui.last_playing_us;
     show_playing(false);
+    // Kid mode starts on the album covers.
+    show_library();
     lv_timer_create(ui_timer, UI_TIMER_MS, NULL);
     ESP_LOGI(TAG, "Now-playing UI is ready on core %d", UI_TASK_CORE);
     return ESP_OK;

@@ -19,6 +19,8 @@ The USB provisioning command, `mise run provision`, asks for:
 
 While Bop runs, it uses the refresh token to request an access token. It requests your current playback state and can send playback-control requests. This can include a track title, artist names, album artwork, track identifier, playback position, and active-device volume.
 
+For kid mode, Bop reads the artists you follow and the albums you saved, and the albums of an artist that a child opens. It keeps only their identifiers and the address of one picture each. To start an album when no device is active, it reads your list of Spotify devices.
+
 ## Where data stays and why Bop uses it
 
 The captive portal receives the WiFi values from your phone through the WPA2-protected Bop setup AP. The page uses local HTTP.
@@ -31,7 +33,7 @@ The USB provisioning command keeps the Spotify Client ID and refresh token in bo
 
 The USB write changes only the Spotify values. Bop keeps the WiFi values from the captive portal.
 
-Bop keeps current playback information and its access token in device memory while it runs.
+Bop keeps current playback information, the kid-mode library lists and pictures, and its access token in device memory while it runs. So that the library shows at once after a restart, Bop also stores the identifiers of your followed artists and saved albums, and their pictures, in a cache partition of the device flash. The cache holds no credential. Bop erases it whenever the device starts without full credentials, for example after `mise run deprovision`.
 
 Bop uses these values only to connect the device to WiFi, request Spotify playback information, show that information, and send the playback commands that you select. Bop does not sell data, send data to an advertising service, or use a Bop-operated server.
 

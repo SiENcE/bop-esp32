@@ -3,6 +3,7 @@
 
 #include "art.h"
 
+#include <math.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
@@ -14,6 +15,8 @@
 #include "esp_timer.h"
 #include "freertos/semphr.h"
 #include "jpeg_decoder.h"
+#include "../cache.h"
+#include "../wifi.h"
 
 #define ART_DOWNLOAD_CAPACITY (1024 * 1024)
 #define ART_MAX_DIMENSION 640
@@ -21,11 +24,24 @@
 #define ART_RETRY_DELAY_MS 5000
 #define ART_ACCEPT_DELAY_MS 2000
 #define ART_TASK_CORE 0
+#define ART_IDLE_WAIT_MS 250
+#define IMAGE_CLIENT_IDLE_US (3LL * 1000000)
+#define COVER_PIXEL_BYTES ((size_t)BOP_COVER_SIZE * BOP_COVER_SIZE * sizeof(uint16_t))
+// One page of four covers plus the next page fits each queue.
+#define COVER_QUEUE_LENGTH 8
 
 static const char *TAG = "bop_art";
 static QueueHandle_t art_result_queue;
+static QueueHandle_t cover_request_queue;
+static QueueHandle_t cover_result_queue;
 static SemaphoreHandle_t art_cache_mutex;
 static char active_track_id[BOP_TRACK_ID_CAPACITY];
+
+typedef struct {
+    char album_id[BOP_ALBUM_ID_CAPACITY];
+    char url[BOP_COVER_URL_CAPACITY];
+    bop_cover_shape_t shape;
+} cover_request_t;
 
 typedef struct {
     uint8_t *data;
@@ -49,6 +65,85 @@ static esp_err_t collect_art_data(esp_http_client_event_t *event)
     return ESP_OK;
 }
 
+// Only the art task downloads, so one client serves every image. It stays
+// connected between downloads: a new HTTPS connection costs a TLS handshake
+// of several hundred milliseconds, which a page of four covers paid four times.
+static esp_http_client_handle_t image_client;
+static art_download_t image_download;
+static int64_t image_client_used_us;
+static bool image_radio_awake;
+
+// A batch of downloads, such as a page of covers, holds the radio awake from
+// its first request until the art task goes idle, so even on battery the
+// covers arrive at full speed and the radio sleeps again afterwards.
+static void set_image_radio_awake(bool awake)
+{
+    if (awake != image_radio_awake) {
+        image_radio_awake = awake;
+        bop_wifi_hold_awake(awake);
+    }
+}
+
+// A kept TLS session holds internal RAM that WiFi and the Spotify connection
+// also need. The connection therefore lives only across a batch of downloads
+// and closes once the art task goes idle.
+static void close_idle_image_client(void)
+{
+    if (esp_timer_get_time() - image_client_used_us < IMAGE_CLIENT_IDLE_US) {
+        return;
+    }
+    if (image_client != NULL) {
+        esp_http_client_cleanup(image_client);
+        image_client = NULL;
+    }
+    set_image_radio_awake(false);
+}
+
+static esp_err_t perform_image_request(const char *url, int *status_code)
+{
+    image_client_used_us = esp_timer_get_time();
+    set_image_radio_awake(true);
+    for (int attempt = 0; attempt < 2; ++attempt) {
+        bool reused = image_client != NULL;
+        esp_err_t error = ESP_OK;
+        if (!reused) {
+            esp_http_client_config_t configuration = {
+                .url = url,
+                .event_handler = collect_art_data,
+                .user_data = &image_download,
+                .crt_bundle_attach = esp_crt_bundle_attach,
+                .timeout_ms = 15000,
+                .buffer_size = 4096,
+                .keep_alive_enable = true,
+            };
+            image_client = esp_http_client_init(&configuration);
+            if (image_client == NULL) {
+                return ESP_ERR_NO_MEM;
+            }
+        } else {
+            error = esp_http_client_set_url(image_client, url);
+        }
+        image_download.length = 0;
+        image_download.overflow = false;
+        if (error == ESP_OK) {
+            error = esp_http_client_perform(image_client);
+        }
+        *status_code = esp_http_client_get_status_code(image_client);
+        image_client_used_us = esp_timer_get_time();
+        if (error == ESP_OK) {
+            return ESP_OK;
+        }
+        // A failed connection is never reused. When the server had closed a
+        // kept connection, one fresh attempt follows.
+        esp_http_client_cleanup(image_client);
+        image_client = NULL;
+        if (!reused || image_download.overflow) {
+            return error;
+        }
+    }
+    return ESP_FAIL;
+}
+
 static esp_err_t download_jpeg(const char *url, uint8_t **jpeg, size_t *jpeg_size)
 {
     *jpeg = NULL;
@@ -57,31 +152,18 @@ static esp_err_t download_jpeg(const char *url, uint8_t **jpeg, size_t *jpeg_siz
         return ESP_ERR_INVALID_ARG;
     }
 
-    art_download_t download = {
+    image_download = (art_download_t){
         .data = heap_caps_malloc(
             ART_DOWNLOAD_CAPACITY, MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT),
         .capacity = ART_DOWNLOAD_CAPACITY,
     };
-    if (download.data == NULL) {
+    if (image_download.data == NULL) {
         return ESP_ERR_NO_MEM;
     }
-
-    esp_http_client_config_t configuration = {
-        .url = url,
-        .event_handler = collect_art_data,
-        .user_data = &download,
-        .crt_bundle_attach = esp_crt_bundle_attach,
-        .timeout_ms = 15000,
-        .buffer_size = 4096,
-    };
-    esp_http_client_handle_t client = esp_http_client_init(&configuration);
-    if (client == NULL) {
-        free(download.data);
-        return ESP_ERR_NO_MEM;
-    }
-    esp_err_t error = esp_http_client_perform(client);
-    int status_code = esp_http_client_get_status_code(client);
-    esp_http_client_cleanup(client);
+    int status_code = 0;
+    esp_err_t error = perform_image_request(url, &status_code);
+    art_download_t download = image_download;
+    image_download = (art_download_t){0};
     if (error != ESP_OK || download.overflow || status_code != 200 || download.length == 0) {
         ESP_LOGE(
             TAG,
@@ -127,26 +209,106 @@ static void resize_rgb565(
     const uint16_t *source,
     uint32_t source_width,
     uint32_t source_height,
-    uint16_t *destination)
+    uint16_t *destination,
+    uint32_t render_size)
 {
-    memset(destination, 0, ART_RENDER_SIZE * ART_RENDER_SIZE * sizeof(uint16_t));
-    uint32_t rendered_width = ART_RENDER_SIZE;
-    uint32_t rendered_height = ART_RENDER_SIZE;
+    memset(destination, 0, render_size * render_size * sizeof(uint16_t));
+    uint32_t rendered_width = render_size;
+    uint32_t rendered_height = render_size;
     if (source_width > source_height) {
-        rendered_height = source_height * ART_RENDER_SIZE / source_width;
+        rendered_height = source_height * render_size / source_width;
     } else if (source_height > source_width) {
-        rendered_width = source_width * ART_RENDER_SIZE / source_height;
+        rendered_width = source_width * render_size / source_height;
     }
-    uint32_t x_offset = (ART_RENDER_SIZE - rendered_width) / 2;
-    uint32_t y_offset = (ART_RENDER_SIZE - rendered_height) / 2;
+    uint32_t x_offset = (render_size - rendered_width) / 2;
+    uint32_t y_offset = (render_size - rendered_height) / 2;
     for (uint32_t y = 0; y < rendered_height; ++y) {
         uint32_t source_y = y * source_height / rendered_height;
         for (uint32_t x = 0; x < rendered_width; ++x) {
             uint32_t source_x = x * source_width / rendered_width;
-            destination[(y + y_offset) * ART_RENDER_SIZE + x + x_offset]
+            destination[(y + y_offset) * render_size + x + x_offset]
                 = source[source_y * source_width + source_x];
         }
     }
+}
+
+static uint16_t rgb888_to_rgb565(uint32_t rgb)
+{
+    return (uint16_t)((((rgb >> 16) & 0xf8) << 8) | (((rgb >> 8) & 0xfc) << 3) | ((rgb & 0xff) >> 3));
+}
+
+static uint16_t blend_rgb565(uint16_t foreground, uint16_t background, uint32_t alpha)
+{
+    uint32_t inverse = 255 - alpha;
+    uint32_t red = (((foreground >> 11) & 0x1f) * alpha + ((background >> 11) & 0x1f) * inverse) / 255;
+    uint32_t green = (((foreground >> 5) & 0x3f) * alpha + ((background >> 5) & 0x3f) * inverse) / 255;
+    uint32_t blue = ((foreground & 0x1f) * alpha + (background & 0x1f) * inverse) / 255;
+    return (uint16_t)((red << 11) | (green << 5) | blue);
+}
+
+// Paints everything outside a rounded square in the background color, with a
+// one-pixel soft edge so the curve does not look stepped. A circle is the case
+// where the radius is half the size. Only corner pixels are visited.
+static void round_corners_rgb565(uint16_t *pixels, uint32_t size, uint32_t radius)
+{
+    if (radius == 0 || radius * 2 > size) {
+        return;
+    }
+    uint16_t background = rgb888_to_rgb565(BOP_IMAGE_BACKGROUND_RGB);
+    float corner = (float)radius;
+    for (uint32_t y = 0; y < size; ++y) {
+        float vertical = 0.0f;
+        if (y < radius) {
+            vertical = corner - ((float)y + 0.5f);
+        } else if (y >= size - radius) {
+            vertical = ((float)y + 0.5f) - (float)(size - radius);
+        } else {
+            continue;
+        }
+        for (uint32_t x = 0; x < size; ++x) {
+            float horizontal = 0.0f;
+            if (x < radius) {
+                horizontal = corner - ((float)x + 0.5f);
+            } else if (x >= size - radius) {
+                horizontal = ((float)x + 0.5f) - (float)(size - radius);
+            } else {
+                continue;
+            }
+            float coverage = corner + 0.5f
+                - sqrtf(horizontal * horizontal + vertical * vertical);
+            if (coverage >= 1.0f) {
+                continue;
+            }
+            uint16_t *pixel = &pixels[y * size + x];
+            *pixel = coverage <= 0.0f
+                ? background
+                : blend_rgb565(*pixel, background, (uint32_t)(coverage * 255.0f));
+        }
+    }
+}
+
+// Every image decodes into a square RGB565 buffer of render_size pixels a side.
+static uint8_t *render_rgb565(
+    const uint16_t *source, uint32_t source_width, uint32_t source_height, uint32_t render_size)
+{
+    uint8_t *rendered = heap_caps_malloc(
+        (size_t)render_size * render_size * sizeof(uint16_t),
+        MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
+    if (rendered != NULL) {
+        resize_rgb565(source, source_width, source_height, (uint16_t *)rendered, render_size);
+    }
+    return rendered;
+}
+
+static void describe_rgb565_image(lv_image_dsc_t *image, uint8_t *pixels, uint32_t size)
+{
+    image->header.magic = LV_IMAGE_HEADER_MAGIC;
+    image->header.cf = LV_COLOR_FORMAT_RGB565;
+    image->header.w = size;
+    image->header.h = size;
+    image->header.stride = size * sizeof(uint16_t);
+    image->data_size = size * size * sizeof(uint16_t);
+    image->data = pixels;
 }
 
 static bool jpeg_is_bounded(
@@ -239,13 +401,15 @@ static bool jpeg_is_bounded(
     return false;
 }
 
-static esp_err_t decode_jpeg(
+// Decodes the full image. The caller frees *pixels.
+static esp_err_t decode_jpeg_pixels(
     const uint8_t *jpeg,
     size_t jpeg_size,
-    const char *track_id,
-    bop_album_art_t **decoded_art)
+    uint8_t **pixels,
+    uint32_t *width,
+    uint32_t *height)
 {
-    *decoded_art = NULL;
+    *pixels = NULL;
     uint32_t source_width = 0;
     uint32_t source_height = 0;
     if (!jpeg_is_bounded(jpeg, jpeg_size, &source_width, &source_height)) {
@@ -281,45 +445,99 @@ static esp_err_t decode_jpeg(
         free(decoded_pixels);
         return ESP_ERR_INVALID_RESPONSE;
     }
+    *pixels = decoded_pixels;
+    *width = output.width;
+    *height = output.height;
+    return ESP_OK;
+}
+
+static esp_err_t decode_jpeg(
+    const uint8_t *jpeg,
+    size_t jpeg_size,
+    const char *track_id,
+    bop_album_art_t **decoded_art)
+{
+    *decoded_art = NULL;
+    uint8_t *decoded_pixels = NULL;
+    uint32_t width = 0;
+    uint32_t height = 0;
+    esp_err_t error = decode_jpeg_pixels(jpeg, jpeg_size, &decoded_pixels, &width, &height);
+    if (error != ESP_OK) {
+        return error;
+    }
 
     bop_album_art_t *art = calloc(1, sizeof(*art));
     if (art == NULL) {
         free(decoded_pixels);
         return ESP_ERR_NO_MEM;
     }
-    size_t rendered_size = ART_RENDER_SIZE * ART_RENDER_SIZE * sizeof(uint16_t);
-    art->pixels = heap_caps_malloc(
-        rendered_size, MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
+    art->pixels = render_rgb565((const uint16_t *)decoded_pixels, width, height, ART_RENDER_SIZE);
+    free(decoded_pixels);
     if (art->pixels == NULL) {
-        free(decoded_pixels);
         free(art);
         return ESP_ERR_NO_MEM;
     }
-    resize_rgb565(
-        (const uint16_t *)decoded_pixels,
-        output.width,
-        output.height,
-        (uint16_t *)art->pixels);
-    free(decoded_pixels);
 
-    art->image.header.magic = LV_IMAGE_HEADER_MAGIC;
-    art->image.header.cf = LV_COLOR_FORMAT_RGB565;
-    art->image.header.w = ART_RENDER_SIZE;
-    art->image.header.h = ART_RENDER_SIZE;
-    art->image.header.stride = ART_RENDER_SIZE * sizeof(uint16_t);
-    art->image.data_size = rendered_size;
-    art->image.data = art->pixels;
+    // The average runs before the corners take the background color, so the
+    // band color comes from the artwork alone.
     art->dominant_rgb = average_rgb565(
         (const uint16_t *)art->pixels, ART_RENDER_SIZE * ART_RENDER_SIZE);
+    round_corners_rgb565((uint16_t *)art->pixels, ART_RENDER_SIZE, BOP_ART_CORNER_RADIUS);
+    describe_rgb565_image(&art->image, art->pixels, ART_RENDER_SIZE);
     strlcpy(art->track_id, track_id, sizeof(art->track_id));
     *decoded_art = art;
     ESP_LOGI(
         TAG,
         "Album art decoded: %ux%u, %u JPEG bytes",
-        output.width,
-        output.height,
+        (unsigned)width,
+        (unsigned)height,
         (unsigned)jpeg_size);
     return ESP_OK;
+}
+
+static esp_err_t decode_cover(
+    const uint8_t *jpeg,
+    size_t jpeg_size,
+    const char *album_id,
+    bop_cover_shape_t shape,
+    bop_cover_t **decoded_cover)
+{
+    *decoded_cover = NULL;
+    uint8_t *decoded_pixels = NULL;
+    uint32_t width = 0;
+    uint32_t height = 0;
+    esp_err_t error = decode_jpeg_pixels(jpeg, jpeg_size, &decoded_pixels, &width, &height);
+    if (error != ESP_OK) {
+        return error;
+    }
+    bop_cover_t *cover = calloc(1, sizeof(*cover));
+    if (cover == NULL) {
+        free(decoded_pixels);
+        return ESP_ERR_NO_MEM;
+    }
+    cover->pixels = render_rgb565((const uint16_t *)decoded_pixels, width, height, BOP_COVER_SIZE);
+    free(decoded_pixels);
+    if (cover->pixels == NULL) {
+        free(cover);
+        return ESP_ERR_NO_MEM;
+    }
+    round_corners_rgb565(
+        (uint16_t *)cover->pixels,
+        BOP_COVER_SIZE,
+        shape == BOP_COVER_SHAPE_CIRCLE ? BOP_COVER_SIZE / 2 : BOP_COVER_CORNER_RADIUS);
+    describe_rgb565_image(&cover->image, cover->pixels, BOP_COVER_SIZE);
+    strlcpy(cover->album_id, album_id, sizeof(cover->album_id));
+    *decoded_cover = cover;
+    return ESP_OK;
+}
+
+void bop_cover_free(bop_cover_t *cover)
+{
+    if (cover == NULL) {
+        return;
+    }
+    free(cover->pixels);
+    free(cover);
 }
 
 void bop_album_art_free(bop_album_art_t *art)
@@ -363,6 +581,96 @@ void bop_art_mark_active(const char *track_id)
     }
 }
 
+static void publish_cover(bop_cover_t *cover)
+{
+    if (xQueueSend(cover_result_queue, &cover, 0) != pdTRUE) {
+        bop_cover_free(cover);
+    }
+}
+
+// A cached picture is stored exactly as drawn, corners included, so it needs
+// one flash read and no network or decoder.
+static bop_cover_t *load_cached_cover(const char *album_id)
+{
+    bop_cover_t *cover = calloc(1, sizeof(*cover));
+    if (cover == NULL) {
+        return NULL;
+    }
+    cover->pixels = heap_caps_malloc(COVER_PIXEL_BYTES, MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
+    if (cover->pixels == NULL
+        || !bop_cache_load_cover(album_id, cover->pixels, COVER_PIXEL_BYTES)) {
+        bop_cover_free(cover);
+        return NULL;
+    }
+    describe_rgb565_image(&cover->image, cover->pixels, BOP_COVER_SIZE);
+    strlcpy(cover->album_id, album_id, sizeof(cover->album_id));
+    return cover;
+}
+
+static void load_cover(const cover_request_t *request)
+{
+    bop_cover_t *cached = load_cached_cover(request->album_id);
+    if (cached != NULL) {
+        publish_cover(cached);
+        return;
+    }
+    uint8_t *jpeg = NULL;
+    size_t jpeg_size = 0;
+    int64_t started_us = esp_timer_get_time();
+    esp_err_t error = download_jpeg(request->url, &jpeg, &jpeg_size);
+    int64_t downloaded_us = esp_timer_get_time();
+    bop_cover_t *cover = NULL;
+    if (error == ESP_OK) {
+        error = decode_cover(jpeg, jpeg_size, request->album_id, request->shape, &cover);
+        // The split shows whether the network or the decoder sets the pace.
+        ESP_LOGI(
+            TAG,
+            "Cover: %u KB downloaded in %u ms, decoded in %u ms",
+            (unsigned)(jpeg_size / 1024),
+            (unsigned)((downloaded_us - started_us) / 1000),
+            (unsigned)((esp_timer_get_time() - downloaded_us) / 1000));
+    }
+    free(jpeg);
+    if (error != ESP_OK) {
+        // The UI asks again when the page shows the album again.
+        ESP_LOGW(TAG, "Album cover failed: %s", esp_err_to_name(error));
+        return;
+    }
+    // The UI owns and frees a cover it receives, and a flash write takes most
+    // of a second. The cache therefore writes from a copy, after the UI already
+    // has the picture.
+    uint8_t *copy = heap_caps_malloc(COVER_PIXEL_BYTES, MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
+    if (copy != NULL) {
+        memcpy(copy, cover->pixels, COVER_PIXEL_BYTES);
+    }
+    publish_cover(cover);
+    if (copy != NULL) {
+        bop_cache_store_cover(request->album_id, copy, COVER_PIXEL_BYTES);
+        free(copy);
+    }
+}
+
+bool bop_cover_request(const char *album_id, const char *url, bop_cover_shape_t shape)
+{
+    if (cover_request_queue == NULL || album_id == NULL || url == NULL) {
+        return false;
+    }
+    cover_request_t request = {.shape = shape};
+    if (strlcpy(request.album_id, album_id, sizeof(request.album_id)) >= sizeof(request.album_id)
+        || strlcpy(request.url, url, sizeof(request.url)) >= sizeof(request.url)) {
+        return false;
+    }
+    return xQueueSend(cover_request_queue, &request, 0) == pdTRUE;
+}
+
+bool bop_cover_receive(bop_cover_t **cover)
+{
+    if (cover_result_queue == NULL || cover == NULL) {
+        return false;
+    }
+    return xQueueReceive(cover_result_queue, cover, 0) == pdTRUE;
+}
+
 static void art_task(void *argument)
 {
     (void)argument;
@@ -381,7 +689,15 @@ static void art_task(void *argument)
             && strcmp(state.track_id, attempted_track) == 0
             && now < retry_after;
         if (!have_track || already_cached || retry_blocked) {
-            vTaskDelay(pdMS_TO_TICKS(250));
+            // Covers load only while the now-playing art has nothing to do,
+            // and the wait for a cover request is the idle delay.
+            cover_request_t request;
+            if (xQueueReceive(cover_request_queue, &request, pdMS_TO_TICKS(ART_IDLE_WAIT_MS))
+                == pdTRUE) {
+                load_cover(&request);
+            } else {
+                close_idle_image_client();
+            }
             continue;
         }
 
@@ -417,15 +733,35 @@ esp_err_t bop_art_pipeline_start(QueueHandle_t result_queue)
         return ESP_ERR_INVALID_STATE;
     }
     art_cache_mutex = xSemaphoreCreateMutex();
-    if (art_cache_mutex == NULL) {
+    QueueHandle_t requests = xQueueCreate(COVER_QUEUE_LENGTH, sizeof(cover_request_t));
+    QueueHandle_t covers = xQueueCreate(COVER_QUEUE_LENGTH, sizeof(bop_cover_t *));
+    if (art_cache_mutex == NULL || requests == NULL || covers == NULL) {
+        if (art_cache_mutex != NULL) {
+            vSemaphoreDelete(art_cache_mutex);
+            art_cache_mutex = NULL;
+        }
+        if (requests != NULL) {
+            vQueueDelete(requests);
+        }
+        if (covers != NULL) {
+            vQueueDelete(covers);
+        }
         return ESP_ERR_NO_MEM;
     }
     active_track_id[0] = '\0';
     art_result_queue = result_queue;
+    cover_request_queue = requests;
+    cover_result_queue = covers;
     if (xTaskCreatePinnedToCore(
             art_task, "album_art", 8192, NULL, 4, NULL, ART_TASK_CORE)
         != pdPASS) {
+        // Nothing has used the cover queues yet: bop_ui_start returns this
+        // error before the UI exists, so no task holds the handles.
         art_result_queue = NULL;
+        cover_request_queue = NULL;
+        cover_result_queue = NULL;
+        vQueueDelete(requests);
+        vQueueDelete(covers);
         vSemaphoreDelete(art_cache_mutex);
         art_cache_mutex = NULL;
         return ESP_ERR_NO_MEM;

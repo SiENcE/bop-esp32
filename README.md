@@ -11,9 +11,48 @@ It shows the current track and sends touch controls to Spotify. It does not play
 
 [See Bop in action on X.](https://x.com/mark_a_phelps/status/2087217997429571717?s=20)
 
+## Kid mode
+
+Bop starts on a grid of pictures from the Spotify library, so a child who
+cannot read yet can pick music:
+
+- **Artists you follow** show first, as round pictures. A tap opens that
+  artist's albums. Only regular albums appear, so every episode of an audio
+  drama series does, while singles and compilations stay hidden.
+- **Albums you saved** follow, as square covers. A tap plays the album.
+
+To change what the children see, follow or unfollow an artist, or save or
+remove an album, in the Spotify app. Bop reads the library again when the grid
+opens, at most once a minute, and every 15 minutes. It shows up to 48 artists,
+up to 144 entries in all, and up to 200 albums of one artist.
+
+The grid shows the whole library of the account. To keep your own music out
+of it, provision Bop with a separate Spotify account for the children.
+
+A tapped album plays from its first track, in order, on the active Spotify
+device. Bop is a remote and plays no sound, so a speaker, phone, or tablet
+must be available to Spotify. When no device is active, Bop uses the first
+available one.
+
+| Gesture on the grid | Action |
+| --- | --- |
+| Tap a round artist picture | Show that artist's albums |
+| Tap a square album cover | Play that album |
+| Tap the playing album's cover | Pause or resume it ⏸️ / ▶️ |
+| Swipe left or right | Next or previous page |
+| Tap the arrow button, or swipe right on an artist's first page | Return from an artist to the library |
+| Tap the green note button | Return to the playing album |
+
+The cover of the playing album shows a translucent pause mark while it plays
+and a play mark while it is paused.
+
+The now-playing screen keeps the gestures below. The button with four squares,
+right of the title, returns to the album grid. When an album ends, Bop returns
+to the grid by itself.
+
 ## Touch controls
 
-Use these gestures on the Bop screen:
+Use these gestures on the now-playing screen:
 
 | Gesture | Action |
 | --- | --- |
@@ -22,6 +61,7 @@ Use these gestures on the Bop screen:
 | Drag up | Increase volume 🔊 |
 | Drag down | Decrease volume 🔉 |
 | Short press | Play or pause ▶️ / ⏸️ |
+| Tap the four-squares button | Return to the album grid |
 | Long press | Show the Spotify screen with a QR code for the current track 🎵 |
 
 Tap the Spotify screen to return to the current track.

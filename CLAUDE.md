@@ -79,7 +79,7 @@ startup states:
   failed connection starts the captive portal. A successful connection shows
   the USB provisioning command, `mise run provision`.
 - With complete credentials, Bop starts the current UI, WiFi, time sync, and
-  Spotify tasks.
+  Spotify tasks. The UI opens on the kid-mode album grid.
 
 `provisioning/portal.c` owns AP preparation, network scanning, HTTP requests,
 and the embedded phone page. `provisioning/dns_hijack.c` owns the bounded DNS
@@ -132,6 +132,24 @@ PSRAM, decodes it with `esp_jpeg`, scales it to 368 pixels, and averages the
 pixels for the background color. It passes one `bop_album_art_t *` through a
 one-slot queue. The UI owns that pointer after it arrives and frees the old one
 with `bop_album_art_free`.
+
+Kid mode (`ui/library_view.c`) adds a fourth flow. The Spotify task reads the
+followed artists and the saved albums into a `bop_library_t`, and an opened
+artist's regular albums into a `bop_artist_albums_t`, ten per request as the
+grid asks for more. Both are published behind the state mutex with generation
+counters. These lists stream through `spotify/json_stream.c` instead of the
+fixed response buffer, because a saved album arrives with its whole track
+list. The response sink receives only HTTP 200 bodies. The grid asks the art
+task for 172-pixel pictures with `bop_cover_request`, and the art task serves
+them only while the now-playing art is idle. An album tap enqueues
+`SPOTIFY_COMMAND_PLAY_ALBUM` through `bop_spotify_enqueue_play_album`, which
+shares the cooldown gate with `bop_spotify_enqueue_command`. Its result returns
+through the normal result queue and is handled apart from tap feedback. Kid
+mode needs the `user-library-read` and `user-follow-read` scopes that
+`tools/provision.py` requests. `cache.c` keeps the library list and the
+decoded grid pictures in the 4 MB `cache` partition that follows the
+application in `partitions.csv`. It holds no credential, and `startup_task`
+erases it whenever the board starts without complete credentials.
 
 Rules that the structure depends on:
 
@@ -222,7 +240,9 @@ only, `RuntimeError` messages that name the fix, and exit code 130 on
 
 Some host checks assert on the text of other sources.
 `test_display_recovery.py` reads `app_main.c`. `test_playback_feedback.py`
-reads `ui.c`, `spotify.c`, and `spotify.h`. `test_deprovision.py` reads `app_main.c`,
+reads `ui.c`, `spotify.c`, `spotify.h`, `library_view.c`, and
+`tools/provision.py`. Its mutation checks replace the first match of a line,
+so a rate-limit or feedback line must appear only once in its file. `test_deprovision.py` reads `app_main.c`,
 `firmware/CMakeLists.txt`, and `firmware/partitions.csv`. `test_provision.py`
 reads `credentials.c`. `test_portal.py` reads the portal, DNS, WiFi,
 credential, application, page, and build sources. `test_screenshot.py` reads `screenshot.c`,

@@ -30,7 +30,9 @@ import screenshot as screenshot_serial
 
 AUTH_URL = "https://accounts.spotify.com/authorize"
 TOKEN_URL = "https://accounts.spotify.com/api/token"
-SCOPES = "user-read-playback-state user-modify-playback-state"
+# Kid mode lists saved albums (user-library-read) and followed artists
+# (user-follow-read).
+SCOPES = "user-read-playback-state user-modify-playback-state user-library-read user-follow-read"
 CALLBACK_HOST = "127.0.0.1"
 CALLBACK_PATH = "/callback"
 DEFAULT_CALLBACK_PORT = 43821

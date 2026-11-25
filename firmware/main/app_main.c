@@ -10,7 +10,9 @@
 #include "bsp/esp32_s3_touch_amoled_1_8.h"
 #include "bsp/display.h"
 #include "bsp/touch.h"
+#include "cache.h"
 #include "credentials.h"
+#include "esp_heap_caps.h"
 #include "esp_log.h"
 #include "esp_lvgl_port.h"
 #include "esp_lvgl_port_touch.h"
@@ -25,7 +27,12 @@
 
 #define LVGL_TASK_CORE 1
 #define SPOTIFY_TASK_CORE 0
-#define DISPLAY_BUFFER_ROWS 100
+// The draw buffer must sit in internal RAM for the display DMA. At 100 rows it
+// took 73.6 KB, and with WiFi and the TLS sessions running internal RAM fell
+// to 4 KB, where hardware AES failed to allocate. 50 rows give back 36.8 KB.
+// A full screen then flushes in 9 chunks instead of 5; each flush waits for
+// its DMA anyway, so only the small per-chunk cost grows.
+#define DISPLAY_BUFFER_ROWS 50
 // The BSP defines a zero display-lock timeout as an indefinite wait.
 #define DISPLAY_LOCK_FOREVER_MS 0
 #define CO5300_QSPI_NOP 0x02000000
@@ -124,6 +131,17 @@ static esp_err_t show_portal_screen(void)
     return ESP_OK;
 }
 
+static void log_free_memory(void)
+{
+    ESP_LOGI(
+        TAG,
+        "Free memory: internal %u KB (largest block %u KB, lowest %u KB), PSRAM %u KB",
+        (unsigned)(heap_caps_get_free_size(MALLOC_CAP_INTERNAL) / 1024),
+        (unsigned)(heap_caps_get_largest_free_block(MALLOC_CAP_INTERNAL) / 1024),
+        (unsigned)(heap_caps_get_minimum_free_size(MALLOC_CAP_INTERNAL) / 1024),
+        (unsigned)(heap_caps_get_free_size(MALLOC_CAP_SPIRAM) / 1024));
+}
+
 static void startup_task(void *argument)
 {
     bop_credentials_t *configured_credentials = argument;
@@ -141,9 +159,21 @@ static void startup_task(void *argument)
         if (error != ESP_OK) {
             ESP_LOGE(TAG, "Startup failed: %s", esp_err_to_name(error));
         }
+        // WiFi, TLS, the display buffer, and the CPU caches share internal RAM.
+        // The first line shows the room at start. The second, once the first
+        // HTTPS connections run, also shows the lowest point so far: hardware
+        // AES fails when too little internal RAM is left.
+        log_free_memory();
+        vTaskDelay(pdMS_TO_TICKS(30000));
+        log_free_memory();
         vTaskDelete(NULL);
         return;
     }
+
+    // Without full credentials, the kid-mode cache may still hold the library
+    // IDs and pictures of an account that was removed, for example by
+    // `mise run deprovision`. They go before anything else runs.
+    bop_cache_clear();
 
     if (error == ESP_OK) {
         error = bop_wifi_connect_bounded(configured_credentials);
@@ -324,6 +354,12 @@ void app_main(void)
     esp_err_t power_error = bop_power_start();
     if (power_error != ESP_OK) {
         ESP_LOGW(TAG, "Battery monitor is unavailable: %s", esp_err_to_name(power_error));
+    }
+    // The cache opens before the UI and the Spotify task, which read it first.
+    // Without it, both load from the network only.
+    esp_err_t cache_error = bop_cache_init();
+    if (cache_error != ESP_OK && cache_error != ESP_ERR_NOT_FOUND) {
+        ESP_LOGW(TAG, "Library cache is unavailable: %s", esp_err_to_name(cache_error));
     }
 
     esp_err_t credentials_error = bop_credentials_init();

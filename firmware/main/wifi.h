@@ -26,3 +26,8 @@ bool bop_wifi_is_connected(void);
 void bop_wifi_get_status(bop_wifi_status_t *status);
 bool bop_wifi_wait_connected(void);
 esp_err_t bop_time_sync(void);
+// Radio power saving on battery, full speed on USB power.
+void bop_wifi_set_power_save(bool enabled);
+// Keeps the radio awake between a true and the matching false call, even on
+// battery. Downloads and commands hold it, so they run at full speed.
+void bop_wifi_hold_awake(bool hold);

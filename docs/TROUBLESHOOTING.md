@@ -198,6 +198,40 @@ A paused player can still appear in Bop after Spotify returns playback state.
 If no playback appears, make sure that WiFi and authorization work. Then read
 the serial log.
 
+## The library grid shows no pictures
+
+The grid shows a message for a parent when it has nothing to show.
+
+- `Follow artists or save albums in Spotify to show them here.`: the account
+  follows no artist and has no saved album. Follow an artist or save an album
+  in the Spotify app.
+- `The library could not be loaded.`: Spotify refused or failed the request.
+  Read the serial log.
+- `The albums could not be loaded.`: the albums of the opened artist failed.
+  Tap the arrow, then open the artist again.
+- `This artist has no albums.`: the artist has only singles, compilations, or
+  appearances, which Bop does not list.
+
+Kid mode needs the `user-library-read` and `user-follow-read` permissions. A
+board provisioned before kid mode has a refresh token without them. The
+library then fails, and the serial log shows `Library request failed` with the
+HTTP status. Run `mise run provision` again and approve the new permissions.
+
+A change in the library appears after Bop reads it again: when the grid opens,
+at most once a minute, or within 15 minutes.
+
+## A cover tap shows a muted speaker
+
+Bop found no Spotify device to play on. Bop is a remote and plays no sound.
+Open Spotify on a speaker, phone, or tablet of the same account, or turn on a
+Spotify Connect speaker. Then tap the cover again.
+
+## Other music plays after an album ends
+
+Spotify Autoplay continues with similar music after an album. The Web API
+cannot turn it off. Turn off **Autoplay** in the Spotify settings of the
+playing device.
+
 ## Spotify rate limiting delays playback updates
 
 Spotify can return a rate limit. Bop waits for a positive numeric delay from

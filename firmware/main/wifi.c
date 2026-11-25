@@ -3,6 +3,7 @@
 
 #include "wifi.h"
 
+#include <stdatomic.h>
 #include <string.h>
 
 #include "esp_check.h"
@@ -15,6 +16,7 @@
 #include "freertos/event_groups.h"
 #include "freertos/semphr.h"
 #include "freertos/task.h"
+#include "power.h"
 
 #define WIFI_CONNECTED_BIT BIT0
 #define WIFI_DISCONNECTED_BIT BIT1
@@ -41,6 +43,11 @@ static uint32_t generation_counter;
 static uint32_t active_generation;
 static uint32_t associated_generation;
 static uint32_t connected_generation;
+static SemaphoreHandle_t power_save_mutex;
+static atomic_bool power_save_wanted;
+static atomic_int awake_holds;
+static bool power_save_applied;
+static bool power_save_active;
 
 static uint32_t next_generation_locked(void)
 {
@@ -217,6 +224,11 @@ static esp_err_t initialize_services(void)
     ESP_RETURN_ON_ERROR(esp_wifi_init(&initialization), TAG, "WiFi initialization failed");
     ESP_RETURN_ON_ERROR(
         esp_wifi_set_storage(WIFI_STORAGE_RAM), TAG, "WiFi RAM storage configuration failed");
+    power_save_mutex = xSemaphoreCreateMutex();
+    if (power_save_mutex == NULL) {
+        return ESP_ERR_NO_MEM;
+    }
+    bop_wifi_set_power_save(bop_power_on_battery());
     ESP_RETURN_ON_ERROR(
         esp_event_handler_register(WIFI_EVENT, ESP_EVENT_ANY_ID, wifi_event, NULL), TAG, "WiFi event registration failed");
     ESP_RETURN_ON_ERROR(
@@ -516,6 +528,56 @@ bool bop_wifi_wait_connected(void)
     EventBits_t bits = xEventGroupWaitBits(
         connected_events, WIFI_CONNECTED_BIT, pdFALSE, pdTRUE, portMAX_DELAY);
     return (bits & WIFI_CONNECTED_BIT) != 0;
+}
+
+// ESP-IDF starts a station with modem sleep, so the radio wakes only for the
+// access point's beacons and every round trip waits for the next one. That
+// slows the large library and cover downloads badly. On USB power the radio
+// stays awake. On battery it sleeps to save charge, except while a task holds
+// it awake for a download or a command. The mutex keeps the applied mode equal
+// to the latest wish and hold count when two tasks change them at once.
+static void apply_power_save(void)
+{
+    if (power_save_mutex == NULL) {
+        // WiFi is not initialized yet. Initialization applies the mode.
+        return;
+    }
+    xSemaphoreTake(power_save_mutex, portMAX_DELAY);
+    bool sleep = atomic_load(&power_save_wanted) && atomic_load(&awake_holds) == 0;
+    if (!power_save_applied || sleep != power_save_active) {
+        esp_err_t error = esp_wifi_set_ps(sleep ? WIFI_PS_MIN_MODEM : WIFI_PS_NONE);
+        if (error == ESP_OK) {
+            power_save_applied = true;
+            power_save_active = sleep;
+        } else {
+            ESP_LOGW(TAG, "WiFi power saving change failed: %s", esp_err_to_name(error));
+        }
+    }
+    xSemaphoreGive(power_save_mutex);
+}
+
+void bop_wifi_set_power_save(bool enabled)
+{
+    bool previous = atomic_exchange(&power_save_wanted, enabled);
+    if (previous != enabled || !power_save_applied) {
+        ESP_LOGI(
+            TAG,
+            "WiFi power saving %s",
+            enabled ? "on between downloads (battery)" : "off (USB power)");
+    }
+    apply_power_save();
+}
+
+void bop_wifi_hold_awake(bool hold)
+{
+    if (hold) {
+        atomic_fetch_add(&awake_holds, 1);
+    } else if (atomic_fetch_sub(&awake_holds, 1) <= 0) {
+        // An unmatched release must not leave the count negative, which
+        // would keep the radio awake for good.
+        atomic_store(&awake_holds, 0);
+    }
+    apply_power_save();
 }
 
 esp_err_t bop_time_sync(void)

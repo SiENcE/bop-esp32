@@ -387,7 +387,10 @@ def test_spotify_volume_command_contract() -> None:
     enqueue_end = SPOTIFY_SOURCE.index("bool bop_spotify_get_command_result(")
     enqueue = SPOTIFY_SOURCE[enqueue_start:enqueue_end]
 
-    assert SPOTIFY_SOURCE.count('"https://api.spotify.com/v1/me/player"') == 2
+    # The client opens on the bare player URL. The poll asks for episodes too,
+    # or Spotify reports a playing podcast episode as a null item.
+    assert SPOTIFY_SOURCE.count('"https://api.spotify.com/v1/me/player"') == 1
+    assert '"https://api.spotify.com/v1/me/player?additional_types=episode"' in poll
     assert "/v1/me/player/currently-playing" not in SPOTIFY_SOURCE
     assert "uint8_t volume_percent;" in SPOTIFY_HEADER
     assert "bool volume_available;" in SPOTIFY_HEADER
@@ -454,6 +457,119 @@ def test_spotify_volume_command_contract() -> None:
     assert snapshot_acknowledges(2, 2)
 
 
+def test_episodes_are_parsed_and_attributed() -> None:
+    parser_start = SPOTIFY_SOURCE.index("static esp_err_t parse_playback(")
+    parser_end = SPOTIFY_SOURCE.index("static esp_err_t poll_current_playback(")
+    parser = SPOTIFY_SOURCE[parser_start:parser_end]
+    attribution_start = UI_SOURCE.index("static void show_attribution(")
+    attribution_end = UI_SOURCE.index("static void create_attribution_screen(")
+    attribution = UI_SOURCE[attribution_start:attribution_end]
+
+    assert "bool is_episode;" in SPOTIFY_HEADER
+    assert "left->is_episode == right->is_episode" in SPOTIFY_SOURCE
+    assert 'strcmp(type->valuestring, "episode") == 0' in parser
+    assert 'cJSON_GetObjectItemCaseSensitive(item, "show")' in parser
+    assert 'cJSON_GetObjectItemCaseSensitive(show, "images")' in parser
+    assert 'cJSON_GetObjectItemCaseSensitive(item, "artists")' in parser
+    assert 'cJSON_GetObjectItemCaseSensitive(album, "images")' in parser
+    assert "ui.state.is_episode" in attribution
+    assert '"https://open.spotify.com/%s/%s"' in attribution
+    assert 'sizeof("https://open.spotify.com/episode/")' in UI_SOURCE
+
+
+def test_kid_mode_contract() -> None:
+    library_view = (ROOT / "firmware/main/ui/library_view.c").read_text(encoding="utf-8")
+    provision = (ROOT / "tools/provision.py").read_text(encoding="utf-8")
+    play_start = SPOTIFY_SOURCE.index("static esp_err_t send_play_album(")
+    play_end = SPOTIFY_SOURCE.index("static TickType_t ticks_until(", play_start)
+    play = SPOTIFY_SOURCE[play_start:play_end]
+    results = function_body(UI_SOURCE, "process_command_results", "ui_timer")
+
+    # Kid mode lists followed artists, then saved albums, then an artist's
+    # regular albums, and needs the two library scopes for that.
+    assert '"https://api.spotify.com/v1/me/following?type=artist&limit=50"' in SPOTIFY_SOURCE
+    assert '"https://api.spotify.com/v1/me/albums?limit=50&market=from_token"' in SPOTIFY_SOURCE
+    assert "/v1/artists/%s/albums" in SPOTIFY_SOURCE
+    assert "?include_groups=album&limit=%d&market=from_token" in SPOTIFY_SOURCE
+    assert "#define ARTIST_ALBUM_PAGE_SIZE 10" in SPOTIFY_SOURCE
+    assert '"artists.items",\n        "artists.next");' in SPOTIFY_SOURCE
+    assert '"items.album",\n            "next");' in SPOTIFY_SOURCE
+    assert "user-library-read" in provision
+    assert "user-follow-read" in provision
+    assert "playlist-read-private" not in provision
+    # A saved album arrives with its whole track list, so library lists stream
+    # through the JSON reader instead of the fixed response buffer. Only a
+    # successful body streams, and a next-page URL must stay on the API.
+    assert "response->sink != NULL && esp_http_client_get_status_code(event->client) == 200" in (
+        SPOTIFY_SOURCE
+    )
+    assert "context->response.sink = NULL;" in SPOTIFY_SOURCE
+    # Clearing a body that was never set reports ESP_ERR_NOT_FOUND for the
+    # missing Content-Type header. Passing that on failed every GET request.
+    clear_start = SPOTIFY_SOURCE.index("static esp_err_t set_request_body(")
+    clear = SPOTIFY_SOURCE[clear_start : SPOTIFY_SOURCE.index("\n}\n", clear_start)]
+    assert "esp_http_client_set_post_field(client, NULL, 0);\n        return ESP_OK;" in clear
+    assert "strncmp(collector->next_url, SPOTIFY_API_PREFIX" in SPOTIFY_SOURCE
+    assert '#define SPOTIFY_API_PREFIX "https://api.spotify.com/v1/"' in SPOTIFY_SOURCE
+    # An artist ID from the UI reaches the artist URL only as a Spotify ID.
+    request_start = SPOTIFY_SOURCE.index("void bop_spotify_request_artist_albums(")
+    request = SPOTIFY_SOURCE[request_start : SPOTIFY_SOURCE.index("\n}\n", request_start)]
+    assert "is_spotify_id(artist_id, BOP_ALBUM_ID_CAPACITY)" in request
+    # An ID reaches a URL or a JSON body only after the base-62 check.
+    assert "is_spotify_id(request->album_id, sizeof(request->album_id))" in play
+    assert play.index("is_spotify_id(") < play.index("spotify:album:%s")
+    assert "is_spotify_id(id->valuestring, DEVICE_ID_CAPACITY)" in SPOTIFY_SOURCE
+    # Both enqueue paths share the one cooldown gate.
+    assert SPOTIFY_SOURCE.count("if (rate_limit_deadline_us - esp_timer_get_time() <= 0)") == 1
+    assert SPOTIFY_SOURCE.count("return submit_command_request(&request);") == 2
+    # Albums play in order, and a 429 there still starts the cooldown.
+    assert "/v1/me/player/shuffle?state=false" in play
+    assert "start_rate_limit_cooldown(*retry_after_seconds);" in play
+    # Album results take their own path, apart from tap feedback.
+    assert "handle_album_result(&result);" in results
+    assert results.index("SPOTIFY_COMMAND_PLAY_ALBUM") < results.index(
+        "if (result.command != SPOTIFY_COMMAND_TOGGLE || result.request_id == 0)"
+    )
+    # Modem sleep makes every round trip wait for a beacon. The library read
+    # and commands hold the radio awake, even on battery.
+    wifi = (ROOT / "firmware/main/wifi.c").read_text(encoding="utf-8")
+    assert "atomic_load(&power_save_wanted) && atomic_load(&awake_holds) == 0" in wifi
+    assert "esp_wifi_set_ps(sleep ? WIFI_PS_MIN_MODEM : WIFI_PS_NONE)" in wifi
+    task_start = SPOTIFY_SOURCE.index("static void client_task(")
+    task = SPOTIFY_SOURCE[task_start : SPOTIFY_SOURCE.index("esp_err_t bop_spotify_start(")]
+    hold = task.index("bop_wifi_hold_awake(true);\n            refresh_library(")
+    assert hold < task.index("refresh_library(") < task.index("bop_wifi_hold_awake(false);", hold)
+    # The library cache lives in its own partition after the application, and
+    # an unprovisioned start erases it before anything else runs.
+    partitions = (ROOT / "firmware/partitions.csv").read_text(encoding="utf-8")
+    assert "cache,    data, undefined, 0x810000, 4M," in partitions
+    app = (ROOT / "firmware/main/app_main.c").read_text(encoding="utf-8")
+    startup = app[
+        app.index("static void startup_task(") : app.index("static void round_display_area(")
+    ]
+    complete_end = startup.index("vTaskDelete(NULL);")
+    assert startup.index("bop_cache_clear();") > complete_end
+    assert startup.index("bop_cache_clear();") < startup.index("bop_wifi_connect_bounded(")
+    # A cover leaves LVGL's image cache before its pixels are freed.
+    release = library_view[library_view.index("static void release_cover(") :]
+    assert release.index("lv_image_cache_drop(") < release.index("bop_cover_free(")
+    # An artist opens its albums. Only an album plays.
+    tap = library_view[library_view.index("static void handle_tap(") :]
+    tap = tap[: tap.index("\n}\n")]
+    assert "entries[index].kind == BOP_LIBRARY_ENTRY_ARTIST" in tap
+    assert tap.index("open_artist(") < tap.index("view.callbacks.select(")
+    # The playing album pauses or resumes instead of starting over.
+    assert tap.index("entry_is_playing(&entries[index])") < tap.index("view.callbacks.select(")
+    assert "view.callbacks.toggle()" in tap
+    # The bar's outer thirds answer for back and resume, a larger target than
+    # the drawn buttons, and the bar comes before the tiles.
+    assert tap.index("point->y >= BAR_TOP") < tap.index("for (size_t tile = 0;")
+    assert "point->x < BAR_BUTTON_AREA_WIDTH && view.level == LEVEL_ARTIST" in tap
+    # A swipe to the right on an artist's first page goes back home.
+    event = library_view[library_view.index("static void view_event(") :]
+    assert "horizontal > 0 && view.level == LEVEL_ARTIST && view.artist_page == 0" in event
+
+
 def test_spotify_branding_is_limited_to_attribution() -> None:
     assert "make_spotify_mark(ui.screen" not in UI_SOURCE
     assert UI_SOURCE.count("make_spotify_mark(") == 2
@@ -467,6 +583,8 @@ def main() -> int:
     test_feedback_requires_an_accepted_tap_request()
     test_volume_drag_contract()
     test_spotify_volume_command_contract()
+    test_episodes_are_parsed_and_attributed()
+    test_kid_mode_contract()
     test_spotify_branding_is_limited_to_attribution()
     print("Playback feedback checks passed.")
     return 0

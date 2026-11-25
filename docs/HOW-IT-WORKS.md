@@ -78,7 +78,7 @@ The board stores a rotated refresh token when Spotify returns one. NVS stores cr
 
 ## Playback and album art
 
-The Spotify task requests `GET /v1/me/player`. It polls every 10 seconds while playback is active. It polls every 60 seconds while playback is paused or idle. A completed playback or volume command causes an immediate poll.
+The Spotify task requests `GET /v1/me/player?additional_types=episode`. Without that parameter, Spotify reports a playing podcast episode as a null item. For an episode, the UI shows the show name in place of the artists, uses the episode or show image as art, and links the attribution QR code to the episode. It polls every 10 seconds while playback is active. It polls every 60 seconds while playback is paused or idle. A completed playback or volume command causes an immediate poll.
 
 The task uses the ESP-IDF certificate bundle for HTTPS validation. It reads the active-device volume from `device.volume_percent`. A valid integer from 0 through 100 enables volume control. Bop intentionally ignores `device.supports_volume` and lets the volume request result decide whether control works.
 
@@ -100,6 +100,40 @@ After successful decoding, the art task publishes the image. The UI timer valida
 
 The task retries a failed download or decode after 5 seconds. It does not download art again after the UI accepts an image for the current track.
 
+## Kid mode
+
+Bop starts on the library grid. The Spotify task reads the artists the account follows with `GET /v1/me/following?type=artist`, then the saved albums with `GET /v1/me/albums`, and keeps each one with the URL of one picture. It keeps up to 48 artists, then albums up to 144 entries in all.
+
+Spotify returns each saved album with its whole track list, about 20 KB an album. A small streaming JSON reader (`spotify/json_stream.c`) takes each response in chunks as it arrives. It reports every value with its path, such as `items.album.id`, and the task keeps only the IDs and image URLs. No response is held whole, so the 32 KB response buffer never limits a list. Error bodies still land in that buffer. Each list follows Spotify's `next` page URL, but only to an `https://api.spotify.com/v1/` address.
+
+The task reads the library at startup, every 15 minutes, and when the grid opens, at most once a minute. A failed read keeps a library that already worked. It publishes the library behind the playback-state mutex with a generation counter, and the UI copies it only when the generation moves.
+
+The grid shows four 172-pixel pictures per page. Artists show round and albums square, so a child can tell them apart without reading. A swipe changes the page. Dots show up to ten pages, and a position bar shows longer lists. The art task decodes pictures on request, but only while the now-playing art has nothing to load. Of the image widths that Spotify lists, it takes the narrowest one that is at least 160 pixels wide. The UI keeps up to 48 decoded pictures, about 2.8 MB of PSRAM, and frees the least recently shown one first. It asks for the shown page and the next one first. While free slots remain, it then preloads the rest of the home library, so every page of it shows at once after the first load. A preloaded picture never evicts another, and only a picture of the shown page causes a redraw.
+
+A tap on an artist opens its albums. The task reads `GET /v1/artists/{id}/albums` with `include_groups=album`, so regular albums appear and singles, compilations, and appearances do not. Spotify returns ten albums per request, so the task loads pages as the child swipes, one page ahead of the shown one, up to 200 albums. The arrow button returns to the library and drops the artist list, and so does a swipe to the right on the artist's first page. The left and right thirds of the button bar answer for the arrow and the note button, a larger target than the drawn circles.
+
+A tap on an album sends a play-album command through the normal command queue. The client sends `PUT /v1/me/player/play` with the album `context_uri`, from the first track. Spotify answers 404 when no device is active. Bop then reads `GET /v1/me/player/devices` and repeats the request on the first device that accepts remote control. After the album starts, Bop turns shuffle off, because children's albums are often stories told across tracks.
+
+The cover of the playing album shows a translucent pause mark while it plays and a play mark while it is paused. A tap on that cover pauses or resumes, through the same command as a tap on the player, instead of starting the album over.
+
+The grid stays until Spotify accepts the album, and the chosen cover dims meanwhile. A failed start shows a warning. When no device can play, it shows a muted speaker.
+
+On the now-playing screen, the four-squares button right of the title returns to the grid. When playback ends, Bop returns to the grid by itself, except during the first 8 seconds after an album starts.
+
+## Library cache
+
+A 4 MB `cache` partition after the application keeps the library list and the grid pictures across restarts (`main/cache.c`). The grid reads the stored list when it starts, before WiFi, the time sync, and the Spotify login finish, and the art task reads stored pictures before it downloads anything. The network read then replaces the list in the background, all at once.
+
+The list uses the first 32 KB. The pictures use 67 slots of 60 KB, each holding one 172-pixel picture exactly as drawn, corners included, so a stored picture needs one flash read and no decoder. A full cache reuses the slot of its oldest picture. Every write stores the data first and the header last, and a CRC-32 guards both, so an interrupted write or damaged flash reads as an empty entry. The list is written only when it changes.
+
+A flash erase pauses both CPU cores for a moment, so the first time a picture is stored the display can stutter briefly. Bop erases the cache whenever it starts without full credentials, so a deprovisioned board keeps no library of the removed account.
+
+## Network speed
+
+ESP-IDF starts a WiFi station with modem sleep: the radio wakes only for the access point's beacons, and every round trip waits for the next one. On USB power Bop turns this sleep off. On battery the radio sleeps, except while a task holds it awake: a library read, an artist page, a playback command, or a batch of picture downloads, which keeps it awake until the art task has been idle for 3 seconds.
+
+The library and the pictures are far larger downloads than playback state. The TCP receive window is 23,360 bytes, 16 packets per round trip instead of the 4 of the ESP-IDF default. WiFi and lwIP may place their buffers in PSRAM, so the larger window leaves internal RAM to TLS. The Spotify client reads in 4 KB pieces. Picture downloads share one kept HTTPS connection per batch, which saves a TLS handshake for every picture after the first. The serial log reports `Library read in N ms` after each library read.
+
 ## Touch controls and display care
 
 The UI records the first touch point and tracks movement while the press continues. Movement greater than 20 pixels prevents the press from opening the attribution screen. A stationary long press still opens that screen.
@@ -116,7 +150,13 @@ The UI shows `offline` when WiFi is unavailable. The WiFi event handler reconnec
 
 The AXP2101 monitor detects battery power. After 30 seconds without touch input, battery power changes display brightness to 10 percent.
 
-A touch restores 85 percent brightness. USB power does not activate the idle-dimming rule.
+AMOLED pixels age with the light they emit, so a still image burns in. On any power source, Bop counts idle time from the later of the last touch and the last moment of active playback. After 1 minute of idle time, the display dims to 10 percent. After 5 minutes, it goes dark. Active playback keeps the display lit.
+
+A touch restores 85 percent brightness, and so does the start of playback. A touch on a dark display only wakes it and sends no command.
+
+Once a minute, the title, artist, progress bar, times, status labels, and the idle screen move by 2 pixels along a small loop. The album art stays in place, because it changes with every track and fills the display edge to edge.
+
+The AXP2101 monitor also enables the fuel gauge and reads the battery percentage and the charging state every 5 seconds. A badge in the top-left corner shows the level while the board runs on battery or charges. It turns red at 15 percent or less on battery. The badge stays hidden when no battery is connected, and on USB power when the battery does not charge.
 
 ## Screen capture
 

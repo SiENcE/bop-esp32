@@ -4,6 +4,7 @@
 idf_component_register(
     SRCS
         "app_main.c"
+        "cache.c"
         "credentials.c"
         "power.c"
         "provisioning/dns_hijack.c"
@@ -13,6 +14,7 @@ idf_component_register(
         "spotify/spotify.c"
         "ui/art.c"
         "ui/fonts/lv_font_montserrat_bold_24.c"
+        "ui/library_view.c"
         "ui/ui.c"
         "wifi.c"
     INCLUDE_DIRS "."
@@ -23,6 +25,7 @@ idf_component_register(
         esp_http_client
         esp_http_server
         esp_netif
+        esp_partition
         esp_timer
         esp_wifi
         espressif__esp_lcd_touch

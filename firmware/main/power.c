@@ -11,22 +11,76 @@
 #include "esp_log.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "wifi.h"
 
 #define AXP2101_ADDRESS 0x34
 #define AXP2101_CHIP_ID_REGISTER 0x03
 #define AXP2101_CHIP_ID 0x4A
 #define AXP2101_STATUS1_REGISTER 0x00
+#define AXP2101_STATUS2_REGISTER 0x01
+#define AXP2101_GAUGE_CONTROL_REGISTER 0x18
+#define AXP2101_BATTERY_PERCENT_REGISTER 0xA4
 #define AXP2101_BATTERY_CONNECTED_BIT (1U << 3)
 #define AXP2101_VBUS_GOOD_BIT (1U << 5)
+#define AXP2101_GAUGE_ENABLE_BIT (1U << 3)
+#define AXP2101_CURRENT_DIRECTION_SHIFT 5
+#define AXP2101_CURRENT_DIRECTION_MASK 0x3U
+#define AXP2101_CURRENT_DIRECTION_CHARGE 0x1U
 #define POWER_POLL_MS 5000
 
 static const char *TAG = "bop_power";
 static i2c_master_dev_handle_t power_device;
 static atomic_bool on_battery;
+static atomic_bool battery_present;
+static atomic_bool battery_charging;
+static atomic_int battery_percent = -1;
 
 static esp_err_t read_register(uint8_t address, uint8_t *value)
 {
     return i2c_master_transmit_receive(power_device, &address, 1, value, 1, 1000);
+}
+
+static esp_err_t write_register(uint8_t address, uint8_t value)
+{
+    const uint8_t buffer[2] = {address, value};
+    return i2c_master_transmit(power_device, buffer, sizeof(buffer), 1000);
+}
+
+// The battery percentage comes from the AXP2101 fuel gauge, which this bit
+// enables. A read-modify-write sets only the gauge bit, so the charger and
+// watchdog bits in the same register keep whatever the board configured.
+static void enable_fuel_gauge(void)
+{
+    uint8_t control = 0;
+    esp_err_t error = read_register(AXP2101_GAUGE_CONTROL_REGISTER, &control);
+    if (error == ESP_OK && (control & AXP2101_GAUGE_ENABLE_BIT) == 0) {
+        error = write_register(
+            AXP2101_GAUGE_CONTROL_REGISTER, control | AXP2101_GAUGE_ENABLE_BIT);
+    }
+    if (error != ESP_OK) {
+        ESP_LOGW(TAG, "AXP2101 fuel gauge is unavailable: %s", esp_err_to_name(error));
+    }
+}
+
+static void update_battery_details(bool present)
+{
+    if (!present) {
+        atomic_store(&battery_charging, false);
+        atomic_store(&battery_percent, -1);
+        return;
+    }
+
+    uint8_t status = 0;
+    if (read_register(AXP2101_STATUS2_REGISTER, &status) == ESP_OK) {
+        uint8_t direction = (status >> AXP2101_CURRENT_DIRECTION_SHIFT)
+            & AXP2101_CURRENT_DIRECTION_MASK;
+        atomic_store(&battery_charging, direction == AXP2101_CURRENT_DIRECTION_CHARGE);
+    }
+
+    uint8_t percent = 0;
+    if (read_register(AXP2101_BATTERY_PERCENT_REGISTER, &percent) == ESP_OK) {
+        atomic_store(&battery_percent, percent <= 100 ? (int)percent : -1);
+    }
 }
 
 static void update_power_source(void)
@@ -38,11 +92,15 @@ static void update_power_source(void)
         return;
     }
 
-    bool next_on_battery = (status & AXP2101_BATTERY_CONNECTED_BIT) != 0
-        && (status & AXP2101_VBUS_GOOD_BIT) == 0;
+    bool present = (status & AXP2101_BATTERY_CONNECTED_BIT) != 0;
+    update_battery_details(present);
+    atomic_store(&battery_present, present);
+
+    bool next_on_battery = present && (status & AXP2101_VBUS_GOOD_BIT) == 0;
     bool previous_on_battery = atomic_exchange(&on_battery, next_on_battery);
     if (previous_on_battery != next_on_battery) {
         ESP_LOGI(TAG, "Power source: %s", next_on_battery ? "battery" : "USB");
+        bop_wifi_set_power_save(next_on_battery);
     }
 }
 
@@ -84,6 +142,7 @@ esp_err_t bop_power_start(void)
         return error == ESP_OK ? ESP_ERR_NOT_FOUND : error;
     }
 
+    enable_fuel_gauge();
     update_power_source();
     if (xTaskCreate(power_task, "bop_power", 3072, NULL, 3, NULL) != pdPASS) {
         i2c_master_bus_rm_device(power_device);
@@ -97,4 +156,15 @@ esp_err_t bop_power_start(void)
 bool bop_power_on_battery(void)
 {
     return atomic_load(&on_battery);
+}
+
+void bop_power_get_battery(bop_battery_status_t *status)
+{
+    // Each field is atomic on its own, so a read during a poll can mix two
+    // polls. The display only shows this, and the next poll corrects it.
+    status->present = atomic_load(&battery_present);
+    status->charging = atomic_load(&battery_charging);
+    status->on_battery = atomic_load(&on_battery);
+    int percent = atomic_load(&battery_percent);
+    status->percent = (int8_t)(status->present ? percent : -1);
 }
