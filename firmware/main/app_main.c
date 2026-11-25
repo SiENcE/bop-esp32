@@ -152,6 +152,13 @@ static void startup_task(void *argument)
         }
         if (error == ESP_OK) {
             error = bop_time_sync();
+            // An NTP server can miss one round of attempts. Giving up here left
+            // Bop without Spotify, its library grid loading forever, until a
+            // restart. The sync therefore repeats until it succeeds.
+            while (error == ESP_ERR_TIMEOUT) {
+                ESP_LOGW(TAG, "Time sync timed out; trying again");
+                error = bop_time_sync();
+            }
         }
         if (error == ESP_OK) {
             error = bop_spotify_start(configured_credentials);

@@ -161,8 +161,11 @@ Read [INSTALL.md](../INSTALL.md) before you provision again.
 
 ## Time synchronization does not finish
 
-The board synchronizes time with `pool.ntp.org` after it connects to WiFi. It
-waits for up to ten two-second attempts before startup stops.
+The board synchronizes time with `pool.ntp.org` after it connects to WiFi. A
+provisioned board repeats rounds of ten two-second attempts until the time
+arrives, and the serial log shows `Time sync timed out; trying again` after
+each failed round. Spotify starts only after the sync. Until then the library
+grid shows `Loading your library...`.
 
 1. Make sure that the WiFi connection works.
 2. Make sure that the network can reach `pool.ntp.org`.
