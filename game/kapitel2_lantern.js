@@ -209,8 +209,8 @@ const TREES = [
 Object.assign(Nagiwa.ledger, { ratz: { to: "RATZ", what: { copy: "eine Kopie meines alten Ausweises" } } });
 Cutaway.item("endstufe", { name: "Endstufe", icon: "inv_endstufe", look: "Die Endstufe aus einem Flutwarnmast. Sie hat Kühlrippen und ist schwerer, als sie aussieht." });
 const ratz = /** @type {any} */ (Cutaway.actors.get("ratz")).def;
-ratz.talk = [RZ("Kundschaft! Kauf was, oder kauf was anderes."), { if: ["day>4", "know_sumpf", "!know_pike"], then: TREES,
-  else: [{ if: ["day>4", "pike_met", "!ledger_ratz"], then: [{ dialog: "ratz_endstufe" }], else: [{ dialog: "ratz" }] }] }];
+ratz.talk = [RZ("Kundschaft! Kauf was, oder kauf was anderes."), { if: ["day>4", "day<8", "know_sumpf", "!know_pike"], then: TREES,
+  else: [{ if: ["day>4", "day<8", "pike_met", "!ledger_ratz"], then: [{ dialog: "ratz_endstufe" }], else: [{ dialog: "ratz" }] }] }];
 Nagiwa.talkTree("ratz_endstufe", [
   ["„Hast du eine Endstufe aus einem Flutwarnmast?“", [RZ("Die gute, mit Kühlrippen. Hab ich."), RZ("Wer will das wissen? Der Reiher?"), "Ich will das wissen.",
     RZ("Der Reiher kriegt nichts von mir. Der hat mich am Schwanz gehabt. Kopfüber, über dem Kanal!"), "Er sagt, das war ein Reflex.",

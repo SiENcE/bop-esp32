@@ -11,7 +11,7 @@
 
 (function () {
 const A24 = Nagiwa.at.cam24, A25 = Nagiwa.at.cam25, AL = Nagiwa.at.lerche_flur, AJ = Nagiwa.at.jade_row, AW = Nagiwa.at.ines_wohnung;
-const OPEN = { or: ["day=7", ["day=6", "time>=21:00"]] };          // after the Quiet has emptied 4B
+const OPEN = { or: ["day>6", ["day=6", "time>=21:00"]] };          // after the Quiet has emptied 4B, and sealed from then on
 
 // ---- CAM 24 at half past seven: a neighbour comes home and taps the code right beside the doorbell's lens (W1). Each evening a moment of
 // its own (the first time the scene is written, after that it is played again); missed, the buffer has it
@@ -81,12 +81,12 @@ const NOTICE_READ = [
   { evi: "besorgt" },
   { say: "evi", text: "Sonntag, zwanzig Uhr. Das merk ich mir." },
 ];
-Cutaway.room.get("lerche_flur").hotspots.door_4b.use = [{ if: OPEN,
+Cutaway.room.get("lerche_flur").hotspots.door_4b.use = [{ if: "day>7", then: ["Ein neues Siegel. CIVIC REST, SEALED.", "Da drin ist nichts mehr von ihr."], else: [{ if: OPEN,
   then: [{ if: "!know_flat", then: ["An der Tür klebt ein Siegel: CIVIC REST, SEALED.", "Das war heute. Das ist ihre.", { set: "know_flat" }] },
     { if: "!visited:ines_wohnung", then: ["Unter dem Siegel ist das Schloss aufgebrochen.", "Ich reiß es ab."] },
     { goto: "ines_wohnung", at: AW.arrive, face: "se" }],
   else: [{ if: "!know_flat", then: ["An der Tür klebt ein Zettel von Civic Rest.", ...NOTICE_READ] },
-    "Abgeschlossen. Ich bin keine Einbrecherin. Jedenfalls nicht so eine."] }];
+    "Abgeschlossen. Ich bin keine Einbrecherin. Jedenfalls nicht so eine."] }] }];
 
 // ---- CAM 25: the landing from its corner, linked with CAM 24 (the same house). On Sunday at eight two in white raincoats open 4B and carry it
 // out, the computer too, until nine; then they seal it (W3)

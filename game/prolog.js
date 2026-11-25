@@ -124,7 +124,7 @@ Nagiwa.deckEnter = [{ unset: "rec_on" }, { if: "day=1", then: [{ once: [
 Object.assign(Nagiwa.contacts, {
   kessler: { name: "M. KESSLER", color: "#eea040", status: "online",
     // the dot: her first message, and in Chapter 1 the new one (a view: reading it changes nothing else)
-    unread: { or: ["!read_kessler", ["day>1", "!read_kessler_again"]] },
+    unread: { or: ["!read_kessler", ["day>1", "day<5", "!read_kessler_again"]] },
     open: [{ set: "read_kessler" }, { set: "read_kessler_again" }, { if: "day=1", then: [{ once: ["Überstunden. Klar.", { evi: "neugierig" }, { say: "evi", text: "Pumpenverwaltung Ost! Da hab ich eine Kamera für dich." }, { evi_point: "glas" }] }] }] },
   teo: { name: "TEO", color: "#ffa040", status: "schläft", unread: "~never" },
   nagiwa: { name: "NAGI·WA SERVICE", color: "#62def0", status: "Werbung", unread: "~never" },

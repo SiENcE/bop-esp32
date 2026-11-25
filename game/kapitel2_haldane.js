@@ -26,7 +26,7 @@
   Nagiwa.cache.clip_najo = { kind: "clip", name: "CAM 51, MO 06:28", about: "Wohnheim 5-Süd, 15. Oktober. Najo Haldane wacht nicht auf. Zwei in Weiß tragen ihn hinaus." };
   Nagiwa.clips.clip_najo = { cam: "cam51", hour: 6, from: 28, to: 33, moments: [[28, 30, "Er schläft"], [30, 33, "Zwei in Weiß"]], people: [["najo", 28, 33]],
     // another morning of his over the one he was carried out (kapitel2-design §6.2): a fake, as Nagi·wa's; never needed
-    montage: { moment: 1, shows: "ZUR SCHICHT", keeps: true, if: ["!haldane", "!off_haldane"], then: [
+    montage: { moment: 1, shows: "ZUR SCHICHT", keeps: true, if: ["day<8", "!haldane", "!off_haldane"], then: [
       "Im Archiv ist ein Morgen vom neunten Oktober. Da steht er auf und geht zur Schicht.", "Den leg ich über halb sieben und setz die Zeit von heute drauf.",
       { evi: "besorgt" }, { say: "evi", text: "Jetzt geht er zur Arbeit. Aber er schläft doch." }, "Das ist eine Fälschung. Seine Mutter wird sie glauben."] } };
   Nagiwa.camRoom("cam51", { background: "cam51_bg", mic: { at: A51.mic, clear: 40, lost: 150 },
@@ -67,7 +67,7 @@
       H("Nichts?"), H("Dann warte ich eben weiter.")] },
     { text: "„Noch nicht. Ich schau noch.“", goto: "end", then: [H("Ich bleib wach. Bis du was weißt.")] },
   ] } });
-  door.talk = [{ if: ["day>5", "!off_haldane"], then: [
+  door.talk = [{ if: ["day>5", "day<8", "!off_haldane"], then: [
     { if: "haldane=truth", then: ["Sie schläft in ihrem Sessel, mitten am Abend. Das Licht hinter ihrem Ohr blinkt wieder."],
       else: [{ if: "haldane=fake", then: [H("Er geht jeden Morgen zur Arbeit. Hast du ja gesehen."), H("Jetzt kann ich schlafen.")],
         else: [{ if: "haldane=nothing", then: [H("Ich warte noch. Vielleicht kommt nächsten Sonntag was.")],
@@ -75,7 +75,7 @@
             else: [{ if: "haldane_ask", then: [H("Hast du ihn gesehen?"), "Noch nicht. Ich schau noch.", H("Ich bleib wach. Bis du was weißt.")],
               else: ASK }] }] }] }] }],
     else: talk }];
-  door.look = [{ if: ["day>5", "!off_haldane"], then: [
+  door.look = [{ if: ["day>5", "day<8", "!off_haldane"], then: [
     { if: "haldane=truth", then: ["Sie schläft in ihrem Sessel. Ich hab ihr gesagt, wo er ist."],
       else: [{ if: "haldane=fake", then: ["Sie sitzt in ihrer Tür und lächelt. Sie glaubt, ihr Sohn geht zur Arbeit."],
         else: ["Frau Haldane sitzt wach in ihrer Tür und schaut zur Treppe.", "Das Pflaster hinter ihrem Ohr ist dunkel. Sie wartet auf seinen Brief."] }] }],

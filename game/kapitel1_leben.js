@@ -87,7 +87,7 @@ const M = (/** @type {string} */ text) => ({ say: "motte", text });
 const LESSON = [
   [M("Das ist ein Auge an der Wand."), "Ein Auge, das nichts vergisst. Was es sieht, liegt irgendwo. Im Puffer, im Archiv. Für immer.", M("Ich auch?"), "Du auch. Mit Mütze.", M("Gut.")],
   ["Die meisten stehen drauf. Auf dem Gehäuse, auf der Speisekarte, auf einem Zettel. Leute sind faul.", M("Und wenn nicht?"), "Dann zapft man sie mit einem Abzweiger an.",
-    { if: ["!got_tap", "!off_tide"], then: [M("So einen?"), "Er schraubt zwei Kabel aus seinem Tideboy und eine Klemme vom Geländer.", M("Der Akku war eh hin."), { give: "abzweiger" }, { set: "got_tap" }, "Der ist besser als der von Ratz. Sag's ihm nicht."],
+    { if: ["day<5", "!got_tap", "!off_tide"], then: [M("So einen?"), "Er schraubt zwei Kabel aus seinem Tideboy und eine Klemme vom Geländer.", M("Der Akku war eh hin."), { give: "abzweiger" }, { set: "got_tap" }, "Der ist besser als der von Ratz. Sag's ihm nicht."],
       else: [M("Bau ich dir mal einen. Aus dem Tideboy.")] }],
   [M("Warum glasst du nie unser Haus?"), "Weil man dann weiß, was die Nachbarn nachts machen.", "Und das kriegt man nicht mehr weg.", M("Ich weiß schon, was Frau Haldane nachts macht."), "Siehst du.", { set: "moth_student" }, M("Jetzt bin ich Glasser."), "Jetzt weißt du Bescheid. Das ist schlimmer."],
 ];

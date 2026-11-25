@@ -22,7 +22,7 @@ const CLIPS = [
 const THANKS = { ring: "Wie er den Ring abzieht! Und dieser Blick. 240.", morrow: "Eine Polizistin, die nimmt! Oben glaubt uns das keiner. 300.",
   traeger: "Das Mädchen in der Tür. Ich musste kurz rausgehen. 400." };
 
-Object.assign(Nagiwa.contacts, { vesper: { name: "VESPER", color: "#d0c0f8", status: "online", if: { or: [["day>2", "day<5", "!off_vesper"], "day>4"] }, unread: "!read_vesper",
+Object.assign(Nagiwa.contacts, { vesper: { name: "VESPER", color: "#d0c0f8", status: "online", if: { or: [["day>2", "day<5", "!off_vesper"], "day>4"] }, unread: ["!read_vesper", "day<8"],
   open: [{ if: "!read_vesper", then: [{ set: "read_vesper" }, "Das ist NINTH LIVE. Die zeigen uns da oben im Abendprogramm.",
     { evi: "froh" }, { say: "evi", text: "Ich kann Gesichter wegmachen! Im Clip-Editor." }, "Dann kauft er's nicht.", { evi: "verwirrt" }, { say: "evi", text: "Oh." }] }] } });
 Cutaway.state.view("read_vesper");
@@ -44,7 +44,7 @@ for (const [id, , , what, pay, viewers, short] of CLIPS) {
 
 // ---- anonymising (kapitel0-design §2.4): the tool wakes in Chapter 1, and only while Vesper's thread is open, so that the main thread's
 // states don't double with every clip. Every clip Vesper would buy can be blurred; then he won't.
-const ANON = { if: ["day>1", "!off_vesper"], then: ["Die Gesichter sind weg. Jetzt sind es nur noch Leute.", { evi: "froh" }, { say: "evi", text: "Jetzt erkennt sie keiner!" }] };
+const ANON = { if: ["day>1", "day<8", "!off_vesper"], then: ["Die Gesichter sind weg. Jetzt sind es nur noch Leute.", { evi: "froh" }, { say: "evi", text: "Jetzt erkennt sie keiner!" }] };
 Nagiwa.clips.clip_kessler_ring.anon = ANON;
 Object.assign(Nagiwa.people, { morrow: { name: "MORROW" }, tide_boy: { name: "TIDEWATER" }, traeger_weiss: { name: "IN WEISS" }, traeger_kind: { name: "MÄDCHEN" } });
 Nagiwa.clips.clip_morrow_bribe = { cam: "cam07", hour: 0, from: 30, to: 31.5, anon: ANON,

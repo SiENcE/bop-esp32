@@ -140,7 +140,7 @@ Nagiwa.talkTree("okonkwo", [
   ["„Wer ist auf dem Foto da?“", [O("Meine Familie. Am Strand, vor dem Wasser."), "Hier unten war ein Strand?", O("Da, wo jetzt der Drain-Markt ist. Wir hatten Handtücher.")]],
   ["„Pass auf. Die Tidewater Boys wollen an deinen Tresor.“", [{ set: "k1b", value: "warned" }, { ledger: "okonkwo", value: "warned" }, O("..."), O("Woher weißt du das?"), "Die haben mich nach dem Code gefragt.",
     O("Und du kommst zu mir."), O("Ich mach heute Nacht einen neuen."), O("Hier hast du eine Stange Reis. Und Batterien."), { give: "reis" }, O("Ich vergesse das nicht."),
-    { evi: "verwirrt" }, { say: "evi", text: "Fünfhundert. Gegen Reis?" }, "Gegen Reis."], undefined, ["!k1b", "!off_tide"]],
+    { evi: "verwirrt" }, { say: "evi", text: "Fünfhundert. Gegen Reis?" }, "Gegen Reis."], undefined, ["day<5", "!k1b", "!off_tide"]],
 ]);
 Cutaway.room("okonkwo_shop", { name: "Okonkwos Laden", background: "okonkwo_shop_bg", walk: AO.walk, props: AO.props,
   ambience: ["fridge_hum"], music: { theme: "juno", intensity: 0.3 },
@@ -163,7 +163,7 @@ Nagiwa.talkTree("ratz", [
     ["„Hast du einen Abzweiger? Ich muss an ein Kabel.“", [RZ("Sechzig Chits. Freundschaftspreis."), RZ("Feindschaftspreis wär achtzig. Wir sind Freunde?")], [
       ["„Hier sind sechzig.“", [{ inc: "chits", by: -60 }, { give: "abzweiger" }, { set: "got_tap" }, RZ("Freunde. Ich hab's gewusst."), RZ("Der klemmt an allem, was ein Kabel hat. Auch an Kabeln.")], undefined, ["chits>=60", "!got_tap"]],
       ["„Das ist zu teuer.“", [RZ("Dann sind wir Feinde. Achtzig.")]],
-    ], ["!got_tap", "!off_tide"]],
+    ], ["day<5", "!got_tap", "!off_tide"]],
     ["„Was ist das da, mit den Drähten?“", [RZ("Das ist ein Ding. Ich weiß nicht, was es macht, darum ist es teuer.")]],
   ]],
   ["„Woher hast du den Kragen?“", [RZ("Vom Flutprogramm. Das ist ein Sprechkragen, Modell zwei."), "Und Modell eins?", RZ("Hat gebissen."), "Wer?", RZ("Der Kragen.")]],

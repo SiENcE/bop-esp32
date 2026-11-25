@@ -22,7 +22,7 @@
   Nagiwa.ledger.shop24 = { to: "24H-LADEN", what: { shown: "gezeigt", cut: "montiert", sold: "verkauft" }, chits: { sold: 60 } };
 
   // ---- the robot (S2): reset with the pocket deck, it finds its way home, and its dock is the way into the shop's net
-  Cutaway.room.get("weg1").hotspots.robot.use = [{ if: "off_shop24", then: ["Er fährt im Kreis und piept. Das ist nicht mein Problem."],
+  Cutaway.room.get("weg1").hotspots.robot.use = [{ if: { or: ["off_shop24", "day>7"] }, then: ["Er fährt im Kreis und piept. Das ist nicht mein Problem."],
     else: ["An seinem Bauch ist eine Wartungsbuchse.", { sfx: "type" }, "Ich steck das Taschen-Deck dran. Seine Karte ist kaputt, er weiß nicht mehr, wo er wohnt.",
       "Ich setz sie zurück.", { set: "code_cam26" }, { set: "link_cam26" }, { sfx: "link" }, "Er piept zweimal und fährt rüber in den 24h-Laden, an seine Ladestation.",
       "Und über die Station bin ich im Netz vom Laden. CAM 26, die Kamera über der Kasse."] }];
@@ -33,7 +33,7 @@
   Nagiwa.clips.clip_shop24 = { cam: "cam26", hour: 2, from: 28, to: 33, moments: [[28, 30, "Leer"], [30, 31.5, "Der Mann"], [31.5, 33, "Leer"]],
     people: [["obdachloser", 30, 31.5]],
     // an empty stretch of the same night over him (kapitel0-design §2.4): a fake, as Nagi·wa's, only smaller; never needed
-    montage: { moment: 1, if: ["!ledger_shop24", "!off_shop24"], then: ["Ich nehm anderthalb Minuten leeren Laden aus derselben Nacht und leg sie über ihn.",
+    montage: { moment: 1, if: ["day<8", "!ledger_shop24", "!off_shop24"], then: ["Ich nehm anderthalb Minuten leeren Laden aus derselben Nacht und leg sie über ihn.",
       "Jetzt kommt um halb drei keiner. Die Uhr läuft durch, nichts springt.", { evi: "besorgt" }, { say: "evi", text: "Jetzt ist er weg. Aber er war doch da." },
       "Das ist eine Fälschung. Wie die von Nagi·wa, nur kleiner."] } };
   Nagiwa.camRoom("cam26", { background: undefined, color: Nagiwa.PHOSPHOR[0], post: [{ exposure: A26.exposure }, ...Nagiwa.FEED_POST],
@@ -41,7 +41,7 @@
     hotspots: {
       counter: { name: "Kasse", poly: AS.counterPoly, look: ["Die Kasse, und keiner dahinter.", "Draußen steht das Schaf. Von hier sieht man nur seinen Schatten auf dem Glas."] },
       fridges: { name: "Kühlschränke", poly: AS.fridgesPoly, look: "Die Kühlschränke. Was da nachts fehlt, sieht die Kamera." },
-      rewind: { name: "Archiv", z: 5, if: ["!cache_clip_shop24", "!off_shop24"],
+      rewind: { name: "Archiv", z: 5, if: ["day<8", "!cache_clip_shop24", "!off_shop24"],
         use: [{ rewind: "02:30", date: "today" }, "Das Archiv vom Laden geht eine Nacht zurück. Halb drei.", "Draußen steht das Schaf und schläft.",
           "Der Mann mit dem Einkaufswagen kommt rein. Er nimmt ein Sandwich aus dem Kühlschrank und eine Dose.",
           "Auf dem Sandwich klebt ein Etikett. Morgen abgelaufen.", "Er schaut einmal in die Kamera. Dann geht er.", { cache: "clip_shop24" },
@@ -57,7 +57,7 @@
       else: [{ if: "ledger_shop24=shown", then: [SH("Die Kasse stimmt wieder. Danke, Glasserin."), "Und der Mann mit dem Wagen?", SH("Das macht jetzt die Kette. Ich hab's nicht gewollt.")],
         else: [{ if: "ledger_shop24=cut", then: [SH("Ich hab mir einen Wecker gestellt. Hilft nichts."), SH("Im Schlaf bin ich wohl ein Dieb.")],
           else: [{ if: "ledger_shop24=sold", then: [SH("Die Kette hat mir was geschickt. Ein Video, wie ich schlafe."), SH("Morgen steht hier ein anderer.")],
-            else: [{ if: "cache_clip_shop24", then: [SH("Du schon wieder."), { dialog: "shop24_wahl" }],
+            else: [{ if: ["cache_clip_shop24", "day<8"], then: [SH("Du schon wieder."), { dialog: "shop24_wahl" }],
               else: [...TELLS, { if: "!link_cam26", then: ["Die Kamera über der Kasse. Mal sehen, an welchem Netz die hängt."], else: ["Die hab ich schon. CAM 26."] }] }] }] }] }] }];
   Cutaway.room.get("weg1").hotspots.sheep2.use = [SH2("Flyer? Schlaf ist umsonst."), "Wo ist der andere?", SH2("Der hat im Dienst geschlafen. Sagt die Kette.")];
   Cutaway.dialog("shop24_wahl", { main: { choices: [

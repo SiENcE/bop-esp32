@@ -108,7 +108,7 @@ Nagiwa.clips.clip_forgery = { cam: "cam31", hour: 23, from: 0.5, to: 4, check: "
 // ---- PRÜFEN: the forgery beside her own, three places in their order (§3.4)
 Cutaway.state.view("forgery_cuts");
 Cutaway.i18n.declare("deck", ["FÄLSCHUNG", "NEWS", "PUFFER", "ZEITSTEMPEL", "REGEN", "LICHT", "01:30", "01:58", "02:30", "03:03"]);
-Nagiwa.checks.faelschung = { kind: "clips", title: "FÄLSCHUNG", if: ["cache_clip_forgery", "cache_clip_ines_death"], done: "forgery_proven",
+Nagiwa.checks.faelschung = { kind: "clips", title: "FÄLSCHUNG", if: ["cache_clip_forgery", "cache_clip_ines_death", "day<8"], done: "forgery_proven",
   a: "clip_forgery", b: "clip_ines_death", lanes: ["NEWS", "PUFFER"], picture, counter: "forgery_cuts",
   marks: [{ at: 1.5, label: "01:30" }, { at: 1.97, label: "01:58" }, { at: 2.5, label: "02:30" }, { at: 3.05, label: "03:03" }],
   finds: [

@@ -19,7 +19,7 @@ Cutaway.moment("lantern_rauschen", { room: "deck", day: 6, from: "22:00", to: "2
   unseen: [{ evi: "neugierig" }, E("Juno! Eben hat auf dem Deck alles gerauscht, auf allen Kanälen. Ich hab's aufgenommen."), { cache: "clip_lantern" }] });
 
 Nagiwa.cache.clip_lantern = { kind: "clip", name: "RAUSCHEN, SO 22:00", about: "Zehn Sekunden, die in jeden Kanal eingebrochen sind. Rauschen, Nagi·wa lügt, Rauschen.",
-  open: [{ if: ["!know_sumpf", "!off_lantern"], then: [{ evi: "neugierig" }, E("Am Anfang rauscht es und am Ende auch. Genau gleich lang. Das ist komisch.")] }] };
+  open: [{ if: ["day<8", "!know_sumpf", "!off_lantern"], then: [{ evi: "neugierig" }, E("Am Anfang rauscht es und am Ende auch. Genau gleich lang. Das ist komisch.")] }] };
 
 // ---- the picture: the swamp his camera saw, from the painting's left part (the trees and his lanterns, not the caravan)
 const CROP = [0, 20, 168, 96];
@@ -79,7 +79,7 @@ Cutaway.i18n.declare("deck", ["ALLE KANÄLE", "NAGI·WA LÜGT"]);
 // those inside the crop, in the picture's own pixels)
 const SPOTS = Nagiwa.at.sumpf.lanterns.filter(([lx, ly]) => lx >= CROP[0] + 6 && lx < CROP[0] + CROP[2] - 6 && ly >= CROP[1] + 6 && ly < CROP[1] + CROP[3] - 6)
   .map(([lx, ly]) => [lx - CROP[0], ly - CROP[1]]);
-Nagiwa.checks.rauschen = { kind: "layers", title: "RAUSCHEN", if: "cache_clip_lantern", done: "know_sumpf", clip: "clip_lantern",
+Nagiwa.checks.rauschen = { kind: "layers", title: "RAUSCHEN", if: ["cache_clip_lantern", "day<8"], done: "know_sumpf", clip: "clip_lantern",
   lanes: ["ANFANG", "ENDE"], name: "Grünes Licht", spots: SPOTS, picture,
   alone: ["Nur Rauschen. Aber es rauscht gleichmäßig. Zu gleichmäßig."],
   laid: ["Ich leg das Rauschen vom Anfang über das vom Ende.", "Es hebt sich auf. Darunter ist ein Bild, ganz blass.", { evi: "neugierig" }, E("Da ist was! Siehst du die hellen Punkte?")],

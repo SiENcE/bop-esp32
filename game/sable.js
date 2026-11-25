@@ -37,9 +37,9 @@ Cutaway.dialog("sable", {
   // Chapter 1 shows the first, third and fifth, Chapter 2 the second, fourth and fifth: the same three places
   main: [
     { text: "„Hast du den Code für die Kamera im Morpheus? CAM 15.“", if: ["day<5", "varga_step", "!code_cam15"], goto: "code", then: [S("Achtzig. Oder was, das achtzig wert ist.")] },
-    { text: "„Ich such was.“", if: ["day>4", { or: [HOSTEL, SWAMP, PUMP] }], goto: "search", then: [S("Suchen kostet. Was?")] },
+    { text: "„Ich such was.“", if: ["day>4", "day<8", { or: [HOSTEL, SWAMP, PUMP] }], goto: "search", then: [S("Suchen kostet. Was?")] },
     { text: "„Du hast Varga meinen Namen gegeben.“", if: "day<5", then: [S("Verkauft. Geben tu ich nichts."), "Für wie viel?", S("Das kostet extra.")] },
-    { text: "„Ich hab was zu verkaufen.“", if: ["day>4", { or: [CLIP, SHOP] }], goto: "sell", then: [S("Zeig.")] },
+    { text: "„Ich hab was zu verkaufen.“", if: ["day>4", "day<8", { or: [CLIP, SHOP] }], goto: "sell", then: [S("Zeig.")] },
     { text: "„Was verkaufst du sonst noch?“", then: [S("Steht an der Wand. Namen, Adressen."), "Und Geheimnisse?", S("Frag. Fragen kostet schon.")] },
     { text: "Bis dann.", silent: true, goto: "end" },
   ],

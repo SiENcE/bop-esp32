@@ -81,6 +81,9 @@ Cutaway.act("kapitel3", {
       { ledger: "kessler", value: "full" }, { ledger: "wren_advance", value: "paid" }, { ledger: "wren", value: "sold" }, { ledger: "wren_live", value: "paid" }, { ledger: "ines", value: "dead" },
       { ledger: "vesper_ines", value: "sold" },
       { set: "chits", value: 6550 }, { set: "cache_clip_kessler_ring" }, { set: "cache_clip_ines_death" }] },
+    // the prologue's answer, which the flat's door, the chat and Sable's contact read, from the Kassenbuch's line (as Chapter 2's start):
+    // without it the door holds her in the flat ("Erst kommt der Auftrag")
+    ...["full", "cut", "nothing"].map((v) => ({ if: `ledger_kessler=${v}`, then: [{ set: "p1", value: v }] })),
     { if: "got_ausweis", then: [{ give: "ausweis" }] }, { if: "got_haken", then: [{ give: "haken" }] },
     { place: "juno", room: "flat", at: AF.deck, face: "ne" },
     // Juno's old access and the codes she has had since Chapter 1 and 2
