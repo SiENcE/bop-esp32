@@ -9,6 +9,7 @@ idf_component_register(
         "provisioning/dns_hijack.c"
         "provisioning/portal.c"
         "screenshot.c"
+        "spotify/json_stream.c"
         "spotify/spotify.c"
         "ui/art.c"
         "ui/fonts/lv_font_montserrat_bold_24.c"
