@@ -128,9 +128,9 @@ bool bop_spotify_get_library(bop_library_t *library);
 uint32_t bop_spotify_get_library_generation(void);
 // Asks for a fresh read of the library. The client task limits how often.
 void bop_spotify_request_library_refresh(void);
-// Asks for the albums of an artist, or for none with NULL. A stored list
-// publishes at once; otherwise the whole list loads page by page.
-void bop_spotify_request_artist_albums(const char *artist_id);
+// Asks for at least `wanted` albums of an artist, or for none with NULL.
+// Another artist ID starts a new list. A stored list publishes whole at once.
+void bop_spotify_request_artist_albums(const char *artist_id, size_t wanted);
 bool bop_spotify_get_artist_albums(bop_artist_albums_t *albums);
 uint32_t bop_spotify_get_artist_albums_generation(void);
 // Someone touched or lifted the board. The client renews a token that would

@@ -1361,6 +1361,12 @@ static void library_select(const char *album_id)
     }
     spotify_command_submission_t submission = bop_spotify_enqueue_play_album(album_id, request_id);
     if (submission != SPOTIFY_COMMAND_SUBMISSION_QUEUED) {
+        ESP_LOGW(
+            TAG,
+            "Album tap refused: %s",
+            submission == SPOTIFY_COMMAND_SUBMISSION_RATE_LIMITED ? "Spotify rate limit"
+                : submission == SPOTIFY_COMMAND_SUBMISSION_QUEUE_FULL ? "queue full"
+                : "Spotify not started");
         show_feedback(LV_SYMBOL_WARNING);
         return;
     }

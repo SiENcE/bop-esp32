@@ -42,14 +42,21 @@
 #define LIBRARY_REFRESH_INTERVAL_MS (3 * 60 * 60 * 1000)
 #define LIBRARY_REQUEST_MIN_INTERVAL_MS (30 * 60 * 1000)
 // Every followed artist's album list loads in the background and stays in
-// flash, one page a second, and is checked again once a day.
-#define ARTIST_REFRESH_SECONDS (24 * 60 * 60)
+// flash, and is checked again once a week. One page every 20 seconds: at one
+// a second, Spotify refused artist album requests for 18 hours.
+#define ARTIST_REFRESH_SECONDS (7 * 24 * 60 * 60)
 #define PREFETCH_START_DELAY_MS 15000
-#define PREFETCH_PAGE_PAUSE_MS 1000
+#define PREFETCH_PAGE_PAUSE_MS 20000
 #define PREFETCH_PASS_PAUSE_MS (60 * 60 * 1000)
+// A list pause follows Spotify's Retry-After, up to this long, which keeps the
+// tick arithmetic far from wrapping.
+#define LIST_PAUSE_MAX_SECONDS (7 * 24 * 60 * 60)
 // A command that waited this long for WiFi is dropped, so music never starts
 // long after the tap.
 #define COMMAND_MAX_AGE_MS 5000
+// A library read that failed, for example on a WiFi drop, runs again soon
+// instead of three hours later.
+#define LIBRARY_RETRY_INTERVAL_MS (2 * 60 * 1000)
 // A touch or a lift of the board renews an access token that would expire
 // within this time, so the next tap needs no token request first.
 #define WAKE_TOKEN_MARGIN_SECONDS (10 * 60)
@@ -97,6 +104,10 @@ typedef struct {
     bop_artist_albums_t *artist_albums;
     char artist_next_url[LIBRARY_URL_CAPACITY];
     artist_prefetch_t *prefetch;
+    // Set while Spotify refuses artist album requests. Prefetch and live
+    // loading of artist lists wait; playback and commands go on.
+    bool artists_paused;
+    TickType_t artists_paused_until;
 } client_context_t;
 
 typedef struct {
@@ -105,6 +116,8 @@ typedef struct {
     char album_id[BOP_ALBUM_ID_CAPACITY];
     bool no_device;
     TickType_t queued_at;
+    // The WiFi disconnect count at the tap. A change means WiFi dropped since.
+    uint32_t queued_disconnects;
 } spotify_command_request_t;
 
 typedef struct {
@@ -128,6 +141,7 @@ static atomic_bool client_started;
 static bop_library_t *published_library;
 static bop_artist_albums_t *published_artist_albums;
 static char requested_artist_id[BOP_ALBUM_ID_CAPACITY];
+static size_t requested_artist_count;
 static atomic_bool library_refresh_requested;
 static atomic_bool wake_requested;
 
@@ -1104,6 +1118,9 @@ static esp_err_t fetch_entry_page(
     context->response.sink_context = NULL;
     bool complete = bop_json_stream_complete(stream);
     free(stream);
+    if (*rate_limited) {
+        ESP_LOGW(TAG, "Library request hit the Spotify rate limit");
+    }
     if (error != ESP_OK || *rate_limited) {
         return error != ESP_OK ? error : ESP_ERR_TIMEOUT;
     }
@@ -1274,6 +1291,38 @@ static void publish_artist_albums(bop_artist_albums_t *working)
     xSemaphoreGive(state_mutex);
 }
 
+// Spotify can refuse one kind of request for hours while it answers the rest:
+// after a burst of artist album requests it asked for a pause of 18 hours
+// there, while the library read a moment before went through. A 429 on a list
+// request therefore pauses only that kind of list. Playback and commands go
+// on, and a 429 on them still pauses everything.
+static TickType_t list_pause_end(int64_t retry_after_seconds, const char *kind)
+{
+    int64_t seconds = retry_after_seconds;
+    if (seconds <= 0) {
+        seconds = RATE_LIMIT_FALLBACK_SECONDS;
+    } else if (seconds > LIST_PAUSE_MAX_SECONDS) {
+        seconds = LIST_PAUSE_MAX_SECONDS;
+    }
+    ESP_LOGW(TAG, "Spotify rate limit on %s: they pause for %lld s", kind, (long long)seconds);
+    return xTaskGetTickCount() + pdMS_TO_TICKS(seconds * 1000);
+}
+
+static bool artists_paused(client_context_t *context)
+{
+    if (context->artists_paused
+        && (int32_t)(context->artists_paused_until - xTaskGetTickCount()) <= 0) {
+        context->artists_paused = false;
+    }
+    return context->artists_paused;
+}
+
+static void pause_artists(client_context_t *context, int64_t retry_after_seconds)
+{
+    context->artists_paused_until = list_pause_end(retry_after_seconds, "artist lists");
+    context->artists_paused = true;
+}
+
 static void format_artist_albums_url(char *url, size_t capacity, const char *artist_id)
 {
     // Only regular albums: an audio-drama episode is one, while singles and
@@ -1289,15 +1338,15 @@ static void format_artist_albums_url(char *url, size_t capacity, const char *art
 
 // Loads the requested artist's albums. A stored list shows at once and needs no
 // network; the background prefetch keeps it fresh. Without one, the list loads
-// one page per call, and the client loop runs commands between the pages. A
-// whole list is stored. Returns true while pages remain.
-static bool load_artist_albums_step(
-    client_context_t *context, int64_t *retry_after_seconds, bool *rate_limited)
+// one page per call, one page ahead of the shown one as the child swipes, and
+// the client loop runs commands between the pages. A whole list is stored.
+// Returns true while the grid wants more than has arrived.
+static bool load_artist_albums_step(client_context_t *context)
 {
-    *rate_limited = false;
     char artist_id[BOP_ALBUM_ID_CAPACITY];
     xSemaphoreTake(state_mutex, portMAX_DELAY);
     strlcpy(artist_id, requested_artist_id, sizeof(artist_id));
+    size_t wanted = requested_artist_count;
     xSemaphoreGive(state_mutex);
 
     bop_artist_albums_t *working = context->artist_albums;
@@ -1315,7 +1364,14 @@ static bool load_artist_albums_step(
             context->artist_next_url, sizeof(context->artist_next_url), artist_id);
         publish_artist_albums(working);
     }
-    if (working->complete) {
+    if (working->complete || working->count >= wanted) {
+        return false;
+    }
+    if (artists_paused(context)) {
+        // The grid keeps what arrived, and says so when nothing did.
+        working->status = working->count > 0 ? BOP_LIBRARY_READY : BOP_LIBRARY_FAILED;
+        working->complete = true;
+        publish_artist_albums(working);
         return false;
     }
 
@@ -1331,13 +1387,15 @@ static bool load_artist_albums_step(
         BOP_LIBRARY_ENTRY_ALBUM,
         "items",
         "next");
+    int64_t retry_after_seconds = 0;
+    bool rate_limited = false;
     bop_wifi_hold_awake(true);
     esp_err_t error = fetch_entry_page(
-        context, context->artist_next_url, collector, retry_after_seconds, rate_limited);
+        context, context->artist_next_url, collector, &retry_after_seconds, &rate_limited);
     bop_wifi_hold_awake(false);
-    if (*rate_limited) {
-        free(collector);
-        return false;
+    if (rate_limited) {
+        pause_artists(context, retry_after_seconds);
+        error = ESP_ERR_TIMEOUT;
     }
     if (error == ESP_OK) {
         strlcpy(context->artist_next_url, collector->next_url, sizeof(context->artist_next_url));
@@ -1354,7 +1412,7 @@ static bool load_artist_albums_step(
     }
     free(collector);
     publish_artist_albums(working);
-    return !working->complete;
+    return !working->complete && working->count < wanted;
 }
 
 // Finds the next followed artist whose stored list is missing or a day old.
@@ -1401,12 +1459,10 @@ static void share_with_open_artist(client_context_t *context, const bop_artist_a
 
 // Loads one page of the next stale artist list. Returns true when it sent a
 // request, so the client loop waits before the next one.
-static bool prefetch_artist_step(
-    client_context_t *context, int64_t *retry_after_seconds, bool *rate_limited)
+static bool prefetch_artist_step(client_context_t *context)
 {
-    *rate_limited = false;
     artist_prefetch_t *prefetch = context->prefetch;
-    if (!prefetch->active && !start_next_prefetch(prefetch)) {
+    if (artists_paused(context) || (!prefetch->active && !start_next_prefetch(prefetch))) {
         return false;
     }
     entry_collector_t *collector = malloc(sizeof(*collector));
@@ -1421,12 +1477,15 @@ static bool prefetch_artist_step(
         BOP_LIBRARY_ENTRY_ALBUM,
         "items",
         "next");
+    int64_t retry_after_seconds = 0;
+    bool rate_limited = false;
     esp_err_t error = fetch_entry_page(
-        context, prefetch->next_url, collector, retry_after_seconds, rate_limited);
-    if (*rate_limited) {
-        // The same page loads again after the cooldown.
+        context, prefetch->next_url, collector, &retry_after_seconds, &rate_limited);
+    if (rate_limited) {
+        // The same page loads again after the pause.
+        pause_artists(context, retry_after_seconds);
         free(collector);
-        return true;
+        return false;
     }
     if (error != ESP_OK) {
         // The next pass checks this artist again.
@@ -1591,6 +1650,8 @@ static void start_rate_limit_cooldown(int64_t retry_after_seconds)
     xSemaphoreTake(cooldown_mutex, portMAX_DELAY);
     rate_limit_deadline_us = deadline;
     xSemaphoreGive(cooldown_mutex);
+    // Every request and tap pauses until then, so the log names the length.
+    ESP_LOGW(TAG, "Spotify rate limit: requests pause for %lld s", (long long)seconds);
 }
 
 static int64_t rate_limit_remaining_us(void)
@@ -1680,11 +1741,15 @@ static void destroy_client_context(client_context_t *context)
 }
 
 // A command that waited for WiFi is dropped instead of sent late: a child who
-// tapped that long ago no longer expects music to start. Returns true when it
-// dropped the command and reported the failure.
+// tapped that long ago no longer expects music to start. Only a WiFi drop
+// counts. A command that waited behind a slow library read is still wanted.
+// Returns true when it dropped the command and reported the failure.
 static bool drop_if_stale(const spotify_command_request_t *request)
 {
-    if (xTaskGetTickCount() - request->queued_at <= pdMS_TO_TICKS(COMMAND_MAX_AGE_MS)) {
+    bop_wifi_status_t wifi;
+    bop_wifi_get_status(&wifi);
+    if (wifi.disconnects == request->queued_disconnects
+        || xTaskGetTickCount() - request->queued_at <= pdMS_TO_TICKS(COMMAND_MAX_AGE_MS)) {
         return false;
     }
     ESP_LOGW(TAG, "Dropped a command that waited for WiFi");
@@ -1704,6 +1769,8 @@ static void client_task(void *argument)
     // the UI asks, at most every half hour.
     TickType_t library_deadline = xTaskGetTickCount();
     TickType_t prefetch_deadline = xTaskGetTickCount() + pdMS_TO_TICKS(PREFETCH_START_DELAY_MS);
+    bool library_paused = false;
+    TickType_t library_paused_until = xTaskGetTickCount();
     TickType_t library_refreshed = xTaskGetTickCount() - pdMS_TO_TICKS(LIBRARY_REQUEST_MIN_INTERVAL_MS);
     publish_cached_library();
 
@@ -1785,20 +1852,29 @@ static void client_task(void *argument)
         }
 
         TickType_t now = xTaskGetTickCount();
+        if (library_paused && ticks_until(library_paused_until) == 0) {
+            library_paused = false;
+        }
         bool library_asked = atomic_load(&library_refresh_requested)
             && now - library_refreshed >= pdMS_TO_TICKS(LIBRARY_REQUEST_MIN_INTERVAL_MS);
-        if (library_asked || ticks_until(library_deadline) == 0) {
+        if (!library_paused && (library_asked || ticks_until(library_deadline) == 0)) {
             atomic_store(&library_refresh_requested, false);
             library_refreshed = now;
             library_deadline = now + pdMS_TO_TICKS(LIBRARY_REFRESH_INTERVAL_MS);
             // A library read is the largest download Bop makes, so the radio
             // stays awake for it even on battery.
             bop_wifi_hold_awake(true);
-            refresh_library(context, &retry_after_seconds, &rate_limited);
+            esp_err_t library_error = refresh_library(
+                context, &retry_after_seconds, &rate_limited);
             bop_wifi_hold_awake(false);
             if (rate_limited) {
-                start_rate_limit_cooldown(retry_after_seconds);
-                continue;
+                // Only the library waits. The cached grid stays.
+                library_paused_until = list_pause_end(retry_after_seconds, "the library");
+                library_paused = true;
+                library_deadline = library_paused_until;
+                rate_limited = false;
+            } else if (library_error != ESP_OK) {
+                library_deadline = xTaskGetTickCount() + pdMS_TO_TICKS(LIBRARY_RETRY_INTERVAL_MS);
             }
             // A parent may have followed a new artist.
             prefetch_deadline = xTaskGetTickCount();
@@ -1806,11 +1882,7 @@ static void client_task(void *argument)
 
         // An open artist loads page by page as the child swipes. Each page
         // goes back through the loop, so commands still go first.
-        bool artist_more = load_artist_albums_step(context, &retry_after_seconds, &rate_limited);
-        if (rate_limited) {
-            start_rate_limit_cooldown(retry_after_seconds);
-            continue;
-        }
+        bool artist_more = load_artist_albums_step(context);
         if (artist_more) {
             continue;
         }
@@ -1819,11 +1891,7 @@ static void client_task(void *argument)
         // at a time between commands and polls, so an artist opens at once and
         // also without WiFi.
         if (ticks_until(prefetch_deadline) == 0) {
-            bool fetched = prefetch_artist_step(context, &retry_after_seconds, &rate_limited);
-            if (rate_limited) {
-                start_rate_limit_cooldown(retry_after_seconds);
-                continue;
-            }
+            bool fetched = prefetch_artist_step(context);
             prefetch_deadline = xTaskGetTickCount()
                 + pdMS_TO_TICKS(fetched ? PREFETCH_PAGE_PAUSE_MS : PREFETCH_PASS_PAUSE_MS);
         }
@@ -1987,6 +2055,9 @@ static spotify_command_submission_t submit_command_request(
     // The age lets the client task drop a command that waited for WiFi.
     spotify_command_request_t queued = *request;
     queued.queued_at = xTaskGetTickCount();
+    bop_wifi_status_t wifi;
+    bop_wifi_get_status(&wifi);
+    queued.queued_disconnects = wifi.disconnects;
     xSemaphoreTake(cooldown_mutex, portMAX_DELAY);
     spotify_command_submission_t submission = SPOTIFY_COMMAND_SUBMISSION_RATE_LIMITED;
     if (rate_limit_deadline_us - esp_timer_get_time() <= 0) {
@@ -2107,7 +2178,7 @@ void bop_spotify_request_library_refresh(void)
     xTaskNotifyGive(client_task_handle);
 }
 
-void bop_spotify_request_artist_albums(const char *artist_id)
+void bop_spotify_request_artist_albums(const char *artist_id, size_t wanted)
 {
     if (!atomic_load(&client_started)) {
         return;
@@ -2118,9 +2189,13 @@ void bop_spotify_request_artist_albums(const char *artist_id)
         ? artist_id
         : "";
     xSemaphoreTake(state_mutex, portMAX_DELAY);
-    bool changed = strcmp(requested_artist_id, id) != 0;
-    if (changed) {
+    bool same_artist = strcmp(requested_artist_id, id) == 0;
+    bool changed = !same_artist || wanted > requested_artist_count;
+    if (!same_artist) {
         strlcpy(requested_artist_id, id, sizeof(requested_artist_id));
+        requested_artist_count = wanted;
+    } else if (wanted > requested_artist_count) {
+        requested_artist_count = wanted;
     }
     xSemaphoreGive(state_mutex);
     if (changed) {

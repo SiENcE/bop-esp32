@@ -227,7 +227,7 @@ HTTP status. Run `mise run provision` again and approve the new permissions.
 
 A change in the library appears after Bop reads it again: when the grid opens,
 at most every half hour, or within three hours. A new album of a followed
-artist appears within a day. Restart Bop to see a change at once.
+artist appears within a week. Restart Bop to see a change at once.
 
 ## A cover tap shows a muted speaker
 
@@ -260,7 +260,14 @@ commands. An affected tap shows a warning. Bop keeps only the newest volume
 target and retries it after the cooldown.
 
 Wait for Bop to resume polling. More input does not bypass the cooldown. Read
-the serial log if rate limits happen often.
+the serial log if rate limits happen often. It shows
+`Spotify rate limit: requests pause for N s`.
+
+A rate limit on the library or on artist lists pauses only those lists, and
+the log shows `Spotify rate limit on artist lists: they pause for N s`.
+Playback and taps keep working, and stored artists still open. An artist
+without a stored list shows `The albums could not be loaded.` until the pause
+ends, which Spotify can set to many hours.
 
 ## Volume drag does not change the active player
 

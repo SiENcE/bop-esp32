@@ -537,7 +537,9 @@ def test_kid_mode_contract() -> None:
     assert "esp_wifi_set_ps(sleep ? WIFI_PS_MIN_MODEM : WIFI_PS_NONE)" in wifi
     task_start = SPOTIFY_SOURCE.index("static void client_task(")
     task = SPOTIFY_SOURCE[task_start : SPOTIFY_SOURCE.index("esp_err_t bop_spotify_start(")]
-    hold = task.index("bop_wifi_hold_awake(true);\n            refresh_library(")
+    hold = task.index(
+        "bop_wifi_hold_awake(true);\n            esp_err_t library_error = refresh_library("
+    )
     assert hold < task.index("refresh_library(") < task.index("bop_wifi_hold_awake(false);", hold)
     # The library cache lives in its own partition after the application, and
     # an unprovisioned start erases it before anything else runs.

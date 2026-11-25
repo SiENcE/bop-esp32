@@ -45,6 +45,11 @@ def test_no_command_waits_for_wifi() -> None:
     assert "&& !drop_if_stale(&pending_command);" in spotify
     assert "#define COMMAND_MAX_AGE_MS 5000" in spotify
     assert "queued.queued_at = xTaskGetTickCount();" in spotify
+    # Only a WiFi drop makes a command stale. A command that waited behind a
+    # slow library read was dropped once, and every tap then showed a warning.
+    stale = function_body(spotify, "static bool drop_if_stale(")
+    assert "wifi.disconnects == request->queued_disconnects" in stale
+    assert "queued.queued_disconnects = wifi.disconnects;" in spotify
 
 
 def test_only_an_undelivered_or_harmless_request_repeats() -> None:
@@ -75,6 +80,24 @@ def test_artist_lists_live_in_flash() -> None:
     assert "view.incoming->status != BOP_LIBRARY_READY" in keep
 
 
+def test_a_list_rate_limit_pauses_only_lists() -> None:
+    # Spotify refused artist album requests for 18 hours after a burst, while
+    # it still answered the rest. A global pause left every tap with a warning.
+    spotify = read("main/spotify/spotify.c")
+    for signature in (
+        "static bool load_artist_albums_step(",
+        "static bool prefetch_artist_step(",
+    ):
+        body = function_body(spotify, signature)
+        assert "pause_artists(context, retry_after_seconds);" in body, signature
+        assert "start_rate_limit_cooldown(" not in body, signature
+    task = function_body(spotify, "static void client_task(")
+    library = task[task.index("refresh_library(") : task.index("load_artist_albums_step(")]
+    assert "start_rate_limit_cooldown(" not in library
+    assert 'list_pause_end(retry_after_seconds, "the library")' in library
+    assert "#define PREFETCH_PAGE_PAUSE_MS 20000" in spotify
+
+
 def test_cache_reaches_the_end_of_flash() -> None:
     line = next(
         line for line in read("partitions.csv").splitlines() if line.strip().startswith("cache,")
@@ -94,6 +117,7 @@ def main() -> int:
     test_no_command_waits_for_wifi()
     test_only_an_undelivered_or_harmless_request_repeats()
     test_artist_lists_live_in_flash()
+    test_a_list_rate_limit_pauses_only_lists()
     test_cache_reaches_the_end_of_flash()
     print("Offline checks passed.")
     return 0

@@ -485,6 +485,14 @@ static void request_covers(void)
     }
 }
 
+// A list without a stored copy loads ten albums at a time. It asks for one
+// page more than the child sees, so the next swipe rarely waits, and a burst
+// of requests never asks Spotify for a whole list at once.
+static void request_artist_albums(void)
+{
+    bop_spotify_request_artist_albums(view.artist_id, (view.artist_page + 2) * TILES_PER_PAGE);
+}
+
 static void swap_artist_lists(void)
 {
     bop_artist_albums_t *shown = view.artist;
@@ -524,6 +532,9 @@ static void change_page(int direction)
         return;
     }
     *page = direction < 0 ? *page - 1 : *page + 1;
+    if (view.level == LEVEL_ARTIST) {
+        request_artist_albums();
+    }
     render_page();
     request_covers();
     slide_grid(direction * PAGE_SLIDE_DISTANCE);
@@ -539,7 +550,7 @@ static void open_artist(const char *artist_id)
     if (bop_cache_load_artist(artist_id, view.incoming)) {
         swap_artist_lists();
     }
-    bop_spotify_request_artist_albums(view.artist_id);
+    request_artist_albums();
     render_page();
     slide_grid(PAGE_SLIDE_DISTANCE);
 }
@@ -549,7 +560,7 @@ static void open_home(void)
     view.level = LEVEL_HOME;
     view.artist_id[0] = '\0';
     // The artist list is dropped. Opening the artist again reads it anew.
-    bop_spotify_request_artist_albums(NULL);
+    bop_spotify_request_artist_albums(NULL, 0);
     render_page();
     prune_covers();
     request_covers();

@@ -26,7 +26,7 @@ cannot read yet can pick music:
 To change what the children see, follow or unfollow an artist, or save or
 remove an album, in the Spotify app. Bop reads the library again every three
 hours, and when the grid opens at most every half hour, and checks each
-artist's albums once a day. Restart Bop to see a change at once. It shows up
+artist's albums once a week. Restart Bop to see a change at once. It shows up
 to 48 artists, up to 144 entries in all, and up to 200 albums of one artist.
 
 Bop keeps the library, the albums of every followed artist, and the pictures

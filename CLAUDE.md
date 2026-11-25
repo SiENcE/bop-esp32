@@ -142,7 +142,10 @@ ignores `device.supports_volume`.
 A Spotify 429 response starts a cooldown from a positive numeric `Retry-After`
 value, or 60 seconds when that value is invalid. The client stops all requests
 during the cooldown. New normal commands are rejected. The newest volume
-target remains pending and retries after the cooldown.
+target remains pending and retries after the cooldown. A 429 on a list request
+is the exception: `list_pause_end` pauses only the library reads or only the
+artist lists, because Spotify refused artist album requests for 18 hours while
+it still answered everything else.
 
 The art pipeline (`ui/art.c`) is a third producer. It downloads the JPEG into
 PSRAM, decodes it with `esp_jpeg`, scales it to 368 pixels, and averages the
@@ -152,10 +155,11 @@ with `bop_album_art_free`.
 
 Kid mode (`ui/library_view.c`) adds a fourth flow. The Spotify task reads the
 followed artists and the saved albums into a `bop_library_t`, and an opened
-artist's regular albums into a `bop_artist_albums_t`, ten per request, the
-whole list at once. After the library read, `prefetch_artist_step` loads every
-followed artist's list in the background, one page a second, and stores it;
-a list is checked again once a day. The grid loads a stored list itself in
+artist's regular albums into a `bop_artist_albums_t`, ten per request as the
+grid asks for more. After the library read, `prefetch_artist_step` loads every
+followed artist's list in the background, one page every 20 seconds, and
+stores it; a list is checked again once a week. A faster pace got the app
+refused for 18 hours. The grid loads a stored list itself in
 `open_artist`, so an artist opens without WiFi, and `take_artist_list` never
 lets a loading or failed list replace a ready one. Both are published behind the state mutex with generation
 counters. These lists stream through `spotify/json_stream.c` instead of the
