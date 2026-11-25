@@ -5,5 +5,6 @@
 nvs,      data, nvs,     0x9000,  0x6000,
 phy_init, data, phy,     0xf000,  0x1000,
 factory,  app,  factory, 0x10000, 8M,
-# Kid-mode library list and grid pictures (main/cache.c). No credentials.
-cache,    data, undefined, 0x810000, 4M,
+# Kid-mode library list, artist album lists, and grid pictures (main/cache.c).
+# No credentials. It reaches the end of the 16 MB flash.
+cache,    data, undefined, 0x810000, 0x7F0000,

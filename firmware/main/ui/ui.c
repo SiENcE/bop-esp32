@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #include "bsp/display.h"
 #include "esp_log.h"
@@ -19,6 +20,7 @@
 #include "misc/cache/instance/lv_image_cache.h"
 #include "art.h"
 #include "library_view.h"
+#include "../motion.h"
 #include "../power.h"
 #include "../spotify/spotify.h"
 #include "../wifi.h"
@@ -34,14 +36,24 @@ LV_FONT_DECLARE(lv_font_montserrat_bold_24);
 #define TAP_THRESHOLD 20
 #define UI_TASK_CORE 1
 #define NORMAL_BRIGHTNESS 85
-#define DIM_BRIGHTNESS 10
+#define SCREENSAVER_BRIGHTNESS 40
 #define OFF_BRIGHTNESS 0
-#define BATTERY_DIM_TIMEOUT_US (30LL * 1000000)
-// AMOLED pixels age with the light they emit, so a still screen burns in. With
-// nothing playing, the screen dims after one minute and goes dark after five,
-// on any power source.
-#define IDLE_DIM_TIMEOUT_US (60LL * 1000000)
-#define IDLE_OFF_TIMEOUT_US (5LL * 60 * 1000000)
+// AMOLED pixels age with the light they emit, so a still screen burns in. Half
+// a minute after the last touch or move of the board, a dim clock drifting over
+// black replaces the screen, during playback too. Two minutes after the last
+// touch, the screen goes dark. A touch or a move brings the screen back.
+#define SCREENSAVER_TIMEOUT_US (30LL * 1000000)
+#define SCREEN_OFF_TIMEOUT_US (2LL * 60 * 1000000)
+// The clock moves this far per UI tick, 8 pixels a second. Even steps keep its
+// invalidated areas on the even-pixel grid that the panel needs.
+#define SCREENSAVER_STEP 2
+#define SCREENSAVER_CLOCK_COLOR 0xA0A0A0
+// Unix time of 2024-01-01. An earlier clock has not been synchronized yet.
+#define CLOCK_VALID_AFTER 1704067200
+// A touch or a lift of the board keeps the radio awake this long, and asks the
+// Spotify task to get ready, at most once in the interval.
+#define INPUT_AWAKE_MS 30000
+#define INPUT_PREPARE_INTERVAL_US (30LL * 1000000)
 // Static text and the progress bar move along a small loop. Even steps keep
 // every invalidated area on the even-pixel grid that the panel needs.
 #define PIXEL_SHIFT_INTERVAL_US (60LL * 1000000)
@@ -94,6 +106,9 @@ typedef struct {
     lv_obj_t *attribution;
     lv_obj_t *attribution_qr;
     lv_obj_t *attribution_caption;
+    lv_obj_t *screensaver;
+    lv_obj_t *screensaver_clock;
+    lv_obj_t *wait;
     QueueHandle_t art_queue;
     bop_album_art_t *active_art;
     playback_state_t state;
@@ -110,7 +125,15 @@ typedef struct {
     int display_brightness;
     uint8_t pixel_shift_index;
     int64_t pixel_shift_changed_us;
-    int64_t last_playing_us;
+    bool screensaver_visible;
+    int32_t screensaver_x;
+    int32_t screensaver_y;
+    int32_t screensaver_step_x;
+    int32_t screensaver_step_y;
+    char screensaver_text[sizeof("00:00")];
+    uint32_t motion_seen;
+    int64_t input_prepared_us;
+    bool connected;
     bool library_visible;
     uint32_t album_request_id;
     int64_t album_started_us;
@@ -507,8 +530,20 @@ static bool volume_feedback_active(void)
         || esp_timer_get_time() < ui.volume_feedback_until_us;
 }
 
+// Without WiFi a tap sends nothing: no command waits in a queue to start music
+// long after the tap. A big WAIT stays over the art until WiFi returns.
+static void show_wait(void)
+{
+    lv_obj_remove_flag(ui.wait, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_move_foreground(ui.wait);
+}
+
 static bool send_gesture_command(spotify_command_t command, uint32_t request_id)
 {
+    if (!bop_wifi_is_connected()) {
+        show_wait();
+        return false;
+    }
     spotify_command_submission_t submission = bop_spotify_enqueue_command(command, request_id);
     if (submission == SPOTIFY_COMMAND_SUBMISSION_QUEUED) {
         return true;
@@ -569,12 +604,53 @@ static void restore_normal_brightness(void)
     set_display_brightness(NORMAL_BRIGHTNESS);
 }
 
+static void show_screensaver(void)
+{
+    if (ui.screensaver_visible) {
+        return;
+    }
+    ui.screensaver_visible = true;
+    lv_obj_remove_flag(ui.screensaver, LV_OBJ_FLAG_HIDDEN);
+}
+
+static void hide_screensaver(void)
+{
+    if (!ui.screensaver_visible) {
+        return;
+    }
+    ui.screensaver_visible = false;
+    lv_obj_add_flag(ui.screensaver, LV_OBJ_FLAG_HIDDEN);
+}
+
+// Asleep is the screensaver or a dark screen. Either way nobody sees what a tap
+// would change, so the first touch only wakes the screen.
+static bool screen_is_asleep(void)
+{
+    return ui.screensaver_visible || ui.display_brightness == OFF_BRIGHTNESS;
+}
+
+// A touch or a lift of the board: a tap may follow. The radio stays awake for
+// it, also on battery, and the Spotify task renews a token that would expire
+// soon and reads the play state.
+static void prepare_for_input(void)
+{
+    int64_t now = esp_timer_get_time();
+    if (ui.input_prepared_us != 0 && now - ui.input_prepared_us < INPUT_PREPARE_INTERVAL_US) {
+        return;
+    }
+    ui.input_prepared_us = now;
+    bop_wifi_keep_awake_for(INPUT_AWAKE_MS);
+    bop_spotify_wake();
+}
+
 // The idle timers read LVGL's own inactivity clock, which every touch resets,
 // including a touch on the attribution screen that never reaches this layer.
-// This call only restores the light at once instead of on the next UI tick.
+// This call only wakes the screen at once instead of on the next UI tick.
 static void record_touch(void)
 {
+    hide_screensaver();
     restore_normal_brightness();
+    prepare_for_input();
 }
 
 static void format_volume_feedback(uint8_t volume_percent, char text[sizeof("100%")])
@@ -739,11 +815,12 @@ static void gesture_event(lv_event_t *event)
         return;
     }
     if (code == LV_EVENT_PRESSED) {
-        // A touch on a dark screen only wakes it. Nobody can see what a tap or
-        // a swipe there would change, so the press goes no further.
-        bool screen_was_off = ui.display_brightness == OFF_BRIGHTNESS;
+        // A touch on a dark screen or on the screensaver only wakes it. Nobody
+        // can see what a tap or a swipe there would change, so the press goes
+        // no further.
+        bool screen_was_asleep = screen_is_asleep();
         record_touch();
-        if (screen_was_off) {
+        if (screen_was_asleep) {
             ui.press_active = false;
             return;
         }
@@ -752,9 +829,12 @@ static void gesture_event(lv_event_t *event)
         ui.press_active = true;
         ui.press_moved = false;
         ui.gesture_axis = GESTURE_AXIS_NONE;
+        // Without WiFi a volume target would wait in its queue, so the drag
+        // stays off.
         ui.volume_drag_available = ui.state.available
             && ui.state.volume_available
-            && !ui.attribution_visible;
+            && !ui.attribution_visible
+            && bop_wifi_is_connected();
         bool use_local_target = ui.volume_final_pending
             || ui.volume_target_awaiting_snapshot;
         ui.volume_start_percent = use_local_target
@@ -820,22 +900,40 @@ static void gesture_event(lv_event_t *event)
     ui.gesture_axis = GESTURE_AXIS_NONE;
 }
 
+// The banner shows over the player and the grid alike while WiFi is down.
 static void create_offline_indicator(void)
 {
     ui.offline = make_label(
         ui.screen,
         &lv_font_montserrat_14,
-        lv_color_hex(0xB3B3B3),
-        276,
+        lv_color_hex(0xF4F4F4),
+        0,
         8,
-        80,
+        LV_SIZE_CONTENT,
         18);
-    lv_label_set_text(ui.offline, "offline");
-    lv_obj_set_style_text_align(ui.offline, LV_TEXT_ALIGN_RIGHT, 0);
+    lv_obj_set_width(ui.offline, LV_SIZE_CONTENT);
+    lv_label_set_text(ui.offline, LV_SYMBOL_WIFI "  Connecting to WiFi...");
+    lv_obj_align(ui.offline, LV_ALIGN_TOP_MID, 0, 8);
     lv_obj_set_style_bg_color(ui.offline, lv_color_hex(0x080808), 0);
     lv_obj_set_style_bg_opa(ui.offline, LV_OPA_70, 0);
-    lv_obj_set_style_pad_hor(ui.offline, 4, 0);
+    lv_obj_set_style_radius(ui.offline, 9, 0);
+    lv_obj_set_style_pad_hor(ui.offline, 8, 0);
     lv_obj_add_flag(ui.offline, LV_OBJ_FLAG_HIDDEN);
+}
+
+// The player's WAIT, centered on the art. Only its own backing darkens.
+static void create_wait_sign(void)
+{
+    ui.wait = lv_label_create(ui.screen);
+    lv_obj_set_style_text_font(ui.wait, &lv_font_montserrat_48, 0);
+    lv_obj_set_style_text_color(ui.wait, lv_color_hex(0xFFFFFF), 0);
+    lv_obj_set_style_bg_color(ui.wait, lv_color_hex(0x000000), 0);
+    lv_obj_set_style_bg_opa(ui.wait, LV_OPA_70, 0);
+    lv_obj_set_style_radius(ui.wait, 12, 0);
+    lv_obj_set_style_pad_hor(ui.wait, 12, 0);
+    lv_label_set_text(ui.wait, "WAIT");
+    lv_obj_align(ui.wait, LV_ALIGN_CENTER, 0, ART_SIZE / 2 - SCREEN_HEIGHT / 2);
+    lv_obj_add_flag(ui.wait, LV_OBJ_FLAG_HIDDEN);
 }
 
 static void create_battery_indicator(void)
@@ -1028,36 +1126,107 @@ static void update_progress(void)
     lv_label_set_text(ui.total, total);
 }
 
+// Back on WiFi, the WAIT hints go, and nothing starts by itself: the child
+// taps again.
 static void update_connectivity(void)
 {
-    if (bop_wifi_is_connected()) {
+    bool connected = bop_wifi_is_connected();
+    if (connected == ui.connected) {
+        return;
+    }
+    ui.connected = connected;
+    if (connected) {
         lv_obj_add_flag(ui.offline, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_add_flag(ui.wait, LV_OBJ_FLAG_HIDDEN);
+        bop_library_view_set_waiting(NULL);
     } else {
         lv_obj_remove_flag(ui.offline, LV_OBJ_FLAG_HIDDEN);
     }
 }
 
-// Playback counts as activity, so a long song never darkens the screen. Idle
-// time runs from the later of the last touch and the last playing moment.
-static void update_display_care(int64_t now)
+// The clock bounces off the screen edges, so no pixel stays lit for long.
+static void update_screensaver(void)
 {
-    int64_t untouched_us = (int64_t)lv_display_get_inactive_time(NULL) * 1000;
-    if (ui.state.available && ui.state.is_playing) {
-        ui.last_playing_us = now;
+    char text[sizeof(ui.screensaver_text)] = "";
+    time_t now = time(NULL);
+    if (now >= CLOCK_VALID_AFTER) {
+        struct tm local;
+        localtime_r(&now, &local);
+        strftime(text, sizeof(text), "%H:%M", &local);
     }
-    int64_t idle_us = now - ui.last_playing_us;
-    if (untouched_us < idle_us) {
-        idle_us = untouched_us;
+    if (strcmp(text, ui.screensaver_text) != 0) {
+        strlcpy(ui.screensaver_text, text, sizeof(ui.screensaver_text));
+        lv_label_set_text(ui.screensaver_clock, text);
+        lv_obj_update_layout(ui.screensaver_clock);
     }
+    int32_t limit_x = (SCREEN_WIDTH - lv_obj_get_width(ui.screensaver_clock)) & ~1;
+    int32_t limit_y = (SCREEN_HEIGHT - lv_obj_get_height(ui.screensaver_clock)) & ~1;
+    ui.screensaver_x += ui.screensaver_step_x;
+    if (ui.screensaver_x <= 0) {
+        ui.screensaver_x = 0;
+        ui.screensaver_step_x = SCREENSAVER_STEP;
+    } else if (ui.screensaver_x >= limit_x) {
+        ui.screensaver_x = limit_x;
+        ui.screensaver_step_x = -SCREENSAVER_STEP;
+    }
+    ui.screensaver_y += ui.screensaver_step_y;
+    if (ui.screensaver_y <= 0) {
+        ui.screensaver_y = 0;
+        ui.screensaver_step_y = SCREENSAVER_STEP;
+    } else if (ui.screensaver_y >= limit_y) {
+        ui.screensaver_y = limit_y;
+        ui.screensaver_step_y = -SCREENSAVER_STEP;
+    }
+    lv_obj_set_pos(ui.screensaver_clock, ui.screensaver_x, ui.screensaver_y);
+}
 
-    int brightness = NORMAL_BRIGHTNESS;
-    if (idle_us >= IDLE_OFF_TIMEOUT_US) {
-        brightness = OFF_BRIGHTNESS;
-    } else if (idle_us >= IDLE_DIM_TIMEOUT_US
-        || (bop_power_on_battery() && untouched_us >= BATTERY_DIM_TIMEOUT_US)) {
-        brightness = DIM_BRIGHTNESS;
+// LVGL's inactivity clock runs from the last touch, and a move of the board
+// resets it too. Playback does not count: a still album cover burns in like any
+// other picture. A dark screen keeps the screensaver up beneath it, so the
+// first touch still only wakes.
+static void update_display_care(void)
+{
+    uint32_t moves = bop_motion_count();
+    if (moves != ui.motion_seen) {
+        ui.motion_seen = moves;
+        lv_display_trigger_activity(NULL);
+        prepare_for_input();
     }
-    set_display_brightness(brightness);
+    int64_t untouched_us = (int64_t)lv_display_get_inactive_time(NULL) * 1000;
+    if (untouched_us >= SCREEN_OFF_TIMEOUT_US) {
+        show_screensaver();
+        set_display_brightness(OFF_BRIGHTNESS);
+    } else if (untouched_us >= SCREENSAVER_TIMEOUT_US) {
+        show_screensaver();
+        update_screensaver();
+        set_display_brightness(SCREENSAVER_BRIGHTNESS);
+    } else {
+        hide_screensaver();
+        set_display_brightness(NORMAL_BRIGHTNESS);
+    }
+}
+
+// The top layer covers the player, the grid, and the attribution screen alike.
+// The overlay takes no input, so a touch reaches the layer below it, which
+// wakes the screen and goes no further.
+static void create_screensaver(void)
+{
+    ui.screensaver = lv_obj_create(lv_layer_top());
+    lv_obj_remove_style_all(ui.screensaver);
+    lv_obj_set_size(ui.screensaver, SCREEN_WIDTH, SCREEN_HEIGHT);
+    lv_obj_set_pos(ui.screensaver, 0, 0);
+    lv_obj_set_style_bg_color(ui.screensaver, lv_color_hex(0x000000), 0);
+    lv_obj_set_style_bg_opa(ui.screensaver, LV_OPA_COVER, 0);
+    lv_obj_remove_flag(ui.screensaver, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE);
+    ui.screensaver_clock = lv_label_create(ui.screensaver);
+    lv_obj_set_style_text_font(ui.screensaver_clock, &lv_font_montserrat_48, 0);
+    lv_obj_set_style_text_color(ui.screensaver_clock, lv_color_hex(SCREENSAVER_CLOCK_COLOR), 0);
+    lv_label_set_text(ui.screensaver_clock, "");
+    lv_obj_add_flag(ui.screensaver, LV_OBJ_FLAG_HIDDEN);
+    ui.screensaver_x = 100;
+    ui.screensaver_y = 180;
+    ui.screensaver_step_x = SCREENSAVER_STEP;
+    ui.screensaver_step_y = SCREENSAVER_STEP;
 }
 
 static void update_pixel_shift(int64_t now)
@@ -1157,6 +1326,8 @@ static void show_library(void)
         hide_attribution(NULL);
     }
     cancel_volume_gesture();
+    // The player's WAIT lies above the grid.
+    lv_obj_add_flag(ui.wait, LV_OBJ_FLAG_HIDDEN);
     // The grid takes its own input. The gesture layer above it would
     // otherwise catch every touch meant for a cover.
     lv_obj_add_flag(ui.gesture_layer, LV_OBJ_FLAG_HIDDEN);
@@ -1173,13 +1344,17 @@ static void show_player(void)
 
 static bool library_press(void)
 {
-    bool screen_was_off = ui.display_brightness == OFF_BRIGHTNESS;
+    bool screen_was_asleep = screen_is_asleep();
     record_touch();
-    return !screen_was_off;
+    return !screen_was_asleep;
 }
 
 static void library_select(const char *album_id)
 {
+    if (!bop_wifi_is_connected()) {
+        bop_library_view_set_waiting(album_id);
+        return;
+    }
     uint32_t request_id = ++ui.next_feedback_request_id;
     if (request_id == 0) {
         request_id = ++ui.next_feedback_request_id;
@@ -1202,6 +1377,10 @@ static void library_resume(void)
 // as a tap on the player, with its immediate play-state update.
 static void library_toggle(void)
 {
+    if (!bop_wifi_is_connected()) {
+        bop_library_view_set_waiting(ui.state.album_id);
+        return;
+    }
     handle_tap();
 }
 
@@ -1283,7 +1462,7 @@ static void ui_timer(lv_timer_t *timer)
     finish_volume_update(now);
     update_progress();
     // After the snapshot, so a playback start lights the screen on this tick.
-    update_display_care(now);
+    update_display_care();
     update_pixel_shift(now);
 }
 
@@ -1321,13 +1500,16 @@ esp_err_t bop_ui_start(void)
         return error;
     }
     create_offline_indicator();
+    create_wait_sign();
     create_battery_indicator();
     create_feedback_layer();
     create_attribution_screen();
+    create_screensaver();
     // start_display set this brightness before the UI started.
     ui.display_brightness = NORMAL_BRIGHTNESS;
-    ui.last_playing_us = esp_timer_get_time();
-    ui.pixel_shift_changed_us = ui.last_playing_us;
+    ui.motion_seen = bop_motion_count();
+    ui.connected = true;
+    ui.pixel_shift_changed_us = esp_timer_get_time();
     show_playing(false);
     // Kid mode starts on the album covers.
     show_library();

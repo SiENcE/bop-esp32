@@ -79,6 +79,7 @@ static struct {
     lv_obj_t *images[TILES_PER_PAGE];
     lv_obj_t *marks[TILES_PER_PAGE];
     lv_obj_t *mark_glyphs[TILES_PER_PAGE];
+    lv_obj_t *wait_signs[TILES_PER_PAGE];
     lv_obj_t *dots[DOT_CAPACITY];
     lv_obj_t *position;
     lv_obj_t *message;
@@ -86,6 +87,9 @@ static struct {
     lv_obj_t *resume;
     bop_library_t *library;
     bop_artist_albums_t *artist;
+    // The second artist buffer: a published or stored list lands here first,
+    // and takes the place of the shown one only when it may.
+    bop_artist_albums_t *incoming;
     uint32_t library_generation;
     uint32_t artist_generation;
     view_level_t level;
@@ -100,6 +104,7 @@ static struct {
     cover_wait_t waits[COVER_CACHE_CAPACITY];
     uint32_t use_counter;
     char pending_album_id[BOP_ALBUM_ID_CAPACITY];
+    char waiting_album_id[BOP_ALBUM_ID_CAPACITY];
     char playing_album_id[BOP_ALBUM_ID_CAPACITY];
     bool is_playing;
 } view;
@@ -332,9 +337,12 @@ static void render_page(void)
             entry->kind == BOP_LIBRARY_ENTRY_ARTIST ? LV_RADIUS_CIRCLE : TILE_RADIUS);
         bool pending = strcmp(entry->id, view.pending_album_id) == 0;
         set_opacity(view.tiles[tile], pending ? LV_OPA_40 : LV_OPA_COVER);
+        // A cover tapped while WiFi is down says WAIT until WiFi returns.
+        bool waiting = strcmp(entry->id, view.waiting_album_id) == 0;
+        set_hidden(view.wait_signs[tile], !waiting);
         // The playing album shows what a tap on it does: pause while it plays,
         // play while it is paused.
-        bool playing = entry_is_playing(entry);
+        bool playing = entry_is_playing(entry) && !waiting;
         if (playing) {
             set_label_text(
                 view.mark_glyphs[tile], view.is_playing ? LV_SYMBOL_PAUSE : LV_SYMBOL_PLAY);
@@ -477,11 +485,11 @@ static void request_covers(void)
     }
 }
 
-// An artist list loads ten albums at a time. It asks for one page more than
-// the child sees, so the next swipe rarely waits.
-static void request_artist_albums(void)
+static void swap_artist_lists(void)
 {
-    bop_spotify_request_artist_albums(view.artist_id, (view.artist_page + 2) * TILES_PER_PAGE);
+    bop_artist_albums_t *shown = view.artist;
+    view.artist = view.incoming;
+    view.incoming = shown;
 }
 
 static void set_grid_x(void *object, int32_t value)
@@ -516,9 +524,6 @@ static void change_page(int direction)
         return;
     }
     *page = direction < 0 ? *page - 1 : *page + 1;
-    if (view.level == LEVEL_ARTIST) {
-        request_artist_albums();
-    }
     render_page();
     request_covers();
     slide_grid(direction * PAGE_SLIDE_DISTANCE);
@@ -529,7 +534,12 @@ static void open_artist(const char *artist_id)
     view.level = LEVEL_ARTIST;
     view.artist_page = 0;
     strlcpy(view.artist_id, artist_id, sizeof(view.artist_id));
-    request_artist_albums();
+    // A stored list shows at once, also without WiFi and before the Spotify
+    // task runs. That task loads the list itself only when none is stored.
+    if (bop_cache_load_artist(artist_id, view.incoming)) {
+        swap_artist_lists();
+    }
+    bop_spotify_request_artist_albums(view.artist_id);
     render_page();
     slide_grid(PAGE_SLIDE_DISTANCE);
 }
@@ -538,8 +548,8 @@ static void open_home(void)
 {
     view.level = LEVEL_HOME;
     view.artist_id[0] = '\0';
-    // The artist list is dropped. Opening an artist again reads it anew.
-    bop_spotify_request_artist_albums(NULL, 0);
+    // The artist list is dropped. Opening the artist again reads it anew.
+    bop_spotify_request_artist_albums(NULL);
     render_page();
     prune_covers();
     request_covers();
@@ -684,11 +694,24 @@ static void create_tiles(void)
         lv_label_set_text(glyph, LV_SYMBOL_PLAY);
         lv_obj_center(glyph);
         lv_obj_add_flag(mark, LV_OBJ_FLAG_HIDDEN);
+        // A big WAIT over a cover tapped while WiFi is down. Only its own
+        // backing darkens, so the cover stays as bright as the others.
+        lv_obj_t *wait = lv_label_create(frame);
+        lv_obj_set_style_text_font(wait, &lv_font_montserrat_48, 0);
+        lv_obj_set_style_text_color(wait, lv_color_hex(0xFFFFFF), 0);
+        lv_obj_set_style_bg_color(wait, lv_color_hex(0x000000), 0);
+        lv_obj_set_style_bg_opa(wait, LV_OPA_70, 0);
+        lv_obj_set_style_radius(wait, 12, 0);
+        lv_obj_set_style_pad_hor(wait, 10, 0);
+        lv_label_set_text(wait, "WAIT");
+        lv_obj_center(wait);
+        lv_obj_add_flag(wait, LV_OBJ_FLAG_HIDDEN);
 
         view.tiles[tile] = frame;
         view.images[tile] = image;
         view.marks[tile] = mark;
         view.mark_glyphs[tile] = glyph;
+        view.wait_signs[tile] = wait;
     }
 }
 
@@ -755,11 +778,15 @@ esp_err_t bop_library_view_create(lv_obj_t *screen, const bop_library_view_callb
     }
     view.library = heap_caps_calloc(1, sizeof(*view.library), MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
     view.artist = heap_caps_calloc(1, sizeof(*view.artist), MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
-    if (view.library == NULL || view.artist == NULL) {
+    view.incoming = heap_caps_calloc(
+        1, sizeof(*view.incoming), MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
+    if (view.library == NULL || view.artist == NULL || view.incoming == NULL) {
         free(view.library);
         free(view.artist);
+        free(view.incoming);
         view.library = NULL;
         view.artist = NULL;
+        view.incoming = NULL;
         return ESP_ERR_NO_MEM;
     }
     view.callbacks = *callbacks;
@@ -815,6 +842,22 @@ void bop_library_view_hide(void)
     lv_obj_add_flag(view.root, LV_OBJ_FLAG_HIDDEN);
 }
 
+// A published list replaces the shown one only for the open artist, and a
+// loading or failed list never replaces a ready one: a list from the flash
+// cache stays when Spotify cannot be reached.
+static bool take_artist_list(void)
+{
+    bool same_artist = strcmp(view.incoming->artist_id, view.artist_id) == 0;
+    bool keeps_ready = artist_list_matches()
+        && view.artist->status == BOP_LIBRARY_READY
+        && view.incoming->status != BOP_LIBRARY_READY;
+    if (!same_artist || keeps_ready) {
+        return false;
+    }
+    swap_artist_lists();
+    return true;
+}
+
 static void clamp_page(size_t *page)
 {
     size_t pages = page_count();
@@ -844,9 +887,9 @@ void bop_library_view_update(const bop_library_view_playback_t *playback)
         render = true;
     }
     if (bop_spotify_get_artist_albums_generation() != view.artist_generation
-        && bop_spotify_get_artist_albums(view.artist)) {
-        view.artist_generation = view.artist->generation;
-        render = true;
+        && bop_spotify_get_artist_albums(view.incoming)) {
+        view.artist_generation = view.incoming->generation;
+        render = take_artist_list() || render;
     }
     if (render) {
         clamp_page(shown_page());
@@ -880,5 +923,18 @@ void bop_library_view_set_pending(const char *album_id)
         view.pending_album_id,
         album_id != NULL ? album_id : "",
         sizeof(view.pending_album_id));
+    render_page();
+}
+
+void bop_library_view_set_waiting(const char *album_id)
+{
+    if (view.root == NULL) {
+        return;
+    }
+    const char *id = album_id != NULL ? album_id : "";
+    if (strcmp(view.waiting_album_id, id) == 0) {
+        return;
+    }
+    strlcpy(view.waiting_album_id, id, sizeof(view.waiting_album_id));
     render_page();
 }

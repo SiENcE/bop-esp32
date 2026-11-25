@@ -12,11 +12,12 @@ CONFIG_LWIP_TCPIP_TASK_AFFINITY_CPU0=y
 # A saved album arrives with its whole track list, and covers are 300-pixel
 # JPEGs, so Bop downloads far more than playback state alone. The 5760-byte
 # default TCP window lets the server send four packets per round trip; 16
-# packets keep a download moving. WiFi and lwIP buffers may then live in PSRAM,
-# so the larger window does not take the internal RAM that TLS needs. The WiFi
-# block-ack window stays at its default: raising it to 16 cut the lowest free
-# internal RAM from 37 KB to 14 KB.
-CONFIG_SPIRAM_TRY_ALLOCATE_WIFI_LWIP=y
+# packets keep a download moving. WiFi and lwIP buffers stay in internal RAM.
+# CONFIG_SPIRAM_TRY_ALLOCATE_WIFI_LWIP would move lwIP to PSRAM, but it also
+# forces 16 static WiFi TX and 16 static RX buffers in internal RAM: with it,
+# the lowest free internal RAM fell from 22 KB to 10 KB, and TLS fails below
+# about 5 KB. The WiFi block-ack window stays at its default: raising it to 16
+# cut the lowest free internal RAM from 37 KB to 14 KB.
 CONFIG_LWIP_TCP_WND_DEFAULT=23360
 CONFIG_LWIP_TCP_RECVMBOX_SIZE=32
 CONFIG_ESP_WIFI_RX_BA_WIN=6
@@ -35,6 +36,8 @@ CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="partitions.csv"
 CONFIG_LV_DEF_REFR_PERIOD=16
 CONFIG_LV_FONT_MONTSERRAT_14=y
 CONFIG_LV_FONT_MONTSERRAT_24=y
+# The screensaver clock.
+CONFIG_LV_FONT_MONTSERRAT_48=y
 CONFIG_LV_USE_QRCODE=y
 CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG=y
 CONFIG_MBEDTLS_CERTIFICATE_BUNDLE=y

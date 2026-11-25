@@ -39,18 +39,34 @@ def idf_arguments(arguments: list[str]) -> list[str]:
     return arguments
 
 
-def perf_arguments(arguments: list[str], firmware: Path) -> list[str]:
-    if os.environ.get("BOP_PERF_MONITOR") != "1":
-        return arguments
-    sdkconfig = firmware / "build-perf" / "sdkconfig"
-    defaults = "SDKCONFIG_DEFAULTS=sdkconfig.defaults;sdkconfig.perf.defaults"
-    return ["-D", f"SDKCONFIG={sdkconfig}", "-D", defaults, *arguments]
+LOCAL_DEFAULTS = "sdkconfig.local.defaults"
+
+
+def config_arguments(arguments: list[str], firmware: Path) -> list[str]:
+    """Add the sdkconfig file and the defaults files of this build.
+
+    `sdkconfig.local.defaults` is an optional, untracked file for the settings
+    of one board, such as `CONFIG_BOP_TIMEZONE`. It comes last, so it wins.
+    Defaults reach only options that the sdkconfig file does not hold yet.
+    """
+    perf = os.environ.get("BOP_PERF_MONITOR") == "1"
+    defaults = ["sdkconfig.defaults"]
+    if perf:
+        defaults.append("sdkconfig.perf.defaults")
+    if (firmware / LOCAL_DEFAULTS).is_file():
+        defaults.append(LOCAL_DEFAULTS)
+    added: list[str] = []
+    if perf:
+        added += ["-D", f"SDKCONFIG={firmware / 'build-perf' / 'sdkconfig'}"]
+    if len(defaults) > 1:
+        added += ["-D", "SDKCONFIG_DEFAULTS=" + ";".join(defaults)]
+    return [*added, *arguments]
 
 
 def run_idf(arguments: list[str]) -> int:
     root = idf_path()
     firmware = project_root() / "firmware"
-    arguments = perf_arguments(idf_arguments(arguments), firmware)
+    arguments = config_arguments(idf_arguments(arguments), firmware)
 
     if os.name == "nt":
         export = root / "export.bat"

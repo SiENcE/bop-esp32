@@ -1,12 +1,14 @@
 # Bop
 
-Bop is a source-only Spotify remote for the [Waveshare ESP32-S3 Touch AMOLED 1.8 board](https://www.waveshare.com/esp32-s3-touch-amoled-1.8.htm).
+Bop is a source-only Spotify remote for children, built on the [Waveshare ESP32-S3 Touch AMOLED 1.8 board](https://www.waveshare.com/esp32-s3-touch-amoled-1.8.htm).
 
-It shows the current track and sends touch controls to Spotify. It does not play audio.
+A child picks music from a grid of album covers and artist pictures, with no reading needed. Parents curate that grid in the Spotify app: every artist the account follows and every album it saves appears on Bop. The now-playing screen shows the current track and controls play, pause, skip, and volume.
+
+Bop plays no sound itself. It tells a Spotify speaker, phone, or tablet what to play.
 
 <p align="center">
-    <img src="./images/mxpx.png" alt="Album Art - Now Playing" width=368 height=448 />
-    <img src="./images/spotify.png" alt="Launch in Spotify" width=368 height=448 />
+    <img src="./docs/vid/AlbumCovers.png" alt="Kid mode - album covers" width=352 height=448 />
+    <img src="./docs/vid/kidmode.gif" alt="Kid mode in use: paging, opening an artist, and playing an album" width=352 height=448 />
 </p>
 
 [See Bop in action on X.](https://x.com/mark_a_phelps/status/2087217997429571717?s=20)
@@ -22,9 +24,16 @@ cannot read yet can pick music:
 - **Albums you saved** follow, as square covers. A tap plays the album.
 
 To change what the children see, follow or unfollow an artist, or save or
-remove an album, in the Spotify app. Bop reads the library again when the grid
-opens, at most once a minute, and every 15 minutes. It shows up to 48 artists,
-up to 144 entries in all, and up to 200 albums of one artist.
+remove an album, in the Spotify app. Bop reads the library again every three
+hours, and when the grid opens at most every half hour, and checks each
+artist's albums once a day. Restart Bop to see a change at once. It shows up
+to 48 artists, up to 144 entries in all, and up to 200 albums of one artist.
+
+Bop keeps the library, the albums of every followed artist, and the pictures
+in its flash memory, so the grid and every artist open at once, also while
+the WiFi is down. Playing an album needs WiFi. Without it, Bop shows
+`Connecting to WiFi...` at the top and a big **WAIT** on a tapped cover, and
+plays nothing until the child taps again with WiFi back.
 
 The grid shows the whole library of the account. To keep your own music out
 of it, provision Bop with a separate Spotify account for the children.
@@ -66,6 +75,16 @@ Use these gestures on the now-playing screen:
 
 Tap the Spotify screen to return to the current track.
 
+<p align="center">
+    <img src="./images/spotify.png" alt="The Spotify screen with a QR code for the current track" width=276 height=336 />
+</p>
+
+After 30 seconds without a touch, a dim drifting clock replaces the screen to
+protect the AMOLED panel, also while music plays, and after 2 minutes the
+screen goes dark. A touch, or picking up or tilting the board, wakes it; that
+first touch does nothing else. The clock shows UTC unless you set your time
+zone, as [INSTALL.md](INSTALL.md) describes.
+
 ## Project status
 
 Bop is source software for personal experimentation. It is not an official Spotify product.
@@ -84,6 +103,8 @@ You need these items:
 - A WiFi network.
 - A Spotify Premium account.
 - Your own Spotify application and Client ID.
+- Optional: a FAT32 microSD card, inserted before Bop starts. Bop writes its
+  log there and keeps the grid pictures that no longer fit its flash cache.
 
 ## Support levels
 
@@ -136,6 +157,8 @@ Bop stores WiFi values, the Spotify Client ID, and the Spotify refresh token as 
 A person with physical access to the board can read these values. Read [SECURITY.md](SECURITY.md) before you provision the device.
 
 Run `mise run deprovision` before you give away, sell, or discard the board. The command removes device credentials after you remove Bop access from Spotify.
+
+A microSD card holds no credentials, but its log names the tracks that played. Remove the card, or delete its `bop` folder, before you give the board away.
 
 ## License and trademarks
 

@@ -53,6 +53,15 @@ The captive portal writes the WiFi SSID and password to the NVS partition **as p
 
 Bop does not enable NVS encryption, Secure Boot, or flash encryption. Anyone with a USB cable can read the whole flash and recover the stored values.
 
+## The microSD card holds no credential
+
+An optional microSD card holds the Bop log and grid pictures, never a WiFi
+password, the Spotify client ID, or a token. The log names the tracks that
+played and, during setup, the WiFi network name, and anyone who takes the card
+can read it. Bop deletes the pictures and the logs of earlier runs from an
+inserted card when it starts without full credentials, for example after
+`mise run deprovision`. Remove the card before you give the board away.
+
 ## The two WiFi password paths
 
 During first setup, your phone sends the WiFi password to the captive portal. The page uses local HTTP through the WPA2-protected Bop setup AP.

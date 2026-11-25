@@ -38,3 +38,6 @@ void bop_library_view_hide(void);
 void bop_library_view_update(const bop_library_view_playback_t *playback);
 // Dims the cover of an album that is starting. NULL clears the mark.
 void bop_library_view_set_pending(const char *album_id);
+// Shows a big WAIT on the cover of an album tapped while WiFi is down, with no
+// dimming. NULL clears it.
+void bop_library_view_set_waiting(const char *album_id);

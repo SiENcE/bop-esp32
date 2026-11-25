@@ -1,6 +1,6 @@
 # Bop Privacy Policy
 
-Last updated: August 14, 2026
+Last updated: November 25, 2026
 
 ## Summary
 
@@ -33,7 +33,9 @@ The USB provisioning command keeps the Spotify Client ID and refresh token in bo
 
 The USB write changes only the Spotify values. Bop keeps the WiFi values from the captive portal.
 
-Bop keeps current playback information, the kid-mode library lists and pictures, and its access token in device memory while it runs. So that the library shows at once after a restart, Bop also stores the identifiers of your followed artists and saved albums, and their pictures, in a cache partition of the device flash. The cache holds no credential. Bop erases it whenever the device starts without full credentials, for example after `mise run deprovision`.
+Bop keeps current playback information, the kid-mode library lists and pictures, and its access token in device memory while it runs. So that the library shows at once after a restart, Bop also stores the identifiers of your followed artists and saved albums, the identifiers of the albums of each followed artist, and their pictures, in a cache partition of the device flash. The cache holds no credential. Bop erases it whenever the device starts without full credentials, for example after `mise run deprovision`.
+
+With a microSD card in the device, Bop also writes its log to the card, and the grid pictures that no longer fit the flash cache. The log names the tracks and episodes that played and, during setup, the WiFi network name. It never holds a password, token, or client ID. Anyone who takes the card can read it. Bop deletes the pictures and the logs of earlier runs from the card whenever the device starts without full credentials. Remove the card before you give the device away, or erase the `bop` folder on it.
 
 Bop uses these values only to connect the device to WiFi, request Spotify playback information, show that information, and send the playback commands that you select. Bop does not sell data, send data to an advertising service, or use a Bop-operated server.
 

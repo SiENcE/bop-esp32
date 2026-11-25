@@ -147,10 +147,12 @@ Restore the saved network, or use the captive portal to select a different netwo
 
 The USB provisioning command asks only for the Spotify Client ID. It keeps the WiFi values that the captive portal stored.
 
-## The board shows `offline`
+## The board shows `Connecting to WiFi...` or a big WAIT
 
-The board could not connect to the saved WiFi network. It reconnects when the
-network becomes available.
+The board lost the saved WiFi network and tries to connect again all the time.
+The grid and every artist still open from the flash memory, but playing,
+pausing, skipping, and volume need WiFi. A tap without WiFi shows a big WAIT
+and sends nothing. Once WiFi returns, the hints go away; tap again.
 
 1. Make sure that the WiFi network is available.
 2. Make sure that the saved network name and password are correct.
@@ -210,8 +212,11 @@ The grid shows a message for a parent when it has nothing to show.
   in the Spotify app.
 - `The library could not be loaded.`: Spotify refused or failed the request.
   Read the serial log.
-- `The albums could not be loaded.`: the albums of the opened artist failed.
-  Tap the arrow, then open the artist again.
+- `The albums could not be loaded.`: the albums of the opened artist failed,
+  and no stored list exists yet. Tap the arrow, then open the artist again.
+- `Loading albums...` that stays: the artist has no stored list yet, and WiFi
+  is down. Bop stores every followed artist's list in the background soon
+  after it starts, so this happens only on a new artist.
 - `This artist has no albums.`: the artist has only singles, compilations, or
   appearances, which Bop does not list.
 
@@ -221,13 +226,23 @@ library then fails, and the serial log shows `Library request failed` with the
 HTTP status. Run `mise run provision` again and approve the new permissions.
 
 A change in the library appears after Bop reads it again: when the grid opens,
-at most once a minute, or within 15 minutes.
+at most every half hour, or within three hours. A new album of a followed
+artist appears within a day. Restart Bop to see a change at once.
 
 ## A cover tap shows a muted speaker
 
 Bop found no Spotify device to play on. Bop is a remote and plays no sound.
 Open Spotify on a speaker, phone, or tablet of the same account, or turn on a
 Spotify Connect speaker. Then tap the cover again.
+
+## The playing album shows no pause mark
+
+The mark shows on the cover of an album that plays as a whole: an album
+started from the grid, or started as an album in the Spotify app. A track that
+plays from a playlist, a search, or a radio has no album context. Bop then
+compares the album of the track itself, which Spotify can report as another
+version of the same album, so the mark can be missing. A tap on the cover then
+starts the album from its first track.
 
 ## Other music plays after an album ends
 
@@ -273,6 +288,51 @@ URL. Make sure that the track title and artist appear first.
 
 The log can show an album-art download, JPEG, decode, or memory error.
 
+## The screen shows a clock or goes dark
+
+This protects the AMOLED panel against burn-in. After 30 seconds without a
+touch or a move of the board, a dim clock drifts over a black screen, also
+while music plays. After 2 minutes the screen goes dark. Touch the screen, or
+pick up or tilt the board, to wake it. The first touch only wakes the screen
+and sends no command.
+
+Until the board has synchronized its time, the screensaver stays black.
+
+## The screen does not wake when the board is picked up
+
+The serial log shows `QMI8658 motion sensor at 0x6B` (or `0x6A`) at startup
+when the motion sensor works. `Motion sensor is unavailable` means that only a
+touch wakes the screen. A move counts when it changes the acceleration by more
+than 0.1 g, about a tilt of 6 degrees, so a very slow or small move can stay
+below it. Touch the screen instead.
+
+A bump against the table or a hard tap can also count as a move and wake the
+screen. This is expected.
+
+## The screensaver clock shows the wrong time
+
+The clock shows UTC unless the firmware was built with your time zone. Set
+`CONFIG_BOP_TIMEZONE` in `firmware/sdkconfig.local.defaults`, delete
+`firmware/sdkconfig`, and run `mise run flash`, as
+[INSTALL.md](../INSTALL.md) describes. A fixed offset such as `<+01>-1` does
+not follow summer time; a rule such as `CET-1CEST,M3.5.0,M10.5.0/3` does.
+
+## The microSD card is not used
+
+Bop looks for the card only when it starts. The serial log then shows one of
+these lines:
+
+- `SD card log: /sdcard/bop/log.txt`: the card works.
+- `No SD card; the log stays on the serial port`: Bop found no card. Switch the
+  board off, insert the card fully, and switch it on.
+- `SD card has no FAT32 file system`: format the card as FAT32 on a computer.
+  Bop never formats a card and does not read exFAT, the usual format of cards
+  larger than 32 GB.
+- `SD card write failed; the card stays unused until a restart`: the card was
+  removed or failed while Bop ran. Restart the board with the card inserted.
+
+Without a card Bop works the same, with the log on the serial port only.
+
 ## The display is blank or does not start
 
 Disconnect and reconnect USB power. If the problem continues, enter download
@@ -297,6 +357,14 @@ when you have a valid backup. A restore overwrites all 16 MB of flash. Read
 2. Run `mise run monitor`.
 3. Reproduce the problem.
 4. Press Ctrl+C to stop the monitor.
+
+With a FAT32 microSD card in the board when it starts, Bop also writes the log
+to `bop/log.txt` on the card. `log1.txt` to `log9.txt` hold earlier runs. Read
+the card in a computer after you switch the board off. The card log keeps
+Bop's lines and every warning and error, but not the informational lines of
+ESP-IDF. A crash report appears only on the serial port. Read
+[The microSD card is not used](#the-microsd-card-is-not-used) when the card
+stays empty.
 
 The log can show WiFi connection, time synchronization, Spotify, album-art,
 and display messages. Read [SECURITY.md](../SECURITY.md) before you share a

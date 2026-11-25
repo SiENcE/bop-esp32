@@ -2,7 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 #include <stdbool.h>
+#include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #include "esp_lcd_panel_io.h"
 #include "esp_lcd_panel_ops.h"
@@ -18,9 +20,11 @@
 #include "esp_lvgl_port_touch.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "motion.h"
 #include "power.h"
 #include "provisioning/portal.h"
 #include "screenshot.h"
+#include "sdcard.h"
 #include "spotify/spotify.h"
 #include "ui/ui.h"
 #include "wifi.h"
@@ -179,8 +183,11 @@ static void startup_task(void *argument)
 
     // Without full credentials, the kid-mode cache may still hold the library
     // IDs and pictures of an account that was removed, for example by
-    // `mise run deprovision`. They go before anything else runs.
+    // `mise run deprovision`. They go before anything else runs. The SD card
+    // loses the same pictures and the logs of earlier runs, which name the
+    // tracks that played.
     bop_cache_clear();
+    bop_sdcard_erase_private_data();
 
     if (error == ESP_OK) {
         error = bop_wifi_connect_bounded(configured_credentials);
@@ -347,6 +354,15 @@ static lv_display_t *start_display(void)
 
 void app_main(void)
 {
+    // First, so the SD card log holds the whole start. Without a card Bop runs
+    // the same, and the log stays on the serial port.
+    // The screensaver clock and the SD card log show local time.
+    setenv("TZ", CONFIG_BOP_TIMEZONE, 1);
+    tzset();
+    esp_err_t sdcard_error = bop_sdcard_start();
+    if (sdcard_error != ESP_OK) {
+        ESP_LOGW(TAG, "SD card log is unavailable: %s", esp_err_to_name(sdcard_error));
+    }
     ESP_LOGI(TAG, "Starting the display");
     lv_display_t *display = start_display();
     if (display == NULL) {
@@ -361,6 +377,13 @@ void app_main(void)
     esp_err_t power_error = bop_power_start();
     if (power_error != ESP_OK) {
         ESP_LOGW(TAG, "Battery monitor is unavailable: %s", esp_err_to_name(power_error));
+    }
+    esp_err_t motion_error = bop_motion_start();
+    if (motion_error != ESP_OK) {
+        ESP_LOGW(
+            TAG,
+            "Motion sensor is unavailable (%s); only a touch wakes the screen",
+            esp_err_to_name(motion_error));
     }
     // The cache opens before the UI and the Spotify task, which read it first.
     // Without it, both load from the network only.

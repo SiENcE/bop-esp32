@@ -68,12 +68,21 @@ SPDX-License-Identifier = "Apache-2.0"
 # stay the property of their owners. THIRD_PARTY_LICENSES.md records the
 # Spotify trademark.
 [[annotations]]
-path = [
-  "images/mxpx.png",
-  "images/spotify.png",
-]
+path = "images/spotify.png"
 precedence = "override"
 SPDX-FileCopyrightText = "2026 Mark Phelps"
+SPDX-License-Identifier = "Apache-2.0"
+
+# A picture and an animation of kid mode for the README. Neither format can
+# hold an SPDX header. As above, the holder owns the recordings, not the album
+# art in them, which stays the property of its owners.
+[[annotations]]
+path = [
+  "docs/vid/AlbumCovers.png",
+  "docs/vid/kidmode.gif",
+]
+precedence = "override"
+SPDX-FileCopyrightText = "2026 SiENcE"
 SPDX-License-Identifier = "Apache-2.0"
 
 # Montserrat, and the LVGL bitmap font built from it. Both stay under the SIL

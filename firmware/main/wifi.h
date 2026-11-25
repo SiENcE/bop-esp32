@@ -31,3 +31,5 @@ void bop_wifi_set_power_save(bool enabled);
 // Keeps the radio awake between a true and the matching false call, even on
 // battery. Downloads and commands hold it, so they run at full speed.
 void bop_wifi_hold_awake(bool hold);
+// Keeps the radio awake for this long, also on battery. A new call extends it.
+void bop_wifi_keep_awake_for(uint32_t milliseconds);

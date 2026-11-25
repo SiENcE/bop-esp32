@@ -11,6 +11,7 @@ firmware/build/
 firmware/build-perf/
 firmware/managed_components/
 firmware/sdkconfig
+firmware/sdkconfig.local.defaults
 backups/
 reports/
 plans

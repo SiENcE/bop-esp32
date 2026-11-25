@@ -60,6 +60,26 @@ Set `BOP_PORT` when more than one Espressif board is connected. Set `BOP_IDF_PAT
 
 After USB provisioning, the board restarts. It connects to WiFi and shows Spotify playback when a player is active.
 
+## Set your time zone (optional)
+
+The screensaver clock and the clock line of the SD card log show UTC unless you set your time zone. The setting is a POSIX TZ string in `firmware/sdkconfig.local.defaults`, a file that Git ignores, so it stays on your computer.
+
+1. Create `firmware/sdkconfig.local.defaults` with one line, for example `CONFIG_BOP_TIMEZONE="CET-1CEST,M3.5.0,M10.5.0/3"` for Central European time with summer time, or `CONFIG_BOP_TIMEZONE="<+01>-1"` for UTC+1 all year.
+2. Delete `firmware/sdkconfig` if it exists. A setting reaches only a new sdkconfig file.
+3. Run `mise run flash`.
+
+Do the same after every later change to the file.
+
+## Use a microSD card (optional)
+
+Bop can write its log to a microSD card and keep there the grid pictures that no longer fit its flash cache.
+
+1. Format the card as FAT32 on a computer. Bop never formats a card, and it does not read exFAT, the usual format of cards larger than 32 GB.
+2. Switch the board off and insert the card.
+3. Switch the board on. The serial log shows `SD card log: /sdcard/bop/log.txt`.
+
+Bop looks for the card only when it starts. To read the log, switch the board off and read `bop/log.txt` in a computer.
+
 ## Update the firmware
 
 1. Pull the latest source changes.
@@ -80,6 +100,8 @@ Deprovisioning erases credentials. It does not restore factory firmware. A new b
 6. Type `ERASE`, followed by the shown MAC address.
 
 The command erases the Bop credential partition. It reads the partition after the erase. Then it restarts the board in provisioning mode.
+
+On that restart, Bop also erases its library cache and, when a microSD card is inserted, the pictures and the logs of earlier runs on the card. A card that is not in the board keeps them. Delete its `bop` folder on a computer.
 
 ## Restore the factory image
 

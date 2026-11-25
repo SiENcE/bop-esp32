@@ -542,7 +542,7 @@ def test_kid_mode_contract() -> None:
     # The library cache lives in its own partition after the application, and
     # an unprovisioned start erases it before anything else runs.
     partitions = (ROOT / "firmware/partitions.csv").read_text(encoding="utf-8")
-    assert "cache,    data, undefined, 0x810000, 4M," in partitions
+    assert "cache,    data, undefined, 0x810000, 0x7F0000," in partitions
     app = (ROOT / "firmware/main/app_main.c").read_text(encoding="utf-8")
     startup = app[
         app.index("static void startup_task(") : app.index("static void round_display_area(")

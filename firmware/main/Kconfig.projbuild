@@ -1,0 +1,16 @@
+# SPDX-FileCopyrightText: 2026 SiENcE
+# SPDX-License-Identifier: Apache-2.0
+
+menu "Bop"
+
+    config BOP_TIMEZONE
+        string "Time zone of the screensaver clock"
+        default "UTC0"
+        help
+            A POSIX TZ string. The screensaver clock and the clock line of the
+            SD card log use it. Examples: "UTC0", "CET-1CEST,M3.5.0,M10.5.0/3"
+            for Central European time with summer time, "<+01>-1" for UTC+1
+            all year. Set it for one board in the untracked file
+            firmware/sdkconfig.local.defaults.
+
+endmenu

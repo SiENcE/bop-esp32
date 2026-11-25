@@ -4,7 +4,7 @@
 
 Bop uses the Waveshare ESP32-S3 Touch AMOLED 1.8 board. The board has an ESP32-S3 processor, 16 MB flash, 8 MB PSRAM, and a 368 by 448 AMOLED display.
 
-The display uses QSPI. The touch controller, AXP2101 power manager, and other low-speed devices use I2C.
+The display uses QSPI. The touch controller, AXP2101 power manager, QMI8658 motion sensor, and other low-speed devices use I2C. The microSD slot uses the SDMMC controller in 1-bit mode on GPIO 1 to 3, with no card-detect pin.
 
 The board uses native USB. It appears as an Espressif USB serial device when you connect a USB data cable.
 
@@ -22,7 +22,7 @@ LVGL draws the interface. `esp_lvgl_port` runs the LVGL task on core 1. Code out
 
 ## Startup and task lifecycle
 
-`app_main` starts the display, touch, brightness, and AXP2101 monitor. Display startup also starts the LVGL task on core 1. It then reads the saved credentials from NVS.
+`app_main` first sets the time zone and starts the SD card log, so the log holds the whole start. It then starts the display, touch, brightness, AXP2101 monitor, and motion sensor, and opens the flash cache. Display startup also starts the LVGL task on core 1. It then reads the saved credentials from NVS.
 
 Bop classifies the values as no credentials, the **WiFi-only state**, or complete credentials.
 
@@ -41,8 +41,9 @@ The UI reads a protected playback-state snapshot and redraws only when it change
 ```text
 app_main
   |
+  +-- time zone and SD card log
   +-- display startup and LVGL task on core 1
-  +-- touch, brightness, and AXP2101 monitor
+  +-- touch, brightness, AXP2101 monitor, motion sensor, and flash cache
   +-- credential state from NVS
       |
       +-- none: Bop setup AP and captive portal
@@ -106,15 +107,17 @@ Bop starts on the library grid. The Spotify task reads the artists the account f
 
 Spotify returns each saved album with its whole track list, about 20 KB an album. A small streaming JSON reader (`spotify/json_stream.c`) takes each response in chunks as it arrives. It reports every value with its path, such as `items.album.id`, and the task keeps only the IDs and image URLs. No response is held whole, so the 32 KB response buffer never limits a list. Error bodies still land in that buffer. Each list follows Spotify's `next` page URL, but only to an `https://api.spotify.com/v1/` address.
 
-The task reads the library at startup, every 15 minutes, and when the grid opens, at most once a minute. A failed read keeps a library that already worked. It publishes the library behind the playback-state mutex with a generation counter, and the UI copies it only when the generation moves.
+The task reads the library at startup, every three hours, and when the grid opens, at most every half hour. A library changes only when a parent edits it in Spotify, so fewer reads mean fewer requests that a weak WiFi can break. A failed read keeps a library that already worked. It publishes the library behind the playback-state mutex with a generation counter, and the UI copies it only when the generation moves.
 
 The grid shows four 172-pixel pictures per page. Artists show round and albums square, so a child can tell them apart without reading. A swipe changes the page. Dots show up to ten pages, and a position bar shows longer lists. The art task decodes pictures on request, but only while the now-playing art has nothing to load. Of the image widths that Spotify lists, it takes the narrowest one that is at least 160 pixels wide. The UI keeps up to 48 decoded pictures, about 2.8 MB of PSRAM, and frees the least recently shown one first. It asks for the shown page and the next one first. While free slots remain, it then preloads the rest of the home library, so every page of it shows at once after the first load. A preloaded picture never evicts another, and only a picture of the shown page causes a redraw.
 
-A tap on an artist opens its albums. The task reads `GET /v1/artists/{id}/albums` with `include_groups=album`, so regular albums appear and singles, compilations, and appearances do not. Spotify returns ten albums per request, so the task loads pages as the child swipes, one page ahead of the shown one, up to 200 albums. The arrow button returns to the library and drops the artist list, and so does a swipe to the right on the artist's first page. The left and right thirds of the button bar answer for the arrow and the note button, a larger target than the drawn circles.
+A tap on an artist opens its albums. The task reads `GET /v1/artists/{id}/albums` with `include_groups=album`, so regular albums appear and singles, compilations, and appearances do not. Spotify returns ten albums per request. The grid first reads the artist's list from the flash cache, so a stored list shows at once, also without WiFi. Without a stored list, the task loads the whole list page by page, up to 200 albums, with commands going first between pages, and stores it.
+
+After the library read, the task also loads the album list of every followed artist in the background, one page a second between commands and polls, and stores each one in the flash cache. It checks a list again once it is a day old, and rests for an hour after each pass. A list that comes back unchanged writes no flash. A failed or loading list never replaces a stored one on the screen. The arrow button returns to the library and drops the artist list, and so does a swipe to the right on the artist's first page. The left and right thirds of the button bar answer for the arrow and the note button, a larger target than the drawn circles.
 
 A tap on an album sends a play-album command through the normal command queue. The client sends `PUT /v1/me/player/play` with the album `context_uri`, from the first track. Spotify answers 404 when no device is active. Bop then reads `GET /v1/me/player/devices` and repeats the request on the first device that accepts remote control. After the album starts, Bop turns shuffle off, because children's albums are often stories told across tracks.
 
-The cover of the playing album shows a translucent pause mark while it plays and a play mark while it is paused. A tap on that cover pauses or resumes, through the same command as a tap on the player, instead of starting the album over.
+The cover of the playing album shows a translucent pause mark while it plays and a play mark while it is paused. A tap on that cover pauses or resumes, through the same command as a tap on the player, instead of starting the album over. Bop finds the playing album through the `context.uri` of the playback state, `spotify:album:<id>`, which keeps the ID of the album that started. The album ID of the playing track can differ, because Spotify relinks a track to the album version of the listener's market. Without an album context, for example in a playlist, Bop compares the album ID of the track, which misses a relinked album.
 
 The grid stays until Spotify accepts the album, and the chosen cover dims meanwhile. A failed start shows a warning. When no device can play, it shows a muted speaker.
 
@@ -122,17 +125,27 @@ On the now-playing screen, the four-squares button right of the title returns to
 
 ## Library cache
 
-A 4 MB `cache` partition after the application keeps the library list and the grid pictures across restarts (`main/cache.c`). The grid reads the stored list when it starts, before WiFi, the time sync, and the Spotify login finish, and the art task reads stored pictures before it downloads anything. The network read then replaces the list in the background, all at once.
+The `cache` partition after the application reaches the end of the 16 MB flash, 7.9 MB, and keeps the library list, the album lists of the followed artists, and the grid pictures across restarts (`main/cache.c`). The grid reads the stored list when it starts, before WiFi, the time sync, and the Spotify login finish, and the art task reads stored pictures before it downloads anything. A picture that is not stored waits until WiFi connects, and the grid asks for it again 10 seconds later. The network read then replaces the list in the background, all at once.
 
-The list uses the first 32 KB. The pictures use 67 slots of 60 KB, each holding one 172-pixel picture exactly as drawn, corners included, so a stored picture needs one flash read and no decoder. A full cache reuses the slot of its oldest picture. Every write stores the data first and the header last, and a CRC-32 guards both, so an interrupted write or damaged flash reads as an empty entry. The list is written only when it changes.
+The list uses the first 32 KB. The artist lists follow in 48 slots of 40 KB, one per followed artist, each with up to 200 albums. A new artist takes a free slot, else the slot of the list seen longest ago. The pictures use the remaining 102 slots of 60 KB, each holding one 172-pixel picture exactly as drawn, corners included, so a stored picture needs one flash read and no decoder. When every slot is used and a microSD card is mounted, further pictures go to the card, as the next section describes. Without a card, a full cache reuses the slot of its oldest picture. Every write stores the data first and the header last, and a CRC-32 guards both, so an interrupted write or damaged flash reads as an empty entry. The list is written only when it changes.
 
 A flash erase pauses both CPU cores for a moment, so the first time a picture is stored the display can stutter briefly. Bop erases the cache whenever it starts without full credentials, so a deprovisioned board keeps no library of the removed account.
+
+## microSD card
+
+A microSD card is optional (`main/sdcard.c`). The slot has no card-detect pin, so Bop mounts the card once at startup, and a card inserted later is used after the next restart. The card needs a FAT32 file system; Bop never formats a card, and exFAT is not built in. Without a card Bop runs the same.
+
+The card holds the log in `bop/log.txt`. A new file starts at each start and after 4 MB; `log1.txt` to `log9.txt` keep the earlier ones. The file keeps Bop's own lines and the warnings and errors of every component. Informational lines of ESP-IDF stay on the serial port, because the WiFi driver names the network it joins in one of them. Each run starts with `=== Bop started (reset: ...) ===`, which names the cause of the restart, such as power on, crash, or watchdog. Each line carries milliseconds since start, and one `=== Clock: ... ===` line ties them to the local time of `CONFIG_BOP_TIMEZONE` once it is synchronized. Lines collect in a 64 KB PSRAM buffer and a low-priority task writes them every two seconds, so logging never waits for the card, and a power cut loses at most the last two seconds. A crash report goes to the serial port only.
+
+Once every flash slot holds a picture, further pictures go to `bop/covers` on the card, up to 2000 (about 118 MB), and the flash keeps the pictures it already holds. Without a card, or with a full one, the flash reuses its oldest slot as before. A picture is written under a temporary name first and renamed when complete. FAT names here are 8.3 and ignore case while Spotify IDs do not, so a file is named by a CRC-32 of the album ID, and its header holds the ID and a CRC-32 of the pixels.
+
+Like the flash cache, the card loses its pictures and the logs of earlier runs whenever Bop starts without full credentials.
 
 ## Network speed
 
 ESP-IDF starts a WiFi station with modem sleep: the radio wakes only for the access point's beacons, and every round trip waits for the next one. On USB power Bop turns this sleep off. On battery the radio sleeps, except while a task holds it awake: a library read, an artist page, a playback command, or a batch of picture downloads, which keeps it awake until the art task has been idle for 3 seconds.
 
-The library and the pictures are far larger downloads than playback state. The TCP receive window is 23,360 bytes, 16 packets per round trip instead of the 4 of the ESP-IDF default. WiFi and lwIP may place their buffers in PSRAM, so the larger window leaves internal RAM to TLS. The Spotify client reads in 4 KB pieces. Picture downloads share one kept HTTPS connection per batch, which saves a TLS handshake for every picture after the first. The serial log reports `Library read in N ms` after each library read.
+The library and the pictures are far larger downloads than playback state. The TCP receive window is 23,360 bytes, 16 packets per round trip instead of the 4 of the ESP-IDF default. WiFi and lwIP keep their buffers in internal RAM. Moving lwIP to PSRAM would force 16 static WiFi TX and 16 static RX buffers into internal RAM, which leaves too little for TLS. The log reports free internal memory after the startup and again 30 seconds later, each time with the lowest point so far. The Spotify client reads in 4 KB pieces. Picture downloads share one kept HTTPS connection per batch, which saves a TLS handshake for every picture after the first. The serial log reports `Library read in N ms` after each library read.
 
 ## Touch controls and display care
 
@@ -146,13 +159,19 @@ Bop sends at most one changed volume target every 150 ms. It sends the final tar
 
 The UI gives immediate feedback after an accepted playback command. Volume feedback takes priority over delayed playback feedback. The next Spotify response corrects temporary play and volume state when necessary.
 
-The UI shows `offline` when WiFi is unavailable. The WiFi event handler reconnects when the access point returns. The Spotify task resumes polling after the connection returns.
+While WiFi is down, the UI shows `Connecting to WiFi...` at the top, over the player and the grid. The WiFi event handler starts a new connection attempt after every drop. A tap that needs Spotify sends nothing without WiFi: the player or the tapped cover shows a big WAIT, without dimming, until WiFi returns, and then nothing starts by itself. No command waits in a queue, and the Spotify task drops a command that waited more than 5 seconds for WiFi, so music never starts long after a tap. Volume drag stays off without WiFi.
 
-The AXP2101 monitor detects battery power. After 30 seconds without touch input, battery power changes display brightness to 10 percent.
+The kept HTTPS connection to Spotify is dead after a WiFi drop, so the first request after it fails. A request that failed before it reached Spotify (connect or send) goes once more on a new connection. A GET or PUT also repeats after a failure before the response headers, because a repeat changes nothing; a skip is a POST and never repeats, since it could skip twice.
 
-AMOLED pixels age with the light they emit, so a still image burns in. On any power source, Bop counts idle time from the later of the last touch and the last moment of active playback. After 1 minute of idle time, the display dims to 10 percent. After 5 minutes, it goes dark. Active playback keeps the display lit.
+A touch, or a lift of the board, prepares the next tap, at most every 30 seconds: the radio stays awake for 30 seconds also on battery, the Spotify task renews an access token that would expire within 10 minutes, and it reads the play state at once.
 
-A touch restores 85 percent brightness, and so does the start of playback. A touch on a dark display only wakes it and sends no command.
+When the network offers several access points with the same name, as a mesh does, Bop scans all channels and joins the strongest one, instead of the first one it hears.
+
+AMOLED pixels age with the light they emit, so a still image burns in, and a still album cover during a long playback is the largest still image Bop shows. On any power source and during playback too, Bop counts idle time from the last touch or the last move of the board. After 30 seconds the screensaver replaces the screen: the time in a dim gray over black at 40 percent brightness, drifting 8 pixels a second and bouncing off the edges. After 2 minutes the display goes dark.
+
+A touch or a move of the board brings back the screen at 85 percent brightness. A touch on the screensaver or on a dark display only wakes it and sends no command. The QMI8658 motion sensor (`main/motion.c`) reports a move: a task reads its accelerometer every 100 ms in low-power mode and counts a change of more than 0.1 g, summed over the three axes, against the last reference. That is a lift or a tilt of about 6 degrees; a board that lies still stays far below it. Without the sensor, only a touch wakes the screen.
+
+The clock shows local time from the build setting `CONFIG_BOP_TIMEZONE`, a POSIX TZ string. The repository default is `UTC0`. Set the zone of your board in `firmware/sdkconfig.local.defaults`, which Git ignores and `tools/run_idf.py` adds after the other defaults, for example `CONFIG_BOP_TIMEZONE="CET-1CEST,M3.5.0,M10.5.0/3"`. Then delete `firmware/sdkconfig` and build again, because defaults reach only settings that the sdkconfig file does not hold yet. Until the time is synchronized, the screensaver is black.
 
 Once a minute, the title, artist, progress bar, times, status labels, and the idle screen move by 2 pixels along a small loop. The album art stays in place, because it changes with every track and fills the display edge to edge.
 

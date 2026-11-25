@@ -614,6 +614,11 @@ static void load_cover(const cover_request_t *request)
         publish_cover(cached);
         return;
     }
+    if (!bop_wifi_is_connected()) {
+        // At startup the grid asks for its covers before WiFi connects. Each
+        // would fail at DNS, so the request waits for the next ask instead.
+        return;
+    }
     uint8_t *jpeg = NULL;
     size_t jpeg_size = 0;
     int64_t started_us = esp_timer_get_time();

@@ -11,6 +11,7 @@
 #include "esp_log.h"
 #include "esp_netif.h"
 #include "esp_netif_sntp.h"
+#include "esp_timer.h"
 #include "esp_wifi.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/event_groups.h"
@@ -46,6 +47,13 @@ static uint32_t connected_generation;
 static SemaphoreHandle_t power_save_mutex;
 static atomic_bool power_save_wanted;
 static atomic_int awake_holds;
+// A touch or a lift of the board keeps the radio awake for a while, so the tap
+// that follows needs no beacon wait. The timer ends that hold.
+static esp_timer_handle_t awake_timer;
+static SemaphoreHandle_t awake_timer_mutex;
+static bool timed_hold;
+
+static void release_timed_hold(void *argument);
 static bool power_save_applied;
 static bool power_save_active;
 
@@ -225,9 +233,16 @@ static esp_err_t initialize_services(void)
     ESP_RETURN_ON_ERROR(
         esp_wifi_set_storage(WIFI_STORAGE_RAM), TAG, "WiFi RAM storage configuration failed");
     power_save_mutex = xSemaphoreCreateMutex();
-    if (power_save_mutex == NULL) {
+    awake_timer_mutex = xSemaphoreCreateMutex();
+    if (power_save_mutex == NULL || awake_timer_mutex == NULL) {
         return ESP_ERR_NO_MEM;
     }
+    const esp_timer_create_args_t awake_timer_arguments = {
+        .callback = release_timed_hold,
+        .name = "bop_wifi_awake",
+    };
+    ESP_RETURN_ON_ERROR(
+        esp_timer_create(&awake_timer_arguments, &awake_timer), TAG, "WiFi awake timer failed");
     bop_wifi_set_power_save(bop_power_on_battery());
     ESP_RETURN_ON_ERROR(
         esp_event_handler_register(WIFI_EVENT, ESP_EVENT_ANY_ID, wifi_event, NULL), TAG, "WiFi event registration failed");
@@ -321,6 +336,11 @@ static esp_err_t start_station_attempt(
             : WIFI_AUTH_WPA2_PSK;
         configuration.sta.pmf_cfg.capable = true;
         configuration.sta.pmf_cfg.required = false;
+        // A home with several access points or a mesh offers the same network
+        // more than once. The default fast scan joins the first one it hears,
+        // which can be the weakest; a full scan joins the strongest.
+        configuration.sta.scan_method = WIFI_ALL_CHANNEL_SCAN;
+        configuration.sta.sort_method = WIFI_CONNECT_AP_BY_SIGNAL;
         error = esp_wifi_set_mode(mode);
     }
     if (error == ESP_OK) {
@@ -578,6 +598,42 @@ void bop_wifi_hold_awake(bool hold)
         atomic_store(&awake_holds, 0);
     }
     apply_power_save();
+}
+
+static void release_timed_hold(void *argument)
+{
+    (void)argument;
+    bool release = false;
+    xSemaphoreTake(awake_timer_mutex, portMAX_DELAY);
+    // A restart while this callback waited for the mutex keeps the hold.
+    if (timed_hold && !esp_timer_is_active(awake_timer)) {
+        timed_hold = false;
+        release = true;
+    }
+    xSemaphoreGive(awake_timer_mutex);
+    if (release) {
+        bop_wifi_hold_awake(false);
+    }
+}
+
+void bop_wifi_keep_awake_for(uint32_t milliseconds)
+{
+    if (awake_timer == NULL) {
+        return;
+    }
+    bool acquire = false;
+    xSemaphoreTake(awake_timer_mutex, portMAX_DELAY);
+    if (!timed_hold) {
+        timed_hold = true;
+        acquire = true;
+    }
+    // Stopping a timer that does not run reports an error, which changes nothing.
+    esp_timer_stop(awake_timer);
+    esp_timer_start_once(awake_timer, (uint64_t)milliseconds * 1000);
+    xSemaphoreGive(awake_timer_mutex);
+    if (acquire) {
+        bop_wifi_hold_awake(true);
+    }
 }
 
 esp_err_t bop_time_sync(void)

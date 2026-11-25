@@ -4,9 +4,11 @@ This file provides guidance to coding agents when working with code in this repo
 
 ## What this is
 
-Bop is a Spotify remote for the Waveshare ESP32-S3 Touch AMOLED 1.8 board. The
-board shows the current track and sends touch commands to the Spotify Web API.
-It plays no audio.
+Bop is a Spotify remote for children on the Waveshare ESP32-S3 Touch AMOLED 1.8
+board. A child picks albums from a picture grid of the artists the account
+follows and the albums it saved, so parents curate it in the Spotify app. The
+board also shows the current track and sends touch commands to the Spotify Web
+API. It plays no audio.
 
 The repository holds two halves:
 
@@ -45,6 +47,12 @@ The performance build is a second build directory, not a flag. `BOP_PERF_MONITOR
 makes `tools/run_idf.py` add `sdkconfig.perf.defaults` and use `firmware/build-perf`:
 use `mise run build-perf`, `flash-perf`, and `monitor-perf`.
 
+`tools/run_idf.py` adds the untracked `firmware/sdkconfig.local.defaults` after
+the other defaults when it exists. It holds settings of one board, such as
+`CONFIG_BOP_TIMEZONE` (Kconfig in `firmware/main/Kconfig.projbuild`, default
+`UTC0`). Defaults reach only options that `firmware/sdkconfig` lacks, so delete
+that file after a change.
+
 Set `BOP_PORT` when more than one Espressif board is connected. Set
 `BOP_IDF_PATH` to move the ESP-IDF checkout away from `~/.local/share/esp-idf`.
 `BOP_SKIP_IDF=1` makes the `mise install` hook skip the ESP-IDF install. CI sets
@@ -69,9 +77,10 @@ tested locally on the board, and Windows is not tested.
 
 ## Firmware architecture
 
-`app_main` (`firmware/main/app_main.c`) starts the display, screenshot state,
-and power monitor before it reads credentials. It then selects one of three
-startup states:
+`app_main` (`firmware/main/app_main.c`) sets the time zone from
+`CONFIG_BOP_TIMEZONE`, starts the SD card log, then starts the display,
+screenshot state, power monitor, and motion sensor, and opens the flash cache
+before it reads credentials. It then selects one of three startup states:
 
 - With no credentials, Bop prepares the **Bop setup AP** before WiFi starts.
   It starts the **captive portal** and shows the AP values and QR code.
@@ -90,7 +99,8 @@ WEP and enterprise networks as unsupported.
 Work is divided across the two cores:
 
 - Core 1 runs the LVGL task and the 250 ms `ui_timer` in `ui/ui.c`.
-- Core 0 runs WiFi, the Spotify client task, the album-art task, and the
+- Core 0 runs WiFi, the Spotify client task, the album-art task, the
+  `bop_sdcard` log writer (PSRAM stack, so it must never write flash), and the
   `bop_screenshot` serial task in `screenshot.c`. That task starts even when
   the mirror buffers failed to allocate, and even on an unprovisioned board,
   because the host still reaches it. A serial path that never came up is the
@@ -98,7 +108,11 @@ Work is divided across the two cores:
   `bop_screenshot_start` refuses when either mutex is NULL, because every
   response path takes them.
 - The AXP2101 power monitor uses an unpinned task. FreeRTOS can schedule this
-  task on either core.
+  task on either core. So does the `bop_motion` task in `motion.c`, which polls
+  the QMI8658 accelerometer every 100 ms from a PSRAM stack and counts moves.
+  `ui_timer` turns a new count into `lv_display_trigger_activity`, so a move
+  resets the same inactivity clock as a touch: 30 s start the screensaver
+  clock on `lv_layer_top`, 2 min turn the display off.
 
 Data moves one way. The Spotify task polls `GET /v1/me/player` every 10
 seconds while playback is active and every 60 seconds while it is paused or
@@ -107,7 +121,10 @@ publishes a `playback_state_t` snapshot behind a mutex. Each real change
 increments `change_counter`. The UI timer copies that snapshot with
 `bop_spotify_get_state` and redraws only when the counter moves.
 
-Normal commands move through a request queue, never through direct calls. A
+Normal commands move through a request queue, never through direct calls.
+Without WiFi the UI enqueues nothing and shows WAIT, and the client drops a
+command that waited more than 5 s (`drop_if_stale`), so no tap starts music
+late. A
 gesture calls `bop_spotify_enqueue_command`, the client task sends the request,
 and a result queue returns accepted tap results to `process_command_results`.
 The serial task also produces normal command requests: the `n`, `b`, and `t`
@@ -135,8 +152,12 @@ with `bop_album_art_free`.
 
 Kid mode (`ui/library_view.c`) adds a fourth flow. The Spotify task reads the
 followed artists and the saved albums into a `bop_library_t`, and an opened
-artist's regular albums into a `bop_artist_albums_t`, ten per request as the
-grid asks for more. Both are published behind the state mutex with generation
+artist's regular albums into a `bop_artist_albums_t`, ten per request, the
+whole list at once. After the library read, `prefetch_artist_step` loads every
+followed artist's list in the background, one page a second, and stores it;
+a list is checked again once a day. The grid loads a stored list itself in
+`open_artist`, so an artist opens without WiFi, and `take_artist_list` never
+lets a loading or failed list replace a ready one. Both are published behind the state mutex with generation
 counters. These lists stream through `spotify/json_stream.c` instead of the
 fixed response buffer, because a saved album arrives with its whole track
 list. The response sink receives only HTTP 200 bodies. The grid asks the art
@@ -144,18 +165,36 @@ task for 172-pixel pictures with `bop_cover_request`, and the art task serves
 them only while the now-playing art is idle. An album tap enqueues
 `SPOTIFY_COMMAND_PLAY_ALBUM` through `bop_spotify_enqueue_play_album`, which
 shares the cooldown gate with `bop_spotify_enqueue_command`. Its result returns
-through the normal result queue and is handled apart from tap feedback. Kid
+through the normal result queue and is handled apart from tap feedback. The
+grid marks the playing album by `playback_state_t.album_id`, which
+`parse_playback` takes from a `spotify:album:` `context.uri` when one exists,
+because Spotify relinks `item.album.id` to another album version. Kid
 mode needs the `user-library-read` and `user-follow-read` scopes that
-`tools/provision.py` requests. `cache.c` keeps the library list and the
-decoded grid pictures in the 4 MB `cache` partition that follows the
-application in `partitions.csv`. It holds no credential, and `startup_task`
+`tools/provision.py` requests. `cache.c` keeps the library list, 48 artist
+lists, and the decoded grid pictures in the `cache` partition that follows the
+application in `partitions.csv` and reaches the end of the 16 MB flash. The
+application partition stays 8 MB, because `deprovision.py` checks that size
+on the board. It holds no credential, and `startup_task`
 erases it whenever the board starts without complete credentials.
+
+`sdcard.c` owns the optional FAT32 microSD card. `app_main` calls
+`bop_sdcard_start` first: a log hook copies Bop lines and every warning and
+error into a PSRAM ring, and the `bop_sdcard` task mounts the card once and
+writes `bop/log.txt` every two seconds. The hook stays installed for the whole
+run, because `screenshot.c` chains its own hook to it. Once every flash slot is
+used, `cache.c` stores further pictures in `bop/covers` on the card. Any code
+that touches the card holds `bop_sdcard_acquire`. `startup_task` calls
+`bop_sdcard_erase_private_data` next to `bop_cache_clear`. Bop never formats a
+card.
 
 Rules that the structure depends on:
 
 - Every LVGL call outside the LVGL task must hold the lock
   (`bsp_display_lock` or `lvgl_port_lock`). Code inside `ui_timer` and inside
   LVGL event callbacks already runs in that task, so it must not lock again.
+- The `bop_sdcard` and `bop_motion` tasks run on PSRAM stacks. A flash write
+  (`esp_partition_*`, NVS) turns off the cache that PSRAM access needs, so
+  neither task may write flash. `test_sdcard.py` checks this for `sdcard.c`.
 - `flush_display` sends a QSPI NOP after each color transfer. That parameter
   transfer is what makes DMA complete before LVGL reuses the buffer. Do not
   remove it.
@@ -248,7 +287,9 @@ reads `credentials.c`. `test_portal.py` reads the portal, DNS, WiFi,
 credential, application, page, and build sources. `test_screenshot.py` reads `screenshot.c`,
 `app_main.c`, and `spotify.c`. It slices `screenshot.c` by function name, so it
 also pins the order of those
-functions. `test_backup.py` and `test_task_cancellation.py`
+functions. `test_sdcard.py` reads `sdcard.c`, `cache.c`, `app_main.c`, and
+`sdkconfig.defaults`. `test_offline.py` reads `ui.c`, `spotify.c`, `cache.c`,
+`library_view.c`, and `partitions.csv`. `test_backup.py` and `test_task_cancellation.py`
 read `mise.toml` and assert on the task definitions. An edit to those files can
 turn the checks red even when the code is correct. Read the failing assertion,
 then decide whether the check or the code is wrong.
