@@ -481,9 +481,15 @@ und am Ende die Läufe über die Kapitelgrenze.
 
 Vorläufig, beim Bau zu prüfen:
 
-1. **Der Traum** als Modus, in den drei Zuständen des Mockups (Datenraum, Tunnel, Bild aus Code; §3.5): viele Feeds zugleich auf einem Bild. Vermutlich ein Raum der Engine ohne gespielte Figur wie die Feeds
-   (`observe`), dessen Bild das Spiel aus kleinen Feed-Bildern zusammensetzt (eine UI-Ebene in `game/`), dazu ein Nachbearbeitungs-Pass in
-   Magenta und Weiß (C7 kennt Paletten). Generisch wäre höchstens „mehrere Räume als Kacheln in einem“; das klärt das Mockup.
+1. **Der Traum** als Modus, in den drei Zuständen des Mockups (Datenraum, Tunnel, Bild aus Code; §3.5): viele Feeds zugleich auf einem Bild.
+   **Gebaut als technischer Versuch** (H6.2, `game/traum.js`), ganz im Spiel, ohne Arbeit an der Engine: Jeder Zustand ist ein Raum ohne
+   gespielte Figur (`observe`), den das Spiel selbst zeichnet (`dream: "<Einstellung>"`), nach den Verfahren des Mockups; die Bilder sind die
+   Hintergründe der Kameras aus den Atlanten, einmal über ihre Stufe in der Phosphor-Rampe in die Rampe des Traums umgerechnet; der Tunnel
+   ist der Fortschritt eines `float` (wie im Vorspann); die Stimmen des Zeugen zeichnet der Traum versetzt in Magenta hinter die weiße Zeile,
+   die die Engine zeichnet. Die Bilder hängen als Hotspots mit ihrem Umriss im Raum (`Nagiwa.at.traum`). Solange `dreaming` gilt, steht die
+   Uhr (auch für den Solver), und der Traum hat seinen eigenen Hinweis. Bis H6.4 Lull davorsetzt, führt das Bett am Dienstag ab 01:00
+   ohne Lull hinein: Datenraum, CAM 33 durch den Tunnel, das Becken, und Juno wacht am Mittwochabend auf. Kein Raum des Traums ist ein
+   Zustand für sich (+28 Zustände).
 2. **Die inneren Stimmen** (C12) wären für DAS IMPLANTAT bei `OBS-4` schön, sind aber nicht nötig: Ohne sie sagt Juno die Zeile selbst.
 3. **Ein Zahlenfeld** wie die Eingabe des Takts an `cam31` (das Tor, §3.2): vorhanden, im Spiel.
 4. **Der Akt `kapitel3`** mit `keep` und `leave` (§2.1) und `?act=kapitel3`.

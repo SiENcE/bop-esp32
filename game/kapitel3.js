@@ -10,7 +10,7 @@ const AF = Nagiwa.at.flat;
 
 // Tuesday has no card of its own (the chapter's card is it); Wednesday is the last evening: nobody sleeps through it (the raid comes then)
 Object.assign(Nagiwa.nights, {
-  9: { date: "Mittwoch, 14. November", evening: "Abend 2", last: true, passes: [] },
+  9: { date: "Mittwoch, 14. November", evening: "Abend 2", last: true, passes: [], wake: ["Vier Stunden, sagen sie. Das war ein ganzer Tag."] },
 });
 // the bed opens at 01:00 on Tuesday: the clock stops there
 Cutaway.moment("one_tue", { room: "deck", day: 8, from: "00:45", to: "01:00", if: "~never", unseen: [] });
@@ -43,6 +43,32 @@ Nagiwa.threads.civic_rest = [
   { from: "civic_rest", if: "day>7", text: "NICHT ZUSTELLBAR" },
 ];
 
+// ---- Tuesday night: the dream (game/traum.js). For now (H6.2, the spike) the bed leads into it from 01:00 without Lull, until H6.4
+// puts the patch before it and H6.5 tells the first night: the data room, CAM 33 through the tunnel, the basin, and Juno wakes on
+// Wednesday evening. While she dreams the clock stands
+const bed = Cutaway.room.get("flat").hotspots.bed;
+bed.use = [{ if: ["day=8", "time>=01:00", "!bed_closed"], then: [
+  "Genug für heute.",
+  { fade: "out", ms: 900 },
+  { set: "dreaming" },
+  { goto: "traum", transition: false },
+  { fade: "in", ms: 1500 },
+  { say: "zeuge", text: "wir haben dich gesehen. jede nacht." },
+], else: bed.use }];
+Cutaway.room.get("traum_cam33").hotspots.becken.use = [
+  "Teo hat hier gesessen. Auf dem Rand.",
+  { say: "zeuge", text: "hier ist es still." },
+  { fade: "out", ms: 1500 },
+  { unset: "dreaming" },
+  { night_passes: true }, { unset: "deck_woke" },
+  { goto: "flat", at: AF.bed, face: "se", transition: false },
+  { time: "18:00", day: "+1" },
+  { evening_card: true },
+  { fade: "in", ms: 700 },
+  { wake: true },
+];
+Nagiwa.holds.push(() => (Cutaway.state.flag("dreaming") ? "Im Traum gibt es keine Uhr." : null));
+
 // ---- Wednesday night: a stand-in for what comes (the second dream night, decision 3, the raid and the fire, H6.6 and H6.7). Never
 // watched: it happens as its window ends, as Chapter 2's end does
 Cutaway.moment("k3_platzhalter", { room: "deck", day: 9, from: "00:45", to: "01:00", if: "~never", unseen: [
@@ -54,6 +80,8 @@ Cutaway.moment("k3_platzhalter", { room: "deck", day: 9, from: "00:45", to: "01:
 // ---- hints (EVI's), so far only the clock: every state on the way needs one
 const HOME = ["door", "door_juno", "stairs", "kessel_door", "deck", "back"];       // the way back to the deck
 Cutaway.hints([
+  { if: "dreaming", about: ["p_cam33", "becken"],
+    text: ["Das sind die Kameras der Stadt. Alle auf einmal.", "Eins davon ist die Pumpenhalle. Da hat Teo gearbeitet.", "Flieg in CAM 33 und sieh dir das Becken an."] },
   { if: ["day=8", "time>=01:00"], about: ["bed", "close", ...HOME],
     text: ["Es ist spät. Du hast seit gestern nicht geschlafen.", "Das Bett ist ab eins offen.", "Geh ins Bett."] },
   { if: "day=8", about: ["wait", "bed", "close", ...HOME],

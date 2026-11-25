@@ -145,7 +145,7 @@
   }
   /** @param {CanvasRenderingContext2D} ctx @param {any} r the room */
   function timestamp(ctx, r) {
-    if (r.feed || /** @type {any} */ (r).broadcast || r.id === "deck" || r.float || Cutaway.sequence.playing() || !Cutaway.time.used || !Cutaway.acts.current) return;
+    if (r.feed || /** @type {any} */ (r).broadcast || r.id === "deck" || r.float || r.dream || Cutaway.sequence.playing() || !Cutaway.time.used || !Cutaway.acts.current) return;
     const label = `${weekday()} ${Cutaway.time.now.text}`, now = Cutaway.clock.time, key = `${r.id} ${label}`;
     if (key !== stampWas) { stampWas = key; litAt = now; }
     // lit for 1.5 s, then it fades back to dim over 0.8 s

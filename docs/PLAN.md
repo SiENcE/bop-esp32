@@ -19,7 +19,8 @@ Status (2026-11-25):
   chapter line not yet: the prologue into Chapter 1 (87 ways; Chapter 1's runs still begin from its own start).
 - **Now:** H6 (Chapter 3 "Lull"). Its design is drafted (`docs/kapitel3-design.md`, the user's decisions in story §10l), every new place
   has an approved block sketch or mockup (the dream's three states, the checkpoint's long hall, the basin room, the walkway to the
-  Flutwerk, a maintenance camera, the station), and the build is planned in steps (§4, "H6 in steps"). H6.1 is done. **Next:** H6.2, the dream as a spike (`game/traum.js`).
+  Flutwerk, a maintenance camera, the station), and the build is planned in steps (§4, "H6 in steps"). H6.1 is done; H6.2, the dream as a spike, is built (`game/traum.js`: the three states, one picture, CAM 33, reached through all of
+  them; for now the bed leads in on Tuesday from 01:00 without Lull) and waits for the user to try it by hand. **Next:** H6.3, the pump hall.
 - **Checks:** the last full run (2026-11-23): `sh tools/check.sh` ALL PASSED (validate 0 errors, 10 warnings; doc-lint 0 errors; the
   prologue 78612 states; Chapter 1 main 115984, roof 52394, zeitung 41712, imai 37158, traeger 12446, varga 109103, tide 142246, motte
   33430, vesper 34258; Chapter 2 main 215148, stick 93050, lantern 271112, the shop 50020, haldane 104272, teo 22074 and the runs of

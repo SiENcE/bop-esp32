@@ -394,3 +394,24 @@ Nagiwa.at.cam07v = (() => {
   const O = Nagiwa.at.okonkwo_shop;
   return { exposure: 1.3, okonkwo: O.okonkwo, mic: O.front, safePoly: [203, 68, 223, 68, 229, 80, 229, 89, 200, 89, 200, 80], shelvesRect: O.shelvesRect, photoRect: O.photoRect };
 })();
+
+// The dream (game/traum.js, style guide §9a), as the mockup laid it out (art/mockups/mock_g_traum.px.js). The data room: the horizon's
+// row, and the cameras' pictures hanging in its space (x right, y up, z ahead, in the dream camera's units; w x h their size, yaw their
+// turn, ph where their bob begins); their hotspots are their outlines as the dream camera sees them at rest. Juno's outline stands at
+// `juno` (its middle, its feet) in each state. The picture made of code: what can be clicked in CAM 33 (the basin, Juno's brackets).
+Nagiwa.at.traum = {
+  horizon: 74, focal: 170,
+  panels: [
+    { cam: "cam24", img: ["cam24_bg"], x: -0.3, y: 3.5, z: 12, w: 1.6, h: 0.9, yaw: 0.0, ph: 0.7 },
+    { cam: "cam18", img: ["cam18_bg"], x: -1.7, y: 2.6, z: 8.5, w: 1.6, h: 0.9, yaw: 0.2, ph: 1.3 },
+    { cam: "cam51", img: ["cam51_bg"], x: 1.7, y: 2.6, z: 8.5, w: 1.6, h: 0.9, yaw: -0.2, ph: 2.1 },
+    { cam: "cam31", img: ["cam31_bg"], x: 4.3, y: 2.3, z: 7.5, w: 1.6, h: 0.9, yaw: -0.45, ph: 3.0 },
+    { cam: "cam22", img: ["cam22_bg"], x: -4.3, y: 1.7, z: 7, w: 1.6, h: 0.9, yaw: 0.5, ph: 4.0 },
+    { cam: "cam03", img: ["cam03_bg"], x: 5.3, y: -0.2, z: 7.2, w: 1.6, h: 0.9, yaw: -0.6, ph: 5.0 },
+    { cam: "cam21", img: ["cam21_bg"], x: -5.2, y: -0.1, z: 6.8, w: 1.6, h: 0.9, yaw: 0.6, ph: 1.9 },
+    { cam: "cam04", img: ["cam04_bg"], x: -2.2, y: 0.45, z: 3.9, w: 1.6, h: 0.9, yaw: 0.35, ph: 0.0 },
+    { cam: "cam33", img: ["cam33_bg", "cam33_pause"], x: 1.95, y: 0.5, z: 3.6, w: 1.6, h: 0.9, yaw: -0.3, ph: 2.6 },
+  ],
+  juno: { raum: [112, 186], tunnel: [160, 179], code: [58, 186] },
+  cam33: { becken: [136, 78, 194, 126], beckenPoly: [146, 80, 184, 80, 194, 92, 194, 114, 184, 126, 146, 126, 136, 114, 136, 92] },
+};

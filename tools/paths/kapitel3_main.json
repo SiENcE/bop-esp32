@@ -1,1 +1,1 @@
-[{"kind":"wait"},{"kind":"wait"},{"kind":"act","id":"bed"},{"kind":"wait"},{"kind":"wait"}]
+[{"kind":"wait"},{"kind":"wait"},{"kind":"act","id":"bed"},{"kind":"act","id":"p_cam33"},{"kind":"act","id":"becken"},{"kind":"wait"},{"kind":"wait"}]
