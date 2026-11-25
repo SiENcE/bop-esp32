@@ -287,6 +287,13 @@ Cutaway.room("drain_market", { name: "Drain-Markt", background: "drain_market_bg
     down: { name: "Treppe hinab", rect: AM.downRect, walkTo: AM.down, face: "down",
       look: "Da geht eine Treppe noch tiefer hinunter. Davor hängt eine Kette, und das Schloss daran blinkt rot.", use: ["Die Kette ist zu, und das Schloss sieht neu aus."] },
   } });
+// The market's music is the wok's radio, a thing at its place, heard through its speaker. A room changing the theme only gets it at the
+// next bar, while the speaker is off at once: the radio's song played on clean and loud for a moment in Sable's booth, the alley, on
+// the raft. So going in or out of the market (not from the arrival, whose tune is made to end on the market), the music stops in a
+// short fade, and the next room's starts at once
+Cutaway.events.on("room.leave", (/** @type {{id?: string, to: string}} */ e) => {
+  if (e.id && e.id !== e.to && e.id !== "drain_arrival" && (e.id === "drain_market" || e.to === "drain_market")) Cutaway.events.emit("music", { stop: true, fade: 0.5 });
+});
 // the arrival (kapitel1-design §9, decided 2026-11-11): every time Juno takes the stairs down from the alley, first the view from the
 // top of them: the market's bustle two and a half seconds, then the camera tilting slowly down to the crowd on the canal; then the
 // market from above. Later visits: one click skips it. The first time, Juno and EVI talk once the camera has come to rest (a click
