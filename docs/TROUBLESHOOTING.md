@@ -31,6 +31,89 @@ port. A charge-only cable cannot transfer data.
 Use these steps when automatic reset does not work. Read
 [INSTALL.md](../INSTALL.md) before you run `mise run flash`.
 
+## The factory backup stops with `Packet content transfer stopped`
+
+esptool 5.3.1 loads a new flasher stub by default. On the ESP32-S3 USB
+Serial/JTAG port of this board, that stub can stop every `read-flash` larger
+than 16 KB. The backup then fails within the first few kilobytes:
+
+```
+A fatal error occurred: Packet content transfer stopped
+backup failed: Command '[... 'read-flash', '0x0', '0x1000000', ...]' returned non-zero exit status 2.
+```
+
+The failure repeats at the same size every time. It also happens on a native
+USB port, so the USB path is not the cause.
+
+Select the legacy stub that esptool still ships, then run the backup again:
+
+```
+ESPTOOL_STUB_VERSION=1 mise run backup
+```
+
+In PowerShell, run `$env:ESPTOOL_STUB_VERSION = "1"` first. The legacy stub
+reads at about 92 kbit/s, so the 16 MB backup takes about 25 minutes. The
+backup keeps all of its checks. Only the transfer changes.
+
+After `backups/factory.bin` and its SHA-256 file exist, `mise run flash` skips
+the backup step and needs no setting. Flash writes are not affected.
+
+## Use the board from WSL on Windows
+
+Windows hardware installation is untested, as the
+[support levels](../README.md#support-levels) state. These notes record one
+working setup.
+
+WSL has no direct USB access. [usbipd-win](https://github.com/dorssel/usbipd-win)
+passes the board into the WSL virtual machine.
+
+1. In an administrator terminal, run `usbipd list` and note the BUSID of the
+   `303a:` device.
+2. Run `usbipd bind --busid <BUSID>` once. The binding persists.
+3. Open a WSL terminal and keep it open.
+4. In a Windows terminal, run `usbipd attach --wsl --busid <BUSID> --auto-attach`.
+
+The board then appears in WSL as `/dev/ttyACM0`. Your WSL user needs the
+`dialout` group. `--auto-attach` attaches the board again after each reset,
+which the flash and provisioning commands cause.
+
+WSL stops its virtual machine soon after the last WSL process ends. That ends
+the attachment. Keep a WSL terminal open while you use the board.
+
+Flash writes, provisioning, and the serial log work through usbipd. Large
+reads from the board do not: even with `ESPTOOL_STUB_VERSION=1`, a 256 KB read
+fails with `Corrupt data`. Take the factory backup natively on Windows instead:
+
+1. Run `usbipd detach --busid <BUSID>`. The board returns as a COM port.
+2. Create a Python virtual environment outside the repository, and install
+   the esptool version that `mise.toml` pins into it.
+3. Put the environment's `Scripts` directory first on `PATH`, and set
+   `ESPTOOL_STUB_VERSION=1`.
+4. From the repository, run `python tools\backup_flash.py`.
+5. Attach the board to WSL again.
+
+The backup lands in the same `backups/` directory, so `mise run flash` in WSL
+finds it.
+
+A clone on a Windows drive, such as `/mnt/c/...`, works from WSL with two
+settings. Windows Git checks files out with CRLF line endings, so Git in WSL
+needs `core.autocrlf=true` for that clone, or it reports every file as
+changed. A firmware build on a Windows drive is slow, because WSL reaches
+those files through a network file system. A clean build took about 17
+minutes.
+
+## `mise run licenses` reports `AGENTS.md` on a Windows clone
+
+`AGENTS.md` is a symbolic link to `CLAUDE.md`. Git for Windows checks out
+symbolic links as small text files unless `core.symlinks` is enabled. REUSE
+skips symbolic links, but it checks that text file and reports it as missing
+license information.
+
+The report comes from the checkout, not from the repository. CI checks a Linux
+clone, where the link is intact. To fix the local clone, enable Windows
+Developer Mode and run `git config core.symlinks true`. Then delete
+`AGENTS.md` and run `git checkout -- AGENTS.md`.
+
 ## The captive portal does not open
 
 1. Scan the QR code on the Bop screen.
