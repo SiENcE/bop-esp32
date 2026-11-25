@@ -289,10 +289,13 @@ Cutaway.room("drain_market", { name: "Drain-Markt", background: "drain_market_bg
   } });
 // The market's music is the wok's radio, a thing at its place, heard through its speaker. A room changing the theme only gets it at the
 // next bar, while the speaker is off at once: the radio's song played on clean and loud for a moment in Sable's booth, the alley, on
-// the raft. So going in or out of the market (not from the arrival, whose tune is made to end on the market), the music stops in a
-// short fade, and the next room's starts at once
+// the raft. So going in or out of the market (not from the arrival, whose tune is made to end on the market), the music stops and the
+// next room's starts at once. Out, the radio fades in half a second as its speaker opens up; in, the theme before is cut almost at
+// once: the market's speaker closes at once too, and its fading tail sounded through it as a short, thin noise
 Cutaway.events.on("room.leave", (/** @type {{id?: string, to: string}} */ e) => {
-  if (e.id && e.id !== e.to && e.id !== "drain_arrival" && (e.id === "drain_market" || e.to === "drain_market")) Cutaway.events.emit("music", { stop: true, fade: 0.5 });
+  if (!e.id || e.id === e.to || e.id === "drain_arrival") return;
+  if (e.id === "drain_market") Cutaway.events.emit("music", { stop: true, fade: 0.5 });
+  else if (e.to === "drain_market") Cutaway.events.emit("music", { stop: true, fade: 0.05 });
 });
 // the arrival (kapitel1-design §9, decided 2026-11-11): every time Juno takes the stairs down from the alley, first the view from the
 // top of them: the market's bustle two and a half seconds, then the camera tilting slowly down to the crowd on the canal; then the
