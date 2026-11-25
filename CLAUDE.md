@@ -153,7 +153,11 @@ pixels for the background color. It passes one `bop_album_art_t *` through a
 one-slot queue. The UI owns that pointer after it arrives and frees the old one
 with `bop_album_art_free`.
 
-Kid mode (`ui/library_view.c`) adds a fourth flow. The Spotify task reads the
+Kid mode (`ui/library_view.c`) adds a fourth flow. Its first level shows the
+followed artists and one albums tile, a `BOP_LIBRARY_ENTRY_FOLDER` entry that
+only the grid makes (`rebuild_home`), which opens `LEVEL_ALBUMS`. The library
+reader leaves out a saved regular album of a followed artist, so each album
+has one place. The Spotify task reads the
 followed artists and the saved albums into a `bop_library_t`, and an opened
 artist's regular albums into a `bop_artist_albums_t`, ten per request as the
 grid asks for more. After the library read, `prefetch_artist_step` loads every

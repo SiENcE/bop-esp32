@@ -53,12 +53,20 @@
 #define POSITION_BAR_HEIGHT 6
 #define PAGE_SLIDE_DISTANCE 40
 #define PAGE_SLIDE_MS 160
+// The albums tile shows the first four album covers at half size, so a child
+// sees a box of albums without reading.
+#define FOLDER_PREVIEW_COUNT 4
+#define FOLDER_PREVIEW_GAP 4
+#define FOLDER_PREVIEW_SIZE ((BOP_COVER_SIZE - FOLDER_PREVIEW_GAP) / 2)
+// No Spotify ID looks like this, so the tile never matches an album.
+#define FOLDER_ID "albums"
 
 static const char *TAG = "bop_library";
 
 typedef enum {
     LEVEL_HOME,
     LEVEL_ARTIST,
+    LEVEL_ALBUMS,
 } view_level_t;
 
 typedef struct {
@@ -80,6 +88,7 @@ static struct {
     lv_obj_t *marks[TILES_PER_PAGE];
     lv_obj_t *mark_glyphs[TILES_PER_PAGE];
     lv_obj_t *wait_signs[TILES_PER_PAGE];
+    lv_obj_t *previews[TILES_PER_PAGE][FOLDER_PREVIEW_COUNT];
     lv_obj_t *dots[DOT_CAPACITY];
     lv_obj_t *position;
     lv_obj_t *message;
@@ -90,12 +99,19 @@ static struct {
     // The second artist buffer: a published or stored list lands here first,
     // and takes the place of the shown one only when it may.
     bop_artist_albums_t *incoming;
+    // Home: the followed artists and the albums tile, in PSRAM. The library
+    // lists the artists first, then the albums.
+    bop_library_entry_t *home_entries;
+    size_t home_count;
+    size_t artist_count;
+    size_t library_album_count;
     uint32_t library_generation;
     uint32_t artist_generation;
     view_level_t level;
     char artist_id[BOP_ALBUM_ID_CAPACITY];
     size_t home_page;
     size_t artist_page;
+    size_t albums_page;
     bool visible;
     bool resume_visible;
     bool press_active;
@@ -116,19 +132,83 @@ static bool artist_list_matches(void)
     return strcmp(view.artist->artist_id, view.artist_id) == 0;
 }
 
+// Home shows the followed artists and one tile for the saved albums. Without a
+// followed artist, home shows the albums themselves.
+static void rebuild_home(void)
+{
+    size_t artists = 0;
+    while (artists < view.library->count
+        && artists < BOP_LIBRARY_ARTIST_CAPACITY
+        && view.library->entries[artists].kind == BOP_LIBRARY_ENTRY_ARTIST) {
+        ++artists;
+    }
+    size_t albums = view.library->count - artists;
+    if (artists != view.artist_count || albums != view.library_album_count) {
+        ESP_LOGI(TAG, "Home: %u artists and %u albums behind the albums tile", (unsigned)artists, (unsigned)albums);
+    }
+    view.library_album_count = albums;
+    view.artist_count = artists;
+    view.home_count = 0;
+    if (artists == 0) {
+        return;
+    }
+    memcpy(view.home_entries, view.library->entries, artists * sizeof(bop_library_entry_t));
+    view.home_count = artists;
+    if (view.library->count > artists) {
+        bop_library_entry_t *folder = &view.home_entries[view.home_count++];
+        memset(folder, 0, sizeof(*folder));
+        folder->kind = BOP_LIBRARY_ENTRY_FOLDER;
+        strlcpy(folder->id, FOLDER_ID, sizeof(folder->id));
+    }
+}
+
+static const bop_library_entry_t *folder_albums(size_t *count)
+{
+    *count = view.library->count - view.artist_count;
+    return view.library->entries + view.artist_count;
+}
+
 static const bop_library_entry_t *shown_entries(size_t *count)
 {
     if (view.level == LEVEL_ARTIST) {
         *count = artist_list_matches() ? view.artist->count : 0;
         return view.artist->entries;
     }
-    *count = view.library->count;
-    return view.library->entries;
+    if (view.level == LEVEL_ALBUMS || view.artist_count == 0) {
+        return folder_albums(count);
+    }
+    *count = view.home_count;
+    return view.home_entries;
 }
 
 static size_t *shown_page(void)
 {
-    return view.level == LEVEL_ARTIST ? &view.artist_page : &view.home_page;
+    if (view.level == LEVEL_ARTIST) {
+        return &view.artist_page;
+    }
+    return view.level == LEVEL_ALBUMS ? &view.albums_page : &view.home_page;
+}
+
+// True when the albums tile is on the shown page and previews this album.
+static bool folder_previews(const char *id)
+{
+    if (view.level != LEVEL_HOME || view.home_count == 0
+        || view.home_entries[view.home_count - 1].kind != BOP_LIBRARY_ENTRY_FOLDER) {
+        return false;
+    }
+    size_t folder = view.home_count - 1;
+    size_t first = view.home_page * TILES_PER_PAGE;
+    if (folder < first || folder >= first + TILES_PER_PAGE) {
+        return false;
+    }
+    size_t count = 0;
+    const bop_library_entry_t *albums = folder_albums(&count);
+    for (size_t index = 0; index < count && index < FOLDER_PREVIEW_COUNT; ++index) {
+        if (strcmp(albums[index].id, id) == 0) {
+            return true;
+        }
+    }
+    return false;
 }
 
 static size_t page_count(void)
@@ -165,7 +245,7 @@ static bool entry_is_shown(const char *id)
             return true;
         }
     }
-    return false;
+    return folder_previews(id);
 }
 
 static int find_cover(const char *id)
@@ -189,20 +269,25 @@ static void release_cover(cover_slot_t *slot)
     slot->last_used = 0;
 }
 
-static void show_tile_image(size_t tile, const lv_image_dsc_t *image)
+static void show_image(lv_obj_t *object, const lv_image_dsc_t *image)
 {
     if (image == NULL) {
         // A hidden image keeps no source, so a freed cover is never named.
-        if (lv_image_get_src(view.images[tile]) != NULL) {
-            lv_image_set_src(view.images[tile], NULL);
+        if (lv_image_get_src(object) != NULL) {
+            lv_image_set_src(object, NULL);
         }
-        lv_obj_add_flag(view.images[tile], LV_OBJ_FLAG_HIDDEN);
+        lv_obj_add_flag(object, LV_OBJ_FLAG_HIDDEN);
         return;
     }
-    if (lv_image_get_src(view.images[tile]) != image) {
-        lv_image_set_src(view.images[tile], image);
+    if (lv_image_get_src(object) != image) {
+        lv_image_set_src(object, image);
     }
-    lv_obj_remove_flag(view.images[tile], LV_OBJ_FLAG_HIDDEN);
+    lv_obj_remove_flag(object, LV_OBJ_FLAG_HIDDEN);
+}
+
+static void show_tile_image(size_t tile, const lv_image_dsc_t *image)
+{
+    show_image(view.images[tile], image);
 }
 
 // Every setter below changes LVGL state only on a real change. A style or
@@ -277,7 +362,11 @@ static void render_message(void)
     const char *text = NULL;
     size_t count = 0;
     shown_entries(&count);
-    if (view.level == LEVEL_ARTIST) {
+    if (view.level == LEVEL_ALBUMS) {
+        if (count == 0) {
+            text = "Save albums in Spotify to show them here.";
+        }
+    } else if (view.level == LEVEL_ARTIST) {
         bop_library_status_t status = artist_list_matches()
             ? view.artist->status
             : BOP_LIBRARY_LOADING;
@@ -310,6 +399,25 @@ static bool entry_is_playing(const bop_library_entry_t *entry)
         && strcmp(entry->id, view.playing_album_id) == 0;
 }
 
+// Shows the first album covers on the albums tile, or clears the previews of
+// a tile that shows something else.
+static void show_folder_previews(size_t tile, bool folder)
+{
+    size_t count = 0;
+    const bop_library_entry_t *albums = folder_albums(&count);
+    for (size_t preview = 0; preview < FOLDER_PREVIEW_COUNT; ++preview) {
+        const lv_image_dsc_t *image = NULL;
+        if (folder && preview < count) {
+            int cached = find_cover(albums[preview].id);
+            if (cached >= 0) {
+                view.covers[cached].last_used = ++view.use_counter;
+                image = &view.covers[cached].cover->image;
+            }
+        }
+        show_image(view.previews[tile][preview], image);
+    }
+}
+
 static void render_page(void)
 {
     size_t count = 0;
@@ -319,10 +427,22 @@ static void render_page(void)
         size_t index = first + tile;
         if (index >= count) {
             show_tile_image(tile, NULL);
+            show_folder_previews(tile, false);
             set_hidden(view.tiles[tile], true);
             continue;
         }
         const bop_library_entry_t *entry = &entries[index];
+        bool folder = entry->kind == BOP_LIBRARY_ENTRY_FOLDER;
+        show_folder_previews(tile, folder);
+        if (folder) {
+            show_tile_image(tile, NULL);
+            set_radius(view.tiles[tile], TILE_RADIUS);
+            set_opacity(view.tiles[tile], LV_OPA_COVER);
+            set_hidden(view.wait_signs[tile], true);
+            set_hidden(view.marks[tile], true);
+            set_hidden(view.tiles[tile], false);
+            continue;
+        }
         int cached = find_cover(entry->id);
         if (cached >= 0) {
             view.covers[cached].last_used = ++view.use_counter;
@@ -350,7 +470,7 @@ static void render_page(void)
         set_hidden(view.marks[tile], !playing);
         set_hidden(view.tiles[tile], false);
     }
-    set_hidden(view.back, view.level != LEVEL_ARTIST);
+    set_hidden(view.back, view.level == LEVEL_HOME);
     render_page_marks();
     render_message();
 }
@@ -478,6 +598,13 @@ static void request_covers(void)
             return;
         }
     }
+    size_t album_count = 0;
+    const bop_library_entry_t *albums = folder_albums(&album_count);
+    for (size_t index = 0; index < album_count && index < FOLDER_PREVIEW_COUNT; ++index) {
+        if (folder_previews(albums[index].id) && !request_cover(&albums[index], now)) {
+            return;
+        }
+    }
     for (size_t index = 0; index < view.library->count && has_free_cover_slot(); ++index) {
         if (!request_cover(&view.library->entries[index], now)) {
             return;
@@ -555,6 +682,15 @@ static void open_artist(const char *artist_id)
     slide_grid(PAGE_SLIDE_DISTANCE);
 }
 
+static void open_albums(void)
+{
+    view.level = LEVEL_ALBUMS;
+    view.albums_page = 0;
+    render_page();
+    request_covers();
+    slide_grid(PAGE_SLIDE_DISTANCE);
+}
+
 static void open_home(void)
 {
     view.level = LEVEL_HOME;
@@ -583,7 +719,7 @@ static void handle_tap(const lv_point_t *point)
     // The bar's outer thirds answer for its two buttons, so a finger that
     // lands beside a circle, or toward a rounded panel corner, still counts.
     if (point->y >= BAR_TOP) {
-        if (point->x < BAR_BUTTON_AREA_WIDTH && view.level == LEVEL_ARTIST) {
+        if (point->x < BAR_BUTTON_AREA_WIDTH && view.level != LEVEL_HOME) {
             open_home();
         } else if (point->x >= VIEW_WIDTH - BAR_BUTTON_AREA_WIDTH
             && view.resume_visible
@@ -600,7 +736,9 @@ static void handle_tap(const lv_point_t *point)
         if (index >= count || !point_in_object(view.tiles[tile], point)) {
             continue;
         }
-        if (entries[index].kind == BOP_LIBRARY_ENTRY_ARTIST) {
+        if (entries[index].kind == BOP_LIBRARY_ENTRY_FOLDER) {
+            open_albums();
+        } else if (entries[index].kind == BOP_LIBRARY_ENTRY_ARTIST) {
             open_artist(entries[index].id);
         } else if (entry_is_playing(&entries[index])) {
             // The album already plays: a tap pauses or resumes it instead
@@ -641,9 +779,9 @@ static void view_event(lv_event_t *event)
     int32_t vertical = point.y - view.press_point.y;
     if (abs(horizontal) >= SWIPE_THRESHOLD && abs(horizontal) > abs(vertical) * 3 / 2) {
         // Like a phone home screen: a swipe to the left shows the next page.
-        // A swipe to the right on an artist's first page goes back home, the
-        // way a phone goes back.
-        if (horizontal > 0 && view.level == LEVEL_ARTIST && view.artist_page == 0) {
+        // A swipe to the right on the first page of an artist or of the albums
+        // goes back home, the way a phone goes back.
+        if (horizontal > 0 && view.level != LEVEL_HOME && *shown_page() == 0) {
             open_home();
         } else {
             change_page(horizontal < 0 ? 1 : -1);
@@ -691,6 +829,19 @@ static void create_tiles(void)
         lv_obj_set_size(image, BOP_COVER_SIZE, BOP_COVER_SIZE);
         lv_obj_set_pos(image, 0, 0);
         lv_obj_add_flag(image, LV_OBJ_FLAG_HIDDEN);
+        // The albums tile's four previews, stretched down to half size.
+        for (size_t preview = 0; preview < FOLDER_PREVIEW_COUNT; ++preview) {
+            lv_obj_t *small = lv_image_create(frame);
+            lv_obj_remove_flag(small, LV_OBJ_FLAG_CLICKABLE);
+            lv_obj_set_size(small, FOLDER_PREVIEW_SIZE, FOLDER_PREVIEW_SIZE);
+            lv_obj_set_pos(
+                small,
+                (int32_t)(preview % 2) * (FOLDER_PREVIEW_SIZE + FOLDER_PREVIEW_GAP),
+                (int32_t)(preview / 2) * (FOLDER_PREVIEW_SIZE + FOLDER_PREVIEW_GAP));
+            lv_image_set_inner_align(small, LV_IMAGE_ALIGN_STRETCH);
+            lv_obj_add_flag(small, LV_OBJ_FLAG_HIDDEN);
+            view.previews[tile][preview] = small;
+        }
         // A translucent round mark over the cover of the playing album. It
         // covers only its own circle, so blending it costs little.
         lv_obj_t *mark = make_plain_object(frame);
@@ -791,13 +942,18 @@ esp_err_t bop_library_view_create(lv_obj_t *screen, const bop_library_view_callb
     view.artist = heap_caps_calloc(1, sizeof(*view.artist), MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
     view.incoming = heap_caps_calloc(
         1, sizeof(*view.incoming), MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
-    if (view.library == NULL || view.artist == NULL || view.incoming == NULL) {
+    view.home_entries = heap_caps_calloc(
+        BOP_LIBRARY_ARTIST_CAPACITY + 1, sizeof(bop_library_entry_t), MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
+    if (view.library == NULL || view.artist == NULL || view.incoming == NULL
+        || view.home_entries == NULL) {
         free(view.library);
         free(view.artist);
         free(view.incoming);
+        free(view.home_entries);
         view.library = NULL;
         view.artist = NULL;
         view.incoming = NULL;
+        view.home_entries = NULL;
         return ESP_ERR_NO_MEM;
     }
     view.callbacks = *callbacks;
@@ -824,6 +980,7 @@ esp_err_t bop_library_view_create(lv_obj_t *screen, const bop_library_view_callb
         view.library->complete = true;
         ESP_LOGI(TAG, "Showing %u cached artists and albums", (unsigned)view.library->count);
     }
+    rebuild_home();
     render_page();
     lv_obj_add_flag(view.root, LV_OBJ_FLAG_HIDDEN);
     ESP_LOGI(TAG, "Library grid is ready");
@@ -895,6 +1052,7 @@ void bop_library_view_update(const bop_library_view_playback_t *playback)
     if (bop_spotify_get_library_generation() != view.library_generation
         && bop_spotify_get_library(view.library)) {
         view.library_generation = view.library->generation;
+        rebuild_home();
         render = true;
     }
     if (bop_spotify_get_artist_albums_generation() != view.artist_generation

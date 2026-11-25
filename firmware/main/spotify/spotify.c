@@ -977,6 +977,14 @@ typedef struct {
     char image_url_path[64];
     char image_width_path[64];
     char next_path[48];
+    char artist_path[64];
+    char type_path[64];
+    // The followed artists, read before the saved albums. A saved regular
+    // album of one of them is left out: the artist's page already shows it.
+    const bop_library_entry_t *followed;
+    size_t followed_count;
+    bool by_followed_artist;
+    bool regular_album;
     char id[BOP_ALBUM_ID_CAPACITY];
     char image_url[BOP_COVER_URL_CAPACITY];
     int image_width;
@@ -1010,6 +1018,9 @@ static void init_collector(
         sizeof(collector->image_width_path),
         "%s.images.width",
         entry_path);
+    // The album's own artists. Its tracks name theirs under tracks.items.
+    snprintf(collector->artist_path, sizeof(collector->artist_path), "%s.artists.id", entry_path);
+    snprintf(collector->type_path, sizeof(collector->type_path), "%s.album_type", entry_path);
 }
 
 // Keeps the narrowest image that still fills a grid tile. When no image is
@@ -1035,7 +1046,8 @@ static void consider_image(entry_collector_t *collector)
 static void commit_entry(entry_collector_t *collector)
 {
     bool valid = is_spotify_id(collector->id, sizeof(collector->id))
-        && *collector->count < collector->capacity;
+        && *collector->count < collector->capacity
+        && !(collector->by_followed_artist && collector->regular_album);
     for (size_t index = 0; valid && index < *collector->count; ++index) {
         valid = strcmp(collector->entries[index].id, collector->id) != 0;
     }
@@ -1048,6 +1060,8 @@ static void commit_entry(entry_collector_t *collector)
     collector->id[0] = '\0';
     collector->cover_url[0] = '\0';
     collector->cover_width = 0;
+    collector->by_followed_artist = false;
+    collector->regular_album = false;
 }
 
 static void collect_value(void *context, const char *path, const char *value, bool is_string)
@@ -1059,6 +1073,14 @@ static void collect_value(void *context, const char *path, const char *value, bo
         strlcpy(collector->image_url, value, sizeof(collector->image_url));
     } else if (strcmp(path, collector->image_width_path) == 0 && !is_string) {
         collector->image_width = atoi(value);
+    } else if (strcmp(path, collector->artist_path) == 0 && is_string) {
+        for (size_t index = 0; index < collector->followed_count; ++index) {
+            if (strcmp(collector->followed[index].id, value) == 0) {
+                collector->by_followed_artist = true;
+            }
+        }
+    } else if (strcmp(path, collector->type_path) == 0 && is_string) {
+        collector->regular_album = strcmp(value, "album") == 0;
     } else if (strcmp(path, collector->next_path) == 0) {
         if (is_string) {
             strlcpy(collector->next_url, value, sizeof(collector->next_url));
@@ -1214,6 +1236,10 @@ static esp_err_t refresh_library(
             BOP_LIBRARY_ENTRY_ALBUM,
             "items.album",
             "next");
+        // The grid shows a saved album apart only when no followed artist's
+        // page holds it.
+        collector->followed = next->entries;
+        collector->followed_count = next->count;
         // Fifty is Spotify's maximum page size. Fewer, larger pages save a
         // request round trip for every twenty albums.
         error = fetch_entry_list(

@@ -207,6 +207,8 @@ the serial log.
 
 The grid shows a message for a parent when it has nothing to show.
 
+- An album you saved is missing behind the albums tile: it is a regular album
+  of an artist you follow, so it shows on that artist's page.
 - `Follow artists or save albums in Spotify to show them here.`: the account
   follows no artist and has no saved album. Follow an artist or save an album
   in the Spotify app.

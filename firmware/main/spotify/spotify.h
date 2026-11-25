@@ -35,9 +35,10 @@ typedef struct {
     uint32_t change_counter;
 } playback_state_t;
 
-// Kid mode shows the account's library: followed artists first, then saved
-// albums. An artist opens the list of its own albums. Spotify IDs are 22
-// base-62 characters. Image URLs on i.scdn.co are about 64.
+// Kid mode shows the account's library: followed artists first, then the saved
+// albums that no followed artist's page shows. An artist opens the list of its
+// own albums. Spotify IDs are 22 base-62 characters. Image URLs on i.scdn.co
+// are about 64.
 #define BOP_LIBRARY_ARTIST_CAPACITY 48
 #define BOP_LIBRARY_CAPACITY 144
 #define BOP_ARTIST_ALBUM_CAPACITY 200
@@ -56,6 +57,8 @@ typedef enum {
 typedef enum {
     BOP_LIBRARY_ENTRY_ALBUM,
     BOP_LIBRARY_ENTRY_ARTIST,
+    // Only the grid makes this one: the tile that opens the saved albums.
+    BOP_LIBRARY_ENTRY_FOLDER,
 } bop_library_entry_kind_t;
 
 typedef struct {

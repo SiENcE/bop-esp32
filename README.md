@@ -18,10 +18,16 @@ Bop plays no sound itself. It tells a Spotify speaker, phone, or tablet what to 
 Bop starts on a grid of pictures from the Spotify library, so a child who
 cannot read yet can pick music:
 
-- **Artists you follow** show first, as round pictures. A tap opens that
-  artist's albums. Only regular albums appear, so every episode of an audio
-  drama series does, while singles and compilations stay hidden.
-- **Albums you saved** follow, as square covers. A tap plays the album.
+- **Artists you follow** show as round pictures. A tap opens that artist's
+  albums. Only regular albums appear, so every episode of an audio drama
+  series does, while singles and compilations stay hidden.
+- **One albums tile** follows the artists. It shows four album covers at a
+  glance, and a tap opens the **albums you saved**, as square covers. A tap
+  on a cover plays the album.
+
+A saved regular album of an artist you follow appears only on that artist's
+page, so each album has one place. Without a followed artist, the saved
+albums show on the first page directly.
 
 To change what the children see, follow or unfollow an artist, or save or
 remove an album, in the Spotify app. Bop reads the library again every three
@@ -46,10 +52,11 @@ available one.
 | Gesture on the grid | Action |
 | --- | --- |
 | Tap a round artist picture | Show that artist's albums |
+| Tap the albums tile (four small covers) | Show the saved albums |
 | Tap a square album cover | Play that album |
 | Tap the playing album's cover | Pause or resume it ⏸️ / ▶️ |
 | Swipe left or right | Next or previous page |
-| Tap the arrow button, or swipe right on an artist's first page | Return from an artist to the library |
+| Tap the arrow button, or swipe right on the first page | Return from an artist or the albums to the first page |
 | Tap the green note button | Return to the playing album |
 
 The cover of the playing album shows a translucent pause mark while it plays

@@ -563,13 +563,21 @@ def test_kid_mode_contract() -> None:
     # The playing album pauses or resumes instead of starting over.
     assert tap.index("entry_is_playing(&entries[index])") < tap.index("view.callbacks.select(")
     assert "view.callbacks.toggle()" in tap
+    # Home shows the followed artists and one albums tile, which opens the saved
+    # albums. A saved regular album of a followed artist stays on that
+    # artist's page only.
+    assert tap.index("BOP_LIBRARY_ENTRY_FOLDER") < tap.index("BOP_LIBRARY_ENTRY_ARTIST")
+    assert "open_albums();" in tap
+    assert "!(collector->by_followed_artist && collector->regular_album)" in SPOTIFY_SOURCE
+    assert '"%s.artists.id", entry_path' in SPOTIFY_SOURCE
     # The bar's outer thirds answer for back and resume, a larger target than
     # the drawn buttons, and the bar comes before the tiles.
     assert tap.index("point->y >= BAR_TOP") < tap.index("for (size_t tile = 0;")
-    assert "point->x < BAR_BUTTON_AREA_WIDTH && view.level == LEVEL_ARTIST" in tap
-    # A swipe to the right on an artist's first page goes back home.
+    assert "point->x < BAR_BUTTON_AREA_WIDTH && view.level != LEVEL_HOME" in tap
+    # A swipe to the right on the first page of an artist or of the albums
+    # goes back home.
     event = library_view[library_view.index("static void view_event(") :]
-    assert "horizontal > 0 && view.level == LEVEL_ARTIST && view.artist_page == 0" in event
+    assert "horizontal > 0 && view.level != LEVEL_HOME && *shown_page() == 0" in event
 
 
 def test_spotify_branding_is_limited_to_attribution() -> None:
